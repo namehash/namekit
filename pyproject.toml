@@ -4,13 +4,16 @@ version = "0.1.0"
 description = ""
 authors = []
 readme = "README.md"
-packages = [
-    { include = "nameguard" }
-]
+packages = [{ include = "nameguard" }]
 
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.12"
+label-inspector = {git = "ssh://git@github.com/namehash/label-inspector-public.git"}
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.4.0"
 
 
 [build-system]
