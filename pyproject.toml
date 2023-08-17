@@ -10,10 +10,19 @@ packages = [{ include = "nameguard" }]
 [tool.poetry.dependencies]
 python = ">=3.9,<3.12"
 label-inspector = {git = "ssh://git@github.com/namehash/label-inspector-public.git"}
+fastapi = "^0.100.1"
+mangum = {version = "^0.17.0", optional = true}
+
+
+[tool.poetry.extras]
+lambda = ["mangum"]
 
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.0"
+flake8 = "^6.1.0"
+uvicorn = {extras = ["standard"], version = "^0.23.2"}
+httpx = "^0.24.1"
 
 
 [build-system]
