@@ -1,26 +1,25 @@
+from enum import Enum
 from fastapi import FastAPI
 from pydantic import BaseModel
 
 from nameguard.nameguard import NameGuard
+from nameguard.models.result import NameGuardResult
+
+
+class ApiVersion(int, Enum):
+    V1 = 1
 
 
 app = FastAPI()
 nameguard = NameGuard()
 
 
-class CheckNameRequest(BaseModel):
+class InspectNameRequest(BaseModel):
     name: str
 
 
-class CheckNameResponse(BaseModel):
-    verdict: str
-    check_results: list[str]
-
-
-@app.post("/")
-async def check_name(request: CheckNameRequest) -> CheckNameResponse:
-    verdict, check_results = nameguard.check_name(request.name)
-    return CheckNameResponse(
-        verdict=verdict.name,
-        check_results=[str(result) for result in check_results],
-    )
+@app.post('/{api_version}/inspect-name')
+async def inspect_name(api_version: ApiVersion, request: InspectNameRequest) -> NameGuardResult:
+    if api_version != ApiVersion.V1:
+        raise Exception(f'API version {api_version} not supported')
+    return nameguard.inspect_name(request.name)
