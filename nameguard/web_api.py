@@ -6,8 +6,8 @@ from nameguard.nameguard import NameGuard
 from nameguard.models.result import NameGuardResult
 
 
-class ApiVersion(int, Enum):
-    V1 = 1
+class ApiVersion(str, Enum):
+    V1 = 'v1'
 
 
 app = FastAPI()
