@@ -23,3 +23,13 @@ async def inspect_name(api_version: ApiVersion, request: InspectNameRequest) -> 
     if api_version != ApiVersion.V1:
         raise Exception(f'API version {api_version} not supported')
     return nameguard.inspect_name(request.name)
+
+
+@app.get('/{api_version}/inspect-name/{name}')
+async def inspect_name_get(api_version: ApiVersion, name: str) -> NameGuardResult:
+    return await inspect_name(api_version, InspectNameRequest(name=name))
+
+
+@app.get('/{api_version}/inspect-name')
+async def inspect_name_get(api_version: ApiVersion) -> NameGuardResult:
+    return await inspect_name(api_version, InspectNameRequest(name=''))
