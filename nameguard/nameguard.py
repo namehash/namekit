@@ -1,25 +1,32 @@
 from label_inspector.inspector import Inspector
+from label_inspector.models import InspectorResultNormalized, InspectorResultUnnormalized, InspectorResult
 from label_inspector.config import initialize_inspector_config
 
 from nameguard import checks
 from nameguard.models import (
     NameGuardResult,
+    LabelGuardResult,
+    GraphemeGuardResult,
     Rating,
     GenericCheckResult,
     NameGuardSummary,
     NameMetadata,
     NameStatus,
-    CheckName,
 )
 
 
-LABEL_CHECKS = [
-    checks.confusables,
-    checks.invisible,
-    checks.mixed_scripts,
-    checks.normalized,
-    checks.typing_difficulty,
+GRAPHEME_CHECKS = [
+    checks.grapheme.confusables.check_grapheme,
+    checks.grapheme.invisible.check_grapheme,
+    checks.grapheme.typing_difficulty.check_grapheme,
 ]
+
+LABEL_CHECKS = [
+    checks.label.normalized.check_label,
+    checks.label.mixed_scripts.check_label,
+]
+
+NAME_CHECKS = []
 
 
 def init_inspector():
@@ -31,19 +38,19 @@ def compute_namehash(name: str) -> str:
     return 'TODO'
 
 
-def agg_nameguard_rating(check_results: list[GenericCheckResult]) -> Rating:
-    return max((check_result.rating for check_result in check_results), key=lambda rating: rating.value)
+def calculate_name_rating(checks: list[GenericCheckResult]) -> Rating:
+    return max(check.rating for check in checks)
 
 
-def count_risks(check_results: list[GenericCheckResult]) -> int:
-    return sum(1 for check_result in check_results if check_result.rating.value > Rating.GREEN.value)
+def count_risks(checks: list[GenericCheckResult]) -> int:
+    return sum(1 for check in checks if check.rating > Rating.GREEN)
 
 
-def agg_per_label_check_results(per_label_check_results: list[list[GenericCheckResult]]) -> list[GenericCheckResult]:
-    return [
-        max(check_results, key=lambda check_result: check_result.rating.value)
-        for check_results in zip(*per_label_check_results)
-    ]
+def agg_checks(checks: list[GenericCheckResult]) -> list[GenericCheckResult]:
+    out = {}
+    for check in checks:
+        out[check.name] = max(out.get(check.name, check), check)
+    return list(out.values())
 
 
 class NameGuard:
@@ -52,16 +59,45 @@ class NameGuard:
 
     def inspect_name(self, name: str) -> NameGuardResult:
         labels = name.split('.')
-        labels_analysis = [self.inspector.analyse_label(label) for label in labels]
+        labels_analysis = [self.analyse_label(label) for label in labels]
 
-        per_label_check_results = [
-            [check.check_label(label_analysis) for check in LABEL_CHECKS]
+        # -- check individual entities --
+
+        # checks for each grapheme in each label
+        labels_graphemes_checks = [
+            [
+                [check(grapheme) for check in GRAPHEME_CHECKS]
+                for grapheme in label_analysis.graphemes
+            ]
+            for label_analysis in labels_analysis
+            if label_analysis.status == 'normalized'
+        ]
+
+        # checks for each label
+        labels_checks = [
+            [check(label_analysis) for check in LABEL_CHECKS]
             for label_analysis in labels_analysis
         ]
 
-        check_results = agg_per_label_check_results(per_label_check_results)
+        # checks for the whole name
+        name_checks = [check(name) for check in NAME_CHECKS]
 
-        name_normalized = all(x['status'] == 'normalized' for x in labels_analysis)
+        # -- aggregate results --
+
+        # merge grapheme checks into label checks
+        for label_i, label_graphemes_checks in enumerate(labels_graphemes_checks):
+            for grapheme_checks in label_graphemes_checks:
+                labels_checks[label_i].extend(grapheme_checks)
+            labels_checks[label_i] = agg_checks(labels_checks[label_i])
+
+        # merge label checks into name checks
+        for label_checks in labels_checks:
+            name_checks.extend(label_checks)
+        name_checks = agg_checks(name_checks)
+
+        # -- generate result --
+
+        name_normalized = all(x.status == 'normalized' for x in labels_analysis)
 
         return NameGuardResult(
             metadata=NameMetadata(
@@ -70,8 +106,33 @@ class NameGuard:
                 status=NameStatus.NORMALIZED if name_normalized else NameStatus.UNNORMALIZED,
             ),
             summary=NameGuardSummary(
-                rating=agg_nameguard_rating(check_results),
-                risk_count=count_risks(check_results),
+                rating=calculate_name_rating(name_checks),
+                risk_count=count_risks(name_checks),
             ),
-            check_results=check_results,
+            checks=name_checks,
+            labels=[
+                LabelGuardResult(
+                    label=label_analysis.label,
+                    checks=label_checks,
+                    graphemes=[
+                        GraphemeGuardResult(
+                            grapheme=grapheme.value,
+                            checks=grapheme_checks,
+                        )
+                        for grapheme, grapheme_checks in zip(label_analysis.graphemes, label_graphemes_checks)
+                    ] if label_analysis.status == 'normalized' else [],
+                )
+                for label_analysis, label_checks, label_graphemes_checks in zip(
+                    labels_analysis,
+                    labels_checks,
+                    labels_graphemes_checks,
+                )
+            ],
         )
+
+    def analyse_label(self, label: str) -> InspectorResult:
+        result = self.inspector.analyse_label(label)
+        if result['status'] == 'normalized':
+            return InspectorResultNormalized(**result)
+        else:
+            return InspectorResultUnnormalized(**result)

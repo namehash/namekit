@@ -21,7 +21,19 @@ class NameGuardSummary(BaseModel):
     risk_count: int
 
 
+class GraphemeGuardResult(BaseModel):
+    grapheme: str
+    checks: list[GenericCheckResult]
+
+
+class LabelGuardResult(BaseModel):
+    label: str
+    checks: list[GenericCheckResult]
+    graphemes: list[GraphemeGuardResult]
+
+
 class NameGuardResult(BaseModel):
     metadata: NameMetadata
     summary: NameGuardSummary
-    check_results: list[GenericCheckResult]
+    checks: list[GenericCheckResult]
+    labels: list[LabelGuardResult]

@@ -1,41 +1,36 @@
 import pytest
 
-from nameguard.checks import (
-    CheckRating,
-    CheckConfusables,
-    CheckTypingDifficulty,
-    CheckENSNormalized,
-)
+from nameguard.models import Rating, CheckName
+from nameguard.nameguard import NameGuard
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope='module')
 def nameguard():
-    from nameguard.nameguard import NameGuard
     return NameGuard()
 
 
-def test_basic_green(nameguard):
-    verdict, check_results = nameguard.check_name('nick.eth')
-    assert verdict is CheckRating.GREEN
-    assert all(check.rating is CheckRating.GREEN
-               for check in check_results)
+def test_basic_green(nameguard: NameGuard):
+    result = nameguard.inspect_name('nick.eth')
+    assert result.summary.rating is Rating.GREEN
+    assert all(check.rating is Rating.GREEN
+               for check in result.checks)
 
 
-def test_basic_yellow(nameguard):
-    verdict, check_results = nameguard.check_name('nićk.eth')
-    assert verdict is CheckRating.YELLOW
-    for check in check_results:
-        if isinstance(check, CheckConfusables) or isinstance(check, CheckTypingDifficulty):
-            assert check.rating is CheckRating.YELLOW
+def test_basic_yellow(nameguard: NameGuard):
+    result = nameguard.inspect_name('nićk.eth')
+    assert result.summary.rating is Rating.YELLOW
+    for check in result.checks:
+        if check.name in (CheckName.CONFUSABLES, CheckName.TYPING_DIFFICULTY):
+            assert check.rating is Rating.YELLOW
         else:
-            assert check.rating is CheckRating.GREEN
+            assert check.rating is Rating.GREEN
 
 
-def test_basic_red(nameguard):
-    verdict, check_results = nameguard.check_name('ni_ck.eth')
-    assert verdict is CheckRating.RED
-    for check in check_results:
-        if isinstance(check, CheckENSNormalized):
-            assert check.rating is CheckRating.RED
+def test_basic_red(nameguard: NameGuard):
+    result = nameguard.inspect_name('ni_ck.eth')
+    assert result.summary.rating is Rating.RED
+    for check in result.checks:
+        if check.name is CheckName.NORMALIZED:
+            assert check.rating is Rating.RED
         else:
-            assert check.rating is CheckRating.GREEN
+            assert check.rating is Rating.GREEN

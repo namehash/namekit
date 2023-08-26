@@ -6,6 +6,8 @@ from .checks import (
 
 from .result import (
     NameGuardResult,
+    LabelGuardResult,
+    GraphemeGuardResult,
     NameGuardSummary,
     NameMetadata,
     NameStatus,

@@ -2,11 +2,43 @@ from pydantic import BaseModel
 from enum import Enum
 
 
-class Rating(Enum):
-    UNKNOWN = 0
-    GREEN = 1
-    YELLOW = 2
-    RED = 3
+class Rating(str, Enum):
+    UNKNOWN = 'UNKNOWN'
+    GREEN = 'GREEN'
+    YELLOW = 'YELLOW'
+    RED = 'RED'
+
+    @property
+    def order(self):
+        return {
+            Rating.UNKNOWN: 0,
+            Rating.GREEN: 1,
+            Rating.YELLOW: 2,
+            Rating.RED: 3,
+        }[self]
+
+    def __hash__(self) -> int:
+        return hash(self.value)
+
+    # Implementing all ops speeds up comparisons
+
+    def __lt__(self, other):
+        return self.order < other.order
+    
+    def __gt__(self, other):
+        return self.order > other.order
+    
+    def __eq__(self, other):
+        return self.order == other.order
+    
+    def __le__(self, other):
+        return self.order <= other.order
+    
+    def __ge__(self, other):
+        return self.order >= other.order
+    
+    def __ne__(self, other):
+        return self.order != other.order
 
 
 class CheckName(str, Enum):
@@ -28,3 +60,27 @@ class GenericCheckResult(BaseModel):
 
     def __repr__(self):
         return f'{self.__class__.__name__}({self.rating.name})'
+
+    @property
+    def order(self):
+        return (self.rating.order, self.severity)
+
+    # Implementing all ops speeds up comparisons
+
+    def __lt__(self, other):
+        return self.order < other.order
+    
+    def __gt__(self, other):
+        return self.order > other.order
+    
+    def __eq__(self, other):
+        return self.order == other.order
+    
+    def __le__(self, other):
+        return self.order <= other.order
+    
+    def __ge__(self, other):
+        return self.order >= other.order
+    
+    def __ne__(self, other):
+        return self.order != other.order
