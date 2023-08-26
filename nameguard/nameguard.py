@@ -14,6 +14,8 @@ from nameguard.models import (
     NameStatus,
 )
 
+from utils import normal_name_to_hash
+
 
 GRAPHEME_CHECKS = [
     checks.grapheme.confusables.check_grapheme,
@@ -38,7 +40,7 @@ def init_inspector():
 
 
 def compute_namehash(name: str) -> str:
-    return 'TODO'
+    return normal_name_to_hash(name)
 
 
 def calculate_nameguard_rating(checks: list[GenericCheckResult]) -> Rating:
