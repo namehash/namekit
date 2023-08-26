@@ -50,3 +50,23 @@ async def bulk_inspect_name(api_version: ApiVersion, request: BulkInspectNameReq
     if api_version != ApiVersion.V1:
         raise Exception(f'API version {api_version} not supported')
     return nameguard.bulk_inspect_name(request.names)
+
+
+# -- inspect-namehash --
+
+@app.get('/{api_version}/inspect-namehash/{namehash}')
+async def inspect_namehash_get(api_version: ApiVersion, namehash: str) -> NameGuardResult:
+    # todo: if prefixed with 0x - hex format, otherwise - decimal format
+    # todo: validate namehash input
+
+    # todo: the graph lookup (using decimal format)
+
+    # todo: error for the NameHash Not Found In Subgraph should be raised (when response == {"data": {"domain": null}})
+    # todo: The returned namehash should equal the namehash that we used in our lookup.
+    #  If it doesn’t, this should raise the NameHash Mismatch Error.
+
+    def namehash_2_label(s: str) -> str:
+        return s
+
+    name = namehash_2_label(namehash)
+    return await inspect_name(api_version, InspectNameRequest(name=name))
