@@ -11,7 +11,6 @@ from nameguard.models import (
     Rating,
     GenericCheckResult,
     NameGuardSummary,
-    NameMetadata,
     NameStatus,
 )
 
@@ -42,7 +41,7 @@ def compute_namehash(name: str) -> str:
     return 'TODO'
 
 
-def calculate_name_rating(checks: list[GenericCheckResult]) -> Rating:
+def calculate_nameguard_rating(checks: list[GenericCheckResult]) -> Rating:
     return max(check.rating for check in checks)
 
 
@@ -104,23 +103,30 @@ class NameGuard:
         name_normalized = all(x.status == 'normalized' for x in labels_analysis)
 
         return NameGuardResult(
-            metadata=NameMetadata(
-                name=name,
-                namehash=compute_namehash(name),
-                status=NameStatus.NORMALIZED if name_normalized else NameStatus.UNNORMALIZED,
-            ),
+            name=name,
+            namehash=compute_namehash(name),
+            status=NameStatus.NORMALIZED if name_normalized else NameStatus.UNNORMALIZED,
             summary=NameGuardSummary(
-                rating=calculate_name_rating(name_checks),
+                rating=calculate_nameguard_rating(name_checks),
                 risk_count=count_risks(name_checks),
             ),
             checks=name_checks,
             labels=[
                 LabelGuardResult(
                     label=label_analysis.label,
+                    status=NameStatus.NORMALIZED if label_analysis.status == 'normalized' else NameStatus.UNNORMALIZED,
+                    summary=NameGuardSummary(
+                        rating=calculate_nameguard_rating(label_checks),
+                        risk_count=count_risks(label_checks),
+                    ),
                     checks=label_checks,
                     graphemes=[
                         GraphemeGuardResult(
                             grapheme=grapheme.value,
+                            summary=NameGuardSummary(
+                                rating=calculate_nameguard_rating(grapheme_checks),
+                                risk_count=count_risks(grapheme_checks),
+                            ),
                             checks=grapheme_checks,
                         )
                         for grapheme, grapheme_checks in zip(label_analysis.graphemes, label_graphemes_checks)

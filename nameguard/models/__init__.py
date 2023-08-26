@@ -10,6 +10,5 @@ from .result import (
     GraphemeGuardResult,
     NameGuardBulkResult,
     NameGuardSummary,
-    NameMetadata,
     NameStatus,
 )
