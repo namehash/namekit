@@ -14,7 +14,7 @@ from nameguard.models import (
     NameStatus,
 )
 
-from utils import normal_name_to_hash
+from nameguard.utils import normal_name_to_hash
 
 
 GRAPHEME_CHECKS = [
