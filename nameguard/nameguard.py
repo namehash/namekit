@@ -25,6 +25,9 @@ GRAPHEME_CHECKS = [
 LABEL_CHECKS = [
     checks.label.normalized.check_label,
     checks.label.mixed_scripts.check_label,
+    checks.label.namewrapper.check_label,
+    checks.label.font_support.check_label,
+    checks.label.punycode.check_label,
 ]
 
 NAME_CHECKS = []
