@@ -1,4 +1,6 @@
 from enum import Enum
+from typing import Literal
+
 from fastapi import FastAPI
 from pydantic import BaseModel
 
@@ -54,8 +56,25 @@ async def bulk_inspect_name(api_version: ApiVersion, request: BulkInspectNameReq
 
 # -- inspect-namehash --
 
-@app.get('/{api_version}/inspect-namehash/{namehash}')
-async def inspect_namehash_get(api_version: ApiVersion, namehash: str) -> NameGuardResult:
+class InspectNamehashRequest(BaseModel):
+    namehash: str  # todo: add validation
+    network_name: Literal['mainnet']
+
+
+@app.post('/{api_version}/inspect-namehash')
+async def inspect_name(api_version: ApiVersion, request: InspectNamehashRequest) -> NameGuardResult:
+    if api_version != ApiVersion.V1:
+        raise Exception(f'API version {api_version} not supported')
+
+    namehash = request.namehash
+    network_name = request.network_name
+
+    name = namehash  # todo: implement (the same as below, just POST)
+    return nameguard.inspect_name(name)
+
+
+@app.get('/{api_version}/inspect-namehash/{network_name}/{namehash}')
+async def inspect_namehash_get(api_version: ApiVersion, network_name: str, namehash: str) -> NameGuardResult:
     # todo: if prefixed with 0x - hex format, otherwise - decimal format
     # todo: validate namehash input
 
@@ -65,8 +84,9 @@ async def inspect_namehash_get(api_version: ApiVersion, namehash: str) -> NameGu
     # todo: The returned namehash should equal the namehash that we used in our lookup.
     #  If it doesn’t, this should raise the NameHash Mismatch Error.
 
-    def namehash_2_label(s: str) -> str:
-        return s
+    def namehash_2_label(s: str, network: str) -> str:
+        return s  # TODO
 
-    name = namehash_2_label(namehash)
+    name = namehash_2_label(namehash, network=network_name)
+
     return await inspect_name(api_version, InspectNameRequest(name=name))
