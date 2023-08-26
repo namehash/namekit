@@ -8,6 +8,7 @@ from .result import (
     NameGuardResult,
     LabelGuardResult,
     GraphemeGuardResult,
+    NameGuardBulkResult,
     NameGuardSummary,
     NameMetadata,
     NameStatus,

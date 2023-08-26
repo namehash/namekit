@@ -7,6 +7,7 @@ from nameguard.models import (
     NameGuardResult,
     LabelGuardResult,
     GraphemeGuardResult,
+    NameGuardBulkResult,
     Rating,
     GenericCheckResult,
     NameGuardSummary,
@@ -57,7 +58,7 @@ class NameGuard:
     def __init__(self):
         self.inspector = init_inspector()
 
-    def inspect_name(self, name: str) -> NameGuardResult:
+    def inspect_name(self, name: str, return_labels=True) -> NameGuardResult:
         labels = name.split('.')
         labels_analysis = [self.analyse_label(label) for label in labels]
 
@@ -127,7 +128,12 @@ class NameGuard:
                     labels_checks,
                     labels_graphemes_checks,
                 )
-            ],
+            ] if return_labels else None,
+        )
+
+    def bulk_inspect_name(self, names: list[str]) -> NameGuardBulkResult:
+        return NameGuardBulkResult(
+            results=[self.inspect_name(name, return_labels=False) for name in names],
         )
 
     def analyse_label(self, label: str) -> InspectorResult:

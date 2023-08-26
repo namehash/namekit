@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 
 from nameguard.nameguard import NameGuard
-from nameguard.models.result import NameGuardResult
+from nameguard.models import NameGuardResult, NameGuardBulkResult
 
 
 class ApiVersion(str, Enum):
@@ -12,6 +12,9 @@ class ApiVersion(str, Enum):
 
 app = FastAPI()
 nameguard = NameGuard()
+
+
+# -- inspect-name --
 
 
 class InspectNameRequest(BaseModel):
@@ -33,3 +36,17 @@ async def inspect_name_get(api_version: ApiVersion, name: str) -> NameGuardResul
 @app.get('/{api_version}/inspect-name')
 async def inspect_name_get(api_version: ApiVersion) -> NameGuardResult:
     return await inspect_name(api_version, InspectNameRequest(name=''))
+
+
+# -- bulk-inspect-name --
+
+
+class BulkInspectNameRequest(BaseModel):
+    names: list[str]
+
+
+@app.post('/{api_version}/bulk-inspect-name')
+async def bulk_inspect_name(api_version: ApiVersion, request: BulkInspectNameRequest) -> NameGuardBulkResult:
+    if api_version != ApiVersion.V1:
+        raise Exception(f'API version {api_version} not supported')
+    return nameguard.bulk_inspect_name(request.names)

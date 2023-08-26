@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel
 from enum import Enum
 
@@ -36,4 +37,8 @@ class NameGuardResult(BaseModel):
     metadata: NameMetadata
     summary: NameGuardSummary
     checks: list[GenericCheckResult]
-    labels: list[LabelGuardResult]
+    labels: Optional[list[LabelGuardResult]]
+
+
+class NameGuardBulkResult(BaseModel):
+    results: list[NameGuardResult]
