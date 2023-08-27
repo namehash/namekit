@@ -34,7 +34,7 @@ async def inspect_name_get(api_version: ApiVersion, name: str) -> NameGuardResul
 
 
 @app.get('/{api_version}/inspect-name')
-async def inspect_name_get(api_version: ApiVersion) -> NameGuardResult:
+async def inspect_name_get_empty(api_version: ApiVersion) -> NameGuardResult:
     return await inspect_name(api_version, InspectNameRequest(name=''))
 
 
