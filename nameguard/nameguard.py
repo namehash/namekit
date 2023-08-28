@@ -85,7 +85,7 @@ class NameGuard:
         ]
 
         # checks for the whole name
-        name_checks = [check(name) for check in NAME_CHECKS]
+        name_checks = [check(labels_analysis) for check in NAME_CHECKS]
 
         # -- aggregate results --
 
