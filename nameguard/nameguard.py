@@ -29,7 +29,9 @@ LABEL_CHECKS = [
     checks.label.punycode.check_label,
 ]
 
-NAME_CHECKS = []
+NAME_CHECKS = [
+    checks.name.punycode_name.check_name,
+]
 
 
 def init_inspector():

@@ -24,32 +24,38 @@ class Rating(str, Enum):
 
     def __lt__(self, other):
         return self.order < other.order
-    
+
     def __gt__(self, other):
         return self.order > other.order
-    
+
     def __eq__(self, other):
         return self.order == other.order
-    
+
     def __le__(self, other):
         return self.order <= other.order
-    
+
     def __ge__(self, other):
         return self.order >= other.order
-    
+
     def __ne__(self, other):
         return self.order != other.order
 
 
 class CheckName(str, Enum):
-    INVISIBLE = 'INVISIBLE'
-    NORMALIZED = 'ENS_NORMALIZED'
+    # Grapheme
     CONFUSABLES = 'CONFUSABLES'
+    INVISIBLE = 'INVISIBLE'
     TYPING_DIFFICULTY = 'TYPING_DIFFICULTY'
-    MIXED_SCRIPTS = 'MIXED_SCRIPTS'
-    PUNYCODE = 'PUNYCODE'
-    NAMEWRAPPER = 'NAMEWRAPPER'
+
+    # Label
     FONT_SUPPORT = 'FONT_SUPPORT'
+    MIXED_SCRIPTS = 'MIXED_SCRIPTS'
+    NAMEWRAPPER = 'NAMEWRAPPER'
+    NORMALIZED = 'NORMALIZED'
+    PUNYCODE = 'PUNYCODE'
+
+    # Name
+    PUNYCODE_NAME = 'PUNYCODE_NAME'
 
 
 class GenericCheckResult(BaseModel):
@@ -59,7 +65,7 @@ class GenericCheckResult(BaseModel):
     message: str
 
     def __repr__(self):
-        return f'{self.__class__.__name__}({self.rating.name})'
+        return f'{self.name}({self.rating.name})'
 
     @property
     def order(self):
@@ -69,18 +75,18 @@ class GenericCheckResult(BaseModel):
 
     def __lt__(self, other):
         return self.order < other.order
-    
+
     def __gt__(self, other):
         return self.order > other.order
-    
+
     def __eq__(self, other):
         return self.order == other.order
-    
+
     def __le__(self, other):
         return self.order <= other.order
-    
+
     def __ge__(self, other):
         return self.order >= other.order
-    
+
     def __ne__(self, other):
         return self.order != other.order

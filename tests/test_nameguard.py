@@ -32,8 +32,11 @@ def test_basic_red(nameguard: NameGuard):
     for check in result.checks:
         if check.name is CheckName.NORMALIZED:
             assert check.rating is Rating.RED
+        elif check.name is CheckName.PUNYCODE_NAME:
+            # skipped because of normalization
+            assert check.rating is Rating.UNKNOWN
         else:
-            assert check.rating is Rating.GREEN
+            assert check.rating is Rating.GREEN, check
 
 
 def test_bulk(nameguard: NameGuard):
