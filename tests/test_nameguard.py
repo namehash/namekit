@@ -40,7 +40,7 @@ def test_basic_red(nameguard: NameGuard):
 
 
 def test_bulk(nameguard: NameGuard):
-    result = nameguard.bulk_inspect_name(['nick.eth', 'nićk.eth', 'ni_ck.eth'])
+    result = nameguard.bulk_inspect_names(['nick.eth', 'nićk.eth', 'ni_ck.eth'])
     assert len(result.results) == 3
     assert result.results[0].summary.rating is Rating.GREEN
     assert result.results[1].summary.rating is Rating.YELLOW

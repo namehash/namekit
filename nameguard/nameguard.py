@@ -142,7 +142,7 @@ class NameGuard:
             ] if return_labels else None,
         )
 
-    def bulk_inspect_name(self, names: list[str]) -> NameGuardBulkResult:
+    def bulk_inspect_names(self, names: list[str]) -> NameGuardBulkResult:
         return NameGuardBulkResult(
             results=[self.inspect_name(name, return_labels=False) for name in names],
         )

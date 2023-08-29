@@ -45,8 +45,8 @@ class BulkInspectNameRequest(BaseModel):
     names: list[str]
 
 
-@app.post('/{api_version}/bulk-inspect-name')
-async def bulk_inspect_name(api_version: ApiVersion, request: BulkInspectNameRequest) -> NameGuardBulkResult:
+@app.post('/{api_version}/bulk-inspect-names')
+async def bulk_inspect_names(api_version: ApiVersion, request: BulkInspectNameRequest) -> NameGuardBulkResult:
     if api_version != ApiVersion.V1:
         raise Exception(f'API version {api_version} not supported')
-    return nameguard.bulk_inspect_name(request.names)
+    return nameguard.bulk_inspect_names(request.names)
