@@ -17,6 +17,7 @@ from nameguard.models import (
 
 GRAPHEME_CHECKS = [
     checks.grapheme.confusables.check_grapheme,
+    checks.grapheme.font_support.check_grapheme,
     checks.grapheme.invisible.check_grapheme,
     checks.grapheme.typing_difficulty.check_grapheme,
 ]
@@ -25,7 +26,6 @@ LABEL_CHECKS = [
     checks.label.normalized.check_label,
     checks.label.mixed_scripts.check_label,
     checks.label.namewrapper.check_label,
-    checks.label.font_support.check_label,
     checks.label.punycode.check_label,
 ]
 
