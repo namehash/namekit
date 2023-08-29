@@ -92,7 +92,18 @@ def int_to_hexstr(n: int, hex_len=64) -> str:
     Given an integer `n`, return a hex-string prefixed with '0x',
     padded with 0s to have exactly `hex_len` digits.
 
-    :raises ValueError  if `n` in hex repr has more digits than `hex_len`
+    Parameters
+    ----------
+    n : int
+    hex_len: int, optional
+    Returns
+    -------
+    str
+        `n` in hex-string format (padded with 0s to match 64 digits and prefixed with 0x).
+    Raises
+    ------
+    ValueError
+        If `n` in hex repr has more digits than `hex_len`.
     """
     res = f"{n:#0{hex_len + 2}x}"
     if len(res) > hex_len + 2:
@@ -121,10 +132,19 @@ def validate_namehash(namehash: str) -> str:
     """
     Validate namehash string and return namehash in hex-string format.
 
-    :param namehash: A string representing a namehash. It can be in
-                     a) decimal format - decimal integer of any length,
-                     b) hex format - 64 hex digits prefixed with 0x.
-    :return: namehash in hex format (padded with 0s to match 64 digits and prefixed with 0x)
+    Parameters
+    ----------
+    namehash : str
+        A string representing a namehash. It can be in
+            a) decimal format - decimal integer of any length,
+            b) hex format - 64 hex digits prefixed with 0x.
+    Returns
+    -------
+    str
+        Namehash in hex-string format (padded with 0s to match 64 digits and prefixed with 0x).
+    Raises
+    ------
+    InvalidNameHash
     """
     if namehash.startswith('0x'):
         if len(namehash) != 66 or not all(c in '0123456789abcdefABCDEF' for c in namehash[2:]):
