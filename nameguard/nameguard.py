@@ -112,16 +112,11 @@ def int_to_hexstr(n: int, hex_len=64) -> str:
 
 
 def namehash_from_name(name: str) -> str:
-    def label_to_hash(label_: str) -> HexBytes:
-        if "." in label_:
-            raise ValueError(f"Cannot generate hash for label {label_!r} with a '.'")
-        return Web3().keccak(text=label_)
-
     node = EMPTY_SHA3_BYTES
     if name:
         labels = name.split(".")
         for label in reversed(labels):
-            labelhash = label_to_hash(label)
+            labelhash = Web3().keccak(text=label)
             assert isinstance(labelhash, bytes)  # todo: remove?
             assert isinstance(node, bytes)
             node = Web3().keccak(node + labelhash)
