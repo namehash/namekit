@@ -1,4 +1,3 @@
-from typing import Optional
 from pydantic import BaseModel
 from enum import Enum
 
@@ -30,14 +29,17 @@ class LabelGuardResult(BaseModel):
     graphemes: list[GraphemeGuardResult]
 
 
-class NameGuardResult(BaseModel):
+class NameGuardQuickResult(BaseModel):
     name: str
     namehash: str
     status: NameStatus
     summary: NameGuardSummary
+
+
+class NameGuardResult(NameGuardQuickResult):
     checks: list[GenericCheckResult]
-    labels: Optional[list[LabelGuardResult]]
+    labels: list[LabelGuardResult]
 
 
 class NameGuardBulkResult(BaseModel):
-    results: list[NameGuardResult]
+    results: list[NameGuardQuickResult]

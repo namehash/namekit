@@ -6,6 +6,7 @@ from .checks import (
 
 from .result import (
     NameGuardResult,
+    NameGuardQuickResult,
     LabelGuardResult,
     GraphemeGuardResult,
     NameGuardBulkResult,
