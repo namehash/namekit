@@ -1,7 +1,7 @@
 from .checks import (
     GenericCheckResult,
     Rating,
-    CheckName,
+    Check,
 )
 
 from .result import (
@@ -10,6 +10,6 @@ from .result import (
     LabelGuardResult,
     GraphemeGuardResult,
     NameGuardBulkResult,
-    NameGuardSummary,
-    NameStatus,
+    RiskSummary,
+    Normalization,
 )

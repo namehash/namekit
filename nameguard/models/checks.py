@@ -41,7 +41,7 @@ class Rating(str, Enum):
         return self.order != other.order
 
 
-class CheckName(str, Enum):
+class Check(str, Enum):
     # Grapheme
     CONFUSABLES = 'CONFUSABLES'
     INVISIBLE = 'INVISIBLE'
@@ -50,22 +50,22 @@ class CheckName(str, Enum):
     # Label
     FONT_SUPPORT = 'FONT_SUPPORT'
     MIXED_SCRIPTS = 'MIXED_SCRIPTS'
-    NAMEWRAPPER = 'NAMEWRAPPER'
+    NAMEWRAPPER_COMPATIBLE = 'NAMEWRAPPER_COMPATIBLE'
     NORMALIZED = 'NORMALIZED'
-    PUNYCODE = 'PUNYCODE'
+    PUNYCODE_COMPATIBLE_LABEL = 'PUNYCODE_COMPATIBLE_LABEL'
 
     # Name
-    PUNYCODE_NAME = 'PUNYCODE_NAME'
+    PUNYCODE_COMPATIBLE_NAME = 'PUNYCODE_COMPATIBLE_NAME'
 
 
 class GenericCheckResult(BaseModel):
-    name: CheckName
+    check: Check
     rating: Rating
     severity: int
     message: str
 
     def __repr__(self):
-        return f'{self.name}({self.rating.name})'
+        return f'{self.check}({self.rating.name})'
 
     @property
     def order(self):

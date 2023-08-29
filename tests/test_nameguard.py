@@ -1,6 +1,6 @@
 import pytest
 
-from nameguard.models import Rating, CheckName
+from nameguard.models import Rating, Check
 from nameguard.nameguard import NameGuard
 
 
@@ -20,7 +20,7 @@ def test_basic_yellow(nameguard: NameGuard):
     result = nameguard.inspect_name('nićk.eth')
     assert result.summary.rating is Rating.YELLOW
     for check in result.checks:
-        if check.name in (CheckName.CONFUSABLES, CheckName.TYPING_DIFFICULTY):
+        if check.check in (Check.CONFUSABLES, Check.TYPING_DIFFICULTY):
             assert check.rating is Rating.YELLOW
         else:
             assert check.rating is Rating.GREEN
@@ -30,9 +30,9 @@ def test_basic_red(nameguard: NameGuard):
     result = nameguard.inspect_name('ni_ck.eth')
     assert result.summary.rating is Rating.RED
     for check in result.checks:
-        if check.name is CheckName.NORMALIZED:
+        if check.check is Check.NORMALIZED:
             assert check.rating is Rating.RED
-        elif check.name is CheckName.PUNYCODE_NAME:
+        elif check.check is Check.PUNYCODE_COMPATIBLE_NAME:
             # skipped because of normalization
             assert check.rating is Rating.UNKNOWN
         else:

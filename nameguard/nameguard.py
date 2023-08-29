@@ -10,8 +10,8 @@ from nameguard.models import (
     NameGuardBulkResult,
     Rating,
     GenericCheckResult,
-    NameGuardSummary,
-    NameStatus,
+    RiskSummary,
+    Normalization,
 )
 
 
@@ -43,6 +43,10 @@ def compute_namehash(name: str) -> str:
     return 'TODO'
 
 
+def compute_labelhash(label: str) -> str:
+    return 'TODO'
+
+
 def calculate_nameguard_rating(checks: list[GenericCheckResult]) -> Rating:
     return max(check.rating for check in checks)
 
@@ -54,7 +58,7 @@ def count_risks(checks: list[GenericCheckResult]) -> int:
 def agg_checks(checks: list[GenericCheckResult]) -> list[GenericCheckResult]:
     out = {}
     for check in checks:
-        out[check.name] = max(out.get(check.name, check), check)
+        out[check.check] = max(out.get(check.check, check), check)
     return list(out.values())
 
 
@@ -107,8 +111,8 @@ class NameGuard:
         return NameGuardResult(
             name=name,
             namehash=compute_namehash(name),
-            status=NameStatus.NORMALIZED if name_normalized else NameStatus.UNNORMALIZED,
-            summary=NameGuardSummary(
+            normalization=Normalization.NORMALIZED if name_normalized else Normalization.UNNORMALIZED,
+            summary=RiskSummary(
                 rating=calculate_nameguard_rating(name_checks),
                 risk_count=count_risks(name_checks),
             ),
@@ -116,8 +120,9 @@ class NameGuard:
             labels=[
                 LabelGuardResult(
                     label=label_analysis.label,
-                    status=NameStatus.NORMALIZED if label_analysis.status == 'normalized' else NameStatus.UNNORMALIZED,
-                    summary=NameGuardSummary(
+                    labelhash=compute_labelhash(label_analysis.label),
+                    normalization=Normalization.NORMALIZED if label_analysis.status == 'normalized' else Normalization.UNNORMALIZED,
+                    summary=RiskSummary(
                         rating=calculate_nameguard_rating(label_checks),
                         risk_count=count_risks(label_checks),
                     ),
@@ -125,7 +130,7 @@ class NameGuard:
                     graphemes=[
                         GraphemeGuardResult(
                             grapheme=grapheme.value,
-                            summary=NameGuardSummary(
+                            summary=RiskSummary(
                                 rating=calculate_nameguard_rating(grapheme_checks),
                                 risk_count=count_risks(grapheme_checks),
                             ),

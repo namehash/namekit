@@ -4,27 +4,28 @@ from enum import Enum
 from nameguard.models.checks import GenericCheckResult, Rating
 
 
-class NameStatus(str, Enum):
+class Normalization(str, Enum):
     NORMALIZED = 'normalized'
     UNNORMALIZED = 'unnormalized'
     UNKNOWN = 'unknown'
 
 
-class NameGuardSummary(BaseModel):
+class RiskSummary(BaseModel):
     rating: Rating
     risk_count: int
 
 
 class GraphemeGuardResult(BaseModel):
     grapheme: str
-    summary: NameGuardSummary
+    summary: RiskSummary
     checks: list[GenericCheckResult]
 
 
 class LabelGuardResult(BaseModel):
     label: str
-    status: NameStatus
-    summary: NameGuardSummary
+    labelhash: str
+    normalization: Normalization
+    summary: RiskSummary
     checks: list[GenericCheckResult]
     graphemes: list[GraphemeGuardResult]
 
@@ -32,8 +33,8 @@ class LabelGuardResult(BaseModel):
 class NameGuardQuickResult(BaseModel):
     name: str
     namehash: str
-    status: NameStatus
-    summary: NameGuardSummary
+    normalization: Normalization
+    summary: RiskSummary
 
 
 class NameGuardResult(NameGuardQuickResult):

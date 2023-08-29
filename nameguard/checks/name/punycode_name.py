@@ -1,4 +1,4 @@
-from nameguard.models import Rating, CheckName, GenericCheckResult
+from nameguard.models import Rating, Check, GenericCheckResult
 from label_inspector.common.punycode import puny_analysis, PunycodeCompatibility
 from label_inspector.models import InspectorResult
 
@@ -14,7 +14,7 @@ MESSAGE_SKIP = 'Name is not normalized'
 def check_name(labels: list[InspectorResult]) -> GenericCheckResult:
     if not all(label.status == 'normalized' for label in labels):
         return GenericCheckResult(
-            name=CheckName.PUNYCODE_NAME,
+            check=Check.PUNYCODE_COMPATIBLE_NAME,
             rating=Rating.UNKNOWN,
             severity=0,
             message=MESSAGE_SKIP,
@@ -23,7 +23,7 @@ def check_name(labels: list[InspectorResult]) -> GenericCheckResult:
         result = puny_analysis('.'.join(label.label for label in labels))
         passed = result.compatibility == PunycodeCompatibility.COMPATIBLE
         return GenericCheckResult(
-            name=CheckName.PUNYCODE_NAME,
+            check=Check.PUNYCODE_COMPATIBLE_NAME,
             rating=Rating.GREEN if passed else RATING,
             severity=0 if passed else SEVERITY,
             message=MESSAGE_PASS if passed else MESSAGE_FAIL,

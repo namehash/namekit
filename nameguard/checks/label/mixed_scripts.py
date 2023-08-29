@@ -1,5 +1,5 @@
 from label_inspector.models import InspectorResult
-from nameguard.models import Rating, CheckName, GenericCheckResult
+from nameguard.models import Rating, Check, GenericCheckResult
 
 
 RATING = Rating.YELLOW
@@ -12,7 +12,7 @@ MESSAGE_SKIP = 'Label is not normalized'
 def check_label(label: InspectorResult) -> GenericCheckResult:
     if label.status != 'normalized':
         return GenericCheckResult(
-            name=CheckName.MIXED_SCRIPTS,
+            check=Check.MIXED_SCRIPTS,
             rating=Rating.UNKNOWN,
             severity=0,
             message=MESSAGE_SKIP,
@@ -20,7 +20,7 @@ def check_label(label: InspectorResult) -> GenericCheckResult:
     else:
         passed = label.all_script is not None
         return GenericCheckResult(
-            name=CheckName.MIXED_SCRIPTS,
+            check=Check.MIXED_SCRIPTS,
             rating=Rating.GREEN if passed else RATING,
             severity=0 if passed else SEVERITY,
             message=MESSAGE_PASS if passed else MESSAGE_FAIL,

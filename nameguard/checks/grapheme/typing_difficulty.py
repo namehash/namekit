@@ -1,5 +1,5 @@
 from label_inspector.models import InspectorGraphemeWithConfusablesResult as Grapheme
-from nameguard.models import Rating, CheckName, GenericCheckResult
+from nameguard.models import Rating, Check, GenericCheckResult
 
 
 RATING = Rating.YELLOW
@@ -17,7 +17,7 @@ def check_grapheme(grapheme: Grapheme) -> GenericCheckResult:
         'underscore',
     )
     return GenericCheckResult(
-        name=CheckName.TYPING_DIFFICULTY,
+        check=Check.TYPING_DIFFICULTY,
         rating=Rating.GREEN if passed else RATING,
         severity=0 if passed else SEVERITY,
         message=MESSAGE_PASS if passed else MESSAGE_FAIL,
