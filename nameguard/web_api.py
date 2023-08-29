@@ -1,6 +1,6 @@
 from enum import Enum
 from fastapi import FastAPI
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from nameguard.nameguard import NameGuard
 from nameguard.models import NameGuardResult, NameGuardBulkResult
@@ -42,7 +42,8 @@ async def inspect_name_get_empty(api_version: ApiVersion) -> NameGuardResult:
 
 
 class BulkInspectNameRequest(BaseModel):
-    names: list[str]
+    # max elements: 250
+    names: list[str] = Field(..., max_items=250)
 
 
 @app.post('/{api_version}/bulk-inspect-names')
