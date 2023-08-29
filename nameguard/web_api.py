@@ -23,8 +23,6 @@ class InspectNameRequest(BaseModel):
 
 @app.post('/{api_version}/inspect-name')
 async def inspect_name(api_version: ApiVersion, request: InspectNameRequest) -> NameGuardResult:
-    if api_version != ApiVersion.V1:
-        raise Exception(f'API version {api_version} not supported')
     return nameguard.inspect_name(request.name)
 
 
@@ -48,6 +46,4 @@ class BulkInspectNameRequest(BaseModel):
 
 @app.post('/{api_version}/bulk-inspect-names')
 async def bulk_inspect_names(api_version: ApiVersion, request: BulkInspectNameRequest) -> NameGuardBulkResult:
-    if api_version != ApiVersion.V1:
-        raise Exception(f'API version {api_version} not supported')
     return nameguard.bulk_inspect_names(request.names)
