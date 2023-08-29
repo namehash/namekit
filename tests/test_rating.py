@@ -2,26 +2,26 @@ from nameguard.models import Rating
 
 
 def test_ordering():
-    assert Rating.UNKNOWN == Rating.UNKNOWN
-    assert Rating.UNKNOWN < Rating.GREEN
-    assert Rating.UNKNOWN < Rating.YELLOW
-    assert Rating.UNKNOWN < Rating.RED
+    assert Rating.SKIP == Rating.SKIP
+    assert Rating.SKIP < Rating.PASS
+    assert Rating.SKIP < Rating.WARN
+    assert Rating.SKIP < Rating.ALERT
 
-    assert Rating.GREEN > Rating.UNKNOWN
-    assert Rating.GREEN == Rating.GREEN
-    assert Rating.GREEN < Rating.YELLOW
-    assert Rating.GREEN < Rating.RED
+    assert Rating.PASS > Rating.SKIP
+    assert Rating.PASS == Rating.PASS
+    assert Rating.PASS < Rating.WARN
+    assert Rating.PASS < Rating.ALERT
 
-    assert Rating.YELLOW > Rating.UNKNOWN
-    assert Rating.YELLOW > Rating.GREEN
-    assert Rating.YELLOW == Rating.YELLOW
-    assert Rating.YELLOW < Rating.RED
+    assert Rating.WARN > Rating.SKIP
+    assert Rating.WARN > Rating.PASS
+    assert Rating.WARN == Rating.WARN
+    assert Rating.WARN < Rating.ALERT
 
-    assert Rating.RED > Rating.UNKNOWN
-    assert Rating.RED > Rating.GREEN
-    assert Rating.RED > Rating.YELLOW
-    assert Rating.RED == Rating.RED
+    assert Rating.ALERT > Rating.SKIP
+    assert Rating.ALERT > Rating.PASS
+    assert Rating.ALERT > Rating.WARN
+    assert Rating.ALERT == Rating.ALERT
 
-    assert Rating.UNKNOWN < Rating.GREEN < Rating.YELLOW < Rating.RED
+    assert Rating.SKIP < Rating.PASS < Rating.WARN < Rating.ALERT
 
-    assert max([Rating.UNKNOWN, Rating.GREEN, Rating.YELLOW]) == Rating.YELLOW
+    assert max([Rating.SKIP, Rating.PASS, Rating.WARN]) == Rating.WARN

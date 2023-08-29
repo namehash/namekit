@@ -3,18 +3,21 @@ from enum import Enum
 
 
 class Rating(str, Enum):
-    UNKNOWN = 'UNKNOWN'
-    GREEN = 'GREEN'
-    YELLOW = 'YELLOW'
-    RED = 'RED'
+    SKIP = 'SKIP'
+    INFO = 'INFO'
+    PASS = 'PASS'
+    WARN = 'WARN'
+    ALERT = 'ALERT'
+    
 
     @property
     def order(self):
         return {
-            Rating.UNKNOWN: 0,
-            Rating.GREEN: 1,
-            Rating.YELLOW: 2,
-            Rating.RED: 3,
+            Rating.SKIP: 0,
+            Rating.INFO: 1,
+            Rating.PASS: 2,
+            Rating.WARN: 3,
+            Rating.ALERT: 4,
         }[self]
 
     def __hash__(self) -> int:

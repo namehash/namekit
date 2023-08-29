@@ -52,7 +52,7 @@ def calculate_nameguard_rating(checks: list[GenericCheckResult]) -> Rating:
 
 
 def count_risks(checks: list[GenericCheckResult]) -> int:
-    return sum(1 for check in checks if check.rating > Rating.GREEN)
+    return sum(1 for check in checks if check.rating > Rating.PASS)
 
 
 def agg_checks(checks: list[GenericCheckResult]) -> list[GenericCheckResult]:

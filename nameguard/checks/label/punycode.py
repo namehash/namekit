@@ -3,7 +3,7 @@ from nameguard.models import Rating, Check, GenericCheckResult
 
 
 # TODO: rating/severity
-RATING = Rating.YELLOW
+RATING = Rating.WARN
 SEVERITY = 4
 MESSAGE_PASS = 'Label is Punycode compatible'
 MESSAGE_FAIL = 'Label is not Punycode compatible'
@@ -14,7 +14,7 @@ def check_label(label: InspectorResult) -> GenericCheckResult:
     if label.status != 'normalized':
         return GenericCheckResult(
             check=Check.PUNYCODE_COMPATIBLE_LABEL,
-            rating=Rating.UNKNOWN,
+            rating=Rating.SKIP,
             severity=0,
             message=MESSAGE_SKIP,
         )
@@ -22,7 +22,7 @@ def check_label(label: InspectorResult) -> GenericCheckResult:
         passed = label.punycode_compatibility == 'COMPATIBLE'
         return GenericCheckResult(
             check=Check.PUNYCODE_COMPATIBLE_LABEL,
-            rating=Rating.GREEN if passed else RATING,
+            rating=Rating.PASS if passed else RATING,
             severity=0 if passed else SEVERITY,
             message=MESSAGE_PASS if passed else MESSAGE_FAIL,
         )

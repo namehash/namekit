@@ -3,7 +3,7 @@ from nameguard.models import Rating, Check, GenericCheckResult
 
 
 # TODO: rating/severity
-RATING = Rating.YELLOW
+RATING = Rating.WARN
 SEVERITY = 4
 MESSAGE_PASS = 'Label is NameWrapper compatible'
 MESSAGE_FAIL = 'Label is not NameWrapper compatible'
@@ -17,7 +17,7 @@ def check_label(label: InspectorResult) -> GenericCheckResult:
     passed = len(wrapped) <= WRAPPED_MAX_BYTES
     return GenericCheckResult(
         check=Check.NAMEWRAPPER_COMPATIBLE,
-        rating=Rating.GREEN if passed else RATING,
+        rating=Rating.PASS if passed else RATING,
         severity=0 if passed else SEVERITY,
         message=MESSAGE_PASS if passed else MESSAGE_FAIL,
     )
