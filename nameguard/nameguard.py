@@ -283,6 +283,8 @@ class NameGuard:
                 raise ENSSubgraphUnavailable(
                     f"Received unexpected status code from ENS Subgraph {response.status_code}: {response.text}")
         except httpx.RequestError as ex:
+            if not str(ex):
+                raise ENSSubgraphUnavailable(f"RequestError has occurred.")
             raise ENSSubgraphUnavailable(f"RequestError has occurred: {ex}")
 
         if 'data' not in response_json or 'domain' not in response_json['data']:
