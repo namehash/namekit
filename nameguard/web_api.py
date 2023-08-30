@@ -3,7 +3,7 @@ from typing import Literal
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 
-from nameguard.nameguard import NameGuard, validate_namehash
+from nameguard.nameguard import NameGuard, validate_namehash, namehash_from_labelhash
 from nameguard.models import NameGuardResult, NameGuardBulkResult
 
 
@@ -80,6 +80,44 @@ async def inspect_namehash_get(
     #  It also means that no grapheme level analysis for such a label will be possible.
     #  This also means the “normalization” in the result should be “Unknown”.
     # for now, name is None if its an unknown label
+    if name is None:
+        raise NotImplementedError()
+    return nameguard.inspect_name(name)
+
+
+# -- inspect-labelhash --
+
+class InspectLabelhashRequest(BaseModel):
+    labelhash: str = Field(title='labelhash (decimal or hex representation)',
+                           examples=['0xaf2caa1c2ca1d027f1ac823b529d0a67cd144264b2789fa2ea4d63a67c7103cc'])
+    network_name: Literal['mainnet']
+    # todo: add ens-normalization check for parent name + add UnnormalizedParentName error
+    parent_name: str = Field('eth', title='parent name (must be normalized)')
+
+
+@app.post('/{api_version}/inspect-labelhash')
+async def inspect_labelhash(api_version: ApiVersion, request: InspectLabelhashRequest) -> NameGuardResult:
+
+    # todo: can it raise InvalidNamehash or should it be InvalidLabelhash (apart from the name its the same error)
+
+    valid_labelhash = validate_namehash(namehash=request.labelhash)
+    namehash = namehash_from_labelhash(valid_labelhash, parent_name=request.parent_name)
+    name = await nameguard.namehash_to_normal_name_lookup(namehash, network=request.network_name)
+    if name is None:
+        raise NotImplementedError()
+    return nameguard.inspect_name(name)
+
+
+@app.get('/{api_version}/inspect-namehash/{network_name}/{namehash}')
+async def inspect_labelhash_get(
+        api_version: ApiVersion,
+        network_name: Literal['mainnet'],
+        labelhash: str,
+        parent_name='.eth'
+) -> NameGuardResult:
+    valid_labelhash = validate_namehash(namehash=labelhash)
+    namehash = namehash_from_labelhash(valid_labelhash, parent_name=parent_name)
+    name = await nameguard.namehash_to_normal_name_lookup(namehash, network=network_name)
     if name is None:
         raise NotImplementedError()
     return nameguard.inspect_name(name)
