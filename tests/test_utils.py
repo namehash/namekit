@@ -1,7 +1,8 @@
 import pytest
 
 from nameguard.nameguard import (
-    int_to_hexstr, namehash_from_name, validate_namehash, InvalidNameHash
+    int_to_hexstr, namehash_from_name, validate_namehash, namehash_from_labelhash,
+    labelhash_from_label,  InvalidNameHash
 )
 
 
@@ -20,6 +21,12 @@ def test_namehash_from_name():
     assert namehash_from_name('byczong.eth') == \
            '0xf8c2c01d386a4807b3ceb131e4975ff37b44824ac9307121b18223f3d77d0c2e'
 
+
+def test_namehash_from_labelhash():
+    assert namehash_from_name('byczong.eth') == \
+           namehash_from_labelhash(labelhash_hexstr=labelhash_from_label('byczong'), parent_name='eth')
+    assert namehash_from_name('iam.byczong.eth') == \
+           namehash_from_labelhash(labelhash_hexstr=labelhash_from_label('iam'), parent_name='byczong.eth')
 
 def test_validate_namehash():
     nh = '0xf8c2c01d386a4807b3ceb131e4975ff37b44824ac9307121b18223f3d77d0c2e'

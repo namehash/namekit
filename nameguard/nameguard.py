@@ -123,7 +123,7 @@ def int_to_hexstr(n: int, hex_len=64) -> str:
 
 
 def labelhash_from_label(label: str) -> str:
-    return Web3().keccak(text=label)
+    return Web3().keccak(text=label).hex()
 
 
 def namehash_from_name(name: str) -> str:
@@ -131,10 +131,16 @@ def namehash_from_name(name: str) -> str:
     if name:
         labels = name.split(".")
         for label in reversed(labels):
-            labelhash = labelhash_from_label(label)
+            labelhash = Web3().keccak(text=label)
             assert isinstance(labelhash, bytes)  # todo: remove?
             assert isinstance(node, bytes)
             node = Web3().keccak(node + labelhash)
+    return node.hex()
+
+
+def namehash_from_labelhash(labelhash_hexstr: str, parent_name='eth') -> str:
+    parent_namehash_hexstr = namehash_from_name(parent_name)
+    node = Web3().keccak(HexBytes(parent_namehash_hexstr) + HexBytes(labelhash_hexstr))
     return node.hex()
 
 
