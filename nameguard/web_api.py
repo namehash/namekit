@@ -53,7 +53,8 @@ async def bulk_inspect_names(api_version: ApiVersion, request: BulkInspectNameRe
 # -- inspect-namehash --
 
 class InspectNamehashRequest(BaseModel):
-    namehash: str
+    namehash: str = Field(title='namehash (decimal or hex representation)',
+                          examples=['0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835'])
     network_name: Literal['mainnet']
 
 
