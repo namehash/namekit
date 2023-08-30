@@ -122,12 +122,16 @@ def int_to_hexstr(n: int, hex_len=64) -> str:
     return res
 
 
+def labelhash_from_label(label: str) -> str:
+    return Web3().keccak(text=label)
+
+
 def namehash_from_name(name: str) -> str:
     node = EMPTY_SHA3_BYTES
     if name:
         labels = name.split(".")
         for label in reversed(labels):
-            labelhash = Web3().keccak(text=label)
+            labelhash = labelhash_from_label(label)
             assert isinstance(labelhash, bytes)  # todo: remove?
             assert isinstance(node, bytes)
             node = Web3().keccak(node + labelhash)
@@ -168,10 +172,6 @@ def validate_namehash(namehash: str) -> str:
             raise InvalidNameHash(
                 reason="The decimal integer converted to base-16 should have at most 64 digits.")
         return hex_namehash
-
-
-def compute_labelhash(label: str) -> str:
-    return 'TODO'
 
 
 def calculate_nameguard_rating(checks: list[GenericCheckResult]) -> Rating:
@@ -248,7 +248,7 @@ class NameGuard:
             labels=[
                 LabelGuardResult(
                     label=label_analysis.label,
-                    labelhash=compute_labelhash(label_analysis.label),
+                    labelhash=labelhash_from_label(label_analysis.label),
                     normalization=Normalization.NORMALIZED if label_analysis.status == 'normalized' else Normalization.UNNORMALIZED,
                     summary=RiskSummary(
                         rating=calculate_nameguard_rating(label_checks),
