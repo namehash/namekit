@@ -3,18 +3,21 @@ from enum import Enum
 
 
 class Rating(str, Enum):
-    UNKNOWN = 'UNKNOWN'
-    GREEN = 'GREEN'
-    YELLOW = 'YELLOW'
-    RED = 'RED'
+    SKIP = 'SKIP'
+    INFO = 'INFO'
+    PASS = 'PASS'
+    WARN = 'WARN'
+    ALERT = 'ALERT'
+    
 
     @property
     def order(self):
         return {
-            Rating.UNKNOWN: 0,
-            Rating.GREEN: 1,
-            Rating.YELLOW: 2,
-            Rating.RED: 3,
+            Rating.SKIP: 0,
+            Rating.INFO: 1,
+            Rating.PASS: 2,
+            Rating.WARN: 3,
+            Rating.ALERT: 4,
         }[self]
 
     def __hash__(self) -> int:
@@ -24,42 +27,48 @@ class Rating(str, Enum):
 
     def __lt__(self, other):
         return self.order < other.order
-    
+
     def __gt__(self, other):
         return self.order > other.order
-    
+
     def __eq__(self, other):
         return self.order == other.order
-    
+
     def __le__(self, other):
         return self.order <= other.order
-    
+
     def __ge__(self, other):
         return self.order >= other.order
-    
+
     def __ne__(self, other):
         return self.order != other.order
 
 
-class CheckName(str, Enum):
-    INVISIBLE = 'INVISIBLE'
-    NORMALIZED = 'ENS_NORMALIZED'
+class Check(str, Enum):
+    # Grapheme
     CONFUSABLES = 'CONFUSABLES'
+    INVISIBLE = 'INVISIBLE'
     TYPING_DIFFICULTY = 'TYPING_DIFFICULTY'
-    MIXED_SCRIPTS = 'MIXED_SCRIPTS'
-    PUNYCODE = 'PUNYCODE'
-    NAMEWRAPPER = 'NAMEWRAPPER'
+
+    # Label
     FONT_SUPPORT = 'FONT_SUPPORT'
+    MIXED_SCRIPTS = 'MIXED_SCRIPTS'
+    NAMEWRAPPER_COMPATIBLE = 'NAMEWRAPPER_COMPATIBLE'
+    NORMALIZED = 'NORMALIZED'
+    PUNYCODE_COMPATIBLE_LABEL = 'PUNYCODE_COMPATIBLE_LABEL'
+
+    # Name
+    PUNYCODE_COMPATIBLE_NAME = 'PUNYCODE_COMPATIBLE_NAME'
 
 
 class GenericCheckResult(BaseModel):
-    name: CheckName
+    check: Check
     rating: Rating
     severity: int
     message: str
 
     def __repr__(self):
-        return f'{self.__class__.__name__}({self.rating.name})'
+        return f'{self.check}({self.rating.name})'
 
     @property
     def order(self):
@@ -69,18 +78,18 @@ class GenericCheckResult(BaseModel):
 
     def __lt__(self, other):
         return self.order < other.order
-    
+
     def __gt__(self, other):
         return self.order > other.order
-    
+
     def __eq__(self, other):
         return self.order == other.order
-    
+
     def __le__(self, other):
         return self.order <= other.order
-    
+
     def __ge__(self, other):
         return self.order >= other.order
-    
+
     def __ne__(self, other):
         return self.order != other.order

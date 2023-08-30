@@ -1,14 +1,15 @@
 from .checks import (
     GenericCheckResult,
     Rating,
-    CheckName,
+    Check,
 )
 
 from .result import (
     NameGuardResult,
+    NameGuardQuickResult,
     LabelGuardResult,
     GraphemeGuardResult,
     NameGuardBulkResult,
-    NameGuardSummary,
-    NameStatus,
+    RiskSummary,
+    Normalization,
 )

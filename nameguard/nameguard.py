@@ -17,13 +17,14 @@ from nameguard.models import (
     NameGuardBulkResult,
     Rating,
     GenericCheckResult,
-    NameGuardSummary,
-    NameStatus,
+    RiskSummary,
+    Normalization,
 )
 
 
 GRAPHEME_CHECKS = [
     checks.grapheme.confusables.check_grapheme,
+    checks.grapheme.font_support.check_grapheme,
     checks.grapheme.invisible.check_grapheme,
     checks.grapheme.typing_difficulty.check_grapheme,
 ]
@@ -32,11 +33,12 @@ LABEL_CHECKS = [
     checks.label.normalized.check_label,
     checks.label.mixed_scripts.check_label,
     checks.label.namewrapper.check_label,
-    checks.label.font_support.check_label,
     checks.label.punycode.check_label,
 ]
 
-NAME_CHECKS = []
+NAME_CHECKS = [
+    checks.name.punycode_name.check_name,
+]
 
 ENS_SUBGRAPH_URL = 'https://api.thegraph.com/subgraphs/name/ensdomains/ens'
 
@@ -159,18 +161,22 @@ def validate_namehash(namehash: str) -> str:
         return hex_namehash
 
 
+def compute_labelhash(label: str) -> str:
+    return 'TODO'
+
+
 def calculate_nameguard_rating(checks: list[GenericCheckResult]) -> Rating:
     return max(check.rating for check in checks)
 
 
 def count_risks(checks: list[GenericCheckResult]) -> int:
-    return sum(1 for check in checks if check.rating > Rating.GREEN)
+    return sum(1 for check in checks if check.rating > Rating.PASS)
 
 
 def agg_checks(checks: list[GenericCheckResult]) -> list[GenericCheckResult]:
     out = {}
     for check in checks:
-        out[check.name] = max(out.get(check.name, check), check)
+        out[check.check] = max(out.get(check.check, check), check)
     return list(out.values())
 
 
@@ -179,7 +185,7 @@ class NameGuard:
         self.inspector = init_inspector()
         self.httpx_client = httpx.AsyncClient()
 
-    def inspect_name(self, name: str, return_labels=True) -> NameGuardResult:
+    def inspect_name(self, name: str) -> NameGuardResult:
         labels = name.split('.')
         labels_analysis = [self.analyse_label(label) for label in labels]
 
@@ -202,7 +208,7 @@ class NameGuard:
         ]
 
         # checks for the whole name
-        name_checks = [check(name) for check in NAME_CHECKS]
+        name_checks = [check(labels_analysis) for check in NAME_CHECKS]
 
         # -- aggregate results --
 
@@ -224,8 +230,8 @@ class NameGuard:
         return NameGuardResult(
             name=name,
             namehash=namehash_from_name(name),
-            status=NameStatus.NORMALIZED if name_normalized else NameStatus.UNNORMALIZED,
-            summary=NameGuardSummary(
+            normalization=Normalization.NORMALIZED if name_normalized else Normalization.UNNORMALIZED,
+            summary=RiskSummary(
                 rating=calculate_nameguard_rating(name_checks),
                 risk_count=count_risks(name_checks),
             ),
@@ -233,8 +239,9 @@ class NameGuard:
             labels=[
                 LabelGuardResult(
                     label=label_analysis.label,
-                    status=NameStatus.NORMALIZED if label_analysis.status == 'normalized' else NameStatus.UNNORMALIZED,
-                    summary=NameGuardSummary(
+                    labelhash=compute_labelhash(label_analysis.label),
+                    normalization=Normalization.NORMALIZED if label_analysis.status == 'normalized' else Normalization.UNNORMALIZED,
+                    summary=RiskSummary(
                         rating=calculate_nameguard_rating(label_checks),
                         risk_count=count_risks(label_checks),
                     ),
@@ -242,7 +249,7 @@ class NameGuard:
                     graphemes=[
                         GraphemeGuardResult(
                             grapheme=grapheme.value,
-                            summary=NameGuardSummary(
+                            summary=RiskSummary(
                                 rating=calculate_nameguard_rating(grapheme_checks),
                                 risk_count=count_risks(grapheme_checks),
                             ),
@@ -256,12 +263,12 @@ class NameGuard:
                     labels_checks,
                     labels_graphemes_checks,
                 )
-            ] if return_labels else None,
+            ],
         )
 
-    def bulk_inspect_name(self, names: list[str]) -> NameGuardBulkResult:
+    def bulk_inspect_names(self, names: list[str]) -> NameGuardBulkResult:
         return NameGuardBulkResult(
-            results=[self.inspect_name(name, return_labels=False) for name in names],
+            results=[self.inspect_name(name) for name in names],
         )
 
     def analyse_label(self, label: str) -> InspectorResult:

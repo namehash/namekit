@@ -1,8 +1,7 @@
 from enum import Enum
 from typing import Literal
-
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from nameguard.nameguard import NameGuard, validate_namehash
 from nameguard.models import NameGuardResult, NameGuardBulkResult
@@ -25,8 +24,6 @@ class InspectNameRequest(BaseModel):
 
 @app.post('/{api_version}/inspect-name')
 async def inspect_name(api_version: ApiVersion, request: InspectNameRequest) -> NameGuardResult:
-    if api_version != ApiVersion.V1:
-        raise Exception(f'API version {api_version} not supported')
     return nameguard.inspect_name(request.name)
 
 
@@ -36,7 +33,7 @@ async def inspect_name_get(api_version: ApiVersion, name: str) -> NameGuardResul
 
 
 @app.get('/{api_version}/inspect-name')
-async def inspect_name_get(api_version: ApiVersion) -> NameGuardResult:
+async def inspect_name_get_empty(api_version: ApiVersion) -> NameGuardResult:
     return await inspect_name(api_version, InspectNameRequest(name=''))
 
 
@@ -44,14 +41,13 @@ async def inspect_name_get(api_version: ApiVersion) -> NameGuardResult:
 
 
 class BulkInspectNameRequest(BaseModel):
-    names: list[str]
+    # max elements: 250
+    names: list[str] = Field(..., max_items=250)
 
 
-@app.post('/{api_version}/bulk-inspect-name')
-async def bulk_inspect_name(api_version: ApiVersion, request: BulkInspectNameRequest) -> NameGuardBulkResult:
-    if api_version != ApiVersion.V1:
-        raise Exception(f'API version {api_version} not supported')
-    return nameguard.bulk_inspect_name(request.names)
+@app.post('/{api_version}/bulk-inspect-names')
+async def bulk_inspect_names(api_version: ApiVersion, request: BulkInspectNameRequest) -> NameGuardBulkResult:
+    return nameguard.bulk_inspect_names(request.names)
 
 
 # -- inspect-namehash --
