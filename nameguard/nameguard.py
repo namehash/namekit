@@ -1,4 +1,5 @@
 import httpx
+import logging
 from fastapi import HTTPException
 from ens.constants import EMPTY_SHA3_BYTES
 from ens.utils import Web3
@@ -20,6 +21,14 @@ from nameguard.models import (
     RiskSummary,
     Normalization,
 )
+
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+stream_handler = logging.StreamHandler()
+stream_handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
+stream_handler.setLevel(logging.DEBUG)
+logger.addHandler(stream_handler)
 
 
 GRAPHEME_CHECKS = [
@@ -279,6 +288,8 @@ class NameGuard:
             return InspectorResultUnnormalized(**result)
 
     async def namehash_to_normal_name_lookup(self, namehash_hexstr: str, network='mainnet') -> Optional[str]:
+        logger.debug(f"Trying namehash lookup for: {namehash_hexstr}")
+
         variables = {'nameHash': namehash_hexstr}
 
         try:
@@ -286,6 +297,7 @@ class NameGuard:
                                                     json={'query': SUBGRAPH_NAME_QUERY, 'variables': variables})
             if response.status_code == 200:
                 response_json = response.json()
+                logger.debug(f"Subgraph response json:\n{response_json}")
             else:
                 raise ENSSubgraphUnavailable(
                     f"Received unexpected status code from ENS Subgraph {response.status_code}: {response.text}")
@@ -295,18 +307,22 @@ class NameGuard:
             raise ENSSubgraphUnavailable(f"RequestError has occurred: {ex}")
 
         if 'data' not in response_json or 'domain' not in response_json['data']:
-            raise ValueError(f"Unexpected response body: {response_json}")  # todo: should it be ENSSubgraphUnavailable?
+            logger.error(f"Unexpected response body: {response_json}")
+            raise ENSSubgraphUnavailable(f"Unexpected response body: {response_json}")
         elif response_json == {'data': {'domain': None}}:
             raise NamehashNotFoundInSubgraph()
         elif 'name' in response_json['data']['domain']:
             name = str(response_json['data']['domain']['name'])
             if name.startswith('['):
-                print(f'Warning - unknown label: {name}')  # todo: create a logger?
+                logger.warning(f'Unknown label returned from subgraph: {name}')
                 return None
             else:
                 calculated_namehash = namehash_from_name(name)
                 if calculated_namehash != namehash_hexstr:
+                    logger.error(
+                        f"NamehashMismatchError occurred:\ninput: {namehash_hexstr}\tcalculated: {calculated_namehash}")
                     raise NamehashMismatchError()
                 return name
         else:
-            raise ValueError(f"Unexpected response body: {response_json}")  # todo: should it be ENSSubgraphUnavailable?
+            logger.error(f"Unexpected response body: {response_json}")
+            raise ENSSubgraphUnavailable(f"Unexpected response body: {response_json}")
