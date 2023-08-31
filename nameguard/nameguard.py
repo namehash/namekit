@@ -264,6 +264,8 @@ class NameGuard:
                     graphemes=[
                         GraphemeGuardResult(
                             grapheme=grapheme.value,
+                            grapheme_name=grapheme.name,
+                            grapheme_type=grapheme.type,
                             summary=RiskSummary(
                                 rating=calculate_nameguard_rating(grapheme_checks),
                                 risk_count=count_risks(grapheme_checks),

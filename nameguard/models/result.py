@@ -19,6 +19,8 @@ class RiskSummary(BaseModel):
 
 class GraphemeGuardResult(BaseModel):
     grapheme: str
+    grapheme_name: str
+    grapheme_type: str
     summary: RiskSummary
     checks: list[GenericCheckResult]
 
