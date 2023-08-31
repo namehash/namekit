@@ -45,3 +45,9 @@ def test_bulk(nameguard: NameGuard):
     assert result.results[0].summary.rating is Rating.PASS
     assert result.results[1].summary.rating is Rating.WARN
     assert result.results[2].summary.rating is Rating.ALERT
+
+
+def test_highest_risk(nameguard: NameGuard):
+    result = nameguard.inspect_name('nić_k.eth')
+    assert result.summary.highest_risk.check is Check.NORMALIZED
+    assert result.summary.highest_risk.rating is Rating.ALERT

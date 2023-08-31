@@ -1,3 +1,4 @@
+from typing import Optional
 from pydantic import BaseModel
 from enum import Enum
 
@@ -13,6 +14,7 @@ class Normalization(str, Enum):
 class RiskSummary(BaseModel):
     rating: Rating
     risk_count: int
+    highest_risk: Optional[GenericCheckResult]
 
 
 class GraphemeGuardResult(BaseModel):

@@ -189,6 +189,10 @@ def agg_checks(checks: list[GenericCheckResult]) -> list[GenericCheckResult]:
     return list(out.values())
 
 
+def get_highest_risk(checks: list[GenericCheckResult]) -> Optional[GenericCheckResult]:
+    return max((check for check in checks if check.rating > Rating.PASS), default=None)
+
+
 class NameGuard:
     def __init__(self):
         self.inspector = init_inspector()
@@ -243,6 +247,7 @@ class NameGuard:
             summary=RiskSummary(
                 rating=calculate_nameguard_rating(name_checks),
                 risk_count=count_risks(name_checks),
+                highest_risk=get_highest_risk(name_checks),
             ),
             checks=name_checks,
             labels=[
@@ -253,6 +258,7 @@ class NameGuard:
                     summary=RiskSummary(
                         rating=calculate_nameguard_rating(label_checks),
                         risk_count=count_risks(label_checks),
+                        highest_risk=get_highest_risk(label_checks),
                     ),
                     checks=label_checks,
                     graphemes=[
@@ -261,6 +267,7 @@ class NameGuard:
                             summary=RiskSummary(
                                 rating=calculate_nameguard_rating(grapheme_checks),
                                 risk_count=count_risks(grapheme_checks),
+                                highest_risk=get_highest_risk(grapheme_checks),
                             ),
                             checks=grapheme_checks,
                         )
