@@ -200,7 +200,7 @@ class NameGuard:
 
     def inspect_name(self, name: str) -> NameGuardResult:
         labels = name.split('.')
-        labels_analysis = [self.analyse_label(label) for label in labels]
+        labels_analysis = [self.inspector.analyse_label(label) for label in labels]
 
         # -- check individual entities --
 
@@ -288,13 +288,6 @@ class NameGuard:
         return NameGuardBulkResult(
             results=[self.inspect_name(name) for name in names],
         )
-
-    def analyse_label(self, label: str) -> InspectorResult:
-        result = self.inspector.analyse_label(label)
-        if result['status'] == 'normalized':
-            return InspectorResultNormalized(**result)
-        else:
-            return InspectorResultUnnormalized(**result)
 
     async def namehash_to_normal_name_lookup(self, namehash_hexstr: str, network='mainnet') -> Optional[str]:
         logger.debug(f"Trying namehash lookup for: {namehash_hexstr}")
