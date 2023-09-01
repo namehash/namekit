@@ -69,7 +69,6 @@ query getDomains($nameHash: String) {
 }
 """  # redundant elements in query for future use
 
-# todo: move exceptions somewhere else?
 # -- exceptions --
 
 class InvalidNameHash(HTTPException):

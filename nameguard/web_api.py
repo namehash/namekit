@@ -1,6 +1,5 @@
 from enum import Enum
-from typing import Literal
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from pydantic import BaseModel, Field
 
 from nameguard.nameguard import NameGuard, validate_namehash, namehash_from_labelhash
