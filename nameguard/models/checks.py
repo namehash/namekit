@@ -62,10 +62,25 @@ class Check(str, Enum):
     UNKNOWN_NAME = 'UNKNOWN_NAME'
 
 
+SEVERITY_ORDER_DESC = [
+    # highest severity first
+    Check.NORMALIZED,
+    Check.INVISIBLE,
+    Check.CONFUSABLES,
+    Check.TYPING_DIFFICULTY,
+    # all other checks get severity 0
+]
+
+SEVERITY = {check: len(SEVERITY_ORDER_DESC) - i for i, check in enumerate(SEVERITY_ORDER_DESC)}
+
+
+def get_check_severity(check: Check) -> int:
+    return SEVERITY.get(check, 0)
+
+
 class GenericCheckResult(BaseModel):
     check: Check
     rating: Rating
-    severity: int
     message: str
 
     def __repr__(self):
@@ -73,7 +88,12 @@ class GenericCheckResult(BaseModel):
 
     @property
     def order(self):
-        return (self.rating.order, self.severity)
+        """
+        Checks are first sorted by rating, then by severity.
+        Higher risk ratings always come first (ALERT > WARN > PASS > INFO > SKIP).
+        Within the same rating, checks are sorted by severity.
+        """
+        return (self.rating.order, get_check_severity(self.check))
 
     # Implementing all ops speeds up comparisons
 
