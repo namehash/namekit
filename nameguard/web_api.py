@@ -49,6 +49,7 @@ async def bulk_inspect_names(api_version: ApiVersion, request: BulkInspectNameRe
 
 # -- inspect-namehash --
 
+
 class InspectNamehashRequest(BaseModel):
     namehash: str = Field(title='namehash (decimal or hex representation)',
                           examples=['0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835'])
@@ -56,12 +57,11 @@ class InspectNamehashRequest(BaseModel):
 
 
 @app.post('/{api_version}/inspect-namehash')
-async def inspect_namehash(api_version: ApiVersion, request: InspectNamehashRequest) -> NameGuardResult:
-    valid_namehash = validate_namehash(namehash=request.namehash)
-    name = await nameguard.namehash_to_normal_name_lookup(valid_namehash, network=request.network_name)
-    if name is None:
-        raise NotImplementedError()
-    return nameguard.inspect_name(name)
+async def inspect_namehash_post(api_version: ApiVersion, request: InspectNamehashRequest) -> NameGuardResult:
+    return await nameguard.inspect_namehash(
+        namehash=validate_namehash(namehash=request.namehash),
+        network=request.network_name,
+    )
 
 
 @app.get('/{api_version}/inspect-namehash/{network_name}/{namehash}')
@@ -70,16 +70,10 @@ async def inspect_namehash_get(
         network_name: NetworkName,
         namehash: str
 ) -> NameGuardResult:
-    valid_namehash = validate_namehash(namehash=namehash)
-    name = await nameguard.namehash_to_normal_name_lookup(valid_namehash, network=network_name)
-
-    # todo: For now, an unknown label should trigger a red NameGuard check result.
-    #  It also means that no grapheme level analysis for such a label will be possible.
-    #  This also means the “normalization” in the result should be “Unknown”.
-    # for now, name is None if its an unknown label
-    if name is None:
-        raise NotImplementedError()
-    return nameguard.inspect_name(name)
+    return await nameguard.inspect_namehash(
+        namehash=validate_namehash(namehash=namehash),
+        network=network_name,
+    )
 
 
 # -- inspect-labelhash --
