@@ -30,6 +30,7 @@ jobs:
         run: |
           eval `ssh-agent -s`
           ssh-add - <<< '${{ secrets.LI_PRIVATE_SSH_KEY }}'
+          pip install git+ssh://git@github.com/namehash/ens-label-inspector.git
 
       - name: Install dependencies
         run: poetry install
