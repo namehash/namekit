@@ -1,20 +1,21 @@
 from enum import Enum
 from fastapi import FastAPI
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ValidationError
+from urllib.parse import unquote
 
 from nameguard.nameguard import NameGuard, validate_namehash, namehash_from_labelhash
 from nameguard.models import NameGuardResult, NameGuardBulkResult
 
 
 class ApiVersion(str, Enum):
-    V1 = 'v1'
+    V1_beta = 'v1-beta'
 
 
 class NetworkName(str, Enum):
     MAINNET = 'mainnet'
 
 
-app = FastAPI()
+app = FastAPI(title='NameGuard Service', version=ApiVersion.V1_beta)
 nameguard = NameGuard()
 
 
@@ -22,7 +23,7 @@ nameguard = NameGuard()
 
 
 class InspectNameRequest(BaseModel):
-    name: str
+    name: str = Field(examples=['iam%2Fal1ce%3F'], title='name (url-encoded if GET request)')
 
 
 @app.post('/{api_version}/inspect-name')
@@ -31,12 +32,18 @@ async def inspect_name(api_version: ApiVersion, request: InspectNameRequest) -> 
 
 
 @app.get('/{api_version}/inspect-name/{name}')
-async def inspect_name_get(api_version: ApiVersion, name: str) -> NameGuardResult:
-    return await inspect_name(api_version, InspectNameRequest(name=name))
+async def inspect_url_encoded_name(api_version: ApiVersion, name: str) -> NameGuardResult:
+    print(name)
+    try:
+        decoded_name = unquote(name, encoding='utf-8', errors='strict')
+    except Exception as ex:
+        raise ValidationError(f'Decoding error occurred: {ex}')
+    print(decoded_name)
+    return await inspect_name(api_version, InspectNameRequest(name=decoded_name))
 
 
 @app.get('/{api_version}/inspect-name')
-async def inspect_name_get_empty(api_version: ApiVersion) -> NameGuardResult:
+async def inspect_empty_name(api_version: ApiVersion) -> NameGuardResult:
     return await inspect_name(api_version, InspectNameRequest(name=''))
 
 

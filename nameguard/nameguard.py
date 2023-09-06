@@ -76,11 +76,11 @@ class InvalidNameHash(HTTPException):
         super().__init__(422, f"Provided namehash is not valid, reason: {reason}")
 
 class ENSSubgraphUnavailable(HTTPException):
-    def __init__(self, error_msg: str):  # todo: which status code?
-        super().__init__(418, f"Error while making request to ENS Subgraph: {error_msg}")
+    def __init__(self, error_msg: str):
+        super().__init__(512, f"Error while making request to ENS Subgraph: {error_msg}")
 
 class NamehashMismatchError(HTTPException):
-    def __init__(self):  # todo: which status code?
+    def __init__(self):
         super().__init__(418, "Namehash calculated on the name returned from ENS Subgraph"
                               " does not equal the input namehash.")
 
