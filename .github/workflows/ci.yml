@@ -26,6 +26,10 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'poetry'
+      - name: ssh
+        run: |
+          eval `ssh-agent -s`
+          ssh-add - <<< '${{ secrets.LI_PRIVATE_SSH_KEY }}'
 
       - name: Install dependencies
         run: poetry install
