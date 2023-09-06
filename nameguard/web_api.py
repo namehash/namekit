@@ -86,13 +86,13 @@ class InspectLabelhashRequest(BaseModel):
 
 
 @app.post('/{api_version}/inspect-labelhash')
-async def inspect_labelhash(api_version: ApiVersion, request: InspectLabelhashRequest) -> NameGuardResult:
+async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelhashRequest) -> NameGuardResult:
     valid_labelhash = validate_namehash(namehash=request.labelhash)
     namehash = namehash_from_labelhash(valid_labelhash, parent_name=request.parent_name)
-    name = await nameguard.namehash_to_normal_name_lookup(namehash, network=request.network_name)
-    if name is None:
-        raise NotImplementedError()
-    return nameguard.inspect_name(name)
+    return await nameguard.inspect_namehash(
+        namehash=namehash,
+        network=request.network_name,
+    )
 
 
 @app.get('/{api_version}/inspect-namehash/{network_name}/{namehash}')
@@ -104,7 +104,7 @@ async def inspect_labelhash_get(
 ) -> NameGuardResult:
     valid_labelhash = validate_namehash(namehash=labelhash)
     namehash = namehash_from_labelhash(valid_labelhash, parent_name=parent_name)
-    name = await nameguard.namehash_to_normal_name_lookup(namehash, network=network_name)
-    if name is None:
-        raise NotImplementedError()
-    return nameguard.inspect_name(name)
+    return await nameguard.inspect_namehash(
+        namehash=namehash,
+        network=network_name,
+    )
