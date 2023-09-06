@@ -39,12 +39,12 @@ class LabelGuardResult(BaseModel):
 class NameGuardQuickResult(BaseModel):
     name: Optional[str] = Field(
         description='The analyzed name. If the name is unknown, this field is `None`.',
-        example='vitalik.eth',
+        examples=['vitalik.eth'],
     )
     
     namehash: str = Field(
         description='The namehash of the name in hex format.',
-        example='0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835',
+        examples=['0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835'],
     )
 
     normalization: Normalization = Field(
