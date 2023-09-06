@@ -1,5 +1,5 @@
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from enum import Enum
 
 from nameguard.models.checks import GenericCheckResult, Rating
@@ -37,15 +37,33 @@ class LabelGuardResult(BaseModel):
 
 
 class NameGuardQuickResult(BaseModel):
-    name: str
-    namehash: str
-    normalization: Normalization
-    summary: RiskSummary
+    name: Optional[str] = Field(
+        description='The analyzed name. If the name is unknown, this field is `None`.',
+        example='vitalik.eth',
+    )
+    
+    namehash: str = Field(
+        description='The namehash of the name in hex format.',
+        example='0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835',
+    )
+
+    normalization: Normalization = Field(
+        description='The normalization status of the name.',
+    )
+
+    summary: RiskSummary = Field(
+        description='The risk summary of the name.',
+    )
 
 
 class NameGuardResult(NameGuardQuickResult):
-    checks: list[GenericCheckResult]
-    labels: list[LabelGuardResult]
+    checks: list[GenericCheckResult] = Field(
+        description='A list of checks that were performed on the name.',
+    )
+
+    labels: Optional[list[LabelGuardResult]] = Field(
+        description='The analyzed labels of the name. If the name is unknown, this field is `None`.',
+    )
 
 
 class NameGuardBulkResult(BaseModel):
