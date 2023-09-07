@@ -1,5 +1,5 @@
 from enum import Enum
-from fastapi import FastAPI
+from fastapi import FastAPI, Path
 from pydantic import BaseModel, Field, ValidationError
 from urllib.parse import unquote
 
@@ -23,21 +23,30 @@ nameguard = NameGuard()
 
 
 class InspectNameRequest(BaseModel):
-    name: str = Field(examples=['iam%2Fal1ce%3F'], title='name (url-encoded if GET request)')
+    name: str = Field(examples=['iamalice.eth'], title='name to inspect')
 
 
-@app.get('/{api_version}/inspect-name/{name:path}')
-async def inspect_name_get(api_version: ApiVersion, name: str) -> NameGuardResult:
-    print(name)
+@app.get(  # todo: check if url-encoding is necessary
+    '/{api_version}/inspect-name/{name:path}',
+    tags=['name'],
+    summary='Inspect Name GET'
+)
+async def inspect_name_get(
+        api_version: ApiVersion,
+        name: str = Path(..., description='**Name should be url-encoded.**', example='iam%2Falice%3F.eth')
+) -> NameGuardResult:
     try:
         decoded_name = unquote(name, encoding='utf-8', errors='strict')
     except Exception as ex:
-        raise ValidationError(f'Decoding error occurred: {ex}')
-    print(decoded_name)
-    return inspect_name_post(api_version, InspectNameRequest(name=decoded_name))
+        raise ValidationError(f'While decoding name "{name}" error occurred: {ex}')
+    return await inspect_name_post(api_version, InspectNameRequest(name=decoded_name))
 
 
-@app.post('/{api_version}/inspect-name')
+@app.post(
+    '/{api_version}/inspect-name',
+    tags=['name'],
+    summary='Inspect Name'
+)
 async def inspect_name_post(api_version: ApiVersion, request: InspectNameRequest) -> NameGuardResult:
     return nameguard.inspect_name(request.name)
 
@@ -49,7 +58,11 @@ class BulkInspectNameRequest(BaseModel):
     names: list[str] = Field(max_items=250)
 
 
-@app.post('/{api_version}/bulk-inspect-names')
+@app.post(
+    '/{api_version}/bulk-inspect-names',
+    tags=['name'],
+    summary='Inspect Multiple Names'
+)
 async def bulk_inspect_names(api_version: ApiVersion, request: BulkInspectNameRequest) -> NameGuardBulkResult:
     return nameguard.bulk_inspect_names(request.names)
 
@@ -63,7 +76,11 @@ class InspectNamehashRequest(BaseModel):
     network_name: NetworkName
 
 
-@app.post('/{api_version}/inspect-namehash')
+@app.post(
+    '/{api_version}/inspect-namehash',
+    tags=['namehash'],
+    summary='Inspect Namehash'
+)
 async def inspect_namehash_post(api_version: ApiVersion, request: InspectNamehashRequest) -> NameGuardResult:
     return await nameguard.inspect_namehash(
         namehash=validate_namehash(namehash=request.namehash),
@@ -71,11 +88,16 @@ async def inspect_namehash_post(api_version: ApiVersion, request: InspectNamehas
     )
 
 
-@app.get('/{api_version}/inspect-namehash/{network_name}/{namehash}')
+@app.get(
+    '/{api_version}/inspect-namehash/{network_name}/{namehash}',
+    tags=['namehash'],
+    summary='Inspect Namehash GET'
+)
 async def inspect_namehash_get(
         api_version: ApiVersion,
         network_name: NetworkName,
-        namehash: str
+        namehash: str = Path(..., example='0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835',
+                             description='**Namehash should be a decimal or a hex (prefixed with 0x) integer.**')
 ) -> NameGuardResult:
     return await nameguard.inspect_namehash(
         namehash=validate_namehash(namehash=namehash),
@@ -85,6 +107,7 @@ async def inspect_namehash_get(
 
 # -- inspect-labelhash --
 
+
 class InspectLabelhashRequest(BaseModel):
     labelhash: str = Field(title='labelhash (decimal or hex representation)',
                            examples=['0xaf2caa1c2ca1d027f1ac823b529d0a67cd144264b2789fa2ea4d63a67c7103cc'])
@@ -92,7 +115,11 @@ class InspectLabelhashRequest(BaseModel):
     parent_name: str = Field('eth', title='parent name (must be normalized)')
 
 
-@app.post('/{api_version}/inspect-labelhash')
+@app.post(
+    '/{api_version}/inspect-labelhash',
+    tags=['labelhash'],
+    summary='Inspect Labelhash'
+)
 async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelhashRequest) -> NameGuardResult:
     valid_labelhash = validate_namehash(namehash=request.labelhash)
     namehash = namehash_from_labelhash(valid_labelhash, parent_name=request.parent_name)
@@ -102,12 +129,17 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
     )
 
 
-@app.get('/{api_version}/inspect-namehash/{network_name}/{namehash}')
+@app.get(
+    '/{api_version}/inspect-labelhash/{network_name}/{labelhash}/{parent_name}',
+    tags=['labelhash'],
+    summary='Inspect Labelhash GET'
+)
 async def inspect_labelhash_get(
         api_version: ApiVersion,
         network_name: NetworkName,
-        labelhash: str,
-        parent_name='eth'
+        labelhash: str = Path(..., example='0xaf2caa1c2ca1d027f1ac823b529d0a67cd144264b2789fa2ea4d63a67c7103cc',
+                              description='**Labelhash should be a decimal or a hex (prefixed with 0x) integer.**'),
+        parent_name: str = Path(..., example='eth', description='**Parent name must be ens-normalized.**')
 ) -> NameGuardResult:
     valid_labelhash = validate_namehash(namehash=labelhash)
     namehash = namehash_from_labelhash(valid_labelhash, parent_name=parent_name)
