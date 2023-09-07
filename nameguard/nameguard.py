@@ -7,7 +7,6 @@ from hexbytes import HexBytes
 from typing import Optional
 
 from label_inspector.inspector import Inspector
-from label_inspector.models import InspectorResultNormalized, InspectorResultUnnormalized, InspectorResult
 from label_inspector.config import initialize_inspector_config
 
 from nameguard import checks
@@ -295,6 +294,25 @@ class NameGuard:
         return NameGuardBulkResult(
             results=[self.inspect_name(name) for name in names],
         )
+
+    async def inspect_namehash(self, namehash: str, network='mainnet') -> NameGuardResult:
+        name = await self.namehash_to_normal_name_lookup(namehash, network=network)
+        if name is None:
+            name_checks = [checks.name.unknown_name.check_name(None)]
+            return NameGuardResult(
+                name=None,
+                namehash=namehash,
+                normalization=Normalization.UNKNOWN,
+                summary=RiskSummary(
+                    rating=calculate_nameguard_rating(name_checks),
+                    risk_count=count_risks(name_checks),
+                    highest_risk=get_highest_risk(name_checks),
+                ),
+                checks=name_checks,
+                labels=None,
+            )
+        else:
+            return self.inspect_name(name)
 
     async def namehash_to_normal_name_lookup(self, namehash_hexstr: str, network='mainnet') -> Optional[str]:
         logger.debug(f"Trying namehash lookup for: {namehash_hexstr}")
