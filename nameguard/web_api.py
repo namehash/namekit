@@ -95,7 +95,7 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
     )
 
 
-@app.get('/{api_version}/inspect-namehash/{network_name}/{namehash}')
+@app.get('/{api_version}/inspect-labelhash/{network_name}/{labelhash}/{parent_name}')
 async def inspect_labelhash_get(
         api_version: ApiVersion,
         network_name: NetworkName,
