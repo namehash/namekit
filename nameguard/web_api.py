@@ -25,27 +25,21 @@ class InspectNameRequest(BaseModel):
     name: str
 
 
-@app.post('/{api_version}/inspect-name')
-async def inspect_name(api_version: ApiVersion, request: InspectNameRequest) -> NameGuardResult:
-    return nameguard.inspect_name(request.name)
-
-
-@app.get('/{api_version}/inspect-name/{name}')
+@app.get('/{api_version}/inspect-name/{name:path}')
 async def inspect_name_get(api_version: ApiVersion, name: str) -> NameGuardResult:
-    return await inspect_name(api_version, InspectNameRequest(name=name))
+    return nameguard.inspect_name(name)
 
 
-@app.get('/{api_version}/inspect-name')
-async def inspect_name_get_empty(api_version: ApiVersion) -> NameGuardResult:
-    return await inspect_name(api_version, InspectNameRequest(name=''))
+@app.post('/{api_version}/inspect-name')
+async def inspect_name_post(api_version: ApiVersion, request: InspectNameRequest) -> NameGuardResult:
+    return nameguard.inspect_name(request.name)
 
 
 # -- bulk-inspect-name --
 
 
 class BulkInspectNameRequest(BaseModel):
-    # max elements: 250
-    names: list[str] = Field(..., max_items=250)
+    names: list[str] = Field(max_items=250)
 
 
 @app.post('/{api_version}/bulk-inspect-names')
