@@ -11,7 +11,7 @@ def nameguard():
 
 
 def analyse_grapheme(nameguard: NameGuard, grapheme: str):
-    return nameguard.analyse_label(grapheme).graphemes[0]
+    return nameguard.inspector.analyse_label(grapheme).graphemes[0]
 
 
 # -- GRAPHEME CHECKS --
@@ -22,14 +22,12 @@ def test_grapheme_confusable(nameguard: NameGuard):
     r = checks.grapheme.confusables.check_grapheme(g)
     assert r.check == Check.CONFUSABLES
     assert r.rating == Rating.PASS
-    assert r.severity == 0
     assert r.message == 'This grapheme is not confusable'
 
     g = analyse_grapheme(nameguard, 'ą')
     r = checks.grapheme.confusables.check_grapheme(g)
     assert r.check == Check.CONFUSABLES
     assert r.rating == Rating.WARN
-    assert r.severity > 0
     assert r.message == 'This grapheme is confusable'
 
 
@@ -38,14 +36,12 @@ def test_grapheme_font_support(nameguard: NameGuard):
     r = checks.grapheme.font_support.check_grapheme(g)
     assert r.check == Check.FONT_SUPPORT
     assert r.rating == Rating.PASS
-    assert r.severity == 0
     assert r.message == 'This grapheme is supported by common fonts'
 
     g = analyse_grapheme(nameguard, '👊🏿')
     r = checks.grapheme.font_support.check_grapheme(g)
     assert r.check == Check.FONT_SUPPORT
     assert r.rating == Rating.WARN
-    assert r.severity > 0
     assert r.message == 'This grapheme is not supported by common fonts'
 
 
@@ -59,14 +55,12 @@ def test_grapheme_typing_difficulty(nameguard: NameGuard):
     r = checks.grapheme.typing_difficulty.check_grapheme(g)
     assert r.check == Check.TYPING_DIFFICULTY
     assert r.rating == Rating.PASS
-    assert r.severity == 0
     assert r.message == 'Name is broadly accessible to type'
 
     g = analyse_grapheme(nameguard, 'ą')
     r = checks.grapheme.typing_difficulty.check_grapheme(g)
     assert r.check == Check.TYPING_DIFFICULTY
     assert r.rating == Rating.WARN
-    assert r.severity > 0
     assert r.message == 'Name contains characters that may be difficult to type on some devices'
 
 
@@ -74,80 +68,70 @@ def test_grapheme_typing_difficulty(nameguard: NameGuard):
 
 
 def test_label_mixed_scripts(nameguard: NameGuard):
-    l = nameguard.analyse_label('ab')
+    l = nameguard.inspector.analyse_label('ab')
     r = checks.label.mixed_scripts.check_label(l)
     assert r.check == Check.MIXED_SCRIPTS
     assert r.rating == Rating.PASS
-    assert r.severity == 0
     assert r.message == 'Label is in a single script'
 
-    l = nameguard.analyse_label('あa')
+    l = nameguard.inspector.analyse_label('あa')
     r = checks.label.mixed_scripts.check_label(l)
     assert r.check == Check.MIXED_SCRIPTS
     assert r.rating == Rating.WARN
-    assert r.severity > 0
     assert r.message == 'Label contains multiple scripts'
 
-    l = nameguard.analyse_label('あ_a')
+    l = nameguard.inspector.analyse_label('あ_a')
     r = checks.label.mixed_scripts.check_label(l)
     assert r.check == Check.MIXED_SCRIPTS
     assert r.rating == Rating.SKIP
-    assert r.severity == 0
     assert r.message == 'Label is not normalized'
 
 
 def test_label_namewrapper(nameguard: NameGuard):
-    l = nameguard.analyse_label('ab')
+    l = nameguard.inspector.analyse_label('ab')
     r = checks.label.namewrapper.check_label(l)
     assert r.check == Check.NAMEWRAPPER_COMPATIBLE
     assert r.rating == Rating.PASS
-    assert r.severity == 0
     assert r.message == 'Label is NameWrapper compatible'
 
-    l = nameguard.analyse_label('あ' * 200)
+    l = nameguard.inspector.analyse_label('あ' * 200)
     r = checks.label.namewrapper.check_label(l)
     assert r.check == Check.NAMEWRAPPER_COMPATIBLE
     assert r.rating == Rating.WARN
-    assert r.severity > 0
     assert r.message == 'Label is not NameWrapper compatible'
 
 
 def test_label_normalized(nameguard: NameGuard):
-    l = nameguard.analyse_label('ab')
+    l = nameguard.inspector.analyse_label('ab')
     r = checks.label.normalized.check_label(l)
     assert r.check == Check.NORMALIZED
     assert r.rating == Rating.PASS
-    assert r.severity == 0
     assert r.message == 'Label is normalized according to ENSIP-15'
 
-    l = nameguard.analyse_label('a_a')
+    l = nameguard.inspector.analyse_label('a_a')
     r = checks.label.normalized.check_label(l)
     assert r.check == Check.NORMALIZED
     assert r.rating == Rating.ALERT
-    assert r.severity > 0
     assert r.message == 'Label is not normalized according to ENSIP-15'
 
 
 def test_label_punycode(nameguard: NameGuard):
-    l = nameguard.analyse_label('ab')
+    l = nameguard.inspector.analyse_label('ab')
     r = checks.label.punycode.check_label(l)
     assert r.check == Check.PUNYCODE_COMPATIBLE_LABEL
     assert r.rating == Rating.PASS
-    assert r.severity == 0
     assert r.message == 'Label is Punycode compatible'
 
-    l = nameguard.analyse_label('あ' * 200)
+    l = nameguard.inspector.analyse_label('あ' * 200)
     r = checks.label.punycode.check_label(l)
     assert r.check == Check.PUNYCODE_COMPATIBLE_LABEL
     assert r.rating == Rating.WARN
-    assert r.severity > 0
     assert r.message == 'Label is not Punycode compatible'
 
-    l = nameguard.analyse_label('あ_a')
+    l = nameguard.inspector.analyse_label('あ_a')
     r = checks.label.punycode.check_label(l)
     assert r.check == Check.PUNYCODE_COMPATIBLE_LABEL
     assert r.rating == Rating.SKIP
-    assert r.severity == 0
     assert r.message == 'Label is not normalized'
 
 
@@ -156,25 +140,22 @@ def test_label_punycode(nameguard: NameGuard):
 
 def test_name_punycode_name(nameguard: NameGuard):
     n = 'nick.eth'
-    ls = [nameguard.analyse_label(l) for l in n.split('.')]
+    ls = [nameguard.inspector.analyse_label(l) for l in n.split('.')]
     r = checks.name.punycode_name.check_name(ls)
     assert r.check == Check.PUNYCODE_COMPATIBLE_NAME
     assert r.rating == Rating.PASS
-    assert r.severity == 0
     assert r.message == 'Name is Punycode compatible'
 
     n = 'あ.' * 60 + 'eth'
-    ls = [nameguard.analyse_label(l) for l in n.split('.')]
+    ls = [nameguard.inspector.analyse_label(l) for l in n.split('.')]
     r = checks.name.punycode_name.check_name(ls)
     assert r.check == Check.PUNYCODE_COMPATIBLE_NAME
     assert r.rating == Rating.WARN
-    assert r.severity > 0
     assert r.message == 'Name is not Punycode compatible'
 
     n = 'あ.' * 60 + 'a_a'
-    ls = [nameguard.analyse_label(l) for l in n.split('.')]
+    ls = [nameguard.inspector.analyse_label(l) for l in n.split('.')]
     r = checks.name.punycode_name.check_name(ls)
     assert r.check == Check.PUNYCODE_COMPATIBLE_NAME
     assert r.rating == Rating.SKIP
-    assert r.severity == 0
     assert r.message == 'Name is not normalized'

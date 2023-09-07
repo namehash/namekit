@@ -3,9 +3,7 @@ from label_inspector.common.punycode import puny_analysis, PunycodeCompatibility
 from label_inspector.models import InspectorResult
 
 
-# TODO: rating/severity
 RATING = Rating.WARN
-SEVERITY = 4
 MESSAGE_PASS = 'Name is Punycode compatible'
 MESSAGE_FAIL = 'Name is not Punycode compatible'
 MESSAGE_SKIP = 'Name is not normalized'
@@ -16,7 +14,6 @@ def check_name(labels: list[InspectorResult]) -> GenericCheckResult:
         return GenericCheckResult(
             check=Check.PUNYCODE_COMPATIBLE_NAME,
             rating=Rating.SKIP,
-            severity=0,
             message=MESSAGE_SKIP,
         )
     else:
@@ -25,6 +22,5 @@ def check_name(labels: list[InspectorResult]) -> GenericCheckResult:
         return GenericCheckResult(
             check=Check.PUNYCODE_COMPATIBLE_NAME,
             rating=Rating.PASS if passed else RATING,
-            severity=0 if passed else SEVERITY,
             message=MESSAGE_PASS if passed else MESSAGE_FAIL,
         )
