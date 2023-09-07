@@ -26,7 +26,7 @@ class InspectNameRequest(BaseModel):
     name: str = Field(examples=['iamalice.eth'], title='name to inspect')
 
 
-@app.get(  # todo: check if url-encoding is necessary
+@app.get(  # todo: check if url-encoding is necessary (add tests, remove unquote if ok)
     '/{api_version}/inspect-name/{name:path}',
     tags=['name'],
     summary='Inspect Name GET'
