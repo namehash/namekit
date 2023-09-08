@@ -1,10 +1,10 @@
 from enum import Enum
 from fastapi import FastAPI, Path
-from pydantic import BaseModel, Field, ValidationError
-from urllib.parse import unquote
+from pydantic import BaseModel, Field
 
 from nameguard.nameguard import NameGuard, validate_namehash, namehash_from_labelhash
 from nameguard.models import NameGuardResult, NameGuardBulkResult
+from nameguard.nameguard import logger
 
 
 class ApiVersion(str, Enum):
@@ -15,7 +15,7 @@ class NetworkName(str, Enum):
     MAINNET = 'mainnet'
 
 
-app = FastAPI(title='NameGuard Service', version=ApiVersion.V1_beta)
+app = FastAPI(title='NameGuard Service', version=ApiVersion.V1_beta.value)
 nameguard = NameGuard()
 
 
@@ -26,20 +26,18 @@ class InspectNameRequest(BaseModel):
     name: str = Field(examples=['iamalice.eth'], title='name to inspect')
 
 
-@app.get(  # todo: check if url-encoding is necessary (add tests, remove unquote if ok)
+@app.get(
     '/{api_version}/inspect-name/{name:path}',
     tags=['name'],
-    summary='Inspect Name GET'
+    summary='Inspect Name GET'  # todo: "Inspect URL-Encoded Name" or this one is ok?
 )
 async def inspect_name_get(
         api_version: ApiVersion,
-        name: str = Path(..., description='**Name should be url-encoded.**', example='iam%2Falice%3F.eth')
+        name: str = Path(..., description='**Name should be url-encoded (if through docs is should not).**',
+                         example='iam%2Falice%3F.eth')
 ) -> NameGuardResult:
-    try:
-        decoded_name = unquote(name, encoding='utf-8', errors='strict')
-    except Exception as ex:
-        raise ValidationError(f'While decoding name "{name}" error occurred: {ex}')
-    return await inspect_name_post(api_version, InspectNameRequest(name=decoded_name))
+    logger.debug(f'[GET inspect-name] input name: \'{name}\'')
+    return nameguard.inspect_name(name)
 
 
 @app.post(
@@ -112,7 +110,7 @@ class InspectLabelhashRequest(BaseModel):
     labelhash: str = Field(title='labelhash (decimal or hex representation)',
                            examples=['0xaf2caa1c2ca1d027f1ac823b529d0a67cd144264b2789fa2ea4d63a67c7103cc'])
     network_name: NetworkName
-    parent_name: str = Field('eth', title='parent name (must be normalized)')
+    parent_name: str = Field('eth', title='parent name')
 
 
 @app.post(
@@ -139,7 +137,7 @@ async def inspect_labelhash_get(
         network_name: NetworkName,
         labelhash: str = Path(..., example='0xaf2caa1c2ca1d027f1ac823b529d0a67cd144264b2789fa2ea4d63a67c7103cc',
                               description='**Labelhash should be a decimal or a hex (prefixed with 0x) integer.**'),
-        parent_name: str = Path(..., example='eth', description='**Parent name must be ens-normalized.**')
+        parent_name: str = Path(..., example='eth')
 ) -> NameGuardResult:
     valid_labelhash = validate_namehash(namehash=labelhash)
     namehash = namehash_from_labelhash(valid_labelhash, parent_name=parent_name)

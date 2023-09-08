@@ -1,4 +1,5 @@
 import httpx
+import asyncio
 import logging
 from fastapi import HTTPException
 from ens.constants import EMPTY_SHA3_BYTES
@@ -203,7 +204,9 @@ class NameGuard:
         self.httpx_client = httpx.AsyncClient()
 
     def inspect_name(self, name: str) -> NameGuardResult:
+        logger.debug(f'[inspect_name] name: \'{name}\'')
         labels = name.split('.')
+        logger.debug(f'[inspect_name] labels: {labels}')
         labels_analysis = [self.inspector.analyse_label(label) for label in labels]
 
         # -- check individual entities --
@@ -320,6 +323,11 @@ class NameGuard:
         variables = {'nameHash': namehash_hexstr}
 
         try:
+            # todo: maybe use async with to fix one-after-another requests?
+            #             async with httpx.AsyncClient() as client:
+            #                 response = await client.post(ENS_SUBGRAPH_URL + '?source=ens-nameguard',
+            #                                              json={'query': SUBGRAPH_NAME_QUERY, 'variables': variables})
+
             response = await self.httpx_client.post(ENS_SUBGRAPH_URL + '?source=ens-nameguard',
                                                     json={'query': SUBGRAPH_NAME_QUERY, 'variables': variables})
             if response.status_code == 200:
@@ -329,9 +337,13 @@ class NameGuard:
                 raise ENSSubgraphUnavailable(
                     f"Received unexpected status code from ENS Subgraph {response.status_code}: {response.text}")
         except httpx.RequestError as ex:
+            logger.exception(f'[namehash_to_normal_name_lookup] communication error with subgraph occurred')
             if not str(ex):
                 raise ENSSubgraphUnavailable(f"RequestError has occurred.")
             raise ENSSubgraphUnavailable(f"RequestError has occurred: {ex}")
+        except Exception:
+            logger.exception(f'[namehash_to_normal_name_lookup] communication error with subgraph occurred')
+            raise ENSSubgraphUnavailable(f"Unknown error occurred while making request")
 
         if 'data' not in response_json or 'domain' not in response_json['data']:
             logger.error(f"Unexpected response body: {response_json}")
