@@ -1,4 +1,5 @@
 import time
+from urllib.parse import quote
 
 import pytest
 from fastapi.testclient import TestClient
@@ -43,12 +44,17 @@ def test_inspect_name_get(test_client, api_version):
 
 @pytest.mark.parametrize(
     "encoded_input_name, decoded_name",
-    [('iam%2Falice%3F.eth', 'iam/alice?.eth'), ('%C5%BC%C3%B3%20%C5%82%C4%87', 'żó łć'),
-     ('%3F%3F%2F%3F%2F%3F%3F', '??/?/??'), ('%2511%25.%3F.eth', '%11%.?.eth')]
+    [
+        ('iam%2Falice%3F.eth', 'iam/alice?.eth'), 
+        ('%C5%BC%C3%B3%20%C5%82%C4%87', 'żó łć'),
+        ('%3F%3F%2F%3F%2F%3F%3F', '??/?/??'), 
+        ('%2511%25.%3F.eth', '%11%.?.eth'),
+     ]
 )  # the last name ('%2511%25.%3F.eth') is incorrectly decoded using fastapi's TestClient, so httpx is used here
 # todo: only works if api is running
-def test_inspect_name_get_special_characters(httpx_client, api_version, encoded_input_name: str, decoded_name: str):
-    response = httpx_client.get(f'http://127.0.0.1:8000/{api_version}/inspect-name/{encoded_input_name}')
+def test_inspect_name_get_special_characters(test_client, api_version, encoded_input_name: str, decoded_name: str):
+    encoded_input_name=quote(encoded_input_name.encode('utf-8')) #because TestClient is doing additional unquote before sending request
+    response = test_client.get(f'/{api_version}/inspect-name/{encoded_input_name}')
     assert response.status_code == 200
     res_json = response.json()
     pprint(res_json)
