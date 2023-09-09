@@ -38,7 +38,8 @@ async def inspect_name_get(
                          example='iam%2Falice%3F.eth'),
         
 ) -> NameGuardResult:
-    logger.debug(f'[GET inspect-name] input name: \'{name}\' raw path: \'{request.scope["raw_path"]}\'')
+    logger.debug(f'[GET inspect-name] input name: \'{name}\' raw path: \'{request.scope["raw_path"]} query string: \'{request.scope["query_string"]}\'')
+    #TODO name = f'{name}?{request.scope["query_string"]}'
     return nameguard.inspect_name(name)
 
 
