@@ -52,7 +52,7 @@ async def inspect_name_post(api_version: ApiVersion, request: InspectNameRequest
 # -- bulk-inspect-name --
 
 
-class BulkInspectNameRequest(BaseModel):
+class BulkInspectNamesRequest(BaseModel):
     names: list[str] = Field(max_items=250)
 
 
@@ -61,7 +61,7 @@ class BulkInspectNameRequest(BaseModel):
     tags=['name'],
     summary='Inspect Multiple Names'
 )
-async def bulk_inspect_names(api_version: ApiVersion, request: BulkInspectNameRequest) -> NameGuardBulkResult:
+async def bulk_inspect_names(api_version: ApiVersion, request: BulkInspectNamesRequest) -> NameGuardBulkResult:
     return nameguard.bulk_inspect_names(request.names)
 
 
