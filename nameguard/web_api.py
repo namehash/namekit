@@ -1,5 +1,5 @@
 from enum import Enum
-from fastapi import FastAPI, Path
+from fastapi import FastAPI, Path, Request
 from pydantic import BaseModel, Field
 
 from nameguard.nameguard import NameGuard, validate_namehash, namehash_from_labelhash
@@ -33,10 +33,12 @@ class InspectNameRequest(BaseModel):
 )
 async def inspect_name_get(
         api_version: ApiVersion,
+        request: Request,
         name: str = Path(..., description='**Name should be url-encoded (if through docs is should not).**',
-                         example='iam%2Falice%3F.eth')
+                         example='iam%2Falice%3F.eth'),
+        
 ) -> NameGuardResult:
-    logger.debug(f'[GET inspect-name] input name: \'{name}\'')
+    logger.debug(f'[GET inspect-name] input name: \'{name}\' raw path: \'{request.scope["raw_path"]}\'')
     return nameguard.inspect_name(name)
 
 
