@@ -2,6 +2,7 @@ from .checks import (
     GenericCheckResult,
     Rating,
     Check,
+    CheckStatus,
 )
 
 from .result import (

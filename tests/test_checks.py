@@ -2,7 +2,7 @@ import pytest
 
 from nameguard import checks
 from nameguard.nameguard import NameGuard
-from nameguard.models import Rating, Check
+from nameguard.models import Rating, Check, CheckStatus
 
 
 @pytest.fixture(scope='module')
@@ -83,7 +83,7 @@ def test_label_mixed_scripts(nameguard: NameGuard):
     l = nameguard.inspector.analyse_label('あ_a')
     r = checks.label.mixed_scripts.check_label(l)
     assert r.check == Check.MIXED_SCRIPTS
-    assert r.rating == Rating.SKIP
+    assert r.status == CheckStatus.SKIP
     assert r.message == 'Label is not normalized'
 
 
@@ -131,7 +131,7 @@ def test_label_punycode(nameguard: NameGuard):
     l = nameguard.inspector.analyse_label('あ_a')
     r = checks.label.punycode.check_label(l)
     assert r.check == Check.PUNYCODE_COMPATIBLE_LABEL
-    assert r.rating == Rating.SKIP
+    assert r.status == CheckStatus.SKIP
     assert r.message == 'Label is not normalized'
 
 
@@ -157,5 +157,5 @@ def test_name_punycode_name(nameguard: NameGuard):
     ls = [nameguard.inspector.analyse_label(l) for l in n.split('.')]
     r = checks.name.punycode_name.check_name(ls)
     assert r.check == Check.PUNYCODE_COMPATIBLE_NAME
-    assert r.rating == Rating.SKIP
+    assert r.status == CheckStatus.SKIP
     assert r.message == 'Name is not normalized'
