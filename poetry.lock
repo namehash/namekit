@@ -1072,8 +1072,8 @@ lambda = ["mangum (>=0.17.0,<0.18.0)"]
 
 [package.source]
 type = "git"
-url = "ssh://git@github.com/namehash/ens-label-inspector.git"
-reference = "HEAD"
+url = "https://github.com/namehash/ens-label-inspector.git"
+reference = "main"
 resolved_reference = "01ed959f65271bbfa7b8b6f843f1b7d816bea905"
 
 [[package]]
@@ -2344,4 +2344,4 @@ lambda = ["mangum"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "8eb5a4fcc703a58b6de8095e079cedf91951d7c38310586744a874046e4378d5"
+content-hash = "6600192f712af7c25d2d75d58d515af24144f79d8922576fa7171fe1b2fc66b2"

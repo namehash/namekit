@@ -22,14 +22,12 @@ from nameguard.models import (
     Normalization,
 )
 
-
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 stream_handler = logging.StreamHandler()
 stream_handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
 stream_handler.setLevel(logging.DEBUG)
 logger.addHandler(stream_handler)
-
 
 GRAPHEME_CHECKS = [
     checks.grapheme.confusables.check_grapheme,
@@ -69,24 +67,29 @@ query getDomains($nameHash: String) {
 }
 """  # redundant elements in query for future use
 
+
 # -- exceptions --
 
 class InvalidNameHash(HTTPException):
     def __init__(self, reason=''):
         super().__init__(422, f"Provided namehash is not valid, reason: {reason}")
 
+
 class ENSSubgraphUnavailable(HTTPException):
-    def __init__(self, error_msg: str):  # todo: which status code?
-        super().__init__(418, f"Error while making request to ENS Subgraph: {error_msg}")
+    def __init__(self, error_msg: str):
+        super().__init__(503, f"Error while making request to ENS Subgraph: {error_msg}")
+
 
 class NamehashMismatchError(HTTPException):
-    def __init__(self):  # todo: which status code?
-        super().__init__(418, "Namehash calculated on the name returned from ENS Subgraph"
+    def __init__(self):
+        super().__init__(500, "Namehash calculated on the name returned from ENS Subgraph"
                               " does not equal the input namehash.")
+
 
 class NamehashNotFoundInSubgraph(HTTPException):
     def __init__(self):
         super().__init__(404, "Provided namehash could not be found in ENS Subgraph.")
+
 
 def init_inspector():
     with initialize_inspector_config('prod_config') as config:
@@ -204,7 +207,9 @@ class NameGuard:
         self.httpx_client = httpx.AsyncClient()
 
     def inspect_name(self, name: str) -> NameGuardResult:
+        logger.debug(f'[inspect_name] name: \'{name}\'')
         labels = name.split('.')
+        logger.debug(f'[inspect_name] labels: {labels}')
         labels_analysis = [self.inspector.analyse_label(label) for label in labels]
 
         # -- check individual entities --
@@ -321,8 +326,10 @@ class NameGuard:
         variables = {'nameHash': namehash_hexstr}
 
         try:
-            response = await self.httpx_client.post(ENS_SUBGRAPH_URL + '?source=ens-nameguard',
-                                                    json={'query': SUBGRAPH_NAME_QUERY, 'variables': variables})
+            async with httpx.AsyncClient() as client:
+                response = await client.post(ENS_SUBGRAPH_URL + '?source=ens-nameguard',
+                                             json={'query': SUBGRAPH_NAME_QUERY, 'variables': variables})
+
             if response.status_code == 200:
                 response_json = response.json()
                 logger.debug(f"Subgraph response json:\n{response_json}")
@@ -330,9 +337,13 @@ class NameGuard:
                 raise ENSSubgraphUnavailable(
                     f"Received unexpected status code from ENS Subgraph {response.status_code}: {response.text}")
         except httpx.RequestError as ex:
+            logger.exception(f'[namehash_to_normal_name_lookup] communication error with subgraph occurred')
             if not str(ex):
                 raise ENSSubgraphUnavailable(f"RequestError has occurred.")
             raise ENSSubgraphUnavailable(f"RequestError has occurred: {ex}")
+        except Exception:
+            logger.exception(f'[namehash_to_normal_name_lookup] communication error with subgraph occurred')
+            raise ENSSubgraphUnavailable(f"Unknown error occurred while making request")
 
         if 'data' not in response_json or 'domain' not in response_json['data']:
             logger.error(f"Unexpected response body: {response_json}")
