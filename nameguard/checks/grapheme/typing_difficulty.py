@@ -1,8 +1,8 @@
 from label_inspector.models import InspectorGraphemeWithConfusablesResult as Grapheme
-from nameguard.models import Rating, Check, GenericCheckResult
+from nameguard.models import CheckStatus, Check, GenericCheckResult
 
 
-RATING = Rating.WARN
+STATUS = CheckStatus.WARN
 MESSAGE_PASS = 'Name is broadly accessible to type'
 MESSAGE_FAIL = 'Name contains characters that may be difficult to type on some devices'
 
@@ -17,6 +17,6 @@ def check_grapheme(grapheme: Grapheme) -> GenericCheckResult:
     )
     return GenericCheckResult(
         check=Check.TYPING_DIFFICULTY,
-        rating=Rating.PASS if passed else RATING,
+        status=CheckStatus.PASS if passed else STATUS,
         message=MESSAGE_PASS if passed else MESSAGE_FAIL,
     )

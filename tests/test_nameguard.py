@@ -1,6 +1,6 @@
 import pytest
 
-from nameguard.models import Rating, Check
+from nameguard.models import Rating, Check, CheckStatus
 from nameguard.nameguard import NameGuard
 
 
@@ -34,7 +34,7 @@ def test_basic_red(nameguard: NameGuard):
             assert check.rating is Rating.ALERT
         elif check.check is Check.PUNYCODE_COMPATIBLE_NAME:
             # skipped because of normalization
-            assert check.rating is Rating.SKIP
+            assert check.status is CheckStatus.SKIP
         else:
             assert check.rating is Rating.PASS, check
 

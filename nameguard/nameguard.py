@@ -16,6 +16,7 @@ from nameguard.models import (
     GraphemeGuardResult,
     NameGuardBulkResult,
     Rating,
+    Check,
     GenericCheckResult,
     RiskSummary,
     Normalization,
@@ -178,23 +179,23 @@ def validate_namehash(namehash: str) -> str:
         return hex_namehash
 
 
-def calculate_nameguard_rating(checks: list[GenericCheckResult]) -> Rating:
-    return max(check.rating for check in checks)
+def calculate_nameguard_rating(check_results: list[GenericCheckResult]) -> Rating:
+    return max(check.rating for check in check_results)
 
 
-def count_risks(checks: list[GenericCheckResult]) -> int:
-    return sum(1 for check in checks if check.rating > Rating.PASS)
+def count_risks(check_results: list[GenericCheckResult]) -> int:
+    return sum(1 for check in check_results if check.rating > Rating.PASS)
 
 
-def agg_checks(checks: list[GenericCheckResult]) -> list[GenericCheckResult]:
-    out = {}
-    for check in checks:
-        out[check.check] = max(out.get(check.check, check), check)
+def agg_checks(check_results: list[GenericCheckResult]) -> list[GenericCheckResult]:
+    out: dict[Check, GenericCheckResult] = {}
+    for result in check_results:
+        out[result.check] = max(out.get(result.check, result), result)
     return list(out.values())
 
 
-def get_highest_risk(checks: list[GenericCheckResult]) -> Optional[GenericCheckResult]:
-    return max((check for check in checks if check.rating > Rating.PASS), default=None)
+def get_highest_risk(check_results: list[GenericCheckResult]) -> Optional[GenericCheckResult]:
+    return max((check for check in check_results if check.rating > Rating.PASS), default=None)
 
 
 class NameGuard:
