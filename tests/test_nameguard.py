@@ -32,9 +32,8 @@ def test_basic_red(nameguard: NameGuard):
     for check in result.checks:
         if check.check is Check.NORMALIZED:
             assert check.rating is Rating.ALERT
-        elif check.check is Check.PUNYCODE_COMPATIBLE_NAME:
-            # skipped because of normalization
-            assert check.status is CheckStatus.SKIP
+        elif check.check in (Check.PUNYCODE_COMPATIBLE_LABEL, Check.PUNYCODE_COMPATIBLE_NAME):
+            assert check.status is CheckStatus.WARN
         else:
             assert check.rating is Rating.PASS, check
 
