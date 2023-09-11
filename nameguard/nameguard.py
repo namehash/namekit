@@ -204,7 +204,6 @@ def get_highest_risk(check_results: list[GenericCheckResult]) -> Optional[Generi
 class NameGuard:
     def __init__(self):
         self.inspector = init_inspector()
-        self.httpx_client = httpx.AsyncClient()
 
     def inspect_name(self, name: str) -> NameGuardResult:
         logger.debug(f'[inspect_name] name: \'{name}\'')
