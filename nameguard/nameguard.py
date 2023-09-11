@@ -220,7 +220,6 @@ class NameGuard:
                 for grapheme in label_analysis.graphemes
             ]
             for label_analysis in labels_analysis
-            if label_analysis.status == 'normalized'
         ]
 
         # checks for each label
@@ -285,7 +284,7 @@ class NameGuard:
                             checks=grapheme_checks,
                         )
                         for grapheme, grapheme_checks in zip(label_analysis.graphemes, label_graphemes_checks)
-                    ] if label_analysis.status == 'normalized' else [],
+                    ],
                 )
                 for label_analysis, label_checks, label_graphemes_checks in zip(
                     labels_analysis,
