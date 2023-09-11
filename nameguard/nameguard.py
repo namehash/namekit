@@ -1,5 +1,4 @@
 import httpx
-import asyncio
 import logging
 from fastapi import HTTPException
 from ens.constants import EMPTY_SHA3_BYTES
@@ -77,12 +76,12 @@ class InvalidNameHash(HTTPException):
 
 class ENSSubgraphUnavailable(HTTPException):
     def __init__(self, error_msg: str):
-        super().__init__(512, f"Error while making request to ENS Subgraph: {error_msg}")
+        super().__init__(503, f"Error while making request to ENS Subgraph: {error_msg}")
 
 
 class NamehashMismatchError(HTTPException):
     def __init__(self):
-        super().__init__(418, "Namehash calculated on the name returned from ENS Subgraph"
+        super().__init__(500, "Namehash calculated on the name returned from ENS Subgraph"
                               " does not equal the input namehash.")
 
 

@@ -29,17 +29,17 @@ class InspectNameRequest(BaseModel):
 @app.get(
     '/{api_version}/inspect-name/{name:path}',
     tags=['name'],
-    summary='Inspect Name GET'  # todo: "Inspect URL-Encoded Name" or this one is ok?
+    summary='Inspect Name GET'
 )
 async def inspect_name_get(
         api_version: ApiVersion,
         request: Request,
-        name: str = Path(..., description='**Name should be url-encoded (if through docs is should not).**',
-                         example='iam%2Falice%3F.eth'),
-        
+        name: str = Path(..., description='**Name should be url-encoded (if through docs, it should not).**',
+                         example='iam%2Falice%3F.eth'),  # todo: change example to examples after fastapi update
 ) -> NameGuardResult:
-    logger.debug(f'[GET inspect-name] input name: \'{name}\' raw path: \'{request.scope["raw_path"]} query string: \'{request.scope["query_string"]}\'')
-    #TODO name = f'{name}?{request.scope["query_string"]}'
+    logger.debug(f'[GET inspect-name] input name: \'{name}\' raw path: \'{request.scope["raw_path"]} query string: '
+                 f'\'{request.scope["query_string"]}\'')
+    # name = f'{name}?{request.scope["query_string"]}'
     return nameguard.inspect_name(name)
 
 
@@ -56,7 +56,7 @@ async def inspect_name_post(api_version: ApiVersion, request: InspectNameRequest
 
 
 class BulkInspectNamesRequest(BaseModel):
-    names: list[str] = Field(max_items=250)
+    names: list[str] = Field(max_length=250)
 
 
 @app.post(
