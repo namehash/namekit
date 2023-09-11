@@ -77,18 +77,6 @@ class InspectNamehashRequest(BaseModel):
     network_name: NetworkName
 
 
-@app.post(
-    '/{api_version}/inspect-namehash',
-    tags=['namehash'],
-    summary='Inspect Namehash'
-)
-async def inspect_namehash_post(api_version: ApiVersion, request: InspectNamehashRequest) -> NameGuardResult:
-    return await nameguard.inspect_namehash(
-        namehash=validate_namehash(namehash=request.namehash),
-        network=request.network_name,
-    )
-
-
 @app.get(
     '/{api_version}/inspect-namehash/{network_name}/{namehash}',
     tags=['namehash'],
@@ -106,6 +94,18 @@ async def inspect_namehash_get(
     )
 
 
+@app.post(
+    '/{api_version}/inspect-namehash',
+    tags=['namehash'],
+    summary='Inspect Namehash'
+)
+async def inspect_namehash_post(api_version: ApiVersion, request: InspectNamehashRequest) -> NameGuardResult:
+    return await nameguard.inspect_namehash(
+        namehash=validate_namehash(namehash=request.namehash),
+        network=request.network_name,
+    )
+
+
 # -- inspect-labelhash --
 
 
@@ -114,20 +114,6 @@ class InspectLabelhashRequest(BaseModel):
                            examples=['0xaf2caa1c2ca1d027f1ac823b529d0a67cd144264b2789fa2ea4d63a67c7103cc'])
     network_name: NetworkName
     parent_name: str = Field('eth', title='parent name')
-
-
-@app.post(
-    '/{api_version}/inspect-labelhash',
-    tags=['labelhash'],
-    summary='Inspect Labelhash'
-)
-async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelhashRequest) -> NameGuardResult:
-    valid_labelhash = validate_namehash(namehash=request.labelhash)
-    namehash = namehash_from_labelhash(valid_labelhash, parent_name=request.parent_name)
-    return await nameguard.inspect_namehash(
-        namehash=namehash,
-        network=request.network_name,
-    )
 
 
 @app.get(
@@ -147,4 +133,18 @@ async def inspect_labelhash_get(
     return await nameguard.inspect_namehash(
         namehash=namehash,
         network=network_name,
+    )
+
+
+@app.post(
+    '/{api_version}/inspect-labelhash',
+    tags=['labelhash'],
+    summary='Inspect Labelhash'
+)
+async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelhashRequest) -> NameGuardResult:
+    valid_labelhash = validate_namehash(namehash=request.labelhash)
+    namehash = namehash_from_labelhash(valid_labelhash, parent_name=request.parent_name)
+    return await nameguard.inspect_namehash(
+        namehash=namehash,
+        network=request.network_name,
     )
