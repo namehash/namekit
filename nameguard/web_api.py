@@ -180,3 +180,7 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
         namehash=namehash,
         network=request.network_name,
     )
+
+
+if __name__ == '__main__':
+    nameguard.inspect_name('nick.eth')

@@ -9,4 +9,8 @@ COPY pyproject.toml poetry.lock README.md LICENSE ./
 COPY nameguard ./nameguard/
 RUN pip install --no-cache-dir .[lambda]
 
+# warmup
+RUN python -m nameguard.web_api
+RUN python -m nameguard.lambda
+
 CMD [ "nameguard.lambda.handler" ]
