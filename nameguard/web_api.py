@@ -5,6 +5,12 @@ from pydantic import BaseModel, Field
 from nameguard.nameguard import NameGuard, validate_namehash, namehash_from_labelhash
 from nameguard.models import NameGuardResult, NameGuardBulkResult
 from nameguard.nameguard import logger
+from nameguard.nameguard import (
+    InvalidNameHash,
+    ENSSubgraphUnavailable,
+    NamehashMismatchError,
+    NamehashNotFoundInSubgraph,
+)
 
 
 class ApiVersion(str, Enum):
@@ -82,7 +88,13 @@ class InspectNamehashRequest(BaseModel):
 @app.get(
     '/{api_version}/inspect-namehash/{network_name}/{namehash}',
     tags=['namehash'],
-    summary='Inspect Namehash GET'
+    summary='Inspect Namehash GET',
+    responses={
+        **InvalidNameHash.get_responses_spec(),
+        **ENSSubgraphUnavailable.get_responses_spec(),
+        **NamehashMismatchError.get_responses_spec(),
+        **NamehashNotFoundInSubgraph.get_responses_spec(),
+    },
 )
 async def inspect_namehash_get(
         api_version: ApiVersion,
@@ -99,7 +111,13 @@ async def inspect_namehash_get(
 @app.post(
     '/{api_version}/inspect-namehash',
     tags=['namehash'],
-    summary='Inspect Namehash'
+    summary='Inspect Namehash',
+    responses={
+        **InvalidNameHash.get_responses_spec(),
+        **ENSSubgraphUnavailable.get_responses_spec(),
+        **NamehashMismatchError.get_responses_spec(),
+        **NamehashNotFoundInSubgraph.get_responses_spec(),
+    },
 )
 async def inspect_namehash_post(api_version: ApiVersion, request: InspectNamehashRequest) -> NameGuardResult:
     return await nameguard.inspect_namehash(
@@ -121,7 +139,13 @@ class InspectLabelhashRequest(BaseModel):
 @app.get(
     '/{api_version}/inspect-labelhash/{network_name}/{labelhash}/{parent_name}',
     tags=['labelhash'],
-    summary='Inspect Labelhash GET'
+    summary='Inspect Labelhash GET',
+    responses={
+        **InvalidNameHash.get_responses_spec(),
+        **ENSSubgraphUnavailable.get_responses_spec(),
+        **NamehashMismatchError.get_responses_spec(),
+        **NamehashNotFoundInSubgraph.get_responses_spec(),
+    },
 )
 async def inspect_labelhash_get(
         api_version: ApiVersion,
@@ -141,7 +165,13 @@ async def inspect_labelhash_get(
 @app.post(
     '/{api_version}/inspect-labelhash',
     tags=['labelhash'],
-    summary='Inspect Labelhash'
+    summary='Inspect Labelhash',
+    responses={
+        **InvalidNameHash.get_responses_spec(),
+        **ENSSubgraphUnavailable.get_responses_spec(),
+        **NamehashMismatchError.get_responses_spec(),
+        **NamehashNotFoundInSubgraph.get_responses_spec(),
+    },
 )
 async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelhashRequest) -> NameGuardResult:
     valid_labelhash = validate_namehash(namehash=request.labelhash)

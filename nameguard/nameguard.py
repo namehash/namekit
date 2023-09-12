@@ -1,6 +1,7 @@
 import httpx
 import logging
 from fastapi import HTTPException
+from pydantic import BaseModel, Field
 from ens.constants import EMPTY_SHA3_BYTES
 from ens.utils import Web3
 from hexbytes import HexBytes
@@ -70,25 +71,47 @@ query getDomains($nameHash: String) {
 
 # -- exceptions --
 
-class InvalidNameHash(HTTPException):
-    def __init__(self, reason=''):
-        super().__init__(422, f"Provided namehash is not valid, reason: {reason}")
+
+class ExceptionResponse(BaseModel):
+    detail: str = Field(
+        description='Human-readable description of the error.',
+        examples=['This is a human-readable description of the error.'],
+    )
 
 
-class ENSSubgraphUnavailable(HTTPException):
-    def __init__(self, error_msg: str):
-        super().__init__(503, f"Error while making request to ENS Subgraph: {error_msg}")
+class NameGuardException(HTTPException):
+    STATUS_CODE = None
+    DESCRIPTION = None
+    
+    def __init__(self, detail: str = ''):
+        super().__init__(self.STATUS_CODE, detail=f'{self.DESCRIPTION} {detail}'.strip())
+
+    @classmethod
+    def get_responses_spec(cls):
+        return {cls.STATUS_CODE: {'description': cls.DESCRIPTION, 'model': ExceptionResponse}}
 
 
-class NamehashMismatchError(HTTPException):
-    def __init__(self):
-        super().__init__(500, "Namehash calculated on the name returned from ENS Subgraph"
-                              " does not equal the input namehash.")
+class InvalidNameHash(NameGuardException):
+    STATUS_CODE = 422
+    DESCRIPTION = "Provided namehash is not valid."
 
 
-class NamehashNotFoundInSubgraph(HTTPException):
-    def __init__(self):
-        super().__init__(404, "Provided namehash could not be found in ENS Subgraph.")
+class ENSSubgraphUnavailable(NameGuardException):
+    STATUS_CODE = 503
+    DESCRIPTION = "Error while making request to ENS Subgraph."
+
+
+class NamehashMismatchError(NameGuardException):
+    STATUS_CODE = 500
+    DESCRIPTION = "Namehash calculated on the name returned from ENS Subgraph does not equal the input namehash."
+
+
+class NamehashNotFoundInSubgraph(NameGuardException):
+    STATUS_CODE = 404
+    DESCRIPTION = "Provided namehash could not be found in ENS Subgraph."
+
+
+# -- utils --
 
 
 def init_inspector():
@@ -166,19 +189,17 @@ def validate_namehash(namehash: str) -> str:
     """
     if namehash.startswith('0x'):
         if len(namehash) != 66 or not all(c in '0123456789abcdefABCDEF' for c in namehash[2:]):
-            raise InvalidNameHash(reason="Hex number must be 64 digits long and prefixed with '0x'.")
+            raise InvalidNameHash("Hex number must be 64 digits long and prefixed with '0x'.")
         return namehash
     else:
         try:
             int_namehash = int(namehash)
         except ValueError:
-            raise InvalidNameHash(
-                reason="Must be a valid, decimal integer or a hex number with 64 digits, prefixed with '0x'.")
+            raise InvalidNameHash("Must be a valid, decimal integer or a hex number with 64 digits, prefixed with '0x'.")
         try:
             hex_namehash = int_to_hexstr(int_namehash)
         except ValueError:
-            raise InvalidNameHash(
-                reason="The decimal integer converted to base-16 should have at most 64 digits.")
+            raise InvalidNameHash("The decimal integer converted to base-16 should have at most 64 digits.")
         return hex_namehash
 
 
