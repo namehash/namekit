@@ -118,6 +118,7 @@ def test_inspect_namehash_get(test_client, api_version, namehash: str, expected_
         ('0x0462571d34d206146958c44e473730b1b2630321072c7fbb92deeea946416dab', 'unknown', '[5bc926fc40cc7c49e0df6dddf26e4dc7b9d6d32f4a55d4f0670320dbf414afd2].byongdok.eth'),
         ('0x5f57b185ab56ca42b5506f96694c767ebcc8c6e2854a79636b565e4ebe700fb0', 'unknown', '[2af8fae91ee5ef94f17f2c2f23532cc2d1ccaee78cae52efed0df04bc2463b13].[3fddf465ed81d79ae943b35800b1d187dc0b5d69614bf7e8ebddbae19d72cae8].genevaswis.eth'),
         ('0xb2636b6e3b1abdd3fbec454d4f4b1a904e7b15e3609cb208bcfc5a5487293308', 'unknown', '[3fddf465ed81d79ae943b35800b1d187dc0b5d69614bf7e8ebddbae19d72cae8].genevaswis.eth'),
+        ('0x00f52438ae09d2f909ee2efc19ba8af75058e74ca4507aa091bd8282aa490e77', 'unknown', '[7710d5ebf94bcebcf1996bb7a3f5e24a6d24435b314b3cec815da03640c2940c].[2e8eaa68c7e128861299162323c29c29672f5c094aceaf22d9c0935e4bbd3f85].[a64d2b5a93eda272d27734cc2fb8d1c468562e279f1e97e759eea1a5a410f8e3].[462a1d6391f7ea5916874504f3b5fc8cd43626f6bbabc8a22fe4312dc1585362].enspunks.eth'),
         ('0x1bc53f6413409d078ec18a29b17f981eafab341598a4e970ac9efab7d29258af', 'unnormalized', '[zzz].eth'),
     ]
 )
