@@ -1,3 +1,5 @@
+import re
+
 import httpx
 import logging
 from fastapi import HTTPException
@@ -371,7 +373,7 @@ class NameGuard:
             raise NamehashNotFoundInSubgraph()
         elif 'name' in response_json['data']['domain']:
             name = str(response_json['data']['domain']['name'])
-            if name.startswith('['):
+            if re.match('^\[[0-9a-f]{64}\]', name):
                 logger.warning(f'Unknown label returned from subgraph: {name}')
                 return None
             else:

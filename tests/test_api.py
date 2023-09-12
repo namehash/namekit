@@ -104,13 +104,31 @@ def test_bulk_inspect_name_post(test_client, api_version):
 def test_inspect_namehash_get(test_client, api_version, namehash: str, expected_status_code: int, expected_name: str):
     network_name = 'mainnet'
     response = test_client.get(f'/{api_version}/inspect-namehash/{network_name}/{namehash}')
-    assert response.status_code == 200
+    assert response.status_code == expected_status_code
     res_json = response.json()
     pprint(res_json)
 
     assert res_json['namehash'] == '0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835'
     assert res_json['name'] == expected_name
 
+@pytest.mark.parametrize(
+    "namehash, normalization, expected_name",
+    [
+        ('0xe0fe380f4d877f643e88ceabbed4e5ee0efe66f079aabba23e8902336f7948da', 'unknown', '[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth'),
+        ('0x0462571d34d206146958c44e473730b1b2630321072c7fbb92deeea946416dab', 'unknown', '[5bc926fc40cc7c49e0df6dddf26e4dc7b9d6d32f4a55d4f0670320dbf414afd2].byongdok.eth'),
+        ('0x5f57b185ab56ca42b5506f96694c767ebcc8c6e2854a79636b565e4ebe700fb0', 'unknown', '[2af8fae91ee5ef94f17f2c2f23532cc2d1ccaee78cae52efed0df04bc2463b13].[3fddf465ed81d79ae943b35800b1d187dc0b5d69614bf7e8ebddbae19d72cae8].genevaswis.eth'),
+        ('0xb2636b6e3b1abdd3fbec454d4f4b1a904e7b15e3609cb208bcfc5a5487293308', 'unknown', '[3fddf465ed81d79ae943b35800b1d187dc0b5d69614bf7e8ebddbae19d72cae8].genevaswis.eth'),
+        ('0x1bc53f6413409d078ec18a29b17f981eafab341598a4e970ac9efab7d29258af', 'unnormalized', '[zzz].eth'),
+    ]
+)
+def test_inspect_namehash_get_unknown(test_client, api_version, namehash: str, normalization: str, expected_name: str):
+    network_name = 'mainnet'
+    response = test_client.get(f'/{api_version}/inspect-namehash/{network_name}/{namehash}')
+    assert response.status_code == 200
+    res_json = response.json()
+    pprint(res_json)
+
+    assert res_json['normalization'] == normalization
 
 @pytest.mark.parametrize(
     "namehash, expected_status_code, expected_name",
