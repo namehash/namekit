@@ -131,6 +131,16 @@ def test_inspect_namehash_post(test_client, api_version, namehash: str, expected
     assert res_json['name'] == expected_name
 
 
+def test_inspect_namehash_invalid_namehash(test_client, api_version):
+    network_name = 'mainnet'
+    namehash = '0x123'
+    response = test_client.post(f'/{api_version}/inspect-namehash',
+                                json={'namehash': namehash, 'network_name': network_name})
+    assert response.status_code == 422
+    res_json = response.json()
+    assert res_json['detail'].startswith('Provided namehash is not valid')
+
+
 # -- inspect-labelhash --
 
 # todo: test different errors and status codes
