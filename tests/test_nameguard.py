@@ -50,3 +50,24 @@ def test_highest_risk(nameguard: NameGuard):
     result = nameguard.inspect_name('nić_k.eth')
     assert result.summary.highest_risk.check is Check.NORMALIZED
     assert result.summary.highest_risk.rating is Rating.ALERT
+
+
+def test_check_skip(nameguard: NameGuard):
+    sup = 'a'
+    unsup = chr(2045)
+    unk = '\u0378'
+
+    result = nameguard.inspect_name(sup)
+    c = [c for c in result.checks if c.check is Check.FONT_SUPPORT][0]
+    assert c.rating is Rating.PASS
+    assert c.status is CheckStatus.PASS
+
+    result = nameguard.inspect_name(unsup)
+    c = [c for c in result.checks if c.check is Check.FONT_SUPPORT][0]
+    assert c.rating is Rating.WARN
+    assert c.status is CheckStatus.WARN
+
+    result = nameguard.inspect_name(unk)
+    c = [c for c in result.checks if c.check is Check.FONT_SUPPORT][0]
+    assert c.rating is Rating.PASS
+    assert c.status is CheckStatus.SKIP
