@@ -76,8 +76,8 @@ class LabelGuardResult(BaseModel):
     Label analysis result.
     '''
 
-    label: str = Field(
-        description='The analyzed label.',
+    label: Optional[str] = Field(
+        description='The analyzed label. If the label is unknown, this field is `None`.',
         examples=['nick', 'eth'],
     )
     
@@ -93,8 +93,8 @@ class LabelGuardResult(BaseModel):
         description='A list of checks that were performed on the label.',
     )
     
-    graphemes: list[GraphemeGuardResult] = Field(
-        description='A list of graphemes that were analyzed in the label.',
+    graphemes: Optional[list[GraphemeGuardResult]] = Field(
+        description='A list of graphemes that were analyzed in the label. If the label is unknown, this field is `None`.',
     )
 
 
@@ -127,8 +127,8 @@ class NameGuardResult(NameGuardQuickResult):
         description='A list of checks that were performed on the name.',
     )
 
-    labels: Optional[list[LabelGuardResult]] = Field(
-        description='The analyzed labels of the name. If the name is unknown, this field is `None`.',
+    labels: list[LabelGuardResult] = Field(
+        description='The analyzed labels of the name.',
     )
 
 

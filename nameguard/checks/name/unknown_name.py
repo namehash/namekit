@@ -9,7 +9,7 @@ MESSAGE_PASS = 'Name can be looked up from a namehash'
 MESSAGE_FAIL = 'Name cannot be looked up from a namehash'
 
 
-def check_name(labels: Optional[list[InspectorResult]]) -> GenericCheckResult:
+def check_name(labels: Optional[list[Optional[InspectorResult]]]) -> GenericCheckResult:
     """
     Check if a name can be looked up from a namehash.
     This is a helper function for creating the `UNKNOWN_NAME` check result.

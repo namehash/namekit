@@ -55,7 +55,13 @@ class NameGuard:
         logger.debug(f'[inspect_name] name: \'{name}\'')
         labels = name.split('.')
         logger.debug(f'[inspect_name] labels: {labels}')
-        labels_analysis = [self.inspector.analyse_label(label) for label in labels]
+
+        # labelhashes have `None` as their analysis
+        labels_analysis = [self.inspector.analyse_label(label)
+                           # do not analyze labelhashes
+                           if not label_is_labelhash(label)
+                           else None
+                           for label in labels]
 
         # -- check individual entities --
 
@@ -64,14 +70,16 @@ class NameGuard:
             [
                 [check(grapheme) for check in GRAPHEME_CHECKS]
                 for grapheme in label_analysis.graphemes
-            ] if not label_is_labelhash(label_analysis.label) else []
+            ] if label_analysis is not None else []
+            # label has [] graphemes if it's a labelhash
             for label_analysis in labels_analysis
         ]
 
         # checks for each label
         labels_checks = [
             [check(label_analysis) for check in LABEL_CHECKS]
-            if not label_is_labelhash(label_analysis.label) else []
+            if label_analysis is not None else []
+            # checks for a label are [] if it's a labelhash
             for label_analysis in labels_analysis
         ]
 
@@ -97,10 +105,10 @@ class NameGuard:
             name=name,
             namehash=namehash_from_name(name),
             normalization=Normalization.UNKNOWN
-                          if any(label_is_labelhash(label) for label in labels)
-                          else Normalization.NORMALIZED
-                          if all(label_analysis.status == 'normalized' for label_analysis in labels_analysis)
-                          else Normalization.UNNORMALIZED,
+                          if any(label_analysis is None for label_analysis in labels_analysis)
+                          else Normalization.UNNORMALIZED
+                          if any(label_analysis.status == 'unnormalized' for label_analysis in labels_analysis)
+                          else Normalization.NORMALIZED,
             summary=RiskSummary(
                 rating=calculate_nameguard_rating(name_checks),
                 risk_count=count_risks(name_checks),
@@ -109,13 +117,14 @@ class NameGuard:
             checks=name_checks,
             labels=[
                 LabelGuardResult(
-                    label=label_analysis.label,
-                    labelhash=labelhash_from_label(label_analysis.label),
+                    label=label_analysis.label if label_analysis is not None else None,
+                    # label will be the labelhash if it's a labelhash
+                    labelhash=labelhash_from_label(label_analysis.label) if label_analysis is not None else '0x' + label[1:-1],
                     normalization=Normalization.UNKNOWN
-                                  if label_is_labelhash(label_analysis.label)
-                                  else Normalization.NORMALIZED
-                                  if label_analysis.status == 'normalized'  
-                                  else Normalization.UNNORMALIZED,
+                                  if label_analysis is None
+                                  else Normalization.UNNORMALIZED
+                                  if label_analysis.status == 'unnormalized'  
+                                  else Normalization.NORMALIZED,
                     summary=RiskSummary(
                         rating=calculate_nameguard_rating(label_checks),
                         risk_count=count_risks(label_checks),
@@ -137,9 +146,10 @@ class NameGuard:
                             checks=grapheme_checks,
                         )
                         for grapheme, grapheme_checks in zip(label_analysis.graphemes, label_graphemes_checks)
-                    ],
+                    ] if label_analysis is not None else None,
                 )
-                for label_analysis, label_checks, label_graphemes_checks in zip(
+                for label, label_analysis, label_checks, label_graphemes_checks in zip(
+                    labels,
                     labels_analysis,
                     labels_checks,
                     labels_graphemes_checks,

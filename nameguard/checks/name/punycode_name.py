@@ -1,3 +1,4 @@
+from typing import Optional
 from nameguard.models import CheckStatus, Check, GenericCheckResult
 from label_inspector.common.punycode import puny_analysis, PunycodeCompatibility
 from label_inspector.models import InspectorResult
@@ -8,8 +9,8 @@ MESSAGE_PASS = 'Name is Punycode compatible'
 MESSAGE_FAIL = 'Name is not Punycode compatible'
 
 
-def check_name(labels: list[InspectorResult]) -> GenericCheckResult:
-    result = puny_analysis('.'.join(label.label for label in labels))
+def check_name(labels: list[Optional[InspectorResult]]) -> GenericCheckResult:
+    result = puny_analysis('.'.join(label.label for label in labels if label is not None))
     passed = result.compatibility == PunycodeCompatibility.COMPATIBLE
     return GenericCheckResult(
         check=Check.PUNYCODE_COMPATIBLE_NAME,
