@@ -1,10 +1,9 @@
-import re
 import pytest
 from fastapi.testclient import TestClient
 from urllib.parse import quote
 from pprint import pprint
 
-from nameguard.nameguard import labelhash_from_label
+from nameguard.utils import labelhash_from_label
 
 
 @pytest.fixture(scope="module")
