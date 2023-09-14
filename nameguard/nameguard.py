@@ -190,9 +190,6 @@ class NameGuard:
 
         logger.debug(f'[inspect_name_with_labelhash_lookup] labelhashes found, resolving')
 
-        try:
-            name = await resolve_all_labelhashes_in_name(name)
-        except NamehashNotFoundInSubgraph:
-            logger.debug(f'[inspect_name_with_labelhash_lookup] namehash not found')
+        name = await resolve_all_labelhashes_in_name(name)
 
         return self.inspect_name(name)
