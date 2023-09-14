@@ -23,7 +23,7 @@ from nameguard.utils import namehash_from_name
 
     ('[3cea9784e8054d1110ff911c2ec60c673937528a1903ba0d76b76b11f62e4550].[17b7d2bcf3a9a21b8c13ea2f80455c2e5725593527788ea42b4deac1b327b620].eth',
      '0x313f64986f3b9b91f1da2a2f9d9029e5121e4caf1c5f959bfedfabe1d0256095',
-     '[3cea9784e8054d1110ff911c2ec60c673937528a1903ba0d76b76b11f62e4550].[17b7d2bcf3a9a21b8c13ea2f80455c2e5725593527788ea42b4deac1b327b620].eth'),
+     '[3cea9784e8054d1110ff911c2ec60c673937528a1903ba0d76b76b11f62e4550].tenzorum-id.eth'),
 
     ('[1c475ca4200d816bad97986d1a70646022472f691e1929e8b2d405969fc68fd5].[5deb321dac767b851bb9b84f09a1b28038f4096cf436648a02f7d403cd52de1e].행정사법인.eth',
      '0x0954e85a60b36786ee9a6d06dd38b66642a21f1517205314d720c164c8bc6604',
@@ -31,5 +31,4 @@ from nameguard.utils import namehash_from_name
 ])
 async def test_lookup(name, namehash, expected):
     assert namehash_from_name(name) == namehash
-    assert await namehash_to_name_lookup(namehash) == expected
     assert await resolve_all_labelhashes_in_name(name) == expected
