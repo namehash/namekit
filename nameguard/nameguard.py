@@ -19,6 +19,7 @@ from nameguard.utils import (
     get_highest_risk,
     label_is_labelhash,
 )
+from nameguard.exceptions import NamehashNotFoundInSubgraph
 from nameguard.logging import logger
 from nameguard.subgraph import namehash_to_name_lookup, resolve_all_labelhashes_in_name
 
@@ -52,6 +53,12 @@ class NameGuard:
         self.inspector = init_inspector()
 
     def inspect_name(self, name: str) -> NameGuardResult:
+        '''
+        Inspect a name. A name is a sequence of labels separated by dots.
+        A label can be a labelhash or a string.
+        If a labelhash is encountered, it will be treated as an unknown label.
+        '''
+
         logger.debug(f'[inspect_name] name: \'{name}\'')
         labels = name.split('.')
         logger.debug(f'[inspect_name] labels: {labels}')
@@ -123,7 +130,7 @@ class NameGuard:
                     normalization=Normalization.UNKNOWN
                                   if label_analysis is None
                                   else Normalization.UNNORMALIZED
-                                  if label_analysis.status == 'unnormalized'  
+                                  if label_analysis.status == 'unnormalized'
                                   else Normalization.NORMALIZED,
                     summary=RiskSummary(
                         rating=calculate_nameguard_rating(label_checks),
@@ -168,6 +175,24 @@ class NameGuard:
         return self.inspect_name(name)
 
     async def inspect_name_with_labelhash_lookup(self, name: str) -> NameGuardResult:
+        '''
+        Inspect a name. A name is a sequence of labels separated by dots.
+        A label can be a labelhash or a string.
+        If a labelhash is encountered, the entire name will be looked up by its namehash.
+        If the namehash is not found, all labelhashes will be treated as unknown labels.
+        '''
+
         logger.debug(f'[inspect_name_with_labelhash_lookup] name: \'{name}\'')
-        name = await resolve_all_labelhashes_in_name(name)
+
+        if all(not label_is_labelhash(label) for label in name.split('.')):
+            logger.debug(f'[inspect_name_with_labelhash_lookup] no labelhashes found')
+            return self.inspect_name(name)
+
+        logger.debug(f'[inspect_name_with_labelhash_lookup] labelhashes found, resolving')
+
+        try:
+            name = await resolve_all_labelhashes_in_name(name)
+        except NamehashNotFoundInSubgraph:
+            logger.debug(f'[inspect_name_with_labelhash_lookup] namehash not found')
+
         return self.inspect_name(name)
