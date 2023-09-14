@@ -2,10 +2,11 @@ from enum import Enum
 from fastapi import FastAPI, Path, Request
 from pydantic import BaseModel, Field
 
-from nameguard.nameguard import NameGuard, validate_namehash, namehash_from_labelhash
+from nameguard.nameguard import NameGuard
+from nameguard.utils import validate_namehash, namehash_from_labelhash
 from nameguard.models import NameGuardResult, NameGuardBulkResult
-from nameguard.nameguard import logger
-from nameguard.nameguard import (
+from nameguard.logging import logger
+from nameguard.exceptions import (
     InvalidNameHash,
     ENSSubgraphUnavailable,
     NamehashMismatchError,

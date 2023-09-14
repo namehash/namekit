@@ -1,9 +1,13 @@
 import pytest
 
-from nameguard.nameguard import (
-    int_to_hexstr, namehash_from_name, validate_namehash, namehash_from_labelhash,
-    labelhash_from_label, InvalidNameHash
+from nameguard.utils import (
+    int_to_hexstr,
+    namehash_from_name,
+    validate_namehash,
+    namehash_from_labelhash,
+    labelhash_from_label,
 )
+from nameguard.exceptions import InvalidNameHash
 
 
 def test_int_to_hexstr():
