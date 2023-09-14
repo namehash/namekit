@@ -17,9 +17,10 @@ from nameguard.utils import (
     count_risks,
     agg_checks,
     get_highest_risk,
+    label_is_labelhash,
 )
 from nameguard.logging import logger
-from nameguard.subgraph import namehash_to_normal_name_lookup
+from nameguard.subgraph import namehash_to_name_lookup, resolve_all_labelhashes_in_name
 
 
 GRAPHEME_CHECKS = [
@@ -63,13 +64,14 @@ class NameGuard:
             [
                 [check(grapheme) for check in GRAPHEME_CHECKS]
                 for grapheme in label_analysis.graphemes
-            ]
+            ] if not label_is_labelhash(label_analysis.label) else []
             for label_analysis in labels_analysis
         ]
 
         # checks for each label
         labels_checks = [
             [check(label_analysis) for check in LABEL_CHECKS]
+            if not label_is_labelhash(label_analysis.label) else []
             for label_analysis in labels_analysis
         ]
 
@@ -91,12 +93,14 @@ class NameGuard:
 
         # -- generate result --
 
-        name_normalized = all(x.status == 'normalized' for x in labels_analysis)
-
         return NameGuardResult(
             name=name,
             namehash=namehash_from_name(name),
-            normalization=Normalization.NORMALIZED if name_normalized else Normalization.UNNORMALIZED,
+            normalization=Normalization.UNKNOWN
+                          if any(label_is_labelhash(label) for label in labels)
+                          else Normalization.NORMALIZED
+                          if all(label_analysis.status == 'normalized' for label_analysis in labels_analysis)
+                          else Normalization.UNNORMALIZED,
             summary=RiskSummary(
                 rating=calculate_nameguard_rating(name_checks),
                 risk_count=count_risks(name_checks),
@@ -107,7 +111,11 @@ class NameGuard:
                 LabelGuardResult(
                     label=label_analysis.label,
                     labelhash=labelhash_from_label(label_analysis.label),
-                    normalization=Normalization.NORMALIZED if label_analysis.status == 'normalized' else Normalization.UNNORMALIZED,
+                    normalization=Normalization.UNKNOWN
+                                  if label_is_labelhash(label_analysis.label)
+                                  else Normalization.NORMALIZED
+                                  if label_analysis.status == 'normalized'  
+                                  else Normalization.UNNORMALIZED,
                     summary=RiskSummary(
                         rating=calculate_nameguard_rating(label_checks),
                         risk_count=count_risks(label_checks),
@@ -144,21 +152,12 @@ class NameGuard:
             results=[self.inspect_name(name) for name in names],
         )
 
-    async def inspect_namehash(self, namehash: str, network='mainnet') -> NameGuardResult:
-        name = await namehash_to_normal_name_lookup(namehash, network=network)
-        if name is None:
-            name_checks = [checks.name.unknown_name.check_name(None)]
-            return NameGuardResult(
-                name=None,
-                namehash=namehash,
-                normalization=Normalization.UNKNOWN,
-                summary=RiskSummary(
-                    rating=calculate_nameguard_rating(name_checks),
-                    risk_count=count_risks(name_checks),
-                    highest_risk=get_highest_risk(name_checks),
-                ),
-                checks=name_checks,
-                labels=None,
-            )
-        else:
-            return self.inspect_name(name)
+    async def inspect_namehash(self, namehash: str) -> NameGuardResult:
+        logger.debug(f'[inspect_namehash] namehash: \'{namehash}\'')
+        name = await namehash_to_name_lookup(namehash)
+        return self.inspect_name(name)
+
+    async def inspect_name_with_labelhash_lookup(self, name: str) -> NameGuardResult:
+        logger.debug(f'[inspect_name_with_labelhash_lookup] name: \'{name}\'')
+        name = await resolve_all_labelhashes_in_name(name)
+        return self.inspect_name(name)
