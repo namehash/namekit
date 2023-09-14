@@ -1,3 +1,4 @@
+import re
 from typing import Optional
 from ens.utils import Web3
 from hexbytes import HexBytes
@@ -5,6 +6,10 @@ from ens.constants import EMPTY_SHA3_BYTES
 
 from nameguard.exceptions import InvalidNameHash
 from nameguard.models import Rating, GenericCheckResult, Check
+
+
+def label_is_labelhash(x: str) -> bool:
+    return bool(re.match(r'^\[[0-9a-f]{64}\]$', x))
 
 
 def hexbytes_to_int(hb: HexBytes) -> int:
@@ -44,9 +49,10 @@ def namehash_from_name(name: str) -> str:
     if name:
         labels = name.split(".")
         for label in reversed(labels):
-            labelhash = Web3().keccak(text=label)
-            assert isinstance(labelhash, bytes)  # todo: remove?
-            assert isinstance(node, bytes)
+            if label_is_labelhash(label):
+                labelhash = HexBytes(label[1:-1])
+            else:
+                labelhash = Web3().keccak(text=label)
             node = Web3().keccak(node + labelhash)
     return node.hex()
 
@@ -92,7 +98,7 @@ def validate_namehash(namehash: str) -> str:
 
 
 def calculate_nameguard_rating(check_results: list[GenericCheckResult]) -> Rating:
-    return max(check.rating for check in check_results)
+    return max((check.rating for check in check_results), default=Rating.PASS)
 
 
 def count_risks(check_results: list[GenericCheckResult]) -> int:

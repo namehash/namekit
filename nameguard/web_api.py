@@ -105,7 +105,6 @@ async def inspect_namehash_get(
 ) -> NameGuardResult:
     return await nameguard.inspect_namehash(
         namehash=validate_namehash(namehash=namehash),
-        network=network_name,
     )
 
 
@@ -123,7 +122,6 @@ async def inspect_namehash_get(
 async def inspect_namehash_post(api_version: ApiVersion, request: InspectNamehashRequest) -> NameGuardResult:
     return await nameguard.inspect_namehash(
         namehash=validate_namehash(namehash=request.namehash),
-        network=request.network_name,
     )
 
 
@@ -157,10 +155,7 @@ async def inspect_labelhash_get(
 ) -> NameGuardResult:
     valid_labelhash = validate_namehash(namehash=labelhash)
     namehash = namehash_from_labelhash(valid_labelhash, parent_name=parent_name)
-    return await nameguard.inspect_namehash(
-        namehash=namehash,
-        network=network_name,
-    )
+    return await nameguard.inspect_namehash(namehash=namehash)
 
 
 @app.post(
@@ -177,10 +172,7 @@ async def inspect_labelhash_get(
 async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelhashRequest) -> NameGuardResult:
     valid_labelhash = validate_namehash(namehash=request.labelhash)
     namehash = namehash_from_labelhash(valid_labelhash, parent_name=request.parent_name)
-    return await nameguard.inspect_namehash(
-        namehash=namehash,
-        network=request.network_name,
-    )
+    return await nameguard.inspect_namehash(namehash=namehash)
 
 
 if __name__ == '__main__':

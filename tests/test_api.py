@@ -175,6 +175,8 @@ def test_inspect_namehash_get_unknown_status(test_client, api_version, namehash:
     pprint(res_json)
 
     assert res_json['normalization'] == normalization
+    assert res_json['namehash'] == namehash
+    assert res_json['name'] == expected_name
 
 
 @pytest.mark.parametrize(
