@@ -1,6 +1,6 @@
 import pytest
 
-from nameguard.models import Rating, Check, CheckStatus
+from nameguard.models import Rating, Check, CheckStatus, Normalization
 from nameguard.nameguard import NameGuard
 
 
@@ -71,3 +71,20 @@ def test_check_skip(nameguard: NameGuard):
     c = [c for c in result.checks if c.check is Check.FONT_SUPPORT][0]
     assert c.rating is Rating.PASS
     assert c.status is CheckStatus.SKIP
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize('name,n,l0,l1', [
+    ('nick.eth', Normalization.NORMALIZED, Normalization.NORMALIZED, Normalization.NORMALIZED),
+    ('[zzz].eth', Normalization.UNNORMALIZED, Normalization.UNNORMALIZED, Normalization.NORMALIZED),
+
+    ('[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth', Normalization.NORMALIZED, Normalization.NORMALIZED, Normalization.NORMALIZED),
+    ('[291aa4f6b79b45c2da078242837f39c773527f1bdb269cc37f1aba8f72e308a8].eth', Normalization.UNNORMALIZED, Normalization.UNNORMALIZED, Normalization.NORMALIZED),
+
+    ('[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth', Normalization.UNKNOWN, Normalization.UNKNOWN, Normalization.NORMALIZED),
+])
+async def test_normalization_status(nameguard: NameGuard, name, n, l0, l1):
+    r = await nameguard.inspect_name_with_labelhash_lookup(name)
+    assert r.normalization is n
+    assert r.labels[0].normalization is l0
+    assert r.labels[1].normalization is l1
