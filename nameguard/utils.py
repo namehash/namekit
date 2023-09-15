@@ -45,6 +45,10 @@ def labelhash_from_label(label: str) -> str:
 
 
 def namehash_from_name(name: str) -> str:
+    '''
+    Calculate the namehash of a name.
+    Detects labelhashes in the name.
+    '''
     node = EMPTY_SHA3_BYTES
     if name:
         labels = name.split(".")

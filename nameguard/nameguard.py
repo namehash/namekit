@@ -36,6 +36,7 @@ LABEL_CHECKS = [
     checks.label.mixed_scripts.check_label,
     checks.label.namewrapper.check_label,
     checks.label.punycode.check_label,
+    checks.label.unknown.check_label,
 ]
 
 NAME_CHECKS = [
@@ -85,8 +86,7 @@ class NameGuard:
         # checks for each label
         labels_checks = [
             [check(label_analysis) for check in LABEL_CHECKS]
-            if label_analysis is not None else []
-            # checks for a label are [] if it's a labelhash
+            # checks have to handle labelhashes
             for label_analysis in labels_analysis
         ]
 
