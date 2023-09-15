@@ -204,8 +204,8 @@ def test_inspect_namehash_get_unknown(test_client, api_version, namehash: str, e
     assert res_json['normalization'] == 'unknown'
     assert res_json['namehash']
 
-    # TODO labelhashes are available for every input
-    # assert all([label['labelhash'] for label in res_json['labels']])
+    # labelhashes are available for every input (also unknown)
+    assert all([label['labelhash'] for label in res_json['labels']])
     # TODO label value for unknown labels is a labelhash
     # for label in res_json['labels']:
     #     if label['normalization'] == 'unknown':
