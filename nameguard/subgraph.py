@@ -5,10 +5,14 @@ from nameguard.exceptions import ENSSubgraphUnavailable, NamehashNotFoundInSubgr
 from nameguard.utils import namehash_from_name, label_is_labelhash
 
 
+# The label limit for using the multi-label lookup query.
+# Longer names will be resolved by querying the namehash of the full name.
+MAX_MULTI_LABEL_LOOKUP = 256
+
 ENS_SUBGRAPH_URL = 'https://api.thegraph.com/subgraphs/name/ensdomains/ens'
 
-SUBGRAPH_NAME_QUERY = """
-query getDomains($nameHash: String) {
+RESOLVE_NAMEHASH_QUERY = """
+query resolveNamehash($nameHash: String) {
   domain(id: $nameHash) {
     name
   }
@@ -48,7 +52,7 @@ async def namehash_to_name_lookup(namehash_hexstr: str) -> str:
 
     variables = {'nameHash': namehash_hexstr}
 
-    data = await call_subgraph(SUBGRAPH_NAME_QUERY, variables)
+    data = await call_subgraph(RESOLVE_NAMEHASH_QUERY, variables)
 
     if 'domain' not in data:
         logger.error(f"Unexpected response data: {data}")
@@ -69,42 +73,64 @@ async def namehash_to_name_lookup(namehash_hexstr: str) -> str:
         raise ENSSubgraphUnavailable(f"Unexpected response data: {data}")
 
 
-def build_multi_label_query(labels: list[str]) -> str:
-    query = '{'
-    for i, labelhash in enumerate(labels):
-        if not label_is_labelhash(labelhash):
-            continue
+def build_multi_label_query(labels: list[str]) -> tuple[str, dict]:
+    '''
+    Builds a query that resolves all labelhashes in a name.
+
+    ```
+    query resolveLabelhashes($l0: String, $l1: String) {
+        l0: domain(id: $l0) {
+            labelName
+        }
+        l1: domain(id: $l1) {
+            labelName
+        }
+    }
+    ```
+    '''
+    labelhash_idx = [i for i, label in enumerate(labels) if label_is_labelhash(label)]
+    args = ' '.join(f'$l{i}:String' for i in labelhash_idx)
+    query = f'query resolveLabelhashes({args}){{'
+    variables = {}
+    for i in labelhash_idx:
         partial_name = '.'.join(labels[i:])
         partial_namehash = namehash_from_name(partial_name)
-        query += f'l{i}:domain(id:"{partial_namehash}"){{labelName}}'
+        query += f'l{i}:domain(id:$l{i}){{labelName}}'
+        variables[f'l{i}'] = partial_namehash
     query += '}'
-    return query
+    return query, variables
 
 
 async def resolve_all_labelhashes_in_name(name: str) -> str:
     logger.debug(f"Trying to resolve full name: {name}")
 
+    namehash = namehash_from_name(name)
     labels =  name.split('.')
-    query = build_multi_label_query(labels)
 
-    data = await call_subgraph(query, {})
+    if len(labels) < MAX_MULTI_LABEL_LOOKUP:
+        logger.debug(f"Trying multi-label lookup for: {name}")
+        query, variables = build_multi_label_query(labels)
+        data = await call_subgraph(query, variables)
+        resolved_labels = []
+        for i, label in enumerate(labels):
+            if label_is_labelhash(label):
+                # domain could be unknown or just the label could be unknown
+                if data[f'l{i}'] is not None:
+                    label = data[f'l{i}']['labelName'] or label
+            resolved_labels.append(label)
+        resolved_name = '.'.join(resolved_labels)
+        resolved_namehash = namehash_from_name(resolved_name)
+        if resolved_namehash != namehash:
+            logger.error(
+                f"NamehashMismatchError occurred:\ninput: {name}\tcalculated: {resolved_name}")
+            raise NamehashMismatchError()
+    else:
+        logger.debug(f"Trying namehash lookup for: {name}")
+        try:
+            resolved_name = await namehash_to_name_lookup(namehash)
+        except NamehashNotFoundInSubgraph:
+            resolved_name = name
 
-    resolved_labels = []
-    for i, label in enumerate(labels):
-        if label_is_labelhash(label):
-            # domain could be unknown or just the label could be unknown
-            if data[f'l{i}'] is not None:
-                label = data[f'l{i}']['labelName'] or label
-        resolved_labels.append(label)
-
-    resolved_name = '.'.join(resolved_labels)
     logger.debug(f"Resolved name: {resolved_name}")
 
-    resolved_namehash = namehash_from_name(resolved_name)
-    if resolved_namehash != namehash_from_name(name):
-        logger.error(
-            f"NamehashMismatchError occurred:\ninput: {name}\tcalculated: {resolved_name}")
-        raise NamehashMismatchError()
-
     return resolved_name
-
