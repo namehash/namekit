@@ -28,6 +28,12 @@ def test_int_to_hexstr():
         ('nIcK.eTh', '0xfcbdde3892e62a9ce1495d580fb7d43a8a7b493189aaa9ea72e9a755b355099a'),  # normalizable
         ('&　󠁡�‍.eth', '0xade50cc78bd67478314cecd9b3623250de7b3d1d962e8df15b063fe365249c4b'),  # disallowed
         ('', '0x0000000000000000000000000000000000000000000000000000000000000000'),
+        ('xyz.hello.eth', '0x1149ec4b348794d13c21794ae392aaa814d22b974f33c45bee75e529e2463923'),
+        ('[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth',
+         '0xe0fe380f4d877f643e88ceabbed4e5ee0efe66f079aabba23e8902336f7948da'),
+        ('[2af8fae91ee5ef94f17f2c2f23532cc2d1ccaee78cae52efed0df04bc2463b13].[3fddf465ed81d79ae943b35800b1d187dc0b5d69614bf7e8ebddbae19d72cae8].genevaswis.eth',
+        '0x5f57b185ab56ca42b5506f96694c767ebcc8c6e2854a79636b565e4ebe700fb0',),
+        ('xyz.[1c8aff950685c2ed4bc3174f3472287b56d9517b9c948127319a09a7a36deac8].eth', '0x1149ec4b348794d13c21794ae392aaa814d22b974f33c45bee75e529e2463923'), # xyz.hello.eth
     ]
 )
 def test_namehash_from_name(name, namehash):
