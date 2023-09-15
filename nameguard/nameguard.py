@@ -121,7 +121,7 @@ class NameGuard:
                 risk_count=count_risks(name_checks),
                 highest_risk=get_highest_risk(name_checks),
             ),
-            checks=name_checks,
+            checks=sorted(name_checks, reverse=True),
             labels=[
                 LabelGuardResult(
                     label=label_analysis.label if label_analysis is not None else None,
@@ -137,7 +137,7 @@ class NameGuard:
                         risk_count=count_risks(label_checks),
                         highest_risk=get_highest_risk(label_checks),
                     ),
-                    checks=label_checks,
+                    checks=sorted(label_checks, reverse=True),
                     graphemes=[
                         GraphemeGuardResult(
                             grapheme=grapheme.value,
@@ -150,7 +150,7 @@ class NameGuard:
                                 risk_count=count_risks(grapheme_checks),
                                 highest_risk=get_highest_risk(grapheme_checks),
                             ),
-                            checks=grapheme_checks,
+                            checks=sorted(grapheme_checks, reverse=True),
                         )
                         for grapheme, grapheme_checks in zip(label_analysis.graphemes, label_graphemes_checks)
                     ] if label_analysis is not None else None,

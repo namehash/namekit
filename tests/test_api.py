@@ -63,12 +63,11 @@ def test_inspect_name_get_unnormalized(test_client, api_version):
     assert all([label['labelhash'] for label in res_json['labels']])  # labelhash for unnormalized
     assert all([label['graphemes'] for label in res_json['labels']])  # graphemes for unnormalized
 
-    # TODO order of checks
-    # check_order_of_list([check['status'] for check in res_json['checks']])
-    # for label in res_json['labels']:
-    #     check_order_of_list([check['status'] for check in label['checks']])
-    #     for grapheme in label['graphemes']:
-    #         check_order_of_list([check['status'] for check in grapheme['checks']])
+    check_order_of_list([check['status'] for check in res_json['checks']])
+    for label in res_json['labels']:
+        check_order_of_list([check['status'] for check in label['checks']])
+        for grapheme in label['graphemes']:
+            check_order_of_list([check['status'] for check in grapheme['checks']])
 
 
 @pytest.mark.parametrize(
