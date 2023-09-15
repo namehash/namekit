@@ -113,9 +113,9 @@ class Check(str, Enum):
     * `NAMEWRAPPER_COMPATIBLE`: TODO
     * `NORMALIZED`: A label is ENSIP-15 normalized.
     * `PUNYCODE_COMPATIBLE_LABEL`: A label is compatible with Punycode.
+    * `UNKNOWN_LABEL`: A label is unknown.
 
     * `PUNYCODE_COMPATIBLE_NAME`: A name is compatible with Punycode.
-    * `UNKNOWN_NAME`: TODO
     '''
 
     # Grapheme
@@ -129,10 +129,10 @@ class Check(str, Enum):
     NAMEWRAPPER_COMPATIBLE = 'NAMEWRAPPER_COMPATIBLE'
     NORMALIZED = 'NORMALIZED'
     PUNYCODE_COMPATIBLE_LABEL = 'PUNYCODE_COMPATIBLE_LABEL'
+    UNKNOWN_LABEL = 'UNKNOWN_LABEL'
 
     # Name
     PUNYCODE_COMPATIBLE_NAME = 'PUNYCODE_COMPATIBLE_NAME'
-    UNKNOWN_NAME = 'UNKNOWN_NAME'
 
 
 SEVERITY_ORDER_DESC = [
