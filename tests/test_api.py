@@ -137,12 +137,16 @@ def test_bulk_inspect_name_post(test_client, api_version):
     [
         ('0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835', 200, 'vitalik.eth'),
         ('107841754600925073349285697024366035838042340511934381588201623605284409137205', 200, 'vitalik.eth'),
+        ('0xe0fe380f4d877f643e88ceabbed4e5ee0efb66f079aabba23e8902336f7948da', 404, None),
     ]
 )
 def test_inspect_namehash_get(test_client, api_version, namehash: str, expected_status_code: int, expected_name: str):
     network_name = 'mainnet'
     response = test_client.get(f'/{api_version}/inspect-namehash/{network_name}/{namehash}')
     assert response.status_code == expected_status_code
+    if expected_status_code != 200:
+        return
+
     res_json = response.json()
     pprint(res_json)
 
