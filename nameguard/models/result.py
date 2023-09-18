@@ -25,10 +25,10 @@ class RiskSummary(BaseModel):
     '''
 
     rating: Rating
-    
+
     risk_count: int = Field(
         description='The number of checks that have a status of `ALERT` or `WARN`.')
-    
+
     highest_risk: Optional[GenericCheckResult] = Field(
         description='The check considered to be the highest risk. If no check has a status of `ALERT` or `WARN`, this field is `None`.')
 
@@ -76,23 +76,24 @@ class LabelGuardResult(BaseModel):
     Label analysis result.
     '''
 
-    label: Optional[str] = Field(
-        description='The analyzed label. If the label is unknown, this field is `None`.',
-        examples=['nick', 'eth'],
+    label: str = Field(
+        description='The analyzed label. If the label is unknown, this field is `[labelhash]`.',
+        examples=['nick', '[99b91f5ec34a22cf0fb21c9f43be6c6417d9991e979c1dca532a8e74d1feec23]'],
     )
-    
+
     labelhash: str = Field(
-        description='The labelhash of the label in hex format.',
+        description='The labelhash of the label in hex format prefixed with `0x`.',
+        examples=['0x99b91f5ec34a22cf0fb21c9f43be6c6417d9991e979c1dca532a8e74d1feec23'],
     )
-    
+
     normalization: Normalization
-    
+
     summary: RiskSummary
-    
+
     checks: list[GenericCheckResult] = Field(
         description='A list of checks that were performed on the label.',
     )
-    
+
     graphemes: Optional[list[GraphemeGuardResult]] = Field(
         description='A list of graphemes that were analyzed in the label. If the label is unknown, this field is `None`.',
     )
@@ -107,9 +108,9 @@ class NameGuardQuickResult(BaseModel):
         description='The analyzed name. If the name is unknown, this field is `None`.',
         examples=['vitalik.eth'],
     )
-    
+
     namehash: str = Field(
-        description='The namehash of the name in hex format.',
+        description='The namehash of the name in hex format prefixed with `0x`.',
         examples=['0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835'],
     )
 
