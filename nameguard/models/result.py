@@ -136,3 +136,15 @@ class NameGuardBulkResult(BaseModel):
     '''
 
     results: list[NameGuardQuickResult]
+
+
+class GraphemeGuardDetailedResult(GraphemeGuardResult):
+    checks: list[GenericCheckResult] = Field(
+        description='A list of checks that were performed on the grapheme.')
+
+    confusables: list[GraphemeGuardResult] = Field(
+        description='A list graphemes that can be confused with the analyzed grapheme.')
+
+    canonical_confusable: Optional[GraphemeGuardResult] = Field(
+        description='A grapheme that is the canonical form of the analyzed grapheme.\n'
+                    '* `null` if the canonical form is not known')

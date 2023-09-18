@@ -175,5 +175,21 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
     return await nameguard.inspect_namehash(namehash=namehash)
 
 
+# -- inspect-grapheme --
+
+
+@app.get(
+    '/{api_version}/inspect-grapheme/{grapheme}',
+    tags=['grapheme'],
+    summary='Inspect Grapheme GET',
+)
+async def inspect_grapheme_get(
+        api_version: ApiVersion,
+        grapheme: str = Path(description='Grapheme to inspect. Should be url-encoded (except when using the Swagger UI).',
+                             examples=['ń', '%F0%9F%98%B5'])
+) -> NameGuardResult:
+    pass
+
+
 if __name__ == '__main__':
     nameguard.inspect_name('nick.eth')
