@@ -124,8 +124,8 @@ class NameGuard:
             checks=sorted(name_checks, reverse=True),
             labels=[
                 LabelGuardResult(
-                    label=label_analysis.label if label_analysis is not None else None,
-                    # label will be the labelhash if it's a labelhash
+                    # actual label or [labelhash]
+                    label=label,
                     labelhash=labelhash_from_label(label_analysis.label) if label_analysis is not None else '0x' + label[1:-1],
                     normalization=Normalization.UNKNOWN
                                   if label_analysis is None

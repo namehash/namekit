@@ -2,6 +2,7 @@ import pytest
 from fastapi.testclient import TestClient
 from urllib.parse import quote
 from pprint import pprint
+import re
 
 from nameguard.utils import labelhash_from_label
 
@@ -204,11 +205,11 @@ def test_inspect_namehash_get_unknown(test_client, api_version, namehash: str, e
     assert res_json['namehash']
 
     # labelhashes are available for every input (also unknown)
-    assert all([label['labelhash'] for label in res_json['labels']])
-    # TODO label value for unknown labels is a labelhash
-    # for label in res_json['labels']:
-    #     if label['normalization'] == 'unknown':
-    #         assert re.match('^\[[0-9a0f]{64}\]$', label['label'])
+    # label value for unknown labels is a labelhash
+    for label in res_json['labels']:
+        if label['normalization'] == 'unknown':
+            assert re.match('^\[[0-9a-f]{64}\]$', label['label'])
+        assert re.match('^0x[0-9a-f]{64}$', label['labelhash'])
 
 
 @pytest.mark.parametrize(

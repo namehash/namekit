@@ -105,7 +105,7 @@ def test_hashes(nameguard: NameGuard):
     r = nameguard.inspect_name('[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth')
     assert r.name == '[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth'
     assert r.namehash == '0x05a67c0ee82964c4f7394cdd47fee7f4d9503a23c09c38341779ea012afe6e00'
-    assert r.labels[0].label is None
+    assert r.labels[0].label == '[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f]'
     assert r.labels[0].labelhash == '0x5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f'
     assert r.labels[1].label == 'eth'
     assert r.labels[1].labelhash == '0x4f5b812789fc606be1b3b16908db13fc7a9adf7ca72641f84d75b47069d3d7f0'
@@ -113,6 +113,6 @@ def test_hashes(nameguard: NameGuard):
 
 def test_unknown_label(nameguard: NameGuard):
     r = nameguard.inspect_name('[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth')
-    assert r.labels[0].label is None
+    assert r.labels[0].label == '[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f]'
     assert r.summary.rating is Rating.ALERT
     assert r.summary.highest_risk.check is Check.UNKNOWN_LABEL
