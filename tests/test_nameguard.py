@@ -2,6 +2,7 @@ import pytest
 
 from nameguard.models import Rating, Check, CheckStatus, Normalization
 from nameguard.nameguard import NameGuard
+from nameguard.exceptions import NamehashNotFoundInSubgraph
 
 
 @pytest.fixture(scope='module')
@@ -113,3 +114,12 @@ def test_unknown_label(nameguard: NameGuard):
     assert r.labels[0].label is None
     assert r.summary.rating is Rating.ALERT
     assert r.summary.highest_risk.check is Check.UNKNOWN_LABEL
+
+
+@pytest.mark.asyncio
+async def test_namehash_non_null_name(nameguard: NameGuard):
+    r = await nameguard.inspect_namehash('0xe0fe380f4d877f643e88ceabbed4e5ee0efe66f079aabba23e8902336f7948da')
+    assert r.name == '[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth'
+
+    with pytest.raises(NamehashNotFoundInSubgraph):
+        await nameguard.inspect_namehash('0xe0fe380f4d877f643e88ceabbed4e5ee0efb66f079aabba23e8902336f7948da')

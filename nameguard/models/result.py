@@ -103,9 +103,9 @@ class NameGuardQuickResult(BaseModel):
     Name analysis result without information about individual checks and labels.
     '''
 
-    name: Optional[str] = Field(
-        description='The analyzed name. If the name is unknown, this field is `None`.',
-        examples=['vitalik.eth'],
+    name: str = Field(
+        description='The analyzed name. Can contain labelhashes when some labels are unknown.',
+        examples=['vitalik.eth', '[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth'],
     )
     
     namehash: str = Field(
