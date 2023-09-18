@@ -94,6 +94,19 @@ def test_inspect_name_get_special_characters(test_client, api_version, encoded_i
     assert res_json['name'] == decoded_name
 
 
+def test_inspect_name_get_empty(test_client, api_version):
+    response = test_client.get(f'/{api_version}/inspect-name/')
+    assert response.status_code == 200
+    res_json = response.json()
+    assert res_json['name'] == ''
+    assert res_json['namehash'] == '0x0000000000000000000000000000000000000000000000000000000000000000'
+    assert res_json['normalization'] == 'normalized'
+
+    response = test_client.get(f'/{api_version}/inspect-name')
+    # method not allowed because this is the POST endpoint path
+    assert response.status_code == 405
+
+
 def test_inspect_name_post(test_client, api_version):
     name = 'vitalik.eth'
     response = test_client.post(f'/{api_version}/inspect-name', json={'name': name})
