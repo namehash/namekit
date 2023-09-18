@@ -67,9 +67,6 @@ class GraphemeGuardResult(BaseModel):
 
     summary: RiskSummary
 
-    checks: list[GenericCheckResult] = Field(
-        description='A list of checks that were performed on the grapheme.')
-
 
 class LabelGuardResult(BaseModel):
     '''
