@@ -143,8 +143,6 @@ def test_bulk_inspect_name_post(test_client, api_version):
 
 # -- inspect-namehash --
 
-# todo: test different errors and status codes
-
 @pytest.mark.parametrize(
     "namehash, expected_status_code, expected_name",
     [
@@ -225,7 +223,7 @@ def test_inspect_namehash_get_unknown(test_client, api_version, namehash: str, e
     # label value for unknown labels is a labelhash
     for label in res_json['labels']:
         if label['normalization'] == 'unknown':
-            assert re.match('^\[[0-9a-f]{64}\]$', label['label'])
+            assert re.match(r'^\[[0-9a-f]{64}\]$', label['label'])
         assert re.match('^0x[0-9a-f]{64}$', label['labelhash'])
 
 
@@ -248,14 +246,39 @@ def test_inspect_namehash_post(test_client, api_version, namehash: str, expected
     assert res_json['name'] == expected_name
 
 
-def test_inspect_namehash_invalid_namehash(test_client, api_version):
+@pytest.mark.parametrize(
+    "namehash, expected_reason",
+    [
+        ('0x123',
+         "Hex number must be 64 digits long and prefixed with '0x'."),
+        ('0xgggg4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835',
+         "Hex number must be 64 digits long and prefixed with '0x'."),
+        ('1652fred1253',
+         "Must be a valid, decimal integer or a hex number with 64 digits, prefixed with '0x'."),
+        ('115792089237316195423570985008687907853269984665640564039457584007913129639936',
+         "The decimal integer converted to base-16 should have at most 64 digits."),
+    ]
+)
+def test_inspect_namehash_invalid_namehash(test_client, api_version, namehash, expected_reason):
     network_name = 'mainnet'
-    namehash = '0x123'
     response = test_client.post(f'/{api_version}/inspect-namehash',
                                 json={'namehash': namehash, 'network_name': network_name})
     assert response.status_code == 422
     res_json = response.json()
     assert res_json['detail'].startswith('Provided namehash is not valid')
+    assert res_json['detail'].endswith(expected_reason)
+
+
+def test_inspect_namehash_mismatch_error(test_client, api_version):
+    network_name = 'mainnet'
+    # todo: how to find registered namehash with null bytes inside? (other than the 0s below)
+    namehash = '0x0000000000000000000000000000000000000000000000000000000000000000'
+    response = test_client.post(f'/{api_version}/inspect-namehash',
+                                json={'namehash': namehash, 'network_name': network_name})
+    assert response.status_code == 500
+    res_json = response.json()
+    assert res_json['detail'].startswith(
+        "Namehash calculated on the name returned from ENS Subgraph does not equal the input namehash.")
 
 
 # -- inspect-labelhash --
@@ -273,13 +296,31 @@ def test_inspect_labelhash_get(test_client, api_version):
     assert res_json['name'] == 'vitalik.eth'
 
 
-def test_inspect_labelhash_post(test_client, api_version):
-    labelhash = labelhash_from_label('vitalik')
+@pytest.mark.parametrize(
+    "labelhash, parent, expected_status_code, expected_name",
+    [
+        ('0xaf2caa1c2ca1d027f1ac823b529d0a67cd144264b2789fa2ea4d63a67c7103cc', None, 200,
+         'vitalik.eth'),
+        ('79233663829379634837589865448569342784712482819484549289560981379859480642508', None, 200,
+         'vitalik.eth'),
+        ('0xaf498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770', None, 200,
+         '[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth'),
+    ]
+)
+def test_inspect_labelhash_post(test_client, api_version, labelhash, parent, expected_status_code, expected_name):
     network_name = 'mainnet'
-    response = test_client.post(f'/{api_version}/inspect-labelhash',
-                                json={'labelhash': labelhash, 'network_name': network_name, 'parent_name': 'eth'})
-    assert response.status_code == 200
+    json_req = {'labelhash': labelhash, 'network_name': network_name}
+    if parent:
+        json_req['parent_name'] = parent
+
+    response = test_client.post(f'/{api_version}/inspect-labelhash', json=json_req)
+    assert response.status_code == expected_status_code
     res_json = response.json()
     pprint(res_json)
 
-    assert res_json['name'] == 'vitalik.eth'
+    assert res_json['name'] == expected_name
+
+    for label in res_json['labels']:
+        if label['normalization'] == 'unknown':
+            assert re.match(r'^\[[0-9a-f]{64}\]$', label['label'])
+        assert re.match('^0x[0-9a-f]{64}$', label['labelhash'])
