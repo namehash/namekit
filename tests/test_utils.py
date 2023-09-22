@@ -1,4 +1,5 @@
 import pytest
+from hexbytes import HexBytes
 
 from nameguard.utils import (
     int_to_hexstr,
@@ -6,6 +7,7 @@ from nameguard.utils import (
     validate_namehash,
     namehash_from_labelhash,
     labelhash_from_label,
+    hexbytes_to_int,
 )
 from nameguard.exceptions import InvalidNameHash
 
@@ -14,6 +16,7 @@ def test_int_to_hexstr():
     hexstr = int_to_hexstr(123456789)
     assert len(hexstr) == 66
     assert hexstr.startswith('0x')
+    assert hexbytes_to_int(HexBytes(hexstr)) == 123456789
 
     with pytest.raises(ValueError):
         _ = int_to_hexstr(123456789**99)
