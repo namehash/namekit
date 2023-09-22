@@ -3,6 +3,7 @@ from fastapi.testclient import TestClient
 from urllib.parse import quote
 from pprint import pprint
 import re
+import httpx
 
 from nameguard.utils import labelhash_from_label
 
@@ -271,6 +272,45 @@ def test_inspect_labelhash_get(test_client, api_version):
     pprint(res_json)
 
     assert res_json['name'] == 'vitalik.eth'
+
+
+def test_inspect_labelhash_get_unexpected_response_body(monkeypatch, test_client, api_version):
+    labelhash = labelhash_from_label('vitalik')
+    network_name = 'mainnet'
+
+    async def return_mock_response(*args, **kwargs):
+        return httpx.Response(200, content=b'{"response": "response"}')
+
+    monkeypatch.setattr(httpx.AsyncClient, 'post', return_mock_response)
+
+    response = test_client.get(f'/{api_version}/inspect-labelhash/{network_name}/{labelhash}/eth')
+    assert response.status_code == 503
+
+
+def test_inspect_labelhash_get_unexpected_status_code(monkeypatch, test_client, api_version):
+    labelhash = labelhash_from_label('vitalik')
+    network_name = 'mainnet'
+
+    async def return_mock_response(*args, **kwargs):
+        return httpx.Response(123)
+
+    monkeypatch.setattr(httpx.AsyncClient, 'post', return_mock_response)
+
+    response = test_client.get(f'/{api_version}/inspect-labelhash/{network_name}/{labelhash}/eth')
+    assert response.status_code == 503
+
+
+def test_inspect_labelhash_get_http_error(monkeypatch, test_client, api_version):
+    labelhash = labelhash_from_label('vitalik')
+    network_name = 'mainnet'
+
+    async def return_mock_response(*args, **kwargs):
+        raise httpx.HTTPError('error')
+
+    monkeypatch.setattr(httpx.AsyncClient, 'post', return_mock_response)
+
+    response = test_client.get(f'/{api_version}/inspect-labelhash/{network_name}/{labelhash}/eth')
+    assert response.status_code == 503
 
 
 def test_inspect_labelhash_post(test_client, api_version):
