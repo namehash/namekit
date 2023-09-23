@@ -3,6 +3,7 @@ from fastapi.testclient import TestClient
 from urllib.parse import quote
 from pprint import pprint
 import re
+import httpx
 
 from nameguard.utils import labelhash_from_label
 
@@ -358,3 +359,41 @@ def test_inspect_labelhash_post(test_client, api_version, labelhash, parent, exp
             assert re.match(r'^\[[0-9a-f]{64}\]$', label['label'])
             assert label['graphemes'] is None
         assert re.match(r'^0x[0-9a-f]{64}$', label['labelhash'])
+
+def test_inspect_labelhash_get_unexpected_response_body(monkeypatch, test_client, api_version):
+    labelhash = labelhash_from_label('vitalik')
+    network_name = 'mainnet'
+
+    async def return_mock_response(*args, **kwargs):
+        return httpx.Response(200, content=b'{"response": "response"}')
+
+    monkeypatch.setattr(httpx.AsyncClient, 'post', return_mock_response)
+
+    response = test_client.get(f'/{api_version}/inspect-labelhash/{network_name}/{labelhash}/eth')
+    assert response.status_code == 503
+
+
+def test_inspect_labelhash_get_unexpected_status_code(monkeypatch, test_client, api_version):
+    labelhash = labelhash_from_label('vitalik')
+    network_name = 'mainnet'
+
+    async def return_mock_response(*args, **kwargs):
+        return httpx.Response(123)
+
+    monkeypatch.setattr(httpx.AsyncClient, 'post', return_mock_response)
+
+    response = test_client.get(f'/{api_version}/inspect-labelhash/{network_name}/{labelhash}/eth')
+    assert response.status_code == 503
+
+
+def test_inspect_labelhash_get_http_error(monkeypatch, test_client, api_version):
+    labelhash = labelhash_from_label('vitalik')
+    network_name = 'mainnet'
+
+    async def return_mock_response(*args, **kwargs):
+        raise httpx.HTTPError('error')
+
+    monkeypatch.setattr(httpx.AsyncClient, 'post', return_mock_response)
+
+    response = test_client.get(f'/{api_version}/inspect-labelhash/{network_name}/{labelhash}/eth')
+    assert response.status_code == 503
