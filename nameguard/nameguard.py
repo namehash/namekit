@@ -9,6 +9,7 @@ from nameguard.models import (
     NameGuardBulkResult,
     RiskSummary,
     Normalization,
+    GraphemeGuardDetailedResult,
 )
 from nameguard.utils import (
     namehash_from_name,
@@ -19,10 +20,9 @@ from nameguard.utils import (
     get_highest_risk,
     label_is_labelhash,
 )
-from nameguard.exceptions import NamehashNotFoundInSubgraph
+from nameguard.exceptions import NamehashNotFoundInSubgraph #TODO
 from nameguard.logging import logger
 from nameguard.subgraph import namehash_to_name_lookup, resolve_all_labelhashes_in_name
-
 
 GRAPHEME_CHECKS = [
     checks.grapheme.confusables.check_grapheme,
@@ -112,10 +112,10 @@ class NameGuard:
             name=name,
             namehash=namehash_from_name(name),
             normalization=Normalization.UNKNOWN
-                          if any(label_analysis is None for label_analysis in labels_analysis)
-                          else Normalization.UNNORMALIZED
-                          if any(label_analysis.status == 'unnormalized' for label_analysis in labels_analysis)
-                          else Normalization.NORMALIZED,
+            if any(label_analysis is None for label_analysis in labels_analysis)
+            else Normalization.UNNORMALIZED
+            if any(label_analysis.status == 'unnormalized' for label_analysis in labels_analysis)
+            else Normalization.NORMALIZED,
             summary=RiskSummary(
                 rating=calculate_nameguard_rating(name_checks),
                 risk_count=count_risks(name_checks),
@@ -126,12 +126,13 @@ class NameGuard:
                 LabelGuardResult(
                     # actual label or [labelhash]
                     label=label,
-                    labelhash=labelhash_from_label(label_analysis.label) if label_analysis is not None else '0x' + label[1:-1],
+                    labelhash=labelhash_from_label(
+                        label_analysis.label) if label_analysis is not None else '0x' + label[1:-1],
                     normalization=Normalization.UNKNOWN
-                                  if label_analysis is None
-                                  else Normalization.UNNORMALIZED
-                                  if label_analysis.status == 'unnormalized'
-                                  else Normalization.NORMALIZED,
+                    if label_analysis is None
+                    else Normalization.UNNORMALIZED
+                    if label_analysis.status == 'unnormalized'
+                    else Normalization.NORMALIZED,
                     summary=RiskSummary(
                         rating=calculate_nameguard_rating(label_checks),
                         risk_count=count_risks(label_checks),
@@ -150,7 +151,7 @@ class NameGuard:
                                 risk_count=count_risks(grapheme_checks),
                                 highest_risk=get_highest_risk(grapheme_checks),
                             ),
-                            checks=sorted(grapheme_checks, reverse=True),
+                            # checks=sorted(grapheme_checks, reverse=True),
                         )
                         for grapheme, grapheme_checks in zip(label_analysis.graphemes, label_graphemes_checks)
                     ] if label_analysis is not None else None,
@@ -193,3 +194,45 @@ class NameGuard:
         name = await resolve_all_labelhashes_in_name(name)
 
         return self.inspect_name(name)
+
+    def inspect_grapheme(self, grapheme: str) -> GraphemeGuardDetailedResult:
+        label_analysis = self.inspector.analyse_label(grapheme)
+        assert len(label_analysis.graphemes) == 1
+        grapheme = label_analysis.graphemes[0]
+        grapheme_checks = [check(grapheme) for check in GRAPHEME_CHECKS]
+
+        def to_grapheme_guard_result(grapheme):
+            grapheme_checks = [check(grapheme) for check in GRAPHEME_CHECKS]
+
+            return GraphemeGuardResult(
+                grapheme=grapheme.value,
+                grapheme_name=grapheme.name,
+                grapheme_type=grapheme.type,
+                grapheme_script=grapheme.script,
+                grapheme_link=grapheme.link,
+                summary=RiskSummary(
+                    rating=calculate_nameguard_rating(grapheme_checks),
+                    risk_count=count_risks(grapheme_checks),
+                    highest_risk=get_highest_risk(grapheme_checks),
+                ),
+            )
+
+        grapheme_result = GraphemeGuardDetailedResult(
+            grapheme=grapheme.value,
+            grapheme_name=grapheme.name,
+            grapheme_type=grapheme.type,
+            grapheme_script=grapheme.script,
+            grapheme_link=grapheme.link,
+            summary=RiskSummary(
+                rating=calculate_nameguard_rating(grapheme_checks),
+                risk_count=count_risks(grapheme_checks),
+                highest_risk=get_highest_risk(grapheme_checks),
+            ),
+            checks=sorted(grapheme_checks, reverse=True),
+            confusables=[to_grapheme_guard_result(c) for c in
+                         grapheme.confusables_other] if grapheme.confusables_other else [],
+            canonical_confusable=to_grapheme_guard_result(
+                grapheme.confusables_canonical) if grapheme.confusables_canonical else None,
+        )
+
+        return grapheme_result

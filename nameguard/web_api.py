@@ -2,6 +2,7 @@ from enum import Enum
 from fastapi import FastAPI, Path, Request
 from pydantic import BaseModel, Field
 
+from nameguard.models import GraphemeGuardDetailedResult
 from nameguard.nameguard import NameGuard
 from nameguard.utils import validate_namehash, namehash_from_labelhash
 from nameguard.models import NameGuardResult, NameGuardBulkResult
@@ -187,8 +188,8 @@ async def inspect_grapheme_get(
         api_version: ApiVersion,
         grapheme: str = Path(description='Grapheme to inspect. Should be url-encoded (except when using the Swagger UI).',
                              examples=['ń', '%F0%9F%98%B5'])
-) -> NameGuardResult:
-    pass
+) -> GraphemeGuardDetailedResult:
+    return nameguard.inspect_grapheme(grapheme)
 
 
 if __name__ == '__main__':

@@ -68,8 +68,7 @@ def test_inspect_name_get_unnormalized(test_client, api_version):
     check_order_of_list([check['status'] for check in res_json['checks']])
     for label in res_json['labels']:
         check_order_of_list([check['status'] for check in label['checks']])
-        for grapheme in label['graphemes']:
-            check_order_of_list([check['status'] for check in grapheme['checks']])
+
 
 
 @pytest.mark.parametrize(
@@ -397,3 +396,14 @@ def test_inspect_labelhash_get_http_error(monkeypatch, test_client, api_version)
 
     response = test_client.get(f'/{api_version}/inspect-labelhash/{network_name}/{labelhash}/eth')
     assert response.status_code == 503
+
+
+def test_inspect_grapheme(test_client, api_version):
+    response = test_client.get(f'/{api_version}/inspect-grapheme/ś')
+    assert response.status_code == 200
+    res_json = response.json()
+    pprint(res_json)
+
+    check_order_of_list([check['status'] for check in res_json['checks']])
+
+    #TODO check for multigrapheme confusables
