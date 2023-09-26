@@ -8,6 +8,7 @@ from nameguard.models import (
     NameGuardResult, 
     NameGuardBulkResult, 
     ReverseLookupResult,
+    ResolverNetworkName,
 )
 from nameguard.logging import logger
 from nameguard.exceptions import (
@@ -183,17 +184,17 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
     return await nameguard.inspect_namehash(namehash=namehash)
 
 @app.get(
-    '/{api_version}/reverse-lookup/{address:path}',
+    '/{api_version}/reverse-lookup/{network_name}/{address:path}',
     tags=['reverse-lookup'],
     summary='Reverse lookup',
     responses={
         **InvalidEthereumAddress.get_responses_spec(),
     },
 )
-async def reverse_lookup_get(api_version: ApiVersion, address: str) -> ReverseLookupResult:
+async def reverse_lookup_get(api_version: ApiVersion, address: str, network_name: ResolverNetworkName) -> ReverseLookupResult:
     if (not address.startswith('0x')) or len(address) != 42 or not all(c in '0123456789abcdefABCDEF' for c in address[2:]):
         raise InvalidEthereumAddress("Hex number must be 40 digits long and prefixed with '0x'.")
-    return await nameguard.reverse_lookup(address)
+    return await nameguard.reverse_lookup(address, network_name)
 
 if __name__ == '__main__':
     nameguard.inspect_name('nick.eth')
