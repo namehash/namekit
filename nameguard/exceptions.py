@@ -39,3 +39,8 @@ class NamehashMismatchError(NameGuardException):
 class NamehashNotFoundInSubgraph(NameGuardException):
     STATUS_CODE = 404
     DESCRIPTION = "Provided namehash could not be found in ENS Subgraph."
+
+
+class InvalidEthereumAddress(NameGuardException):
+    STATUS_CODE = 422
+    DESCRIPTION = "Provided Ethereum address is not valid."
