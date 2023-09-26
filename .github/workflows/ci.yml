@@ -13,6 +13,9 @@ jobs:
         os: [ubuntu-latest]
         python-version: [3.9, 3.11]
 
+    env:
+      PROVIDER_URI: ${{ secrets.PROVIDER_URI }}
+
     steps:
       - uses: actions/checkout@v3
         with:
