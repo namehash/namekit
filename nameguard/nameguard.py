@@ -16,6 +16,7 @@ from nameguard.models import (
     NameGuardBulkResult,
     RiskSummary,
     Normalization,
+    ResolverNetworkName,
 )
 from nameguard.models.result import ReverseLookupResult, ReverseLookupStatus
 from nameguard.utils import (
@@ -61,7 +62,10 @@ class NameGuard:
         self.inspector = init_inspector()
 
         load_dotenv()
-        self.ns = ENS(HTTPProvider(os.environ.get('PROVIDER_URI')))  # TODO use web sockets and async
+        # TODO use web sockets and async
+        self.ns = {ResolverNetworkName.MAINNET: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_MAINNET'))),
+                   ResolverNetworkName.GOERLI: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_GOERLI'))),
+                   ResolverNetworkName.SEPOLIA: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_SEPOLIA')))}
 
     def inspect_name(self, name: str) -> NameGuardResult:
         '''
@@ -204,8 +208,8 @@ class NameGuard:
 
         return self.inspect_name(name)
 
-    async def reverse_lookup(self, address: str) -> ReverseLookupResult:
-        domain = self.ns.name(address)
+    async def reverse_lookup(self, address: str, network_name: str) -> ReverseLookupResult:
+        domain = self.ns[network_name].name(address)
         display_name = f'Unnamed {address[2:6]}'
         primary_name = None
         nameguard_result = None

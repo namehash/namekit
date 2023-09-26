@@ -15,3 +15,7 @@ from .result import (
     Normalization,
     ReverseLookupResult,
 )
+
+from .request import (
+    ResolverNetworkName,
+)
