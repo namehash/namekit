@@ -14,7 +14,9 @@ jobs:
         python-version: [3.9, 3.11]
 
     env:
-      PROVIDER_URI: ${{ secrets.PROVIDER_URI }}
+      PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
+      PROVIDER_URI_GOERLI: ${{ secrets.PROVIDER_URI_GOERLI }}
+      PROVIDER_URI_SEOPLIA: ${{ secrets.PROVIDER_URI_SEOPLIA }}
 
     steps:
       - uses: actions/checkout@v3
