@@ -1,5 +1,12 @@
+import os
+
+import ens_normalize
+from ens import ENS
+from ens_normalize import DisallowedSequence
 from label_inspector.inspector import Inspector
 from label_inspector.config import initialize_inspector_config
+from web3 import HTTPProvider
+from dotenv import load_dotenv
 
 from nameguard import checks
 from nameguard.models import (
@@ -10,6 +17,7 @@ from nameguard.models import (
     RiskSummary,
     Normalization,
 )
+from nameguard.models.result import ReverseLookupResult, ReverseLookupStatus
 from nameguard.utils import (
     namehash_from_name,
     labelhash_from_label,
@@ -22,7 +30,6 @@ from nameguard.utils import (
 from nameguard.exceptions import NamehashNotFoundInSubgraph
 from nameguard.logging import logger
 from nameguard.subgraph import namehash_to_name_lookup, resolve_all_labelhashes_in_name
-
 
 GRAPHEME_CHECKS = [
     checks.grapheme.confusables.check_grapheme,
@@ -52,6 +59,9 @@ def init_inspector():
 class NameGuard:
     def __init__(self):
         self.inspector = init_inspector()
+
+        load_dotenv()
+        self.ns = ENS(HTTPProvider(os.environ.get('PROVIDER_URI')))  # TODO use web sockets and async
 
     def inspect_name(self, name: str) -> NameGuardResult:
         '''
@@ -193,3 +203,25 @@ class NameGuard:
         name = await resolve_all_labelhashes_in_name(name)
 
         return self.inspect_name(name)
+
+    async def reverse_lookup(self, address: str) -> ReverseLookupResult:
+        domain = self.ns.name(address)
+        display_name = f'Unnamed {address[2:6]}'
+        primary_name = None
+        nameguard_result = None
+        if domain is None:
+            status = ReverseLookupStatus.NO_PRIMARY_NAME_FOUND
+        else:
+            try:
+                display_name = ens_normalize.ens_beautify(domain)
+                status = ReverseLookupStatus.NORMALIZED
+                primary_name = domain
+
+                nameguard_result = self.inspect_name(primary_name)
+            except DisallowedSequence:
+                status = ReverseLookupStatus.PRIMARY_NAME_FOUND_BUT_UNNORMALIZED
+
+        return ReverseLookupResult(primary_name=primary_name,
+                                   display_name=display_name,
+                                   primary_name_status=status,
+                                   nameguard_result=nameguard_result)

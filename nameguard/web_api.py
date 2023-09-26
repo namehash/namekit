@@ -4,13 +4,18 @@ from pydantic import BaseModel, Field
 
 from nameguard.nameguard import NameGuard
 from nameguard.utils import validate_namehash, namehash_from_labelhash
-from nameguard.models import NameGuardResult, NameGuardBulkResult
+from nameguard.models import (
+    NameGuardResult, 
+    NameGuardBulkResult, 
+    ReverseLookupResult,
+)
 from nameguard.logging import logger
 from nameguard.exceptions import (
     InvalidNameHash,
     ENSSubgraphUnavailable,
     NamehashMismatchError,
     NamehashNotFoundInSubgraph,
+    InvalidEthereumAddress,
 )
 
 
@@ -177,6 +182,18 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
     namehash = namehash_from_labelhash(valid_labelhash, parent_name=request.parent_name)
     return await nameguard.inspect_namehash(namehash=namehash)
 
+@app.get(
+    '/{api_version}/reverse-lookup/{address:path}',
+    tags=['reverse-lookup'],
+    summary='Reverse lookup',
+    responses={
+        **InvalidEthereumAddress.get_responses_spec(),
+    },
+)
+async def reverse_lookup_get(api_version: ApiVersion, address: str) -> ReverseLookupResult:
+    if (not address.startswith('0x')) or len(address) != 42 or not all(c in '0123456789abcdefABCDEF' for c in address[2:]):
+        raise InvalidEthereumAddress("Hex number must be 40 digits long and prefixed with '0x'.")
+    return await nameguard.reverse_lookup(address)
 
 if __name__ == '__main__':
     nameguard.inspect_name('nick.eth')

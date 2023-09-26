@@ -13,4 +13,5 @@ from .result import (
     NameGuardBulkResult,
     RiskSummary,
     Normalization,
+    ReverseLookupResult,
 )

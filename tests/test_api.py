@@ -401,3 +401,25 @@ def test_inspect_labelhash_get_http_error(monkeypatch, test_client, api_version)
 
     response = test_client.get(f'/{api_version}/inspect-labelhash/{network_name}/{labelhash}/eth')
     assert response.status_code == 503
+
+def test_reverse_lookup_get(monkeypatch, test_client, api_version):
+    address='0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
+    response = test_client.get(f'/{api_version}/reverse-lookup/{address}')
+    assert response.status_code == 200
+    res_json = response.json()
+    print(res_json)
+    assert res_json['primary_name_status'] == 'NORMALIZED'
+    assert res_json['primary_name'] == 'vitalik.eth'
+    assert res_json['display_name'] == 'vitalik.eth'
+
+def test_reverse_lookup_get_unknown(monkeypatch, test_client, api_version):
+    address='0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96046'
+    response = test_client.get(f'/{api_version}/reverse-lookup/{address}')
+    assert response.status_code == 200
+    res_json = response.json()
+    print(res_json)
+    assert res_json['primary_name_status'] == 'NO_PRIMARY_NAME_FOUND'
+    assert res_json['primary_name'] == None
+    assert res_json['display_name'] == 'Unnamed d8dA'  #TODO upper or lower?
+    
+    #TODO add example with address resolved to unnoramlized name
