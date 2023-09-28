@@ -132,7 +132,7 @@ def test_inspect_name_post_latin_all_pass(test_client, api_version):
     # grapheme keys
     assert all(
         set(grapheme_res.keys()) == {'grapheme', 'grapheme_name', 'grapheme_type', 'grapheme_script',
-                                     'grapheme_link', 'summary', 'summary', 'checks'}
+                                     'grapheme_link', 'summary'}
         for label_res in res_json['labels'] for grapheme_res in label_res['graphemes']
     )
 
@@ -148,9 +148,7 @@ def test_inspect_name_post_latin_all_pass(test_client, api_version):
         assert grapheme_res['grapheme'] == expected_grapheme
         assert grapheme_res['grapheme_script'] == 'Latin'
         assert grapheme_res['summary'] == {'highest_risk': None, 'rating': 'PASS', 'risk_count': 0}
-        for check in grapheme_res['checks']:
-            assert 'check' in check and 'message' in check
-            assert check['status'] == 'PASS'
+
 
 
 # -- bulk-inspect-name --
@@ -406,6 +404,10 @@ def test_inspect_grapheme(test_client, api_version):
 
     check_order_of_list([check['status'] for check in res_json['checks']])
 
+    #TODO
+    # for check in grapheme_res['checks']:
+    #     assert 'check' in check and 'message' in check
+    #     assert check['status'] == 'PASS'
 
 @pytest.mark.xfail
 def test_inspect_grapheme_multi(test_client, api_version):
