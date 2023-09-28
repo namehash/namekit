@@ -16,7 +16,8 @@ from nameguard.exceptions import (
     ENSSubgraphUnavailable,
     NamehashMismatchError,
     NamehashNotFoundInSubgraph,
-    InvalidEthereumAddress,
+    InvalidEthereumAddress, 
+    ProviderUnavailable,
 )
 
 
@@ -189,6 +190,7 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
     summary='Reverse lookup',
     responses={
         **InvalidEthereumAddress.get_responses_spec(),
+        **ProviderUnavailable.get_responses_spec(),
     },
 )
 async def reverse_lookup_get(api_version: ApiVersion, address: str, network_name: ResolverNetworkName) -> ReverseLookupResult:
