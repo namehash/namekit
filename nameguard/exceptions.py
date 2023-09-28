@@ -44,3 +44,8 @@ class NamehashNotFoundInSubgraph(NameGuardException):
 class InvalidEthereumAddress(NameGuardException):
     STATUS_CODE = 422
     DESCRIPTION = "Provided Ethereum address is not valid."
+
+
+class ProviderUnavailable(NameGuardException):
+    STATUS_CODE = 503
+    DESCRIPTION = "Error while making request to provider."

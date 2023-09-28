@@ -402,7 +402,7 @@ def test_inspect_labelhash_get_http_error(monkeypatch, test_client, api_version)
     response = test_client.get(f'/{api_version}/inspect-labelhash/{network_name}/{labelhash}/eth')
     assert response.status_code == 503
 
-def test_reverse_lookup_get(monkeypatch, test_client, api_version):
+def test_reverse_lookup_get(test_client, api_version):
     address='0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
     response = test_client.get(f'/{api_version}/reverse-lookup/mainnet/{address}')
     assert response.status_code == 200
@@ -412,7 +412,7 @@ def test_reverse_lookup_get(monkeypatch, test_client, api_version):
     assert res_json['primary_name'] == 'vitalik.eth'
     assert res_json['display_name'] == 'vitalik.eth'
     
-def test_reverse_lookup_get_offchain(monkeypatch, test_client, api_version):
+def test_reverse_lookup_get_offchain(test_client, api_version):
     address='0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd'
     response = test_client.get(f'/{api_version}/reverse-lookup/mainnet/{address}')
     assert response.status_code == 200
@@ -422,7 +422,7 @@ def test_reverse_lookup_get_offchain(monkeypatch, test_client, api_version):
     assert res_json['primary_name'] == 'exampleprimary.cb.id'
     assert res_json['display_name'] == 'exampleprimary.cb.id'
 
-def test_reverse_lookup_get_unknown(monkeypatch, test_client, api_version):
+def test_reverse_lookup_get_unknown(test_client, api_version):
     address='0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96046'
     response = test_client.get(f'/{api_version}/reverse-lookup/mainnet/{address}')
     assert response.status_code == 200
