@@ -166,7 +166,7 @@ class ReverseLookupResult(BaseModel):
     
     display_name: str = Field(
         description='ENS beautified version of the primary name\n'
-                    'if primary name was not found or is unnormalized then "Unnamed [first four digits of Ethereum address]"',
+                    'if primary name was not found or is unnormalized then "Unnamed [first four digits of Ethereum address]", e.g. "Unnamed C2A6"',
     )
     
     nameguard_result: Optional[NameGuardResult]
