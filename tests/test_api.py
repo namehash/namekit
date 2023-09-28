@@ -406,4 +406,13 @@ def test_inspect_grapheme(test_client, api_version):
 
     check_order_of_list([check['status'] for check in res_json['checks']])
 
-    #TODO check for multigrapheme confusables
+
+@pytest.mark.xfail
+def test_inspect_grapheme_multi(test_client, api_version):
+    #TODO
+    response = test_client.get(f'/{api_version}/inspect-grapheme/aś')
+    assert response.status_code == 200
+    res_json = response.json()
+    pprint(res_json)
+
+    check_order_of_list([check['status'] for check in res_json['checks']])

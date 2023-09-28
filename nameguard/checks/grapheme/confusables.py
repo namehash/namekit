@@ -8,7 +8,7 @@ MESSAGE_FAIL = 'This grapheme is confusable'
 MESSAGE_SKIP = 'It has not been checked if this grapheme is confusable'
 
 def check_grapheme(grapheme: Grapheme) -> GenericCheckResult:
-    if hasattr(grapheme, 'confusables_other') is False:
+    if not isinstance(grapheme, Grapheme):
         return GenericCheckResult(
             check=Check.CONFUSABLES,
             status=CheckStatus.SKIP,
