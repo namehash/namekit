@@ -34,15 +34,17 @@ class InspectNameRequest(BaseModel):
         description='Name to inspect.',
         examples=['iamalice.eth'],
     )
+    network_name: NetworkName
 
 
 @app.get(
-    '/{api_version}/inspect-name/{name:path}',
+    '/{api_version}/inspect-name/{network_name}/{name:path}',
     tags=['name'],
     summary='Inspect Name GET'
 )
 async def inspect_name_get(
         api_version: ApiVersion,
+        network_name: NetworkName,
         request: Request,
         name: str = Path(description='**Name should be url-encoded (except when using the Swagger UI).**',
                          examples=['iam%2Falice%3F.eth']),
@@ -66,6 +68,7 @@ async def inspect_name_post(api_version: ApiVersion, request: InspectNameRequest
 
 class BulkInspectNamesRequest(BaseModel):
     names: list[str] = Field(max_length=250)
+    network_name: NetworkName
 
 
 @app.post(
