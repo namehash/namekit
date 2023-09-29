@@ -17,7 +17,7 @@ from nameguard.models import (
     NameGuardBulkResult,
     RiskSummary,
     Normalization,
-    ResolverNetworkName,
+    NetworkName,
 )
 from nameguard.models.result import ReverseLookupResult, ReverseLookupStatus
 from nameguard.utils import (
@@ -64,9 +64,9 @@ class NameGuard:
 
         load_dotenv()
         # TODO use web sockets and async
-        self.ns = {ResolverNetworkName.MAINNET: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_MAINNET'))),
-                   ResolverNetworkName.GOERLI: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_GOERLI'))),
-                   ResolverNetworkName.SEPOLIA: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_SEPOLIA')))}
+        self.ns = {NetworkName.MAINNET: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_MAINNET'))),
+                   NetworkName.GOERLI: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_GOERLI'))),
+                   NetworkName.SEPOLIA: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_SEPOLIA')))}
 
     def inspect_name(self, name: str) -> NameGuardResult:
         '''

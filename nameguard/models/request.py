@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class ResolverNetworkName(str, Enum):
+class NetworkName(str, Enum):
     MAINNET = 'mainnet'
     SEPOLIA = 'sepolia'
     GOERLI = 'goerli'

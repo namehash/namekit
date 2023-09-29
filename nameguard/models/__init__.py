@@ -17,5 +17,5 @@ from .result import (
 )
 
 from .request import (
-    ResolverNetworkName,
+    NetworkName,
 )
