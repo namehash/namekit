@@ -182,18 +182,18 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
     return await nameguard.inspect_namehash(namehash=namehash)
 
 @app.get(
-    '/{api_version}/reverse-lookup/{network_name}/{address:path}',
-    tags=['reverse-lookup'],
-    summary='Reverse lookup',
+    '/{api_version}/primary-name/{network_name}/{address:path}',
+    tags=['primary_name'],
+    summary='Reverse lookup of Ethereum address to primary name',
     responses={
         **InvalidEthereumAddress.get_responses_spec(),
         **ProviderUnavailable.get_responses_spec(),
     },
 )
-async def reverse_lookup_get(api_version: ApiVersion, address: str, network_name: ResolverNetworkName) -> ReverseLookupResult:
+async def primary_name_get(api_version: ApiVersion, address: str, network_name: ResolverNetworkName) -> ReverseLookupResult:
     if (not address.startswith('0x')) or len(address) != 42 or not all(c in '0123456789abcdefABCDEF' for c in address[2:]):
         raise InvalidEthereumAddress("Hex number must be 40 digits long and prefixed with '0x'.")
-    return await nameguard.reverse_lookup(address, network_name)
+    return await nameguard.primary_name(address, network_name)
 
 if __name__ == '__main__':
     nameguard.inspect_name('nick.eth')

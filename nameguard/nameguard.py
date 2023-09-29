@@ -209,7 +209,7 @@ class NameGuard:
 
         return self.inspect_name(name)
 
-    async def reverse_lookup(self, address: str, network_name: str) -> ReverseLookupResult:
+    async def primary_name(self, address: str, network_name: str) -> ReverseLookupResult:
         try:
             domain = self.ns[network_name].name(address)
         except requests.exceptions.ConnectionError as ex:
