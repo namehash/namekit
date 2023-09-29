@@ -198,7 +198,7 @@ async def primary_name_get(api_version: ApiVersion, address: str, network_name: 
     '/{api_version}/fake-ens-name-check/{network_name}/{contract_address}/{token_id}',
     tags=['fake-ens-name-check'],
     summary='Fake ENS name check GET',
-    responses={
+    responses={  # TODO
         # **InvalidNameHash.get_responses_spec(),
         # **ENSSubgraphUnavailable.get_responses_spec(),
         # **NamehashMismatchError.get_responses_spec(),
