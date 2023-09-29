@@ -252,8 +252,8 @@ class NameGuard:
         headers = {"accept": "application/json"}
         response = requests.get(url, headers=headers)
 
-        # print(response.text)
         res_json=response.json()
+        print(res_json)
         title = res_json['title']
         metadata_name = res_json['metadata']['name']
         
@@ -261,5 +261,5 @@ class NameGuard:
         
         name = ens_normalize.ens_cure(name)
         
-        print(title, name)
+        print([title, name])
         return name.endswith('.eth')

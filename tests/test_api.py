@@ -434,13 +434,24 @@ def test_primary_name_get_unknown(test_client, api_version):
     
     #TODO add example with address resolved to unnoramlized (test existence of nameguard results) name and test other networks
 
-def test_fake_ens_name_check(test_client, api_version):
+@pytest.mark.parametrize(
+    "contract_address, token_id, fake",
+    [
+        ('0x495f947276749ce646f68ac8c248420045cb7b5e', '61995921128521442959106650131462633744885269624153038309795231243542768648193', True),  # nick.eth
+        ('0x2cc8342d7c8bff5a213eb2cde39de9a59b3461a7', '45104', True),
+        ('0x495f947276749ce646f68ac8c248420045cb7b5e', '115299889408293060529275095010636973531920388509401805939660647627196198813697', True),
+        ('0x495f947276749ce646f68ac8c248420045cb7b5e', '87268313074833894749413679830860625010141738974859681274795075557252109697025', True),  #based on collection name
+        ('0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d', '3972', False),
+        ('0xbd3531da5cf5857e7cfaa92426877b022e612cf8', '2028', False),
+        # matic chain
+        ('0x2953399124f0cbb46d2cbacd8a89cf0599974963', '1075136997460547214433646341011567219464027878285908866916833491623281164289', True),
+        ('0x2953399124f0cbb46d2cbacd8a89cf0599974963', '3741242716829664262552727484824431817099747563526660400091605301110364962817', True),
+        ('0xcc6c63044bfe4e991f3a13b35b6ee924b54cd304', '440', False),
+    ]
+)
+def test_fake_ens_name_check(test_client, api_version, contract_address, token_id, fake):
     network_name = 'mainnet'
-
-    # fake nick.eth
-    contract_address='0x495f947276749ce646f68ac8c248420045cb7b5e'
-    token_id='61995921128521442959106650131462633744885269624153038309795231243542768648193'
 
     response = test_client.get(f'/{api_version}/fake-ens-name-check/{network_name}/{contract_address}/{token_id}')
     assert response.status_code == 200
-    assert response.json() == True
+    assert response.json() == fake
