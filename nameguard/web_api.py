@@ -5,10 +5,10 @@ from pydantic import BaseModel, Field
 from nameguard.nameguard import NameGuard
 from nameguard.utils import validate_namehash, namehash_from_labelhash
 from nameguard.models import (
-    NameGuardResult, 
-    NameGuardBulkResult, 
+    NameGuardResult,
+    NameGuardBulkResult,
     ReverseLookupResult,
-    ResolverNetworkName,
+    NetworkName,
 )
 from nameguard.logging import logger
 from nameguard.exceptions import (
@@ -23,10 +23,6 @@ from nameguard.exceptions import (
 
 class ApiVersion(str, Enum):
     V1_BETA = 'v1-beta'
-
-
-class NetworkName(str, Enum):
-    MAINNET = 'mainnet'
 
 
 app = FastAPI(title='NameGuard Service', version=ApiVersion.V1_BETA.value)
@@ -193,7 +189,7 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
         **ProviderUnavailable.get_responses_spec(),
     },
 )
-async def primary_name_get(api_version: ApiVersion, address: str, network_name: ResolverNetworkName) -> ReverseLookupResult:
+async def primary_name_get(api_version: ApiVersion, address: str, network_name: NetworkName) -> ReverseLookupResult:
     if (not address.startswith('0x')) or len(address) != 42 or not all(c in '0123456789abcdefABCDEF' for c in address[2:]):
         raise InvalidEthereumAddress("Hex number must be 40 digits long and prefixed with '0x'.")
     return await nameguard.primary_name(address, network_name)
