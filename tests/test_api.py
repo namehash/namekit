@@ -430,6 +430,6 @@ def test_reverse_lookup_get_unknown(test_client, api_version):
     print(res_json)
     assert res_json['primary_name_status'] == 'NO_PRIMARY_NAME_FOUND'
     assert res_json['primary_name'] == None
-    assert res_json['display_name'] == 'Unnamed d8dA'  #TODO upper or lower?
+    assert res_json['display_name'] == 'Unnamed d8da'
     
-    #TODO add example with address resolved to unnoramlized name and test other networks
+    #TODO add example with address resolved to unnoramlized (test existence of nameguard results) name and test other networks

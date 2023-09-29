@@ -214,18 +214,17 @@ class NameGuard:
             domain = self.ns[network_name].name(address)
         except requests.exceptions.ConnectionError as ex:
             raise ProviderUnavailable(f"Communication error with provider occurred: {ex}")
-        display_name = f'Unnamed {address[2:6]}'
+        display_name = f'Unnamed {address[2:6].lower()}'
         primary_name = None
         nameguard_result = None
         if domain is None:
             status = ReverseLookupStatus.NO_PRIMARY_NAME_FOUND
         else:
+            nameguard_result = self.inspect_name(domain)
             try:
                 display_name = ens_normalize.ens_beautify(domain)
                 status = ReverseLookupStatus.NORMALIZED
                 primary_name = domain
-
-                nameguard_result = self.inspect_name(primary_name)
             except DisallowedSequence:
                 status = ReverseLookupStatus.PRIMARY_NAME_FOUND_BUT_UNNORMALIZED
 
