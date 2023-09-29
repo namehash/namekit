@@ -61,6 +61,11 @@ def init_inspector():
         return Inspector(config)
 
 
+ens_contract_adresses = {
+    '0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85'.lower(),  # Base Registrar
+    '0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401'.lower(),  # Name Wrapper
+}
+
 class NameGuard:
     def __init__(self):
         self.inspector = init_inspector()
@@ -238,8 +243,7 @@ class NameGuard:
 
     async def fake_ens_name_check(self, network_name, contract_address, token_id):
         contract_address = contract_address.lower()
-        ens_contract_adresses = {'0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85'.lower(), '0x58774Bb8acD458A640aF0B88238369A167546ef2'.lower()}
-        
+
         if contract_address in ens_contract_adresses:
             return False
 
@@ -255,7 +259,7 @@ class NameGuard:
         
         name = metadata_name #TODO
         
-        #TODO normalize or cure
+        name = ens_normalize.ens_cure(name)
         
         print(title, name)
         return name.endswith('.eth')
