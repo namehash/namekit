@@ -25,7 +25,8 @@ def api_version():
 
 def test_inspect_name_get(test_client, api_version):
     name = 'byczong.eth'
-    response = test_client.get(f'/{api_version}/inspect-name/{name}')
+    network_name = 'mainnet'
+    response = test_client.get(f'/{api_version}/inspect-name/{network_name}/{name}')
     assert response.status_code == 200
     res_json = response.json()
     pprint(res_json)
@@ -50,7 +51,8 @@ def check_order_of_list(l: list[str]):
 
 def test_inspect_name_get_unnormalized(test_client, api_version):
     name = 'bycz ong.eth'
-    response = test_client.get(f'/{api_version}/inspect-name/{name}')
+    network_name = 'mainnet'
+    response = test_client.get(f'/{api_version}/inspect-name/{network_name}/{name}')
     assert response.status_code == 200
     res_json = response.json()
     pprint(res_json)
@@ -87,7 +89,8 @@ def test_inspect_name_get_special_characters(test_client, api_version, encoded_i
     if do_quote:
         encoded_input_name = quote(
             encoded_input_name.encode('utf-8'))  # because TestClient is doing additional unquote before sending request
-    response = test_client.get(f'/{api_version}/inspect-name/{encoded_input_name}')
+    network_name = 'mainnet'
+    response = test_client.get(f'/{api_version}/inspect-name/{network_name}/{encoded_input_name}')
     assert response.status_code == 200
     res_json = response.json()
     pprint(res_json)
@@ -96,7 +99,8 @@ def test_inspect_name_get_special_characters(test_client, api_version, encoded_i
 
 
 def test_inspect_name_get_empty(test_client, api_version):
-    response = test_client.get(f'/{api_version}/inspect-name/')
+    network_name = 'mainnet'
+    response = test_client.get(f'/{api_version}/inspect-name/{network_name}')
     assert response.status_code == 200
     res_json = response.json()
     assert res_json['name'] == ''
@@ -110,7 +114,7 @@ def test_inspect_name_get_empty(test_client, api_version):
 
 def test_inspect_name_post_latin_all_pass(test_client, api_version):
     name = 'vitalik.eth'
-    response = test_client.post(f'/{api_version}/inspect-name', json={'name': name})
+    response = test_client.post(f'/{api_version}/inspect-name', json={'name': name, 'network_name': 'mainnet'})
     assert response.status_code == 200
     res_json = response.json()
     pprint(res_json)
@@ -158,7 +162,7 @@ def test_inspect_name_post_latin_all_pass(test_client, api_version):
 
 def test_bulk_inspect_name_post(test_client, api_version):
     names = ['vitalik.eth', 'byczong.mydomain.eth']
-    response = test_client.post(f'/{api_version}/bulk-inspect-names', json={'names': names})
+    response = test_client.post(f'/{api_version}/bulk-inspect-names', json={'names': names, 'network_name': 'mainnet'})
     assert response.status_code == 200
     res_json = response.json()
     pprint(res_json)
