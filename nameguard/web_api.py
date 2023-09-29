@@ -191,5 +191,26 @@ async def primary_name_get(api_version: ApiVersion, address: str, network_name: 
         raise InvalidEthereumAddress("Hex number must be 40 digits long and prefixed with '0x'.")
     return await nameguard.primary_name(address, network_name)
 
+@app.get(
+    '/{api_version}/fake-ens-name-check/{network_name}/{contract_address}/{token_id}',
+    tags=['fake-ens-name-check'],
+    summary='Fake ENS name check GET',
+    responses={
+        # **InvalidNameHash.get_responses_spec(),
+        # **ENSSubgraphUnavailable.get_responses_spec(),
+        # **NamehashMismatchError.get_responses_spec(),
+        # **NamehashNotFoundInSubgraph.get_responses_spec(),
+    },
+)
+async def fake_ens_name_check_get(
+        api_version: ApiVersion,
+        network_name: NetworkName,
+        contract_address: str = Path(examples=['0x495f947276749ce646f68ac8c248420045cb7b5e'],
+                              description='contract address for the NFT contract (ERC721 and ERC1155 supported).'),
+        token_id: str = Path(examples=['61995921128521442959106650131462633744885269624153038309795231243542768648193'], 
+                             description='The ID of the token. Can be in hex or decimal format.') #TODO
+) -> bool:
+    return await nameguard.fake_ens_name_check(network_name=network_name, contract_address=contract_address, token_id=token_id)
+
 if __name__ == '__main__':
     nameguard.inspect_name('nick.eth')
