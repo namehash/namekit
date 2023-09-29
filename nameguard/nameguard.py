@@ -4,6 +4,9 @@ import ens_normalize
 import requests
 from ens import ENS
 from ens_normalize import DisallowedSequence
+import os
+
+import requests
 from label_inspector.inspector import Inspector
 from label_inspector.config import initialize_inspector_config
 from web3 import HTTPProvider
@@ -232,3 +235,27 @@ class NameGuard:
                                    display_name=display_name,
                                    primary_name_status=status,
                                    nameguard_result=nameguard_result)
+
+    async def fake_ens_name_check(self, network_name, contract_address, token_id):
+        contract_address = contract_address.lower()
+        ens_contract_adresses = {'0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85'.lower(), '0x58774Bb8acD458A640aF0B88238369A167546ef2'.lower()}
+        
+        if contract_address in ens_contract_adresses:
+            return False
+
+        # TODO use httpx.AsyncClient()
+        url = f"{os.environ.get('PROVIDER_URI_MAINNET')}/getNFTMetadata?contractAddress={contract_address}&tokenId={token_id}&refreshCache=false"
+        headers = {"accept": "application/json"}
+        response = requests.get(url, headers=headers)
+
+        # print(response.text)
+        res_json=response.json()
+        title = res_json['title']
+        metadata_name = res_json['metadata']['name']
+        
+        name = metadata_name #TODO
+        
+        #TODO normalize or cure
+        
+        print(title, name)
+        return name.endswith('.eth')

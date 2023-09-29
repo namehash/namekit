@@ -433,3 +433,14 @@ def test_primary_name_get_unknown(test_client, api_version):
     assert res_json['display_name'] == 'Unnamed d8da'
     
     #TODO add example with address resolved to unnoramlized (test existence of nameguard results) name and test other networks
+
+def test_fake_ens_name_check(test_client, api_version):
+    network_name = 'mainnet'
+
+    # fake nick.eth
+    contract_address='0x495f947276749ce646f68ac8c248420045cb7b5e'
+    token_id='61995921128521442959106650131462633744885269624153038309795231243542768648193'
+
+    response = test_client.get(f'/{api_version}/fake-ens-name-check/{network_name}/{contract_address}/{token_id}')
+    assert response.status_code == 200
+    assert response.json() == True
