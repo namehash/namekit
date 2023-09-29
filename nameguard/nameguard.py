@@ -242,6 +242,10 @@ class NameGuard:
                                    nameguard_result=nameguard_result)
 
     async def fake_ens_name_check(self, network_name, contract_address, token_id):
+        """
+        Check if the token is a fake ENS name. 
+        Return True if it is not valid ENS contract address and title and collection name of NFT look like ENS name.
+        """
         contract_address = contract_address.lower()
 
         if contract_address in ens_contract_adresses:
@@ -255,9 +259,11 @@ class NameGuard:
         res_json=response.json()
         print(res_json)
         title = res_json['title']
-        metadata_name = res_json['metadata']['name']
+        # metadata_name = res_json['metadata']['name']
         
-        name = metadata_name #TODO
+        #TODO should we check tokenType? NOT_A_CONTRACT
+        
+        name = title  #TODO
         
         name = ens_normalize.ens_cure(name)
         
