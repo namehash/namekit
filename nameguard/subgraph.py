@@ -2,6 +2,7 @@ import httpx
 
 from nameguard.logging import logger
 from nameguard.exceptions import ENSSubgraphUnavailable, NamehashNotFoundInSubgraph, NamehashMismatchError
+from nameguard.models import NetworkName
 from nameguard.utils import namehash_from_name, label_is_labelhash
 
 
@@ -9,7 +10,12 @@ from nameguard.utils import namehash_from_name, label_is_labelhash
 # Longer names will be resolved by querying the namehash of the full name.
 MAX_MULTI_LABEL_LOOKUP = 256
 
-ENS_SUBGRAPH_URL = 'https://api.thegraph.com/subgraphs/name/ensdomains/ens'
+ENS_SUBGRAPH_URL = {
+    NetworkName.MAINNET: 'https://api.thegraph.com/subgraphs/name/ensdomains/ens',
+    NetworkName.GOERLI: 'https://api.thegraph.com/subgraphs/name/ensdomains/ensgoerli',
+    NetworkName.SEPOLIA: 'https://api.studio.thegraph.com/proxy/49574/enssepolia/version/latest',
+}
+
 
 RESOLVE_NAMEHASH_QUERY = """
 query resolveNamehash($nameHash: String) {
@@ -20,11 +26,11 @@ query resolveNamehash($nameHash: String) {
 """
 
 
-async def call_subgraph(query: str, variables: dict) -> dict:
+async def call_subgraph(network_name: NetworkName, query: str, variables: dict) -> dict:
     try:
         async with httpx.AsyncClient() as client:
             response = await client.post(
-                ENS_SUBGRAPH_URL + '?source=ens-nameguard',
+                ENS_SUBGRAPH_URL[network_name] + '?source=ens-nameguard',
                 json={'query': query, 'variables': variables},
             )
 
@@ -47,12 +53,12 @@ async def call_subgraph(query: str, variables: dict) -> dict:
         return response_json['data']
 
 
-async def namehash_to_name_lookup(namehash_hexstr: str) -> str:
+async def namehash_to_name_lookup(network_name: NetworkName, namehash_hexstr: str) -> str:
     logger.debug(f"Trying namehash lookup for: {namehash_hexstr}")
 
     variables = {'nameHash': namehash_hexstr}
 
-    data = await call_subgraph(RESOLVE_NAMEHASH_QUERY, variables)
+    data = await call_subgraph(network_name, RESOLVE_NAMEHASH_QUERY, variables)
 
     if 'domain' not in data:
         logger.error(f"Unexpected response data: {data}")
@@ -101,7 +107,7 @@ def build_multi_label_query(labels: list[str]) -> tuple[str, dict]:
     return query, variables
 
 
-async def resolve_all_labelhashes_in_name(name: str) -> str:
+async def resolve_all_labelhashes_in_name(network_name: NetworkName, name: str) -> str:
     logger.debug(f"Trying to resolve full name: {name}")
 
     namehash = namehash_from_name(name)
@@ -110,7 +116,7 @@ async def resolve_all_labelhashes_in_name(name: str) -> str:
     if len(labels) < MAX_MULTI_LABEL_LOOKUP:
         logger.debug(f"Trying multi-label lookup for: {name}")
         query, variables = build_multi_label_query(labels)
-        data = await call_subgraph(query, variables)
+        data = await call_subgraph(network_name, query, variables)
         resolved_labels = []
         for i, label in enumerate(labels):
             if label_is_labelhash(label):
@@ -127,7 +133,7 @@ async def resolve_all_labelhashes_in_name(name: str) -> str:
     else:
         logger.debug(f"Trying namehash lookup for: {name}")
         try:
-            resolved_name = await namehash_to_name_lookup(namehash)
+            resolved_name = await namehash_to_name_lookup(network_name, namehash)
         except NamehashNotFoundInSubgraph:
             resolved_name = name
 

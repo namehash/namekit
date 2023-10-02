@@ -88,7 +88,8 @@ def test_check_skip(nameguard: NameGuard):
     ('jkestel.[ab5e71b02a15ad804e7f48ba6b9ce9444eefb3797e3e347e98af3ee29adfbbf0].eth', Normalization.NORMALIZED, Normalization.NORMALIZED, Normalization.NORMALIZED),  # jkestel.loopring.eth
 ])
 async def test_normalization_status(nameguard: NameGuard, name, n, l0, l1):
-    r = await nameguard.inspect_name_with_labelhash_lookup(name)
+    network_name='mainnet'
+    r = await nameguard.inspect_name_with_labelhash_lookup(network_name, name)
     assert r.normalization is n
     assert r.labels[0].normalization is l0
     assert r.labels[1].normalization is l1
@@ -121,8 +122,9 @@ def test_unknown_label(nameguard: NameGuard):
 
 @pytest.mark.asyncio
 async def test_namehash_non_null_name(nameguard: NameGuard):
-    r = await nameguard.inspect_namehash('0xe0fe380f4d877f643e88ceabbed4e5ee0efe66f079aabba23e8902336f7948da')
+    network_name = 'mainnet'
+    r = await nameguard.inspect_namehash(network_name, '0xe0fe380f4d877f643e88ceabbed4e5ee0efe66f079aabba23e8902336f7948da')
     assert r.name == '[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth'
 
     with pytest.raises(NamehashNotFoundInSubgraph):
-        await nameguard.inspect_namehash('0xe0fe380f4d877f643e88ceabbed4e5ee0efb66f079aabba23e8902336f7948da')
+        await nameguard.inspect_namehash(network_name, '0xe0fe380f4d877f643e88ceabbed4e5ee0efb66f079aabba23e8902336f7948da')

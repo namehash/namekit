@@ -31,13 +31,15 @@ from nameguard.utils import namehash_from_name
 ])
 async def test_lookup(name, namehash, expected):
     assert namehash_from_name(name) == namehash
-    assert await resolve_all_labelhashes_in_name(name) == expected
+    network_name = 'mainnet'
+    assert await resolve_all_labelhashes_in_name(network_name, name) == expected
 
 
 @pytest.mark.asyncio
 async def test_long_lookup():
+    network_name = 'mainnet'
     name = '[2af8fae91ee5ef94f17f2c2f23532cc2d1ccaee78cae52efed0df04bc2463b13].' * 250 + 'eth'
-    assert await resolve_all_labelhashes_in_name(name) == name
+    assert await resolve_all_labelhashes_in_name(network_name, name) == name
 
     name = '[2af8fae91ee5ef94f17f2c2f23532cc2d1ccaee78cae52efed0df04bc2463b13].' * 500 + 'eth'
-    assert await resolve_all_labelhashes_in_name(name) == name
+    assert await resolve_all_labelhashes_in_name(network_name, name) == name
