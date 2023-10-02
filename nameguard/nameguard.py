@@ -21,8 +21,10 @@ from nameguard.models import (
     RiskSummary,
     Normalization,
     NetworkName,
+    ReverseLookupResult,
+    ReverseLookupStatus,
+    FakeENSCheckStatus,
 )
-from nameguard.models.result import ReverseLookupResult, ReverseLookupStatus
 from nameguard.utils import (
     namehash_from_name,
     labelhash_from_label,
@@ -65,6 +67,13 @@ ens_contract_adresses = {
     '0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85'.lower(),  # Base Registrar
     '0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401'.lower(),  # Name Wrapper
 }
+
+
+def nested_get(dic, keys):
+    for key in keys:
+        dic = dic[key]
+    return dic
+
 
 class NameGuard:
     def __init__(self):
@@ -135,10 +144,10 @@ class NameGuard:
             name=name,
             namehash=namehash_from_name(name),
             normalization=Normalization.UNKNOWN
-                          if any(label_analysis is None for label_analysis in labels_analysis)
-                          else Normalization.UNNORMALIZED
-                          if any(label_analysis.status == 'unnormalized' for label_analysis in labels_analysis)
-                          else Normalization.NORMALIZED,
+            if any(label_analysis is None for label_analysis in labels_analysis)
+            else Normalization.UNNORMALIZED
+            if any(label_analysis.status == 'unnormalized' for label_analysis in labels_analysis)
+            else Normalization.NORMALIZED,
             summary=RiskSummary(
                 rating=calculate_nameguard_rating(name_checks),
                 risk_count=count_risks(name_checks),
@@ -149,12 +158,13 @@ class NameGuard:
                 LabelGuardResult(
                     # actual label or [labelhash]
                     label=label,
-                    labelhash=labelhash_from_label(label_analysis.label) if label_analysis is not None else '0x' + label[1:-1],
+                    labelhash=labelhash_from_label(
+                        label_analysis.label) if label_analysis is not None else '0x' + label[1:-1],
                     normalization=Normalization.UNKNOWN
-                                  if label_analysis is None
-                                  else Normalization.UNNORMALIZED
-                                  if label_analysis.status == 'unnormalized'
-                                  else Normalization.NORMALIZED,
+                    if label_analysis is None
+                    else Normalization.UNNORMALIZED
+                    if label_analysis.status == 'unnormalized'
+                    else Normalization.NORMALIZED,
                     summary=RiskSummary(
                         rating=calculate_nameguard_rating(label_checks),
                         risk_count=count_risks(label_checks),
@@ -249,23 +259,33 @@ class NameGuard:
         contract_address = contract_address.lower()
 
         if contract_address in ens_contract_adresses:
-            return False
+            return FakeENSCheckStatus.AUTHENTIC_ENS_NAME  # TODO is it enough? should we check if it exist? ot is it normalized? or it ends with .eth?
 
         # TODO use httpx.AsyncClient()
         url = f"{os.environ.get('PROVIDER_URI_MAINNET')}/getNFTMetadata?contractAddress={contract_address}&tokenId={token_id}&refreshCache=false"
         headers = {"accept": "application/json"}
         response = requests.get(url, headers=headers)
 
-        res_json=response.json()
+        res_json = response.json()
         print(res_json)
+        token_type = res_json['id']['tokenMetadata']['tokenType']
+        if token_type not in ['ERC721', 'ERC1155']:  # TODO what values can have token_type? should we have a separete status for NOT_A_CONTRACT?
+            return FakeENSCheckStatus.UNKNOWN_NFT
+
         title = res_json['title']
-        # metadata_name = res_json['metadata']['name']
-        
-        #TODO should we check tokenType? NOT_A_CONTRACT
-        
-        name = title  #TODO
-        
-        name = ens_normalize.ens_cure(name)
-        
-        print([title, name])
-        return name.endswith('.eth')
+
+        cured_title = ens_normalize.ens_cure(title)
+
+        if cured_title.endswith('.eth'):
+            return FakeENSCheckStatus.IMPERSONATED_ENS_NAME
+        else:
+            for keys in [['metadata', 'name'], ['contractMetadata', 'openSea', 'collectionName'],
+                         ['contractMetadata', 'name']]:
+                try:
+                    name = nested_get(res_json, keys)
+                    if '.eth' in name.lower():
+                        return FakeENSCheckStatus.POTENTIALLY_IMPERSONATED_ENS_NAME
+                except KeyError:
+                    pass
+
+            return FakeENSCheckStatus.NON_IMPERSONATED_ENS_NAME

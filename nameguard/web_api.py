@@ -8,7 +8,8 @@ from nameguard.models import (
     NameGuardResult,
     NameGuardBulkResult,
     ReverseLookupResult,
-    NetworkName,
+    NetworkName, 
+    FakeENSCheckStatus,
 )
 from nameguard.logging import logger
 from nameguard.exceptions import (
@@ -209,7 +210,7 @@ async def fake_ens_name_check_get(
                               description='contract address for the NFT contract (ERC721 and ERC1155 supported).'),
         token_id: str = Path(examples=['61995921128521442959106650131462633744885269624153038309795231243542768648193'], 
                              description='The ID of the token. Can be in hex or decimal format.') #TODO
-) -> bool:
+) -> FakeENSCheckStatus:
     return await nameguard.fake_ens_name_check(network_name=network_name, contract_address=contract_address, token_id=token_id)
 
 if __name__ == '__main__':
