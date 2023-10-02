@@ -170,3 +170,19 @@ class ReverseLookupResult(BaseModel):
     )
     
     nameguard_result: Optional[NameGuardResult]
+
+
+class FakeENSCheckStatus(str, Enum):
+    '''
+    * `authentic_ens_name` Authentic ENS Name
+    * `impersonated_ens_name` Impersonated ENS Name
+    * `potentially_impersonated_ens_name` Potentially Impersonated ENS Name (`.eth` inside of a string)
+    * `non_impersonated_ens_name` Non-Impersonated ENS Name (this is the case of an NFT / collection that isn't named in a way like a `.eth` name)
+    * `unknown_nft`: Unknown NFT (this is the case where you can't get any info from Alchemy on the NFT / collection)
+    '''
+
+    AUTHENTIC_ENS_NAME = 'authentic_ens_name'
+    IMPERSONATED_ENS_NAME = 'impersonated_ens_name'
+    POTENTIALLY_IMPERSONATED_ENS_NAME = 'potentially_impersonated_ens_name'
+    NON_IMPERSONATED_ENS_NAME = 'non_impersonated_ens_name'
+    UNKNOWN_NFT = 'unknown_nft'

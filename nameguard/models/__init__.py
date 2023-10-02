@@ -14,6 +14,8 @@ from .result import (
     RiskSummary,
     Normalization,
     ReverseLookupResult,
+    ReverseLookupStatus,
+    FakeENSCheckStatus,
 )
 
 from .request import (
