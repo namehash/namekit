@@ -111,16 +111,17 @@ class NameGuardError extends Error {
   }
 }
 
+const DEFAULT_ENDPOINT =
+  "https://pyfgdpsi4jgbf5tlzu62zbokii0mhmgc.lambda-url.eu-north-1.on.aws";
+const DEFAULT_VERSION = "v1-beta";
+
 export class NameGuard {
   private endpoint: URL;
   private version: string;
 
   constructor(options?: NameGuardOptions) {
-    this.endpoint = new URL(
-      options?.endpoint ||
-        "https://pyfgdpsi4jgbf5tlzu62zbokii0mhmgc.lambda-url.eu-north-1.on.aws"
-    );
-    this.version = options?.version || "v1-beta";
+    this.endpoint = new URL(options?.endpoint || DEFAULT_ENDPOINT);
+    this.version = options?.version || DEFAULT_VERSION;
   }
 
   private async fetchSingleName(name: string): Promise<SingleNameResponse> {
