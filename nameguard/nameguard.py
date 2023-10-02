@@ -145,10 +145,10 @@ class NameGuard:
             name=name,
             namehash=namehash_from_name(name),
             normalization=Normalization.UNKNOWN
-            if any(label_analysis is None for label_analysis in labels_analysis)
-            else Normalization.UNNORMALIZED
-            if any(label_analysis.status == 'unnormalized' for label_analysis in labels_analysis)
-            else Normalization.NORMALIZED,
+                          if any(label_analysis is None for label_analysis in labels_analysis)
+                          else Normalization.UNNORMALIZED
+                          if any(label_analysis.status == 'unnormalized' for label_analysis in labels_analysis)
+                          else Normalization.NORMALIZED,
             summary=RiskSummary(
                 rating=calculate_nameguard_rating(name_checks),
                 risk_count=count_risks(name_checks),
@@ -159,13 +159,12 @@ class NameGuard:
                 LabelGuardResult(
                     # actual label or [labelhash]
                     label=label,
-                    labelhash=labelhash_from_label(
-                        label_analysis.label) if label_analysis is not None else '0x' + label[1:-1],
+                    labelhash=labelhash_from_label(label_analysis.label) if label_analysis is not None else '0x' + label[1:-1],
                     normalization=Normalization.UNKNOWN
-                    if label_analysis is None
-                    else Normalization.UNNORMALIZED
-                    if label_analysis.status == 'unnormalized'
-                    else Normalization.NORMALIZED,
+                                  if label_analysis is None
+                                  else Normalization.UNNORMALIZED
+                                  if label_analysis.status == 'unnormalized'
+                                  else Normalization.NORMALIZED,
                     summary=RiskSummary(
                         rating=calculate_nameguard_rating(label_checks),
                         risk_count=count_risks(label_checks),
