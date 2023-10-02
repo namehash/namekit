@@ -25,6 +25,9 @@ class InvalidNameHash(NameGuardException):
     STATUS_CODE = 422
     DESCRIPTION = "Provided namehash is not valid."
 
+class InvalidTokenID(NameGuardException):
+    STATUS_CODE = 422
+    DESCRIPTION = "Provided token id is not valid."
 
 class ENSSubgraphUnavailable(NameGuardException):
     STATUS_CODE = 503

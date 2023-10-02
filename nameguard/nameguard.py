@@ -25,6 +25,7 @@ from nameguard.models import (
     ReverseLookupStatus,
     FakeENSCheckStatus,
 )
+from nameguard.provider import get_nft_metadata
 from nameguard.utils import (
     namehash_from_name,
     labelhash_from_label,
@@ -253,23 +254,17 @@ class NameGuard:
 
     async def fake_ens_name_check(self, network_name, contract_address, token_id):
         """
-        Check if the token is a fake ENS name. 
-        Return True if it is not valid ENS contract address and title and collection name of NFT look like ENS name.
+        Check if the token is a fake ENS name (not valid ENS contract address and title and collection name of NFT look like ENS name).
         """
         contract_address = contract_address.lower()
 
         if contract_address in ens_contract_adresses:
-            return FakeENSCheckStatus.AUTHENTIC_ENS_NAME  # TODO is it enough? should we check if it exist? ot is it normalized? or it ends with .eth?
+            return FakeENSCheckStatus.AUTHENTIC_ENS_NAME  # TODO is it enough? should we check if it exist? or is it normalized? or it ends with .eth?
 
-        # TODO use httpx.AsyncClient()
-        url = f"{os.environ.get('PROVIDER_URI_MAINNET')}/getNFTMetadata?contractAddress={contract_address}&tokenId={token_id}&refreshCache=false"
-        headers = {"accept": "application/json"}
-        response = requests.get(url, headers=headers)
+        res_json = await get_nft_metadata(contract_address, token_id)
 
-        res_json = response.json()
-        print(res_json)
         token_type = res_json['id']['tokenMetadata']['tokenType']
-        if token_type not in ['ERC721', 'ERC1155']:  # TODO what values can have token_type? should we have a separete status for NOT_A_CONTRACT?
+        if token_type not in ['ERC721', 'ERC1155']:  # TODO what values can have token_type? should we have a separate status for NOT_A_CONTRACT?
             return FakeENSCheckStatus.UNKNOWN_NFT
 
         title = res_json['title']
@@ -279,7 +274,11 @@ class NameGuard:
         if cured_title.endswith('.eth'):
             return FakeENSCheckStatus.IMPERSONATED_ENS_NAME
         else:
-            for keys in [['metadata', 'name'], ['contractMetadata', 'openSea', 'collectionName'],
+            if '.eth' in cured_title:
+                return FakeENSCheckStatus.POTENTIALLY_IMPERSONATED_ENS_NAME
+
+            for keys in [['metadata', 'name'], 
+                         ['contractMetadata', 'openSea', 'collectionName'],
                          ['contractMetadata', 'name']]:
                 try:
                     name = nested_get(res_json, keys)
