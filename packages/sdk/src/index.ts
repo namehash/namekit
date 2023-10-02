@@ -94,8 +94,19 @@ export interface SingleNameResponse {
   labels: LabelInspection[];
 }
 
+interface NameGuardQuickResult {
+  /* The analyzed name. Can contain labelhashes when some labels are unknown. */
+  name: string;
+  /* The namehash of the name in hex format prefixed with 0x. */
+  namehash: Keccak256Hash;
+  /* The ENSIP-15 normalization status of `name` */
+  normalization: Normalization;
+  /* The risk summary of `name` */
+  summary: RiskSummary;
+}
+
 export interface BatchNamesResponse {
-  results?: SingleNameResponse[];
+  results?: NameGuardQuickResult[];
 }
 
 interface NameGuardResponse {
