@@ -19,7 +19,7 @@ export type Check =
   | "PUNYCODE_COMPATIBLE_NAME";
 
 /** Represents the status of a conducted check */
-export type Status = "SKIP" | "INFO" | "PASS" | "WARN" | "ALERT";
+export type CheckStatus = "SKIP" | "INFO" | "PASS" | "WARN" | "ALERT";
 
 /** Represents the rating of a name/label/grapheme based on multiple conducted checks */
 export type Rating = "PASS" | "WARN" | "ALERT";
@@ -29,7 +29,7 @@ export interface CheckResult {
   /** The type of check */
   check: Check;
   /** The status of the check */
-  status: Status;
+  status: CheckStatus;
   /** A message describing the result of the check */
   message: string;
 }
@@ -62,14 +62,14 @@ export interface Grapheme {
 
 export type Normalization = "normalized" | "unnormalized" | "unknown";
 
-export type Hash = string;
+export type Keccak256Hash = string;
 
-export interface Label {
+export interface LabelInspection {
   /** The analyzed label */
   label: string;
   /** The labelhash of the label in hex format prefixed with `0x` */
-  labelhash: Hash;
-  /** The ENSIP-15 normalization status of a label */
+  labelhash: Keccak256Hash;
+  /** The ENSIP-15 normalization status of `label` */
   normalization: Normalization;
   /** Summary of the risks identified */
   summary: RiskSummary;
@@ -83,15 +83,15 @@ export interface SingleNameResponse {
   /* The analyzed name. Can contain labelhashes when some labels are unknown. */
   name: string;
   /* The namehash of the name in hex format prefixed with 0x. */
-  namehash: Hash;
-  /* The ENSIP-15 normalization status of a name */
+  namehash: Keccak256Hash;
+  /* The ENSIP-15 normalization status of `name` */
   normalization: Normalization;
-  /* The risk summary of a name */
+  /* The risk summary of `name` */
   summary: RiskSummary;
   /* The checks performed for this name */
   checks: CheckResult[];
   /** The analyzed labels of the name */
-  labels: Label[];
+  labels: LabelInspection[];
 }
 
 export interface BatchNamesResponse {
@@ -162,21 +162,21 @@ export class NameGuard {
    * @param {string} name A string for a single name.
    * @returns {Promise<SingleNamesResponse>}  A promise that resolves with the details of the name.
    */
-  public name(name: string): Promise<SingleNameResponse>;
+  public inspectName(name: string): Promise<SingleNameResponse>;
 
   /**
    * Inspects multiple names.
    * @param {string[]} names An array of strings for multiple names.
    * @returns {Promise<BatchNamesResponse>} A promise that resolves with the details of the names.
    */
-  public name(names: string[]): Promise<BatchNamesResponse>;
+  public inspectName(names: string[]): Promise<BatchNamesResponse>;
 
   /**
    * Inspect by one name or multiple.
    * @param {string | string[]} names A string for a single name or an array of strings for multiple names.
    * @returns {Promise<SingleNameResponse | BatchNamesResponse>} A promise that resolves with the details
    */
-  public async name(
+  public async inspectName(
     names: string | string[]
   ): Promise<SingleNameResponse | BatchNamesResponse> {
     if (typeof names === "string") {
@@ -193,7 +193,7 @@ export class NameGuard {
    * @param {string} name A string for a single namehash.
    * @returns A promise that resolves with the details of the namehash.
    */
-  public async namehash(name: string): Promise<NameGuardResponse> {
+  public async inspectNamehash(name: string): Promise<NameGuardResponse> {
     return Promise.resolve({});
   }
 
@@ -202,7 +202,7 @@ export class NameGuard {
    * @param {string} label A string for a single labelhash.
    * @returns A promise that resolves with the details of the labelhash.
    */
-  public async labelhash(label: string): Promise<NameGuardResponse> {
+  public async inspectLabelhash(label: string): Promise<NameGuardResponse> {
     return Promise.resolve({});
   }
 }
@@ -213,8 +213,8 @@ export function createClient(options?: NameGuardOptions) {
 
 const defaultClient = createClient();
 
-NameGuard.prototype.name = NameGuard.prototype.name;
-NameGuard.prototype.namehash = NameGuard.prototype.namehash;
-NameGuard.prototype.labelhash = NameGuard.prototype.labelhash;
+NameGuard.prototype.inspectName = NameGuard.prototype.inspectName;
+NameGuard.prototype.inspectNamehash = NameGuard.prototype.inspectNamehash;
+NameGuard.prototype.inspectLabelhash = NameGuard.prototype.inspectLabelhash;
 
 export const nameguard = defaultClient;
