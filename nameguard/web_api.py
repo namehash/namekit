@@ -3,7 +3,7 @@ from fastapi import FastAPI, Path, Request
 from pydantic import BaseModel, Field
 
 from nameguard.nameguard import NameGuard
-from nameguard.utils import validate_namehash, namehash_from_labelhash
+from nameguard.utils import validate_namehash, namehash_from_labelhash, validate_token_id
 from nameguard.models import (
     NameGuardResult,
     NameGuardBulkResult,
@@ -17,8 +17,8 @@ from nameguard.exceptions import (
     ENSSubgraphUnavailable,
     NamehashMismatchError,
     NamehashNotFoundInSubgraph,
-    InvalidEthereumAddress, 
-    ProviderUnavailable,
+    InvalidEthereumAddress,
+    ProviderUnavailable, InvalidTokenID,
 )
 
 
@@ -199,11 +199,9 @@ async def primary_name_get(api_version: ApiVersion, address: str, network_name: 
     '/{api_version}/fake-ens-name-check/{network_name}/{contract_address}/{token_id}',
     tags=['fake-ens-name-check'],
     summary='Fake ENS name check GET',
-    responses={  # TODO
-        # **InvalidNameHash.get_responses_spec(),
-        # **ENSSubgraphUnavailable.get_responses_spec(),
-        # **NamehashMismatchError.get_responses_spec(),
-        # **NamehashNotFoundInSubgraph.get_responses_spec(),
+    responses={
+        **InvalidTokenID.get_responses_spec(),
+        **ProviderUnavailable.get_responses_spec(),
     },
 )
 async def fake_ens_name_check_get(
@@ -214,6 +212,9 @@ async def fake_ens_name_check_get(
         token_id: str = Path(examples=['61995921128521442959106650131462633744885269624153038309795231243542768648193'], 
                              description='The ID of the token. Can be in hex or decimal format.') #TODO
 ) -> FakeENSCheckStatus:
+    if (not contract_address.startswith('0x')) or len(contract_address) != 42 or not all(c in '0123456789abcdefABCDEF' for c in contract_address[2:]):
+        raise InvalidEthereumAddress("Hex number must be 40 digits long and prefixed with '0x'.")
+    token_id = validate_token_id(token_id)
     return await nameguard.fake_ens_name_check(network_name=network_name, contract_address=contract_address, token_id=token_id)
 
 if __name__ == '__main__':

@@ -4,7 +4,7 @@ from ens.utils import Web3
 from hexbytes import HexBytes
 from ens.constants import EMPTY_SHA3_BYTES
 
-from nameguard.exceptions import InvalidNameHash
+from nameguard.exceptions import InvalidNameHash, InvalidTokenID
 from nameguard.models import Rating, GenericCheckResult, Check
 
 
@@ -65,6 +65,34 @@ def namehash_from_labelhash(labelhash_hexstr: str, parent_name='eth') -> str:
     parent_namehash_hexstr = namehash_from_name(parent_name)
     node = Web3().keccak(HexBytes(parent_namehash_hexstr) + HexBytes(labelhash_hexstr))
     return node.hex()
+
+
+def validate_token_id(token_id: str) -> str:
+    """
+    Validate token_id string and return token_id in hex-string format.
+
+    Parameters
+    ----------
+    token_id : str
+        A string representing a token_id. It can be in
+            a) decimal format - decimal integer of any length,
+            b) hex format - hex digits prefixed with 0x.
+    Returns
+    -------
+    str
+        input
+    Raises
+    ------
+    InvalidTokenID
+    """
+    if token_id.startswith('0x'):
+        if not all(c in '0123456789abcdefABCDEF' for c in token_id[2:]):
+            raise InvalidTokenID("Invalid hex number.")
+        return token_id
+    elif token_id.isdigit():
+        return token_id
+    else:
+        raise InvalidTokenID("Must be a valid, decimal integer.")
 
 
 def validate_namehash(namehash: str) -> str:
