@@ -230,7 +230,7 @@ class NameGuard {
    * @returns A promise that resolves with the details of the namehash.
    */
   public async inspectNamehash(
-    namehash: string,
+    namehash: Keccak256Hash,
     network: Network = this.network
   ): Promise<NameGuardResult> {
     if (!isKeccak256Hash(namehash)) {
@@ -259,7 +259,7 @@ class NameGuard {
    * @returns A promise that resolves with the details of the labelhash.
    */
   public async inspectLabelhash(
-    labelhash: string,
+    labelhash: Keccak256Hash,
     network: Network = this.network,
     parent: string = this.parent
   ): Promise<NameGuardResult> {
