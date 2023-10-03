@@ -1,9 +1,9 @@
 import fetch from "cross-fetch";
 
-type NameGuardOptions = {
+interface NameGuardOptions {
   endpoint?: string;
   version?: string;
-};
+}
 
 /** Represents the type of a check */
 export type Check =
@@ -126,7 +126,7 @@ const DEFAULT_ENDPOINT =
   "https://pyfgdpsi4jgbf5tlzu62zbokii0mhmgc.lambda-url.eu-north-1.on.aws";
 const DEFAULT_VERSION = "v1-beta";
 
-export class NameGuard {
+class NameGuard {
   private endpoint: URL;
   private version: string;
 
@@ -173,6 +173,10 @@ export class NameGuard {
    * Inspects a single name.
    * @param {string} name A string for a single name.
    * @returns {Promise<SingleNamesResponse>}  A promise that resolves with the details of the name.
+   * @example
+   * const data = await nameguard.inspectName('vitalik.eth');
+   * @example
+   * const data = await nameguard.inspectName(['nick.eth', 'vitalik.eth']);
    */
   public inspectName(name: string): Promise<SingleNameResponse>;
 
@@ -181,7 +185,7 @@ export class NameGuard {
    * @param {string[]} names An array of strings for multiple names.
    * @returns {Promise<BatchNamesResponse>} A promise that resolves with the details of the names.
    */
-  public inspectName(names: string[]): Promise<BatchNamesResponse>;
+  public inspectName(...names: string[]): Promise<BatchNamesResponse>;
 
   /**
    * Inspect by one name or multiple.
@@ -189,14 +193,12 @@ export class NameGuard {
    * @returns {Promise<SingleNameResponse | BatchNamesResponse>} A promise that resolves with the details
    */
   public async inspectName(
-    names: string | string[]
+    ...args: string[]
   ): Promise<SingleNameResponse | BatchNamesResponse> {
-    if (typeof names === "string") {
-      return this.fetchSingleName(names);
-    } else if (Array.isArray(names)) {
-      return this.fetchBatchNames(names);
+    if (args.length === 1) {
+      return this.fetchSingleName(args[0]);
     } else {
-      throw new Error("Invalid input. Expected a string or an array of names.");
+      return this.fetchBatchNames(args);
     }
   }
 
@@ -206,7 +208,7 @@ export class NameGuard {
    * @returns A promise that resolves with the details of the namehash.
    */
   public async inspectNamehash(name: string): Promise<NameGuardResponse> {
-    return Promise.resolve({});
+    throw new Error("Not implemented");
   }
 
   /**
@@ -215,10 +217,18 @@ export class NameGuard {
    * @returns A promise that resolves with the details of the labelhash.
    */
   public async inspectLabelhash(label: string): Promise<NameGuardResponse> {
-    return Promise.resolve({});
+    throw new Error("Not implemented");
   }
 }
 
+/**
+ * Creates a new instance of the NameGuard class.
+ *
+ * @param {NameGuardOptions} [options] - Configuration options for NameGuard.
+ * @example
+ * import { createClient } from '@namehash/nameguard';
+ * const nameguard = createClient({ ... })
+ */
 export function createClient(options?: NameGuardOptions) {
   return new NameGuard(options);
 }
@@ -229,4 +239,11 @@ NameGuard.prototype.inspectName = NameGuard.prototype.inspectName;
 NameGuard.prototype.inspectNamehash = NameGuard.prototype.inspectNamehash;
 NameGuard.prototype.inspectLabelhash = NameGuard.prototype.inspectLabelhash;
 
+/**
+ * `NameGuard` provides methods to inspect and prevent malicious use of ENS names.
+ * It can inspect individual names or batch names.
+ * @example
+ * import { nameguard } from '@namehash/nameguard';
+ * const data = nameguard.inspectName('vitalik.eth');
+ */
 export const nameguard = defaultClient;
