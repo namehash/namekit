@@ -59,7 +59,7 @@ export interface GraphemeGuardResult {
   /** Summary of the risks identified */
   summary: RiskSummary;
   /** A list of checks that were performed on the grapheme */
-  checks: CheckResult[] | null;
+  checks: CheckResult[];
 }
 
 /**
