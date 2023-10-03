@@ -1,6 +1,17 @@
-# @namehash/nameguard
+# NameGuard Client
 
-## Install
+NameGuard provides methods to inspect and prevent malicious use of ENS names as well as:
+
+- Confusable grapheme detection
+- International accessibility checks
+- Rendering checks for different fonts
+- ENSIP-15 verification with detailed explanations and auto-suggestions
+- Punycode and DNS hostname compatibility checks
+- Provides a unified rating system for entire names, as well as detailed explanations for each check
+
+The `@namehash/nameguard` SDK provides full type-safety when working with the NameGuard API. The client is built using `cross-fetch` so it can work in both server and client contexts.
+
+## Installation
 
 ```bash
 npm install @namehash/nameguard
@@ -14,16 +25,16 @@ The easiest way to get started is by using the `nameguard` singleton.
 import { nameguard } from "@namehash/nameguard";
 
 // single name
-await nameguard.name("...");
+await nameguard.inspectName("...");
 
 // Multiple names
-await nameguard.names(["...", "..."]);
-
-// labelhash
-await nameguard.labelhash("...");
+await nameguard.inspectName(["...", "..."]);
 
 // namehash
-await nameguard.namehash("...");
+await nameguard.inspectNamehash("...");
+
+// labelhash
+await nameguard.inspectionLabelhash("...");
 ```
 
 ## Custom client
