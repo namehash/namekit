@@ -1,5 +1,7 @@
 import fetch from "cross-fetch";
 
+export type Network = "mainnet" | "goerli" | "sepolia";
+
 /** Represents the type of a check */
 export type Check =
   | "CONFUSABLES"
@@ -120,13 +122,13 @@ class NameGuardError extends Error {
 const DEFAULT_ENDPOINT =
   "https://pyfgdpsi4jgbf5tlzu62zbokii0mhmgc.lambda-url.eu-north-1.on.aws";
 const DEFAULT_VERSION = "v1-beta";
-const DEFAULT_NETWORK = "mainnet";
+const DEFAULT_NETWORK = Network.Mainnet;
 const DEFAULT_PARENT_NAME = "eth";
 
 interface NameGuardOptions {
   endpoint?: string;
   version?: string;
-  network?: string;
+  network?: Network;
   parent?: string;
 }
 
@@ -137,7 +139,7 @@ function isKeccak256Hash(hash: Keccak256Hash) {
 class NameGuard {
   private endpoint: URL;
   private version: string;
-  private network: string;
+  private network: Network;
   private parent: string;
 
   constructor(options?: NameGuardOptions) {
@@ -229,7 +231,7 @@ class NameGuard {
    */
   public async inspectNamehash(
     namehash: string,
-    network: string = this.network
+    network: Network = this.network
   ): Promise<NameGuardResult> {
     if (!isKeccak256Hash(namehash)) {
       throw new Error("Invalid Keccak256 hash format for namehash.");
@@ -258,7 +260,7 @@ class NameGuard {
    */
   public async inspectLabelhash(
     labelhash: string,
-    network: string = this.network,
+    network: Network = this.network,
     parent: string = this.parent
   ): Promise<NameGuardResult> {
     if (!isKeccak256Hash(labelhash)) {
