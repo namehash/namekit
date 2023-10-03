@@ -42,12 +42,10 @@ export interface RiskSummary {
   highest_risk: CheckResult | null;
 }
 
-interface BaseModel {}
-
 /**
  * Grapheme analysis result
  */
-export interface GraphemeGuardResult extends BaseModel {
+export interface GraphemeGuardResult {
   /** The analyzed grapheme */
   grapheme: string;
   /** The name of the grapheme */
@@ -67,7 +65,7 @@ export interface GraphemeGuardResult extends BaseModel {
 /**
  * Label analysis result
  */
-export interface LabelGuardResult extends BaseModel {
+export interface LabelGuardResult {
   /** The analyzed label */
   label: string;
   /** The labelhash of the label in hex format prefixed with `0x` */
@@ -85,7 +83,7 @@ export interface LabelGuardResult extends BaseModel {
 /**
  * Name analysis result without information about individual checks and labels.
  */
-interface NameGuardQuickResult extends BaseModel {
+interface NameGuardQuickResult {
   /* The analyzed name. Can contain labelhashes when some labels are unknown. */
   name: string;
   /* The namehash of the name in hex format prefixed with 0x. */
