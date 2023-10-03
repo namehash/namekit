@@ -27,14 +27,14 @@ import { nameguard } from "@namehash/nameguard";
 // single name
 await nameguard.inspectName("...");
 
-// Multiple names
-await nameguard.inspectName(["...", "..."]);
+// multiple names
+await nameguard.inspectBulkNames(["...", "..."]);
 
 // namehash
 await nameguard.inspectNamehash("...");
 
 // labelhash
-await nameguard.inspectionLabelhash("...");
+await nameguard.inspectLabelhash("...");
 ```
 
 ## Custom client
