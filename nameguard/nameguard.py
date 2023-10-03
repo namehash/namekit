@@ -82,9 +82,13 @@ class NameGuard:
 
         load_dotenv()
         # TODO use web sockets and async
-        self.ns = {NetworkName.MAINNET: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_MAINNET'))),
-                   NetworkName.GOERLI: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_GOERLI'))),
-                   NetworkName.SEPOLIA: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_SEPOLIA')))}
+        self.ns = {}
+        for network_name, env_var in ((NetworkName.MAINNET, 'PROVIDER_URI_MAINNET'),
+                                      (NetworkName.GOERLI, 'PROVIDER_URI_GOERLI'),
+                                      (NetworkName.SEPOLIA, 'PROVIDER_URI_SEPOLIA')):
+            if os.environ.get(env_var) is None:
+                logger.warning(f'Environment variable {env_var} is not set')
+            self.ns[network_name] = ENS(HTTPProvider(os.environ.get(env_var)))
 
     def inspect_name(self, name: str) -> NameGuardResult:
         '''
