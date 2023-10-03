@@ -1,10 +1,5 @@
 import fetch from "cross-fetch";
 
-interface NameGuardOptions {
-  endpoint?: string;
-  version?: string;
-}
-
 /** Represents the type of a check */
 export type Check =
   | "CONFUSABLES"
@@ -23,6 +18,10 @@ export type CheckStatus = "SKIP" | "INFO" | "PASS" | "WARN" | "ALERT";
 
 /** Represents the rating of a name/label/grapheme based on multiple conducted checks */
 export type Rating = "PASS" | "WARN" | "ALERT";
+
+export type Normalization = "normalized" | "unnormalized" | "unknown";
+
+export type Keccak256Hash = string;
 
 /** The result of a conducted check */
 export interface CheckResult {
@@ -43,7 +42,12 @@ export interface RiskSummary {
   highest_risk: CheckResult | null;
 }
 
-export interface Grapheme {
+interface BaseModel {}
+
+/**
+ * Grapheme analysis result
+ */
+export interface GraphemeGuardResult extends BaseModel {
   /** The analyzed grapheme */
   grapheme: string;
   /** The name of the grapheme */
@@ -60,11 +64,10 @@ export interface Grapheme {
   checks: CheckResult[] | null;
 }
 
-export type Normalization = "normalized" | "unnormalized" | "unknown";
-
-export type Keccak256Hash = string;
-
-export interface LabelInspection {
+/**
+ * Label analysis result
+ */
+export interface LabelGuardResult extends BaseModel {
   /** The analyzed label */
   label: string;
   /** The labelhash of the label in hex format prefixed with `0x` */
@@ -76,10 +79,13 @@ export interface LabelInspection {
   /** A list of checks that were performed on the label */
   checks: CheckResult[] | null;
   /** A list of graphemes that were analyzed in the label */
-  graphemes: Grapheme[] | null;
+  graphemes: GraphemeGuardResult[] | null;
 }
 
-export interface SingleNameResponse {
+/**
+ * Name analysis result without information about individual checks and labels.
+ */
+interface NameGuardQuickResult extends BaseModel {
   /* The analyzed name. Can contain labelhashes when some labels are unknown. */
   name: string;
   /* The namehash of the name in hex format prefixed with 0x. */
@@ -88,29 +94,20 @@ export interface SingleNameResponse {
   normalization: Normalization;
   /* The risk summary of `name` */
   summary: RiskSummary;
+}
+
+/**
+ * Full name analysis result with information about individual checks and labels.
+ */
+export interface NameGuardResult extends NameGuardQuickResult {
   /* The checks performed for this name */
   checks: CheckResult[];
   /** The analyzed labels of the name */
-  labels: LabelInspection[];
+  labels: LabelGuardResult[];
 }
 
-interface NameGuardQuickResult {
-  /* The analyzed name. Can contain labelhashes when some labels are unknown. */
-  name: string;
-  /* The namehash of the name in hex format prefixed with 0x. */
-  namehash: Keccak256Hash;
-  /* The ENSIP-15 normalization status of `name` */
-  normalization: Normalization;
-  /* The risk summary of `name` */
-  summary: RiskSummary;
-}
-
-export interface BatchNamesResponse {
+export interface NameGuardBulkResult {
   results?: NameGuardQuickResult[];
-}
-
-interface NameGuardResponse {
-  [any: string]: any;
 }
 
 class NameGuardError extends Error {
@@ -125,17 +122,30 @@ class NameGuardError extends Error {
 const DEFAULT_ENDPOINT =
   "https://pyfgdpsi4jgbf5tlzu62zbokii0mhmgc.lambda-url.eu-north-1.on.aws";
 const DEFAULT_VERSION = "v1-beta";
+const DEFAULT_NETWORK = "mainnet";
+const DEFAULT_PARENT_NAME = "eth";
+
+interface NameGuardOptions {
+  endpoint?: string;
+  version?: string;
+  network?: string;
+  parent?: string;
+}
 
 class NameGuard {
   private endpoint: URL;
   private version: string;
+  private network: string;
+  private parent: string;
 
   constructor(options?: NameGuardOptions) {
     this.endpoint = new URL(options?.endpoint || DEFAULT_ENDPOINT);
     this.version = options?.version || DEFAULT_VERSION;
+    this.network = options?.network || DEFAULT_NETWORK;
+    this.parent = options?.parent || DEFAULT_PARENT_NAME;
   }
 
-  private async fetchSingleName(name: string): Promise<SingleNameResponse> {
+  private async fetchSingleName(name: string): Promise<NameGuardResult> {
     const encodedName = encodeURIComponent(name);
     const url = `${this.endpoint}/${this.version}/inspect-name/${encodedName}`;
 
@@ -148,7 +158,7 @@ class NameGuard {
     return await response.json();
   }
 
-  private async fetchBatchNames(names: string[]): Promise<BatchNamesResponse> {
+  private async fetchBatchNames(names: string[]): Promise<NameGuardBulkResult> {
     const url = `${this.endpoint}/${this.version}/bulk-inspect-names`;
 
     const response = await fetch(url, {
@@ -178,23 +188,23 @@ class NameGuard {
    * @example
    * const data = await nameguard.inspectName(['nick.eth', 'vitalik.eth']);
    */
-  public inspectName(name: string): Promise<SingleNameResponse>;
+  public inspectName(name: string): Promise<NameGuardResult>;
 
   /**
    * Inspects multiple names.
    * @param {string[]} names An array of strings for multiple names.
-   * @returns {Promise<BatchNamesResponse>} A promise that resolves with the details of the names.
+   * @returns {Promise<NameGuardBulkResult>} A promise that resolves with the details of the names.
    */
-  public inspectName(...names: string[]): Promise<BatchNamesResponse>;
+  public inspectName(...names: string[]): Promise<NameGuardBulkResult>;
 
   /**
    * Inspect by one name or multiple.
    * @param {string | string[]} names A string for a single name or an array of strings for multiple names.
-   * @returns {Promise<SingleNameResponse | BatchNamesResponse>} A promise that resolves with the details
+   * @returns {Promise<NameGuardResult | NameGuardBulkResult>} A promise that resolves with the details
    */
   public async inspectName(
     ...args: string[]
-  ): Promise<SingleNameResponse | BatchNamesResponse> {
+  ): Promise<NameGuardResult | NameGuardBulkResult> {
     if (args.length === 1) {
       return this.fetchSingleName(args[0]);
     } else {
@@ -204,19 +214,40 @@ class NameGuard {
 
   /**
    * Inspects a namehash.
-   * @param {string} name A string for a single namehash.
+   * @param {string} namehash A namehash should be a decimal or a hex (prefixed with 0x) string.
+   * @param {string} network The network name (defaults to "mainnet").
    * @returns A promise that resolves with the details of the namehash.
    */
-  public async inspectNamehash(name: string): Promise<NameGuardResponse> {
-    throw new Error("Not implemented");
+  public async inspectNamehash(
+    namehash: string,
+    network: string = this.network
+  ): Promise<NameGuardResult> {
+    const url = `${this.endpoint}/${this.version}/inspect-namehash/${network}/${namehash}`;
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new NameGuardError(
+        response.status,
+        `Failed to inspect namehash ${namehash} using the network ${network}.`
+      );
+    }
+
+    return await response.json();
   }
 
   /**
    * Inspects a labelhash.
-   * @param {string} label A string for a single labelhash.
+   * @param {string} labelhash A labelhash should be a decimal or a hex (prefixed with 0x) string.
+   * @param {string} network The network name (defaults to "mainnet").
+   * @param {string} parent The parent name (defaults to "eth").
    * @returns A promise that resolves with the details of the labelhash.
    */
-  public async inspectLabelhash(label: string): Promise<NameGuardResponse> {
+  public async inspectLabelhash(
+    labelhash: string,
+    network: string = this.network,
+    parent: string = this.parent
+  ): Promise<NameGuardResult> {
     throw new Error("Not implemented");
   }
 }
