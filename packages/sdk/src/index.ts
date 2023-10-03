@@ -130,6 +130,10 @@ interface NameGuardOptions {
   parent?: string;
 }
 
+function isKeccak256Hash(hash: Keccak256Hash) {
+  return /^0x[0-9a-f]{64}$/i.test(hash);
+}
+
 class NameGuard {
   private endpoint: URL;
   private version: string;
@@ -227,6 +231,10 @@ class NameGuard {
     namehash: string,
     network: string = this.network
   ): Promise<NameGuardResult> {
+    if (!isKeccak256Hash(namehash)) {
+      throw new Error("Invalid Keccak256 hash format for namehash.");
+    }
+
     const url = `${this.endpoint}/${this.version}/inspect-namehash/${network}/${namehash}`;
 
     const response = await fetch(url);
@@ -253,6 +261,10 @@ class NameGuard {
     network: string = this.network,
     parent: string = this.parent
   ): Promise<NameGuardResult> {
+    if (!isKeccak256Hash(labelhash)) {
+      throw new Error("Invalid Keccak256 hash format for labelhash.");
+    }
+
     throw new Error("Not implemented");
   }
 }
