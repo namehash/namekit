@@ -122,7 +122,7 @@ class NameGuardError extends Error {
 const DEFAULT_ENDPOINT =
   "https://pyfgdpsi4jgbf5tlzu62zbokii0mhmgc.lambda-url.eu-north-1.on.aws";
 const DEFAULT_VERSION = "v1-beta";
-const DEFAULT_NETWORK = Network.Mainnet;
+const DEFAULT_NETWORK: Network = "mainnet";
 const DEFAULT_PARENT_NAME = "eth";
 
 interface NameGuardOptions {
