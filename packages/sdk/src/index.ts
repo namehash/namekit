@@ -158,7 +158,14 @@ class NameGuard {
     return await response.json();
   }
 
-  private async fetchBatchNames(names: string[]): Promise<NameGuardBulkResult> {
+  /**
+   * Inspects multiple names.
+   * @param {string[]} names A string for a single name.
+   * @returns {Promise<SingleNamesResponse>} A promise that resolves with the details of the name.
+   * @example
+   * const data = await nameguard.inspectName(['nick.eth', 'vitalik.eth']);
+   */
+  async inspectBulkNames(names: string[]): Promise<NameGuardBulkResult> {
     const url = `${this.endpoint}/${this.version}/bulk-inspect-names`;
 
     const response = await fetch(url, {
@@ -182,11 +189,11 @@ class NameGuard {
   /**
    * Inspects a single name.
    * @param {string} name A string for a single name.
-   * @returns {Promise<SingleNamesResponse>}  A promise that resolves with the details of the name.
+   * @returns {Promise<SingleNamesResponse>} A promise that resolves with the details of the name.
    * @example
    * const data = await nameguard.inspectName('vitalik.eth');
    * @example
-   * const data = await nameguard.inspectName(['nick.eth', 'vitalik.eth']);
+   * const data = await nameguard.inspectName('nick.eth', 'vitalik.eth');
    */
   public inspectName(name: string): Promise<NameGuardResult>;
 
@@ -199,7 +206,7 @@ class NameGuard {
 
   /**
    * Inspect by one name or multiple.
-   * @param {string | string[]} names A string for a single name or an array of strings for multiple names.
+   * @param {string | string[]} name A string for a single name or an array of strings for multiple names.
    * @returns {Promise<NameGuardResult | NameGuardBulkResult>} A promise that resolves with the details
    */
   public async inspectName(
@@ -208,7 +215,7 @@ class NameGuard {
     if (args.length === 1) {
       return this.fetchSingleName(args[0]);
     } else {
-      return this.fetchBatchNames(args);
+      return this.inspectBulkNames(args);
     }
   }
 
