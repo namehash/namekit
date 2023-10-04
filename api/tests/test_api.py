@@ -445,17 +445,19 @@ def test_primary_name_get(test_client, api_version):
     assert res_json['primary_name_status'] == 'normalized'
     assert res_json['primary_name'] == 'vitalik.eth'
     assert res_json['display_name'] == 'vitalik.eth'
-    
+
+
 def test_primary_name_get_uppercase(test_client, api_version):
     address='0XD8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
     response = test_client.get(f'/{api_version}/primary-name/mainnet/{address}')
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
-    assert res_json['primary_name_status'] == 'NORMALIZED'
+    assert res_json['primary_name_status'] == 'normalized'
     assert res_json['primary_name'] == 'vitalik.eth'
     assert res_json['display_name'] == 'vitalik.eth'
-    
+
+
 def test_primary_name_get_offchain(test_client, api_version):
     address='0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd'
     response = test_client.get(f'/{api_version}/primary-name/mainnet/{address}')
@@ -476,7 +478,7 @@ def test_primary_name_get_unknown(test_client, api_version):
     assert res_json['primary_name_status'] == 'no_primary_name_found'
     assert res_json['primary_name'] == None
     assert res_json['display_name'] == 'Unnamed d8da'
-    
+
     #TODO add example with address resolved to unnoramlized (test existence of nameguard results) name and test other networks
 
 
