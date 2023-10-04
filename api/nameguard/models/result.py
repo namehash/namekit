@@ -14,9 +14,9 @@ class Normalization(str, Enum):
     * `unknown`: The name or label is unknown because it cannot be looked up from its hash.
     '''
 
-    NORMALIZED = 'NORMALIZED'
-    UNNORMALIZED = 'UNNORMALIZED'
-    UNKNOWN = 'UNKNOWN'
+    NORMALIZED = 'normalized'
+    UNNORMALIZED = 'unnormalized'
+    UNKNOWN = 'unknown'
 
 
 class RiskSummary(BaseModel):
@@ -159,9 +159,9 @@ class ReverseLookupStatus(str, Enum):
     * `PRIMARY_NAME_FOUND_BUT_UNNORMALIZED`: ENS primary name was found, but it is not normalized.
     '''
 
-    NORMALIZED = 'NORMALIZED'
-    NO_PRIMARY_NAME_FOUND = 'NO_PRIMARY_NAME_FOUND'
-    PRIMARY_NAME_FOUND_BUT_UNNORMALIZED = 'PRIMARY_NAME_FOUND_BUT_UNNORMALIZED'
+    NORMALIZED = 'normalized'
+    NO_PRIMARY_NAME_FOUND = 'no_primary_name_found'
+    PRIMARY_NAME_FOUND_BUT_UNNORMALIZED = 'primary_name_found_but_unnormalized'
 
 
 class ReverseLookupResult(BaseModel):
@@ -185,15 +185,15 @@ class ReverseLookupResult(BaseModel):
 
 class FakeENSCheckStatus(str, Enum):
     '''
-    * `AUTHENTIC_ENS_NAME` Authentic ENS Name
-    * `IMPERSONATED_ENS_NAME` Impersonated ENS Name
-    * `POTENTIALLY_IMPERSONATED_ENS_NAME` Potentially Impersonated ENS Name (`.eth` inside of a string)
-    * `NON_IMPERSONATED_ENS_NAME` Non-Impersonated ENS Name (this is the case of an NFT / collection that isn't named in a way like a `.eth` name)
-    * `UNKNOWN_NFT`: Unknown NFT (this is the case where you can't get any info from Alchemy on the NFT / collection)
+    * `authentic_ens_name` Authentic ENS Name
+    * `impersonated_ens_name` Impersonated ENS Name
+    * `potentially_impersonated_ens_name` Potentially Impersonated ENS Name (`.eth` inside of a string)
+    * `non_impersonated_ens_name` Non-Impersonated ENS Name (this is the case of an NFT / collection that isn't named in a way like a `.eth` name)
+    * `unknown_nft`: Unknown NFT (this is the case where you can't get any info from Alchemy on the NFT / collection)
     '''
 
-    AUTHENTIC_ENS_NAME = 'AUTHENTIC_ENS_NAME'
-    IMPERSONATED_ENS_NAME = 'IMPERSONATED_ENS_NAME'
-    POTENTIALLY_IMPERSONATED_ENS_NAME = 'POTENTIALLY_IMPERSONATED_ENS_NAME'
-    NON_IMPERSONATED_ENS_NAME = 'NON_IMPERSONATED_ENS_NAME'
-    UNKNOWN_NFT = 'UNKNOWN_NFT'
+    AUTHENTIC_ENS_NAME = 'authentic_ens_name'
+    IMPERSONATED_ENS_NAME = 'impersonated_ens_name'
+    POTENTIALLY_IMPERSONATED_ENS_NAME = 'potentially_impersonated_ens_name'
+    NON_IMPERSONATED_ENS_NAME = 'non_impersonated_ens_name'
+    UNKNOWN_NFT = 'unknown_nft'
