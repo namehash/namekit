@@ -80,7 +80,7 @@ def validate_token_id(token_id: str) -> str:
     Returns
     -------
     str
-        input
+        normalized input
     Raises
     ------
     InvalidTokenID
@@ -131,6 +131,21 @@ def validate_namehash(namehash: str) -> str:
         return hex_namehash
 
 def validate_ethereum_address(address: str) -> str:
+    """
+    Validate address string and return normalized address.
+
+    Parameters
+    ----------
+    address : str
+        A string representing a address. It must be in hex format - hex digits prefixed with 0x.
+    Returns
+    -------
+    str
+        normalized input
+    Raises
+    ------
+    InvalidEthereumAddress
+    """
     address = address.lower()
     if (not address.startswith('0x')) or len(address) != 42 or not all(c in '0123456789abcdef' for c in address[2:]):
         raise InvalidEthereumAddress("Hex number must be 40 digits long and prefixed with '0x'.")
