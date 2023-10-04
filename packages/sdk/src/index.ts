@@ -331,7 +331,7 @@ class NameGuard {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name }),
+      body: JSON.stringify({ name: name }),
     });
 
     if (!response.ok) {
