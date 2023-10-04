@@ -187,6 +187,8 @@ def test_bulk_inspect_name_post(test_client, api_version):
     "network_name, namehash, expected_status_code, expected_name",
     [
         ('mainnet', '0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835', 200, 'vitalik.eth'),
+        ('mainnet', '0xEe6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835', 200, 'vitalik.eth'),  # uppercase hex
+        ('mainnet', '0XEe6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835', 200, 'vitalik.eth'),  # uppercase hex
         ('mainnet', '107841754600925073349285697024366035838042340511934381588201623605284409137205', 200, 'vitalik.eth'),
         ('mainnet', '0xe0fe380f4d877f643e88ceabbed4e5ee0efb66f079aabba23e8902336f7948da', 404, None),
         ('goerli', '0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835', 200, 'vitalik.eth'),
@@ -211,6 +213,8 @@ def test_inspect_namehash_get(test_client, api_version, network_name: str, nameh
     [
         ('0xe0fe380f4d877f643e88ceabbed4e5ee0efe66f079aabba23e8902336f7948da', 'unknown',
          '[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth'),
+        ('0XE0fe380f4d877f643e88ceabbed4e5ee0efe66f079aabba23e8902336f7948da', 'unknown',
+         '[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth'), # uppercase hex
         ('0x0462571d34d206146958c44e473730b1b2630321072c7fbb92deeea946416dab', 'unknown',
          '[5bc926fc40cc7c49e0df6dddf26e4dc7b9d6d32f4a55d4f0670320dbf414afd2].byongdok.eth'),
         ('0x5f57b185ab56ca42b5506f96694c767ebcc8c6e2854a79636b565e4ebe700fb0', 'unknown',
@@ -220,6 +224,7 @@ def test_inspect_namehash_get(test_client, api_version, network_name: str, nameh
         ('0x00f52438ae09d2f909ee2efc19ba8af75058e74ca4507aa091bd8282aa490e77', 'unknown',
          '[7710d5ebf94bcebcf1996bb7a3f5e24a6d24435b314b3cec815da03640c2940c].[2e8eaa68c7e128861299162323c29c29672f5c094aceaf22d9c0935e4bbd3f85].[a64d2b5a93eda272d27734cc2fb8d1c468562e279f1e97e759eea1a5a410f8e3].[462a1d6391f7ea5916874504f3b5fc8cd43626f6bbabc8a22fe4312dc1585362].enspunks.eth'),
         ('0x1bc53f6413409d078ec18a29b17f981eafab341598a4e970ac9efab7d29258af', 'unnormalized', '[zzz].eth'),
+        ('0X1Bc53f6413409d078ec18a29b17f981eafab341598a4e970ac9efab7d29258af', 'unnormalized', '[zzz].eth'),  # uppercase hex
     ]
 )
 def test_inspect_namehash_get_unknown_status(test_client, api_version, namehash: str, normalization: str,
@@ -231,7 +236,7 @@ def test_inspect_namehash_get_unknown_status(test_client, api_version, namehash:
     pprint(res_json)
 
     assert res_json['normalization'] == normalization
-    assert res_json['namehash'] == namehash
+    assert res_json['namehash'] == namehash.lower()
     assert res_json['name'] == expected_name
 
 
@@ -240,6 +245,8 @@ def test_inspect_namehash_get_unknown_status(test_client, api_version, namehash:
     [
         ('0xe0fe380f4d877f643e88ceabbed4e5ee0efe66f079aabba23e8902336f7948da',
          '[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth'),
+        ('0XE0fe380f4d877f643e88ceabbed4e5ee0efe66f079aabba23e8902336f7948da',
+         '[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth'),  # uppercase hex
         ('0x0462571d34d206146958c44e473730b1b2630321072c7fbb92deeea946416dab',
          '[5bc926fc40cc7c49e0df6dddf26e4dc7b9d6d32f4a55d4f0670320dbf414afd2].byongdok.eth'),
         ('0x5f57b185ab56ca42b5506f96694c767ebcc8c6e2854a79636b565e4ebe700fb0',
@@ -272,6 +279,7 @@ def test_inspect_namehash_get_unknown(test_client, api_version, namehash: str, e
     "namehash, expected_status_code, expected_name",
     [
         ('0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835', 200, 'vitalik.eth'),
+        ('0XEe6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835', 200, 'vitalik.eth'),  # uppercase hex
         ('107841754600925073349285697024366035838042340511934381588201623605284409137205', 200, 'vitalik.eth'),
     ]
 )
@@ -339,6 +347,7 @@ def test_inspect_labelhash_get(test_client, api_version):
     "labelhash, parent, expected_status_code, expected_name",
     [
         ('0xaf2caa1c2ca1d027f1ac823b529d0a67cd144264b2789fa2ea4d63a67c7103cc', None, 200, 'vitalik.eth'),
+        ('0XAf2caa1c2ca1d027f1ac823b529d0a67cd144264b2789fa2ea4d63a67c7103cc', None, 200, 'vitalik.eth'),  # uppercase hex
         ('79233663829379634837589865448569342784712482819484549289560981379859480642508', 'eth', 200, 'vitalik.eth'),
         ('0xaf498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770', None, 200,
          '[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth'),
@@ -437,7 +446,16 @@ def test_primary_name_get(test_client, api_version):
     assert res_json['primary_name'] == 'vitalik.eth'
     assert res_json['display_name'] == 'vitalik.eth'
     
-
+def test_primary_name_get_uppercase(test_client, api_version):
+    address='0XD8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
+    response = test_client.get(f'/{api_version}/primary-name/mainnet/{address}')
+    assert response.status_code == 200
+    res_json = response.json()
+    print(res_json)
+    assert res_json['primary_name_status'] == 'NORMALIZED'
+    assert res_json['primary_name'] == 'vitalik.eth'
+    assert res_json['display_name'] == 'vitalik.eth'
+    
 def test_primary_name_get_offchain(test_client, api_version):
     address='0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd'
     response = test_client.get(f'/{api_version}/primary-name/mainnet/{address}')
@@ -473,6 +491,8 @@ def test_primary_name_get_unknown(test_client, api_version):
         ('0xbd3531da5cf5857e7cfaa92426877b022e612cf8', '2028', FakeENSCheckStatus.NON_IMPERSONATED_ENS_NAME),
         ('0xbd3531da5cf5857e7cfaa92426877b022e612cf9', '2028', FakeENSCheckStatus.UNKNOWN_NFT),  # NOT_A_CONTRACT
         ('0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85', '47192814855232171824620094590612668126513223473283784600320596656451859494352', FakeENSCheckStatus.AUTHENTIC_ENS_NAME),  # brantly.eth
+        ('0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85', '0X43Fcd34d8589090581e1d2bdcf5dc17feb05b2006401fb1c3fdded335a465b51', FakeENSCheckStatus.AUTHENTIC_ENS_NAME),  # brantly.eth uppercase hex
+        ('0X57F1887a8bf19b14fc0df6fd9b2acc9af147ea85', '47192814855232171824620094590612668126513223473283784600320596656451859494352', FakeENSCheckStatus.AUTHENTIC_ENS_NAME),  # brantly.eth uppercase hex
         ('0xfe4f558a0fee0657bfa044792f5545f5a8f4ecb1', '1', FakeENSCheckStatus.IMPERSONATED_ENS_NAME),  # https://rarible.com/token/0xfe4f558a0fee0657bfa044792f5545f5a8f4ecb1:1
         ('0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401', '34762977820481521209114130776556072772965907316729597364642457029530388725237', FakeENSCheckStatus.AUTHENTIC_ENS_NAME),  # NameWrapper https://rarible.com/token/0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401:34762977820481521209114130776556072772965907316729597364642457029530388725237
         pytest.param('0x495f947276749Ce646f68AC8c248420045cb7b5e', '7432975079437310392139769917906933533429658990679450758216769878461532602369', FakeENSCheckStatus.IMPERSONATED_ENS_NAME, marks=pytest.mark.xfail(reason='why not works? it is on x2y2 but delisted on opensea')),  # https://x2y2.io/eth/0x495f947276749Ce646f68AC8c248420045cb7b5e/7432975079437310392139769917906933533429658990679450758216769878461532602369

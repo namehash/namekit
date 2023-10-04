@@ -80,6 +80,7 @@ def test_check_skip(nameguard: NameGuard):
     ('[zzz].eth', Normalization.UNNORMALIZED, Normalization.UNNORMALIZED, Normalization.NORMALIZED),
 
     ('[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth', Normalization.NORMALIZED, Normalization.NORMALIZED, Normalization.NORMALIZED),  # nick.eth
+    ('[5D5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth', Normalization.UNNORMALIZED, Normalization.UNNORMALIZED, Normalization.NORMALIZED),  # nick.eth  uppercase hex
     ('[291aa4f6b79b45c2da078242837f39c773527f1bdb269cc37f1aba8f72e308a8].eth', Normalization.UNNORMALIZED, Normalization.UNNORMALIZED, Normalization.NORMALIZED),  # [zzz].eth
 
     ('[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth', Normalization.UNKNOWN, Normalization.UNKNOWN, Normalization.NORMALIZED),  # unkown label
@@ -112,6 +113,15 @@ def test_hashes(nameguard: NameGuard):
     assert r.labels[1].label == 'eth'
     assert r.labels[1].labelhash == '0x4f5b812789fc606be1b3b16908db13fc7a9adf7ca72641f84d75b47069d3d7f0'
 
+def test_hashes_uppercase(nameguard: NameGuard):
+    # this should be treated not as labelhash but normal string
+    r = nameguard.inspect_name('[5D5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth')
+    assert r.name == '[5D5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth'
+    assert r.namehash != '0x05a67c0ee82964c4f7394cdd47fee7f4d9503a23c09c38341779ea012afe6e00'
+    assert r.labels[0].label == '[5D5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f]'
+    assert r.labels[0].labelhash != '0x5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f'
+    assert r.labels[1].label == 'eth'
+    assert r.labels[1].labelhash == '0x4f5b812789fc606be1b3b16908db13fc7a9adf7ca72641f84d75b47069d3d7f0'
 
 def test_unknown_label(nameguard: NameGuard):
     r = nameguard.inspect_name('[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth')
