@@ -194,7 +194,8 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
     },
 )
 async def primary_name_get(api_version: ApiVersion, address: str, network_name: NetworkName) -> ReverseLookupResult:
-    if (not address.startswith('0x')) or len(address) != 42 or not all(c in '0123456789abcdefABCDEF' for c in address[2:]):
+    address = address.lower()
+    if (not address.startswith('0x')) or len(address) != 42 or not all(c in '0123456789abcdef' for c in address[2:]):
         raise InvalidEthereumAddress("Hex number must be 40 digits long and prefixed with '0x'.")
     return await nameguard.primary_name(address, network_name)
 
@@ -215,7 +216,9 @@ async def fake_ens_name_check_get(
         token_id: str = Path(examples=['61995921128521442959106650131462633744885269624153038309795231243542768648193'], 
                              description='The ID of the token (in hex or decimal format).')
 ) -> FakeENSCheckStatus:
-    if (not contract_address.startswith('0x')) or len(contract_address) != 42 or not all(c in '0123456789abcdefABCDEF' for c in contract_address[2:]):
+    contract_address = contract_address.lower()
+    token_id = token_id.lower()
+    if (not contract_address.startswith('0x')) or len(contract_address) != 42 or not all(c in '0123456789abcdef' for c in contract_address[2:]):
         raise InvalidEthereumAddress("Hex number must be 40 digits long and prefixed with '0x'.")
     token_id = validate_token_id(token_id)
     return await nameguard.fake_ens_name_check(network_name=network_name, contract_address=contract_address, token_id=token_id)

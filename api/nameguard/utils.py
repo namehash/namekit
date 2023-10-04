@@ -86,7 +86,7 @@ def validate_token_id(token_id: str) -> str:
     InvalidTokenID
     """
     if token_id.startswith('0x'):
-        if not all(c in '0123456789abcdefABCDEF' for c in token_id[2:]):
+        if not all(c in '0123456789abcdef' for c in token_id[2:]):
             raise InvalidTokenID("Invalid hex number.")
         return token_id
     elif token_id.isdigit():
@@ -113,8 +113,9 @@ def validate_namehash(namehash: str) -> str:
     ------
     InvalidNameHash
     """
+    namehash = namehash.lower()
     if namehash.startswith('0x'):
-        if len(namehash) != 66 or not all(c in '0123456789abcdefABCDEF' for c in namehash[2:]):
+        if len(namehash) != 66 or not all(c in '0123456789abcdef' for c in namehash[2:]):
             raise InvalidNameHash("Hex number must be 64 digits long and prefixed with '0x'.")
         return namehash
     else:

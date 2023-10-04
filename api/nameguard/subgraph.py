@@ -55,7 +55,8 @@ async def call_subgraph(network_name: NetworkName, query: str, variables: dict) 
 
 async def namehash_to_name_lookup(network_name: NetworkName, namehash_hexstr: str) -> str:
     logger.debug(f"Trying namehash lookup for: {namehash_hexstr}")
-
+    namehash_hexstr = namehash_hexstr.lower()
+    
     variables = {'nameHash': namehash_hexstr}
 
     data = await call_subgraph(network_name, RESOLVE_NAMEHASH_QUERY, variables)
