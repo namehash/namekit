@@ -276,14 +276,30 @@ interface NameGuardOptions {
   parent?: string;
 }
 
-// TODO: I think we want to modify this utility function into something like `normalizeKeccak256Hash`, such that:
-//  1. It accepts a hash in any acceptable format (prefixed, unprefixed).
-//  2. It throws an error if the hash is not in an acceptable format.
-//  3. It returns a normalized Keccak256Hash in the format that we use internally (prefixed and all in lowercase).
 const keccak256Regex = /^0x?[0-9a-f]{64}$/i;
 
 function isKeccak256Hash(hash: Keccak256Hash) {
   return keccak256Regex.test(hash);
+}
+
+/**
+ * Normalizes a Keccak256Hash. Allows for normalization of hashes that are prefixed or
+ * unprefixed or containing hex digits of any capitalization.
+ * 
+ * @param hash the hash to normalize
+ * @returns a normalized Keccak256Hash (prefixed with 0x and all in lowercase).
+ * @throws an error if the hash is not a valid Keccak256Hash.
+ */
+function normalizeKeccak256Hash(hash: Keccak256Hash) {
+  if (!isKeccak256Hash(hash)) {
+    throw new Error("Invalid Keccak256 hash format.");
+  }
+
+  if (!hash.startsWith("0x") && !hash.startsWith("0X")) {
+    return `0x${hash.toLowerCase()}`;
+  }
+
+  return hash.toLowerCase();
 }
 
 class NameGuard {
