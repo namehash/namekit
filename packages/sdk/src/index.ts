@@ -267,14 +267,14 @@ const DEFAULT_ENDPOINT =
   "https://pyfgdpsi4jgbf5tlzu62zbokii0mhmgc.lambda-url.eu-north-1.on.aws";
 const DEFAULT_VERSION = "v1-beta";
 const DEFAULT_NETWORK: Network = "mainnet";
-const DEFAULT_LABELHASH_INSPECTION_PARENT = "eth";
+const DEFAULT_INSPECT_LABELHASH_PARENT = "eth";
 const MAX_BULK_INSPECTION_NAMES = 250;
 
 interface NameGuardOptions {
   endpoint?: string;
   version?: string;
   network?: Network;
-  labelhashInspectionParent?: string;
+  inspectLabelhashParent?: string;
 }
 
 const keccak256Regex = /^0x?[0-9a-f]{64}$/i;
@@ -307,13 +307,13 @@ class NameGuard {
   private endpoint: URL;
   private version: string;
   private network: Network;
-  private labelhashInspectionParent: string;
+  private inspectLabelhashParent: string;
 
   constructor(options?: NameGuardOptions) {
     this.endpoint = new URL(options?.endpoint || DEFAULT_ENDPOINT);
     this.version = options?.version || DEFAULT_VERSION;
     this.network = options?.network || DEFAULT_NETWORK;
-    this.labelhashInspectionParent = options?.labelhashInspectionParent || DEFAULT_LABELHASH_INSPECTION_PARENT;
+    this.inspectLabelhashParent = options?.inspectLabelhashParent || DEFAULT_INSPECT_LABELHASH_PARENT;
   }
 
   private async fetchFullNameGuardReport(
@@ -473,7 +473,7 @@ class NameGuard {
       throw new Error("Invalid Keccak256 hash format for labelhash.");
     }
 
-    const parent = options?.parent || this.labelhashInspectionParent;
+    const parent = options?.parent || this.inspectLabelhashParent;
 
     // TODO: forward the provided options into these calls, not sure how is an elegant way to do that in TypeScript
     if (parent === "") {
