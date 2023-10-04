@@ -6,18 +6,18 @@ class CheckStatus(str, Enum):
     '''
     The status of a conducted check.
 
-    * `SKIP`: This check was skipped because it was not applicable.
-    * `INFO`: This check is informational only.
-    * `PASS`: This check passed.
-    * `WARN`: This check failed, this is a minor issue.
-    * `ALERT`: This check failed, this is a major issue.
+    * `skip`: This check was skipped because it was not applicable.
+    * `info`: This check is informational only.
+    * `pass`: This check passed.
+    * `warn`: This check failed, this is a minor issue.
+    * `alert`: This check failed, this is a major issue.
     '''
 
-    SKIP = 'SKIP'
-    INFO = 'INFO'
-    PASS = 'PASS'
-    WARN = 'WARN'
-    ALERT = 'ALERT'
+    SKIP = 'skip'
+    INFO = 'info'
+    PASS = 'pass'
+    WARN = 'warn'
+    ALERT = 'alert'
 
 
     @property
@@ -58,14 +58,14 @@ class Rating(str, Enum):
     '''
     The rating of a name/label/grapheme based on multiple conducted checks.
 
-    * `PASS`: All checks passed.
-    * `WARN`: At least one check failed with a `WARN` status but no check failed with an `ALERT` status.
-    * `ALERT`: At least one check failed with an `ALERT` status.
+    * `pass`: All checks passed.
+    * `warn`: At least one check failed with a `WARN` status but no check failed with an `ALERT` status.
+    * `alert`: At least one check failed with an `ALERT` status.
     '''
 
-    PASS = 'PASS'
-    WARN = 'WARN'
-    ALERT = 'ALERT'
+    PASS = 'pass'
+    WARN = 'warn'
+    ALERT = 'alert'
     
 
     @property
@@ -104,35 +104,35 @@ class Check(str, Enum):
     '''
     The type of a check.
 
-    * `CONFUSABLES`: A grapheme is visually confusable.
-    * `INVISIBLE`: A grapheme is invisible.
-    * `TYPING_DIFFICULTY`: A grapheme is difficult to type.
-    * `FONT_SUPPORT`: A grapheme is not supported by common fonts.
+    * `confusables`: A grapheme is visually confusable.
+    * `invisible`: A grapheme is invisible.
+    * `typing_difficulty`: A grapheme is difficult to type.
+    * `font_support`: A grapheme is not supported by common fonts.
 
-    * `MIXED_SCRIPTS`: A label contains multiple scripts.
-    * `NAMEWRAPPER_COMPATIBLE`: TODO
-    * `NORMALIZED`: A label is ENSIP-15 normalized.
-    * `PUNYCODE_COMPATIBLE_LABEL`: A label is compatible with Punycode.
-    * `UNKNOWN_LABEL`: A label is unknown.
+    * `mixed_scripts`: A label contains multiple scripts.
+    * `namewrapper_compatible`: TODO
+    * `normalized`: A label is ENSIP-15 normalized.
+    * `punycode_compatible_label`: A label is compatible with Punycode.
+    * `unknown_label`: A label is unknown.
 
-    * `PUNYCODE_COMPATIBLE_NAME`: A name is compatible with Punycode.
+    * `punycode_compatible_name`: A name is compatible with Punycode.
     '''
 
     # Grapheme
-    CONFUSABLES = 'CONFUSABLES'
-    INVISIBLE = 'INVISIBLE'
-    TYPING_DIFFICULTY = 'TYPING_DIFFICULTY'
-    FONT_SUPPORT = 'FONT_SUPPORT'
+    CONFUSABLES = 'confusables'
+    INVISIBLE = 'invisible'
+    TYPING_DIFFICULTY = 'typing_difficulty'
+    FONT_SUPPORT = 'font_support'
 
     # Label
-    MIXED_SCRIPTS = 'MIXED_SCRIPTS'
-    NAMEWRAPPER_COMPATIBLE = 'NAMEWRAPPER_COMPATIBLE'
-    NORMALIZED = 'NORMALIZED'
-    PUNYCODE_COMPATIBLE_LABEL = 'PUNYCODE_COMPATIBLE_LABEL'
-    UNKNOWN_LABEL = 'UNKNOWN_LABEL'
+    MIXED_SCRIPTS = 'mixed_scripts'
+    NAMEWRAPPER_COMPATIBLE = 'namewrapper_compatible'
+    NORMALIZED = 'normalized'
+    PUNYCODE_COMPATIBLE_LABEL = 'punycode_compatible_label'
+    UNKNOWN_LABEL = 'unknown_label'
 
     # Name
-    PUNYCODE_COMPATIBLE_NAME = 'PUNYCODE_COMPATIBLE_NAME'
+    PUNYCODE_COMPATIBLE_NAME = 'punycode_compatible_name'
 
 
 SEVERITY_ORDER_DESC = [
