@@ -430,17 +430,32 @@ class NameGuard {
     return await response.json();
   }
 
+  // TODO: Update jsdoc to match the new `options` param.
   // TODO: The main purpose of this function is to pass a tokenId rather than a labelhash. However we need to make changes
   //        here to properly support this use case.
   // TODO: We need to have more specialized error handling here for cases such as the lookup in the ENS Subgraph failing.
   // TODO: Update the comment below to be more specific on the types of errors that could be returned here.
   /**
-   * Inspects the name associated with the name "[{labelhash}].{parent}".
+   * Inspects the name "[{labelhash}].{parent}". Parent may be a name with any number of labels.
+   * 
+   * This is a convenience function to generate a `FullNameGuardReport` in cases when you only have:
+   * 1. The labelhash of the "childmost" label of a name.
+   * 2. The complete parent name of the "childmost" label.
+   * 
+   * NameGuard always inspects names, rather than labelhashes. So this function will first attempt
+   * to resolve the "childmost" label associated with the provided labelhash through the ENS Subgraph.
+   * 
+   * If this label resolution fails the resulting `FullNameGuardReport` will be equivalent to requesting
+   * a `FullNameGuardReport` for the name "[{labelhash}].{parent}" which will contain (at least) one label
+   * with an "unknown" `Normalization`.
+   * 
+   * If this label resolution succeeds the resulting `FullNameGuardReport` will be equivalent to requesting
+   * a `FullNameGuardReport` for the name "{label}.{parent}".
    *
    * @param {string} labelhash A labelhash should be a decimal or a hex (prefixed with 0x) string.
    * @param {string} network The network name (defaults to "mainnet").
    * @param {string} parent The parent name (defaults to "eth").
-   * @returns A promise that resolves with the details of the labelhash.
+   * @returns A promise that resolves with a `FullNameGuardReport` of the resolved name.
    */
   public async inspectLabelhash(
     labelhash: Keccak256Hash,
