@@ -270,9 +270,10 @@ interface NameGuardOptions {
 //  1. It accepts a hash in any acceptable format (prefixed, unprefixed).
 //  2. It throws an error if the hash is not in an acceptable format.
 //  3. It returns a normalized Keccak256Hash in the format that we use internally (prefixed and all in lowercase).
+const keccak256Regex = /^0x[0-9a-f]{64}$/i;
+
 function isKeccak256Hash(hash: Keccak256Hash) {
-  // TODO: I think we want to extract this regex out into a const that doesn't get recompiled every time we call this function.
-  return /^0x[0-9a-f]{64}$/i.test(hash);
+  return keccak256Regex.test(hash);
 }
 
 class NameGuard {
