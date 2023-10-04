@@ -1074,7 +1074,7 @@ lambda = ["mangum (>=0.17.0,<0.18.0)"]
 type = "git"
 url = "https://github.com/namehash/ens-label-inspector.git"
 reference = "main"
-resolved_reference = "a138ce810473e6a8c633ca1f8c570ad554d8d1a3"
+resolved_reference = "0ecc083910be2b5f0d3fb82a06d4d17cb1d053e4"
 
 [[package]]
 name = "lru-dict"
