@@ -292,7 +292,7 @@ function isKeccak256Hash(hash: Keccak256Hash) {
  */
 function normalizeKeccak256Hash(hash: Keccak256Hash) {
   if (!isKeccak256Hash(hash)) {
-    throw new Error("Invalid Keccak256 hash format.");
+    throw new Error("Invalid Keccak-256 hash format.");
   }
 
   if (!hash.startsWith("0x") && !hash.startsWith("0X")) {
