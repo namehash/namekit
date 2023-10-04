@@ -21,7 +21,7 @@ class Normalization(str, Enum):
 
 class SummaryReport(BaseModel):
     '''
-    The risk summary of a name or label.
+    The risk summary of a name, label, or grapheme.
     '''
 
     rating: Rating
