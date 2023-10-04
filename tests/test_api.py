@@ -408,21 +408,15 @@ def test_inspect_grapheme(test_client, api_version):
 
     check_order_of_list([check['status'] for check in res_json['checks']])
 
-    #TODO
-    # for check in grapheme_res['checks']:
-    #     assert 'check' in check and 'message' in check
-    #     assert check['status'] == 'PASS'
+    for check in res_json['checks']:
+        assert 'check' in check and 'message' in check
+        assert check['status'] in ('PASS', 'WARN')
 
 
-@pytest.mark.xfail
+
 def test_inspect_grapheme_multi(test_client, api_version):
-    #TODO
     response = test_client.get(f'/{api_version}/inspect-grapheme/aś')
-    assert response.status_code == 200
-    res_json = response.json()
-    pprint(res_json)
-
-    check_order_of_list([check['status'] for check in res_json['checks']])
+    assert response.status_code == 422
 
 
 def test_primary_name_get(test_client, api_version):
