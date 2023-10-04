@@ -6,6 +6,7 @@ from ens import ENS
 from ens_normalize import DisallowedSequence
 from label_inspector.inspector import Inspector
 from label_inspector.config import initialize_inspector_config
+from label_inspector.models import InspectorConfusableGraphemeResult
 from web3 import HTTPProvider
 from dotenv import load_dotenv
 
@@ -17,6 +18,7 @@ from nameguard.models import (
     NameGuardBulkResult,
     RiskSummary,
     Normalization,
+    GraphemeGuardDetailedResult,
     NetworkName,
 )
 from nameguard.models.result import ReverseLookupResult, ReverseLookupStatus
@@ -29,9 +31,10 @@ from nameguard.utils import (
     get_highest_risk,
     label_is_labelhash,
 )
-from nameguard.exceptions import NamehashNotFoundInSubgraph, ProviderUnavailable
+from nameguard.exceptions import NamehashNotFoundInSubgraph, ProviderUnavailable, NotAGrapheme
 from nameguard.logging import logger
 from nameguard.subgraph import namehash_to_name_lookup, resolve_all_labelhashes_in_name
+
 
 GRAPHEME_CHECKS = [
     checks.grapheme.confusables.check_grapheme,
@@ -60,13 +63,15 @@ def init_inspector():
 
 class NameGuard:
     def __init__(self):
-        self.inspector = init_inspector()
-
+        self._inspector = init_inspector()
         load_dotenv()
         # TODO use web sockets and async
         self.ns = {NetworkName.MAINNET: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_MAINNET'))),
                    NetworkName.GOERLI: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_GOERLI'))),
                    NetworkName.SEPOLIA: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_SEPOLIA')))}
+
+    def analyse_label(self, label: str):
+        return self._inspector.analyse_label(label, simple_confusables=True)
 
     def inspect_name(self, name: str) -> NameGuardResult:
         '''
@@ -80,7 +85,7 @@ class NameGuard:
         logger.debug(f'[inspect_name] labels: {labels}')
 
         # labelhashes have `None` as their analysis
-        labels_analysis = [self.inspector.analyse_label(label)
+        labels_analysis = [self.analyse_label(label)
                            # do not analyze labelhashes
                            if not label_is_labelhash(label)
                            else None
@@ -127,10 +132,10 @@ class NameGuard:
             name=name,
             namehash=namehash_from_name(name),
             normalization=Normalization.UNKNOWN
-                          if any(label_analysis is None for label_analysis in labels_analysis)
-                          else Normalization.UNNORMALIZED
-                          if any(label_analysis.status == 'unnormalized' for label_analysis in labels_analysis)
-                          else Normalization.NORMALIZED,
+            if any(label_analysis is None for label_analysis in labels_analysis)
+            else Normalization.UNNORMALIZED
+            if any(label_analysis.status == 'unnormalized' for label_analysis in labels_analysis)
+            else Normalization.NORMALIZED,
             summary=RiskSummary(
                 rating=calculate_nameguard_rating(name_checks),
                 risk_count=count_risks(name_checks),
@@ -141,12 +146,13 @@ class NameGuard:
                 LabelGuardResult(
                     # actual label or [labelhash]
                     label=label,
-                    labelhash=labelhash_from_label(label_analysis.label) if label_analysis is not None else '0x' + label[1:-1],
+                    labelhash=labelhash_from_label(
+                        label_analysis.label) if label_analysis is not None else '0x' + label[1:-1],
                     normalization=Normalization.UNKNOWN
-                                  if label_analysis is None
-                                  else Normalization.UNNORMALIZED
-                                  if label_analysis.status == 'unnormalized'
-                                  else Normalization.NORMALIZED,
+                    if label_analysis is None
+                    else Normalization.UNNORMALIZED
+                    if label_analysis.status == 'unnormalized'
+                    else Normalization.NORMALIZED,
                     summary=RiskSummary(
                         rating=calculate_nameguard_rating(label_checks),
                         risk_count=count_risks(label_checks),
@@ -165,7 +171,6 @@ class NameGuard:
                                 risk_count=count_risks(grapheme_checks),
                                 highest_risk=get_highest_risk(grapheme_checks),
                             ),
-                            checks=sorted(grapheme_checks, reverse=True),
                         )
                         for grapheme, grapheme_checks in zip(label_analysis.graphemes, label_graphemes_checks)
                     ] if label_analysis is not None else None,
@@ -208,6 +213,53 @@ class NameGuard:
         name = await resolve_all_labelhashes_in_name(name)
 
         return self.inspect_name(name)
+
+    def inspect_grapheme(self, grapheme: str) -> GraphemeGuardDetailedResult:
+        '''
+        Inspect a single grapheme.
+        Throws `NotAGrapheme` if the input is not a single grapheme.
+        '''
+
+        label_analysis = self.analyse_label(grapheme)
+        if label_analysis.grapheme_length != 1:
+            raise NotAGrapheme(f'The input contains {label_analysis.grapheme_length} graphemes.')
+
+        grapheme_analysis = label_analysis.graphemes[0]
+        grapheme_checks = [check(grapheme_analysis) for check in GRAPHEME_CHECKS]
+
+        return GraphemeGuardDetailedResult(
+            grapheme=grapheme_analysis.value,
+            grapheme_name=grapheme_analysis.name,
+            grapheme_type=grapheme_analysis.type,
+            grapheme_script=grapheme_analysis.script,
+            grapheme_link=grapheme_analysis.link,
+            summary=RiskSummary(
+                rating=calculate_nameguard_rating(grapheme_checks),
+                risk_count=count_risks(grapheme_checks),
+                highest_risk=get_highest_risk(grapheme_checks),
+            ),
+            checks=sorted(grapheme_checks, reverse=True),
+            confusables=[self._inspect_confusable(c)
+                         for c in grapheme_analysis.confusables_other]
+                         if grapheme_analysis.confusables_other else [],
+            canonical_confusable=self._inspect_confusable(grapheme_analysis.confusables_canonical)
+                                 if grapheme_analysis.confusables_canonical else None,
+        )
+
+    def _inspect_confusable(self, grapheme: InspectorConfusableGraphemeResult) -> GraphemeGuardResult:
+        grapheme_checks = [check(grapheme) for check in GRAPHEME_CHECKS]
+        return GraphemeGuardResult(
+            grapheme=grapheme.value,
+            grapheme_name=grapheme.name,
+            grapheme_type=grapheme.type,
+            grapheme_script=grapheme.script,
+            grapheme_link=grapheme.link,
+            summary=RiskSummary(
+                rating=calculate_nameguard_rating(grapheme_checks),
+                risk_count=count_risks(grapheme_checks),
+                highest_risk=get_highest_risk(grapheme_checks),
+            ),
+        )
 
     async def primary_name(self, address: str, network_name: str) -> ReverseLookupResult:
         try:

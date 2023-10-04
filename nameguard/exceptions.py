@@ -41,6 +41,11 @@ class NamehashNotFoundInSubgraph(NameGuardException):
     DESCRIPTION = "Provided namehash could not be found in ENS Subgraph."
 
 
+class NotAGrapheme(NameGuardException):
+    STATUS_CODE = 422
+    DESCRIPTION = 'The provided string is not a single grapheme.'
+
+
 class InvalidEthereumAddress(NameGuardException):
     STATUS_CODE = 422
     DESCRIPTION = "Provided Ethereum address is not valid."

@@ -2,6 +2,7 @@ from enum import Enum
 from fastapi import FastAPI, Path, Request
 from pydantic import BaseModel, Field
 
+from nameguard.models import GraphemeGuardDetailedResult
 from nameguard.nameguard import NameGuard
 from nameguard.utils import validate_namehash, namehash_from_labelhash
 from nameguard.models import (
@@ -16,7 +17,8 @@ from nameguard.exceptions import (
     ENSSubgraphUnavailable,
     NamehashMismatchError,
     NamehashNotFoundInSubgraph,
-    InvalidEthereumAddress, 
+    NotAGrapheme,
+    InvalidEthereumAddress,
     ProviderUnavailable,
 )
 
@@ -193,6 +195,26 @@ async def primary_name_get(api_version: ApiVersion, address: str, network_name: 
     if (not address.startswith('0x')) or len(address) != 42 or not all(c in '0123456789abcdefABCDEF' for c in address[2:]):
         raise InvalidEthereumAddress("Hex number must be 40 digits long and prefixed with '0x'.")
     return await nameguard.primary_name(address, network_name)
+
+
+# -- inspect-grapheme --
+
+
+@app.get(
+    '/{api_version}/inspect-grapheme/{grapheme}',
+    tags=['grapheme'],
+    summary='Inspect Grapheme GET',
+    responses={
+        **NotAGrapheme.get_responses_spec(),
+    },
+)
+async def inspect_grapheme_get(
+        api_version: ApiVersion,
+        grapheme: str = Path(description='Grapheme to inspect. Should be url-encoded (except when using the Swagger UI).',
+                             examples=['ń', '%F0%9F%98%B5'])
+) -> GraphemeGuardDetailedResult:
+    return nameguard.inspect_grapheme(grapheme)
+
 
 if __name__ == '__main__':
     nameguard.inspect_name('nick.eth')

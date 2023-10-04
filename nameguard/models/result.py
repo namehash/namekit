@@ -67,9 +67,6 @@ class GraphemeGuardResult(BaseModel):
 
     summary: RiskSummary
 
-    checks: list[GenericCheckResult] = Field(
-        description='A list of checks that were performed on the grapheme.')
-
 
 class LabelGuardResult(BaseModel):
     '''
@@ -140,6 +137,19 @@ class NameGuardBulkResult(BaseModel):
 
     results: list[NameGuardQuickResult]
 
+
+class GraphemeGuardDetailedResult(GraphemeGuardResult):
+    checks: list[GenericCheckResult] = Field(
+        description='A list of checks that were performed on the grapheme.')
+
+    confusables: list[GraphemeGuardResult] = Field(
+        description='A list graphemes that can be confused with the analyzed grapheme.')
+
+    canonical_confusable: Optional[GraphemeGuardResult] = Field(
+        description='A grapheme that is the canonical form of the analyzed grapheme.\n'
+                    '* `null` if the canonical form is not known')
+
+
 class ReverseLookupStatus(str, Enum):
     '''
     The reverse lookup status of Ethereum address.
@@ -152,6 +162,7 @@ class ReverseLookupStatus(str, Enum):
     NORMALIZED = 'NORMALIZED'
     NO_PRIMARY_NAME_FOUND = 'NO_PRIMARY_NAME_FOUND'
     PRIMARY_NAME_FOUND_BUT_UNNORMALIZED = 'PRIMARY_NAME_FOUND_BUT_UNNORMALIZED'
+
 
 class ReverseLookupResult(BaseModel):
     '''
