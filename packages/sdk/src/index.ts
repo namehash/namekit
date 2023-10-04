@@ -2,7 +2,6 @@ import fetch from "cross-fetch";
 
 // TODO: We should consistently decide to use lowercase or uppercase enum values. Currently we use both.
 
-// TODO: Expand the documentation here for other impacts of the network parameter.
 /**
  * The network that NameGuard will use to inspect a names/labels/graphemes.
  *
@@ -10,6 +9,8 @@ import fetch from "cross-fetch";
  * 1. The ENS Subgraph that NameGuard will use to resolve:
  *   1. labelhashes into labels; or
  *   2. namehashes into names.
+ * 2. Evaluating the name of an NFT and if it is a fake ENS name.
+ * 3. Resolution of primary name lookups for impersonation checks.
  */
 export type Network = "mainnet" | "goerli" | "sepolia";
 
