@@ -133,3 +133,25 @@ async def test_namehash_non_null_name(nameguard: NameGuard):
 def test_inspect_grapheme_multi(nameguard: NameGuard):
     with pytest.raises(NotAGrapheme):
         nameguard.inspect_grapheme('ab')
+
+
+def test_canonicals(nameguard: NameGuard):
+    r = nameguard.inspect_name('ńićk.ęth')
+    assert r.canonical_name == 'nick.eth'
+    assert r.labels[0].canonical_label == 'nick'
+    assert r.labels[1].canonical_label == 'eth'
+
+    r = nameguard.inspect_grapheme('ń')
+    assert r.canonical_grapheme == 'n'
+
+    r = nameguard.inspect_name('nĲk.eth')
+    assert r.canonical_name is None
+    assert r.labels[0].canonical_label is None
+
+    r = nameguard.inspect_grapheme('Ĳ')
+    assert r.canonical_grapheme is None
+
+    r = nameguard.inspect_name('ńićk.[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth')
+    assert r.canonical_name == 'nick.[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth'
+    assert r.labels[0].canonical_label == 'nick'
+    assert r.labels[1].canonical_label == '[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f]'

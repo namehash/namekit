@@ -36,6 +36,7 @@ from nameguard.utils import (
     agg_checks,
     get_highest_risk,
     label_is_labelhash,
+    compute_canonical_from_list,
 )
 from nameguard.exceptions import NamehashNotFoundInSubgraph, ProviderUnavailable, NotAGrapheme
 from nameguard.logging import logger
@@ -162,6 +163,13 @@ class NameGuard:
             risk_count=count_risks(name_checks),
             highest_risk=get_highest_risk(name_checks),
             checks=sorted(name_checks, reverse=True),
+            canonical_name=compute_canonical_from_list(
+                [label_analysis.canonical_label
+                 if label_analysis is not None
+                 else labels[i] # labelhash
+                 for i, label_analysis in enumerate(labels_analysis)],
+                 sep='.',
+            ),
             labels=[
                 LabelGuardReport(
                     # actual label or [labelhash]
@@ -177,6 +185,7 @@ class NameGuard:
                     risk_count=count_risks(label_checks),
                     highest_risk=get_highest_risk(label_checks),
                     checks=sorted(label_checks, reverse=True),
+                    canonical_label=label_analysis.canonical_label if label_analysis is not None else label, # labelhash
                     graphemes=[
                         SummaryGraphemeGuardReport(
                             grapheme=grapheme.value,
@@ -258,6 +267,7 @@ class NameGuard:
                          if grapheme_analysis.confusables_other else [],
             canonical_confusable=self._inspect_confusable(grapheme_analysis.confusables_canonical)
                                  if grapheme_analysis.confusables_canonical else None,
+            canonical_grapheme=label_analysis.canonical_label,
         )
 
     def _inspect_confusable(self, grapheme: InspectorConfusableGraphemeResult) -> SummaryGraphemeGuardReport:

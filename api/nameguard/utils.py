@@ -8,6 +8,16 @@ from nameguard.exceptions import InvalidNameHash, InvalidTokenID
 from nameguard.models import Rating, GenericCheckResult, Check
 
 
+def compute_canonical_from_list(canonicals: list[Optional[str]], sep='') -> Optional[str]:
+    '''
+    Compute a canonical string from a list of canonical strings.
+    If any canonical `None`, the result is `None`.
+    '''
+    if any(canonical is None for canonical in canonicals):
+        return None
+    return sep.join(canonicals)
+
+
 def label_is_labelhash(x: str) -> bool:
     return bool(re.match(r'^\[[0-9a-f]{64}\]$', x))
 

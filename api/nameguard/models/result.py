@@ -66,8 +66,6 @@ class SummaryGraphemeGuardReport(SummaryReport):
                     "* `null` for multi-character graphemes")
 
 
-
-
 class LabelGuardReport(SummaryReport):
     '''
     Label analysis result.
@@ -93,6 +91,12 @@ class LabelGuardReport(SummaryReport):
         description='A list of graphemes that were analyzed in the label. If the label is unknown, this field is `None`.',
     )
 
+    canonical_label: Optional[str] = Field(
+        description='The canonical form of the analyzed label.\n'
+                    '* `null` if the canonical form of any grapheme is not known\n'
+                    '* `[labelhash] if the label is unknown`',
+    )
+
 
 class SummaryNameGuardReport(SummaryReport):
     '''
@@ -112,7 +116,6 @@ class SummaryNameGuardReport(SummaryReport):
     normalization: Normalization
 
 
-
 class NameGuardReport(SummaryNameGuardReport):
     '''
     Full name analysis result with information about individual checks and labels.
@@ -124,6 +127,12 @@ class NameGuardReport(SummaryNameGuardReport):
 
     labels: list[LabelGuardReport] = Field(
         description='The analyzed labels of the name.',
+    )
+
+    canonical_name: Optional[str] = Field(
+        description='The canonical form of the analyzed name.\n'
+                    '* `null` if the canonical form of any label is not known\n'
+                    '* `can contain labelhashes when some labels are unknown`',
     )
 
 
@@ -140,9 +149,12 @@ class GraphemeGuardReport(SummaryGraphemeGuardReport):
         description='A list of checks that were performed on the grapheme.')
 
     confusables: list[SummaryGraphemeGuardReport] = Field(
-        description='A list graphemes that can be confused with the analyzed grapheme.')
+        description='A list graphemes that can be confused with the analyzed grapheme. '
+                    'The list does not contain the analyzed grapheme. '
+                    'A canonical form of the grapheme is the first element of the list, if it is known. '
+                    'Otherwise, the first element is a different confusable.')
 
-    canonical_confusable: Optional[SummaryGraphemeGuardReport] = Field(
+    canonical_grapheme: Optional[str] = Field(
         description='A grapheme that is the canonical form of the analyzed grapheme.\n'
                     '* `null` if the canonical form is not known')
 
@@ -166,17 +178,17 @@ class ReverseLookupResult(BaseModel):
     Reverse lookup result.
     '''
     primary_name_status: ReverseLookupStatus
-    
+
     primary_name: Optional[str] = Field(
         description='Primary ENS name for the Ethereum address.'
                     '* `null` if primary name was not found or is unnormalized ',
     )
-    
+
     display_name: str = Field(
         description='ENS beautified version of the primary name\n'
                     'if primary name was not found or is unnormalized then "Unnamed [first four digits of Ethereum address]", e.g. "Unnamed C2A6"',
     )
-    
+
     nameguard_result: Optional[NameGuardReport]
 
 
