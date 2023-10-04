@@ -68,8 +68,8 @@ def init_inspector():
 
 
 ens_contract_adresses = {
-    '0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85'.lower(),  # Base Registrar
-    '0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401'.lower(),  # Name Wrapper
+    '0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85',  # Base Registrar
+    '0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401',  # Name Wrapper
 }
 
 

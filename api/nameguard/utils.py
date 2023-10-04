@@ -4,7 +4,7 @@ from ens.utils import Web3
 from hexbytes import HexBytes
 from ens.constants import EMPTY_SHA3_BYTES
 
-from nameguard.exceptions import InvalidNameHash, InvalidTokenID
+from nameguard.exceptions import InvalidNameHash, InvalidTokenID, InvalidEthereumAddress
 from nameguard.models import Rating, GenericCheckResult, Check
 
 
@@ -69,7 +69,7 @@ def namehash_from_labelhash(labelhash_hexstr: str, parent_name='eth') -> str:
 
 def validate_token_id(token_id: str) -> str:
     """
-    Validate token_id string and return token_id in hex-string format.
+    Validate token_id string and return normalized token_id.
 
     Parameters
     ----------
@@ -85,6 +85,7 @@ def validate_token_id(token_id: str) -> str:
     ------
     InvalidTokenID
     """
+    token_id = token_id.lower()
     if token_id.startswith('0x'):
         if not all(c in '0123456789abcdef' for c in token_id[2:]):
             raise InvalidTokenID("Invalid hex number.")
@@ -129,6 +130,11 @@ def validate_namehash(namehash: str) -> str:
             raise InvalidNameHash("The decimal integer converted to base-16 should have at most 64 digits.")
         return hex_namehash
 
+def validate_ethereum_address(address: str) -> str:
+    address = address.lower()
+    if (not address.startswith('0x')) or len(address) != 42 or not all(c in '0123456789abcdef' for c in address[2:]):
+        raise InvalidEthereumAddress("Hex number must be 40 digits long and prefixed with '0x'.")
+    return address
 
 def calculate_nameguard_rating(check_results: list[GenericCheckResult]) -> Rating:
     return max((check.rating for check in check_results), default=Rating.PASS)
