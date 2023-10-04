@@ -2,14 +2,14 @@ from enum import Enum
 from fastapi import FastAPI, Path, Request
 from pydantic import BaseModel, Field
 
-from nameguard.models import GraphemeGuardDetailedResult
+from nameguard.models import FullGraphemeGuardReport
 from nameguard.nameguard import NameGuard
 from nameguard.utils import validate_namehash, namehash_from_labelhash, validate_token_id
 from nameguard.models import (
-    NameGuardResult,
-    NameGuardBulkResult,
+    FullNameGuardReport,
+    BulkNameGuardBulkReport,
     ReverseLookupResult,
-    NetworkName, 
+    NetworkName,
     FakeENSCheckStatus,
 )
 from nameguard.logging import logger
@@ -55,7 +55,7 @@ async def inspect_name_get(
         request: Request,
         name: str = Path(description='**Name should be url-encoded (except when using the Swagger UI).**',
                          examples=['iam%2Falice%3F.eth']),
-) -> NameGuardResult:
+) -> FullNameGuardReport:
     logger.debug(f'[GET inspect-name] input name: \'{name}\' raw path: \'{request.scope["raw_path"]} query string: '
                  f'\'{request.scope["query_string"]}\'')
     return nameguard.inspect_name(name)
@@ -66,7 +66,7 @@ async def inspect_name_get(
     tags=['name'],
     summary='Inspect Name'
 )
-async def inspect_name_post(api_version: ApiVersion, request: InspectNameRequest) -> NameGuardResult:
+async def inspect_name_post(api_version: ApiVersion, request: InspectNameRequest) -> FullNameGuardReport:
     return nameguard.inspect_name(request.name)
 
 
@@ -83,7 +83,7 @@ class BulkInspectNamesRequest(BaseModel):
     tags=['name'],
     summary='Inspect Multiple Names'
 )
-async def bulk_inspect_names(api_version: ApiVersion, request: BulkInspectNamesRequest) -> NameGuardBulkResult:
+async def bulk_inspect_names(api_version: ApiVersion, request: BulkInspectNamesRequest) -> BulkNameGuardBulkReport:
     return nameguard.bulk_inspect_names(request.names)
 
 
@@ -112,7 +112,7 @@ async def inspect_namehash_get(
         network_name: NetworkName,
         namehash: str = Path(examples=['0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835'],
                              description='Namehash should be a decimal or a hex (prefixed with 0x) string.')
-) -> NameGuardResult:
+) -> FullNameGuardReport:
     return await nameguard.inspect_namehash(network_name=network_name, 
         namehash=validate_namehash(namehash=namehash),
     )
@@ -129,7 +129,7 @@ async def inspect_namehash_get(
         **NamehashNotFoundInSubgraph.get_responses_spec(),
     },
 )
-async def inspect_namehash_post(api_version: ApiVersion, request: InspectNamehashRequest) -> NameGuardResult:
+async def inspect_namehash_post(api_version: ApiVersion, request: InspectNamehashRequest) -> FullNameGuardReport:
     return await nameguard.inspect_namehash(network_name=request.network_name,
         namehash=validate_namehash(namehash=request.namehash),
     )
@@ -162,7 +162,7 @@ async def inspect_labelhash_get(
         labelhash: str = Path(examples=['0xaf2caa1c2ca1d027f1ac823b529d0a67cd144264b2789fa2ea4d63a67c7103cc'],
                               description='Labelhash should be a decimal or a hex (prefixed with 0x) string.'),
         parent_name: str = Path(examples=['eth'])
-) -> NameGuardResult:
+) -> FullNameGuardReport:
     valid_labelhash = validate_namehash(namehash=labelhash)
     namehash = namehash_from_labelhash(valid_labelhash, parent_name=parent_name)
     return await nameguard.inspect_namehash(network_name=network_name, namehash=namehash)
@@ -179,7 +179,7 @@ async def inspect_labelhash_get(
         **NamehashNotFoundInSubgraph.get_responses_spec(),
     },
 )
-async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelhashRequest) -> NameGuardResult:
+async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelhashRequest) -> FullNameGuardReport:
     valid_labelhash = validate_namehash(namehash=request.labelhash)
     namehash = namehash_from_labelhash(valid_labelhash, parent_name=request.parent_name)
     return await nameguard.inspect_namehash(network_name=request.network_name, namehash=namehash)
@@ -236,7 +236,7 @@ async def inspect_grapheme_get(
         api_version: ApiVersion,
         grapheme: str = Path(description='Grapheme to inspect. Should be url-encoded (except when using the Swagger UI).',
                              examples=['ń', '%F0%9F%98%B5'])
-) -> GraphemeGuardDetailedResult:
+) -> FullGraphemeGuardReport:
     return nameguard.inspect_grapheme(grapheme)
 
 

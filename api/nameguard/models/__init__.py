@@ -6,14 +6,14 @@ from .checks import (
 )
 
 from .result import (
-    NameGuardResult,
-    NameGuardQuickResult,
-    LabelGuardResult,
-    GraphemeGuardResult,
-    NameGuardBulkResult,
-    RiskSummary,
+    FullNameGuardReport,
+    SummaryNameGuardReport,
+    LabelGuardReport,
+    SummaryGraphemeGuardReport,
+    BulkNameGuardBulkReport,
+    SummaryReport,
     Normalization,
-    GraphemeGuardDetailedResult,
+    FullGraphemeGuardReport,
     ReverseLookupResult,
     ReverseLookupStatus,
     FakeENSCheckStatus,
