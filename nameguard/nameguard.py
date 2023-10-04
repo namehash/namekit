@@ -1,5 +1,6 @@
 from label_inspector.inspector import Inspector
 from label_inspector.config import initialize_inspector_config
+from label_inspector.models import InspectorConfusableGraphemeResult
 
 from nameguard import checks
 from nameguard.models import (
@@ -20,9 +21,10 @@ from nameguard.utils import (
     get_highest_risk,
     label_is_labelhash,
 )
-from nameguard.exceptions import NamehashNotFoundInSubgraph #TODO
+from nameguard.exceptions import NotAGrapheme
 from nameguard.logging import logger
 from nameguard.subgraph import namehash_to_name_lookup, resolve_all_labelhashes_in_name
+
 
 GRAPHEME_CHECKS = [
     checks.grapheme.confusables.check_grapheme,
@@ -199,43 +201,48 @@ class NameGuard:
         return self.inspect_name(name)
 
     def inspect_grapheme(self, grapheme: str) -> GraphemeGuardDetailedResult:
+        '''
+        Inspect a single grapheme.
+        Throws `NotAGrapheme` if the input is not a single grapheme.
+        '''
+
         label_analysis = self.analyse_label(grapheme)
-        assert len(label_analysis.graphemes) == 1
-        grapheme_obj = label_analysis.graphemes[0]
-        grapheme_checks = [check(grapheme_obj) for check in GRAPHEME_CHECKS]
+        if label_analysis.grapheme_length != 1:
+            raise NotAGrapheme(f'The input contains {label_analysis.grapheme_length} graphemes.')
 
-        def to_grapheme_guard_result(grapheme):
-            grapheme_checks = [check(grapheme) for check in GRAPHEME_CHECKS]
+        grapheme_analysis = label_analysis.graphemes[0]
+        grapheme_checks = [check(grapheme_analysis) for check in GRAPHEME_CHECKS]
 
-            return GraphemeGuardResult(
-                grapheme=grapheme_obj.value,
-                grapheme_name=grapheme_obj.name,
-                grapheme_type=grapheme_obj.type,
-                grapheme_script=grapheme_obj.script,
-                grapheme_link=grapheme_obj.link,
-                summary=RiskSummary(
-                    rating=calculate_nameguard_rating(grapheme_checks),
-                    risk_count=count_risks(grapheme_checks),
-                    highest_risk=get_highest_risk(grapheme_checks),
-                ),
-            )
-
-        grapheme_result = GraphemeGuardDetailedResult(
-            grapheme=grapheme_obj.value,
-            grapheme_name=grapheme_obj.name,
-            grapheme_type=grapheme_obj.type,
-            grapheme_script=grapheme_obj.script,
-            grapheme_link=grapheme_obj.link,
+        return GraphemeGuardDetailedResult(
+            grapheme=grapheme_analysis.value,
+            grapheme_name=grapheme_analysis.name,
+            grapheme_type=grapheme_analysis.type,
+            grapheme_script=grapheme_analysis.script,
+            grapheme_link=grapheme_analysis.link,
             summary=RiskSummary(
                 rating=calculate_nameguard_rating(grapheme_checks),
                 risk_count=count_risks(grapheme_checks),
                 highest_risk=get_highest_risk(grapheme_checks),
             ),
             checks=sorted(grapheme_checks, reverse=True),
-            confusables=[to_grapheme_guard_result(c) for c in
-                         grapheme_obj.confusables_other] if grapheme_obj.confusables_other else [],
-            canonical_confusable=to_grapheme_guard_result(
-                grapheme_obj.confusables_canonical) if grapheme_obj.confusables_canonical else None,
+            confusables=[self._inspect_confusable(c)
+                         for c in grapheme_analysis.confusables_other]
+                         if grapheme_analysis.confusables_other else [],
+            canonical_confusable=self._inspect_confusable(grapheme_analysis.confusables_canonical)
+                                 if grapheme_analysis.confusables_canonical else None,
         )
 
-        return grapheme_result
+    def _inspect_confusable(self, grapheme: InspectorConfusableGraphemeResult) -> GraphemeGuardResult:
+        grapheme_checks = [check(grapheme) for check in GRAPHEME_CHECKS]
+        return GraphemeGuardResult(
+            grapheme=grapheme.value,
+            grapheme_name=grapheme.name,
+            grapheme_type=grapheme.type,
+            grapheme_script=grapheme.script,
+            grapheme_link=grapheme.link,
+            summary=RiskSummary(
+                rating=calculate_nameguard_rating(grapheme_checks),
+                risk_count=count_risks(grapheme_checks),
+                highest_risk=get_highest_risk(grapheme_checks),
+            ),
+        )

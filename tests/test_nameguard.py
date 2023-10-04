@@ -2,7 +2,7 @@ import pytest
 
 from nameguard.models import Rating, Check, CheckStatus, Normalization
 from nameguard.nameguard import NameGuard
-from nameguard.exceptions import NamehashNotFoundInSubgraph
+from nameguard.exceptions import NamehashNotFoundInSubgraph, NotAGrapheme
 
 
 @pytest.fixture(scope='module')
@@ -126,3 +126,8 @@ async def test_namehash_non_null_name(nameguard: NameGuard):
 
     with pytest.raises(NamehashNotFoundInSubgraph):
         await nameguard.inspect_namehash('0xe0fe380f4d877f643e88ceabbed4e5ee0efb66f079aabba23e8902336f7948da')
+
+
+def test_inspect_grapheme_multi(nameguard: NameGuard):
+    with pytest.raises(NotAGrapheme):
+        nameguard.inspect_grapheme('ab')

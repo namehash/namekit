@@ -12,6 +12,7 @@ from nameguard.exceptions import (
     ENSSubgraphUnavailable,
     NamehashMismatchError,
     NamehashNotFoundInSubgraph,
+    NotAGrapheme,
 )
 
 
@@ -183,6 +184,9 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
     '/{api_version}/inspect-grapheme/{grapheme}',
     tags=['grapheme'],
     summary='Inspect Grapheme GET',
+    responses={
+        **NotAGrapheme.get_responses_spec(),
+    },
 )
 async def inspect_grapheme_get(
         api_version: ApiVersion,
