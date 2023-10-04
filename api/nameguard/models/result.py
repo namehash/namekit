@@ -156,9 +156,9 @@ class ReverseLookupStatus(str, Enum):
     * `PRIMARY_NAME_FOUND_BUT_UNNORMALIZED`: ENS primary name was found, but it is not normalized.
     '''
 
-    NORMALIZED = 'NORMALIZED'
-    NO_PRIMARY_NAME_FOUND = 'NO_PRIMARY_NAME_FOUND'
-    PRIMARY_NAME_FOUND_BUT_UNNORMALIZED = 'PRIMARY_NAME_FOUND_BUT_UNNORMALIZED'
+    NORMALIZED = 'normalized'
+    NO_PRIMARY_NAME_FOUND = 'no_primary_name_found'
+    PRIMARY_NAME_FOUND_BUT_UNNORMALIZED = 'primary_name_found_but_unnormalized'
 
 
 class ReverseLookupResult(BaseModel):

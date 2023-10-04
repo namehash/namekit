@@ -36,14 +36,14 @@ def test_inspect_name_get(test_client, api_version):
     assert res_json['namehash'] == '0xf8c2c01d386a4807b3ceb131e4975ff37b44824ac9307121b18223f3d77d0c2e'
     assert res_json['normalization'] == 'normalized'
     assert res_json['highest_risk'] == None
-    assert res_json['rating'] == 'PASS'
+    assert res_json['rating'] == 'pass'
     assert res_json['risk_count'] == 0
     assert res_json['checks']
     assert res_json['labels']
     assert all([label['labelhash'] for label in res_json['labels']])
 
 
-CORRECT_CHECKS_ORDER = ['ALERT', 'WARN', 'PASS', 'INFO', 'SKIP']
+CORRECT_CHECKS_ORDER = ['alert', 'warn', 'pass', 'info', 'skip']
 
 
 def check_order_of_list(l: list[str]):
@@ -63,7 +63,7 @@ def test_inspect_name_get_unnormalized(test_client, api_version):
     assert res_json['name'] == name
     assert res_json['namehash'] == '0x3f97a45d7aa341b55b749b276f699278634ce4e5afa3e0753a8fe5be5d1355c2'
     assert res_json['normalization'] == 'unnormalized'
-    assert res_json['rating'] == 'ALERT'
+    assert res_json['rating'] == 'alert'
     assert res_json['risk_count'] > 0
     assert res_json['checks']
     assert res_json['labels']
@@ -125,14 +125,14 @@ def test_inspect_name_post_latin_all_pass(test_client, api_version):
     assert res_json['namehash'] == '0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835'
     assert res_json['normalization'] == 'normalized'
     assert res_json['highest_risk'] == None
-    assert res_json['rating'] == 'PASS'
+    assert res_json['rating'] == 'pass'
     assert res_json['risk_count'] == 0
     assert res_json['checks']
     assert len(res_json['labels']) == 2
 
     for check in res_json['checks']:
         assert 'check' in check and 'message' in check
-        assert check['status'] == 'PASS'
+        assert check['status'] == 'pass'
 
     # labels keys
     assert (set(label_res.keys()) == {'label', 'labelhash', 'normalization', 'highest_risk', 'rating', 'risk_count', 'checks', 'graphemes'}
@@ -151,13 +151,13 @@ def test_inspect_name_post_latin_all_pass(test_client, api_version):
         assert res_json['labels'][i]['normalization'] == 'normalized'
         for check in res_json['labels'][i]['checks']:
             assert 'check' in check and 'message' in check
-            assert check['status'] == 'PASS'
+            assert check['status'] == 'pass'
 
     for grapheme_res, expected_grapheme in zip(res_json['labels'][0]['graphemes'], list('vitalik')):
         assert grapheme_res['grapheme'] == expected_grapheme
         assert grapheme_res['grapheme_script'] == 'Latin'
         assert grapheme_res['highest_risk'] == None
-        assert grapheme_res['rating'] == 'PASS'
+        assert grapheme_res['rating'] == 'pass'
         assert grapheme_res['risk_count'] == 0
 
 
@@ -418,7 +418,7 @@ def test_inspect_grapheme(test_client, api_version):
 
     for check in res_json['checks']:
         assert 'check' in check and 'message' in check
-        assert check['status'] in ('PASS', 'WARN')
+        assert check['status'] in ('pass', 'warn')
 
 
 
@@ -433,7 +433,7 @@ def test_primary_name_get(test_client, api_version):
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
-    assert res_json['primary_name_status'] == 'NORMALIZED'
+    assert res_json['primary_name_status'] == 'normalized'
     assert res_json['primary_name'] == 'vitalik.eth'
     assert res_json['display_name'] == 'vitalik.eth'
     
@@ -444,7 +444,7 @@ def test_primary_name_get_offchain(test_client, api_version):
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
-    assert res_json['primary_name_status'] == 'NORMALIZED'
+    assert res_json['primary_name_status'] == 'normalized'
     assert res_json['primary_name'] == 'exampleprimary.cb.id'
     assert res_json['display_name'] == 'exampleprimary.cb.id'
 
@@ -455,7 +455,7 @@ def test_primary_name_get_unknown(test_client, api_version):
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
-    assert res_json['primary_name_status'] == 'NO_PRIMARY_NAME_FOUND'
+    assert res_json['primary_name_status'] == 'no_primary_name_found'
     assert res_json['primary_name'] == None
     assert res_json['display_name'] == 'Unnamed d8da'
     
