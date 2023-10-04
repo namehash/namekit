@@ -51,7 +51,10 @@ def init_inspector():
 
 class NameGuard:
     def __init__(self):
-        self.inspector = init_inspector()
+        self._inspector = init_inspector()
+
+    def analyse_label(self, label: str):
+        return self._inspector.analyse_label(label, simple_confusables=True)
 
     def inspect_name(self, name: str) -> NameGuardResult:
         '''
@@ -65,7 +68,7 @@ class NameGuard:
         logger.debug(f'[inspect_name] labels: {labels}')
 
         # labelhashes have `None` as their analysis
-        labels_analysis = [self.inspector.analyse_label(label)
+        labels_analysis = [self.analyse_label(label)
                            # do not analyze labelhashes
                            if not label_is_labelhash(label)
                            else None
@@ -196,20 +199,20 @@ class NameGuard:
         return self.inspect_name(name)
 
     def inspect_grapheme(self, grapheme: str) -> GraphemeGuardDetailedResult:
-        label_analysis = self.inspector.analyse_label(grapheme)
+        label_analysis = self.analyse_label(grapheme)
         assert len(label_analysis.graphemes) == 1
-        grapheme = label_analysis.graphemes[0]
-        grapheme_checks = [check(grapheme) for check in GRAPHEME_CHECKS]
+        grapheme_obj = label_analysis.graphemes[0]
+        grapheme_checks = [check(grapheme_obj) for check in GRAPHEME_CHECKS]
 
         def to_grapheme_guard_result(grapheme):
             grapheme_checks = [check(grapheme) for check in GRAPHEME_CHECKS]
 
             return GraphemeGuardResult(
-                grapheme=grapheme.value,
-                grapheme_name=grapheme.name,
-                grapheme_type=grapheme.type,
-                grapheme_script=grapheme.script,
-                grapheme_link=grapheme.link,
+                grapheme=grapheme_obj.value,
+                grapheme_name=grapheme_obj.name,
+                grapheme_type=grapheme_obj.type,
+                grapheme_script=grapheme_obj.script,
+                grapheme_link=grapheme_obj.link,
                 summary=RiskSummary(
                     rating=calculate_nameguard_rating(grapheme_checks),
                     risk_count=count_risks(grapheme_checks),
@@ -218,11 +221,11 @@ class NameGuard:
             )
 
         grapheme_result = GraphemeGuardDetailedResult(
-            grapheme=grapheme.value,
-            grapheme_name=grapheme.name,
-            grapheme_type=grapheme.type,
-            grapheme_script=grapheme.script,
-            grapheme_link=grapheme.link,
+            grapheme=grapheme_obj.value,
+            grapheme_name=grapheme_obj.name,
+            grapheme_type=grapheme_obj.type,
+            grapheme_script=grapheme_obj.script,
+            grapheme_link=grapheme_obj.link,
             summary=RiskSummary(
                 rating=calculate_nameguard_rating(grapheme_checks),
                 risk_count=count_risks(grapheme_checks),
@@ -230,9 +233,9 @@ class NameGuard:
             ),
             checks=sorted(grapheme_checks, reverse=True),
             confusables=[to_grapheme_guard_result(c) for c in
-                         grapheme.confusables_other] if grapheme.confusables_other else [],
+                         grapheme_obj.confusables_other] if grapheme_obj.confusables_other else [],
             canonical_confusable=to_grapheme_guard_result(
-                grapheme.confusables_canonical) if grapheme.confusables_canonical else None,
+                grapheme_obj.confusables_canonical) if grapheme_obj.confusables_canonical else None,
         )
 
         return grapheme_result
