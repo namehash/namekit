@@ -282,7 +282,6 @@ interface NameGuardOptions {
   endpoint?: string;
   version?: string;
   network?: Network;
-  inspectLabelhashParent?: string;
 }
 
 const keccak256Regex = /^0x?[0-9a-f]{64}$/i;
@@ -294,7 +293,7 @@ function isKeccak256Hash(hash: Keccak256Hash) {
 /**
  * Normalizes a Keccak256Hash. Allows for normalization of hashes that are prefixed or
  * unprefixed or containing hex digits of any capitalization.
- * 
+ *
  * @param hash the hash to normalize
  * @returns a normalized Keccak256Hash (prefixed with 0x and all in lowercase).
  * @throws an error if the hash is not a valid Keccak256Hash.
@@ -315,13 +314,11 @@ class NameGuard {
   private endpoint: URL;
   private version: string;
   private network: Network;
-  private inspectLabelhashParent: string;
 
   constructor(options?: NameGuardOptions) {
     this.endpoint = new URL(options?.endpoint || DEFAULT_ENDPOINT);
     this.version = options?.version || DEFAULT_VERSION;
     this.network = options?.network || DEFAULT_NETWORK;
-    this.inspectLabelhashParent = options?.inspectLabelhashParent || DEFAULT_INSPECT_LABELHASH_PARENT;
   }
 
   private async fetchFullNameGuardReport(
@@ -392,7 +389,7 @@ class NameGuard {
    *   1. A `FullNameGuardReport` contains a lot of additional data that isn't always needed / desired when a `SummaryNameGuardReport` will do.
    *   2. When NameGuard only needs to return a `SummaryNameGuardReport`, some special performance optimizations
    *      are possible (and completely safe) that help to accelate responses in many cases.
-   * 
+   *
    *
    * @param {string[]} names The list of names for NameGuard to inspect.
    * @returns {Promise<BulkSummaryNameGuardReport>} A promise that resolves with a list of `SummaryNameGuardReport` values for each name queried in the bulk inspection.
@@ -452,20 +449,20 @@ class NameGuard {
   // TODO: Update the comment below to be more specific on the types of errors that could be returned here.
   /**
    * Inspects the name "[{labelhash}].{parent}".
-   * 
+   *
    * Parent may be a name with any number of labels. The default parent is "eth".
-   * 
+   *
    * This is a convenience function to generate a `FullNameGuardReport` in cases when you only have:
    * 1. The labelhash of the "childmost" label of a name.
    * 2. The complete parent name of the "childmost" label.
-   * 
+   *
    * NameGuard always inspects names, rather than labelhashes. So this function will first attempt
    * to resolve the "childmost" label associated with the provided labelhash through the ENS Subgraph.
-   * 
+   *
    * If this label resolution fails the resulting `FullNameGuardReport` will be equivalent to requesting
    * a `FullNameGuardReport` for the name "[{labelhash}].{parent}" which will contain (at least) one label
    * with an "unknown" `Normalization`.
-   * 
+   *
    * If this label resolution succeeds the resulting `FullNameGuardReport` will be equivalent to requesting
    * a `FullNameGuardReport` for the name "{label}.{parent}".
    *
@@ -481,7 +478,7 @@ class NameGuard {
       throw new Error("Invalid Keccak256 hash format for labelhash.");
     }
 
-    const parent = options?.parent || this.inspectLabelhashParent;
+    const parent = options?.parent || DEFAULT_INSPECT_LABELHASH_PARENT;
 
     // TODO: forward the provided options into these calls, not sure how is an elegant way to do that in TypeScript
     if (parent === "") {
