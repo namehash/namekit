@@ -2,6 +2,7 @@ from enum import Enum
 from fastapi import FastAPI, Path, Request
 from pydantic import BaseModel, Field
 
+from nameguard.models import GraphemeGuardDetailedResult
 from nameguard.nameguard import NameGuard
 from nameguard.utils import validate_namehash, namehash_from_labelhash, validate_token_id
 from nameguard.models import (
@@ -18,7 +19,9 @@ from nameguard.exceptions import (
     NamehashMismatchError,
     NamehashNotFoundInSubgraph,
     InvalidEthereumAddress,
-    ProviderUnavailable, InvalidTokenID,
+    ProviderUnavailable, 
+    InvalidTokenID,
+    NotAGrapheme,
 )
 
 
@@ -208,14 +211,35 @@ async def fake_ens_name_check_get(
         api_version: ApiVersion,
         network_name: NetworkName,
         contract_address: str = Path(examples=['0x495f947276749ce646f68ac8c248420045cb7b5e'],
-                              description='contract address for the NFT contract (ERC721 and ERC1155 supported).'),
+                              description='Contract address for the NFT contract (ERC721 and ERC1155 supported).'),
         token_id: str = Path(examples=['61995921128521442959106650131462633744885269624153038309795231243542768648193'], 
-                             description='The ID of the token. Can be in hex or decimal format.') #TODO
+                             description='The ID of the token (in hex or decimal format).')
 ) -> FakeENSCheckStatus:
     if (not contract_address.startswith('0x')) or len(contract_address) != 42 or not all(c in '0123456789abcdefABCDEF' for c in contract_address[2:]):
         raise InvalidEthereumAddress("Hex number must be 40 digits long and prefixed with '0x'.")
     token_id = validate_token_id(token_id)
     return await nameguard.fake_ens_name_check(network_name=network_name, contract_address=contract_address, token_id=token_id)
+
+
+# -- inspect-grapheme --
+
+
+@app.get(
+    '/{api_version}/inspect-grapheme/{grapheme}',
+    tags=['grapheme'],
+    summary='Inspect Grapheme GET',
+    responses={
+        **NotAGrapheme.get_responses_spec(),
+    },
+)
+async def inspect_grapheme_get(
+        api_version: ApiVersion,
+        grapheme: str = Path(description='Grapheme to inspect. Should be url-encoded (except when using the Swagger UI).',
+                             examples=['ń', '%F0%9F%98%B5'])
+) -> GraphemeGuardDetailedResult:
+    return nameguard.inspect_grapheme(grapheme)
+
+
 
 if __name__ == '__main__':
     nameguard.inspect_name('nick.eth')

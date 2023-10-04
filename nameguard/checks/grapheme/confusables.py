@@ -5,9 +5,15 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult
 STATUS = CheckStatus.WARN
 MESSAGE_PASS = 'This grapheme is not confusable'
 MESSAGE_FAIL = 'This grapheme is confusable'
-
+MESSAGE_SKIP = 'It has not been checked if this grapheme is confusable'
 
 def check_grapheme(grapheme: Grapheme) -> GenericCheckResult:
+    if not isinstance(grapheme, Grapheme):
+        return GenericCheckResult(
+            check=Check.CONFUSABLES,
+            status=CheckStatus.SKIP,
+            message=MESSAGE_SKIP,
+        )
     passed = len(grapheme.confusables_other) == 0
     return GenericCheckResult(
         check=Check.CONFUSABLES,

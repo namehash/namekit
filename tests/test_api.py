@@ -71,8 +71,7 @@ def test_inspect_name_get_unnormalized(test_client, api_version):
     check_order_of_list([check['status'] for check in res_json['checks']])
     for label in res_json['labels']:
         check_order_of_list([check['status'] for check in label['checks']])
-        for grapheme in label['graphemes']:
-            check_order_of_list([check['status'] for check in grapheme['checks']])
+
 
 
 @pytest.mark.parametrize(
@@ -138,7 +137,7 @@ def test_inspect_name_post_latin_all_pass(test_client, api_version):
     # grapheme keys
     assert all(
         set(grapheme_res.keys()) == {'grapheme', 'grapheme_name', 'grapheme_type', 'grapheme_script',
-                                     'grapheme_link', 'summary', 'summary', 'checks'}
+                                     'grapheme_link', 'summary'}
         for label_res in res_json['labels'] for grapheme_res in label_res['graphemes']
     )
 
@@ -154,9 +153,7 @@ def test_inspect_name_post_latin_all_pass(test_client, api_version):
         assert grapheme_res['grapheme'] == expected_grapheme
         assert grapheme_res['grapheme_script'] == 'Latin'
         assert grapheme_res['summary'] == {'highest_risk': None, 'rating': 'PASS', 'risk_count': 0}
-        for check in grapheme_res['checks']:
-            assert 'check' in check and 'message' in check
-            assert check['status'] == 'PASS'
+
 
 
 # -- bulk-inspect-name --
@@ -404,6 +401,26 @@ def test_inspect_labelhash_get_http_error(monkeypatch, test_client, api_version)
     response = test_client.get(f'/{api_version}/inspect-labelhash/{network_name}/{labelhash}/eth')
     assert response.status_code == 503
 
+
+def test_inspect_grapheme(test_client, api_version):
+    response = test_client.get(f'/{api_version}/inspect-grapheme/ś')
+    assert response.status_code == 200
+    res_json = response.json()
+    pprint(res_json)
+
+    check_order_of_list([check['status'] for check in res_json['checks']])
+
+    for check in res_json['checks']:
+        assert 'check' in check and 'message' in check
+        assert check['status'] in ('PASS', 'WARN')
+
+
+
+def test_inspect_grapheme_multi(test_client, api_version):
+    response = test_client.get(f'/{api_version}/inspect-grapheme/aś')
+    assert response.status_code == 422
+
+
 def test_primary_name_get(test_client, api_version):
     address='0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
     response = test_client.get(f'/{api_version}/primary-name/mainnet/{address}')
@@ -414,6 +431,7 @@ def test_primary_name_get(test_client, api_version):
     assert res_json['primary_name'] == 'vitalik.eth'
     assert res_json['display_name'] == 'vitalik.eth'
     
+
 def test_primary_name_get_offchain(test_client, api_version):
     address='0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd'
     response = test_client.get(f'/{api_version}/primary-name/mainnet/{address}')
@@ -423,6 +441,7 @@ def test_primary_name_get_offchain(test_client, api_version):
     assert res_json['primary_name_status'] == 'NORMALIZED'
     assert res_json['primary_name'] == 'exampleprimary.cb.id'
     assert res_json['display_name'] == 'exampleprimary.cb.id'
+
 
 def test_primary_name_get_unknown(test_client, api_version):
     address='0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96046'
@@ -435,6 +454,7 @@ def test_primary_name_get_unknown(test_client, api_version):
     assert res_json['display_name'] == 'Unnamed d8da'
     
     #TODO add example with address resolved to unnoramlized (test existence of nameguard results) name and test other networks
+
 
 @pytest.mark.parametrize(
     "contract_address, token_id, fake",
@@ -466,3 +486,4 @@ def test_fake_ens_name_check(test_client, api_version, contract_address, token_i
     response = test_client.get(f'/{api_version}/fake-ens-name-check/{network_name}/{contract_address}/{token_id}')
     assert response.status_code == 200
     assert response.json() == fake
+
