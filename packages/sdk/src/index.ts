@@ -11,7 +11,7 @@ import fetch from "cross-fetch";
  *   2. namehashes into names.
  * 2. Evaluating the name of an NFT and if it is a fake ENS name.
  * 3. Resolution of primary name lookups for impersonation checks.
- * 
+ *
  * The resolution of labelhashes into labels or namehashes into names is theoretically
  * not network dependant. However, the current implementation of NameGuard constrains
  * itself to making at most 1 request to 1 subgraph to resolve a labelhash or namehash. Therefore
@@ -324,13 +324,15 @@ class NameGuard {
   private async fetchFullNameGuardReport(
     name: string
   ): Promise<FullNameGuardReport> {
-    const encodedName = encodeURIComponent(name);
-    const url = `${this.endpoint}/${this.version}/inspect-name/${encodedName}`;
+    const url = `${this.endpoint}/${this.version}/inspect-name`;
 
-    // TODO: Suggest we change this to use the POST endpoint instead of the GET endpoint.
-    // 1. We don't have to worry about possible edge cases with HTTP GET URL length limits when querying extremely long names that can be tens of thousands of characters or more.
-    // 2. We don't have to urlencode / urldecode anything.
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name }),
+    });
 
     if (!response.ok) {
       throw new NameGuardError(response.status, `Failed to fetch name.`);
