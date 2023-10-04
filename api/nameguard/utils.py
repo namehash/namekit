@@ -87,7 +87,7 @@ def validate_token_id(token_id: str) -> str:
     """
     token_id = token_id.lower()
     if token_id.startswith('0x'):
-        if not all(c in '0123456789abcdef' for c in token_id[2:]):
+        if not validate_hex(token_id, require_prefix=True, required_length=None):
             raise InvalidTokenID("Invalid hex number.")
         return token_id
     elif token_id.isdigit():
@@ -116,7 +116,7 @@ def validate_namehash(namehash: str) -> str:
     """
     namehash = namehash.lower()
     if namehash.startswith('0x'):
-        if len(namehash) != 66 or not all(c in '0123456789abcdef' for c in namehash[2:]):
+        if not validate_hex(namehash, require_prefix=True, required_length=66):
             raise InvalidNameHash("Hex number must be 64 digits long and prefixed with '0x'.")
         return namehash
     else:
@@ -129,6 +129,7 @@ def validate_namehash(namehash: str) -> str:
         except ValueError:
             raise InvalidNameHash("The decimal integer converted to base-16 should have at most 64 digits.")
         return hex_namehash
+
 
 def validate_ethereum_address(address: str) -> str:
     """
@@ -147,9 +148,24 @@ def validate_ethereum_address(address: str) -> str:
     InvalidEthereumAddress
     """
     address = address.lower()
-    if (not address.startswith('0x')) or len(address) != 42 or not all(c in '0123456789abcdef' for c in address[2:]):
+    if not validate_hex(address, require_prefix=True, required_length=42):
         raise InvalidEthereumAddress("Hex number must be 40 digits long and prefixed with '0x'.")
     return address
+
+
+def validate_hex(hex: str, *, require_prefix: bool = True, required_length: int = None) -> bool:
+    """
+    Hex string must be lowercased.
+    """
+    if required_length is not None and len(hex) != required_length:
+        return False
+    if require_prefix:
+        if not hex.startswith('0x'):
+            return False
+        return all(c in '0123456789abcdef' for c in hex[2:])
+    else:
+        return all(c in '0123456789abcdef' for c in hex)
+
 
 def calculate_nameguard_rating(check_results: list[GenericCheckResult]) -> Rating:
     return max((check.rating for check in check_results), default=Rating.PASS)
