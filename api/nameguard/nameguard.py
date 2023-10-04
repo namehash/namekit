@@ -15,13 +15,13 @@ from dotenv import load_dotenv
 
 from nameguard import checks
 from nameguard.models import (
-    FullNameGuardReport,
+    NameGuardReport,
     LabelGuardReport,
     SummaryGraphemeGuardReport,
     BulkNameGuardBulkReport,
     SummaryReport,
     Normalization,
-    FullGraphemeGuardReport,
+    GraphemeGuardReport,
     NetworkName,
     ReverseLookupResult,
     ReverseLookupStatus,
@@ -95,7 +95,7 @@ class NameGuard:
     def analyse_label(self, label: str):
         return self._inspector.analyse_label(label, simple_confusables=True)
 
-    def inspect_name(self, name: str) -> FullNameGuardReport:
+    def inspect_name(self, name: str) -> NameGuardReport:
         '''
         Inspect a name. A name is a sequence of labels separated by dots.
         A label can be a labelhash or a string.
@@ -150,7 +150,7 @@ class NameGuard:
 
         # -- generate result --
 
-        return FullNameGuardReport(
+        return NameGuardReport(
             name=name,
             namehash=namehash_from_name(name),
             normalization=Normalization.UNKNOWN
@@ -205,12 +205,12 @@ class NameGuard:
             results=[self.inspect_name(name) for name in names],
         )
 
-    async def inspect_namehash(self, network_name: NetworkName, namehash: str) -> FullNameGuardReport:
+    async def inspect_namehash(self, network_name: NetworkName, namehash: str) -> NameGuardReport:
         logger.debug(f'[inspect_namehash] namehash: \'{namehash}\'')
         name = await namehash_to_name_lookup(network_name, namehash)
         return self.inspect_name(name)
 
-    async def inspect_name_with_labelhash_lookup(self, network_name: NetworkName, name: str) -> FullNameGuardReport:
+    async def inspect_name_with_labelhash_lookup(self, network_name: NetworkName, name: str) -> NameGuardReport:
         '''
         Inspect a name. A name is a sequence of labels separated by dots.
         A label can be a labelhash or a string.
@@ -230,7 +230,7 @@ class NameGuard:
 
         return self.inspect_name(name)
 
-    def inspect_grapheme(self, grapheme: str) -> FullGraphemeGuardReport:
+    def inspect_grapheme(self, grapheme: str) -> GraphemeGuardReport:
         '''
         Inspect a single grapheme.
         Throws `NotAGrapheme` if the input is not a single grapheme.
@@ -243,7 +243,7 @@ class NameGuard:
         grapheme_analysis = label_analysis.graphemes[0]
         grapheme_checks = [check(grapheme_analysis) for check in GRAPHEME_CHECKS]
 
-        return FullGraphemeGuardReport(
+        return GraphemeGuardReport(
             grapheme=grapheme_analysis.value,
             grapheme_name=grapheme_analysis.name,
             grapheme_type=grapheme_analysis.type,

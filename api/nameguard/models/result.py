@@ -113,7 +113,7 @@ class SummaryNameGuardReport(SummaryReport):
 
 
 
-class FullNameGuardReport(SummaryNameGuardReport):
+class NameGuardReport(SummaryNameGuardReport):
     '''
     Full name analysis result with information about individual checks and labels.
     '''
@@ -135,7 +135,7 @@ class BulkNameGuardBulkReport(BaseModel):
     results: list[SummaryNameGuardReport]
 
 
-class FullGraphemeGuardReport(SummaryGraphemeGuardReport):
+class GraphemeGuardReport(SummaryGraphemeGuardReport):
     checks: list[GenericCheckResult] = Field(
         description='A list of checks that were performed on the grapheme.')
 
@@ -177,7 +177,7 @@ class ReverseLookupResult(BaseModel):
                     'if primary name was not found or is unnormalized then "Unnamed [first four digits of Ethereum address]", e.g. "Unnamed C2A6"',
     )
     
-    nameguard_result: Optional[FullNameGuardReport]
+    nameguard_result: Optional[NameGuardReport]
 
 
 class FakeENSCheckStatus(str, Enum):
