@@ -268,6 +268,7 @@ const DEFAULT_ENDPOINT =
 const DEFAULT_VERSION = "v1-beta";
 const DEFAULT_NETWORK: Network = "mainnet";
 const DEFAULT_PARENT_NAME = "eth";
+const MAX_BULK_INSPECTION_NAMES = 250;
 
 interface NameGuardOptions {
   endpoint?: string;
@@ -276,14 +277,30 @@ interface NameGuardOptions {
   parent?: string;
 }
 
-// TODO: I think we want to modify this utility function into something like `normalizeKeccak256Hash`, such that:
-//  1. It accepts a hash in any acceptable format (prefixed, unprefixed).
-//  2. It throws an error if the hash is not in an acceptable format.
-//  3. It returns a normalized Keccak256Hash in the format that we use internally (prefixed and all in lowercase).
 const keccak256Regex = /^0x?[0-9a-f]{64}$/i;
 
 function isKeccak256Hash(hash: Keccak256Hash) {
   return keccak256Regex.test(hash);
+}
+
+/**
+ * Normalizes a Keccak256Hash. Allows for normalization of hashes that are prefixed or
+ * unprefixed or containing hex digits of any capitalization.
+ * 
+ * @param hash the hash to normalize
+ * @returns a normalized Keccak256Hash (prefixed with 0x and all in lowercase).
+ * @throws an error if the hash is not a valid Keccak256Hash.
+ */
+function normalizeKeccak256Hash(hash: Keccak256Hash) {
+  if (!isKeccak256Hash(hash)) {
+    throw new Error("Invalid Keccak256 hash format.");
+  }
+
+  if (!hash.startsWith("0x") && !hash.startsWith("0X")) {
+    return `0x${hash.toLowerCase()}`;
+  }
+
+  return hash.toLowerCase();
 }
 
 class NameGuard {
@@ -340,6 +357,7 @@ class NameGuard {
     return await response.json();
   }
 
+  // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
   // TODO: This function should also accept an optional `network` parameter.
   /**
    * Inspects a single name with NameGuard. Provides a full NameGuard report including:
@@ -356,9 +374,8 @@ class NameGuard {
     return this.fetchFullNameGuardReport(name);
   }
 
+  // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
   // TODO: This function should also accept an optional `network` parameter.
-  // TODO: Shouldn't there be some named constant for the max number of names to submit in a single bulk inspection request?
-  // TODO: Throw an error if the list of names is empty or more than the max number of names?
   /**
    * Inspects one or more names with NameGuard. Provides a `SummaryNameGuardReport` for each provided name, including:
    *   1. The details of all checks performed on `name` that consolidates all checks performed on labels and graphemes in `name`.
@@ -374,6 +391,12 @@ class NameGuard {
   public bulkInspectNames(
     names: string[]
   ): Promise<BulkSummaryNameGuardReport> {
+    if (names.length > MAX_BULK_INSPECTION_NAMES) {
+      throw new Error(
+        `Bulk inspection of more than ${MAX_BULK_INSPECTION_NAMES} names at a time is not supported.`
+      );
+    }
+
     return this.fetchSummaryNameGuardReports(names);
   }
 
@@ -414,12 +437,45 @@ class NameGuard {
     return await response.json();
   }
 
+
+
+  // @notrab sorry I think we keep running into some misunderstandings. There's a lot of background information and complexity in ENS so let's work through it! As a general recommendation, whenever you see something that looks strange or unintuitive, please feel very welcome to ask me questions ! In many cases there may be special background information about why something is a particular way.
+
+  // /* Background:
+  //  * 1. NameGuard inspects names. It needs a name to inspect, rather than just a labelhash.
+  //  *    So what's going on here? Why have this `inspectLabelhash` function at all? 
+  //  * 
+  //  */
+  
+  // There are cases where a client app wants to get a NameGuard report for a name it believes exists, but the client app doesn't know the actual name. It's really complicated and time consuming to write out why this case exists, but it does.
+  
+  // In such cases, the client app only has two pieces of data about a name (without knowing what the true name is):
+  // 1. a NFT tokenId for an ENS name (hint: this is actually a labelhash!)
+  // 2. a parent name (such as "eth", or "example.123.456.eth")
+  
+  // In these cases, NameGuard can still help ! They can make use of this inspectLabelhash endpoint ! NameGuard has logic inside of itself that will try to discover what the true name is. NameGuard first works to discover the true name, and then once discovered it inspects that name and returns the result. In the case that it couldn't discover the true name, NameGuard still handles every edge case.
+
+  // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
   // TODO: The main purpose of this function is to pass a tokenId rather than a labelhash. However we need to make changes
   //        here to properly support this use case.
   // TODO: We need to have more specialized error handling here for cases such as the lookup in the ENS Subgraph failing.
   // TODO: Update the comment below to be more specific on the types of errors that could be returned here.
   /**
-   * Inspects the name associated with the name "[{labelhash}].{parent}".
+   * Inspects the name "[{labelhash}].{parent}". Parent may be a name with any number of labels.
+   * 
+   * This is a convenience function to generate a `FullNameGuardReport` in cases when you only have:
+   * 1. The labelhash of the "childmost" label of a name.
+   * 2. The complete parent name of the "childmost" label.
+   * 
+   * NameGuard always inspects names, rather than labelhashes. So this function will first attempt
+   * to resolve the label associated with the provided labelhash through the ENS Subgraph.
+   * 
+   * If this label resolution fails the resulting `FullNameGuardReport` will be equivalent to requesting
+   * a `FullNameGuardReport` for the name "[{labelhash}].{parent}" which will contain (at least) one label
+   * with an "unknown" `Normalization`.
+   * 
+   * If this label resolution succeeds the resulting `FullNameGuardReport` will be equivalent to requesting
+   * a `FullNameGuardReport` for the name "{label}.{parent}".
    *
    * @param {string} labelhash A labelhash should be a decimal or a hex (prefixed with 0x) string.
    * @param {string} network The network name (defaults to "mainnet").
