@@ -473,11 +473,14 @@ class NameGuard {
       throw new Error("Invalid Keccak256 hash format for labelhash.");
     }
 
-    // const network = options?.network || this.network;
-    // const parent = options?.parent || this.parent;
+    const parent = options?.parent || this.parent;
 
-    // TODO: This function can be implemented through a call to `fetchFullNameGuardReport`.
-    throw new Error("Not implemented");
+    // TODO: forward the provided options into these calls, not sure how is an elegant way to do that in TypeScript
+    if (parent === "") {
+      return this.inspectName(`[${labelhash}]`);
+    } else {
+      return this.inspectName(`[${labelhash}].${parent}`);
+    }
   }
 }
 
