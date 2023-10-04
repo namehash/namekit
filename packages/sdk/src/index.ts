@@ -268,6 +268,7 @@ const DEFAULT_ENDPOINT =
 const DEFAULT_VERSION = "v1-beta";
 const DEFAULT_NETWORK: Network = "mainnet";
 const DEFAULT_PARENT_NAME = "eth";
+const MAX_BULK_INSPECTION_NAMES = 250;
 
 interface NameGuardOptions {
   endpoint?: string;
@@ -375,16 +376,15 @@ class NameGuard {
 
   // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
   // TODO: This function should also accept an optional `network` parameter.
-  // TODO: Shouldn't there be some named constant for the max number of names to submit in a single bulk inspection request?
-  // TODO: Throw an error if the list of names is empty or more than the max number of names?
   /**
-   * Inspects one or more names with NameGuard. Provides a `SummaryNameGuardReport` for each provided name, including:
+   * Inspects up to 250 names at a time with NameGuard. Provides a `SummaryNameGuardReport` for each provided name, including:
    *   1. The details of all checks performed on `name` that consolidates all checks performed on labels and graphemes in `name`.
    *
    * Each `SummaryNameGuardReport` returned represents an equivalant set of checks as a `FullNameGuardReport`. However:
    *   1. A `FullNameGuardReport` contains a lot of additional data that isn't always needed / desired when a `SummaryNameGuardReport` will do.
    *   2. When NameGuard only needs to return a `SummaryNameGuardReport`, some special performance optimizations
    *      are possible (and completely safe) that help to accelate responses in many cases.
+   * 
    *
    * @param {string[]} names The list of names for NameGuard to inspect.
    * @returns {Promise<BulkSummaryNameGuardReport>} A promise that resolves with a list of `SummaryNameGuardReport` values for each name queried in the bulk inspection.
@@ -392,6 +392,12 @@ class NameGuard {
   public bulkInspectNames(
     names: string[]
   ): Promise<BulkSummaryNameGuardReport> {
+    if (names.length > MAX_BULK_INSPECTION_NAMES) {
+      throw new Error(
+        `Bulk inspection of more than ${MAX_BULK_INSPECTION_NAMES} names at a time is not supported.`
+      );
+    }
+
     return this.fetchSummaryNameGuardReports(names);
   }
 
