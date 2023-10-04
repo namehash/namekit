@@ -12,14 +12,14 @@ def nameguard():
 
 def test_basic_green(nameguard: NameGuard):
     result = nameguard.inspect_name('nick.eth')
-    assert result.summary.rating is Rating.PASS
+    assert result.rating is Rating.PASS
     assert all(check.rating is Rating.PASS
                for check in result.checks)
 
 
 def test_basic_yellow(nameguard: NameGuard):
     result = nameguard.inspect_name('nićk.eth')
-    assert result.summary.rating is Rating.WARN
+    assert result.rating is Rating.WARN
     for check in result.checks:
         if check.check in (Check.CONFUSABLES, Check.TYPING_DIFFICULTY):
             assert check.rating is Rating.WARN
@@ -29,7 +29,7 @@ def test_basic_yellow(nameguard: NameGuard):
 
 def test_basic_red(nameguard: NameGuard):
     result = nameguard.inspect_name('ni_ck.eth')
-    assert result.summary.rating is Rating.ALERT
+    assert result.rating is Rating.ALERT
     for check in result.checks:
         if check.check is Check.NORMALIZED:
             assert check.rating is Rating.ALERT
@@ -42,15 +42,15 @@ def test_basic_red(nameguard: NameGuard):
 def test_bulk(nameguard: NameGuard):
     result = nameguard.bulk_inspect_names(['nick.eth', 'nićk.eth', 'ni_ck.eth'])
     assert len(result.results) == 3
-    assert result.results[0].summary.rating is Rating.PASS
-    assert result.results[1].summary.rating is Rating.WARN
-    assert result.results[2].summary.rating is Rating.ALERT
+    assert result.results[0].rating is Rating.PASS
+    assert result.results[1].rating is Rating.WARN
+    assert result.results[2].rating is Rating.ALERT
 
 
 def test_highest_risk(nameguard: NameGuard):
     result = nameguard.inspect_name('nić_k.eth')
-    assert result.summary.highest_risk.check is Check.NORMALIZED
-    assert result.summary.highest_risk.rating is Rating.ALERT
+    assert result.highest_risk.check is Check.NORMALIZED
+    assert result.highest_risk.rating is Rating.ALERT
 
 
 def test_check_skip(nameguard: NameGuard):
@@ -116,8 +116,8 @@ def test_hashes(nameguard: NameGuard):
 def test_unknown_label(nameguard: NameGuard):
     r = nameguard.inspect_name('[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth')
     assert r.labels[0].label == '[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f]'
-    assert r.summary.rating is Rating.ALERT
-    assert r.summary.highest_risk.check is Check.UNKNOWN_LABEL
+    assert r.rating is Rating.ALERT
+    assert r.highest_risk.check is Check.UNKNOWN_LABEL
 
 
 @pytest.mark.asyncio

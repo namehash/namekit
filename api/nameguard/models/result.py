@@ -19,9 +19,9 @@ class Normalization(str, Enum):
     UNKNOWN = 'unknown'
 
 
-class RiskSummary(BaseModel):
+class SummaryReport(BaseModel):
     '''
-    The risk summary of a name or label.
+    The risk summary of a name, label, or grapheme.
     '''
 
     rating: Rating
@@ -33,7 +33,7 @@ class RiskSummary(BaseModel):
         description='The check considered to be the highest risk. If no check has a status of `ALERT` or `WARN`, this field is `None`.')
 
 
-class GraphemeGuardResult(BaseModel):
+class SummaryGraphemeGuardReport(SummaryReport):
     '''
     Grapheme analysis result.
     '''
@@ -65,10 +65,10 @@ class GraphemeGuardResult(BaseModel):
         description="Link to an external page with information about the grapheme.\n"
                     "* `null` for multi-character graphemes")
 
-    summary: RiskSummary
 
 
-class LabelGuardResult(BaseModel):
+
+class LabelGuardReport(SummaryReport):
     '''
     Label analysis result.
     '''
@@ -85,18 +85,16 @@ class LabelGuardResult(BaseModel):
 
     normalization: Normalization
 
-    summary: RiskSummary
-
     checks: list[GenericCheckResult] = Field(
         description='A list of checks that were performed on the label.',
     )
 
-    graphemes: Optional[list[GraphemeGuardResult]] = Field(
+    graphemes: Optional[list[SummaryGraphemeGuardReport]] = Field(
         description='A list of graphemes that were analyzed in the label. If the label is unknown, this field is `None`.',
     )
 
 
-class NameGuardQuickResult(BaseModel):
+class SummaryNameGuardReport(SummaryReport):
     '''
     Name analysis result without information about individual checks and labels.
     '''
@@ -113,10 +111,9 @@ class NameGuardQuickResult(BaseModel):
 
     normalization: Normalization
 
-    summary: RiskSummary
 
 
-class NameGuardResult(NameGuardQuickResult):
+class NameGuardReport(SummaryNameGuardReport):
     '''
     Full name analysis result with information about individual checks and labels.
     '''
@@ -125,27 +122,27 @@ class NameGuardResult(NameGuardQuickResult):
         description='A list of checks that were performed on the name.',
     )
 
-    labels: list[LabelGuardResult] = Field(
+    labels: list[LabelGuardReport] = Field(
         description='The analyzed labels of the name.',
     )
 
 
-class NameGuardBulkResult(BaseModel):
+class BulkNameGuardBulkReport(BaseModel):
     '''
     Bulk name analysis results.
     '''
 
-    results: list[NameGuardQuickResult]
+    results: list[SummaryNameGuardReport]
 
 
-class GraphemeGuardDetailedResult(GraphemeGuardResult):
+class GraphemeGuardReport(SummaryGraphemeGuardReport):
     checks: list[GenericCheckResult] = Field(
         description='A list of checks that were performed on the grapheme.')
 
-    confusables: list[GraphemeGuardResult] = Field(
+    confusables: list[SummaryGraphemeGuardReport] = Field(
         description='A list graphemes that can be confused with the analyzed grapheme.')
 
-    canonical_confusable: Optional[GraphemeGuardResult] = Field(
+    canonical_confusable: Optional[SummaryGraphemeGuardReport] = Field(
         description='A grapheme that is the canonical form of the analyzed grapheme.\n'
                     '* `null` if the canonical form is not known')
 
@@ -180,7 +177,7 @@ class ReverseLookupResult(BaseModel):
                     'if primary name was not found or is unnormalized then "Unnamed [first four digits of Ethereum address]", e.g. "Unnamed C2A6"',
     )
     
-    nameguard_result: Optional[NameGuardResult]
+    nameguard_result: Optional[NameGuardReport]
 
 
 class FakeENSCheckStatus(str, Enum):
