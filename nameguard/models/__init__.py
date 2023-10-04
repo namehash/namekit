@@ -15,6 +15,8 @@ from .result import (
     Normalization,
     GraphemeGuardDetailedResult,
     ReverseLookupResult,
+    ReverseLookupStatus,
+    FakeENSCheckStatus,
 )
 
 from .request import (

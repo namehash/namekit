@@ -4,6 +4,9 @@ import ens_normalize
 import requests
 from ens import ENS
 from ens_normalize import DisallowedSequence
+import os
+
+import requests
 from label_inspector.inspector import Inspector
 from label_inspector.config import initialize_inspector_config
 from label_inspector.models import InspectorConfusableGraphemeResult
@@ -20,8 +23,11 @@ from nameguard.models import (
     Normalization,
     GraphemeGuardDetailedResult,
     NetworkName,
+    ReverseLookupResult,
+    ReverseLookupStatus,
+    FakeENSCheckStatus,
 )
-from nameguard.models.result import ReverseLookupResult, ReverseLookupStatus
+from nameguard.provider import get_nft_metadata
 from nameguard.utils import (
     namehash_from_name,
     labelhash_from_label,
@@ -61,14 +67,30 @@ def init_inspector():
         return Inspector(config)
 
 
+ens_contract_adresses = {
+    '0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85'.lower(),  # Base Registrar
+    '0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401'.lower(),  # Name Wrapper
+}
+
+
+def nested_get(dic, keys):
+    for key in keys:
+        dic = dic[key]
+    return dic
+
+
 class NameGuard:
     def __init__(self):
         self._inspector = init_inspector()
         load_dotenv()
         # TODO use web sockets and async
-        self.ns = {NetworkName.MAINNET: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_MAINNET'))),
-                   NetworkName.GOERLI: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_GOERLI'))),
-                   NetworkName.SEPOLIA: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_SEPOLIA')))}
+        self.ns = {}
+        for network_name, env_var in ((NetworkName.MAINNET, 'PROVIDER_URI_MAINNET'),
+                                      (NetworkName.GOERLI, 'PROVIDER_URI_GOERLI'),
+                                      (NetworkName.SEPOLIA, 'PROVIDER_URI_SEPOLIA')):
+            if os.environ.get(env_var) is None:
+                logger.warning(f'Environment variable {env_var} is not set')
+            self.ns[network_name] = ENS(HTTPProvider(os.environ.get(env_var)))
 
     def analyse_label(self, label: str):
         return self._inspector.analyse_label(label, simple_confusables=True)
@@ -284,3 +306,40 @@ class NameGuard:
                                    display_name=display_name,
                                    primary_name_status=status,
                                    nameguard_result=nameguard_result)
+
+    async def fake_ens_name_check(self, network_name, contract_address, token_id):
+        """
+        Check if the token is a fake ENS name (not valid ENS contract address and title and collection name of NFT look like ENS name).
+        """
+        contract_address = contract_address.lower()
+
+        if contract_address in ens_contract_adresses:
+            return FakeENSCheckStatus.AUTHENTIC_ENS_NAME  # TODO is it enough? should we check if it exist? or is it normalized? or it ends with .eth?
+
+        res_json = await get_nft_metadata(contract_address, token_id)
+
+        token_type = res_json['id']['tokenMetadata']['tokenType']
+        if token_type not in ['ERC721', 'ERC1155']:  # TODO what values can have token_type? should we have a separate status for NOT_A_CONTRACT?
+            return FakeENSCheckStatus.UNKNOWN_NFT
+
+        title = res_json['title']
+
+        cured_title = ens_normalize.ens_cure(title)
+
+        if cured_title.endswith('.eth'):
+            return FakeENSCheckStatus.IMPERSONATED_ENS_NAME
+        else:
+            if '.eth' in cured_title:
+                return FakeENSCheckStatus.POTENTIALLY_IMPERSONATED_ENS_NAME
+
+            for keys in [['metadata', 'name'], 
+                         ['contractMetadata', 'openSea', 'collectionName'],
+                         ['contractMetadata', 'name']]:
+                try:
+                    name = nested_get(res_json, keys)
+                    if '.eth' in name.lower():
+                        return FakeENSCheckStatus.POTENTIALLY_IMPERSONATED_ENS_NAME
+                except KeyError:
+                    pass
+
+            return FakeENSCheckStatus.NON_IMPERSONATED_ENS_NAME

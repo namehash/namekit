@@ -4,12 +4,13 @@ from pydantic import BaseModel, Field
 
 from nameguard.models import GraphemeGuardDetailedResult
 from nameguard.nameguard import NameGuard
-from nameguard.utils import validate_namehash, namehash_from_labelhash
+from nameguard.utils import validate_namehash, namehash_from_labelhash, validate_token_id
 from nameguard.models import (
     NameGuardResult,
     NameGuardBulkResult,
     ReverseLookupResult,
-    NetworkName,
+    NetworkName, 
+    FakeENSCheckStatus,
 )
 from nameguard.logging import logger
 from nameguard.exceptions import (
@@ -17,9 +18,10 @@ from nameguard.exceptions import (
     ENSSubgraphUnavailable,
     NamehashMismatchError,
     NamehashNotFoundInSubgraph,
-    NotAGrapheme,
     InvalidEthereumAddress,
-    ProviderUnavailable,
+    ProviderUnavailable, 
+    InvalidTokenID,
+    NotAGrapheme,
 )
 
 
@@ -196,6 +198,28 @@ async def primary_name_get(api_version: ApiVersion, address: str, network_name: 
         raise InvalidEthereumAddress("Hex number must be 40 digits long and prefixed with '0x'.")
     return await nameguard.primary_name(address, network_name)
 
+@app.get(
+    '/{api_version}/fake-ens-name-check/{network_name}/{contract_address}/{token_id}',
+    tags=['fake-ens-name-check'],
+    summary='Fake ENS name check GET',
+    responses={
+        **InvalidTokenID.get_responses_spec(),
+        **ProviderUnavailable.get_responses_spec(),
+    },
+)
+async def fake_ens_name_check_get(
+        api_version: ApiVersion,
+        network_name: NetworkName,
+        contract_address: str = Path(examples=['0x495f947276749ce646f68ac8c248420045cb7b5e'],
+                              description='Contract address for the NFT contract (ERC721 and ERC1155 supported).'),
+        token_id: str = Path(examples=['61995921128521442959106650131462633744885269624153038309795231243542768648193'], 
+                             description='The ID of the token (in hex or decimal format).')
+) -> FakeENSCheckStatus:
+    if (not contract_address.startswith('0x')) or len(contract_address) != 42 or not all(c in '0123456789abcdefABCDEF' for c in contract_address[2:]):
+        raise InvalidEthereumAddress("Hex number must be 40 digits long and prefixed with '0x'.")
+    token_id = validate_token_id(token_id)
+    return await nameguard.fake_ens_name_check(network_name=network_name, contract_address=contract_address, token_id=token_id)
+
 
 # -- inspect-grapheme --
 
@@ -214,6 +238,7 @@ async def inspect_grapheme_get(
                              examples=['ń', '%F0%9F%98%B5'])
 ) -> GraphemeGuardDetailedResult:
     return nameguard.inspect_grapheme(grapheme)
+
 
 
 if __name__ == '__main__':
