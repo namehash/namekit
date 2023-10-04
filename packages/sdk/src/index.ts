@@ -356,6 +356,7 @@ class NameGuard {
     return await response.json();
   }
 
+  // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
   // TODO: This function should also accept an optional `network` parameter.
   /**
    * Inspects a single name with NameGuard. Provides a full NameGuard report including:
@@ -372,6 +373,7 @@ class NameGuard {
     return this.fetchFullNameGuardReport(name);
   }
 
+  // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
   // TODO: This function should also accept an optional `network` parameter.
   // TODO: Shouldn't there be some named constant for the max number of names to submit in a single bulk inspection request?
   // TODO: Throw an error if the list of names is empty or more than the max number of names?
