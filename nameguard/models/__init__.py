@@ -14,4 +14,9 @@ from .result import (
     RiskSummary,
     Normalization,
     GraphemeGuardDetailedResult,
+    ReverseLookupResult,
+)
+
+from .request import (
+    NetworkName,
 )

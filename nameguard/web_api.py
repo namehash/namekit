@@ -5,7 +5,12 @@ from pydantic import BaseModel, Field
 from nameguard.models import GraphemeGuardDetailedResult
 from nameguard.nameguard import NameGuard
 from nameguard.utils import validate_namehash, namehash_from_labelhash
-from nameguard.models import NameGuardResult, NameGuardBulkResult
+from nameguard.models import (
+    NameGuardResult,
+    NameGuardBulkResult,
+    ReverseLookupResult,
+    NetworkName,
+)
 from nameguard.logging import logger
 from nameguard.exceptions import (
     InvalidNameHash,
@@ -13,15 +18,13 @@ from nameguard.exceptions import (
     NamehashMismatchError,
     NamehashNotFoundInSubgraph,
     NotAGrapheme,
+    InvalidEthereumAddress,
+    ProviderUnavailable,
 )
 
 
 class ApiVersion(str, Enum):
     V1_BETA = 'v1-beta'
-
-
-class NetworkName(str, Enum):
-    MAINNET = 'mainnet'
 
 
 app = FastAPI(title='NameGuard Service', version=ApiVersion.V1_BETA.value)
@@ -36,15 +39,17 @@ class InspectNameRequest(BaseModel):
         description='Name to inspect.',
         examples=['iamalice.eth'],
     )
+    network_name: NetworkName
 
 
 @app.get(
-    '/{api_version}/inspect-name/{name:path}',
+    '/{api_version}/inspect-name/{network_name}/{name:path}',
     tags=['name'],
     summary='Inspect Name GET'
 )
 async def inspect_name_get(
         api_version: ApiVersion,
+        network_name: NetworkName,
         request: Request,
         name: str = Path(description='**Name should be url-encoded (except when using the Swagger UI).**',
                          examples=['iam%2Falice%3F.eth']),
@@ -68,6 +73,7 @@ async def inspect_name_post(api_version: ApiVersion, request: InspectNameRequest
 
 class BulkInspectNamesRequest(BaseModel):
     names: list[str] = Field(max_length=250)
+    network_name: NetworkName
 
 
 @app.post(
@@ -175,6 +181,20 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
     valid_labelhash = validate_namehash(namehash=request.labelhash)
     namehash = namehash_from_labelhash(valid_labelhash, parent_name=request.parent_name)
     return await nameguard.inspect_namehash(namehash=namehash)
+
+@app.get(
+    '/{api_version}/primary-name/{network_name}/{address:path}',
+    tags=['primary_name'],
+    summary='Reverse lookup of Ethereum address to primary name',
+    responses={
+        **InvalidEthereumAddress.get_responses_spec(),
+        **ProviderUnavailable.get_responses_spec(),
+    },
+)
+async def primary_name_get(api_version: ApiVersion, address: str, network_name: NetworkName) -> ReverseLookupResult:
+    if (not address.startswith('0x')) or len(address) != 42 or not all(c in '0123456789abcdefABCDEF' for c in address[2:]):
+        raise InvalidEthereumAddress("Hex number must be 40 digits long and prefixed with '0x'.")
+    return await nameguard.primary_name(address, network_name)
 
 
 # -- inspect-grapheme --

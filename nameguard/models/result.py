@@ -148,3 +148,36 @@ class GraphemeGuardDetailedResult(GraphemeGuardResult):
     canonical_confusable: Optional[GraphemeGuardResult] = Field(
         description='A grapheme that is the canonical form of the analyzed grapheme.\n'
                     '* `null` if the canonical form is not known')
+
+
+class ReverseLookupStatus(str, Enum):
+    '''
+    The reverse lookup status of Ethereum address.
+
+    * `NORMALIZED`: ENS primary name was found and it is normalized.
+    * `NO_PRIMARY_NAME_FOUND`: ENS primary name was not found.
+    * `PRIMARY_NAME_FOUND_BUT_UNNORMALIZED`: ENS primary name was found, but it is not normalized.
+    '''
+
+    NORMALIZED = 'NORMALIZED'
+    NO_PRIMARY_NAME_FOUND = 'NO_PRIMARY_NAME_FOUND'
+    PRIMARY_NAME_FOUND_BUT_UNNORMALIZED = 'PRIMARY_NAME_FOUND_BUT_UNNORMALIZED'
+
+
+class ReverseLookupResult(BaseModel):
+    '''
+    Reverse lookup result.
+    '''
+    primary_name_status: ReverseLookupStatus
+    
+    primary_name: Optional[str] = Field(
+        description='Primary ENS name for the Ethereum address.'
+                    '* `null` if primary name was not found or is unnormalized ',
+    )
+    
+    display_name: str = Field(
+        description='ENS beautified version of the primary name\n'
+                    'if primary name was not found or is unnormalized then "Unnamed [first four digits of Ethereum address]", e.g. "Unnamed C2A6"',
+    )
+    
+    nameguard_result: Optional[NameGuardResult]

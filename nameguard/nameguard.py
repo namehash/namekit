@@ -1,6 +1,14 @@
+import os
+
+import ens_normalize
+import requests
+from ens import ENS
+from ens_normalize import DisallowedSequence
 from label_inspector.inspector import Inspector
 from label_inspector.config import initialize_inspector_config
 from label_inspector.models import InspectorConfusableGraphemeResult
+from web3 import HTTPProvider
+from dotenv import load_dotenv
 
 from nameguard import checks
 from nameguard.models import (
@@ -11,7 +19,9 @@ from nameguard.models import (
     RiskSummary,
     Normalization,
     GraphemeGuardDetailedResult,
+    NetworkName,
 )
+from nameguard.models.result import ReverseLookupResult, ReverseLookupStatus
 from nameguard.utils import (
     namehash_from_name,
     labelhash_from_label,
@@ -21,7 +31,7 @@ from nameguard.utils import (
     get_highest_risk,
     label_is_labelhash,
 )
-from nameguard.exceptions import NotAGrapheme
+from nameguard.exceptions import NamehashNotFoundInSubgraph, ProviderUnavailable, NotAGrapheme
 from nameguard.logging import logger
 from nameguard.subgraph import namehash_to_name_lookup, resolve_all_labelhashes_in_name
 
@@ -57,6 +67,12 @@ class NameGuard:
 
     def analyse_label(self, label: str):
         return self._inspector.analyse_label(label, simple_confusables=True)
+
+        load_dotenv()
+        # TODO use web sockets and async
+        self.ns = {NetworkName.MAINNET: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_MAINNET'))),
+                   NetworkName.GOERLI: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_GOERLI'))),
+                   NetworkName.SEPOLIA: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_SEPOLIA')))}
 
     def inspect_name(self, name: str) -> NameGuardResult:
         '''
@@ -156,7 +172,6 @@ class NameGuard:
                                 risk_count=count_risks(grapheme_checks),
                                 highest_risk=get_highest_risk(grapheme_checks),
                             ),
-                            # checks=sorted(grapheme_checks, reverse=True),
                         )
                         for grapheme, grapheme_checks in zip(label_analysis.graphemes, label_graphemes_checks)
                     ] if label_analysis is not None else None,
@@ -246,3 +261,27 @@ class NameGuard:
                 highest_risk=get_highest_risk(grapheme_checks),
             ),
         )
+
+    async def primary_name(self, address: str, network_name: str) -> ReverseLookupResult:
+        try:
+            domain = self.ns[network_name].name(address)
+        except requests.exceptions.ConnectionError as ex:
+            raise ProviderUnavailable(f"Communication error with provider occurred: {ex}")
+        display_name = f'Unnamed {address[2:6].lower()}'
+        primary_name = None
+        nameguard_result = None
+        if domain is None:
+            status = ReverseLookupStatus.NO_PRIMARY_NAME_FOUND
+        else:
+            nameguard_result = self.inspect_name(domain)
+            try:
+                display_name = ens_normalize.ens_beautify(domain)
+                status = ReverseLookupStatus.NORMALIZED
+                primary_name = domain
+            except DisallowedSequence:
+                status = ReverseLookupStatus.PRIMARY_NAME_FOUND_BUT_UNNORMALIZED
+
+        return ReverseLookupResult(primary_name=primary_name,
+                                   display_name=display_name,
+                                   primary_name_status=status,
+                                   nameguard_result=nameguard_result)

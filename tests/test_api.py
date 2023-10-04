@@ -25,7 +25,8 @@ def api_version():
 
 def test_inspect_name_get(test_client, api_version):
     name = 'byczong.eth'
-    response = test_client.get(f'/{api_version}/inspect-name/{name}')
+    network_name = 'mainnet'
+    response = test_client.get(f'/{api_version}/inspect-name/{network_name}/{name}')
     assert response.status_code == 200
     res_json = response.json()
     pprint(res_json)
@@ -50,7 +51,8 @@ def check_order_of_list(l: list[str]):
 
 def test_inspect_name_get_unnormalized(test_client, api_version):
     name = 'bycz ong.eth'
-    response = test_client.get(f'/{api_version}/inspect-name/{name}')
+    network_name = 'mainnet'
+    response = test_client.get(f'/{api_version}/inspect-name/{network_name}/{name}')
     assert response.status_code == 200
     res_json = response.json()
     pprint(res_json)
@@ -86,7 +88,8 @@ def test_inspect_name_get_special_characters(test_client, api_version, encoded_i
     if do_quote:
         encoded_input_name = quote(
             encoded_input_name.encode('utf-8'))  # because TestClient is doing additional unquote before sending request
-    response = test_client.get(f'/{api_version}/inspect-name/{encoded_input_name}')
+    network_name = 'mainnet'
+    response = test_client.get(f'/{api_version}/inspect-name/{network_name}/{encoded_input_name}')
     assert response.status_code == 200
     res_json = response.json()
     pprint(res_json)
@@ -95,7 +98,8 @@ def test_inspect_name_get_special_characters(test_client, api_version, encoded_i
 
 
 def test_inspect_name_get_empty(test_client, api_version):
-    response = test_client.get(f'/{api_version}/inspect-name/')
+    network_name = 'mainnet'
+    response = test_client.get(f'/{api_version}/inspect-name/{network_name}')
     assert response.status_code == 200
     res_json = response.json()
     assert res_json['name'] == ''
@@ -109,7 +113,7 @@ def test_inspect_name_get_empty(test_client, api_version):
 
 def test_inspect_name_post_latin_all_pass(test_client, api_version):
     name = 'vitalik.eth'
-    response = test_client.post(f'/{api_version}/inspect-name', json={'name': name})
+    response = test_client.post(f'/{api_version}/inspect-name', json={'name': name, 'network_name': 'mainnet'})
     assert response.status_code == 200
     res_json = response.json()
     pprint(res_json)
@@ -155,7 +159,7 @@ def test_inspect_name_post_latin_all_pass(test_client, api_version):
 
 def test_bulk_inspect_name_post(test_client, api_version):
     names = ['vitalik.eth', 'byczong.mydomain.eth']
-    response = test_client.post(f'/{api_version}/bulk-inspect-names', json={'names': names})
+    response = test_client.post(f'/{api_version}/bulk-inspect-names', json={'names': names, 'network_name': 'mainnet'})
     assert response.status_code == 200
     res_json = response.json()
     pprint(res_json)
@@ -409,6 +413,7 @@ def test_inspect_grapheme(test_client, api_version):
     #     assert 'check' in check and 'message' in check
     #     assert check['status'] == 'PASS'
 
+
 @pytest.mark.xfail
 def test_inspect_grapheme_multi(test_client, api_version):
     #TODO
@@ -418,3 +423,38 @@ def test_inspect_grapheme_multi(test_client, api_version):
     pprint(res_json)
 
     check_order_of_list([check['status'] for check in res_json['checks']])
+
+
+def test_primary_name_get(test_client, api_version):
+    address='0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
+    response = test_client.get(f'/{api_version}/primary-name/mainnet/{address}')
+    assert response.status_code == 200
+    res_json = response.json()
+    print(res_json)
+    assert res_json['primary_name_status'] == 'NORMALIZED'
+    assert res_json['primary_name'] == 'vitalik.eth'
+    assert res_json['display_name'] == 'vitalik.eth'
+    
+
+def test_primary_name_get_offchain(test_client, api_version):
+    address='0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd'
+    response = test_client.get(f'/{api_version}/primary-name/mainnet/{address}')
+    assert response.status_code == 200
+    res_json = response.json()
+    print(res_json)
+    assert res_json['primary_name_status'] == 'NORMALIZED'
+    assert res_json['primary_name'] == 'exampleprimary.cb.id'
+    assert res_json['display_name'] == 'exampleprimary.cb.id'
+
+
+def test_primary_name_get_unknown(test_client, api_version):
+    address='0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96046'
+    response = test_client.get(f'/{api_version}/primary-name/mainnet/{address}')
+    assert response.status_code == 200
+    res_json = response.json()
+    print(res_json)
+    assert res_json['primary_name_status'] == 'NO_PRIMARY_NAME_FOUND'
+    assert res_json['primary_name'] == None
+    assert res_json['display_name'] == 'Unnamed d8da'
+    
+    #TODO add example with address resolved to unnoramlized (test existence of nameguard results) name and test other networks
