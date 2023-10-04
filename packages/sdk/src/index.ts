@@ -307,13 +307,6 @@ class NameGuard {
     return await response.json();
   }
 
-  /**
-   * Inspects multiple names.
-   * @param {string[]} names A string for a single name.
-   * @returns {Promise<SingleNamesResponse>} A promise that resolves with the details of the name.
-   * @example
-   * const data = await nameguard.inspectName(['nick.eth', 'vitalik.eth']);
-   */
   private async fetchSummaryNameGuardReports(
     names: string[]
   ): Promise<BulkSummaryNameGuardReport> {
