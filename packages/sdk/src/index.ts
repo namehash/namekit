@@ -11,6 +11,13 @@ import fetch from "cross-fetch";
  *   2. namehashes into names.
  * 2. Evaluating the name of an NFT and if it is a fake ENS name.
  * 3. Resolution of primary name lookups for impersonation checks.
+ * 
+ * The resolution of labelhashes into labels or namehashes into names is theoretically
+ * not network dependant. However, the current implementation of NameGuard constrains
+ * itself to making at most 1 request to 1 subgraph to resolve a labelhash or namehash. Therefore
+ * the network parameter can influence the result when inspecting a name containing a labelhash or
+ * when inspecting a namehash for a name with labels that are not known to the ENS Subgraph on a
+ * particular network.
  */
 export type Network = "mainnet" | "goerli" | "sepolia";
 
