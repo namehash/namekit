@@ -34,14 +34,14 @@ def test_inspect_name_get(test_client, api_version):
 
     assert res_json['name'] == name
     assert res_json['namehash'] == '0xf8c2c01d386a4807b3ceb131e4975ff37b44824ac9307121b18223f3d77d0c2e'
-    assert res_json['normalization'] == 'NORMALIZED'
-    assert res_json['summary'] == {'highest_risk': None, 'rating': 'PASS', 'risk_count': 0}
+    assert res_json['normalization'] == 'normalized'
+    assert res_json['summary'] == {'highest_risk': None, 'rating': 'pass', 'risk_count': 0}
     assert res_json['checks']
     assert res_json['labels']
     assert all([label['labelhash'] for label in res_json['labels']])
 
 
-CORRECT_CHECKS_ORDER = ['ALERT', 'WARN', 'PASS', 'INFO', 'SKIP']
+CORRECT_CHECKS_ORDER = ['alert', 'warn', 'pass', 'info', 'skip']
 
 
 def check_order_of_list(l: list[str]):
@@ -60,8 +60,8 @@ def test_inspect_name_get_unnormalized(test_client, api_version):
 
     assert res_json['name'] == name
     assert res_json['namehash'] == '0x3f97a45d7aa341b55b749b276f699278634ce4e5afa3e0753a8fe5be5d1355c2'
-    assert res_json['normalization'] == 'UNNORMALIZED'
-    assert res_json['summary']['rating'] == 'ALERT'
+    assert res_json['normalization'] == 'unnormalized'
+    assert res_json['summary']['rating'] == 'alert'
     assert res_json['summary']['risk_count'] > 0
     assert res_json['checks']
     assert res_json['labels']
@@ -105,7 +105,7 @@ def test_inspect_name_get_empty(test_client, api_version):
     res_json = response.json()
     assert res_json['name'] == ''
     assert res_json['namehash'] == '0x0000000000000000000000000000000000000000000000000000000000000000'
-    assert res_json['normalization'] == 'NORMALIZED'
+    assert res_json['normalization'] == 'normalized'
 
     response = test_client.get(f'/{api_version}/inspect-name')
     # method not allowed because this is the POST endpoint path
@@ -121,14 +121,14 @@ def test_inspect_name_post_latin_all_pass(test_client, api_version):
 
     assert res_json['name'] == name
     assert res_json['namehash'] == '0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835'
-    assert res_json['normalization'] == 'NORMALIZED'
-    assert res_json['summary'] == {'highest_risk': None, 'rating': 'PASS', 'risk_count': 0}
+    assert res_json['normalization'] == 'normalized'
+    assert res_json['summary'] == {'highest_risk': None, 'rating': 'pass', 'risk_count': 0}
     assert res_json['checks']
     assert len(res_json['labels']) == 2
 
     for check in res_json['checks']:
         assert 'check' in check and 'message' in check
-        assert check['status'] == 'PASS'
+        assert check['status'] == 'pass'
 
     # labels keys
     assert (set(label_res.keys()) == {'label', 'labelhash', 'normalization', 'summary', 'checks', 'graphemes'}
@@ -144,15 +144,15 @@ def test_inspect_name_post_latin_all_pass(test_client, api_version):
     for i, label in enumerate(('vitalik', 'eth')):
         assert res_json['labels'][i]['label'] == label
         assert res_json['labels'][i]['labelhash'] == labelhash_from_label(label)
-        assert res_json['labels'][i]['normalization'] == 'NORMALIZED'
+        assert res_json['labels'][i]['normalization'] == 'normalized'
         for check in res_json['labels'][i]['checks']:
             assert 'check' in check and 'message' in check
-            assert check['status'] == 'PASS'
+            assert check['status'] == 'pass'
 
     for grapheme_res, expected_grapheme in zip(res_json['labels'][0]['graphemes'], list('vitalik')):
         assert grapheme_res['grapheme'] == expected_grapheme
         assert grapheme_res['grapheme_script'] == 'Latin'
-        assert grapheme_res['summary'] == {'highest_risk': None, 'rating': 'PASS', 'risk_count': 0}
+        assert grapheme_res['summary'] == {'highest_risk': None, 'rating': 'pass', 'risk_count': 0}
 
 
 
@@ -203,17 +203,17 @@ def test_inspect_namehash_get(test_client, api_version, network_name: str, nameh
 @pytest.mark.parametrize(
     "namehash, normalization, expected_name",
     [
-        ('0xe0fe380f4d877f643e88ceabbed4e5ee0efe66f079aabba23e8902336f7948da', 'UNKNOWN',
+        ('0xe0fe380f4d877f643e88ceabbed4e5ee0efe66f079aabba23e8902336f7948da', 'unknown',
          '[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth'),
-        ('0x0462571d34d206146958c44e473730b1b2630321072c7fbb92deeea946416dab', 'UNKNOWN',
+        ('0x0462571d34d206146958c44e473730b1b2630321072c7fbb92deeea946416dab', 'unknown',
          '[5bc926fc40cc7c49e0df6dddf26e4dc7b9d6d32f4a55d4f0670320dbf414afd2].byongdok.eth'),
-        ('0x5f57b185ab56ca42b5506f96694c767ebcc8c6e2854a79636b565e4ebe700fb0', 'UNKNOWN',
+        ('0x5f57b185ab56ca42b5506f96694c767ebcc8c6e2854a79636b565e4ebe700fb0', 'unknown',
          '[2af8fae91ee5ef94f17f2c2f23532cc2d1ccaee78cae52efed0df04bc2463b13].[3fddf465ed81d79ae943b35800b1d187dc0b5d69614bf7e8ebddbae19d72cae8].genevaswis.eth'),
-        ('0xb2636b6e3b1abdd3fbec454d4f4b1a904e7b15e3609cb208bcfc5a5487293308', 'UNKNOWN',
+        ('0xb2636b6e3b1abdd3fbec454d4f4b1a904e7b15e3609cb208bcfc5a5487293308', 'unknown',
          '[3fddf465ed81d79ae943b35800b1d187dc0b5d69614bf7e8ebddbae19d72cae8].genevaswis.eth'),
-        ('0x00f52438ae09d2f909ee2efc19ba8af75058e74ca4507aa091bd8282aa490e77', 'UNKNOWN',
+        ('0x00f52438ae09d2f909ee2efc19ba8af75058e74ca4507aa091bd8282aa490e77', 'unknown',
          '[7710d5ebf94bcebcf1996bb7a3f5e24a6d24435b314b3cec815da03640c2940c].[2e8eaa68c7e128861299162323c29c29672f5c094aceaf22d9c0935e4bbd3f85].[a64d2b5a93eda272d27734cc2fb8d1c468562e279f1e97e759eea1a5a410f8e3].[462a1d6391f7ea5916874504f3b5fc8cd43626f6bbabc8a22fe4312dc1585362].enspunks.eth'),
-        ('0x1bc53f6413409d078ec18a29b17f981eafab341598a4e970ac9efab7d29258af', 'UNNORMALIZED', '[zzz].eth'),
+        ('0x1bc53f6413409d078ec18a29b17f981eafab341598a4e970ac9efab7d29258af', 'unnormalized', '[zzz].eth'),
     ]
 )
 def test_inspect_namehash_get_unknown_status(test_client, api_version, namehash: str, normalization: str,
@@ -251,13 +251,13 @@ def test_inspect_namehash_get_unknown(test_client, api_version, namehash: str, e
     res_json = response.json()
     pprint(res_json)
 
-    assert res_json['normalization'] == 'UNKNOWN'
+    assert res_json['normalization'] == 'unknown'
     assert res_json['namehash']
 
     # labelhashes are available for every input (also unknown)
     # label value for unknown labels is a labelhash
     for label in res_json['labels']:
-        if label['normalization'] == 'UNKNOWN':
+        if label['normalization'] == 'unknown':
             assert re.match(r'^\[[0-9a-f]{64}\]$', label['label'])
         assert re.match('^0x[0-9a-f]{64}$', label['labelhash'])
 
@@ -412,7 +412,7 @@ def test_inspect_grapheme(test_client, api_version):
 
     for check in res_json['checks']:
         assert 'check' in check and 'message' in check
-        assert check['status'] in ('PASS', 'WARN')
+        assert check['status'] in ('pass', 'warn')
 
 
 
@@ -427,7 +427,7 @@ def test_primary_name_get(test_client, api_version):
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
-    assert res_json['primary_name_status'] == 'NORMALIZED'
+    assert res_json['primary_name_status'] == 'normalized'
     assert res_json['primary_name'] == 'vitalik.eth'
     assert res_json['display_name'] == 'vitalik.eth'
     
@@ -438,7 +438,7 @@ def test_primary_name_get_offchain(test_client, api_version):
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
-    assert res_json['primary_name_status'] == 'NORMALIZED'
+    assert res_json['primary_name_status'] == 'normalized'
     assert res_json['primary_name'] == 'exampleprimary.cb.id'
     assert res_json['display_name'] == 'exampleprimary.cb.id'
 
@@ -449,7 +449,7 @@ def test_primary_name_get_unknown(test_client, api_version):
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
-    assert res_json['primary_name_status'] == 'NO_PRIMARY_NAME_FOUND'
+    assert res_json['primary_name_status'] == 'no_primary_name_found'
     assert res_json['primary_name'] == None
     assert res_json['display_name'] == 'Unnamed d8da'
     
