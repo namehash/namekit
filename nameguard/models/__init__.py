@@ -13,6 +13,7 @@ from .result import (
     NameGuardBulkResult,
     RiskSummary,
     Normalization,
+    GraphemeGuardDetailedResult,
     ReverseLookupResult,
     ReverseLookupStatus,
     FakeENSCheckStatus,
