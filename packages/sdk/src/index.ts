@@ -267,14 +267,14 @@ const DEFAULT_ENDPOINT =
   "https://pyfgdpsi4jgbf5tlzu62zbokii0mhmgc.lambda-url.eu-north-1.on.aws";
 const DEFAULT_VERSION = "v1-beta";
 const DEFAULT_NETWORK: Network = "mainnet";
-const DEFAULT_PARENT_NAME = "eth";
+const DEFAULT_LABELHASH_INSPECTION_PARENT = "eth";
 const MAX_BULK_INSPECTION_NAMES = 250;
 
 interface NameGuardOptions {
   endpoint?: string;
   version?: string;
   network?: Network;
-  parent?: string;
+  labelhashInspectionParent?: string;
 }
 
 const keccak256Regex = /^0x?[0-9a-f]{64}$/i;
@@ -307,13 +307,13 @@ class NameGuard {
   private endpoint: URL;
   private version: string;
   private network: Network;
-  private parent: string;
+  private labelhashInspectionParent: string;
 
   constructor(options?: NameGuardOptions) {
     this.endpoint = new URL(options?.endpoint || DEFAULT_ENDPOINT);
     this.version = options?.version || DEFAULT_VERSION;
     this.network = options?.network || DEFAULT_NETWORK;
-    this.parent = options?.parent || DEFAULT_PARENT_NAME;
+    this.labelhashInspectionParent = options?.labelhashInspectionParent || DEFAULT_LABELHASH_INSPECTION_PARENT;
   }
 
   private async fetchFullNameGuardReport(
@@ -438,13 +438,14 @@ class NameGuard {
     return await response.json();
   }
 
-  // TODO: Update jsdoc to match the new `options` param.
   // TODO: The main purpose of this function is to pass a tokenId rather than a labelhash. However we need to make changes
   //        here to properly support this use case.
   // TODO: We need to have more specialized error handling here for cases such as the lookup in the ENS Subgraph failing.
   // TODO: Update the comment below to be more specific on the types of errors that could be returned here.
   /**
-   * Inspects the name "[{labelhash}].{parent}". Parent may be a name with any number of labels.
+   * Inspects the name "[{labelhash}].{parent}".
+   * 
+   * Parent may be a name with any number of labels. The default parent is "eth".
    * 
    * This is a convenience function to generate a `FullNameGuardReport` in cases when you only have:
    * 1. The labelhash of the "childmost" label of a name.
@@ -461,8 +462,7 @@ class NameGuard {
    * a `FullNameGuardReport` for the name "{label}.{parent}".
    *
    * @param {string} labelhash A labelhash should be a decimal or a hex (prefixed with 0x) string.
-   * @param {string} network The network name (defaults to "mainnet").
-   * @param {string} parent The parent name (defaults to "eth").
+   * @param {InspectLabelhashOptions} options The options for the inspection.
    * @returns A promise that resolves with a `FullNameGuardReport` of the resolved name.
    */
   public async inspectLabelhash(
@@ -473,7 +473,7 @@ class NameGuard {
       throw new Error("Invalid Keccak256 hash format for labelhash.");
     }
 
-    const parent = options?.parent || this.parent;
+    const parent = options?.parent || this.labelhashInspectionParent;
 
     // TODO: forward the provided options into these calls, not sure how is an elegant way to do that in TypeScript
     if (parent === "") {
