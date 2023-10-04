@@ -228,6 +228,16 @@ interface SummaryNameGuardReport {
   summary: SummaryReport;
 }
 
+// TODO: Reduce these into a single options call if/when all endpoints support
+interface InspectNamehashOptions {
+  network?: Network;
+}
+
+interface InspectLabelhashOptions {
+  network?: Network;
+  parent?: string;
+}
+
 /**
  * NameGuard report that contains the full results of all `checks` on all `labels` in a name.
  */
@@ -382,11 +392,13 @@ class NameGuard {
    */
   public async inspectNamehash(
     namehash: Keccak256Hash,
-    network: Network = this.network
+    options?: InspectNamehashOptions
   ): Promise<FullNameGuardReport> {
     if (!isKeccak256Hash(namehash)) {
       throw new Error("Invalid Keccak256 hash format for namehash.");
     }
+
+    const network = options?.network || this.network;
 
     const url = `${this.endpoint}/${this.version}/inspect-namehash/${network}/${namehash}`;
 
@@ -416,12 +428,14 @@ class NameGuard {
    */
   public async inspectLabelhash(
     labelhash: Keccak256Hash,
-    network: Network = this.network,
-    parent: string = this.parent
+    options?: InspectLabelhashOptions
   ): Promise<FullNameGuardReport> {
     if (!isKeccak256Hash(labelhash)) {
       throw new Error("Invalid Keccak256 hash format for labelhash.");
     }
+
+    // const network = options?.network || this.network;
+    // const parent = options?.parent || this.parent;
 
     // TODO: This function can be implemented through a call to `fetchFullNameGuardReport`.
     throw new Error("Not implemented");
