@@ -28,7 +28,7 @@ import { nameguard } from "@namehash/nameguard";
 await nameguard.inspectName("...");
 
 // multiple names
-await nameguard.inspectBulkNames(["...", "..."]);
+await nameguard.bulkInspectNames(["...", "..."]);
 
 // namehash
 await nameguard.inspectNamehash("...");
