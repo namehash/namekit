@@ -64,15 +64,14 @@ def init_inspector():
 class NameGuard:
     def __init__(self):
         self._inspector = init_inspector()
-
-    def analyse_label(self, label: str):
-        return self._inspector.analyse_label(label, simple_confusables=True)
-
         load_dotenv()
         # TODO use web sockets and async
         self.ns = {NetworkName.MAINNET: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_MAINNET'))),
                    NetworkName.GOERLI: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_GOERLI'))),
                    NetworkName.SEPOLIA: ENS(HTTPProvider(os.environ.get('PROVIDER_URI_SEPOLIA')))}
+
+    def analyse_label(self, label: str):
+        return self._inspector.analyse_label(label, simple_confusables=True)
 
     def inspect_name(self, name: str) -> NameGuardResult:
         '''
