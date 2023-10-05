@@ -170,6 +170,13 @@ export interface GraphemeGuardReport extends SummaryGraphemeGuardReport {
    * If a canonical confusable is found, it will be the first element in the list.
    */
   confusables: SummaryGraphemeGuardReport[];
+
+  /**
+   * The grapheme considered to be the canonical form of the analyzed `grapheme`.
+   * 
+   * `null` if and only if the canonical form of the grapheme is considered to be undefined.
+   */
+  canonical_grapheme: string | null;
 }
 
 /**
@@ -209,6 +216,13 @@ export interface LabelGuardReport extends SummaryReport {
    * If `normalization` is "unknown", then `graphemes` will be an empty list.
    */
   graphemes: SummaryGraphemeGuardReport[];
+
+  /**
+   * The label considered to be the canonical form of the analyzed `label`.
+   * 
+   * `null` if and only if the canonical form of the label is considered to be undefined.
+   */
+  canonical_label: string | null;
 }
 
 /**
@@ -255,6 +269,13 @@ export interface NameGuardReport extends SummaryNameGuardReport {
 
   /** Details of the inspection of all labels in `name`. */
   labels: LabelGuardReport[];
+
+  /**
+   * The name considered to be the canonical form of the analyzed `name`.
+   * 
+   * `null` if and only if the canonical form of the name is considered to be undefined.
+   */
+  canonical_name: string | null;
 }
 
 export interface BulkSummaryNameGuardReport {
