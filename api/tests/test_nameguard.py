@@ -165,3 +165,11 @@ def test_canonicals(nameguard: NameGuard):
     assert r.canonical_name == 'nick.[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth'
     assert r.labels[0].canonical_label == 'nick'
     assert r.labels[1].canonical_label == '[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f]'
+
+
+def test_grapheme_description(nameguard: NameGuard):
+    r = nameguard.inspect_name('nick.eth')
+    assert r.labels[0].graphemes[0].grapheme_description == 'A-Z letter'
+
+    r = nameguard.inspect_grapheme('😉')
+    assert r.grapheme_description == 'Emoji'
