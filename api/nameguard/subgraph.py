@@ -177,9 +177,9 @@ async def resolve_labelhashes_querying_labelhashes(network_name: NetworkName, la
         return {}
     labelhashes = [f'0x{labelhash[1:-1]}' for labelhash in labelhashes]
     query, variables = build_multi_label_query_querying_labelhashes(labelhashes)
-    print(query, variables)
+    
     data = await call_subgraph(network_name, query, variables)
-    print(data)
+    
     result={}
     for var, labelhash in variables.items():
         labelhash=f"[{labelhash[2:]}]"
@@ -205,6 +205,9 @@ async def resolve_all_labelhashes_in_name_querying_labelhashes(network_name: Net
         labels[i] = resolved_labelhashes[labels[i]]
     
     resolved_name = '.'.join(labels)
+
+    logger.debug(f"Resolved name: {resolved_name}")
+    
     return resolved_name
     
 async def resolve_all_labelhashes_in_names_querying_labelhashes(network_name: NetworkName, names: list[str]) -> list[str]:

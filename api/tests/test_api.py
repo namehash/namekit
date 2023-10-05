@@ -180,6 +180,15 @@ def test_bulk_inspect_name_post(test_client, api_version):
     response = test_client.post(f'/{api_version}/bulk-inspect-names', json={'names': names * 126})
     assert response.status_code == 422
 
+def test_bulk_inspect_name_post_stress(test_client, api_version):
+    names = [f'[{labelhash_from_label(str(i))[2:]}].eth' for i in range(250)]
+    print(names)
+    response = test_client.post(f'/{api_version}/bulk-inspect-names', json={'names': names, 'network_name': 'mainnet'})
+    assert response.status_code == 200
+    res_json = response.json()
+    pprint(res_json)
+
+    
 
 # -- inspect-namehash --
 
@@ -354,6 +363,7 @@ def test_inspect_labelhash_get(test_client, api_version):
         ('0x97bf1a722288db8edaf0f6687b4431ac96feb13d3b55a7b11e9c6bc33f938bef', None, 404, None),  # 08745yortgh04y-53jpfdhudpdfhgw5th42yhgerotihg4w95hy8
         ('0xaf2caa1c2ca1d027f1ac823b529d0a67cd144264b2789fa2ea4d63a67c7103cc', 'nonexistentparent', 404, None),
         ('0x12345', None, 422, None),
+        ('0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb', None, 200, 'a.eth'),
     ]
 )
 def test_inspect_labelhash_post(test_client, api_version, labelhash, parent, expected_status_code, expected_name):
