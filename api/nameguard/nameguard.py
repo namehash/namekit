@@ -195,6 +195,7 @@ class NameGuard:
                             rating=calculate_nameguard_rating(grapheme_checks),
                             risk_count=count_risks(grapheme_checks),
                             highest_risk=get_highest_risk(grapheme_checks),
+                            grapheme_description=grapheme.description,
                         )
                         for grapheme, grapheme_checks in zip(label_analysis.graphemes, label_graphemes_checks)
                     ] if label_analysis is not None else None,
@@ -267,6 +268,7 @@ class NameGuard:
             canonical_confusable=self._inspect_confusable(grapheme_analysis.confusables_canonical)
                                  if grapheme_analysis.confusables_canonical else None,
             canonical_grapheme=label_analysis.canonical_label,
+            grapheme_description=grapheme_analysis.description,
         )
 
     def _inspect_confusable(self, grapheme: InspectorConfusableGraphemeResult) -> ConsolidatedGraphemeGuardReport:
@@ -280,6 +282,7 @@ class NameGuard:
             rating=calculate_nameguard_rating(grapheme_checks),
             risk_count=count_risks(grapheme_checks),
             highest_risk=get_highest_risk(grapheme_checks),
+            grapheme_description=grapheme.description,
         )
 
     async def primary_name(self, address: str, network_name: str) -> ReverseLookupResult:
