@@ -1,7 +1,5 @@
 import fetch from "cross-fetch";
 
-// TODO: We should consistently decide to use lowercase or uppercase enum values. Currently we use both.
-
 /**
  * The network that NameGuard will use to inspect a names/labels/graphemes.
  *
@@ -23,19 +21,30 @@ export type Network = "mainnet" | "goerli" | "sepolia";
 
 /** The type of a check that NameGuard performed. */
 export type CheckType =
-  | "confusables"
-  | "invisible"
-  | "typing_difficulty"
-  | "font_support"
-  | "mixed_scripts"
-  | "namewrapper_compatible"
-  | "normalized"
-  | "punycode_compatible_label"
-  | "unknown_label"
-  | "punycode_compatible_name";
+
+  // Grapheme-level checks
+  | "confusables" /** A grapheme is visually confusable. */
+  | "invisible" /** A grapheme is invisible. */
+  | "typing_difficulty" /** A grapheme is difficult to type. */
+  | "font_support" /** A grapheme is not supported by common fonts. */
+
+  // Label-level checks
+  | "mixed_scripts" /** A label contains multiple scripts. */
+  | "namewrapper_compatible" /** A label cannot be wrapped by the ENS NameWrapper */
+  | "normalized" /** A label is not ENSIP-15 normalized. */
+  | "punycode_compatible_label" /** A label is not compatible with Punycode. */
+  | "unknown_label"  /** A label is unknown. */
+
+  // Name-level checks
+  | "punycode_compatible_name" /** A name is compatible with Punycode. */;
 
 /** The resulting status code of a check that NameGuard performed. */
-export type CheckResultCode = "skip" | "info" | "pass" | "warn" | "alert";
+export type CheckResultCode =
+  | "skip" /** `skip`: This check was skipped because it was not applicable. */
+  | "info" /** `info`: This check is informational only. */
+  | "pass" /** `pass`: This check passed. */
+  | "warn" /** `warn`: This check failed, this is a minor issue. */
+  | "alert" /** `alert`: This check failed, this is a major issue. */;
 
 /**
  * The consolidated rating that NameGuard places on a name/label/grapheme.
@@ -48,17 +57,23 @@ export type CheckResultCode = "skip" | "info" | "pass" | "warn" | "alert";
  * The `Rating` of a label considers all `CheckResult` values for the label and all of its graphemes.
  * The `Rating` of a name considers all `CheckResult` values for the name and all of its labels and graphemes.
  */
-export type Rating = "pass" | "warn" | "alert";
+export type Rating = 
+  | "pass" /** `pass`: All checks passed. */
+  | "warn" /** `warn`: At least one check failed with a `WARN` status but no check failed with an `ALERT` status. */
+  | "alert" /** `alert`: At least one check failed with an `ALERT` status. */;
 
 /**
  * The ENSIP-15 normalization status of a name/label.
  *
- * If a label is in the format "[labelhash]" then the `Normalization` of the label is considered to be "unknown".
- * If a name contains any label that is "unnormalized" then the `Normalization` of the entire name is considered to be "unnormalized".
- * If a name contains no "unnormalized" labels but 1 or more "unknown" labels then the entire name is considered to be "unknown".
- * A name is "normalized" if and only if all of its labels are "normalized".
+ * If a label is in the format "[labelhash]" then the `Normalization` of the label is considered to be `unknown`.
+ * If a name contains any label that is `unnormalized` then the `Normalization` of the entire name is considered to be `unnormalized`.
+ * If a name contains no `unnormalized` labels but 1 or more `unknown` labels then the entire name is considered to be `unknown`.
+ * A name is `normalized` if and only if all of its labels are `normalized`.
  */
-export type Normalization = "normalized" | "unnormalized" | "unknown";
+export type Normalization =
+  | "normalized" /** `normalized`: The name or label is normalized. */
+  | "unnormalized" /** `unnormalized`: The name or label is not normalized. */
+  | "unknown" /** `unknown`: The name or label is unknown because it cannot be looked up from its hash. */;
 
 /**
  * The Keccak-256 hash of a name/label.
@@ -102,7 +117,7 @@ export interface SummaryReport {
    */
   rating: Rating;
 
-  /* The number of `CheckResult` values on a name/label/grapheme with a `CheckStatusCode` of `ALERT` or `WARN`. */
+  /* The number of `CheckResult` values on a name/label/grapheme with a `CheckStatusCode` of `alert` or `warn`. */
   risk_count: number;
 
   /**
@@ -127,22 +142,24 @@ export interface SummaryGraphemeGuardReport extends SummaryReport {
   grapheme: string;
 
   /**
-   * The name of the grapheme.
+   * The name of `grapheme`.
    */
   grapheme_name: string;
 
   /**
-   * The type of the grapheme.
+   * The type of `grapheme`.
    */
   grapheme_type: string;
 
   /**
-   * The name of the script associated with the grapheme.
+   * The name of the script associated with `grapheme`.
    */
   grapheme_script: string;
 
   /**
-   * An optional link to an "external" webpage with additional details about the grapheme.
+   * An optional link to an "external" webpage with additional details about `grapheme`.
+   * 
+   * `null` for many multi-character graphemes that are not emojis.
    */
   grapheme_link: string | null;
 }
@@ -174,7 +191,7 @@ export interface GraphemeGuardReport extends SummaryGraphemeGuardReport {
   /**
    * The grapheme considered to be the canonical form of the analyzed `grapheme`.
    * 
-   * `null` if and only if the canonical form of the grapheme is considered to be undefined.
+   * `null` if and only if the canonical form of `grapheme` is considered to be undefined.
    */
   canonical_grapheme: string | null;
 }
@@ -189,14 +206,14 @@ export interface LabelGuardReport extends SummaryReport {
    * Potential values include:
    *
    * 1. An empty string, such as in the case that a label symbolically represents the ENS namespace root.
-   * 2. If `normalization` is "unknown" then this field will always be a string in the format "[labelhash]".
+   * 2. If `normalization` is `unknown` then this field will always be a string in the format "[labelhash]".
    */
   label: string;
 
   /**
    * The labelhash of `label` in hex format prefixed with `0x`
    *
-   * If `normalization` is "unknown" then `label` will always be a string in the format "[labelhash]" and
+   * If `normalization` is `unknown` then `label` will always be a string in the format "[labelhash]" and
    * the `labelhash` will therefore be the "labelhash" value embedded within `label`, rather than
    * the labelhash of the literal `label`.
    * */
@@ -213,14 +230,14 @@ export interface LabelGuardReport extends SummaryReport {
   /**
    * A list of `SummaryGraphemeGuardReport` values for each grapheme contained within `label`.
    *
-   * If `normalization` is "unknown", then `graphemes` will be an empty list.
+   * If `normalization` is `unknown`, then `graphemes` will be an empty list.
    */
   graphemes: SummaryGraphemeGuardReport[];
 
   /**
    * The label considered to be the canonical form of the analyzed `label`.
    * 
-   * `null` if and only if the canonical form of the label is considered to be undefined.
+   * `null` if and only if the canonical form of `label` is considered to be undefined.
    */
   canonical_label: string | null;
 }
@@ -263,7 +280,7 @@ export interface NameGuardReport extends SummaryNameGuardReport {
   /**
    * The name considered to be the canonical form of the analyzed `name`.
    * 
-   * `null` if and only if the canonical form of the name is considered to be undefined.
+   * `null` if and only if the canonical form of `name` is considered to be undefined.
    */
   canonical_name: string | null;
 }
@@ -484,7 +501,7 @@ class NameGuard {
    *
    * If this label resolution fails the resulting `NameGuardReport` will be equivalent to requesting
    * a `NameGuardReport` for the name "[{labelhash}].{parent}" which will contain (at least) one label
-   * with an "unknown" `Normalization`.
+   * with an `unknown` `Normalization`.
    *
    * If this label resolution succeeds the resulting `NameGuardReport` will be equivalent to requesting
    * a `NameGuardReport` for the name "{label}.{parent}".
