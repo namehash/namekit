@@ -8,14 +8,14 @@ describe("NameGuard", () => {
   // Test urlencoded
 
   // This is a dumb test
-  it("should fetch the full report for a single name", async () => {
+  it("should fetch the NameGuard report for a single name", async () => {
     const data = await nameguard.inspectName("notrab.eth");
 
     expect(data.name).toBe("notrab.eth");
   });
 
   // I'm so lazy right now but this works
-  it("should fetch the summarized reports of multiple names", async () => {
+  it("should fetch the summarized NameGuard reports of multiple names", async () => {
     const data = await nameguard.bulkInspectNames([
       "notrab.eth",
       "vitalik.eth",

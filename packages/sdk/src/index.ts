@@ -112,7 +112,7 @@ export interface SummaryReport {
 }
 
 // TODO: As soon as the Python App has the necessary updates we want to create separate interfaces for
-//       SummaryGraphemeGuardReport and FullGraphemeGuardReport.
+//       SummaryGraphemeGuardReport and GraphemeGuardReport.
 /**
  * The result of a NameGuard inspection on a grapheme.
  */
@@ -213,8 +213,8 @@ export interface LabelGuardReport {
  * Generated through a detailed inspection of all labels and graphemes within `name`.
  *
  * A `SummaryNameGuardReport` consolidates the results of all `checks` on all labels and graphemes in a
- * `FullNameGuardReport` into a `RiskSummary` without the need to explicitly return all
- * the details of the `FullNameGuardReport`.
+ * `NameGuardReport` into a `RiskSummary` without the need to explicitly return all
+ * the details of the `NameGuardReport`.
  */
 interface SummaryNameGuardReport {
   /* The name that NameGuard inspected. Some labels in this name may be represented as "[labelhash]"
@@ -249,7 +249,7 @@ interface InspectLabelhashOptions {
 /**
  * NameGuard report that contains the full results of all `checks` on all `labels` in a name.
  */
-export interface FullNameGuardReport extends SummaryNameGuardReport {
+export interface NameGuardReport extends SummaryNameGuardReport {
   /* The results of all checks performed by NameGuard on `name`. */
   checkResults: CheckResult[];
 
@@ -321,9 +321,9 @@ class NameGuard {
     this.network = options?.network || DEFAULT_NETWORK;
   }
 
-  private async fetchFullNameGuardReport(
+  private async fetchNameGuardReport(
     name: string
-  ): Promise<FullNameGuardReport> {
+  ): Promise<NameGuardReport> {
     const url = `${this.endpoint}/${this.version}/inspect-name`;
 
     const response = await fetch(url, {
@@ -367,18 +367,18 @@ class NameGuard {
   // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
   // TODO: This function should also accept an optional `network` parameter.
   /**
-   * Inspects a single name with NameGuard. Provides a full NameGuard report including:
+   * Inspects a single name with NameGuard. Provides a `NameGuardReport` including:
    *   1. The details of all checks performed on `name` that consolidates all checks performed on labels and graphemes in `name`.
    *   2. The details of all labels in `name`.
    *   3. A summary of all graphemes in `name`.
    *
    * @param {string} name The name for NameGuard to inspect.
-   * @returns {Promise<FullNameGuardReport>} A promise that resolves with the `FullNameGuardReport` of the name.
+   * @returns {Promise<NameGuardReport>} A promise that resolves with the `NameGuardReport` of the name.
    * @example
-   * const fullNameGuardReport = await nameguard.inspectName('vitalik.eth');
+   * const nameGuardReport = await nameguard.inspectName('vitalik.eth');
    */
-  public inspectName(name: string): Promise<FullNameGuardReport> {
-    return this.fetchFullNameGuardReport(name);
+  public inspectName(name: string): Promise<NameGuardReport> {
+    return this.fetchNameGuardReport(name);
   }
 
   // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
@@ -387,8 +387,8 @@ class NameGuard {
    * Inspects up to 250 names at a time with NameGuard. Provides a `SummaryNameGuardReport` for each provided name, including:
    *   1. The details of all checks performed on `name` that consolidates all checks performed on labels and graphemes in `name`.
    *
-   * Each `SummaryNameGuardReport` returned represents an equivalant set of checks as a `FullNameGuardReport`. However:
-   *   1. A `FullNameGuardReport` contains a lot of additional data that isn't always needed / desired when a `SummaryNameGuardReport` will do.
+   * Each `SummaryNameGuardReport` returned represents an equivalant set of checks as a `NameGuardReport`. However:
+   *   1. A `NameGuardReport` contains a lot of additional data that isn't always needed / desired when a `SummaryNameGuardReport` will do.
    *   2. When NameGuard only needs to return a `SummaryNameGuardReport`, some special performance optimizations
    *      are possible (and completely safe) that help to accelate responses in many cases.
    *
@@ -414,7 +414,7 @@ class NameGuard {
    * Inspects the name associated with a namehash.
    *
    * NameGuard will attempt to resolve the name associated with the namehash through the ENS Subgraph.
-   * If this resolution succeeds then NameGuard will generate and return a `FullNameGuardReport` for the name.
+   * If this resolution succeeds then NameGuard will generate and return a `NameGuardReport` for the name.
    * If this resolution fails then NameGuard will return an error.
    *
    * @param {string} namehash A namehash should be a decimal or a hex (prefixed with 0x) string.
@@ -424,7 +424,7 @@ class NameGuard {
   public async inspectNamehash(
     namehash: Keccak256Hash,
     options?: InspectNamehashOptions
-  ): Promise<FullNameGuardReport> {
+  ): Promise<NameGuardReport> {
     if (!isKeccak256Hash(namehash)) {
       throw new Error("Invalid Keccak256 hash format for namehash.");
     }
@@ -454,28 +454,28 @@ class NameGuard {
    *
    * Parent may be a name with any number of labels. The default parent is "eth".
    *
-   * This is a convenience function to generate a `FullNameGuardReport` in cases when you only have:
+   * This is a convenience function to generate a `NameGuardReport` in cases when you only have:
    * 1. The labelhash of the "childmost" label of a name.
    * 2. The complete parent name of the "childmost" label.
    *
    * NameGuard always inspects names, rather than labelhashes. So this function will first attempt
    * to resolve the "childmost" label associated with the provided labelhash through the ENS Subgraph.
    *
-   * If this label resolution fails the resulting `FullNameGuardReport` will be equivalent to requesting
-   * a `FullNameGuardReport` for the name "[{labelhash}].{parent}" which will contain (at least) one label
+   * If this label resolution fails the resulting `NameGuardReport` will be equivalent to requesting
+   * a `NameGuardReport` for the name "[{labelhash}].{parent}" which will contain (at least) one label
    * with an "unknown" `Normalization`.
    *
-   * If this label resolution succeeds the resulting `FullNameGuardReport` will be equivalent to requesting
-   * a `FullNameGuardReport` for the name "{label}.{parent}".
+   * If this label resolution succeeds the resulting `NameGuardReport` will be equivalent to requesting
+   * a `NameGuardReport` for the name "{label}.{parent}".
    *
    * @param {string} labelhash A labelhash should be a decimal or a hex (prefixed with 0x) string.
    * @param {InspectLabelhashOptions} options The options for the inspection.
-   * @returns A promise that resolves with a `FullNameGuardReport` of the resolved name.
+   * @returns A promise that resolves with a `NameGuardReport` of the resolved name.
    */
   public async inspectLabelhash(
     labelhash: Keccak256Hash,
     options?: InspectLabelhashOptions
-  ): Promise<FullNameGuardReport> {
+  ): Promise<NameGuardReport> {
     if (!isKeccak256Hash(labelhash)) {
       throw new Error("Invalid Keccak256 hash format for labelhash.");
     }
@@ -515,6 +515,6 @@ NameGuard.prototype.inspectLabelhash = NameGuard.prototype.inspectLabelhash;
  * It can inspect individual names or batch names.
  * @example
  * import { nameguard } from '@namehash/nameguard';
- * const fullNameGuardReport = await nameguard.inspectName('vitalik.eth');
+ * const fameGuardReport = await nameguard.inspectName('vitalik.eth');
  */
 export const nameguard = defaultClient;
