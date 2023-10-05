@@ -190,11 +190,11 @@ export interface LabelGuardReport extends SummaryReport {
   checks: CheckResult[];
 
   /**
-   * A list of `GraphemeGuardReport` values for each grapheme contained within `label`.
+   * A list of `SummaryGraphemeGuardReport` values for each grapheme contained within `label`.
    *
    * If `normalization` is "unknown", then `graphemes` will be an empty list.
    */
-  graphemes: GraphemeGuardReport[];
+  graphemes: SummaryGraphemeGuardReport[];
 }
 
 /**
