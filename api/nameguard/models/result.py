@@ -27,10 +27,10 @@ class ConsolidatedReport(BaseModel):
     rating: Rating
 
     risk_count: int = Field(
-        description='The number of checks that have a status of `ALERT` or `WARN`.')
+        description='The number of checks that have a status of `alert` or `warn`.')
 
     highest_risk: Optional[GenericCheckResult] = Field(
-        description='The check considered to be the highest risk. If no check has a status of `ALERT` or `WARN`, this field is `None`.')
+        description='The check considered to be the highest risk. If no check has a status of `alert` or `warn`, this field is `null`.')
 
 
 class ConsolidatedGraphemeGuardReport(ConsolidatedReport):
@@ -88,7 +88,7 @@ class LabelGuardReport(ConsolidatedReport):
     )
 
     graphemes: Optional[list[ConsolidatedGraphemeGuardReport]] = Field(
-        description='A list of graphemes that were analyzed in the label. If the label is unknown, this field is `None`.',
+        description='A list of graphemes that were analyzed in the label. If the label is unknown, this field is `null`.',
     )
 
     canonical_label: Optional[str] = Field(
