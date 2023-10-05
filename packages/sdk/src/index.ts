@@ -250,16 +250,6 @@ interface SummaryNameGuardReport extends SummaryReport {
   normalization: Normalization;
 }
 
-// TODO: Reduce these into a single options call if/when all endpoints support
-interface InspectNamehashOptions {
-  network?: Network;
-}
-
-interface InspectLabelhashOptions {
-  network?: Network;
-  parent?: string;
-}
-
 /**
  * NameGuard report that contains the full results of all `checks` on all `labels` in a name.
  */
@@ -303,6 +293,16 @@ interface NameGuardOptions {
   endpoint?: string;
   version?: string;
   network?: Network;
+}
+
+// TODO: Reduce these into a single options call if/when all endpoints support
+interface InspectNamehashOptions {
+  network?: Network;
+}
+
+interface InspectLabelhashOptions {
+  network?: Network;
+  parent?: string;
 }
 
 const keccak256Regex = /^0x?[0-9a-f]{64}$/i;
