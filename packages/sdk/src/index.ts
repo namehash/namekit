@@ -279,7 +279,7 @@ export interface NameGuardReport extends SummaryNameGuardReport {
 }
 
 export interface BulkSummaryNameGuardReport {
-  results?: SummaryNameGuardReport[];
+  results: SummaryNameGuardReport[];
 }
 
 // TODO: I think we want to apply more formalization to this error class.
