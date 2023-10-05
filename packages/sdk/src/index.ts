@@ -111,14 +111,8 @@ export interface SummaryReport {
   highest_risk: CheckResult | null;
 }
 
-export interface SummaryGraphemeGuardReport {
+export interface SummaryGraphemeGuardReport extends SummaryReport {
 
-  // TODO: Update data models so that GraphemeGuardReport extends SummaryReport.
-  /**
-   * The consolidated summary of all the risks and limitations NameGuard found within the grapheme.
-   */
-  summary: SummaryReport;
-  
   /**
    * The inspected grapheme.
    *
@@ -167,7 +161,7 @@ export interface GraphemeGuardReport extends SummaryGraphemeGuardReport {
 /**
  * The result of a NameGuard inspection on a label.
  */
-export interface LabelGuardReport {
+export interface LabelGuardReport extends SummaryReport {
   /**
    * The inspected label.
    *
@@ -189,12 +183,6 @@ export interface LabelGuardReport {
 
   /** The ENSIP-15 normalization status of `label` */
   normalization: Normalization;
-
-  // TODO: Update data models so that LabelGuardReport extends SummaryReport.
-  /**
-   * The consolidated summary of all the risks and limitations NameGuard found within `label`.
-   */
-  summary: SummaryReport;
 
   /**
    * A list of the results of all the checks that NameGuard performed while inspecting `label`.
@@ -218,7 +206,7 @@ export interface LabelGuardReport {
  * `NameGuardReport` into a `RiskSummary` without the need to explicitly return all
  * the details of the `NameGuardReport`.
  */
-interface SummaryNameGuardReport {
+interface SummaryNameGuardReport extends SummaryReport {
   /* The name that NameGuard inspected. Some labels in this name may be represented as "[labelhash]"
    * if and only if all of the following is true:
    *
@@ -232,10 +220,6 @@ interface SummaryNameGuardReport {
 
   /* The ENSIP-15 normalization status of `name` */
   normalization: Normalization;
-
-  // TODO: Update data models so that SummaryNameGuardReport extends SummaryReport.
-  /* The summary of all risks and limitations NameGuard found within `name` */
-  summary: SummaryReport;
 }
 
 // TODO: Reduce these into a single options call if/when all endpoints support
