@@ -15,7 +15,7 @@ describe("NameGuard", () => {
   });
 
   // I'm so lazy right now but this works
-  it("should fetch the summarized report of multiple names", async () => {
+  it("should fetch the summarized reports of multiple names", async () => {
     const data = await nameguard.bulkInspectNames([
       "notrab.eth",
       "vitalik.eth",
