@@ -3,7 +3,7 @@ import pytest
 from nameguard.subgraph import (
     namehash_to_name_lookup,
     resolve_all_labelhashes_in_name,
-    resolve_labelhashes, resolve_all_labelhashes_in_name2,
+    resolve_labelhashes_querying_labelhashes, resolve_all_labelhashes_in_name_querying_labelhashes,
 )
 from nameguard.utils import namehash_from_name
 
@@ -37,17 +37,17 @@ from nameguard.utils import namehash_from_name
 async def test_lookup(name, namehash, expected):
     assert namehash_from_name(name) == namehash
     network_name = 'mainnet'
-    assert await resolve_all_labelhashes_in_name2(network_name, name) == expected
+    assert await resolve_all_labelhashes_in_name_querying_labelhashes(network_name, name) == expected
 
 
 @pytest.mark.asyncio
 async def test_long_lookup():
     network_name = 'mainnet'
     name = '[2af8fae91ee5ef94f17f2c2f23532cc2d1ccaee78cae52efed0df04bc2463b13].' * 250 + 'eth'
-    assert await resolve_all_labelhashes_in_name(network_name, name) == name
+    assert await resolve_all_labelhashes_in_name_querying_labelhashes(network_name, name) == name
 
     name = '[2af8fae91ee5ef94f17f2c2f23532cc2d1ccaee78cae52efed0df04bc2463b13].' * 500 + 'eth'
-    assert await resolve_all_labelhashes_in_name(network_name, name) == name
+    assert await resolve_all_labelhashes_in_name_querying_labelhashes(network_name, name) == name
 
 
 @pytest.mark.asyncio
@@ -59,6 +59,6 @@ async def test_lookup2():
         '[f3e579667f05ae575146e5f418b0e8c0de3527a84c92e839c722a97901cd4b67]': 'jkestel',
         '[f3e579667f05ae575146e5f418b0e8c0de3527a84c92e839c722a97901cd4b68]': '[f3e579667f05ae575146e5f418b0e8c0de3527a84c92e839c722a97901cd4b68]'
     }
-    result = await resolve_labelhashes(network_name, labelhashes.keys())
+    result = await resolve_labelhashes_querying_labelhashes(network_name, labelhashes.keys())
     print(result)
     assert result == labelhashes
