@@ -101,9 +101,9 @@ export interface CheckResult {
 }
 
 /**
- * The consolidated summary of all the risks and limitations NameGuard found within a name/label/grapheme.
+ * The consolidated inspection result of all the risks and limitations NameGuard found within a name/label/grapheme.
  */
-export interface SummaryReport {
+export interface ConsolidatedReport {
   /**
    * The consolidated rating that NameGuard places on a name/label/grapheme.
    *
@@ -126,7 +126,7 @@ export interface SummaryReport {
   highest_risk: CheckResult | null;
 }
 
-export interface SummaryGraphemeGuardReport extends SummaryReport {
+export interface ConsolidatedGraphemeGuardReport extends ConsolidatedReport {
 
   /**
    * The inspected grapheme.
@@ -167,7 +167,7 @@ export interface SummaryGraphemeGuardReport extends SummaryReport {
 /**
  * The result of a NameGuard inspection on a grapheme.
  */
-export interface GraphemeGuardReport extends SummaryGraphemeGuardReport {
+export interface GraphemeGuardReport extends ConsolidatedGraphemeGuardReport {
 
   /**
    * A list of the results of all the checks that NameGuard performed while inspecting the grapheme.
@@ -175,7 +175,7 @@ export interface GraphemeGuardReport extends SummaryGraphemeGuardReport {
   checks: CheckResult[];
 
   /**
-   * A list of `SummaryGraphemeGuardReport` values that might be confused with the analyzed `grapheme`.
+   * A list of `ConsolidatedGraphemeGuardReport` values that might be confused with the analyzed `grapheme`.
    * 
    * To be considered a confusable, a grapheme must meet all of the following criteria:
    * 1. They might be considered visually confusable with `grapheme`.
@@ -186,7 +186,7 @@ export interface GraphemeGuardReport extends SummaryGraphemeGuardReport {
    * 
    * If a canonical confusable is found, it will be the first element in the list.
    */
-  confusables: SummaryGraphemeGuardReport[];
+  confusables: ConsolidatedGraphemeGuardReport[];
 
   /**
    * The grapheme considered to be the canonical form of the analyzed `grapheme`.
@@ -199,7 +199,7 @@ export interface GraphemeGuardReport extends SummaryGraphemeGuardReport {
 /**
  * The result of a NameGuard inspection on a label.
  */
-export interface LabelGuardReport extends SummaryReport {
+export interface LabelGuardReport extends ConsolidatedReport {
   /**
    * The inspected label.
    *
@@ -228,11 +228,11 @@ export interface LabelGuardReport extends SummaryReport {
   checks: CheckResult[];
 
   /**
-   * A list of `SummaryGraphemeGuardReport` values for each grapheme contained within `label`.
+   * A list of `ConsolidatedGraphemeGuardReport` values for each grapheme contained within `label`.
    *
    * If `normalization` is `unknown`, then `graphemes` will be an empty list.
    */
-  graphemes: SummaryGraphemeGuardReport[];
+  graphemes: ConsolidatedGraphemeGuardReport[];
 
   /**
    * The label considered to be the canonical form of the analyzed `label`.
@@ -243,15 +243,15 @@ export interface LabelGuardReport extends SummaryReport {
 }
 
 /**
- * The consolidated summary of all the risks and limitations NameGuard found within a name.
+ * The consolidated inspection results of all the risks and limitations NameGuard found within a name.
  *
  * Generated through a detailed inspection of all labels and graphemes within `name`.
  *
- * A `SummaryNameGuardReport` consolidates the results of all `checks` on all labels and graphemes in a
- * `NameGuardReport` into a `RiskSummary` without the need to explicitly return all
+ * A `ConsolidatedNameGuardReport` consolidates the results of all `checks` on all labels and graphemes in a
+ * `NameGuardReport` into a `ConsolidatedReport` without the need to explicitly return all
  * the details of the `NameGuardReport`.
  */
-interface SummaryNameGuardReport extends SummaryReport {
+interface ConsolidatedNameGuardReport extends ConsolidatedReport {
   /* The name that NameGuard inspected. Some labels in this name may be represented as "[labelhash]"
    * if and only if all of the following is true:
    *
@@ -270,7 +270,7 @@ interface SummaryNameGuardReport extends SummaryReport {
 /**
  * NameGuard report that contains the full results of all `checks` on all `labels` in a name.
  */
-export interface NameGuardReport extends SummaryNameGuardReport {
+export interface NameGuardReport extends ConsolidatedNameGuardReport {
   /* The results of all checks performed by NameGuard on `name`. */
   checks: CheckResult[];
 
@@ -285,8 +285,8 @@ export interface NameGuardReport extends SummaryNameGuardReport {
   canonical_name: string | null;
 }
 
-export interface BulkSummaryNameGuardReport {
-  results: SummaryNameGuardReport[];
+export interface BulkConsolidatedNameGuardReport {
+  results: ConsolidatedNameGuardReport[];
 }
 
 // TODO: I think we want to apply more formalization to this error class.
@@ -379,9 +379,9 @@ class NameGuard {
     return await response.json();
   }
 
-  private async fetchSummaryNameGuardReports(
+  private async fetchConsolidatedNameGuardReports(
     names: string[]
-  ): Promise<BulkSummaryNameGuardReport> {
+  ): Promise<BulkConsolidatedNameGuardReport> {
     const url = `${this.endpoint}/${this.version}/bulk-inspect-names`;
 
     const response = await fetch(url, {
@@ -408,7 +408,7 @@ class NameGuard {
    * Inspects a single name with NameGuard. Provides a `NameGuardReport` including:
    *   1. The details of all checks performed on `name` that consolidates all checks performed on labels and graphemes in `name`.
    *   2. The details of all labels in `name`.
-   *   3. A summary of all graphemes in `name`.
+   *   3. A consolidated inspection result of all graphemes in `name`.
    *
    * @param {string} name The name for NameGuard to inspect.
    * @returns {Promise<NameGuardReport>} A promise that resolves with the `NameGuardReport` of the name.
@@ -422,28 +422,28 @@ class NameGuard {
   // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
   // TODO: This function should also accept an optional `network` parameter.
   /**
-   * Inspects up to 250 names at a time with NameGuard. Provides a `SummaryNameGuardReport` for each provided name, including:
+   * Inspects up to 250 names at a time with NameGuard. Provides a `ConsolidatedNameGuardReport` for each provided name, including:
    *   1. The details of all checks performed on `name` that consolidates all checks performed on labels and graphemes in `name`.
    *
-   * Each `SummaryNameGuardReport` returned represents an equivalant set of checks as a `NameGuardReport`. However:
-   *   1. A `NameGuardReport` contains a lot of additional data that isn't always needed / desired when a `SummaryNameGuardReport` will do.
-   *   2. When NameGuard only needs to return a `SummaryNameGuardReport`, some special performance optimizations
+   * Each `ConsolidatedNameGuardReport` returned represents an equivalant set of checks as a `NameGuardReport`. However:
+   *   1. A `NameGuardReport` contains a lot of additional data that isn't always needed / desired when a `ConsolidatedNameGuardReport` will do.
+   *   2. When NameGuard only needs to return a `ConsolidatedNameGuardReport`, some special performance optimizations
    *      are possible (and completely safe) that help to accelate responses in many cases.
    *
    *
    * @param {string[]} names The list of names for NameGuard to inspect.
-   * @returns {Promise<BulkSummaryNameGuardReport>} A promise that resolves with a list of `SummaryNameGuardReport` values for each name queried in the bulk inspection.
+   * @returns {Promise<BulkConsolidatedNameGuardReport>} A promise that resolves with a list of `ConsolidatedNameGuardReport` values for each name queried in the bulk inspection.
    */
   public bulkInspectNames(
     names: string[]
-  ): Promise<BulkSummaryNameGuardReport> {
+  ): Promise<BulkConsolidatedNameGuardReport> {
     if (names.length > MAX_BULK_INSPECTION_NAMES) {
       throw new Error(
         `Bulk inspection of more than ${MAX_BULK_INSPECTION_NAMES} names at a time is not supported.`
       );
     }
 
-    return this.fetchSummaryNameGuardReports(names);
+    return this.fetchConsolidatedNameGuardReports(names);
   }
 
   // TODO: We need to have more specialized error handling here for cases such as the lookup in the ENS Subgraph failing.
