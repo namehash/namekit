@@ -65,6 +65,8 @@ class ConsolidatedGraphemeGuardReport(ConsolidatedReport):
         description="Link to an external page with information about the grapheme.\n"
                     "* `null` for multi-character graphemes")
 
+    grapheme_description: str = Field(description="Description of the grapheme type.")
+
 
 class LabelGuardReport(ConsolidatedReport):
     '''
