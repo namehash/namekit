@@ -156,6 +156,20 @@ export interface GraphemeGuardReport extends SummaryGraphemeGuardReport {
    * A list of the results of all the checks that NameGuard performed while inspecting the grapheme.
    */
   checks: CheckResult[];
+
+  /**
+   * A list of `SummaryGraphemeGuardReport` values that might be confused with the analyzed `grapheme`.
+   * 
+   * To be considered a confusable, a grapheme must meet all of the following criteria:
+   * 1. They might be considered visually confusable with `grapheme`.
+   * 2. They must not be equal to `grapheme`.
+   * 3. They are considered "less-canonical" than `grapheme`, not "more-canonical".
+   * 4. They are ENS normalized (i.e. graphemes that couldn't appear in a normalized ENS name are not included in this list).
+   * 5. They are not multi-grapheme confusables (support for these is planned to be added later).
+   * 
+   * If a canonical confusable is found, it will be the first element in the list.
+   */
+  confusables: SummaryGraphemeGuardReport[];
 }
 
 /**
