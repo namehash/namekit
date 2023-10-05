@@ -111,12 +111,14 @@ export interface SummaryReport {
   highest_risk: CheckResult | null;
 }
 
-// TODO: As soon as the Python App has the necessary updates we want to create separate interfaces for
-//       SummaryGraphemeGuardReport and GraphemeGuardReport.
-/**
- * The result of a NameGuard inspection on a grapheme.
- */
-export interface GraphemeGuardReport {
+export interface SummaryGraphemeGuardReport {
+
+  // TODO: Update data models so that GraphemeGuardReport extends SummaryReport.
+  /**
+   * The consolidated summary of all the risks and limitations NameGuard found within the grapheme.
+   */
+  summary: SummaryReport;
+  
   /**
    * The inspected grapheme.
    *
@@ -149,12 +151,12 @@ export interface GraphemeGuardReport {
    * An optional link to an "external" webpage with additional details about the grapheme.
    */
   grapheme_link: string | null;
+}
 
-  // TODO: Update data models so that GraphemeGuardReport extends SummaryReport.
-  /**
-   * The consolidated summary of all the risks and limitations NameGuard found within the grapheme.
-   */
-  summary: SummaryReport;
+/**
+ * The result of a NameGuard inspection on a grapheme.
+ */
+export interface GraphemeGuardReport extends SummaryGraphemeGuardReport {
 
   /**
    * A list of the results of all the checks that NameGuard performed while inspecting the grapheme.
