@@ -23,19 +23,19 @@ export type Network = "mainnet" | "goerli" | "sepolia";
 
 /** The type of a check that NameGuard performed. */
 export type CheckType =
-  | "CONFUSABLES"
-  | "INVISIBLE"
-  | "TYPING_DIFFICULTY"
-  | "FONT_SUPPORT"
-  | "MIXED_SCRIPTS"
-  | "NAMEWRAPPER_COMPATIBLE"
-  | "NORMALIZED"
-  | "PUNYCODE_COMPATIBLE_LABEL"
-  | "UNKNOWN_LABEL"
-  | "PUNYCODE_COMPATIBLE_NAME";
+  | "confusables"
+  | "invisible"
+  | "typing_difficulty"
+  | "font_support"
+  | "mixed_scripts"
+  | "namewrapper_compatible"
+  | "normalized"
+  | "punycode_compatible_label"
+  | "unknown_label"
+  | "punycode_compatible_name";
 
 /** The resulting status code of a check that NameGuard performed. */
-export type CheckResultCode = "SKIP" | "INFO" | "PASS" | "WARN" | "ALERT";
+export type CheckResultCode = "skip" | "info" | "pass" | "warn" | "alert";
 
 /**
  * The consolidated rating that NameGuard places on a name/label/grapheme.
@@ -48,7 +48,7 @@ export type CheckResultCode = "SKIP" | "INFO" | "PASS" | "WARN" | "ALERT";
  * The `Rating` of a label considers all `CheckResult` values for the label and all of its graphemes.
  * The `Rating` of a name considers all `CheckResult` values for the name and all of its labels and graphemes.
  */
-export type Rating = "PASS" | "WARN" | "ALERT";
+export type Rating = "pass" | "warn" | "alert";
 
 /**
  * The ENSIP-15 normalization status of a name/label.
