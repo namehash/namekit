@@ -141,7 +141,7 @@ def test_inspect_name_post_latin_all_pass(test_client, api_version):
     # grapheme keys
     assert all(
         set(grapheme_res.keys()) == {'grapheme', 'grapheme_name', 'grapheme_type', 'grapheme_script',
-                                     'grapheme_link', 'highest_risk', 'rating', 'risk_count'}
+                                     'grapheme_link', 'highest_risk', 'rating', 'risk_count', 'grapheme_description'}
         for label_res in res_json['labels'] for grapheme_res in label_res['graphemes']
     )
 
