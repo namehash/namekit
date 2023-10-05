@@ -7,11 +7,11 @@ from .checks import (
 
 from .result import (
     NameGuardReport,
-    SummaryNameGuardReport,
+    ConsolidatedNameGuardReport,
     LabelGuardReport,
-    SummaryGraphemeGuardReport,
+    ConsolidatedGraphemeGuardReport,
     BulkNameGuardBulkReport,
-    SummaryReport,
+    ConsolidatedReport,
     Normalization,
     GraphemeGuardReport,
     ReverseLookupResult,

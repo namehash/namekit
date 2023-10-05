@@ -19,7 +19,7 @@ class Normalization(str, Enum):
     UNKNOWN = 'unknown'
 
 
-class SummaryReport(BaseModel):
+class ConsolidatedReport(BaseModel):
     '''
     The risk summary of a name, label, or grapheme.
     '''
@@ -33,7 +33,7 @@ class SummaryReport(BaseModel):
         description='The check considered to be the highest risk. If no check has a status of `ALERT` or `WARN`, this field is `None`.')
 
 
-class SummaryGraphemeGuardReport(SummaryReport):
+class ConsolidatedGraphemeGuardReport(ConsolidatedReport):
     '''
     Grapheme analysis result.
     '''
@@ -66,7 +66,7 @@ class SummaryGraphemeGuardReport(SummaryReport):
                     "* `null` for multi-character graphemes")
 
 
-class LabelGuardReport(SummaryReport):
+class LabelGuardReport(ConsolidatedReport):
     '''
     Label analysis result.
     '''
@@ -87,7 +87,7 @@ class LabelGuardReport(SummaryReport):
         description='A list of checks that were performed on the label.',
     )
 
-    graphemes: Optional[list[SummaryGraphemeGuardReport]] = Field(
+    graphemes: Optional[list[ConsolidatedGraphemeGuardReport]] = Field(
         description='A list of graphemes that were analyzed in the label. If the label is unknown, this field is `None`.',
     )
 
@@ -98,7 +98,7 @@ class LabelGuardReport(SummaryReport):
     )
 
 
-class SummaryNameGuardReport(SummaryReport):
+class ConsolidatedNameGuardReport(ConsolidatedReport):
     '''
     Name analysis result without information about individual checks and labels.
     '''
@@ -116,7 +116,7 @@ class SummaryNameGuardReport(SummaryReport):
     normalization: Normalization
 
 
-class NameGuardReport(SummaryNameGuardReport):
+class NameGuardReport(ConsolidatedNameGuardReport):
     '''
     Full name analysis result with information about individual checks and labels.
     '''
@@ -141,14 +141,14 @@ class BulkNameGuardBulkReport(BaseModel):
     Bulk name analysis results.
     '''
 
-    results: list[SummaryNameGuardReport]
+    results: list[ConsolidatedNameGuardReport]
 
 
-class GraphemeGuardReport(SummaryGraphemeGuardReport):
+class GraphemeGuardReport(ConsolidatedGraphemeGuardReport):
     checks: list[GenericCheckResult] = Field(
         description='A list of checks that were performed on the grapheme.')
 
-    confusables: list[SummaryGraphemeGuardReport] = Field(
+    confusables: list[ConsolidatedGraphemeGuardReport] = Field(
         description='A list graphemes that can be confused with the analyzed grapheme. '
                     'The list does not contain the analyzed grapheme. '
                     'A canonical form of the grapheme is the first element of the list, if it is known. '
