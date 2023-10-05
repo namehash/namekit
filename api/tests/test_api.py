@@ -351,7 +351,7 @@ def test_inspect_labelhash_get(test_client, api_version):
         ('79233663829379634837589865448569342784712482819484549289560981379859480642508', 'eth', 200, 'vitalik.eth'),
         ('0xaf498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770', None, 200,
          '[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth'),
-        ('0x47a85c2e040081a30b17112b1d0d56eced6e4a1873443c26afdc51a61d32f199', None, 404, None),
+        ('0x97bf1a722288db8edaf0f6687b4431ac96feb13d3b55a7b11e9c6bc33f938bef', None, 404, None),  # 08745yortgh04y-53jpfdhudpdfhgw5th42yhgerotihg4w95hy8
         ('0xaf2caa1c2ca1d027f1ac823b529d0a67cd144264b2789fa2ea4d63a67c7103cc', 'nonexistentparent', 404, None),
         ('0x12345', None, 422, None),
     ]
