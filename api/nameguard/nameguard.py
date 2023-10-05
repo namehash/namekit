@@ -17,9 +17,8 @@ from nameguard import checks
 from nameguard.models import (
     NameGuardReport,
     LabelGuardReport,
-    SummaryGraphemeGuardReport,
+    ConsolidatedGraphemeGuardReport,
     BulkNameGuardBulkReport,
-    SummaryReport,
     Normalization,
     GraphemeGuardReport,
     NetworkName,
@@ -187,7 +186,7 @@ class NameGuard:
                     checks=sorted(label_checks, reverse=True),
                     canonical_label=label_analysis.canonical_label if label_analysis is not None else label, # labelhash
                     graphemes=[
-                        SummaryGraphemeGuardReport(
+                        ConsolidatedGraphemeGuardReport(
                             grapheme=grapheme.value,
                             grapheme_name=grapheme.name,
                             grapheme_type=grapheme.type,
@@ -270,9 +269,9 @@ class NameGuard:
             canonical_grapheme=label_analysis.canonical_label,
         )
 
-    def _inspect_confusable(self, grapheme: InspectorConfusableGraphemeResult) -> SummaryGraphemeGuardReport:
+    def _inspect_confusable(self, grapheme: InspectorConfusableGraphemeResult) -> ConsolidatedGraphemeGuardReport:
         grapheme_checks = [check(grapheme) for check in GRAPHEME_CHECKS]
-        return SummaryGraphemeGuardReport(
+        return ConsolidatedGraphemeGuardReport(
             grapheme=grapheme.value,
             grapheme_name=grapheme.name,
             grapheme_type=grapheme.type,
