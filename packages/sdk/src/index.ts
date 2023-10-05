@@ -265,7 +265,7 @@ interface InspectLabelhashOptions {
  */
 export interface NameGuardReport extends SummaryNameGuardReport {
   /* The results of all checks performed by NameGuard on `name`. */
-  checkResults: CheckResult[];
+  checks: CheckResult[];
 
   /** Details of the inspection of all labels in `name`. */
   labels: LabelGuardReport[];
