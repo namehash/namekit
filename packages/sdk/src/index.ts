@@ -21,7 +21,6 @@ export type Network = "mainnet" | "goerli" | "sepolia";
 
 /** The type of a check that NameGuard performed. */
 export type CheckType =
-
   // Grapheme-level checks
   | "confusables" /** A grapheme is visually confusable. */
   | "invisible" /** A grapheme is invisible. */
@@ -33,7 +32,7 @@ export type CheckType =
   | "namewrapper_compatible" /** A label cannot be wrapped by the ENS NameWrapper */
   | "normalized" /** A label is not ENSIP-15 normalized. */
   | "punycode_compatible_label" /** A label is not compatible with Punycode. */
-  | "unknown_label"  /** A label is unknown. */
+  | "unknown_label" /** A label is unknown. */
 
   // Name-level checks
   | "punycode_compatible_name" /** A name is compatible with Punycode. */;
@@ -57,7 +56,7 @@ export type CheckResultCode =
  * The `Rating` of a label considers all `CheckResult` values for the label and all of its graphemes.
  * The `Rating` of a name considers all `CheckResult` values for the name and all of its labels and graphemes.
  */
-export type Rating = 
+export type Rating =
   | "pass" /** `pass`: All checks passed. */
   | "warn" /** `warn`: At least one check failed with a `WARN` status but no check failed with an `ALERT` status. */
   | "alert" /** `alert`: At least one check failed with an `ALERT` status. */;
@@ -127,7 +126,6 @@ export interface ConsolidatedReport {
 }
 
 export interface ConsolidatedGraphemeGuardReport extends ConsolidatedReport {
-
   /**
    * The inspected grapheme.
    *
@@ -158,7 +156,7 @@ export interface ConsolidatedGraphemeGuardReport extends ConsolidatedReport {
 
   /**
    * An optional link to an "external" webpage with additional details about `grapheme`.
-   * 
+   *
    * `null` for many multi-character graphemes that are not emojis.
    */
   grapheme_link: string | null;
@@ -168,7 +166,6 @@ export interface ConsolidatedGraphemeGuardReport extends ConsolidatedReport {
  * The result of a NameGuard inspection on a grapheme.
  */
 export interface GraphemeGuardReport extends ConsolidatedGraphemeGuardReport {
-
   /**
    * A list of the results of all the checks that NameGuard performed while inspecting the grapheme.
    */
@@ -176,21 +173,21 @@ export interface GraphemeGuardReport extends ConsolidatedGraphemeGuardReport {
 
   /**
    * A list of `ConsolidatedGraphemeGuardReport` values that might be confused with the analyzed `grapheme`.
-   * 
+   *
    * To be considered a confusable, a grapheme must meet all of the following criteria:
    * 1. They might be considered visually confusable with `grapheme`.
    * 2. They must not be equal to `grapheme`.
    * 3. They are considered "less-canonical" than `grapheme`, not "more-canonical".
    * 4. They are ENS normalized (i.e. graphemes that couldn't appear in a normalized ENS name are not included in this list).
    * 5. They are not multi-grapheme confusables (support for these is planned to be added later).
-   * 
+   *
    * If a canonical confusable is found, it will be the first element in the list.
    */
   confusables: ConsolidatedGraphemeGuardReport[];
 
   /**
    * The grapheme considered to be the canonical form of the analyzed `grapheme`.
-   * 
+   *
    * `null` if and only if the canonical form of `grapheme` is considered to be undefined.
    */
   canonical_grapheme: string | null;
@@ -236,7 +233,7 @@ export interface LabelGuardReport extends ConsolidatedReport {
 
   /**
    * The label considered to be the canonical form of the analyzed `label`.
-   * 
+   *
    * `null` if and only if the canonical form of `label` is considered to be undefined.
    */
   canonical_label: string | null;
@@ -279,7 +276,7 @@ export interface NameGuardReport extends ConsolidatedNameGuardReport {
 
   /**
    * The name considered to be the canonical form of the analyzed `name`.
-   * 
+   *
    * `null` if and only if the canonical form of `name` is considered to be undefined.
    */
   canonical_name: string | null;
@@ -312,7 +309,10 @@ interface NameGuardOptions {
   network?: Network;
 }
 
-// TODO: Reduce these into a single options call if/when all endpoints support
+interface InspectNameOptions {
+  network?: Network;
+}
+
 interface InspectNamehashOptions {
   network?: Network;
 }
@@ -353,23 +353,30 @@ class NameGuard {
   private version: string;
   private network: Network;
 
-  constructor(options?: NameGuardOptions) {
-    this.endpoint = new URL(options?.endpoint || DEFAULT_ENDPOINT);
-    this.version = options?.version || DEFAULT_VERSION;
-    this.network = options?.network || DEFAULT_NETWORK;
+  constructor({
+    endpoint = DEFAULT_ENDPOINT,
+    version = DEFAULT_VERSION,
+    network = DEFAULT_NETWORK,
+  } = {}) {
+    this.endpoint = new URL(endpoint);
+    this.version = version;
+    this.network = network;
   }
 
   private async fetchNameGuardReport(
-    name: string
+    name: string,
+    options?: InspectNameOptions
   ): Promise<NameGuardReport> {
     const url = `${this.endpoint}/${this.version}/inspect-name`;
+
+    const network_name = options?.network || this.network;
 
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ name: name }),
+      body: JSON.stringify({ name, network_name }),
     });
 
     if (!response.ok) {
@@ -380,16 +387,19 @@ class NameGuard {
   }
 
   private async fetchConsolidatedNameGuardReports(
-    names: string[]
+    names: string[],
+    options?: InspectNameOptions
   ): Promise<BulkConsolidatedNameGuardReport> {
     const url = `${this.endpoint}/${this.version}/bulk-inspect-names`;
+
+    const network_name = options?.network || this.network;
 
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ names }),
+      body: JSON.stringify({ names, network_name }),
     });
 
     if (!response.ok) {
@@ -403,7 +413,6 @@ class NameGuard {
   }
 
   // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
-  // TODO: This function should also accept an optional `network` parameter.
   /**
    * Inspects a single name with NameGuard. Provides a `NameGuardReport` including:
    *   1. The details of all checks performed on `name` that consolidates all checks performed on labels and graphemes in `name`.
@@ -415,12 +424,14 @@ class NameGuard {
    * @example
    * const nameGuardReport = await nameguard.inspectName('vitalik.eth');
    */
-  public inspectName(name: string): Promise<NameGuardReport> {
-    return this.fetchNameGuardReport(name);
+  public inspectName(
+    name: string,
+    options?: InspectNameOptions
+  ): Promise<NameGuardReport> {
+    return this.fetchNameGuardReport(name, options);
   }
 
   // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
-  // TODO: This function should also accept an optional `network` parameter.
   /**
    * Inspects up to 250 names at a time with NameGuard. Provides a `ConsolidatedNameGuardReport` for each provided name, including:
    *   1. The details of all checks performed on `name` that consolidates all checks performed on labels and graphemes in `name`.
@@ -435,7 +446,8 @@ class NameGuard {
    * @returns {Promise<BulkConsolidatedNameGuardReport>} A promise that resolves with a list of `ConsolidatedNameGuardReport` values for each name queried in the bulk inspection.
    */
   public bulkInspectNames(
-    names: string[]
+    names: string[],
+    options?: InspectNameOptions
   ): Promise<BulkConsolidatedNameGuardReport> {
     if (names.length > MAX_BULK_INSPECTION_NAMES) {
       throw new Error(
@@ -443,7 +455,7 @@ class NameGuard {
       );
     }
 
-    return this.fetchConsolidatedNameGuardReports(names);
+    return this.fetchConsolidatedNameGuardReports(names, options);
   }
 
   // TODO: We need to have more specialized error handling here for cases such as the lookup in the ENS Subgraph failing.
@@ -520,11 +532,10 @@ class NameGuard {
 
     const parent = options?.parent || DEFAULT_INSPECT_LABELHASH_PARENT;
 
-    // TODO: forward the provided options into these calls, not sure how is an elegant way to do that in TypeScript
     if (parent === "") {
-      return this.inspectName(`[${labelhash}]`);
+      return this.inspectName(`[${labelhash}]`, options);
     } else {
-      return this.inspectName(`[${labelhash}].${parent}`);
+      return this.inspectName(`[${labelhash}].${parent}`, options);
     }
   }
 }
@@ -542,11 +553,6 @@ export function createClient(options?: NameGuardOptions) {
 }
 
 const defaultClient = createClient();
-
-NameGuard.prototype.inspectName = NameGuard.prototype.inspectName;
-NameGuard.prototype.bulkInspectNames = NameGuard.prototype.bulkInspectNames;
-NameGuard.prototype.inspectNamehash = NameGuard.prototype.inspectNamehash;
-NameGuard.prototype.inspectLabelhash = NameGuard.prototype.inspectLabelhash;
 
 /**
  * `NameGuard` provides methods to inspect and prevent malicious use of ENS names.
