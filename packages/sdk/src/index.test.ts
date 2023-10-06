@@ -35,4 +35,11 @@ describe("NameGuard", () => {
       nameguard.inspectLabelhash("0x1234567890abcdef")
     ).rejects.toThrow("Invalid Keccak256 hash format for labelhash.");
   });
+
+  it("should analyze a single grapheme", async () => {
+    const data = await nameguard.inspectGrapheme("ą");
+
+    expect(data.grapheme).toBe("ą");
+    expect(data.canonical_grapheme).toBe("a");
+  });
 });

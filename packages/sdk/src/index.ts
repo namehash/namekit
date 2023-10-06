@@ -340,21 +340,21 @@ class ReverseLookupResult(BaseModel):
 */
 export interface ReverseLookupResult {
   primary_name_status: ReverseLookupStatus;
- 
+
   /**
    * Primary ENS name for the Ethereum address.
-   * 
+   *
    * `null` if primary name was not found or is unnormalized.
    */
   primary_name: string | null;
- 
+
   /**
    * ENS beautified version of the primary name.
-   * 
+   *
    * If primary name was not found or is unnormalized then "Unnamed [first four digits of Ethereum address]", e.g. "Unnamed C2A6".
    */
   display_name: string;
- 
+
   nameguard_result: NameGuardReport | null;
 }
 
@@ -420,6 +420,10 @@ function normalizeKeccak256Hash(hash: Keccak256Hash) {
   return hash.toLowerCase();
 }
 
+function countGraphemes(str: string) {
+  return [...str].length;
+}
+
 class NameGuard {
   private endpoint: URL;
   private version: string;
@@ -479,6 +483,22 @@ class NameGuard {
         response.status,
         `Failed to fetch names in batch.`
       );
+    }
+
+    return await response.json();
+  }
+
+  private async fetchGraphemeGuardReport(
+    grapheme: string
+    ): Promise<GraphemeGuardReport> {
+    const grapheme_encoded = encodeURIComponent(grapheme);
+
+    const url = `${this.endpoint}/${this.version}/inspect-grapheme/${grapheme_encoded}`;
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new NameGuardError(response.status, `Failed to fetch grapheme.`);
     }
 
     return await response.json();
@@ -612,6 +632,24 @@ class NameGuard {
     } else {
       return this.inspectName(`[${labelhash}].${parent}`, options);
     }
+  }
+
+  /**
+   * Inspect a single grapheme.
+   *
+   * @param {string} grapheme The grapheme to inspect. Must be a single grapheme (i.e. a single character or a sequence of characters that represent a single grapheme).
+   * @returns A promise that resolves with a `GraphemeGuardReport` of the inspected grapheme.
+   */
+  public async inspectGrapheme(
+    grapheme: string
+  ): Promise<GraphemeGuardReport> {
+    if (countGraphemes(grapheme) !== 1) {
+      throw new Error(
+        "The grapheme parameter must be a single grapheme (i.e. a single character or a sequence of characters that represent a single grapheme)."
+      );
+    }
+
+    return this.fetchGraphemeGuardReport(grapheme);
   }
 }
 
