@@ -165,11 +165,11 @@ class GraphemeGuardReport(ConsolidatedGraphemeGuardReport):
 
 class ReverseLookupStatus(str, Enum):
     '''
-    The reverse lookup status of Ethereum address.
+    The reverse lookup status of an Ethereum address.
 
-    * `NORMALIZED`: ENS primary name was found and it is normalized.
-    * `NO_PRIMARY_NAME_FOUND`: ENS primary name was not found.
-    * `PRIMARY_NAME_FOUND_BUT_UNNORMALIZED`: ENS primary name was found, but it is not normalized.
+    * `normalized`: ENS primary name was found and it is normalized.
+    * `no_primary_name_found`: ENS primary name was not found.
+    * `primary_name_found_but_unnormalized`: ENS primary name was found, but it is not normalized.
     '''
 
     NORMALIZED = 'normalized'

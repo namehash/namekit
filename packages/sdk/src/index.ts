@@ -76,6 +76,21 @@ export type Normalization =
   | "unknown" /** `unknown`: The name or label is unknown because it cannot be looked up from its hash. */;
 
 /**
+ * The status of a reverse ENS lookup performed by NameGuard.
+ * */
+export type ReverseLookupStatus =
+  | "normalized" /** The ENS primary name was found and it is normalized. */
+  | "no_primary_name_found" /** The ENS primary name was not found. */
+  | "primary_name_found_but_unnormalized" /** The ENS primary name was found, but it is not normalized. */;
+
+export type FakeENSCheckStatus =
+  | "authentic_ens_name" /** The name is an authentic ENS name. */
+  | "impersonated_ens_name" /** The name is an impersonated ENS name. */
+  | "potentially_impersonated_ens_name" /** Potentially Impersonated ENS Name (`.eth` inside of a string). */
+  | "non_impersonated_ens_name" /** Non-Impersonated ENS Name (this is the case of an NFT / collection that isn't named in a way like a `.eth` name). */
+  | "unknown_nft" /** Unknown NFT (this is the case where you can't get any info from Alchemy on the NFT / collection). */;
+
+/**
  * The Keccak-256 hash of a name/label.
  *
  * A labelhash is a Keccak-256 hash of a label.
@@ -291,10 +306,10 @@ export interface NameGuardReport extends ConsolidatedNameGuardReport {
    * The name considered to be the canonical form of the analyzed `name`.
    *
    * `null` if and only if the canonical form of `name` is considered to be undefined.
-   * 
+   *
    * If a label is represented as `[labelhash]` in `name`,
    * the `canonical_name` will also contain the label represented as `[labelhash]`.
-   * 
+   *
    * `canonical_name` is guaranteed to be normalized.
    */
   canonical_name: string | null;
@@ -302,6 +317,45 @@ export interface NameGuardReport extends ConsolidatedNameGuardReport {
 
 export interface BulkConsolidatedNameGuardReport {
   results: ConsolidatedNameGuardReport[];
+}
+
+/*
+class ReverseLookupResult(BaseModel):
+    '''
+    Reverse lookup result.
+    '''
+    primary_name_status: ReverseLookupStatus
+
+    primary_name: Optional[str] = Field(
+        description='Primary ENS name for the Ethereum address.'
+                    '* `null` if primary name was not found or is unnormalized ',
+    )
+
+    display_name: str = Field(
+        description='ENS beautified version of the primary name\n'
+                    'if primary name was not found or is unnormalized then "Unnamed [first four digits of Ethereum address]", e.g. "Unnamed C2A6"',
+    )
+
+    nameguard_result: Optional[NameGuardReport]
+*/
+export interface ReverseLookupResult {
+  primary_name_status: ReverseLookupStatus;
+ 
+  /**
+   * Primary ENS name for the Ethereum address.
+   * 
+   * `null` if primary name was not found or is unnormalized.
+   */
+  primary_name: string | null;
+ 
+  /**
+   * ENS beautified version of the primary name.
+   * 
+   * If primary name was not found or is unnormalized then "Unnamed [first four digits of Ethereum address]", e.g. "Unnamed C2A6".
+   */
+  display_name: string;
+ 
+  nameguard_result: NameGuardReport | null;
 }
 
 // TODO: I think we want to apply more formalization to this error class.
