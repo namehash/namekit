@@ -394,7 +394,16 @@ interface InspectLabelhashOptions {
   parent?: string;
 }
 
+interface PrimaryNameOptions {
+  network?: Network;
+}
+
+interface FakeEnsNameOptions {
+  network?: Network;
+}
+
 const keccak256Regex = /^(?:0x)?[0-9a-f]{64}$/i;
+const ethereumAddressRegex = /^0x[0-9a-f]{40}$/i;
 
 function isKeccak256Hash(hash: Keccak256Hash) {
   return keccak256Regex.test(hash);
@@ -418,6 +427,10 @@ function normalizeKeccak256Hash(hash: Keccak256Hash) {
   }
 
   return hash.toLowerCase();
+}
+
+function isEthereumAddress(address: string) {
+  return ethereumAddressRegex.test(address);
 }
 
 function countGraphemes(str: string) {
@@ -483,6 +496,23 @@ class NameGuard {
         response.status,
         `Failed to fetch names in batch.`
       );
+    }
+
+    return await response.json();
+  }
+
+  private async fetchPrimaryName(
+    address: string,
+    options?: PrimaryNameOptions
+  ): Promise<ReverseLookupResult> {
+    const network_name = options?.network || this.network;
+
+    const url = `${this.endpoint}/${this.version}/primary-name/${network_name}/${address}`;
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new NameGuardError(response.status, `Failed to fetch primary name.`);
     }
 
     return await response.json();
@@ -650,6 +680,17 @@ class NameGuard {
     }
 
     return this.fetchGraphemeGuardReport(grapheme);
+  }
+
+  public async primaryName(
+    address: string,
+    options?: PrimaryNameOptions
+  ): Promise<ReverseLookupResult> {
+    if (!isEthereumAddress(address)) {
+      throw new Error("Invalid Ethereum address format.");
+    }
+
+    return this.fetchPrimaryName(address, options);
   }
 }
 

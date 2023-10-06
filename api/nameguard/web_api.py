@@ -184,6 +184,10 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
     namehash = namehash_from_labelhash(valid_labelhash, parent_name=request.parent_name)
     return await nameguard.inspect_namehash(network_name=request.network_name, namehash=namehash)
 
+
+# -- primary-name --
+
+
 @app.get(
     '/{api_version}/primary-name/{network_name}/{address:path}',
     tags=['primary_name'],
@@ -196,6 +200,10 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
 async def primary_name_get(api_version: ApiVersion, address: str, network_name: NetworkName) -> ReverseLookupResult:
     address = validate_ethereum_address(address)
     return await nameguard.primary_name(address, network_name)
+
+
+# -- fake-ens-name-check --
+
 
 @app.get(
     '/{api_version}/fake-ens-name-check/{network_name}/{contract_address}/{token_id}',

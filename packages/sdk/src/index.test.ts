@@ -42,4 +42,11 @@ describe("NameGuard", () => {
     expect(data.grapheme).toBe("ą");
     expect(data.canonical_grapheme).toBe("a");
   });
+
+  // TODO: lambda does not have the API key set up
+  // it("should analyze a primary name", async () => {
+  //   const data = await nameguard.primaryName("0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5");
+
+  //   expect(data.display_name).toBe("nick.eth");
+  // });
 });
