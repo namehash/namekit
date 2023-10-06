@@ -58,6 +58,7 @@ LABEL_CHECKS = [
 ]
 
 NAME_CHECKS = [
+    checks.name.impersonation_risk.check_name,
     checks.name.punycode_name.check_name,
 ]
 

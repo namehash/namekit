@@ -115,6 +115,7 @@ class Check(str, Enum):
     * `punycode_compatible_label`: A label is compatible with Punycode.
     * `unknown_label`: A label is unknown.
 
+    * `impersonation_risk`: A name might be used for impersonation.
     * `punycode_compatible_name`: A name is compatible with Punycode.
     '''
 
@@ -132,11 +133,13 @@ class Check(str, Enum):
     UNKNOWN_LABEL = 'unknown_label'
 
     # Name
+    IMPERSONATION_RISK = 'impersonation_risk'
     PUNYCODE_COMPATIBLE_NAME = 'punycode_compatible_name'
 
 
 SEVERITY_ORDER_DESC = [
     # highest severity first
+    Check.IMPERSONATION_RISK,
     Check.NORMALIZED,
     Check.INVISIBLE,
     Check.CONFUSABLES,
