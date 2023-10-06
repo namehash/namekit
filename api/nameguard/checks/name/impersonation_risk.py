@@ -6,7 +6,8 @@ from label_inspector.models import InspectorResult
 STATUS = CheckStatus.WARN
 MESSAGE_PASS = 'Name shows no signs of impersonation'
 MESSAGE_FAIL = 'Name might be an impersonation of `{}`'
-MESSAGE_SKIP = 'Name contains unknown labels and cannot be checked for impersonation risk'
+MESSAGE_SKIP_UNK = 'Name contains unknown labels and cannot be checked for impersonation risk'
+MESSAGE_SKIP_CANON = 'Name contains labels with unknown canonical forms and cannot be checked for impersonation risk'
 
 
 def check_name(labels: list[Optional[InspectorResult]]) -> GenericCheckResult:
@@ -14,15 +15,18 @@ def check_name(labels: list[Optional[InspectorResult]]) -> GenericCheckResult:
         return GenericCheckResult(
             check=Check.IMPERSONATION_RISK,
             status=CheckStatus.SKIP,
-            message=MESSAGE_SKIP,
+            message=MESSAGE_SKIP_UNK,
+        )
+    canonicals = [label.normalized_canonical_label for label in labels]
+    if None in canonicals:
+        return GenericCheckResult(
+            check=Check.IMPERSONATION_RISK,
+            status=CheckStatus.SKIP,
+            message=MESSAGE_SKIP_CANON,
         )
     name = '.'.join(label.label for label in labels)
-    canonicals = [label.canonical_label for label in labels]
-    if None in canonicals:
-        passed = True
-    else:
-        canonical = '.'.join(canonicals)
-        passed = name == canonical
+    canonical = '.'.join(canonicals)
+    passed = name == canonical
     return GenericCheckResult(
         check=Check.IMPERSONATION_RISK,
         status=CheckStatus.PASS if passed else STATUS,

@@ -96,7 +96,8 @@ class LabelGuardReport(ConsolidatedReport):
     canonical_label: Optional[str] = Field(
         description='The canonical form of the analyzed label.\n'
                     '* `null` if the canonical form of any grapheme is not known\n'
-                    '* `[labelhash] if the label is unknown`',
+                    '* `null` if the result would be unnormalized, even if the canonical form of all graphemes is known\n'
+                    '* `[labelhash]` if the label is unknown',
     )
 
 
@@ -158,7 +159,8 @@ class GraphemeGuardReport(ConsolidatedGraphemeGuardReport):
 
     canonical_grapheme: Optional[str] = Field(
         description='A grapheme that is the canonical form of the analyzed grapheme.\n'
-                    '* `null` if the canonical form is not known')
+                    '* `null` if the canonical form is not known\n'
+                    '* does not imply that the canonical grapheme/label/name is normalized')
 
 
 class ReverseLookupStatus(str, Enum):
