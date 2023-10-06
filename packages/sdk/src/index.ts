@@ -353,10 +353,14 @@ class NameGuard {
   private version: string;
   private network: Network;
 
-  constructor(options?: NameGuardOptions) {
-    this.endpoint = new URL(options?.endpoint || DEFAULT_ENDPOINT);
-    this.version = options?.version || DEFAULT_VERSION;
-    this.network = options?.network || DEFAULT_NETWORK;
+  constructor({
+    endpoint = DEFAULT_ENDPOINT,
+    version = DEFAULT_VERSION,
+    network = DEFAULT_NETWORK,
+  } = {}) {
+    this.endpoint = new URL(endpoint);
+    this.version = version;
+    this.network = network;
   }
 
   private async fetchNameGuardReport(
@@ -409,7 +413,6 @@ class NameGuard {
   }
 
   // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
-  // TODO: This function should also accept an optional `network` parameter.
   /**
    * Inspects a single name with NameGuard. Provides a `NameGuardReport` including:
    *   1. The details of all checks performed on `name` that consolidates all checks performed on labels and graphemes in `name`.
@@ -429,7 +432,6 @@ class NameGuard {
   }
 
   // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
-  // TODO: This function should also accept an optional `network` parameter.
   /**
    * Inspects up to 250 names at a time with NameGuard. Provides a `ConsolidatedNameGuardReport` for each provided name, including:
    *   1. The details of all checks performed on `name` that consolidates all checks performed on labels and graphemes in `name`.
@@ -528,13 +530,18 @@ class NameGuard {
       throw new Error("Invalid Keccak256 hash format for labelhash.");
     }
 
-    const parent = options?.parent || DEFAULT_INSPECT_LABELHASH_PARENT;
+    const resolvedOptions = {
+      network: options?.network || this.network,
+      parent: options?.parent || DEFAULT_INSPECT_LABELHASH_PARENT,
+    };
 
-    // TODO: forward the provided options into these calls, not sure how is an elegant way to do that in TypeScript
-    if (parent === "") {
-      return this.inspectName(`[${labelhash}]`);
+    if (resolvedOptions.parent === "") {
+      return this.inspectName(`[${labelhash}]`, resolvedOptions);
     } else {
-      return this.inspectName(`[${labelhash}].${parent}`);
+      return this.inspectName(
+        `[${labelhash}].${resolvedOptions.parent}`,
+        resolvedOptions
+      );
     }
   }
 }
@@ -552,11 +559,6 @@ export function createClient(options?: NameGuardOptions) {
 }
 
 const defaultClient = createClient();
-
-NameGuard.prototype.inspectName = NameGuard.prototype.inspectName;
-NameGuard.prototype.bulkInspectNames = NameGuard.prototype.bulkInspectNames;
-NameGuard.prototype.inspectNamehash = NameGuard.prototype.inspectNamehash;
-NameGuard.prototype.inspectLabelhash = NameGuard.prototype.inspectLabelhash;
 
 /**
  * `NameGuard` provides methods to inspect and prevent malicious use of ENS names.
