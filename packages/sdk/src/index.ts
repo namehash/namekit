@@ -35,6 +35,7 @@ export type CheckType =
   | "unknown_label" /** A label is unknown. */
 
   // Name-level checks
+  | "impersonation_risk" /** A name might be used for impersonation. */
   | "punycode_compatible_name" /** A name is compatible with Punycode. */;
 
 /** The resulting status code of a check that NameGuard performed. */
@@ -160,6 +161,11 @@ export interface ConsolidatedGraphemeGuardReport extends ConsolidatedReport {
    * `null` for many multi-character graphemes that are not emojis.
    */
   grapheme_link: string | null;
+
+  /**
+   * A description of the grapheme type.
+   * */
+  grapheme_description: string;
 }
 
 /**
@@ -189,6 +195,9 @@ export interface GraphemeGuardReport extends ConsolidatedGraphemeGuardReport {
    * The grapheme considered to be the canonical form of the analyzed `grapheme`.
    *
    * `null` if and only if the canonical form of `grapheme` is considered to be undefined.
+   *
+   * A name constructed from this single `canonical_grapheme` is not guaranteed to be normalized.
+   * A label is not guaranteed to be normalized even if all graphemes are normalized.
    */
   canonical_grapheme: string | null;
 }
@@ -227,14 +236,18 @@ export interface LabelGuardReport extends ConsolidatedReport {
   /**
    * A list of `ConsolidatedGraphemeGuardReport` values for each grapheme contained within `label`.
    *
-   * If `normalization` is `unknown`, then `graphemes` will be an empty list.
+   * If `normalization` is `unknown`, then `graphemes` will be `null`.
    */
-  graphemes: ConsolidatedGraphemeGuardReport[];
+  graphemes: ConsolidatedGraphemeGuardReport[] | null;
 
   /**
    * The label considered to be the canonical form of the analyzed `label`.
    *
    * `null` if and only if the canonical form of `label` is considered to be undefined.
+   *
+   * If not `null`, it is guaranteed that the `canonical_label` is normalized.
+   *
+   * If `normalization` is `unknown`, then `canonical_label` will be `[labelhash]`.
    */
   canonical_label: string | null;
 }
@@ -278,6 +291,11 @@ export interface NameGuardReport extends ConsolidatedNameGuardReport {
    * The name considered to be the canonical form of the analyzed `name`.
    *
    * `null` if and only if the canonical form of `name` is considered to be undefined.
+   * 
+   * If a label is represented as `[labelhash]` in `name`,
+   * the `canonical_name` will also contain the label represented as `[labelhash]`.
+   * 
+   * `canonical_name` is guaranteed to be normalized.
    */
   canonical_name: string | null;
 }
@@ -322,7 +340,7 @@ interface InspectLabelhashOptions {
   parent?: string;
 }
 
-const keccak256Regex = /^0x?[0-9a-f]{64}$/i;
+const keccak256Regex = /^(?:0x)?[0-9a-f]{64}$/i;
 
 function isKeccak256Hash(hash: Keccak256Hash) {
   return keccak256Regex.test(hash);
@@ -445,17 +463,20 @@ class NameGuard {
    * @param {string[]} names The list of names for NameGuard to inspect.
    * @returns {Promise<BulkConsolidatedNameGuardReport>} A promise that resolves with a list of `ConsolidatedNameGuardReport` values for each name queried in the bulk inspection.
    */
-  public bulkInspectNames(
+  public async bulkInspectNames(
     names: string[],
     options?: InspectNameOptions
   ): Promise<BulkConsolidatedNameGuardReport> {
-    if (names.length > MAX_BULK_INSPECTION_NAMES) {
-      throw new Error(
-        `Bulk inspection of more than ${MAX_BULK_INSPECTION_NAMES} names at a time is not supported.`
+    const results = [];
+    for (let i = 0; i < names.length; i += MAX_BULK_INSPECTION_NAMES) {
+      const chunk = names.slice(i, i + MAX_BULK_INSPECTION_NAMES);
+      const chunkResults = await this.fetchConsolidatedNameGuardReports(
+        chunk,
+        options
       );
+      results.push(...chunkResults.results);
     }
-
-    return this.fetchConsolidatedNameGuardReports(names, options);
+    return { results };
   }
 
   // TODO: We need to have more specialized error handling here for cases such as the lookup in the ENS Subgraph failing.
