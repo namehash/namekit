@@ -530,18 +530,12 @@ class NameGuard {
       throw new Error("Invalid Keccak256 hash format for labelhash.");
     }
 
-    const resolvedOptions = {
-      network: options?.network || this.network,
-      parent: options?.parent || DEFAULT_INSPECT_LABELHASH_PARENT,
-    };
+    const parent = options?.parent || DEFAULT_INSPECT_LABELHASH_PARENT;
 
-    if (resolvedOptions.parent === "") {
-      return this.inspectName(`[${labelhash}]`, resolvedOptions);
+    if (parent === "") {
+      return this.inspectName(`[${labelhash}]`, options);
     } else {
-      return this.inspectName(
-        `[${labelhash}].${resolvedOptions.parent}`,
-        resolvedOptions
-      );
+      return this.inspectName(`[${labelhash}].${parent}`, options);
     }
   }
 }
