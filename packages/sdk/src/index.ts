@@ -550,11 +550,11 @@ class NameGuard {
    * @example
    * const nameGuardReport = await nameguard.inspectName('vitalik.eth');
    */
-  public inspectName(
+  public async inspectName(
     name: string,
     options?: InspectNameOptions
   ): Promise<NameGuardReport> {
-    return this.fetchNameGuardReport(name, options);
+    return await this.fetchNameGuardReport(name, options);
   }
 
   // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
@@ -662,9 +662,9 @@ class NameGuard {
     const parent = options?.parent || DEFAULT_INSPECT_LABELHASH_PARENT;
 
     if (parent === "") {
-      return this.inspectName(`[${labelhash}]`, options);
+      return await this.inspectName(`[${labelhash}]`, options);
     } else {
-      return this.inspectName(`[${labelhash}].${parent}`, options);
+      return await this.inspectName(`[${labelhash}].${parent}`, options);
     }
   }
 
@@ -683,7 +683,7 @@ class NameGuard {
       );
     }
 
-    return this.fetchGraphemeGuardReport(grapheme);
+    return await this.fetchGraphemeGuardReport(grapheme);
   }
 
   public async primaryName(
@@ -694,7 +694,7 @@ class NameGuard {
       throw new Error("Invalid Ethereum address format.");
     }
 
-    return this.fetchPrimaryName(address, options);
+    return await this.fetchPrimaryName(address, options);
   }
 
   public async fakeEnsNameCheck(
@@ -710,7 +710,7 @@ class NameGuard {
       throw new Error("Invalid token id format.");
     }
 
-    return this.fetchFakeEnsName(contract_address, token_id, options);
+    return await this.fetchFakeEnsName(contract_address, token_id, options);
   }
 }
 
