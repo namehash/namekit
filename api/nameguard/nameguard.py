@@ -322,7 +322,11 @@ class NameGuard:
         res_json = await get_nft_metadata(contract_address, token_id)
 
         token_type = res_json['id']['tokenMetadata']['tokenType']
-        if token_type not in ['ERC721', 'ERC1155']:  # TODO what values can have token_type? should we have a separate status for NOT_A_CONTRACT?
+        if token_type == 'NO_SUPPORTED_NFT_STANDARD':
+            return FakeENSCheckStatus.UNKNOWN_NFT
+        elif token_type == 'NOT_A_CONTRACT':
+            return FakeENSCheckStatus.UNKNOWN_NFT  # TODO: or new status?
+        elif token_type not in ['ERC721', 'ERC1155']:
             return FakeENSCheckStatus.UNKNOWN_NFT
 
         title = res_json['title']
