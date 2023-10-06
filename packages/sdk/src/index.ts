@@ -319,25 +319,6 @@ export interface BulkConsolidatedNameGuardReport {
   results: ConsolidatedNameGuardReport[];
 }
 
-/*
-class ReverseLookupResult(BaseModel):
-    '''
-    Reverse lookup result.
-    '''
-    primary_name_status: ReverseLookupStatus
-
-    primary_name: Optional[str] = Field(
-        description='Primary ENS name for the Ethereum address.'
-                    '* `null` if primary name was not found or is unnormalized ',
-    )
-
-    display_name: str = Field(
-        description='ENS beautified version of the primary name\n'
-                    'if primary name was not found or is unnormalized then "Unnamed [first four digits of Ethereum address]", e.g. "Unnamed C2A6"',
-    )
-
-    nameguard_result: Optional[NameGuardReport]
-*/
 export interface ReverseLookupResult {
   primary_name_status: ReverseLookupStatus;
 
