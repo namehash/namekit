@@ -179,11 +179,11 @@ class GenericCheckResult(BaseModel):
     @property
     def order(self):
         """
-        Checks are first sorted by rating, then by severity.
-        Higher risk ratings always come first (ALERT > WARN > PASS > INFO > SKIP).
-        Within the same rating, checks are sorted by severity.
+        Checks are first sorted by status, then by severity.
+        Higher risk status always comes first (ALERT > WARN > PASS > INFO > SKIP).
+        Within the same status, checks are sorted by severity.
         """
-        return (self.rating.order, get_check_severity(self.check))
+        return (self.status.order, get_check_severity(self.check))
 
     # Implementing all ops speeds up comparisons
 
