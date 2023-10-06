@@ -49,4 +49,14 @@ describe("NameGuard", () => {
 
   //   expect(data.display_name).toBe("nick.eth");
   // });
+
+  // TODO: lambda does not have the API key set up
+  // it("should check a fake ENS name", async () => {
+  //   const data = await nameguard.fakeEnsNameCheck(
+  //     "0x495f947276749ce646f68ac8c248420045cb7b5e",
+  //     "61995921128521442959106650131462633744885269624153038309795231243542768648193"
+  //   );
+
+  //   expect(data).toBe("impersonated_ens_name");
+  // });
 });

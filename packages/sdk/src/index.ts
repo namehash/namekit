@@ -404,6 +404,7 @@ interface FakeEnsNameOptions {
 
 const keccak256Regex = /^(?:0x)?[0-9a-f]{64}$/i;
 const ethereumAddressRegex = /^0x[0-9a-f]{40}$/i;
+const tokenIdRegex = /^(?:\d+)|(?:0x[0-9a-f]+)$/i;
 
 function isKeccak256Hash(hash: Keccak256Hash) {
   return keccak256Regex.test(hash);
@@ -431,6 +432,10 @@ function normalizeKeccak256Hash(hash: Keccak256Hash) {
 
 function isEthereumAddress(address: string) {
   return ethereumAddressRegex.test(address);
+}
+
+function isTokenId(token_id: string) {
+  return tokenIdRegex.test(token_id);
 }
 
 function countGraphemes(str: string) {
@@ -513,6 +518,24 @@ class NameGuard {
 
     if (!response.ok) {
       throw new NameGuardError(response.status, `Failed to fetch primary name.`);
+    }
+
+    return await response.json();
+  }
+
+  private async fetchFakeEnsName(
+    contract_address: string,
+    token_id: string,
+    options?: FakeEnsNameOptions
+  ): Promise<FakeENSCheckStatus> {
+    const network_name = options?.network || this.network;
+
+    const url = `${this.endpoint}/${this.version}/fake-ens-name-check/${network_name}/${contract_address}/${token_id}`;
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new NameGuardError(response.status, `Failed to fetch fake ENS name.`);
     }
 
     return await response.json();
@@ -691,6 +714,22 @@ class NameGuard {
     }
 
     return this.fetchPrimaryName(address, options);
+  }
+
+  public async fakeEnsNameCheck(
+    contract_address: string,
+    token_id: string,
+    options?: FakeEnsNameOptions
+  ): Promise<FakeENSCheckStatus> {
+    if (!isEthereumAddress(contract_address)) {
+      throw new Error("Invalid Ethereum address format.");
+    }
+
+    if (!isTokenId(token_id)) {
+      throw new Error("Invalid token id format.");
+    }
+
+    return this.fetchFakeEnsName(contract_address, token_id, options);
   }
 }
 
