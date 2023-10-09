@@ -224,4 +224,4 @@ class FakeEthNameCheckResult(BaseModel):
     status: FakeEthNameCheckStatus
     
     nameguard_result: Optional[NameGuardReport] = Field(description='NameGuard report for the .eth ENS NFT.\n'
-                                                        '* `null` if the NFT is not associated with authentic ".eth" contracts and labael is known')
+                                                        '* `null` if `status` is any value except `authentic_eth_name` and `invalid_eth_name` (the NFT is not associated with authentic ".eth" contracts and label is known)')
