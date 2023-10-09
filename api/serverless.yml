@@ -31,7 +31,7 @@ functions:
               - "ecr:InitiateLayerUpload"
               - "ecr:SetRepositoryPolicy"
               - "ecr:GetRepositoryPolicy"
-            Resource: [ "arn:aws:ecr:eu-east-1:571094861812:repository/*" ]
+            Resource: [ "arn:aws:ecr:us-east-1:571094861812:repository/*" ]
           - Effect: "Allow"
             Action:
               - "logs:*"
