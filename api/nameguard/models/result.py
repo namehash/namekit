@@ -169,12 +169,12 @@ class ReverseLookupStatus(str, Enum):
 
     * `normalized`: ENS primary name was found and it is normalized.
     * `no_primary_name_found`: ENS primary name was not found.
-    * `primary_name_found_but_unnormalized`: ENS primary name was found, but it is not normalized.
+    * `unnormalized`: ENS primary name was found, but it is not normalized.
     '''
 
     NORMALIZED = 'normalized'
     NO_PRIMARY_NAME_FOUND = 'no_primary_name_found'
-    PRIMARY_NAME_FOUND_BUT_UNNORMALIZED = 'primary_name_found_but_unnormalized'
+    UNNORMALIZED = 'unnormalized'
 
 
 class ReverseLookupResult(BaseModel):
@@ -198,9 +198,9 @@ class ReverseLookupResult(BaseModel):
 
 class FakeENSCheckStatus(str, Enum):
     '''
-    * `authentic_ens_name` Authentic ENS Name
-    * `impersonated_ens_name` Impersonated ENS Name
-    * `potentially_impersonated_ens_name` Potentially Impersonated ENS Name (`.eth` inside of a string)
+    * `authentic_ens_name` The NFT is associated with authentic ".eth" contracts.
+    * `impersonated_ens_name` The NFT appears to impersonate a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" at the end of relevant NFT metadata fields. Consider automated rejection of this NFT from marketplaces.
+    * `potentially_impersonated_ens_name` The NFT potentially impersonates a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" within relevant NFT metadata fields (but not at the end of those fields). Consider manual review of this NFT before publishing to marketplaces.
     * `non_impersonated_ens_name` Non-Impersonated ENS Name (this is the case of an NFT / collection that isn't named in a way like a `.eth` name)
     * `unknown_nft`: Unknown NFT (this is the case where you can't get any info from Alchemy on the NFT / collection)
     '''

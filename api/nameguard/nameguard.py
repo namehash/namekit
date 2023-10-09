@@ -303,7 +303,7 @@ class NameGuard:
                 status = ReverseLookupStatus.NORMALIZED
                 primary_name = domain
             except DisallowedSequence:
-                status = ReverseLookupStatus.PRIMARY_NAME_FOUND_BUT_UNNORMALIZED
+                status = ReverseLookupStatus.UNNORMALIZED
 
         return ReverseLookupResult(primary_name=primary_name,
                                    display_name=display_name,

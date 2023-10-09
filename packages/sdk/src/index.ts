@@ -81,12 +81,12 @@ export type Normalization =
 export type ReverseLookupStatus =
   | "normalized" /** The ENS primary name was found and it is normalized. */
   | "no_primary_name_found" /** The ENS primary name was not found. */
-  | "primary_name_found_but_unnormalized" /** The ENS primary name was found, but it is not normalized. */;
+  | "unnormalized" /** The ENS primary name was found, but it is not normalized. */;
 
 export type FakeENSCheckStatus =
-  | "authentic_ens_name" /** The name is an authentic ENS name. */
-  | "impersonated_ens_name" /** The name is an impersonated ENS name. */
-  | "potentially_impersonated_ens_name" /** Potentially Impersonated ENS Name (`.eth` inside of a string). */
+  | "authentic_ens_name" /** The NFT is associated with authentic ".eth" contracts. */
+  | "impersonated_ens_name" /** The NFT appears to impersonate a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" at the end of relevant NFT metadata fields. Consider automated rejection of this NFT from marketplaces. */
+  | "potentially_impersonated_ens_name" /** The NFT potentially impersonates a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" within relevant NFT metadata fields (but not at the end of those fields). Consider manual review of this NFT before publishing to marketplaces. */
   | "non_impersonated_ens_name" /** Non-Impersonated ENS Name (this is the case of an NFT / collection that isn't named in a way like a `.eth` name). */
   | "unknown_nft" /** Unknown NFT (this is the case where you can't get any info from Alchemy on the NFT / collection). */;
 
@@ -674,19 +674,19 @@ class NameGuard {
   public inspectGrapheme(grapheme: string): Promise<GraphemeGuardReport> {
     if (countGraphemes(grapheme) !== 1) {
       throw new Error(
-        "The grapheme parameter must be a single grapheme (i.e. a single character or a sequence of characters that represent a single grapheme)."
+        `The provided grapheme: "${grapheme}" is not a single grapheme. (i.e. it is not a single character or a sequence of characters that represent a single grapheme).`
       );
     }
 
     return this.fetchGraphemeGuardReport(grapheme);
   }
 
-  public primaryName(
+  public getSecurePrimaryName(
     address: string,
     options?: PrimaryNameOptions
   ): Promise<ReverseLookupResult> {
     if (!isEthereumAddress(address)) {
-      throw new Error("Invalid Ethereum address format.");
+      throw new Error(`The provided address: "${address}" is not in a valid Ethereum address format.`);
     }
 
     return this.fetchPrimaryName(address, options);
@@ -698,11 +698,11 @@ class NameGuard {
     options?: FakeEnsNameOptions
   ): Promise<FakeENSCheckStatus> {
     if (!isEthereumAddress(contract_address)) {
-      throw new Error("Invalid Ethereum address format.");
+      throw new Error(`The provided address: "${contract_address}" is not in a valid Ethereum address format.`);
     }
 
     if (!isTokenId(token_id)) {
-      throw new Error("Invalid token id format.");
+      throw new Error(`The provided token_id: "${token_id}" is not in a valid token id format.`);
     }
 
     return this.fetchFakeEnsName(contract_address, token_id, options);
