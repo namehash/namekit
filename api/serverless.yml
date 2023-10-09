@@ -25,6 +25,7 @@ functions:
     versionFunctions: true
     url: true
     role: myDefaultRole
+    provisionedConcurrency: 1
     # iam:
     #   role:
     #     statements:
@@ -148,16 +149,16 @@ resources:
             SslSupportMethod: sni-only
             MinimumProtocolVersion: TLSv1.2_2019
             AcmCertificateArn: !Ref ACMCertificate
-  #   ApiRecordSetGroup:
-  #     Type: AWS::Route53::RecordSetGroup
-  #     DeletionPolicy: Delete
-  #     DependsOn:
-  #       - ApiCloudFrontDistribution
-  #     Properties:
-  #       HostedZoneName: ${self:custom.hostedZoneName}
-  #       RecordSets:
-  #         - Name: ${self:custom.apiDomain}
-  #           Type: A
-  #           AliasTarget:
-  #             HostedZoneId: Z00828203AEAZA0WLANE6 # Cloudfront default hosted zone ID
-  #             DNSName: { 'Fn::GetAtt': [ApiCloudFrontDistribution, DomainName] } # set the domain of your cloudfront distribution
+    ApiRecordSetGroup:
+      Type: AWS::Route53::RecordSetGroup
+      DeletionPolicy: Delete
+      DependsOn:
+        - ApiCloudFrontDistribution
+      Properties:
+        HostedZoneName: ${self:custom.hostedZoneName}
+        RecordSets:
+          - Name: ${self:custom.apiDomain}
+            Type: A
+            AliasTarget:
+              HostedZoneId: ${self:custom.hostedZoneId} # Cloudfront default hosted zone ID
+              DNSName: { 'Fn::GetAtt': [ApiCloudFrontDistribution, DomainName] } # set the domain of your cloudfront distribution
