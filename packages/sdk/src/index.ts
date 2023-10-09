@@ -498,7 +498,10 @@ class NameGuard {
     const response = await fetch(url);
 
     if (!response.ok) {
-      throw new NameGuardError(response.status, `Failed to fetch primary name.`);
+      throw new NameGuardError(
+        response.status,
+        `Failed to fetch primary name.`
+      );
     }
 
     return await response.json();
@@ -516,7 +519,10 @@ class NameGuard {
     const response = await fetch(url);
 
     if (!response.ok) {
-      throw new NameGuardError(response.status, `Failed to fetch fake ENS name.`);
+      throw new NameGuardError(
+        response.status,
+        `Failed to fetch fake ENS name.`
+      );
     }
 
     return await response.json();
@@ -524,7 +530,7 @@ class NameGuard {
 
   private async fetchGraphemeGuardReport(
     grapheme: string
-    ): Promise<GraphemeGuardReport> {
+  ): Promise<GraphemeGuardReport> {
     const grapheme_encoded = encodeURIComponent(grapheme);
 
     const url = `${this.endpoint}/${this.version}/inspect-grapheme/${grapheme_encoded}`;
@@ -550,11 +556,11 @@ class NameGuard {
    * @example
    * const nameGuardReport = await nameguard.inspectName('vitalik.eth');
    */
-  public async inspectName(
+  public inspectName(
     name: string,
     options?: InspectNameOptions
   ): Promise<NameGuardReport> {
-    return await this.fetchNameGuardReport(name, options);
+    return this.fetchNameGuardReport(name, options);
   }
 
   // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
@@ -571,20 +577,11 @@ class NameGuard {
    * @param {string[]} names The list of names for NameGuard to inspect.
    * @returns {Promise<BulkConsolidatedNameGuardReport>} A promise that resolves with a list of `ConsolidatedNameGuardReport` values for each name queried in the bulk inspection.
    */
-  public async bulkInspectNames(
+  public bulkInspectNames(
     names: string[],
     options?: InspectNameOptions
   ): Promise<BulkConsolidatedNameGuardReport> {
-    const results = [];
-    for (let i = 0; i < names.length; i += MAX_BULK_INSPECTION_NAMES) {
-      const chunk = names.slice(i, i + MAX_BULK_INSPECTION_NAMES);
-      const chunkResults = await this.fetchConsolidatedNameGuardReports(
-        chunk,
-        options
-      );
-      results.push(...chunkResults.results);
-    }
-    return { results };
+    return this.fetchConsolidatedNameGuardReports(names, options);
   }
 
   // TODO: We need to have more specialized error handling here for cases such as the lookup in the ENS Subgraph failing.
@@ -674,19 +671,17 @@ class NameGuard {
    * @param {string} grapheme The grapheme to inspect. Must be a single grapheme (i.e. a single character or a sequence of characters that represent a single grapheme).
    * @returns A promise that resolves with a `GraphemeGuardReport` of the inspected grapheme.
    */
-  public async inspectGrapheme(
-    grapheme: string
-  ): Promise<GraphemeGuardReport> {
+  public inspectGrapheme(grapheme: string): Promise<GraphemeGuardReport> {
     if (countGraphemes(grapheme) !== 1) {
       throw new Error(
         "The grapheme parameter must be a single grapheme (i.e. a single character or a sequence of characters that represent a single grapheme)."
       );
     }
 
-    return await this.fetchGraphemeGuardReport(grapheme);
+    return this.fetchGraphemeGuardReport(grapheme);
   }
 
-  public async primaryName(
+  public primaryName(
     address: string,
     options?: PrimaryNameOptions
   ): Promise<ReverseLookupResult> {
@@ -694,10 +689,10 @@ class NameGuard {
       throw new Error("Invalid Ethereum address format.");
     }
 
-    return await this.fetchPrimaryName(address, options);
+    return this.fetchPrimaryName(address, options);
   }
 
-  public async fakeEnsNameCheck(
+  public fakeEnsNameCheck(
     contract_address: string,
     token_id: string,
     options?: FakeEnsNameOptions
@@ -710,7 +705,7 @@ class NameGuard {
       throw new Error("Invalid token id format.");
     }
 
-    return await this.fetchFakeEnsName(contract_address, token_id, options);
+    return this.fetchFakeEnsName(contract_address, token_id, options);
   }
 }
 
