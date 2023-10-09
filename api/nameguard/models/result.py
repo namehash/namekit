@@ -193,7 +193,8 @@ class SecureReverseLookupResult(BaseModel):
                     '* if `primary_name` is `null` then provides a fallback `display_name` of "Unnamed [first four hex digits of Ethereum address]", e.g. "Unnamed C2A6"',
     )
 
-    nameguard_result: Optional[NameGuardReport] = Field(description='NameGuard report for the `primary_name` if is normalizable else null.')
+    nameguard_result: Optional[NameGuardReport] = Field(description='NameGuard report for the `primary_name`.\n'
+                                                                    '* `null` if primary name is not found')
 
 
 class FakeEthNameCheckStatus(str, Enum):

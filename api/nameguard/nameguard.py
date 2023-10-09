@@ -300,12 +300,15 @@ class NameGuard:
             status = SecureReverseLookupStatus.NO_PRIMARY_NAME
         else:
             nameguard_result = self.inspect_name(domain)
-            try:
-                display_name = ens_normalize.ens_beautify(domain)
+            
+            result = ens_normalize.ens_process(domain, do_normalize=True, do_beautify=True)
+            if result.normalized != domain:
+                status = SecureReverseLookupStatus.UNNORMALIZED
+            else:
+                display_name = result.beautified
                 status = SecureReverseLookupStatus.NORMALIZED
                 primary_name = domain
-            except DisallowedSequence:
-                status = SecureReverseLookupStatus.UNNORMALIZED
+
 
         return SecureReverseLookupResult(primary_name=primary_name,
                                          display_name=display_name,
