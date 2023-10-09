@@ -316,37 +316,53 @@ class NameGuard:
         """
         contract_address = contract_address.lower()
 
-        if contract_address in ens_contract_adresses:
-            return FakeEthNameCheckStatus.AUTHENTIC_ENS_NAME  # TODO is it enough? should we check if it exist? or is it normalized? or it ends with .eth?
-
+        
         res_json = await get_nft_metadata(contract_address, token_id)
 
         token_type = res_json['id']['tokenMetadata']['tokenType']
-        if token_type == 'NO_SUPPORTED_NFT_STANDARD':
+        
+        if token_type == 'NOT_A_CONTRACT':
             return FakeEthNameCheckStatus.UNKNOWN_NFT
-        elif token_type == 'NOT_A_CONTRACT':
-            return FakeEthNameCheckStatus.UNKNOWN_NFT  # TODO: or new status?
-        elif token_type not in ['ERC721', 'ERC1155']:
+        elif token_type == 'NO_SUPPORTED_NFT_STANDARD':
+            return FakeEthNameCheckStatus.UNKNOWN_NFT  #TODO: different status?
+        elif token_type not in ['ERC721', 'ERC1155']:  # Alchemy does not support other types
             return FakeEthNameCheckStatus.UNKNOWN_NFT
 
         title = res_json['title']
 
-        cured_title = ens_normalize.ens_cure(title)
-
-        if cured_title.endswith('.eth'):
-            return FakeEthNameCheckStatus.IMPERSONATED_ENS_NAME
+        if contract_address in ens_contract_adresses:
+            if title == '':
+                return FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME
+            elif ens_normalize.is_ens_normalized(title):
+                return FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME
+            else:
+                return FakeEthNameCheckStatus.INVALID_ETH_NAME
         else:
-            if '.eth' in cured_title:
-                return FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ENS_NAME
-
-            for keys in [['metadata', 'name'], 
+            fields_values=[]
+            for keys in [['title'],
+                         ['metadata', 'name'], 
                          ['contractMetadata', 'openSea', 'collectionName'],
                          ['contractMetadata', 'name']]:
                 try:
                     name = nested_get(res_json, keys)
-                    if '.eth' in name.lower():
-                        return FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ENS_NAME
+                    try:
+                        #TODO: remove invisible and then canonicalize
+                        cured_title = ens_normalize.ens_cure(name)
+                        # canonicalize
+                        inspector_result = self._inspector.analyse_label(cured_title)
+                        if inspector_result.canonical_label is not None:
+                            canonical_name = inspector_result.canonical_label
+                        else:
+                            canonical_name = cured_title
+                    except DisallowedSequence:
+                        canonical_name = title
+                    if canonical_name.endswith('.eth'):
+                        return FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME
+                    fields_values.append(canonical_name)
                 except KeyError:
                     pass
+            for field_value in fields_values:
+                if '.eth' in field_value:
+                    return FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME
 
-            return FakeEthNameCheckStatus.NON_IMPERSONATED_ENS_NAME
+            return FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME
