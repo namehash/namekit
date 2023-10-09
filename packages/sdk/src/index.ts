@@ -356,7 +356,7 @@ export interface SecureReverseLookupResult {
   /**
    * NameGuard report for the `primary_name`.
    *
-   * `null` if primary name is not found.
+   * `null` if `primary_name_status` is `no_primary_name` (primary name is not found).
    */
   nameguard_result: NameGuardReport | null;
 }
@@ -534,7 +534,7 @@ class NameGuard {
     contract_address: string,
     token_id: string,
     options?: FakeEthNameOptions
-  ): Promise<FakeEthNameCheckStatus> {
+  ): Promise<FakeEthNameCheckResult> {
     const network_name = options?.network || this.network;
 
     const url = `${this.endpoint}/${this.version}/fake-ens-name-check/${network_name}/${contract_address}/${token_id}`;
@@ -724,7 +724,7 @@ class NameGuard {
     contract_address: string,
     token_id: string,
     options?: FakeEthNameOptions
-  ): Promise<FakeEthNameCheckStatus> {
+  ): Promise<FakeEthNameCheckResult> {
     if (!isEthereumAddress(contract_address)) {
       throw new Error(`The provided address: "${contract_address}" is not in a valid Ethereum address format.`);
     }
