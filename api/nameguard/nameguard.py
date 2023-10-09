@@ -75,6 +75,7 @@ ens_contract_adresses = {
     '0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401',  # Name Wrapper
 }
 
+ALCHEMY_UNKNOWN_NAME = re.compile('^\[0x[0-9a-f]{4}\.\.\.[0-9a-f]{4}\]\.eth$')
 
 def nested_get(dic, keys):
     for key in keys:
@@ -341,7 +342,7 @@ class NameGuard:
             if title == '':
                 return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME, nameguard_result=None)
             else:
-                if re.match('^\[0x[0-9a-f]{4}\.\.\.[0-9a-f]{4}\]\.eth$', title):
+                if ALCHEMY_UNKNOWN_NAME.match(title):
                     return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME, nameguard_result=None)
 
                 report = self.inspect_name(title)  # TODO add network_name
