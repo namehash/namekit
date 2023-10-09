@@ -1,0 +1,99 @@
+service: oss-nameguard
+	
+custom:
+  stage: ${opt:stage}
+  apiDomain: api.nameguard.io
+  hostedZoneName: nameguard.io.  
+  certificateArn: arn:aws:acm:us-east-1:974791667779:certificate/80b90773-fdc0-4b1e-a27a-6fc0725abef0
+
+provider:
+  name: aws
+  stage: ${self:custom.stage}
+  ecr:
+    images:
+      oss-nameguard:
+        path: ./
+      
+functions:
+  oss-nameguard:
+    image:
+      name: oss-nameguard
+    name: oss-nameguard-${self:custom.stage}
+    memorySize: 512
+    timeout: 10
+    versionFunctions: true
+    url: true
+    platform: linux/amd64
+
+# resources:
+#   ACMCertificate: 
+#     Type: "AWS::CertificateManager::Certificate"
+#     Properties: 
+#       DomainName: api.example.com
+#       DomainValidationOptions:
+#             - DomainName: api.example.com
+#               HostedZoneId: Z00828203AEAZA0WLANE6
+#       ValidationMethod: DNS 
+  # Resources:
+  #   ApiCloudFrontDistribution:
+  #     Type: AWS::CloudFront::Distribution
+  #     DeletionPolicy: Delete
+  #     Properties:
+  #       DistributionConfig:
+  #         Enabled: true
+  #         PriceClass: PriceClass_100
+  #         HttpVersion: http2
+  #         Comment: Api distribution for ${self:custom.apiDomain}
+  #         Origins:
+  #           - Id: ApiGateway
+  #             DomainName: !Select [2, !Split ["/", !GetAtt OssDashnameguardLambdaFunctionUrl.FunctionUrl]] # extract function url form your lambda resource
+  #             OriginPath: ''
+  #             CustomOriginConfig:
+  #               HTTPPort: 80
+  #               HTTPSPort: 443
+  #               OriginProtocolPolicy: https-only
+  #               OriginSSLProtocols: [TLSv1, TLSv1.1, TLSv1.2]
+  #         DefaultCacheBehavior:
+  #           TargetOriginId: ApiGateway
+  #           ViewerProtocolPolicy: redirect-to-https
+  #           Compress: true
+  #           DefaultTTL: 0
+  #           AllowedMethods:
+  #             - HEAD
+  #             - DELETE
+  #             - POST
+  #             - GET
+  #             - OPTIONS
+  #             - PUT
+  #             - PATCH
+  #           CachedMethods:
+  #             - HEAD
+  #             - OPTIONS
+  #             - GET
+  #           ForwardedValues:
+  #             QueryString: false
+  #             Headers:
+  #               - Accept
+  #               - x-api-key
+  #               - Authorization
+  #             Cookies:
+  #               Forward: none
+  #         Aliases:
+  #           - ${self:custom.apiDomain}
+  #         ViewerCertificate:
+  #           SslSupportMethod: sni-only
+  #           MinimumProtocolVersion: TLSv1.2_2019
+  #           AcmCertificateArn: !Ref ${self:custom.certificateArn}
+  #   ApiRecordSetGroup:
+  #     Type: AWS::Route53::RecordSetGroup
+  #     DeletionPolicy: Delete
+  #     DependsOn:
+  #       - ApiCloudFrontDistribution
+  #     Properties:
+  #       HostedZoneName: ${self:custom.hostedZoneName}
+  #       RecordSets:
+  #         - Name: ${self:custom.apiDomain}
+  #           Type: A
+  #           AliasTarget:
+  #             HostedZoneId: Z00828203AEAZA0WLANE6 # Cloudfront default hosted zone ID
+  #             DNSName: { 'Fn::GetAtt': [ApiCloudFrontDistribution, DomainName] } # set the domain of your cloudfront distribution

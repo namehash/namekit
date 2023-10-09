@@ -1,0 +1,50 @@
+name: Build image and push to ECR
+
+on:
+  push:
+    branches:
+      - ci-cd-lambda-nameguard
+
+env:
+  NODE_VERSION: '18.16.0'
+  TS_VERSION: '4.2.3'
+  TS_NODE_VERSION: '10.0.0'
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  build-image:
+    runs-on: ubuntu-20.04
+    env:
+      SERVICE_NAME: nameguard
+    steps:
+      - name: Checkout this repo
+        uses: actions/checkout@v3
+        with:
+          path: repo
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Setup git
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email ''
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: arn:aws:iam::571094861812:role/GithubActionsRole
+          aws-region: us-east-1
+
+      - name: Show env
+        run: |
+          env
+
+      - name: Build and deploy lambda
+        run: |
+          npm install -g serverless
+          serverless deploy --stage dev
