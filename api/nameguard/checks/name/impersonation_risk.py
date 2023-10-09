@@ -17,7 +17,7 @@ def check_name(labels: list[Optional[InspectorResult]]) -> GenericCheckResult:
             status=CheckStatus.SKIP,
             message=MESSAGE_SKIP_UNK,
         )
-    canonicals = [label.canonical_confusable_label for label in labels]
+    canonicals = [label.normalized_canonical_label for label in labels]
     if None in canonicals:
         return GenericCheckResult(
             check=Check.IMPERSONATION_RISK,
@@ -30,5 +30,5 @@ def check_name(labels: list[Optional[InspectorResult]]) -> GenericCheckResult:
     return GenericCheckResult(
         check=Check.IMPERSONATION_RISK,
         status=CheckStatus.PASS if passed else STATUS,
-        message=MESSAGE_PASS if passed else MESSAGE_FAIL.format('.'.join(label.beautiful_canonical_label for label in labels)),
+        message=MESSAGE_PASS if passed else MESSAGE_FAIL.format('.'.join(label.normalized_canonical_label for label in labels)),
     )
