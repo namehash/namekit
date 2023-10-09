@@ -43,6 +43,7 @@ jobs:
       - name: Show env
         run: |
           env
+          ls
 
       - name: Build and deploy lambda
         run: |
