@@ -103,6 +103,21 @@ export type FakeEthNameCheckStatus =
 export type Keccak256Hash = string;
 
 /**
+ * The result of a fake eth name check that NameGuard performed on a contract address and token id.
+ */
+export interface FakeEthNameCheckResult {
+  /** The resulting status code of the check that NameGuard performed. */
+  status: FakeEthNameCheckStatus;
+
+  /**
+   * NameGuard report for the .eth ENS NFT.
+   *
+   * `null` if `status` is any value except `authentic_eth_name` and `invalid_eth_name` (the NFT is not associated with authentic ".eth" contracts and label is known)
+   */
+  nameguard_result: NameGuardReport | null;
+}
+
+/**
  * The result of a check that NameGuard performed on a name/label/grapheme.
  */
 export interface CheckResult {
