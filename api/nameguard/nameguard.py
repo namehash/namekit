@@ -1,4 +1,5 @@
 import os
+import re
 
 import ens_normalize
 import requests
@@ -164,7 +165,7 @@ class NameGuard:
             highest_risk=get_highest_risk(name_checks),
             checks=sorted(name_checks, reverse=True),
             canonical_name=compute_canonical_from_list(
-                [label_analysis.normalized_canonical_label
+                [label_analysis.canonical_confusable_label
                  if label_analysis is not None
                  else labels[i] # labelhash
                  for i, label_analysis in enumerate(labels_analysis)],
@@ -185,7 +186,7 @@ class NameGuard:
                     risk_count=count_risks(label_checks),
                     highest_risk=get_highest_risk(label_checks),
                     checks=sorted(label_checks, reverse=True),
-                    canonical_label=label_analysis.normalized_canonical_label if label_analysis is not None else label, # labelhash
+                    canonical_label=label_analysis.canonical_confusable_label if label_analysis is not None else label, # labelhash
                     graphemes=[
                         ConsolidatedGraphemeGuardReport(
                             grapheme=grapheme.value,
@@ -339,7 +340,10 @@ class NameGuard:
                 report = self.inspect_name(title)  #TODO add network_name
                 # if report.normalization == Normalization.NORMALIZED:
                 #TODO return report
-                #TODO fix for unknown
+
+                if re.match('^\[0x[0-9a-f]{4}\.\.\.[0-9a-f]{4}\]\.eth$', title):
+                    return FakeENSCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME
+
                 if ens_normalize.is_ens_normalized(title):
                     return FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME
                 else:
