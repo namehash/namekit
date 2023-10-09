@@ -194,7 +194,7 @@ class SecureReverseLookupResult(BaseModel):
     )
 
     nameguard_result: Optional[NameGuardReport] = Field(description='NameGuard report for the `primary_name`.\n'
-                                                                    '* `null` if primary name is not found')
+                                                                    '* `null` if `primary_name_status` is `no_primary_name`')
 
 
 class FakeEthNameCheckStatus(str, Enum):
@@ -223,4 +223,5 @@ class FakeEthNameCheckResult(BaseModel):
     """
     status: FakeEthNameCheckStatus
     
-    nameguard_result: Optional[NameGuardReport] = Field(None, description='NameGuard report for the .eth ENS NFT else null.')
+    nameguard_result: Optional[NameGuardReport] = Field(description='NameGuard report for the .eth ENS NFT.\n'
+                                                        '* `null` if the NFT is not associated with authentic ".eth" contracts and labael is known')
