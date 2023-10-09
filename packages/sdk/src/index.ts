@@ -337,9 +337,9 @@ export interface SecureReverseLookupResult {
   display_name: string;
 
   /**
-   * NameGuard report for the `primary_name` if is normalizable else null. #TODO
+   * NameGuard report for the `primary_name`.
    *
-   * `null` if `primary_name` is `null` or is not normalizable. #TODO
+   * `null` if primary name is not found.
    */
   nameguard_result: NameGuardReport | null;
 }
