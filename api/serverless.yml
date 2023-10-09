@@ -4,7 +4,7 @@ custom:
   stage: ${opt:stage}
   apiDomain: api.nameguard.io
   hostedZoneName: nameguard.io.  
-  certificateArn: arn:aws:acm:us-east-1:974791667779:certificate/80b90773-fdc0-4b1e-a27a-6fc0725abef0
+  certificateArn: arn:aws:acm:us-east-1:571094861812:certificate/80b90773-fdc0-4b1e-a27a-6fc0725abef0
 
 provider:
   name: aws
@@ -26,10 +26,17 @@ functions:
     iam:
       role:
         statements:
-          - Effect: "Allow"
+          - Sid: LambdaECRImageRetrievalPolicy
+            Effect: Allow
             Action:
-              - "ecr:*"
-            Resource: [ "*" ]
+              - ecr:BatchGetImage
+              - ecr:GetDownloadUrlForLayer
+            Principal:
+              Service: lambda.amazonaws.com
+            Condition:
+              StringLike:
+                aws:sourceArn:
+                  - arn:aws:lambda:us-east-1:571094861812:function:*
           - Effect: "Allow"
             Action:
               - "logs:CreateLogStream"
