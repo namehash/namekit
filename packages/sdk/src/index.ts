@@ -84,11 +84,13 @@ export type SecureReverseLookupStatus =
   | "unnormalized" /** The ENS primary name was found, but it is not normalized. */;
 
 export type FakeEthNameCheckStatus =
-  | "authentic_ens_name" /** The NFT is associated with authentic ".eth" contracts. */
-  | "impersonated_ens_name" /** The NFT appears to impersonate a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" at the end of relevant NFT metadata fields. Consider automated rejection of this NFT from marketplaces. */
-  | "potentially_impersonated_ens_name" /** The NFT potentially impersonates a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" within relevant NFT metadata fields (but not at the end of those fields). Consider manual review of this NFT before publishing to marketplaces. */
-  | "non_impersonated_ens_name" /** The NFT doesn't represent itself as a ".eth" name and doesn't belong to authentic ENS contracts. No string that visually resembles ".eth" was found within relevant NFT metadata fields. */
-  | "unknown_nft" /** No information could be found on the requested NFT. This generally indicates that the NFT doesn't exist or hasn't been indexed yet. */;
+  | "authentic_eth_name" /** The NFT is associated with authentic ".eth" contracts. */
+  | "impersonated_eth_name" /** The NFT appears to impersonate a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" at the end of relevant NFT metadata fields. Consider automated rejection of this NFT from marketplaces. */
+  | "potentially_impersonated_eth_name" /** The NFT potentially impersonates a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" within relevant NFT metadata fields (but not at the end of those fields). Consider manual review of this NFT before publishing to marketplaces. */
+  | "non_impersonated_eth_name" /** The NFT doesn't represent itself as a ".eth" name and doesn't belong to authentic ENS contracts. No string that visually resembles ".eth" was found within relevant NFT metadata fields. */
+  | "unknown_nft" /** No information could be found on the requested NFT. This generally indicates that the NFT doesn't exist or hasn't been indexed yet. */
+  | "invalid_eth_name" /** The NFT is associated with authentic ".eth" contracts, but it is unnormalized. */
+  | "potentially_authentic_eth_name" /** The NFT is associated with authentic ".eth" contracts, but its label is unknown. */;
 
 /**
  * The Keccak-256 hash of a name/label.
