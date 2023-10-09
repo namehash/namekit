@@ -147,7 +147,7 @@ resources:
           ViewerCertificate:
             SslSupportMethod: sni-only
             MinimumProtocolVersion: TLSv1.2_2019
-            AcmCertificateArn: !Ref ${self:custom.certificateArn}
+            AcmCertificateArn: !Ref ACMCertificate
   #   ApiRecordSetGroup:
   #     Type: AWS::Route53::RecordSetGroup
   #     DeletionPolicy: Delete
