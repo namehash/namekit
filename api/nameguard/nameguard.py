@@ -342,7 +342,7 @@ class NameGuard:
                 #TODO return report
 
                 if re.match('^\[0x[0-9a-f]{4}\.\.\.[0-9a-f]{4}\]\.eth$', title):
-                    return FakeENSCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME
+                    return FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME
 
                 if ens_normalize.is_ens_normalized(title):
                     return FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME
