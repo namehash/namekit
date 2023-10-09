@@ -98,56 +98,56 @@ resources:
               - DomainName: ${self:custom.apiDomain}
                 HostedZoneId: ${self:custom.hostedZoneId}
         ValidationMethod: DNS 
-  # Resources:
-  #   ApiCloudFrontDistribution:
-  #     Type: AWS::CloudFront::Distribution
-  #     DeletionPolicy: Delete
-  #     Properties:
-  #       DistributionConfig:
-  #         Enabled: true
-  #         PriceClass: PriceClass_100
-  #         HttpVersion: http2
-  #         Comment: Api distribution for ${self:custom.apiDomain}
-  #         Origins:
-  #           - Id: ApiGateway
-  #             DomainName: !Select [2, !Split ["/", !GetAtt OssDashnameguardLambdaFunctionUrl.FunctionUrl]] # extract function url form your lambda resource
-  #             OriginPath: ''
-  #             CustomOriginConfig:
-  #               HTTPPort: 80
-  #               HTTPSPort: 443
-  #               OriginProtocolPolicy: https-only
-  #               OriginSSLProtocols: [TLSv1, TLSv1.1, TLSv1.2]
-  #         DefaultCacheBehavior:
-  #           TargetOriginId: ApiGateway
-  #           ViewerProtocolPolicy: redirect-to-https
-  #           Compress: true
-  #           DefaultTTL: 0
-  #           AllowedMethods:
-  #             - HEAD
-  #             - DELETE
-  #             - POST
-  #             - GET
-  #             - OPTIONS
-  #             - PUT
-  #             - PATCH
-  #           CachedMethods:
-  #             - HEAD
-  #             - OPTIONS
-  #             - GET
-  #           ForwardedValues:
-  #             QueryString: false
-  #             Headers:
-  #               - Accept
-  #               - x-api-key
-  #               - Authorization
-  #             Cookies:
-  #               Forward: none
-  #         Aliases:
-  #           - ${self:custom.apiDomain}
-  #         ViewerCertificate:
-  #           SslSupportMethod: sni-only
-  #           MinimumProtocolVersion: TLSv1.2_2019
-  #           AcmCertificateArn: !Ref ${self:custom.certificateArn}
+
+    ApiCloudFrontDistribution:
+      Type: AWS::CloudFront::Distribution
+      DeletionPolicy: Delete
+      Properties:
+        DistributionConfig:
+          Enabled: true
+          PriceClass: PriceClass_100
+          HttpVersion: http2
+          Comment: Api distribution for ${self:custom.apiDomain}
+          Origins:
+            - Id: ApiGateway
+              DomainName: !Select [2, !Split ["/", !GetAtt OssDashnameguardLambdaFunctionUrl.FunctionUrl]] # extract function url form your lambda resource
+              OriginPath: ''
+              CustomOriginConfig:
+                HTTPPort: 80
+                HTTPSPort: 443
+                OriginProtocolPolicy: https-only
+                OriginSSLProtocols: [TLSv1, TLSv1.1, TLSv1.2]
+          DefaultCacheBehavior:
+            TargetOriginId: ApiGateway
+            ViewerProtocolPolicy: redirect-to-https
+            Compress: true
+            DefaultTTL: 0
+            AllowedMethods:
+              - HEAD
+              - DELETE
+              - POST
+              - GET
+              - OPTIONS
+              - PUT
+              - PATCH
+            CachedMethods:
+              - HEAD
+              - OPTIONS
+              - GET
+            ForwardedValues:
+              QueryString: false
+              Headers:
+                - Accept
+                - x-api-key
+                - Authorization
+              Cookies:
+                Forward: none
+          Aliases:
+            - ${self:custom.apiDomain}
+          ViewerCertificate:
+            SslSupportMethod: sni-only
+            MinimumProtocolVersion: TLSv1.2_2019
+            AcmCertificateArn: !Ref ${self:custom.certificateArn}
   #   ApiRecordSetGroup:
   #     Type: AWS::Route53::RecordSetGroup
   #     DeletionPolicy: Delete
