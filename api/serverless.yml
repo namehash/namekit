@@ -14,15 +14,15 @@ provider:
       oss-nameguard:
         path: ./
       
-# functions:
-#   oss-nameguard:
-#     image:
-#       name: oss-nameguard
-#     name: oss-nameguard-${self:custom.stage}
-#     memorySize: 512
-#     timeout: 10
-#     versionFunctions: true
-#     url: 
+functions:
+  oss-nameguard:
+    image:
+      name: oss-nameguard
+    name: oss-nameguard-${self:custom.stage}
+    memorySize: 512
+    timeout: 10
+    versionFunctions: true
+    url: 
 #     role: myDefaultRole
     # iam:
     #   role:
