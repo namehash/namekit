@@ -31,7 +31,7 @@ functions:
               - "ecr:InitiateLayerUpload"
               - "ecr:SetRepositoryPolicy"
               - "ecr:GetRepositoryPolicy"
-            Resource: [ "arn:aws:ecr:eu-west-1:<account_id>:repository/*" ]
+            Resource: [ "arn:aws:ecr:eu-east-1:571094861812:repository/*" ]
     
 
 # resources:
