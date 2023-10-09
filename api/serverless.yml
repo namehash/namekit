@@ -56,12 +56,6 @@ resources:
                 Service:
                   - lambda.amazonaws.com
               Action: sts:AssumeRole
-            - Effect: Allow
-              Action:
-                - ecr:BatchGetImage
-                - ecr:GetDownloadUrlForLayer
-              Principal:
-                Service: lambda.amazonaws.com
         Policies:
           - PolicyName: myPolicyName
             PolicyDocument:
@@ -90,6 +84,12 @@ resources:
                        - - "arn:aws:s3:::"
                          - "Ref" : "ServerlessDeploymentBucket"
 
+                - Effect: Allow
+                  Action:
+                    - ecr:BatchGetImage
+                    - ecr:GetDownloadUrlForLayer
+                  Resource:
+                    - ["*"]
 
 # resources:
 #   ACMCertificate: 
