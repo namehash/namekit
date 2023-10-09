@@ -475,7 +475,7 @@ def test_primary_name_get_unknown(test_client, api_version):
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
-    assert res_json['primary_name_status'] == 'no_primary_name_found'
+    assert res_json['primary_name_status'] == 'no_primary_name'
     assert res_json['primary_name'] == None
     assert res_json['display_name'] == 'Unnamed d8da'
 
