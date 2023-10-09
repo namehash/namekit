@@ -31,10 +31,28 @@ functions:
               - "ecr:InitiateLayerUpload"
               - "ecr:SetRepositoryPolicy"
               - "ecr:GetRepositoryPolicy"
+              - "ecr:SetRepositoryPolicy"
+              -  "ecr:GetDownloadUrlForLayer"
+              -  "ecr:BatchGetImage"
+              -  "ecr:CompleteLayerUpload"
+              -  "ecr:DescribeImages"
+              -  "ecr:DescribeRepositories"
+              -  "ecr:UploadLayerPart"
+              -  "ecr:ListImages"
+              -  "ecr:InitiateLayerUpload"
+              -  "ecr:BatchCheckLayerAvailability"
+              -  "ecr:GetRepositoryPolicy"
+              -  "ecr:PutImage"
             Resource: [ "arn:aws:ecr:us-east-1:571094861812:repository/*" ]
           - Effect: "Allow"
             Action:
-              - "logs:*"
+              - "ecr:GetAuthorizationToken"
+            Resource: [ "*" ]
+          - Effect: "Allow"
+            Action:
+              - "logs:CreateLogStream"
+              -  "logs:CreateLogGroup"
+              -  "logs:TagResource"
             Resource: [ "*" ]  
 
 # resources:
