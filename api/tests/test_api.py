@@ -520,5 +520,10 @@ def test_fake_ens_name_check(test_client, api_version, contract_address, token_i
 
     response = test_client.get(f'/{api_version}/fake-ens-name-check/{network_name}/{contract_address}/{token_id}')
     assert response.status_code == 200
-    assert response.json() == fake
+    res_json = response.json()
+    assert res_json['status'] == fake
+    if res_json['status'] in (FakeEthNameCheckStatus.INVALID_ETH_NAME, FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME):
+        assert res_json['nameguard_result'] is not None
+    else:
+        assert res_json['nameguard_result'] is None
 
