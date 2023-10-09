@@ -4,6 +4,7 @@ custom:
   stage: ${opt:stage}
   apiDomain: api.nameguard.io
   hostedZoneName: nameguard.io.  
+  hostedZoneId: Z00825691ZLCWE2VKJQW0
   certificateArn: arn:aws:acm:us-east-1:571094861812:certificate/80b90773-fdc0-4b1e-a27a-6fc0725abef0
 
 provider:
@@ -95,7 +96,7 @@ resources:
         DomainName: ${self:custom.apiDomain}
         DomainValidationOptions:
               - DomainName: ${self:custom.apiDomain}
-                HostedZoneId: ${self:custom.hostedZoneName}
+                HostedZoneId: ${self:custom.hostedZoneId}
         ValidationMethod: DNS 
   # Resources:
   #   ApiCloudFrontDistribution:
