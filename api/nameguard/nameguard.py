@@ -25,7 +25,8 @@ from nameguard.models import (
     NetworkName,
     SecureReverseLookupResult,
     SecureReverseLookupStatus,
-    FakeEthNameCheckStatus,
+    FakeEthNameCheckStatus, 
+    FakeEthNameCheckResult,
 )
 from nameguard.provider import get_nft_metadata
 from nameguard.utils import (
@@ -311,7 +312,7 @@ class NameGuard:
                                          primary_name_status=status,
                                          nameguard_result=nameguard_result)
 
-    async def fake_eth_name_check(self, network_name, contract_address, token_id):
+    async def fake_eth_name_check(self, network_name, contract_address, token_id) -> FakeEthNameCheckResult:
         """
         Check if the token is a fake ENS name (not valid ENS contract address and title and collection name of NFT look like ENS name).
         """
@@ -323,31 +324,28 @@ class NameGuard:
         token_type = res_json['id']['tokenMetadata']['tokenType']
         
         if token_type not in ['ERC721', 'ERC1155'] and contract_address in ens_contract_adresses:
-            return FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME)
         if token_type == 'NOT_A_CONTRACT':
-            return FakeEthNameCheckStatus.UNKNOWN_NFT
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT)
         elif token_type == 'NO_SUPPORTED_NFT_STANDARD':
-            return FakeEthNameCheckStatus.UNKNOWN_NFT  #TODO: different status?
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT)  #TODO: different status?
         elif token_type not in ['ERC721', 'ERC1155']:  # Alchemy does not support other types
-            return FakeEthNameCheckStatus.UNKNOWN_NFT
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT)
 
         title = res_json['title']
 
         if contract_address in ens_contract_adresses:
             if title == '':
-                return FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME
+                return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME)
             else:
-                report = self.inspect_name(title)  #TODO add network_name
-                # if report.normalization == Normalization.NORMALIZED:
-                #TODO return report
-
                 if re.match('^\[0x[0-9a-f]{4}\.\.\.[0-9a-f]{4}\]\.eth$', title):
-                    return FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME)
 
+                report = self.inspect_name(title)  # TODO add network_name
                 if ens_normalize.is_ens_normalized(title):
-                    return FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME, nameguard_result=report)
                 else:
-                    return FakeEthNameCheckStatus.INVALID_ETH_NAME
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.INVALID_ETH_NAME, nameguard_result=report)
         else:
             fields_values=[]
             for keys in [['title'],
@@ -368,12 +366,12 @@ class NameGuard:
                     except DisallowedSequence:
                         canonical_name = title
                     if canonical_name.endswith('.eth'):
-                        return FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME
+                        return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME)
                     fields_values.append(canonical_name)
                 except KeyError:
                     pass
             for field_value in fields_values:
                 if '.eth' in field_value:
-                    return FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME)
 
-            return FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME)

@@ -193,7 +193,7 @@ class SecureReverseLookupResult(BaseModel):
                     '* if `primary_name` is `null` then provides a fallback `display_name` of "Unnamed [first four hex digits of Ethereum address]", e.g. "Unnamed C2A6"',
     )
 
-    nameguard_result: Optional[NameGuardReport]
+    nameguard_result: Optional[NameGuardReport] = Field(description='NameGuard report for the `primary_name` if is normalizable else null.')
 
 
 class FakeEthNameCheckStatus(str, Enum):
@@ -214,3 +214,12 @@ class FakeEthNameCheckStatus(str, Enum):
     UNKNOWN_NFT = 'unknown_nft'
     INVALID_ETH_NAME = 'invalid_eth_name'
     POTENTIALLY_AUTHENTIC_ETH_NAME = 'potentially_authentic_eth_name'
+
+
+class FakeEthNameCheckResult(BaseModel):
+    """
+    Fake .eth ENS name check result.
+    """
+    status: FakeEthNameCheckStatus
+    
+    nameguard_result: Optional[NameGuardReport] = Field(None, description='NameGuard report for the .eth ENS NFT else null.')

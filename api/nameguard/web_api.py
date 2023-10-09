@@ -2,7 +2,6 @@ from enum import Enum
 from fastapi import FastAPI, Path, Request
 from pydantic import BaseModel, Field
 
-from nameguard.models import GraphemeGuardReport
 from nameguard.nameguard import NameGuard
 from nameguard.utils import validate_namehash, namehash_from_labelhash, validate_token_id, validate_ethereum_address
 from nameguard.models import (
@@ -10,7 +9,8 @@ from nameguard.models import (
     BulkNameGuardBulkReport,
     SecureReverseLookupResult,
     NetworkName,
-    FakeEthNameCheckStatus,
+    GraphemeGuardReport,
+    FakeEthNameCheckResult
 )
 from nameguard.logging import logger
 from nameguard.exceptions import (
@@ -221,7 +221,7 @@ async def fake_ens_name_check_get(
                               description='Contract address for the NFT contract (ERC721 and ERC1155 supported).'),
         token_id: str = Path(examples=['61995921128521442959106650131462633744885269624153038309795231243542768648193'], 
                              description='The ID of the token (in hex or decimal format).')
-) -> FakeEthNameCheckStatus:
+) -> FakeEthNameCheckResult:
     contract_address = validate_ethereum_address(contract_address)
     token_id = validate_token_id(token_id)
     return await nameguard.fake_eth_name_check(network_name=network_name, contract_address=contract_address, token_id=token_id)
