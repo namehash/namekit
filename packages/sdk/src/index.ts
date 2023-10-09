@@ -35,6 +35,7 @@ export type CheckType =
   | "unknown_label" /** A label is unknown. */
 
   // Name-level checks
+  | "impersonation_risk" /** A name might be used for impersonation. */
   | "punycode_compatible_name" /** A name is compatible with Punycode. */;
 
 /** The resulting status code of a check that NameGuard performed. */
@@ -73,6 +74,21 @@ export type Normalization =
   | "normalized" /** `normalized`: The name or label is normalized. */
   | "unnormalized" /** `unnormalized`: The name or label is not normalized. */
   | "unknown" /** `unknown`: The name or label is unknown because it cannot be looked up from its hash. */;
+
+/**
+ * The status of a reverse ENS lookup performed by NameGuard.
+ * */
+export type SecureReverseLookupStatus =
+  | "normalized" /** The ENS primary name was found and it is normalized. */
+  | "no_primary_name" /** The ENS primary name was not found. */
+  | "unnormalized" /** The ENS primary name was found, but it is not normalized. */;
+
+export type FakeEthNameCheckStatus =
+  | "authentic_ens_name" /** The NFT is associated with authentic ".eth" contracts. */
+  | "impersonated_ens_name" /** The NFT appears to impersonate a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" at the end of relevant NFT metadata fields. Consider automated rejection of this NFT from marketplaces. */
+  | "potentially_impersonated_ens_name" /** The NFT potentially impersonates a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" within relevant NFT metadata fields (but not at the end of those fields). Consider manual review of this NFT before publishing to marketplaces. */
+  | "non_impersonated_ens_name" /** The NFT doesn't represent itself as a ".eth" name and doesn't belong to authentic ENS contracts. No string that visually resembles ".eth" was found within relevant NFT metadata fields. */
+  | "unknown_nft" /** No information could be found on the requested NFT. This generally indicates that the NFT doesn't exist or hasn't been indexed yet. */;
 
 /**
  * The Keccak-256 hash of a name/label.
@@ -160,6 +176,11 @@ export interface ConsolidatedGraphemeGuardReport extends ConsolidatedReport {
    * `null` for many multi-character graphemes that are not emojis.
    */
   grapheme_link: string | null;
+
+  /**
+   * A user-friendly description of the grapheme type.
+   * */
+  grapheme_description: string;
 }
 
 /**
@@ -189,6 +210,9 @@ export interface GraphemeGuardReport extends ConsolidatedGraphemeGuardReport {
    * The grapheme considered to be the canonical form of the analyzed `grapheme`.
    *
    * `null` if and only if the canonical form of `grapheme` is considered to be undefined.
+   *
+   * A name / label constructed from repeated instances of this `canonical_grapheme` is not guaranteed to be normalized.
+   * A name / label is not guaranteed to be normalized even if all graphemes are normalized.
    */
   canonical_grapheme: string | null;
 }
@@ -227,14 +251,18 @@ export interface LabelGuardReport extends ConsolidatedReport {
   /**
    * A list of `ConsolidatedGraphemeGuardReport` values for each grapheme contained within `label`.
    *
-   * If `normalization` is `unknown`, then `graphemes` will be an empty list.
+   * `null` if and only if `normalization` is `unknown`.
    */
-  graphemes: ConsolidatedGraphemeGuardReport[];
+  graphemes: ConsolidatedGraphemeGuardReport[] | null;
 
   /**
    * The label considered to be the canonical form of the analyzed `label`.
    *
    * `null` if and only if the canonical form of `label` is considered to be undefined.
+   *
+   * If not `null`, it is guaranteed that the `canonical_label` is normalized.
+   *
+   * If `normalization` is `unknown`, then `canonical_label` will be `[labelhash]`.
    */
   canonical_label: string | null;
 }
@@ -278,12 +306,37 @@ export interface NameGuardReport extends ConsolidatedNameGuardReport {
    * The name considered to be the canonical form of the analyzed `name`.
    *
    * `null` if and only if the canonical form of `name` is considered to be undefined.
+   *
+   * If a label is represented as `[labelhash]` in `name`,
+   * the `canonical_name` will also contain the label represented as `[labelhash]`.
+   *
+   * `canonical_name` is guaranteed to be normalized.
    */
   canonical_name: string | null;
 }
 
 export interface BulkConsolidatedNameGuardReport {
   results: ConsolidatedNameGuardReport[];
+}
+
+export interface SecureReverseLookupResult {
+  primary_name_status: SecureReverseLookupStatus;
+
+  /**
+   * Primary ENS name for the Ethereum address.
+   *
+   * `null` if `primary_name_status` is any value except `normalized`.
+   */
+  primary_name: string | null;
+
+  /**
+   * ENS beautified version of `primary_name`.
+   *
+   * If `primary_name` is `null` then provides a fallback `display_name` of "Unnamed [first four hex digits of Ethereum address]", e.g. "Unnamed C2A6".
+   */
+  display_name: string;
+
+  nameguard_result: NameGuardReport | null;
 }
 
 // TODO: I think we want to apply more formalization to this error class.
@@ -322,7 +375,17 @@ interface InspectLabelhashOptions {
   parent?: string;
 }
 
-const keccak256Regex = /^0x?[0-9a-f]{64}$/i;
+interface SecurePrimaryNameOptions {
+  network?: Network;
+}
+
+interface FakeEthNameOptions {
+  network?: Network;
+}
+
+const keccak256Regex = /^(?:0x)?[0-9a-f]{64}$/i;
+const ethereumAddressRegex = /^0x[0-9a-f]{40}$/i;
+const tokenIdRegex = /^(?:\d+)|(?:0x[0-9a-f]+)$/i;
 
 function isKeccak256Hash(hash: Keccak256Hash) {
   return keccak256Regex.test(hash);
@@ -346,6 +409,19 @@ function normalizeKeccak256Hash(hash: Keccak256Hash) {
   }
 
   return hash.toLowerCase();
+}
+
+function isEthereumAddress(address: string) {
+  return ethereumAddressRegex.test(address);
+}
+
+function isTokenId(token_id: string) {
+  return tokenIdRegex.test(token_id);
+}
+
+function countGraphemes(str: string) {
+  // TODO fix!!
+  return [...str].length;
 }
 
 class NameGuard {
@@ -412,6 +488,63 @@ class NameGuard {
     return await response.json();
   }
 
+  private async fetchSecurePrimaryName(
+    address: string,
+    options?: SecurePrimaryNameOptions
+  ): Promise<SecureReverseLookupResult> {
+    const network_name = options?.network || this.network;
+
+    const url = `${this.endpoint}/${this.version}/primary-name/${network_name}/${address}`;
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new NameGuardError(
+        response.status,
+        "Error looking up secure primary name."
+      );
+    }
+
+    return await response.json();
+  }
+
+  private async fetchFakeEthName(
+    contract_address: string,
+    token_id: string,
+    options?: FakeEthNameOptions
+  ): Promise<FakeEthNameCheckStatus> {
+    const network_name = options?.network || this.network;
+
+    const url = `${this.endpoint}/${this.version}/fake-ens-name-check/${network_name}/${contract_address}/${token_id}`;
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new NameGuardError(
+        response.status,
+        "Error looking up .eth name impersonation status of NFT."
+      );
+    }
+
+    return await response.json();
+  }
+
+  private async fetchGraphemeGuardReport(
+    grapheme: string
+  ): Promise<GraphemeGuardReport> {
+    const grapheme_encoded = encodeURIComponent(grapheme);
+
+    const url = `${this.endpoint}/${this.version}/inspect-grapheme/${grapheme_encoded}`;
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new NameGuardError(response.status, `Error looking up GraphemeGuardReport.`);
+    }
+
+    return await response.json();
+  }
+
   // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
   /**
    * Inspects a single name with NameGuard. Provides a `NameGuardReport` including:
@@ -454,7 +587,6 @@ class NameGuard {
         `Bulk inspection of more than ${MAX_BULK_INSPECTION_NAMES} names at a time is not supported.`
       );
     }
-
     return this.fetchConsolidatedNameGuardReports(names, options);
   }
 
@@ -533,10 +665,53 @@ class NameGuard {
     const parent = options?.parent || DEFAULT_INSPECT_LABELHASH_PARENT;
 
     if (parent === "") {
-      return this.inspectName(`[${labelhash}]`, options);
+      return await this.inspectName(`[${labelhash}]`, options);
     } else {
-      return this.inspectName(`[${labelhash}].${parent}`, options);
+      return await this.inspectName(`[${labelhash}].${parent}`, options);
     }
+  }
+
+  /**
+   * Inspect a single grapheme.
+   *
+   * @param {string} grapheme The grapheme to inspect. Must be a single grapheme (i.e. a single character or a sequence of characters that represent a single grapheme).
+   * @returns A promise that resolves with a `GraphemeGuardReport` of the inspected grapheme.
+   */
+  public inspectGrapheme(grapheme: string): Promise<GraphemeGuardReport> {
+    if (countGraphemes(grapheme) !== 1) {
+      throw new Error(
+        `The provided grapheme: "${grapheme}" is not a single grapheme. (i.e. it is not a single character or a sequence of characters that represent a single grapheme).`
+      );
+    }
+
+    return this.fetchGraphemeGuardReport(grapheme);
+  }
+
+  public getSecurePrimaryName(
+    address: string,
+    options?: SecurePrimaryNameOptions
+  ): Promise<SecureReverseLookupResult> {
+    if (!isEthereumAddress(address)) {
+      throw new Error(`The provided address: "${address}" is not in a valid Ethereum address format.`);
+    }
+
+    return this.fetchSecurePrimaryName(address, options);
+  }
+
+  public fakeEthNameCheck(
+    contract_address: string,
+    token_id: string,
+    options?: FakeEthNameOptions
+  ): Promise<FakeEthNameCheckStatus> {
+    if (!isEthereumAddress(contract_address)) {
+      throw new Error(`The provided address: "${contract_address}" is not in a valid Ethereum address format.`);
+    }
+
+    if (!isTokenId(token_id)) {
+      throw new Error(`The provided token_id: "${token_id}" is not in a valid token id format.`);
+    }
+
+    return this.fetchFakeEthName(contract_address, token_id, options);
   }
 }
 

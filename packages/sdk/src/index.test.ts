@@ -35,4 +35,28 @@ describe("NameGuard", () => {
       nameguard.inspectLabelhash("0x1234567890abcdef")
     ).rejects.toThrow("Invalid Keccak256 hash format for labelhash.");
   });
+
+  it("should analyze a single grapheme", async () => {
+    const data = await nameguard.inspectGrapheme("ą");
+
+    expect(data.grapheme).toBe("ą");
+    expect(data.canonical_grapheme).toBe("a");
+  });
+
+  // TODO: lambda does not have the API key set up
+  // it("should analyze a primary name", async () => {
+  //   const data = await nameguard.primaryName("0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5");
+
+  //   expect(data.display_name).toBe("nick.eth");
+  // });
+
+  // TODO: lambda does not have the API key set up
+  // it("should check a fake ENS name", async () => {
+  //   const data = await nameguard.fakeEnsNameCheck(
+  //     "0x495f947276749ce646f68ac8c248420045cb7b5e",
+  //     "61995921128521442959106650131462633744885269624153038309795231243542768648193"
+  //   );
+
+  //   expect(data).toBe("impersonated_ens_name");
+  // });
 });

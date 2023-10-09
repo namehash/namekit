@@ -22,9 +22,9 @@ from nameguard.models import (
     Normalization,
     GraphemeGuardReport,
     NetworkName,
-    ReverseLookupResult,
-    ReverseLookupStatus,
-    FakeENSCheckStatus,
+    SecureReverseLookupResult,
+    SecureReverseLookupStatus,
+    FakeEthNameCheckStatus,
 )
 from nameguard.provider import get_nft_metadata
 from nameguard.utils import (
@@ -286,7 +286,7 @@ class NameGuard:
             grapheme_description=grapheme.description,
         )
 
-    async def primary_name(self, address: str, network_name: str) -> ReverseLookupResult:
+    async def primary_name(self, address: str, network_name: str) -> SecureReverseLookupResult:
         try:
             domain = self.ns[network_name].name(address)
         except requests.exceptions.ConnectionError as ex:
@@ -295,49 +295,49 @@ class NameGuard:
         primary_name = None
         nameguard_result = None
         if domain is None:
-            status = ReverseLookupStatus.NO_PRIMARY_NAME_FOUND
+            status = SecureReverseLookupStatus.NO_PRIMARY_NAME
         else:
             nameguard_result = self.inspect_name(domain)
             try:
                 display_name = ens_normalize.ens_beautify(domain)
-                status = ReverseLookupStatus.NORMALIZED
+                status = SecureReverseLookupStatus.NORMALIZED
                 primary_name = domain
             except DisallowedSequence:
-                status = ReverseLookupStatus.PRIMARY_NAME_FOUND_BUT_UNNORMALIZED
+                status = SecureReverseLookupStatus.UNNORMALIZED
 
-        return ReverseLookupResult(primary_name=primary_name,
-                                   display_name=display_name,
-                                   primary_name_status=status,
-                                   nameguard_result=nameguard_result)
+        return SecureReverseLookupResult(primary_name=primary_name,
+                                         display_name=display_name,
+                                         primary_name_status=status,
+                                         nameguard_result=nameguard_result)
 
-    async def fake_ens_name_check(self, network_name, contract_address, token_id):
+    async def fake_eth_name_check(self, network_name, contract_address, token_id):
         """
         Check if the token is a fake ENS name (not valid ENS contract address and title and collection name of NFT look like ENS name).
         """
         contract_address = contract_address.lower()
 
         if contract_address in ens_contract_adresses:
-            return FakeENSCheckStatus.AUTHENTIC_ENS_NAME  # TODO is it enough? should we check if it exist? or is it normalized? or it ends with .eth?
+            return FakeEthNameCheckStatus.AUTHENTIC_ENS_NAME  # TODO is it enough? should we check if it exist? or is it normalized? or it ends with .eth?
 
         res_json = await get_nft_metadata(contract_address, token_id)
 
         token_type = res_json['id']['tokenMetadata']['tokenType']
         if token_type == 'NO_SUPPORTED_NFT_STANDARD':
-            return FakeENSCheckStatus.UNKNOWN_NFT
+            return FakeEthNameCheckStatus.UNKNOWN_NFT
         elif token_type == 'NOT_A_CONTRACT':
-            return FakeENSCheckStatus.UNKNOWN_NFT  # TODO: or new status?
+            return FakeEthNameCheckStatus.UNKNOWN_NFT  # TODO: or new status?
         elif token_type not in ['ERC721', 'ERC1155']:
-            return FakeENSCheckStatus.UNKNOWN_NFT
+            return FakeEthNameCheckStatus.UNKNOWN_NFT
 
         title = res_json['title']
 
         cured_title = ens_normalize.ens_cure(title)
 
         if cured_title.endswith('.eth'):
-            return FakeENSCheckStatus.IMPERSONATED_ENS_NAME
+            return FakeEthNameCheckStatus.IMPERSONATED_ENS_NAME
         else:
             if '.eth' in cured_title:
-                return FakeENSCheckStatus.POTENTIALLY_IMPERSONATED_ENS_NAME
+                return FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ENS_NAME
 
             for keys in [['metadata', 'name'], 
                          ['contractMetadata', 'openSea', 'collectionName'],
@@ -345,8 +345,8 @@ class NameGuard:
                 try:
                     name = nested_get(res_json, keys)
                     if '.eth' in name.lower():
-                        return FakeENSCheckStatus.POTENTIALLY_IMPERSONATED_ENS_NAME
+                        return FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ENS_NAME
                 except KeyError:
                     pass
 
-            return FakeENSCheckStatus.NON_IMPERSONATED_ENS_NAME
+            return FakeEthNameCheckStatus.NON_IMPERSONATED_ENS_NAME
