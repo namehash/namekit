@@ -8,9 +8,9 @@ from nameguard.utils import validate_namehash, namehash_from_labelhash, validate
 from nameguard.models import (
     NameGuardReport,
     BulkNameGuardBulkReport,
-    ReverseLookupResult,
+    SecureReverseLookupResult,
     NetworkName,
-    FakeENSCheckStatus,
+    FakeEthNameCheckStatus,
 )
 from nameguard.logging import logger
 from nameguard.exceptions import (
@@ -197,7 +197,7 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
         **ProviderUnavailable.get_responses_spec(),
     },
 )
-async def primary_name_get(api_version: ApiVersion, address: str, network_name: NetworkName) -> ReverseLookupResult:
+async def primary_name_get(api_version: ApiVersion, address: str, network_name: NetworkName) -> SecureReverseLookupResult:
     address = validate_ethereum_address(address)
     return await nameguard.primary_name(address, network_name)
 
@@ -221,10 +221,10 @@ async def fake_ens_name_check_get(
                               description='Contract address for the NFT contract (ERC721 and ERC1155 supported).'),
         token_id: str = Path(examples=['61995921128521442959106650131462633744885269624153038309795231243542768648193'], 
                              description='The ID of the token (in hex or decimal format).')
-) -> FakeENSCheckStatus:
+) -> FakeEthNameCheckStatus:
     contract_address = validate_ethereum_address(contract_address)
     token_id = validate_token_id(token_id)
-    return await nameguard.fake_ens_name_check(network_name=network_name, contract_address=contract_address, token_id=token_id)
+    return await nameguard.fake_eth_name_check(network_name=network_name, contract_address=contract_address, token_id=token_id)
 
 
 # -- inspect-grapheme --

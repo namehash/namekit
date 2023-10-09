@@ -78,17 +78,17 @@ export type Normalization =
 /**
  * The status of a reverse ENS lookup performed by NameGuard.
  * */
-export type ReverseLookupStatus =
+export type SecureReverseLookupStatus =
   | "normalized" /** The ENS primary name was found and it is normalized. */
-  | "no_primary_name_found" /** The ENS primary name was not found. */
+  | "no_primary_name" /** The ENS primary name was not found. */
   | "unnormalized" /** The ENS primary name was found, but it is not normalized. */;
 
-export type FakeENSCheckStatus =
+export type FakeEthNameCheckStatus =
   | "authentic_ens_name" /** The NFT is associated with authentic ".eth" contracts. */
   | "impersonated_ens_name" /** The NFT appears to impersonate a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" at the end of relevant NFT metadata fields. Consider automated rejection of this NFT from marketplaces. */
   | "potentially_impersonated_ens_name" /** The NFT potentially impersonates a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" within relevant NFT metadata fields (but not at the end of those fields). Consider manual review of this NFT before publishing to marketplaces. */
-  | "non_impersonated_ens_name" /** Non-Impersonated ENS Name (this is the case of an NFT / collection that isn't named in a way like a `.eth` name). */
-  | "unknown_nft" /** Unknown NFT (this is the case where you can't get any info from Alchemy on the NFT / collection). */;
+  | "non_impersonated_ens_name" /** The NFT doesn't represent itself as a ".eth" name and doesn't belong to authentic ENS contracts. No string that visually resembles ".eth" was found within relevant NFT metadata fields. */
+  | "unknown_nft" /** No information could be found on the requested NFT. This generally indicates that the NFT doesn't exist or hasn't been indexed yet. */;
 
 /**
  * The Keccak-256 hash of a name/label.
@@ -178,7 +178,7 @@ export interface ConsolidatedGraphemeGuardReport extends ConsolidatedReport {
   grapheme_link: string | null;
 
   /**
-   * A description of the grapheme type.
+   * A user-friendly description of the grapheme type.
    * */
   grapheme_description: string;
 }
@@ -211,8 +211,8 @@ export interface GraphemeGuardReport extends ConsolidatedGraphemeGuardReport {
    *
    * `null` if and only if the canonical form of `grapheme` is considered to be undefined.
    *
-   * A name constructed from this single `canonical_grapheme` is not guaranteed to be normalized.
-   * A label is not guaranteed to be normalized even if all graphemes are normalized.
+   * A name / label constructed from repeated instances of this `canonical_grapheme` is not guaranteed to be normalized.
+   * A name / label is not guaranteed to be normalized even if all graphemes are normalized.
    */
   canonical_grapheme: string | null;
 }
@@ -251,7 +251,7 @@ export interface LabelGuardReport extends ConsolidatedReport {
   /**
    * A list of `ConsolidatedGraphemeGuardReport` values for each grapheme contained within `label`.
    *
-   * If `normalization` is `unknown`, then `graphemes` will be `null`.
+   * `null` if and only if `normalization` is `unknown`.
    */
   graphemes: ConsolidatedGraphemeGuardReport[] | null;
 
@@ -319,20 +319,20 @@ export interface BulkConsolidatedNameGuardReport {
   results: ConsolidatedNameGuardReport[];
 }
 
-export interface ReverseLookupResult {
-  primary_name_status: ReverseLookupStatus;
+export interface SecureReverseLookupResult {
+  primary_name_status: SecureReverseLookupStatus;
 
   /**
    * Primary ENS name for the Ethereum address.
    *
-   * `null` if primary name was not found or is unnormalized.
+   * `null` if `primary_name_status` is any value except `normalized`.
    */
   primary_name: string | null;
 
   /**
-   * ENS beautified version of the primary name.
+   * ENS beautified version of `primary_name`.
    *
-   * If primary name was not found or is unnormalized then "Unnamed [first four digits of Ethereum address]", e.g. "Unnamed C2A6".
+   * If `primary_name` is `null` then provides a fallback `display_name` of "Unnamed [first four hex digits of Ethereum address]", e.g. "Unnamed C2A6".
    */
   display_name: string;
 
@@ -375,11 +375,11 @@ interface InspectLabelhashOptions {
   parent?: string;
 }
 
-interface PrimaryNameOptions {
+interface SecurePrimaryNameOptions {
   network?: Network;
 }
 
-interface FakeEnsNameOptions {
+interface FakeEthNameOptions {
   network?: Network;
 }
 
@@ -420,6 +420,7 @@ function isTokenId(token_id: string) {
 }
 
 function countGraphemes(str: string) {
+  // TODO fix!!
   return [...str].length;
 }
 
@@ -487,10 +488,10 @@ class NameGuard {
     return await response.json();
   }
 
-  private async fetchPrimaryName(
+  private async fetchSecurePrimaryName(
     address: string,
-    options?: PrimaryNameOptions
-  ): Promise<ReverseLookupResult> {
+    options?: SecurePrimaryNameOptions
+  ): Promise<SecureReverseLookupResult> {
     const network_name = options?.network || this.network;
 
     const url = `${this.endpoint}/${this.version}/primary-name/${network_name}/${address}`;
@@ -500,18 +501,18 @@ class NameGuard {
     if (!response.ok) {
       throw new NameGuardError(
         response.status,
-        `Failed to fetch primary name.`
+        "Error looking up secure primary name."
       );
     }
 
     return await response.json();
   }
 
-  private async fetchFakeEnsName(
+  private async fetchFakeEthName(
     contract_address: string,
     token_id: string,
-    options?: FakeEnsNameOptions
-  ): Promise<FakeENSCheckStatus> {
+    options?: FakeEthNameOptions
+  ): Promise<FakeEthNameCheckStatus> {
     const network_name = options?.network || this.network;
 
     const url = `${this.endpoint}/${this.version}/fake-ens-name-check/${network_name}/${contract_address}/${token_id}`;
@@ -521,7 +522,7 @@ class NameGuard {
     if (!response.ok) {
       throw new NameGuardError(
         response.status,
-        `Failed to fetch fake ENS name.`
+        "Error looking up .eth name impersonation status of NFT."
       );
     }
 
@@ -538,7 +539,7 @@ class NameGuard {
     const response = await fetch(url);
 
     if (!response.ok) {
-      throw new NameGuardError(response.status, `Failed to fetch grapheme.`);
+      throw new NameGuardError(response.status, `Error looking up GraphemeGuardReport.`);
     }
 
     return await response.json();
@@ -581,6 +582,11 @@ class NameGuard {
     names: string[],
     options?: InspectNameOptions
   ): Promise<BulkConsolidatedNameGuardReport> {
+    if (names.length > MAX_BULK_INSPECTION_NAMES) {
+      throw new Error(
+        `Bulk inspection of more than ${MAX_BULK_INSPECTION_NAMES} names at a time is not supported.`
+      );
+    }
     return this.fetchConsolidatedNameGuardReports(names, options);
   }
 
@@ -683,20 +689,20 @@ class NameGuard {
 
   public getSecurePrimaryName(
     address: string,
-    options?: PrimaryNameOptions
-  ): Promise<ReverseLookupResult> {
+    options?: SecurePrimaryNameOptions
+  ): Promise<SecureReverseLookupResult> {
     if (!isEthereumAddress(address)) {
       throw new Error(`The provided address: "${address}" is not in a valid Ethereum address format.`);
     }
 
-    return this.fetchPrimaryName(address, options);
+    return this.fetchSecurePrimaryName(address, options);
   }
 
-  public fakeEnsNameCheck(
+  public fakeEthNameCheck(
     contract_address: string,
     token_id: string,
-    options?: FakeEnsNameOptions
-  ): Promise<FakeENSCheckStatus> {
+    options?: FakeEthNameOptions
+  ): Promise<FakeEthNameCheckStatus> {
     if (!isEthereumAddress(contract_address)) {
       throw new Error(`The provided address: "${contract_address}" is not in a valid Ethereum address format.`);
     }
@@ -705,7 +711,7 @@ class NameGuard {
       throw new Error(`The provided token_id: "${token_id}" is not in a valid token id format.`);
     }
 
-    return this.fetchFakeEnsName(contract_address, token_id, options);
+    return this.fetchFakeEthName(contract_address, token_id, options);
   }
 }
 

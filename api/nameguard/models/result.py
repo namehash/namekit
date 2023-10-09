@@ -163,46 +163,46 @@ class GraphemeGuardReport(ConsolidatedGraphemeGuardReport):
                     '* does not imply that the canonical grapheme/label/name is normalized')
 
 
-class ReverseLookupStatus(str, Enum):
+class SecureReverseLookupStatus(str, Enum):
     '''
     The reverse lookup status of an Ethereum address.
 
     * `normalized`: ENS primary name was found and it is normalized.
-    * `no_primary_name_found`: ENS primary name was not found.
+    * `no_primary_name`: ENS primary name was not found.
     * `unnormalized`: ENS primary name was found, but it is not normalized.
     '''
 
     NORMALIZED = 'normalized'
-    NO_PRIMARY_NAME_FOUND = 'no_primary_name_found'
+    NO_PRIMARY_NAME = 'no_primary_name'
     UNNORMALIZED = 'unnormalized'
 
 
-class ReverseLookupResult(BaseModel):
+class SecureReverseLookupResult(BaseModel):
     '''
     Reverse lookup result.
     '''
-    primary_name_status: ReverseLookupStatus
+    primary_name_status: SecureReverseLookupStatus
 
     primary_name: Optional[str] = Field(
-        description='Primary ENS name for the Ethereum address.'
-                    '* `null` if primary name was not found or is unnormalized ',
+        description='Primary ENS name for the Ethereum address.\n'
+                    '* `null` if `primary_name_status` is any value except `normalized`',
     )
 
     display_name: str = Field(
-        description='ENS beautified version of the primary name\n'
-                    'if primary name was not found or is unnormalized then "Unnamed [first four digits of Ethereum address]", e.g. "Unnamed C2A6"',
+        description='ENS beautified version of `primary_name`.\n'
+                    '* if `primary_name` is `null` then provides a fallback `display_name` of "Unnamed [first four hex digits of Ethereum address]", e.g. "Unnamed C2A6"',
     )
 
     nameguard_result: Optional[NameGuardReport]
 
 
-class FakeENSCheckStatus(str, Enum):
+class FakeEthNameCheckStatus(str, Enum):
     '''
     * `authentic_ens_name` The NFT is associated with authentic ".eth" contracts.
     * `impersonated_ens_name` The NFT appears to impersonate a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" at the end of relevant NFT metadata fields. Consider automated rejection of this NFT from marketplaces.
     * `potentially_impersonated_ens_name` The NFT potentially impersonates a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" within relevant NFT metadata fields (but not at the end of those fields). Consider manual review of this NFT before publishing to marketplaces.
-    * `non_impersonated_ens_name` Non-Impersonated ENS Name (this is the case of an NFT / collection that isn't named in a way like a `.eth` name)
-    * `unknown_nft`: Unknown NFT (this is the case where you can't get any info from Alchemy on the NFT / collection)
+    * `non_impersonated_ens_name` The NFT doesn't represent itself as a ".eth" name and doesn't belong to authentic ENS contracts. No string that visually resembles ".eth" was found within relevant NFT metadata fields.
+    * `unknown_nft`: No information could be found on the requested NFT. This generally indicates that the NFT doesn't exist or hasn't been indexed yet.
     '''
 
     AUTHENTIC_ENS_NAME = 'authentic_ens_name'
