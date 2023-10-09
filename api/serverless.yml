@@ -32,7 +32,10 @@ functions:
               - "ecr:SetRepositoryPolicy"
               - "ecr:GetRepositoryPolicy"
             Resource: [ "arn:aws:ecr:eu-east-1:571094861812:repository/*" ]
-    
+          - Effect: "Allow"
+            Action:
+              - "logs:*"
+            Resource: [ "*" ]  
 
 # resources:
 #   ACMCertificate: 
