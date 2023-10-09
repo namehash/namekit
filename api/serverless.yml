@@ -26,22 +26,6 @@ functions:
     url: true
     role: myDefaultRole
     provisionedConcurrency: 1
-    # iam:
-    #   role:
-    #     statements:
-    #       - Sid: LambdaECRImageRetrievalPolicy
-    #         Effect: Allow
-    #         Action:
-    #           - ecr:BatchGetImage
-    #           - ecr:GetDownloadUrlForLayer
-    #         Principal:
-    #           Service: lambda.amazonaws.com
-    #       - Effect: "Allow"
-    #         Action:
-    #           - "logs:CreateLogStream"
-    #           -  "logs:CreateLogGroup"
-    #           -  "logs:TagResource"
-    #         Resource: [ "*" ]  
 
 resources:
   Resources:
@@ -149,16 +133,16 @@ resources:
             SslSupportMethod: sni-only
             MinimumProtocolVersion: TLSv1.2_2019
             AcmCertificateArn: !Ref ACMCertificate
-    # ApiRecordSetGroup:
-    #   Type: AWS::Route53::RecordSetGroup
-    #   DeletionPolicy: Delete
-    #   DependsOn:
-    #     - ApiCloudFrontDistribution
-    #   Properties:
-    #     HostedZoneName: ${self:custom.hostedZoneName}
-    #     RecordSets:
-    #       - Name: ${self:custom.apiDomain}
-    #         Type: A
-    #         AliasTarget:
-    #           HostedZoneId: ${self:custom.hostedZoneId} # Cloudfront default hosted zone ID
-    #           DNSName: { 'Fn::GetAtt': [ApiCloudFrontDistribution, DomainName] } # set the domain of your cloudfront distribution
+    ApiRecordSetGroup:
+      Type: AWS::Route53::RecordSetGroup
+      DeletionPolicy: Delete
+      DependsOn:
+        - ApiCloudFrontDistribution
+      Properties:
+        HostedZoneName: ${self:custom.hostedZoneName}
+        RecordSets:
+          - Name: ${self:custom.apiDomain}
+            Type: A
+            AliasTarget:
+              HostedZoneId: Z2FDTNDATAQYW2 #default for cloudfornt
+              DNSName: { 'Fn::GetAtt': [ApiCloudFrontDistribution, DomainName] } # set the domain of your cloudfront distribution
