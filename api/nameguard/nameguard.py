@@ -321,6 +321,8 @@ class NameGuard:
 
         token_type = res_json['id']['tokenMetadata']['tokenType']
         
+        if token_type not in ['ERC721', 'ERC1155'] and contract_address in ens_contract_adresses:
+            return FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME
         if token_type == 'NOT_A_CONTRACT':
             return FakeEthNameCheckStatus.UNKNOWN_NFT
         elif token_type == 'NO_SUPPORTED_NFT_STANDARD':
@@ -333,10 +335,15 @@ class NameGuard:
         if contract_address in ens_contract_adresses:
             if title == '':
                 return FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME
-            elif ens_normalize.is_ens_normalized(title):
-                return FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME
             else:
-                return FakeEthNameCheckStatus.INVALID_ETH_NAME
+                report = self.inspect_name(title)  #TODO add network_name
+                # if report.normalization == Normalization.NORMALIZED:
+                #TODO return report
+                #TODO fix for unknown
+                if ens_normalize.is_ens_normalized(title):
+                    return FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME
+                else:
+                    return FakeEthNameCheckStatus.INVALID_ETH_NAME
         else:
             fields_values=[]
             for keys in [['title'],
