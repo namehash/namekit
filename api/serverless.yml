@@ -43,7 +43,7 @@ functions:
               -  "ecr:BatchCheckLayerAvailability"
               -  "ecr:GetRepositoryPolicy"
               -  "ecr:PutImage"
-            Resource: [ "arn:aws:ecr:us-east-1:571094861812:repository/*" ]
+            Resource: [ "*" ]
           - Effect: "Allow"
             Action:
               - "ecr:GetAuthorizationToken"
