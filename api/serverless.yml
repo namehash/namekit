@@ -22,8 +22,8 @@ functions:
     memorySize: 512
     timeout: 10
     versionFunctions: true
-    url: 
-#     role: myDefaultRole
+    url: true
+    role: myDefaultRole
     # iam:
     #   role:
     #     statements:
