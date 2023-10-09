@@ -48,3 +48,4 @@ jobs:
         run: |
           npm install -g serverless
           serverless deploy --stage dev
+        working-directory: api
