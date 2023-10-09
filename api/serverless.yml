@@ -83,7 +83,12 @@ resources:
                        - ""
                        - - "arn:aws:s3:::"
                          - "Ref" : "ServerlessDeploymentBucket"
-    
+                -  Effect: Allow
+                   Action:
+                    - ecr:BatchGetImage
+                    - ecr:GetDownloadUrlForLayer
+                   Principal:
+                     Service: lambda.amazonaws.com
 
 # resources:
 #   ACMCertificate: 
