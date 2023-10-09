@@ -23,16 +23,25 @@ functions:
     timeout: 10
     versionFunctions: true
     url: true
-    platform: linux/amd64
+    iam:
+      role:
+        statements:
+          - Effect: "Allow"
+            Action:
+              - "ecr:InitiateLayerUpload"
+              - "ecr:SetRepositoryPolicy"
+              - "ecr:GetRepositoryPolicy"
+            Resource: [ "arn:aws:ecr:eu-west-1:<account_id>:repository/*" ]
+    
 
 # resources:
 #   ACMCertificate: 
 #     Type: "AWS::CertificateManager::Certificate"
 #     Properties: 
-#       DomainName: api.example.com
-#       DomainValidationOptions:
-#             - DomainName: api.example.com
-#               HostedZoneId: Z00828203AEAZA0WLANE6
+#       DomainName: ${self:custom.apiDomain}
+#       #DomainValidationOptions:
+#       #      - DomainName: ${self:custom.stage}
+#       #        HostedZoneId: Z00828203AEAZA0WLANE6
 #       ValidationMethod: DNS 
   # Resources:
   #   ApiCloudFrontDistribution:
