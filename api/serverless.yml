@@ -28,25 +28,7 @@ functions:
         statements:
           - Effect: "Allow"
             Action:
-              - "ecr:InitiateLayerUpload"
-              - "ecr:SetRepositoryPolicy"
-              - "ecr:GetRepositoryPolicy"
-              - "ecr:SetRepositoryPolicy"
-              -  "ecr:GetDownloadUrlForLayer"
-              -  "ecr:BatchGetImage"
-              -  "ecr:CompleteLayerUpload"
-              -  "ecr:DescribeImages"
-              -  "ecr:DescribeRepositories"
-              -  "ecr:UploadLayerPart"
-              -  "ecr:ListImages"
-              -  "ecr:InitiateLayerUpload"
-              -  "ecr:BatchCheckLayerAvailability"
-              -  "ecr:GetRepositoryPolicy"
-              -  "ecr:PutImage"
-            Resource: [ "*" ]
-          - Effect: "Allow"
-            Action:
-              - "ecr:GetAuthorizationToken"
+              - "ecr:*"
             Resource: [ "*" ]
           - Effect: "Allow"
             Action:
