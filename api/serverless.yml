@@ -2,7 +2,7 @@ service: oss-nameguard
 
 custom:
   stage: ${opt:stage}
-  apiDomain: api.nameguard.io
+  apiDomain: api-test.nameguard.io
   hostedZoneName: nameguard.io.  
   hostedZoneId: Z00825691ZLCWE2VKJQW0
   certificateArn: arn:aws:acm:us-east-1:571094861812:certificate/80b90773-fdc0-4b1e-a27a-6fc0725abef0
