@@ -327,22 +327,22 @@ class NameGuard:
         token_type = res_json['id']['tokenMetadata']['tokenType']
         
         if token_type not in ['ERC721', 'ERC1155'] and contract_address in ens_contract_adresses:
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME)
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME, nameguard_result=None)
         if token_type == 'NOT_A_CONTRACT':
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT)
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None)
         elif token_type == 'NO_SUPPORTED_NFT_STANDARD':
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT)  #TODO: different status?
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None)  #TODO: different status?
         elif token_type not in ['ERC721', 'ERC1155']:  # Alchemy does not support other types
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT)
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None)
 
         title = res_json['title']
 
         if contract_address in ens_contract_adresses:
             if title == '':
-                return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME)
+                return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME, nameguard_result=None)
             else:
                 if re.match('^\[0x[0-9a-f]{4}\.\.\.[0-9a-f]{4}\]\.eth$', title):
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME)
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME, nameguard_result=None)
 
                 report = self.inspect_name(title)  # TODO add network_name
                 if ens_normalize.is_ens_normalized(title):
@@ -361,7 +361,7 @@ class NameGuard:
                         #TODO: remove invisible and then canonicalize
                         cured_title = ens_normalize.ens_cure(name)
                         # canonicalize
-                        inspector_result = self._inspector.analyse_label(cured_title)
+                        inspector_result = self.analyse_label(cured_title)
                         if inspector_result.canonical_label is not None:
                             canonical_name = inspector_result.canonical_label
                         else:
@@ -369,12 +369,12 @@ class NameGuard:
                     except DisallowedSequence:
                         canonical_name = title
                     if canonical_name.endswith('.eth'):
-                        return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME)
+                        return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, nameguard_result=None)
                     fields_values.append(canonical_name)
                 except KeyError:
                     pass
             for field_value in fields_values:
                 if '.eth' in field_value:
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME)
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME, nameguard_result=None)
 
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME)
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME, nameguard_result=None)
