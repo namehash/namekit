@@ -185,9 +185,9 @@ async def test_grapheme_description(nameguard: NameGuard):
     r = nameguard.inspect_grapheme('😉')
     assert r.grapheme_description == 'Emoji'
 
-
-def test_impersonation_risk(nameguard: NameGuard):
-    r = nameguard.inspect_name('nick.eth')
+@pytest.mark.asyncio
+async def test_impersonation_risk(nameguard: NameGuard):
+    r = await nameguard.inspect_name('mainnet', 'nick.eth')
     for check in r.checks:
         if check.check is Check.IMPERSONATION_RISK:
             assert check.rating is Rating.PASS
@@ -195,7 +195,7 @@ def test_impersonation_risk(nameguard: NameGuard):
     else:
         assert False, 'IMPERSONATION_RISK check not found'
 
-    r = nameguard.inspect_name('nićk.eth')
+    r = await nameguard.inspect_name('mainnet', 'nićk.eth')
     for check in r.checks:
         if check.check is Check.IMPERSONATION_RISK:
             assert check.rating is Rating.WARN
@@ -204,7 +204,7 @@ def test_impersonation_risk(nameguard: NameGuard):
     else:
         assert False, 'IMPERSONATION_RISK check not found'
 
-    r = nameguard.inspect_name('nick.[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth')
+    r = await nameguard.inspect_name('mainnet', 'nick.[d941683d8cbb29d555b64e348d39171ee55ae8234118165add0175a8d4636c13].eth')
     for check in r.checks:
         if check.check is Check.IMPERSONATION_RISK:
             assert check.rating is Rating.PASS

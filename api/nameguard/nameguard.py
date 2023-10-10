@@ -342,7 +342,7 @@ class NameGuard:
                 if ALCHEMY_UNKNOWN_NAME.match(title):
                     return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME, nameguard_result=None)
 
-                report = self.inspect_name(title)  # TODO add network_name
+                report = await self.inspect_name(network_name, title)
                 if ens_normalize.is_ens_normalized(title):
                     return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME, nameguard_result=report)
                 else:
