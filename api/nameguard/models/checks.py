@@ -115,6 +115,7 @@ class Check(str, Enum):
     * `punycode_compatible_label`: A label is compatible with Punycode.
     * `unknown_label`: A label is unknown.
 
+    * `impersonation_risk`: A name might be used for impersonation.
     * `punycode_compatible_name`: A name is compatible with Punycode.
     '''
 
@@ -132,11 +133,13 @@ class Check(str, Enum):
     UNKNOWN_LABEL = 'unknown_label'
 
     # Name
+    IMPERSONATION_RISK = 'impersonation_risk'
     PUNYCODE_COMPATIBLE_NAME = 'punycode_compatible_name'
 
 
 SEVERITY_ORDER_DESC = [
     # highest severity first
+    Check.IMPERSONATION_RISK,
     Check.NORMALIZED,
     Check.INVISIBLE,
     Check.CONFUSABLES,
@@ -176,11 +179,11 @@ class GenericCheckResult(BaseModel):
     @property
     def order(self):
         """
-        Checks are first sorted by rating, then by severity.
-        Higher risk ratings always come first (ALERT > WARN > PASS > INFO > SKIP).
-        Within the same rating, checks are sorted by severity.
+        Checks are first sorted by status, then by severity.
+        Higher risk status always comes first (ALERT > WARN > PASS > INFO > SKIP).
+        Within the same status, checks are sorted by severity.
         """
-        return (self.rating.order, get_check_severity(self.check))
+        return (self.status.order, get_check_severity(self.check))
 
     # Implementing all ops speeds up comparisons
 

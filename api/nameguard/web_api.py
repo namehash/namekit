@@ -2,15 +2,15 @@ from enum import Enum
 from fastapi import FastAPI, Path, Request
 from pydantic import BaseModel, Field
 
-from nameguard.models import GraphemeGuardReport
 from nameguard.nameguard import NameGuard
 from nameguard.utils import validate_namehash, namehash_from_labelhash, validate_token_id, validate_ethereum_address
 from nameguard.models import (
     NameGuardReport,
     BulkNameGuardBulkReport,
-    ReverseLookupResult,
+    SecureReverseLookupResult,
     NetworkName,
-    FakeENSCheckStatus,
+    GraphemeGuardReport,
+    FakeEthNameCheckResult
 )
 from nameguard.logging import logger
 from nameguard.exceptions import (
@@ -184,6 +184,10 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
     namehash = namehash_from_labelhash(valid_labelhash, parent_name=request.parent_name)
     return await nameguard.inspect_namehash(network_name=request.network_name, namehash=namehash)
 
+
+# -- primary-name --
+
+
 @app.get(
     '/{api_version}/primary-name/{network_name}/{address:path}',
     tags=['primary_name'],
@@ -193,30 +197,34 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
         **ProviderUnavailable.get_responses_spec(),
     },
 )
-async def primary_name_get(api_version: ApiVersion, address: str, network_name: NetworkName) -> ReverseLookupResult:
+async def primary_name_get(api_version: ApiVersion, address: str, network_name: NetworkName) -> SecureReverseLookupResult:
     address = validate_ethereum_address(address)
     return await nameguard.primary_name(address, network_name)
 
+
+# -- fake-ens-name-check --
+
+
 @app.get(
-    '/{api_version}/fake-ens-name-check/{network_name}/{contract_address}/{token_id}',
-    tags=['fake-ens-name-check'],
-    summary='Fake ENS name check GET',
+    '/{api_version}/fake-eth-name-check/{network_name}/{contract_address}/{token_id}',
+    tags=['fake-eth-name-check'],
+    summary='Fake .eth ENS name check GET',
     responses={
         **InvalidTokenID.get_responses_spec(),
         **ProviderUnavailable.get_responses_spec(),
     },
 )
-async def fake_ens_name_check_get(
+async def fake_eth_name_check_get(
         api_version: ApiVersion,
         network_name: NetworkName,
         contract_address: str = Path(examples=['0x495f947276749ce646f68ac8c248420045cb7b5e'],
                               description='Contract address for the NFT contract (ERC721 and ERC1155 supported).'),
         token_id: str = Path(examples=['61995921128521442959106650131462633744885269624153038309795231243542768648193'], 
                              description='The ID of the token (in hex or decimal format).')
-) -> FakeENSCheckStatus:
+) -> FakeEthNameCheckResult:
     contract_address = validate_ethereum_address(contract_address)
     token_id = validate_token_id(token_id)
-    return await nameguard.fake_ens_name_check(network_name=network_name, contract_address=contract_address, token_id=token_id)
+    return await nameguard.fake_eth_name_check(network_name=network_name, contract_address=contract_address, token_id=token_id)
 
 
 # -- inspect-grapheme --

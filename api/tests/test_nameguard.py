@@ -23,7 +23,7 @@ async def test_basic_yellow(nameguard: NameGuard):
     result = await nameguard.inspect_name('mainnet', 'nićk.eth')
     assert result.rating is Rating.WARN
     for check in result.checks:
-        if check.check in (Check.CONFUSABLES, Check.TYPING_DIFFICULTY):
+        if check.check in (Check.CONFUSABLES, Check.TYPING_DIFFICULTY, Check.IMPERSONATION_RISK):
             assert check.rating is Rating.WARN
         else:
             assert check.rating is Rating.PASS
@@ -184,3 +184,31 @@ async def test_grapheme_description(nameguard: NameGuard):
 
     r = nameguard.inspect_grapheme('😉')
     assert r.grapheme_description == 'Emoji'
+
+
+def test_impersonation_risk(nameguard: NameGuard):
+    r = nameguard.inspect_name('nick.eth')
+    for check in r.checks:
+        if check.check is Check.IMPERSONATION_RISK:
+            assert check.rating is Rating.PASS
+            break
+    else:
+        assert False, 'IMPERSONATION_RISK check not found'
+
+    r = nameguard.inspect_name('nićk.eth')
+    for check in r.checks:
+        if check.check is Check.IMPERSONATION_RISK:
+            assert check.rating is Rating.WARN
+            assert check.message == 'Name might be an impersonation of `nick.eth`'
+            break
+    else:
+        assert False, 'IMPERSONATION_RISK check not found'
+
+    r = nameguard.inspect_name('nick.[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth')
+    for check in r.checks:
+        if check.check is Check.IMPERSONATION_RISK:
+            assert check.rating is Rating.PASS
+            assert check.status is CheckStatus.SKIP
+            break
+    else:
+        assert False, 'IMPERSONATION_RISK check not found'

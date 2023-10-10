@@ -1,4 +1,5 @@
 import os
+import re
 
 import ens_normalize
 import requests
@@ -22,9 +23,10 @@ from nameguard.models import (
     Normalization,
     GraphemeGuardReport,
     NetworkName,
-    ReverseLookupResult,
-    ReverseLookupStatus,
-    FakeENSCheckStatus,
+    SecureReverseLookupResult,
+    SecureReverseLookupStatus,
+    FakeEthNameCheckStatus, 
+    FakeEthNameCheckResult,
 )
 from nameguard.provider import get_nft_metadata
 from nameguard.utils import (
@@ -58,6 +60,7 @@ LABEL_CHECKS = [
 ]
 
 NAME_CHECKS = [
+    checks.name.impersonation_risk.check_name,
     checks.name.punycode_name.check_name,
 ]
 
@@ -72,6 +75,7 @@ ens_contract_adresses = {
     '0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401',  # Name Wrapper
 }
 
+ALCHEMY_UNKNOWN_NAME = re.compile('^\[0x[0-9a-f]{4}\.\.\.[0-9a-f]{4}\]\.eth$')
 
 def nested_get(dic, keys):
     for key in keys:
@@ -167,7 +171,7 @@ class NameGuard:
             highest_risk=get_highest_risk(name_checks),
             checks=sorted(name_checks, reverse=True),
             canonical_name=compute_canonical_from_list(
-                [label_analysis.canonical_label
+                [label_analysis.normalized_canonical_label
                  if label_analysis is not None
                  else labels[i] # labelhash
                  for i, label_analysis in enumerate(labels_analysis)],
@@ -188,7 +192,7 @@ class NameGuard:
                     risk_count=count_risks(label_checks),
                     highest_risk=get_highest_risk(label_checks),
                     checks=sorted(label_checks, reverse=True),
-                    canonical_label=label_analysis.canonical_label if label_analysis is not None else label, # labelhash
+                    canonical_label=label_analysis.normalized_canonical_label if label_analysis is not None else label, # labelhash
                     graphemes=[
                         ConsolidatedGraphemeGuardReport(
                             grapheme=grapheme.value,
@@ -282,7 +286,7 @@ class NameGuard:
             grapheme_description=grapheme.description,
         )
 
-    async def primary_name(self, address: str, network_name: str) -> ReverseLookupResult:
+    async def primary_name(self, address: str, network_name: str) -> SecureReverseLookupResult:
         try:
             domain = self.ns[network_name].name(address)
         except requests.exceptions.ConnectionError as ex:
@@ -291,54 +295,84 @@ class NameGuard:
         primary_name = None
         nameguard_result = None
         if domain is None:
-            status = ReverseLookupStatus.NO_PRIMARY_NAME_FOUND
+            status = SecureReverseLookupStatus.NO_PRIMARY_NAME
         else:
             nameguard_result = await self.inspect_name(network_name, domain)
-            try:
-                display_name = ens_normalize.ens_beautify(domain)
-                status = ReverseLookupStatus.NORMALIZED
+            
+            result = ens_normalize.ens_process(domain, do_normalize=True, do_beautify=True)
+            if result.normalized != domain:
+                status = SecureReverseLookupStatus.UNNORMALIZED
+            else:
+                display_name = result.beautified
+                status = SecureReverseLookupStatus.NORMALIZED
                 primary_name = domain
-            except DisallowedSequence:
-                status = ReverseLookupStatus.PRIMARY_NAME_FOUND_BUT_UNNORMALIZED
 
-        return ReverseLookupResult(primary_name=primary_name,
-                                   display_name=display_name,
-                                   primary_name_status=status,
-                                   nameguard_result=nameguard_result)
 
-    async def fake_ens_name_check(self, network_name, contract_address, token_id):
+        return SecureReverseLookupResult(primary_name=primary_name,
+                                         display_name=display_name,
+                                         primary_name_status=status,
+                                         nameguard_result=nameguard_result)
+
+    async def fake_eth_name_check(self, network_name, contract_address, token_id) -> FakeEthNameCheckResult:
         """
         Check if the token is a fake ENS name (not valid ENS contract address and title and collection name of NFT look like ENS name).
         """
         contract_address = contract_address.lower()
 
-        if contract_address in ens_contract_adresses:
-            return FakeENSCheckStatus.AUTHENTIC_ENS_NAME  # TODO is it enough? should we check if it exist? or is it normalized? or it ends with .eth?
-
+        
         res_json = await get_nft_metadata(contract_address, token_id)
 
         token_type = res_json['id']['tokenMetadata']['tokenType']
-        if token_type not in ['ERC721', 'ERC1155']:  # TODO what values can have token_type? should we have a separate status for NOT_A_CONTRACT?
-            return FakeENSCheckStatus.UNKNOWN_NFT
+        
+        if token_type not in ['ERC721', 'ERC1155'] and contract_address in ens_contract_adresses:
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME, nameguard_result=None)
+        if token_type == 'NOT_A_CONTRACT':
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None)
+        elif token_type == 'NO_SUPPORTED_NFT_STANDARD':
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None)  #TODO: different status?
+        elif token_type not in ['ERC721', 'ERC1155']:  # Alchemy does not support other types
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None)
 
         title = res_json['title']
 
-        cured_title = ens_normalize.ens_cure(title)
+        if contract_address in ens_contract_adresses:
+            if title == '':
+                return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME, nameguard_result=None)
+            else:
+                if ALCHEMY_UNKNOWN_NAME.match(title):
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME, nameguard_result=None)
 
-        if cured_title.endswith('.eth'):
-            return FakeENSCheckStatus.IMPERSONATED_ENS_NAME
+                report = self.inspect_name(title)  # TODO add network_name
+                if ens_normalize.is_ens_normalized(title):
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME, nameguard_result=report)
+                else:
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.INVALID_ETH_NAME, nameguard_result=report)
         else:
-            if '.eth' in cured_title:
-                return FakeENSCheckStatus.POTENTIALLY_IMPERSONATED_ENS_NAME
-
-            for keys in [['metadata', 'name'], 
+            fields_values=[]
+            for keys in [['title'],
+                         ['metadata', 'name'], 
                          ['contractMetadata', 'openSea', 'collectionName'],
                          ['contractMetadata', 'name']]:
                 try:
                     name = nested_get(res_json, keys)
-                    if '.eth' in name.lower():
-                        return FakeENSCheckStatus.POTENTIALLY_IMPERSONATED_ENS_NAME
+                    try:
+                        #TODO: remove invisible and then canonicalize
+                        cured_title = ens_normalize.ens_cure(name)
+                        # canonicalize
+                        inspector_result = self.analyse_label(cured_title)
+                        if inspector_result.canonical_label is not None:
+                            canonical_name = inspector_result.canonical_label
+                        else:
+                            canonical_name = cured_title
+                    except DisallowedSequence:
+                        canonical_name = title
+                    if canonical_name.endswith('.eth'):
+                        return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, nameguard_result=None)
+                    fields_values.append(canonical_name)
                 except KeyError:
                     pass
+            for field_value in fields_values:
+                if '.eth' in field_value:
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME, nameguard_result=None)
 
-            return FakeENSCheckStatus.NON_IMPERSONATED_ENS_NAME
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME, nameguard_result=None)

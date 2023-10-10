@@ -14,9 +14,10 @@ from .result import (
     ConsolidatedReport,
     Normalization,
     GraphemeGuardReport,
-    ReverseLookupResult,
-    ReverseLookupStatus,
-    FakeENSCheckStatus,
+    SecureReverseLookupResult,
+    SecureReverseLookupStatus,
+    FakeEthNameCheckStatus,
+    FakeEthNameCheckResult,
 )
 
 from .request import (
