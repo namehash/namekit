@@ -35,6 +35,11 @@ functions:
     provisionedConcurrency: 1
     tags:
       Stage: ${self:custom.stage}
+    environment:
+      PROVIDER_URI_GOERLI: ${param:PROVIDER_URI_GOERLI}
+      PROVIDER_URI_MAINNET: ${param:PROVIDER_URI_MAINNET}
+      PROVIDER_URI_SEPOLIA: ${param:PROVIDER_URI_SEPOLIA}
+
 
 resources:
   Resources:
