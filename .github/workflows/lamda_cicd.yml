@@ -39,11 +39,6 @@ jobs:
           role-to-assume: ${{ secrets.AWS_ROLE}}
           aws-region: us-east-1
 
-      - name: Show files
-        run: |
-          #env
-          ls
-
       - name: Build and deploy lambda
         run: |
           npm install -g serverless
