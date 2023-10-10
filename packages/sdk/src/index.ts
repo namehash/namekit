@@ -537,7 +537,7 @@ class NameGuard {
   ): Promise<FakeEthNameCheckResult> {
     const network_name = options?.network || this.network;
 
-    const url = `${this.endpoint}/${this.version}/fake-ens-name-check/${network_name}/${contract_address}/${token_id}`;
+    const url = `${this.endpoint}/${this.version}/fake-eth-name-check/${network_name}/${contract_address}/${token_id}`;
 
     const response = await fetch(url);
 

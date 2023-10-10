@@ -206,15 +206,15 @@ async def primary_name_get(api_version: ApiVersion, address: str, network_name: 
 
 
 @app.get(
-    '/{api_version}/fake-ens-name-check/{network_name}/{contract_address}/{token_id}',
-    tags=['fake-ens-name-check'],
-    summary='Fake ENS name check GET',
+    '/{api_version}/fake-eth-name-check/{network_name}/{contract_address}/{token_id}',
+    tags=['fake-eth-name-check'],
+    summary='Fake .eth ENS name check GET',
     responses={
         **InvalidTokenID.get_responses_spec(),
         **ProviderUnavailable.get_responses_spec(),
     },
 )
-async def fake_ens_name_check_get(
+async def fake_eth_name_check_get(
         api_version: ApiVersion,
         network_name: NetworkName,
         contract_address: str = Path(examples=['0x495f947276749ce646f68ac8c248420045cb7b5e'],
