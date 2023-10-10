@@ -6,6 +6,14 @@ custom:
   hostedZoneName: nameguard.io.  
   hostedZoneId: Z00825691ZLCWE2VKJQW0
   certificateArn: arn:aws:acm:us-east-1:571094861812:certificate/80b90773-fdc0-4b1e-a27a-6fc0725abef0
+  prune:
+    automatic: true
+    number: 5
+  region: us-east-1   
+  # deploymentBucket:
+  #   name: serverless-lambda
+  #   serverSideEncryption: AES256
+  # deploymentPrefix: ${self:custom.stage}/oss-nameguard
 
 provider:
   name: aws
@@ -14,7 +22,10 @@ provider:
     images:
       oss-nameguard:
         path: ./
-      
+
+plugins:
+  - serverless-prune-plugin
+
 functions:
   oss-nameguard:
     image:
@@ -26,6 +37,8 @@ functions:
     url: true
     role: myDefaultRole
     provisionedConcurrency: 1
+    tags:
+      Stage: ${self:stage}
 
 resources:
   Resources:
