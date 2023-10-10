@@ -31,18 +31,18 @@ functions:
     timeout: 10
     versionFunctions: true
     url: true
-    role: myDefaultRole
+    role: DefaultNameGuardRole
     provisionedConcurrency: 1
     tags:
       Stage: ${self:custom.stage}
 
 resources:
   Resources:
-    myDefaultRole:
+    DefaultNameGuardRole:
       Type: AWS::IAM::Role
       Properties:
         Path: /my/default/path/
-        RoleName: MyDefaultRole # required if you want to use 'serverless deploy --function' later on
+        RoleName: DefaultNameGuardRole # required if you want to use 'serverless deploy --function' later on
         AssumeRolePolicyDocument:
           Version: '2012-10-17'
           Statement:
@@ -52,7 +52,7 @@ resources:
                   - lambda.amazonaws.com
               Action: sts:AssumeRole
         Policies:
-          - PolicyName: myPolicyName
+          - PolicyName: NameGuardPolicy
             PolicyDocument:
               Version: '2012-10-17'
               Statement:
@@ -104,7 +104,7 @@ resources:
           Comment: Api distribution for ${self:custom.apiDomain}
           Origins:
             - Id: ApiGateway
-              DomainName: !Select [2, !Split ["/", !GetAtt OssDashnameguardLambdaFunctionUrl.FunctionUrl]] # extract function url form your lambda resource
+              DomainName: !Select [2, !Split ["/", !GetAtt OssDashnameguardLambdaFunctionUrl.FunctionUrl]]
               OriginPath: ''
               CustomOriginConfig:
                 HTTPPort: 80
