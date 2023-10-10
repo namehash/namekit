@@ -47,5 +47,5 @@ jobs:
         run: |
           npm install -g serverless
           npm install serverless-prune-plugin
-          serverless remove --stage dev
+          serverless deploy --stage prod
         working-directory: api
