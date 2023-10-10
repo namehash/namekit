@@ -53,7 +53,7 @@ jobs:
           ALL_IMAGES_TO_DELETE=$(aws ecr describe-images --repository-name $ECR_REPO --query 'sort_by(imageDetails,& imagePushedAt)[*].imageDigest' --filter "tagStatus=UNTAGGED" --output json )
           len=`echo $ALL_IMAGES_TO_DELETE | jq length`
           IMAGES_TO_DELETE=$(aws ecr describe-images --repository-name $ECR_REPO --query 'sort_by(imageDetails,& imagePushedAt)[*].imageDigest' --filter "tagStatus=UNTAGGED" --output json | jq '.[0]')
-          if [[ $len > 5 ]] then aws ecr batch-delete-image --repository-name $ECR_REPO --image-ids imageDigest=$IMAGES_TO_DELETE; fi
+          if [[ $len > 5 ]]; then aws ecr batch-delete-image --repository-name $ECR_REPO --image-ids imageDigest=$IMAGES_TO_DELETE; fi
 
         working-directory: api
 
