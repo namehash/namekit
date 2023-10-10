@@ -1,9 +1,10 @@
-name: Build image and push to ECR
+name: Deploy serverless lambda nameguard
 
 on:
   push:
     branches:
       - ci-cd-lambda-nameguard
+      - main
 
 env:
   NODE_VERSION: '18.16.0'
@@ -15,7 +16,7 @@ permissions:
   contents: write
 
 jobs:
-  build-image:
+  build-image-deploy-serverless:
     runs-on: ubuntu-20.04
     env:
       SERVICE_NAME: nameguard
@@ -49,3 +50,62 @@ jobs:
           npm install serverless-prune-plugin
           serverless deploy --stage prod
         working-directory: api
+
+      - name: Delete old image from ECR
+        env:
+          ECR_REPO: serverless-oss-nameguard-prod
+        run: |
+          IMAGES_TO_DELETE=$(aws ecr describe-images --repository-name $ECR_REPO --query 'sort_by(imageDetails,& imagePushedAt)[*].imageDigest' --filter "tagStatus=UNTAGGED" --output json | jq '.[0]')
+          aws ecr batch-delete-image --repository-name $ECR_REPO --image-ids imageDigest=$IMAGES_TO_DELETE
+        working-directory: api
+
+  notify:
+    name: Notification
+    if: ${{ needs.build-image-deploy-serverless.result != 'skipped' && always() }}
+    needs: [build-image-deploy-serverless]
+    runs-on: ubuntu-20.04
+    steps:
+      - name: dump status on success
+        if: ${{ needs.build-image-deploy-serverless.result == 'success'}}
+        run: |
+          echo "STATUS=Success  :rocket:" >> $GITHUB_ENV
+          echo "TEXT=Lambda nameguard deployed succesfully! :white_check_mark:" >> $GITHUB_ENV
+
+      - name: dump status on failure
+        if: ${{ needs.build-image-deploy-serverless.result == 'failure' }}
+        run: |
+          echo "STATUS=Failure  :x:" >> $GITHUB_ENV
+          echo "TEXT=Lambda nameguard deployed failed! :rotating_light:" >> $GITHUB_ENV
+
+      - name: Deployment status Slack notification
+        uses: 8398a7/action-slack@v3
+        with:
+          status: custom
+          fields: commit,workflow,repo
+          custom_payload: |
+            {
+              attachments: [{
+                color: '${{ needs.build-image-deploy-serverless.result  }}' === 'success' ? 'good' : '${{ needs.build-image-deploy-serverless.result }}' === 'failure' ? 'danger' : 'warning',
+                title: 'Test UI',
+                text: '${{ env.TEXT }}',
+                fields: [
+                {
+                  title: 'Repository',
+                  value: `${process.env.AS_REPO}`,
+                  short: true
+                },
+                {
+                  title: 'Status',
+                  value: '${{ env.STATUS }}',
+                  short: true
+                },
+                {
+                  title: 'Workflow',
+                  value: `${process.env.AS_WORKFLOW}`,
+                  short: true
+                }
+                ]
+              }]
+            }
+        env:
+          SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
