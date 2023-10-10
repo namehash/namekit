@@ -38,9 +38,9 @@ jobs:
           role-to-assume: arn:aws:iam::571094861812:role/GithubActionsRole
           aws-region: us-east-1
 
-      - name: Show env
+      - name: Show files
         run: |
-          env
+          #env
           ls
 
       - name: Build and deploy lambda
