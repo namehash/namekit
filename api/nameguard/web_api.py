@@ -64,7 +64,7 @@ async def inspect_name_get(
 # hidden endpoint
 @app.get('/{api_version}/inspect-name/{network_name}', include_in_schema=False)
 async def inspect_name_get_empty(api_version: ApiVersion, network_name: NetworkName, request: Request):
-    raise HTTPException(404, detail='Not Found')
+    return nameguard.inspect_name('')
 
 
 @app.post(
@@ -211,7 +211,7 @@ async def primary_name_get(api_version: ApiVersion, address: str, network_name: 
 # hidden endpoint
 @app.get('/{api_version}/primary-name/{network_name}', include_in_schema=False)
 async def primary_name_get_empty(api_version: ApiVersion, network_name: NetworkName):
-    raise HTTPException(404, detail='Not Found')
+    raise InvalidEthereumAddress("Hex number must be 40 digits long and prefixed with '0x'.")
 
 
 # -- fake-ens-name-check --
