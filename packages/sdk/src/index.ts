@@ -539,7 +539,10 @@ class NameGuard {
     const response = await fetch(url);
 
     if (!response.ok) {
-      throw new NameGuardError(response.status, `Error looking up GraphemeGuardReport.`);
+      throw new NameGuardError(
+        response.status,
+        `Error looking up GraphemeGuardReport.`
+      );
     }
 
     return await response.json();
@@ -692,7 +695,9 @@ class NameGuard {
     options?: SecurePrimaryNameOptions
   ): Promise<SecureReverseLookupResult> {
     if (!isEthereumAddress(address)) {
-      throw new Error(`The provided address: "${address}" is not in a valid Ethereum address format.`);
+      throw new Error(
+        `The provided address: "${address}" is not in a valid Ethereum address format.`
+      );
     }
 
     return this.fetchSecurePrimaryName(address, options);
@@ -704,11 +709,15 @@ class NameGuard {
     options?: FakeEthNameOptions
   ): Promise<FakeEthNameCheckStatus> {
     if (!isEthereumAddress(contract_address)) {
-      throw new Error(`The provided address: "${contract_address}" is not in a valid Ethereum address format.`);
+      throw new Error(
+        `The provided address: "${contract_address}" is not in a valid Ethereum address format.`
+      );
     }
 
     if (!isTokenId(token_id)) {
-      throw new Error(`The provided token_id: "${token_id}" is not in a valid token id format.`);
+      throw new Error(
+        `The provided token_id: "${token_id}" is not in a valid token id format.`
+      );
     }
 
     return this.fetchFakeEthName(contract_address, token_id, options);

@@ -3,7 +3,7 @@ import { nameguard } from "@namehash/nameguard";
 export default async function Home() {
   const nameInspection = await nameguard.inspectName("vitalik.eth");
   // const overloaded = await nameguard.inspectName("vitalik.eth", "nick.eth");
-  const bulkInspections = await nameguard.inspectBulkNames([
+  const bulkInspections = await nameguard.bulkInspectNames([
     "vitalik.eth",
     "nick.eth",
   ]);
