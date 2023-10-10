@@ -1,5 +1,5 @@
 from enum import Enum
-from fastapi import FastAPI, Path, Request
+from fastapi import FastAPI, Path, Request, HTTPException
 from pydantic import BaseModel, Field
 
 from nameguard.models import GraphemeGuardReport
@@ -59,6 +59,12 @@ async def inspect_name_get(
     logger.debug(f'[GET inspect-name] input name: \'{name}\' raw path: \'{request.scope["raw_path"]} query string: '
                  f'\'{request.scope["query_string"]}\'')
     return nameguard.inspect_name(name)
+
+
+# hidden endpoint
+@app.get('/{api_version}/inspect-name/{network_name}', include_in_schema=False)
+async def inspect_name_get_empty(api_version: ApiVersion, network_name: NetworkName, request: Request):
+    raise HTTPException(404, detail='Not Found')
 
 
 @app.post(
@@ -200,6 +206,12 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
 async def primary_name_get(api_version: ApiVersion, address: str, network_name: NetworkName) -> SecureReverseLookupResult:
     address = validate_ethereum_address(address)
     return await nameguard.primary_name(address, network_name)
+
+
+# hidden endpoint
+@app.get('/{api_version}/primary-name/{network_name}', include_in_schema=False)
+async def primary_name_get_empty(api_version: ApiVersion, network_name: NetworkName):
+    raise HTTPException(404, detail='Not Found')
 
 
 # -- fake-ens-name-check --
