@@ -1,5 +1,5 @@
 from enum import Enum
-from fastapi import FastAPI, Path, Request, HTTPException
+from fastapi import FastAPI, Path, Request
 from pydantic import BaseModel, Field
 
 from nameguard.models import GraphemeGuardReport
@@ -63,7 +63,9 @@ async def inspect_name_get(
 
 # hidden endpoint
 @app.get('/{api_version}/inspect-name/{network_name}', include_in_schema=False)
-async def inspect_name_get_empty(api_version: ApiVersion, network_name: NetworkName, request: Request):
+async def inspect_name_get_empty(
+        api_version: ApiVersion, network_name: NetworkName, request: Request
+) -> NameGuardReport:
     return nameguard.inspect_name('')
 
 
