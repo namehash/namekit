@@ -515,10 +515,10 @@ def test_primary_name_get_unknown(test_client, api_version):
         # ('0xcc6c63044bfe4e991f3a13b35b6ee924b54cd304', '440', FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME),
     ]
 )
-def test_fake_ens_name_check(test_client, api_version, contract_address, token_id, fake):
+def test_fake_eth_name_check(test_client, api_version, contract_address, token_id, fake):
     network_name = 'mainnet'
 
-    response = test_client.get(f'/{api_version}/fake-ens-name-check/{network_name}/{contract_address}/{token_id}')
+    response = test_client.get(f'/{api_version}/fake-eth-name-check/{network_name}/{contract_address}/{token_id}')
     assert response.status_code == 200
     res_json = response.json()
     assert res_json['status'] == fake
