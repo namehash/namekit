@@ -36,7 +36,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          role-to-assume: arn:aws:iam::571094861812:role/GithubActionsRole
+          role-to-assume: ${{ secrets.AWS_ROLE}}
           aws-region: us-east-1
 
       - name: Show files
@@ -86,7 +86,7 @@ jobs:
             {
               attachments: [{
                 color: '${{ needs.build-image-deploy-serverless.result  }}' === 'success' ? 'good' : '${{ needs.build-image-deploy-serverless.result }}' === 'failure' ? 'danger' : 'warning',
-                title: 'Test UI',
+                title: 'Lambda Nameguard deployment.',
                 text: '${{ env.TEXT }}',
                 fields: [
                 {
@@ -108,4 +108,4 @@ jobs:
               }]
             }
         env:
-          SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL}}
