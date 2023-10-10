@@ -9,10 +9,7 @@ custom:
     automatic: true
     number: 5
   region: us-east-1   
-  deploymentBucket:
-    name: polysentry-serverless-lambda
-    serverSideEncryption: AES256
-  deploymentPrefix: ${self:custom.stage}/oss-nameguard
+
 
 provider:
   name: aws
