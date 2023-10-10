@@ -108,6 +108,7 @@ def test_inspect_name_get_empty(test_client, api_version):
     assert res_json['name'] == ''
     assert res_json['namehash'] == '0x0000000000000000000000000000000000000000000000000000000000000000'
     assert res_json['normalization'] == 'normalized'
+    assert res_json['rating'] == 'pass'
 
     response = test_client.get(f'/{api_version}/inspect-name')
     # method not allowed because this is the POST endpoint path

@@ -16,7 +16,7 @@ def check_label(label: Optional[InspectorResult]) -> GenericCheckResult:
             status=CheckStatus.SKIP,
             message=MESSAGE_SKIP,
         )
-    passed = label.all_script is not None
+    passed = label.all_script is not None or label.label == ''
     return GenericCheckResult(
         check=Check.MIXED_SCRIPTS,
         status=CheckStatus.PASS if passed else STATUS,
