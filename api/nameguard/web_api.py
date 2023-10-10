@@ -197,7 +197,7 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
 
 
 @app.get(
-    '/{api_version}/primary-name/{network_name}/{address:path}',
+    '/{api_version}/primary-name/{network_name}/{address}',
     tags=['primary_name'],
     summary='Reverse lookup of Ethereum address to primary name',
     responses={
@@ -208,12 +208,6 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
 async def primary_name_get(api_version: ApiVersion, address: str, network_name: NetworkName) -> SecureReverseLookupResult:
     address = validate_ethereum_address(address)
     return await nameguard.primary_name(address, network_name)
-
-
-# hidden endpoint
-@app.get('/{api_version}/primary-name/{network_name}', include_in_schema=False)
-async def primary_name_get_empty(api_version: ApiVersion, network_name: NetworkName):
-    raise InvalidEthereumAddress("Hex number must be 40 digits long and prefixed with '0x'.")
 
 
 # -- fake-ens-name-check --

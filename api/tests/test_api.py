@@ -483,6 +483,11 @@ def test_primary_name_get_unknown(test_client, api_version):
     #TODO add example with address resolved to unnoramlized (test existence of nameguard results) name and test other networks
 
 
+def test_primary_name_get_empty(test_client, api_version):
+    response = test_client.get(f'/{api_version}/primary-name/mainnet')
+    assert response.status_code == 422
+
+
 @pytest.mark.parametrize(
     "contract_address, token_id, fake",
     [
