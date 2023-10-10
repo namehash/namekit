@@ -344,12 +344,19 @@ def test_inspect_labelhash_get(test_client, api_version):
     assert res_json['name'] == 'vitalik.eth'
 
 
-def test_inspect_labelhash_get_empty_parent(test_client, api_version):
+def test_inspect_labelhash_get_empty(test_client, api_version):
     labelhash = labelhash_from_label('vitalik')
-    response = test_client.get(f'/{api_version}/inspect-labelhash/mainnet/{labelhash}')
+    response = test_client.get(f'/{api_version}/inspect-labelhash/mainnet/{labelhash}')  # empty parent = eth
     assert response.status_code == 200
     res_json = response.json()
     assert res_json['name'] == 'vitalik.eth'
+
+    response = test_client.get(f'/{api_version}/inspect-labelhash/mainnet')
+    assert response.status_code == 404
+
+    response = test_client.get(f'/{api_version}/inspect-labelhash')
+    # method not allowed because this is the POST endpoint path
+    assert response.status_code == 405
 
 
 @pytest.mark.parametrize(
@@ -493,6 +500,9 @@ def test_primary_name_get_unknown(test_client, api_version):
 
 def test_primary_name_get_empty(test_client, api_version):
     response = test_client.get(f'/{api_version}/primary-name/mainnet')
+    assert response.status_code == 404
+
+    response = test_client.get(f'/{api_version}/primary-name')
     assert response.status_code == 404
 
 
