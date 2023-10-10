@@ -38,7 +38,7 @@ functions:
     role: myDefaultRole
     provisionedConcurrency: 1
     tags:
-      Stage: ${self:stage}
+      Stage: ${self:custom.stage}
 
 resources:
   Resources:
