@@ -1,6 +1,7 @@
 import React from "react";
 import { nameguard, CheckResultCode, Rating } from "@namehash/nameguard";
 import cc from "classcat";
+import { Report } from "@namehash/nameguard-react";
 
 function Status({ status }: { status: CheckResultCode }) {
   switch (status) {
@@ -247,6 +248,7 @@ export default async function Home() {
   return (
     <>
       <div className="max-w-6xl mx-auto py-32 space-y-12 px-6">
+        <Report name="vĩtal1k⚡️.eth" />
         <div className="space-y-2 md:w-1/2 md:pr-4">
           <h2 className="text-black text-2xl font-semibold">
             NameGuard Report
