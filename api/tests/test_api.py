@@ -11,16 +11,16 @@ from nameguard.models import FakeEthNameCheckStatus
 from nameguard.utils import labelhash_from_label
 
 
-load_dotenv()
-running_lambda_tests = os.environ.get('RUN_LAMBDA_API_TESTS') == 'true' and bool(os.environ.get('LAMBDA_ROOT_URI'))
+load_dotenv()  # run lambda api tests if LAMBDA_ROOT_URL is set
+running_lambda_tests = bool(os.environ.get('LAMBDA_ROOT_URL'))
 
 
 @pytest.fixture(scope="module")
 def test_client():
     if running_lambda_tests:
-        lambda_root_uri = os.environ.get('LAMBDA_ROOT_URI')
-        print(f'\n\nRunning lambda tests; root url: {lambda_root_uri}')
-        client = httpx.Client(base_url=lambda_root_uri)
+        lambda_root_url = os.environ.get('LAMBDA_ROOT_URL')
+        print(f'\n\nRunning lambda tests; root url: {lambda_root_url}')
+        client = httpx.Client(base_url=lambda_root_url)
         return client
 
     from nameguard.web_api import app
