@@ -176,11 +176,11 @@ async def inspect_labelhash_get(
     return await nameguard.inspect_namehash(network_name=network_name, namehash=namehash)
 
 
-# hidden endpoint (with default parent='eth')
+# hidden endpoint (with parent='')
 @app.get('/{api_version}/inspect-labelhash/{network_name}/{labelhash}', include_in_schema=False)
 async def inspect_labelhash_get_empty(api_version: ApiVersion, network_name: NetworkName, labelhash: str):
     valid_labelhash = validate_namehash(namehash=labelhash)
-    namehash = namehash_from_labelhash(valid_labelhash, parent_name='eth')
+    namehash = namehash_from_labelhash(valid_labelhash, parent_name='')
     return await nameguard.inspect_namehash(network_name=network_name, namehash=namehash)
 
 

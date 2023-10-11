@@ -345,11 +345,10 @@ def test_inspect_labelhash_get(test_client, api_version):
 
 
 def test_inspect_labelhash_get_empty(test_client, api_version):
-    labelhash = labelhash_from_label('vitalik')
-    response = test_client.get(f'/{api_version}/inspect-labelhash/mainnet/{labelhash}')  # empty parent = eth
-    assert response.status_code == 200
-    res_json = response.json()
-    assert res_json['name'] == 'vitalik.eth'
+    labelhash = labelhash_from_label('dcjq92834vhh8teru5903wu9hawtpyhuoidfj09q2yh987euitvhgs')
+    response = test_client.get(f'/{api_version}/inspect-labelhash/mainnet/{labelhash}')  # empty parent = ''
+    assert response.status_code == 404
+    assert response.json()['detail'] == 'Provided namehash could not be found in ENS Subgraph.'
 
     response = test_client.get(f'/{api_version}/inspect-labelhash/mainnet')
     assert response.status_code == 404
