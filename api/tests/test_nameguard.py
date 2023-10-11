@@ -1,6 +1,6 @@
 import pytest
 
-from nameguard.models import Rating, Check, CheckStatus, Normalization
+from nameguard.models import Rating, Check, CheckStatus, Normalization, GenericCheckResult
 from nameguard.nameguard import NameGuard
 from nameguard.exceptions import NamehashNotFoundInSubgraph, NotAGrapheme
 
@@ -212,3 +212,24 @@ async def test_impersonation_risk(nameguard: NameGuard):
             break
     else:
         assert False, 'IMPERSONATION_RISK check not found'
+
+
+def test_generic_check_result_operators():
+    assert GenericCheckResult(**{'check': Check.NORMALIZED, 'status': CheckStatus.INFO, 'message': ''}) == \
+           GenericCheckResult(**{'check': Check.NORMALIZED, 'status': CheckStatus.INFO, 'message': ''})
+    assert GenericCheckResult(**{'check': Check.CONFUSABLES, 'status': CheckStatus.WARN, 'message': ''}) != \
+           GenericCheckResult(**{'check': Check.FONT_SUPPORT, 'status': CheckStatus.WARN, 'message': ''})
+    assert GenericCheckResult(**{'check': Check.NORMALIZED, 'status': CheckStatus.INFO, 'message': ''}) < \
+           GenericCheckResult(**{'check': Check.FONT_SUPPORT, 'status': CheckStatus.PASS, 'message': ''})
+    assert GenericCheckResult(**{'check': Check.NORMALIZED, 'status': CheckStatus.WARN, 'message': ''}) <= \
+           GenericCheckResult(**{'check': Check.FONT_SUPPORT, 'status': CheckStatus.ALERT, 'message': ''})
+    assert GenericCheckResult(**{'check': Check.NORMALIZED, 'status': CheckStatus.PASS, 'message': ''}) > \
+           GenericCheckResult(**{'check': Check.CONFUSABLES, 'status': CheckStatus.PASS, 'message': ''})
+    assert GenericCheckResult(**{'check': Check.NORMALIZED, 'status': CheckStatus.ALERT, 'message': ''}) >= \
+           GenericCheckResult(**{'check': Check.FONT_SUPPORT, 'status': CheckStatus.ALERT, 'message': ''})
+
+def test_generic_check_result_repr():
+    assert repr(GenericCheckResult(**{'check': Check.NORMALIZED, 'status': CheckStatus.PASS, 'message': ''})) == \
+           'Check.NORMALIZED(PASS)'
+
+# todo: coverage for nameguard.py: 93%
