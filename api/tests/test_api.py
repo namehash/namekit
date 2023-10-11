@@ -4,13 +4,25 @@ from urllib.parse import quote
 from pprint import pprint
 import re
 import httpx
+import os
+from dotenv import load_dotenv
 
 from nameguard.models import FakeEthNameCheckStatus
 from nameguard.utils import labelhash_from_label
 
 
+load_dotenv()  # run lambda api tests if LAMBDA_ROOT_URL is set
+running_lambda_tests = bool(os.environ.get('LAMBDA_ROOT_URL'))
+
+
 @pytest.fixture(scope="module")
 def test_client():
+    if running_lambda_tests:
+        lambda_root_url = os.environ.get('LAMBDA_ROOT_URL')
+        print(f'\n\nRunning lambda tests; root url: {lambda_root_url}')
+        client = httpx.Client(base_url=lambda_root_url)
+        return client
+
     from nameguard.web_api import app
     client = TestClient(app)
     return client
@@ -403,6 +415,8 @@ def test_inspect_labelhash_post(test_client, api_version, labelhash, parent, exp
             assert label['graphemes'] is None
         assert re.match(r'^0x[0-9a-f]{64}$', label['labelhash'])
 
+
+@pytest.mark.skipif(running_lambda_tests, reason='cannot monkeypatch if testing lambda')
 def test_inspect_labelhash_get_unexpected_response_body(monkeypatch, test_client, api_version):
     labelhash = labelhash_from_label('vitalik')
     network_name = 'mainnet'
@@ -416,6 +430,7 @@ def test_inspect_labelhash_get_unexpected_response_body(monkeypatch, test_client
     assert response.status_code == 503
 
 
+@pytest.mark.skipif(running_lambda_tests, reason='cannot monkeypatch if testing lambda')
 def test_inspect_labelhash_get_unexpected_status_code(monkeypatch, test_client, api_version):
     labelhash = labelhash_from_label('vitalik')
     network_name = 'mainnet'
@@ -429,6 +444,7 @@ def test_inspect_labelhash_get_unexpected_status_code(monkeypatch, test_client, 
     assert response.status_code == 503
 
 
+@pytest.mark.skipif(running_lambda_tests, reason='cannot monkeypatch if testing lambda')
 def test_inspect_labelhash_get_http_error(monkeypatch, test_client, api_version):
     labelhash = labelhash_from_label('vitalik')
     network_name = 'mainnet'
