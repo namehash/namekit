@@ -75,7 +75,7 @@ jobs:
           echo "STATUS=Failure  :x:" >> $GITHUB_ENV
           echo "TEXT=Lambda NameGuard deployed failed! :rotating_light:" >> $GITHUB_ENV
 
-      - name: Deployment status Slack notification
+      - name: Send deployment status Slack notification
         uses: 8398a7/action-slack@v3
         with:
           status: custom
