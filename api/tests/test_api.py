@@ -11,12 +11,14 @@ from nameguard.models import FakeEthNameCheckStatus
 from nameguard.utils import labelhash_from_label
 
 
+load_dotenv()
+running_lambda_tests = os.environ.get('RUN_LAMBDA_API_TESTS') == 'true' and bool(os.environ.get('LAMBDA_ROOT_URI'))
+
+
 @pytest.fixture(scope="module")
 def test_client():
-
-    # if RUN_LAMBDA_API_TESTS=true and LAMBDA_ROOT_URI is set, run api tests against nameguard on lambda
-    load_dotenv()
-    if os.environ.get('RUN_LAMBDA_API_TESTS') == 'true' and (lambda_root_uri := os.environ.get('LAMBDA_ROOT_URI')):
+    if running_lambda_tests:
+        lambda_root_uri = os.environ.get('LAMBDA_ROOT_URI')
         print(f'\n\nRunning lambda tests; root url: {lambda_root_uri}')
         client = httpx.Client(base_url=lambda_root_uri)
         return client
@@ -24,11 +26,6 @@ def test_client():
     from nameguard.web_api import app
     client = TestClient(app)
     return client
-
-
-load_dotenv()
-should_skip_tests_with_monkeypatching = \
-    os.environ.get('RUN_LAMBDA_API_TESTS') == 'true' and bool(os.environ.get('LAMBDA_ROOT_URI'))
 
 
 @pytest.fixture(scope="module")
@@ -394,7 +391,7 @@ def test_inspect_labelhash_post(test_client, api_version, labelhash, parent, exp
         assert re.match(r'^0x[0-9a-f]{64}$', label['labelhash'])
 
 
-@pytest.mark.skipif(should_skip_tests_with_monkeypatching, reason='cannot monkeypatch if testing lambda')
+@pytest.mark.skipif(running_lambda_tests, reason='cannot monkeypatch if testing lambda')
 def test_inspect_labelhash_get_unexpected_response_body(monkeypatch, test_client, api_version):
     labelhash = labelhash_from_label('vitalik')
     network_name = 'mainnet'
@@ -408,7 +405,7 @@ def test_inspect_labelhash_get_unexpected_response_body(monkeypatch, test_client
     assert response.status_code == 503
 
 
-@pytest.mark.skipif(should_skip_tests_with_monkeypatching, reason='cannot monkeypatch if testing lambda')
+@pytest.mark.skipif(running_lambda_tests, reason='cannot monkeypatch if testing lambda')
 def test_inspect_labelhash_get_unexpected_status_code(monkeypatch, test_client, api_version):
     labelhash = labelhash_from_label('vitalik')
     network_name = 'mainnet'
@@ -422,7 +419,7 @@ def test_inspect_labelhash_get_unexpected_status_code(monkeypatch, test_client, 
     assert response.status_code == 503
 
 
-@pytest.mark.skipif(should_skip_tests_with_monkeypatching, reason='cannot monkeypatch if testing lambda')
+@pytest.mark.skipif(running_lambda_tests, reason='cannot monkeypatch if testing lambda')
 def test_inspect_labelhash_get_http_error(monkeypatch, test_client, api_version):
     labelhash = labelhash_from_label('vitalik')
     network_name = 'mainnet'
