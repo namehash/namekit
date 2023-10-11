@@ -215,9 +215,10 @@ async def test_impersonation_risk(nameguard: NameGuard):
         assert False, 'IMPERSONATION_RISK check not found'
 
 
-def test_invalid_unicode(nameguard: NameGuard):
+@pytest.mark.asyncio
+async def test_invalid_unicode(nameguard: NameGuard):
     with pytest.raises(UnicodeEncodeError):
-        nameguard.inspect_name('\uD801\uDC37')
+        await nameguard.inspect_name('mainnet', '\uD801\uDC37')
 
     with pytest.raises(UnicodeEncodeError):
         Web3.keccak(text='\uD801\uDC37')
