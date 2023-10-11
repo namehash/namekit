@@ -69,6 +69,12 @@ importers:
 
   packages/nameguard-react:
     dependencies:
+      '@namehash/nameguard':
+        specifier: workspace:*
+        version: link:../sdk
+      classcat:
+        specifier: 5.0.4
+        version: 5.0.4
       react:
         specifier: ^18.2.0
         version: 18.2.0
