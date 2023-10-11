@@ -1,4 +1,5 @@
 import pytest
+from web3 import Web3
 
 from nameguard.models import Rating, Check, CheckStatus, Normalization
 from nameguard.nameguard import NameGuard
@@ -201,3 +202,11 @@ def test_impersonation_risk(nameguard: NameGuard):
             break
     else:
         assert False, 'IMPERSONATION_RISK check not found'
+
+
+def test_invalid_unicode(nameguard: NameGuard):
+    with pytest.raises(UnicodeEncodeError):
+        nameguard.inspect_name('\uD801\uDC37')
+
+    with pytest.raises(UnicodeEncodeError):
+        Web3.keccak(text='\uD801\uDC37')

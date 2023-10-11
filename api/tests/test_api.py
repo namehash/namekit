@@ -527,3 +527,8 @@ def test_fake_eth_name_check(test_client, api_version, contract_address, token_i
     else:
         assert res_json['nameguard_result'] is None
 
+
+def test_invalid_unicode(test_client, api_version):
+    with pytest.raises(UnicodeEncodeError):
+        # throws inside httpx
+        test_client.get(f'/{api_version}/inspect-grapheme/\uD801\uDC37')

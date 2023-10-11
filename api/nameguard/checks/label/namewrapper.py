@@ -18,8 +18,11 @@ def check_label(label: Optional[InspectorResult]) -> GenericCheckResult:
             status=CheckStatus.SKIP,
             message=MESSAGE_SKIP,
         )
-    wrapped = label.label.encode('utf-8')
-    passed = len(wrapped) <= WRAPPED_MAX_BYTES
+    try:
+        wrapped = label.label.encode('utf-8')
+        passed = len(wrapped) <= WRAPPED_MAX_BYTES
+    except UnicodeEncodeError:
+        passed = False
     return GenericCheckResult(
         check=Check.NAMEWRAPPER_COMPATIBLE,
         status=CheckStatus.PASS if passed else STATUS,
