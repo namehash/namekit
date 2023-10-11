@@ -230,6 +230,6 @@ def test_generic_check_result_operators():
 
 def test_generic_check_result_repr():
     assert repr(GenericCheckResult(**{'check': Check.NORMALIZED, 'status': CheckStatus.PASS, 'message': ''})) == \
-           'Check.NORMALIZED(PASS)'
+           'normalized(pass)'
 
 # todo: coverage for nameguard.py: 93%
