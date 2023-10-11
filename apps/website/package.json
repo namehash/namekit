@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@namehash/nameguard": "workspace:*",
+    "@namehash/nameguard-react": "workspace:*",
     "classcat": "5.0.4",
     "next": "latest",
     "react": "latest",
