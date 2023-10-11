@@ -19,8 +19,8 @@ The NameHash team is proud to present NameGuard, a tool for identifying and prev
 ### Env varaibles
 
 ```bash
-AWS_ROLE - role assumed by github action used to deploy infra on AWS(also push image to ECR). This role is used by cloudformation to create infrastructure.
-SLACK_WEBHOOK_URL - Webhook slack url used to send message on slack channel. Message send when serverless deply ends with status failed or success. 
+AWS_ROLE - AWS Role used by GitHub actions to create the CloudFormation infrastructure for deploying NameGuard as an AWS Lambda and pushing the latest build image to AWS ECR.
+SLACK_WEBHOOK_URL - Slack webhook url used by GitHub actions to send notifications of deployment success or failure to the dev team's slack channel.
 ```
 
 ### Installing the library

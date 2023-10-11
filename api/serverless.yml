@@ -158,5 +158,5 @@ resources:
           - Name: ${self:custom.apiDomain}
             Type: A
             AliasTarget:
-              HostedZoneId: Z2FDTNDATAQYW2 #default for cloudfornt
+              HostedZoneId: Z2FDTNDATAQYW2 #default for cloudfront
               DNSName: { 'Fn::GetAtt': [ApiCloudFrontDistribution, DomainName] } # set the domain of your cloudfront distribution

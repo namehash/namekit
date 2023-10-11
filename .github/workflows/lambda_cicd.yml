@@ -1,4 +1,4 @@
-name: Deploy serverless lambda nameguard
+name: Deploy NameGuard to AWS as a serverless lambda
 
 on:
   push:
@@ -46,7 +46,7 @@ jobs:
           serverless deploy --stage prod --param="PROVIDER_URI_GOERLI=${{secrets.PROVIDER_URI_GOERLI}}" --param="PROVIDER_URI_MAINNET=${{secrets.PROVIDER_URI_MAINNET}}" --param="PROVIDER_URI_SEPOLIA=${{secrets.PROVIDER_URI_SEPOLIA}}"
         working-directory: api 
 
-      - name: Delete old image from ECR
+      - name: Delete old images from ECR
         env:
           ECR_REPO: serverless-oss-nameguard-prod
         run: |
@@ -58,18 +58,18 @@ jobs:
         working-directory: api
 
   notify:
-    name: Notification
+    name: Send Slack deployment event notification
     if: ${{ needs.build-image-deploy-serverless.result != 'skipped' && always() }}
     needs: [build-image-deploy-serverless]
     runs-on: ubuntu-20.04
     steps:
-      - name: dump status on success
+      - name: Output status on deployment success
         if: ${{ needs.build-image-deploy-serverless.result == 'success'}}
         run: |
           echo "STATUS=Success  :rocket:" >> $GITHUB_ENV
           echo "TEXT=Lambda nameguard deployed succesfully! :white_check_mark:" >> $GITHUB_ENV
 
-      - name: dump status on failure
+      - name: Output status on deployment failed
         if: ${{ needs.build-image-deploy-serverless.result == 'failure' }}
         run: |
           echo "STATUS=Failure  :x:" >> $GITHUB_ENV
