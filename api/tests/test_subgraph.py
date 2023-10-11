@@ -62,3 +62,7 @@ async def test_lookup2():
     result = await resolve_labelhashes_querying_labelhashes(network_name, labelhashes.keys())
     print(result)
     assert result == labelhashes
+
+
+# todo: coverage for subgraph.py: 69%
+# todo: coverage for provider.py: 70%
