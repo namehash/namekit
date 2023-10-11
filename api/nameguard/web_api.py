@@ -49,11 +49,13 @@ class InspectNameRequest(BaseModel):
     tags=['name'],
     summary='Inspect Name GET'
 )
+@app.get('/{api_version}/inspect-name/{network_name}', include_in_schema=False)
 async def inspect_name_get(
         api_version: ApiVersion,
         network_name: NetworkName,
         request: Request,
-        name: str = Path(description='**Name should be url-encoded (except when using the Swagger UI).**',
+        name: str = Path(default_factory=lambda: '',
+                         description='**Name should be url-encoded (except when using the Swagger UI).**',
                          examples=['iam%2Falice%3F.eth']),
 ) -> NameGuardReport:
     logger.debug(f'[GET inspect-name] input name: \'{name}\' raw path: \'{request.scope["raw_path"]} query string: '
@@ -146,7 +148,7 @@ class InspectLabelhashRequest(BaseModel):
 
 
 @app.get(
-    '/{api_version}/inspect-labelhash/{network_name}/{labelhash}/{parent_name}',
+    '/{api_version}/inspect-labelhash/{network_name}/{labelhash}/{parent_name:path}',
     tags=['labelhash'],
     summary='Inspect Labelhash GET',
     responses={
@@ -156,12 +158,13 @@ class InspectLabelhashRequest(BaseModel):
         **NamehashNotFoundInSubgraph.get_responses_spec(),
     },
 )
+@app.get('/{api_version}/inspect-labelhash/{network_name}/{labelhash}', include_in_schema=False)
 async def inspect_labelhash_get(
         api_version: ApiVersion,
         network_name: NetworkName,
         labelhash: str = Path(examples=['0xaf2caa1c2ca1d027f1ac823b529d0a67cd144264b2789fa2ea4d63a67c7103cc'],
                               description='Labelhash should be a decimal or a hex (prefixed with 0x) string.'),
-        parent_name: str = Path(examples=['eth'])
+        parent_name: str = Path(default_factory=lambda: '', examples=['eth'])
 ) -> NameGuardReport:
     valid_labelhash = validate_namehash(namehash=labelhash)
     namehash = namehash_from_labelhash(valid_labelhash, parent_name=parent_name)
@@ -189,7 +192,7 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
 
 
 @app.get(
-    '/{api_version}/primary-name/{network_name}/{address:path}',
+    '/{api_version}/primary-name/{network_name}/{address}',
     tags=['primary_name'],
     summary='Reverse lookup of Ethereum address to primary name',
     responses={

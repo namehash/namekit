@@ -108,6 +108,7 @@ def test_inspect_name_get_empty(test_client, api_version):
     assert res_json['name'] == ''
     assert res_json['namehash'] == '0x0000000000000000000000000000000000000000000000000000000000000000'
     assert res_json['normalization'] == 'normalized'
+    assert res_json['rating'] == 'pass'
 
     response = test_client.get(f'/{api_version}/inspect-name')
     # method not allowed because this is the POST endpoint path
@@ -352,6 +353,20 @@ def test_inspect_labelhash_get(test_client, api_version):
     assert res_json['name'] == 'vitalik.eth'
 
 
+def test_inspect_labelhash_get_empty(test_client, api_version):
+    labelhash = labelhash_from_label('dcjq92834vhh8teru5903wu9hawtpyhuoidfj09q2yh987euitvhgs')
+    response = test_client.get(f'/{api_version}/inspect-labelhash/mainnet/{labelhash}')  # empty parent = ''
+    assert response.status_code == 404
+    assert response.json()['detail'] == 'Provided namehash could not be found in ENS Subgraph.'
+
+    response = test_client.get(f'/{api_version}/inspect-labelhash/mainnet')
+    assert response.status_code == 404
+
+    response = test_client.get(f'/{api_version}/inspect-labelhash')
+    # method not allowed because this is the POST endpoint path
+    assert response.status_code == 405
+
+
 @pytest.mark.parametrize(
     "labelhash, parent, expected_status_code, expected_name",
     [
@@ -490,6 +505,14 @@ def test_primary_name_get_unknown(test_client, api_version):
     assert res_json['display_name'] == 'Unnamed d8da'
 
     #TODO add example with address resolved to unnoramlized (test existence of nameguard results) name and test other networks
+
+
+def test_primary_name_get_empty(test_client, api_version):
+    response = test_client.get(f'/{api_version}/primary-name/mainnet')
+    assert response.status_code == 404
+
+    response = test_client.get(f'/{api_version}/primary-name')
+    assert response.status_code == 404
 
 
 @pytest.mark.parametrize(

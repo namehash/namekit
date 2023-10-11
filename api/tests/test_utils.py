@@ -48,6 +48,8 @@ def test_namehash_from_labelhash():
            namehash_from_labelhash(labelhash_hexstr=labelhash_from_label('byczong'), parent_name='eth')
     assert namehash_from_name('iam.byczong.eth') == \
            namehash_from_labelhash(labelhash_hexstr=labelhash_from_label('iam'), parent_name='byczong.eth')
+    assert namehash_from_name('byczong') == \
+           namehash_from_labelhash(labelhash_hexstr=labelhash_from_label('byczong'), parent_name='')
 
 
 def test_validate_namehash():
