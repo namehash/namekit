@@ -194,3 +194,27 @@ def agg_checks(check_results: list[GenericCheckResult]) -> list[GenericCheckResu
 
 def get_highest_risk(check_results: list[GenericCheckResult]) -> Optional[GenericCheckResult]:
     return max((check for check in check_results if check.rating > Rating.PASS), default=None)
+
+
+def capitalize_words(s: str) -> str:
+    return ' '.join(word.casefold() for word in s.split(' '))
+
+
+def detect_grapheme_link_name(link: str) -> str:
+    '''
+    Possible link formats:
+
+    * https://unicodeplus.com/U+{...}
+    * https://unicode.link/inspect/utf8:{...}
+    * http://📙.la/{...}
+    '''
+
+    if link.startswith('https://unicodeplus.com'):
+        return 'UnicodePlus'
+    elif link.startswith('https://unicode.link'):
+        # title of th epage
+        return 'Unicode Visualizer'
+    elif link.startswith('http://📙.la'):
+        return 'Emojipedia'
+    else:
+        return 'Unknown External Page'
