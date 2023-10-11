@@ -193,20 +193,35 @@ class SecureReverseLookupResult(BaseModel):
                     '* if `primary_name` is `null` then provides a fallback `display_name` of "Unnamed [first four hex digits of Ethereum address]", e.g. "Unnamed C2A6"',
     )
 
-    nameguard_result: Optional[NameGuardReport]
+    nameguard_result: Optional[NameGuardReport] = Field(description='NameGuard report for the `primary_name`.\n'
+                                                                    '* `null` if `primary_name_status` is `no_primary_name` (primary name is not found)')
 
 
 class FakeEthNameCheckStatus(str, Enum):
     '''
-    * `authentic_ens_name` The NFT is associated with authentic ".eth" contracts.
-    * `impersonated_ens_name` The NFT appears to impersonate a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" at the end of relevant NFT metadata fields. Consider automated rejection of this NFT from marketplaces.
-    * `potentially_impersonated_ens_name` The NFT potentially impersonates a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" within relevant NFT metadata fields (but not at the end of those fields). Consider manual review of this NFT before publishing to marketplaces.
-    * `non_impersonated_ens_name` The NFT doesn't represent itself as a ".eth" name and doesn't belong to authentic ENS contracts. No string that visually resembles ".eth" was found within relevant NFT metadata fields.
+    * `authentic_eth_name` The NFT is associated with authentic ".eth" contracts.
+    * `impersonated_eth_name` The NFT appears to impersonate a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" at the end of relevant NFT metadata fields. Consider automated rejection of this NFT from marketplaces.
+    * `potentially_impersonated_eth_name` The NFT potentially impersonates a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" within relevant NFT metadata fields (but not at the end of those fields). Consider manual review of this NFT before publishing to marketplaces.
+    * `non_impersonated_eth_name` The NFT doesn't represent itself as a ".eth" name and doesn't belong to authentic ENS contracts. No string that visually resembles ".eth" was found within relevant NFT metadata fields.
     * `unknown_nft`: No information could be found on the requested NFT. This generally indicates that the NFT doesn't exist or hasn't been indexed yet.
+    * `invalid_eth_name`: The NFT is associated with authentic ".eth" contracts, but it is unnormalized.
+    * `potentially_authentic_eth_name`: The NFT is associated with authentic ".eth" contracts, but its label is unknown.
     '''
 
-    AUTHENTIC_ENS_NAME = 'authentic_ens_name'
-    IMPERSONATED_ENS_NAME = 'impersonated_ens_name'
-    POTENTIALLY_IMPERSONATED_ENS_NAME = 'potentially_impersonated_ens_name'
-    NON_IMPERSONATED_ENS_NAME = 'non_impersonated_ens_name'
+    AUTHENTIC_ETH_NAME = 'authentic_eth_name'
+    IMPERSONATED_ETH_NAME = 'impersonated_eth_name'
+    POTENTIALLY_IMPERSONATED_ETH_NAME = 'potentially_impersonated_eth_name'
+    NON_IMPERSONATED_ETH_NAME = 'non_impersonated_eth_name'
     UNKNOWN_NFT = 'unknown_nft'
+    INVALID_ETH_NAME = 'invalid_eth_name'
+    POTENTIALLY_AUTHENTIC_ETH_NAME = 'potentially_authentic_eth_name'
+
+
+class FakeEthNameCheckResult(BaseModel):
+    """
+    Fake .eth ENS name check result.
+    """
+    status: FakeEthNameCheckStatus
+    
+    nameguard_result: Optional[NameGuardReport] = Field(description='NameGuard report for the .eth ENS NFT.\n'
+                                                        '* `null` if `status` is any value except `authentic_eth_name` and `invalid_eth_name` (the NFT is not associated with authentic ".eth" contracts and label is known)')

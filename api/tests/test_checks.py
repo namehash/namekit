@@ -74,6 +74,12 @@ def test_label_mixed_scripts(nameguard: NameGuard):
     assert r.rating == Rating.PASS
     assert r.message == 'Label is in a single script'
 
+    l = nameguard.analyse_label('')
+    r = checks.label.mixed_scripts.check_label(l)
+    assert r.check == Check.MIXED_SCRIPTS
+    assert r.rating == Rating.PASS
+    assert r.message == 'Label is in a single script'
+
     l = nameguard.analyse_label('あa')
     r = checks.label.mixed_scripts.check_label(l)
     assert r.check == Check.MIXED_SCRIPTS

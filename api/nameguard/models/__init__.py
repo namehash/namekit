@@ -17,6 +17,7 @@ from .result import (
     SecureReverseLookupResult,
     SecureReverseLookupStatus,
     FakeEthNameCheckStatus,
+    FakeEthNameCheckResult,
 )
 
 from .request import (

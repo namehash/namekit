@@ -84,11 +84,13 @@ export type SecureReverseLookupStatus =
   | "unnormalized" /** The ENS primary name was found, but it is not normalized. */;
 
 export type FakeEthNameCheckStatus =
-  | "authentic_ens_name" /** The NFT is associated with authentic ".eth" contracts. */
-  | "impersonated_ens_name" /** The NFT appears to impersonate a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" at the end of relevant NFT metadata fields. Consider automated rejection of this NFT from marketplaces. */
-  | "potentially_impersonated_ens_name" /** The NFT potentially impersonates a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" within relevant NFT metadata fields (but not at the end of those fields). Consider manual review of this NFT before publishing to marketplaces. */
-  | "non_impersonated_ens_name" /** The NFT doesn't represent itself as a ".eth" name and doesn't belong to authentic ENS contracts. No string that visually resembles ".eth" was found within relevant NFT metadata fields. */
-  | "unknown_nft" /** No information could be found on the requested NFT. This generally indicates that the NFT doesn't exist or hasn't been indexed yet. */;
+  | "authentic_eth_name" /** The NFT is associated with authentic ".eth" contracts. */
+  | "impersonated_eth_name" /** The NFT appears to impersonate a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" at the end of relevant NFT metadata fields. Consider automated rejection of this NFT from marketplaces. */
+  | "potentially_impersonated_eth_name" /** The NFT potentially impersonates a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" within relevant NFT metadata fields (but not at the end of those fields). Consider manual review of this NFT before publishing to marketplaces. */
+  | "non_impersonated_eth_name" /** The NFT doesn't represent itself as a ".eth" name and doesn't belong to authentic ENS contracts. No string that visually resembles ".eth" was found within relevant NFT metadata fields. */
+  | "unknown_nft" /** No information could be found on the requested NFT. This generally indicates that the NFT doesn't exist or hasn't been indexed yet. */
+  | "invalid_eth_name" /** The NFT is associated with authentic ".eth" contracts, but it is unnormalized. */
+  | "potentially_authentic_eth_name" /** The NFT is associated with authentic ".eth" contracts, but its label is unknown. */;
 
 /**
  * The Keccak-256 hash of a name/label.
@@ -99,6 +101,21 @@ export type FakeEthNameCheckStatus =
  * A "normalized Keccak-256 hash" is a Keccak-256 hash that is always prefixed with "0x" and all in lowercase.
  * */
 export type Keccak256Hash = string;
+
+/**
+ * The result of a fake eth name check that NameGuard performed on a contract address and token id.
+ */
+export interface FakeEthNameCheckResult {
+  /** The resulting status code of the check that NameGuard performed. */
+  status: FakeEthNameCheckStatus;
+
+  /**
+   * NameGuard report for the .eth ENS NFT.
+   *
+   * `null` if `status` is any value except `authentic_eth_name` and `invalid_eth_name` (the NFT is not associated with authentic ".eth" contracts and label is known)
+   */
+  nameguard_result: NameGuardReport | null;
+}
 
 /**
  * The result of a check that NameGuard performed on a name/label/grapheme.
@@ -336,6 +353,11 @@ export interface SecureReverseLookupResult {
    */
   display_name: string;
 
+  /**
+   * NameGuard report for the `primary_name`.
+   *
+   * `null` if `primary_name_status` is `no_primary_name` (primary name is not found).
+   */
   nameguard_result: NameGuardReport | null;
 }
 
@@ -512,10 +534,10 @@ class NameGuard {
     contract_address: string,
     token_id: string,
     options?: FakeEthNameOptions
-  ): Promise<FakeEthNameCheckStatus> {
+  ): Promise<FakeEthNameCheckResult> {
     const network_name = options?.network || this.network;
 
-    const url = `${this.endpoint}/${this.version}/fake-ens-name-check/${network_name}/${contract_address}/${token_id}`;
+    const url = `${this.endpoint}/${this.version}/fake-eth-name-check/${network_name}/${contract_address}/${token_id}`;
 
     const response = await fetch(url);
 
@@ -707,7 +729,7 @@ class NameGuard {
     contract_address: string,
     token_id: string,
     options?: FakeEthNameOptions
-  ): Promise<FakeEthNameCheckStatus> {
+  ): Promise<FakeEthNameCheckResult> {
     if (!isEthereumAddress(contract_address)) {
       throw new Error(
         `The provided address: "${contract_address}" is not in a valid Ethereum address format.`

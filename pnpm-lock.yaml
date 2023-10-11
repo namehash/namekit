@@ -23,6 +23,9 @@ importers:
       '@namehash/nameguard':
         specifier: workspace:*
         version: link:../../packages/sdk
+      '@namehash/nameguard-react':
+        specifier: workspace:*
+        version: link:../../packages/nameguard-react
       classcat:
         specifier: 5.0.4
         version: 5.0.4
@@ -41,7 +44,7 @@ importers:
         version: 20.8.4
       '@types/react':
         specifier: latest
-        version: 18.2.27
+        version: 18.2.28
       '@types/react-dom':
         specifier: latest
         version: 18.2.12
@@ -62,6 +65,28 @@ importers:
         version: 3.3.3
       typescript:
         specifier: latest
+        version: 5.2.2
+
+  packages/nameguard-react:
+    dependencies:
+      '@namehash/nameguard':
+        specifier: workspace:*
+        version: link:../sdk
+      classcat:
+        specifier: 5.0.4
+        version: 5.0.4
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+    devDependencies:
+      tsup:
+        specifier: ^7.2.0
+        version: 7.2.0(typescript@5.2.2)
+      typescript:
+        specifier: ^5.2.2
         version: 5.2.2
 
   packages/sdk:
@@ -801,11 +826,11 @@ packages:
   /@types/react-dom@18.2.12:
     resolution: {integrity: sha512-QWZuiA/7J/hPIGocXreCRbx7wyoeet9ooxfbSA+zbIWqyQEE7GMtRn4A37BdYyksnN+/NDnWgfxZH9UVGDw1hg==}
     dependencies:
-      '@types/react': 18.2.27
+      '@types/react': 18.2.28
     dev: true
 
-  /@types/react@18.2.27:
-    resolution: {integrity: sha512-Wfv7B7FZiR2r3MIqbAlXoY1+tXm4bOqfz4oRr+nyXdBqapDBZ0l/IGcSlAfvxIHEEJjkPU0MYAc/BlFPOcrgLw==}
+  /@types/react@18.2.28:
+    resolution: {integrity: sha512-ad4aa/RaaJS3hyGz0BGegdnSRXQBkd1CCYDCdNjBPg90UUpLgo+WlJqb9fMYUxtehmzF3PJaTWqRZjko6BRzBg==}
     dependencies:
       '@types/prop-types': 15.7.8
       '@types/scheduler': 0.16.4
