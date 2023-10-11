@@ -13,8 +13,8 @@ function Status({ status }: { status: CheckResultCode }) {
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18ZM13.8566 8.19113C14.1002 7.85614 14.0261 7.38708 13.6911 7.14345C13.3561 6.89982 12.8871 6.97388 12.6434 7.30887L9.15969 12.099L7.28033 10.2197C6.98744 9.92678 6.51256 9.92678 6.21967 10.2197C5.92678 10.5126 5.92678 10.9874 6.21967 11.2803L8.71967 13.7803C8.87477 13.9354 9.08999 14.0149 9.30867 13.9977C9.52734 13.9805 9.72754 13.8685 9.85655 13.6911L13.8566 8.19113Z"
           />
         </svg>
@@ -28,8 +28,8 @@ function Status({ status }: { status: CheckResultCode }) {
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M8.4845 2.49499C9.15808 1.32833 10.842 1.32833 11.5156 2.495L17.7943 13.37C18.4678 14.5367 17.6259 15.995 16.2787 15.995H3.72136C2.37421 15.995 1.53224 14.5367 2.20582 13.37L8.4845 2.49499ZM10 5C10.4142 5 10.75 5.33579 10.75 5.75V9.25C10.75 9.66421 10.4142 10 10 10C9.58579 10 9.25 9.66421 9.25 9.25L9.25 5.75C9.25 5.33579 9.58579 5 10 5ZM10 14C10.5523 14 11 13.5523 11 13C11 12.4477 10.5523 12 10 12C9.44772 12 9 12.4477 9 13C9 13.5523 9.44772 14 10 14Z"
           />
         </svg>
@@ -43,8 +43,8 @@ function Status({ status }: { status: CheckResultCode }) {
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M8.4845 2.49499C9.15808 1.32833 10.842 1.32833 11.5156 2.495L17.7943 13.37C18.4678 14.5367 17.6259 15.995 16.2787 15.995H3.72136C2.37421 15.995 1.53224 14.5367 2.20582 13.37L8.4845 2.49499ZM10 5C10.4142 5 10.75 5.33579 10.75 5.75V9.25C10.75 9.66421 10.4142 10 10 10C9.58579 10 9.25 9.66421 9.25 9.25L9.25 5.75C9.25 5.33579 9.58579 5 10 5ZM10 14C10.5523 14 11 13.5523 11 13C11 12.4477 10.5523 12 10 12C9.44772 12 9 12.4477 9 13C9 13.5523 9.44772 14 10 14Z"
           />
         </svg>
@@ -70,8 +70,8 @@ function Status({ status }: { status: CheckResultCode }) {
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
+            fillRule="evenodd"
+            clipRule="evenodd"
             d="M18 10C18 14.4183 14.4183 18 10 18C5.58172 18 2 14.4183 2 10C2 5.58172 5.58172 2 10 2C14.4183 2 18 5.58172 18 10ZM11 6C11 6.55228 10.5523 7 10 7C9.44771 7 9 6.55228 9 6C9 5.44772 9.44771 5 10 5C10.5523 5 11 5.44772 11 6ZM9 9C8.58579 9 8.25 9.33579 8.25 9.75C8.25 10.1642 8.58579 10.5 9 10.5H9.25338C9.41332 10.5 9.53213 10.6481 9.49743 10.8042L9.03829 12.8704C8.79542 13.9633 9.62706 15 10.7466 15H11C11.4142 15 11.75 14.6642 11.75 14.25C11.75 13.8358 11.4142 13.5 11 13.5H10.7466C10.5867 13.5 10.4679 13.3519 10.5026 13.1958L10.9617 11.1296C11.2046 10.0367 10.3729 9 9.25338 9H9Z"
           />
         </svg>
@@ -80,9 +80,11 @@ function Status({ status }: { status: CheckResultCode }) {
 }
 
 export default async function Home() {
-  const data = await nameguard.inspectName("vitaly⚡️.eth");
+  const data = await nameguard.inspectName("💖ze us.eth");
 
   const { name, highest_risk, rating, risk_count, checks, labels } = data;
+
+  const rawLabels = data.labels.map((label) => label.label);
 
   return (
     <>
@@ -138,19 +140,33 @@ export default async function Home() {
               className="border border-gray-200 rounded-md divide-y divide-gray-200"
             >
               <div className="py-[10px] px-6 text-sm font-normal">
-                {label.label}
+                {rawLabels.map((l, index) => (
+                  <>
+                    <span
+                      key={index}
+                      className={
+                        l === label.label ? "text-black" : "text-gray-500"
+                      }
+                    >
+                      {l}
+                    </span>
+                    {index < rawLabels.length - 1 && (
+                      <span className="text-gray-500">.</span>
+                    )}
+                  </>
+                ))}
               </div>
               {label?.graphemes?.map((grapheme) => (
                 <div
                   key={grapheme.grapheme}
-                  className="grid grid-cols-8 gap-4 py-5 px-10"
+                  className="grid grid-cols-8 gap-4 py-5"
                 >
                   <div className="flex items-center justify-center">
                     <p className="text-4xl text-black font-bold">
                       {grapheme.grapheme}
                     </p>
                   </div>
-                  <div className="col-span-3 flex-1">
+                  <div className="col-span-3">
                     <p className="text-black text-sm font-medium">
                       {grapheme.grapheme_name}
                     </p>
@@ -158,13 +174,17 @@ export default async function Home() {
                       {grapheme.grapheme_script}
                     </p>
                   </div>
-                  <div className="col-span-3 flex items-center space-x-3">
-                    <Status status={grapheme.rating} />
-                    <p className="font-medium text-black text-sm">
-                      {grapheme.highest_risk?.message}
-                    </p>
+                  <div className="col-span-4 flex space-between space-x-3">
+                    <div className="flex items-center space-x-4">
+                      <div className="flex-shrink-0">
+                        <Status status={grapheme.rating} />
+                      </div>
+                      <p className="font-medium text-black text-sm">
+                        {grapheme.highest_risk?.message}
+                      </p>
+                    </div>
                   </div>
-                  <div className="flex items-center justify-between ml-auto">
+                  {/* <div className="flex items-center justify-end pr-10">
                     <svg
                       width="10"
                       height="18"
@@ -175,16 +195,45 @@ export default async function Home() {
                       <path
                         d="M1.25 1.5L8.75 9L1.25 16.5"
                         stroke="#AFAFAF"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                     </svg>
-                  </div>
+                  </div> */}
                 </div>
               ))}
             </div>
           ))}
+        </div>
+
+        <div className="rounded-md overflow-hidden border border-gray-200 relative bg-gradient-to-r from-[#FBD84D]/5 via-[#F965D9]/5 to-[#503BFE]/5 bg-opacity-5 p-6 md:p-10">
+          <div className="z-0 absolute inset-0 h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
+          <div className="relative z-10 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 justify-between items-center">
+            <div>
+              <p className="text-black font-semibold text-lg leading-8">
+                Have feedback or suggestions?
+              </p>
+              <p className="text-gray-500 font-normal leading-6 text-sm">
+                If you think any inspection result could be improved please
+                contact us with details.
+              </p>
+            </div>
+            <div className="w-full md:w-auto flex-shrink-0">
+              <a
+                href="#"
+                className="rounded-md block md:inline-block text-center bg-black text-white px-5 py-3 font-medium leading-6"
+              >
+                Chat with us
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="text-center px-6">
+          <p className="text-sm leading-6 text-gray-500">
+            Report generated by NameGuard (Beta)
+          </p>
         </div>
       </div>
 
