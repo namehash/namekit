@@ -180,6 +180,15 @@ def test_bulk_inspect_name_post(test_client, api_version):
     response = test_client.post(f'/{api_version}/bulk-inspect-names', json={'names': names * 126})
     assert response.status_code == 422
 
+def test_bulk_inspect_name_post_stress(test_client, api_version):
+    names = [f'[{labelhash_from_label(str(i))[2:]}].eth' for i in range(250)]
+    print(names)
+    response = test_client.post(f'/{api_version}/bulk-inspect-names', json={'names': names, 'network_name': 'mainnet'})
+    assert response.status_code == 200
+    res_json = response.json()
+    pprint(res_json)
+
+    
 
 # -- inspect-namehash --
 
@@ -222,7 +231,7 @@ def test_inspect_namehash_get(test_client, api_version, network_name: str, nameh
         ('0xb2636b6e3b1abdd3fbec454d4f4b1a904e7b15e3609cb208bcfc5a5487293308', 'unknown',
          '[3fddf465ed81d79ae943b35800b1d187dc0b5d69614bf7e8ebddbae19d72cae8].genevaswis.eth'),
         ('0x00f52438ae09d2f909ee2efc19ba8af75058e74ca4507aa091bd8282aa490e77', 'unknown',
-         '[7710d5ebf94bcebcf1996bb7a3f5e24a6d24435b314b3cec815da03640c2940c].[2e8eaa68c7e128861299162323c29c29672f5c094aceaf22d9c0935e4bbd3f85].[a64d2b5a93eda272d27734cc2fb8d1c468562e279f1e97e759eea1a5a410f8e3].[462a1d6391f7ea5916874504f3b5fc8cd43626f6bbabc8a22fe4312dc1585362].enspunks.eth'),
+         '🥛.[2e8eaa68c7e128861299162323c29c29672f5c094aceaf22d9c0935e4bbd3f85].[a64d2b5a93eda272d27734cc2fb8d1c468562e279f1e97e759eea1a5a410f8e3].👽.enspunks.eth'),
         ('0x1bc53f6413409d078ec18a29b17f981eafab341598a4e970ac9efab7d29258af', 'unnormalized', '[zzz].eth'),
         ('0X1Bc53f6413409d078ec18a29b17f981eafab341598a4e970ac9efab7d29258af', 'unnormalized', '[zzz].eth'),  # uppercase hex
     ]
@@ -354,6 +363,7 @@ def test_inspect_labelhash_get(test_client, api_version):
         ('0x97bf1a722288db8edaf0f6687b4431ac96feb13d3b55a7b11e9c6bc33f938bef', None, 404, None),  # 08745yortgh04y-53jpfdhudpdfhgw5th42yhgerotihg4w95hy8
         ('0xaf2caa1c2ca1d027f1ac823b529d0a67cd144264b2789fa2ea4d63a67c7103cc', 'nonexistentparent', 404, None),
         ('0x12345', None, 422, None),
+        ('0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb', None, 200, 'a.eth'),
     ]
 )
 def test_inspect_labelhash_post(test_client, api_version, labelhash, parent, expected_status_code, expected_name):

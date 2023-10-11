@@ -36,6 +36,7 @@ async def call_subgraph(network_name: NetworkName, query: str, variables: dict) 
 
         if response.status_code == 200:
             response_json = response.json()
+            logger.debug(f"Subgraph query:\n{query} {variables}")
             logger.debug(f"Subgraph response json:\n{response_json}")
         else:
             raise ENSSubgraphUnavailable(
@@ -112,7 +113,7 @@ async def resolve_all_labelhashes_in_name(network_name: NetworkName, name: str) 
     logger.debug(f"Trying to resolve full name: {name}")
 
     namehash = namehash_from_name(name)
-    labels =  name.split('.')
+    labels = name.split('.')
 
     if len(labels) < MAX_MULTI_LABEL_LOOKUP:
         logger.debug(f"Trying multi-label lookup for: {name}")
@@ -141,3 +142,90 @@ async def resolve_all_labelhashes_in_name(network_name: NetworkName, name: str) 
     logger.debug(f"Resolved name: {resolved_name}")
 
     return resolved_name
+
+def build_multi_label_query_querying_labelhashes(labelhashes: list[str]) -> tuple[str, dict]:
+    '''
+    Builds a query that resolves all labelhashes in a name.
+    Labelhash in format 0x1234...1234.
+    ```
+    query resolveLabelhashes($l0: String, $l1: String) {
+        l0: domains(where: {labelhash: $l0, labelName_not: null}, first: 1) {
+            labelName
+        }
+        l1: domains(where: {labelhash: $l1, labelName_not: null}, first: 1) {
+            labelName
+        }
+    }
+    ```
+    '''
+    args = ' '.join(f'$l{i}:String' for i in range(len(labelhashes)))
+    query = f'query resolveLabelhashes({args}){{'
+    variables = {}
+    for i, labelhash in enumerate(labelhashes):
+        query += f'l{i}:domains(where: {{labelhash: $l{i}, labelName_not: null}}, first: 1){{labelName}}'
+        variables[f'l{i}'] = labelhash
+    query += '}'
+    return query, variables
+
+
+async def resolve_labelhashes_querying_labelhashes(network_name: NetworkName, labelhashes: list[str]) -> dict[str,str]:
+    """
+    Resolve labelhashes to label names.
+    Labelhash in format [1234...1234].
+    """
+    if not labelhashes:
+        return {}
+    labelhashes = [f'0x{labelhash[1:-1]}' for labelhash in labelhashes]
+    query, variables = build_multi_label_query_querying_labelhashes(labelhashes)
+    
+    data = await call_subgraph(network_name, query, variables)
+    
+    result={}
+    for var, labelhash in variables.items():
+        labelhash=f"[{labelhash[2:]}]"
+        if data[var]:
+            result[labelhash] = data[var][0]['labelName']
+        else:
+            result[labelhash] = labelhash
+    return result
+
+async def resolve_all_labelhashes_in_name_querying_labelhashes(network_name: NetworkName, name: str) -> str:
+    logger.debug(f"Trying to resolve full name: {name}")
+
+    labels = name.split('.')
+
+    labelhash_idx = [i for i, label in enumerate(labels) if label_is_labelhash(label)]
+
+    if not labelhash_idx:
+        return name
+
+    resolved_labelhashes = await resolve_labelhashes_querying_labelhashes(network_name, [labels[i] for i in labelhash_idx])
+
+    for i in labelhash_idx:
+        labels[i] = resolved_labelhashes[labels[i]]
+    
+    resolved_name = '.'.join(labels)
+
+    logger.debug(f"Resolved name: {resolved_name}")
+    
+    return resolved_name
+    
+async def resolve_all_labelhashes_in_names_querying_labelhashes(network_name: NetworkName, names: list[str]) -> list[str]:
+    segmented_names = []
+    labelhashes = set()
+    for name in names:
+        labels = name.split('.')
+        segmented_names.append(labels)
+        for label in labels:
+            if label_is_labelhash(label):
+                labelhashes.add(label)
+    
+    resolved_labelhashes = await resolve_labelhashes_querying_labelhashes(network_name, labelhashes)
+    
+    resolved_names = []
+    for labels in segmented_names:
+        for i, label in enumerate(labels):
+            if label_is_labelhash(label):
+                labels[i] = resolved_labelhashes[label]
+        resolved_names.append('.'.join(labels))
+    return resolved_names

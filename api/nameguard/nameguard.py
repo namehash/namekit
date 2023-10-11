@@ -41,8 +41,8 @@ from nameguard.utils import (
 )
 from nameguard.exceptions import NamehashNotFoundInSubgraph, ProviderUnavailable, NotAGrapheme
 from nameguard.logging import logger
-from nameguard.subgraph import namehash_to_name_lookup, resolve_all_labelhashes_in_name
-
+from nameguard.subgraph import namehash_to_name_lookup, resolve_all_labelhashes_in_name, \
+    resolve_all_labelhashes_in_name_querying_labelhashes, resolve_all_labelhashes_in_names_querying_labelhashes
 
 GRAPHEME_CHECKS = [
     checks.grapheme.confusables.check_grapheme,
@@ -99,7 +99,7 @@ class NameGuard:
     def analyse_label(self, label: str):
         return self._inspector.analyse_label(label, simple_confusables=True)
 
-    def inspect_name(self, name: str) -> NameGuardReport:
+    async def inspect_name(self, network_name: NetworkName, name: str, resolve_labelhashes: bool = True) -> NameGuardReport:
         '''
         Inspect a name. A name is a sequence of labels separated by dots.
         A label can be a labelhash or a string.
@@ -107,6 +107,10 @@ class NameGuard:
         '''
 
         logger.debug(f'[inspect_name] name: \'{name}\'')
+        
+        if resolve_labelhashes:
+            name = await resolve_all_labelhashes_in_name_querying_labelhashes(network_name, name)
+
         labels = name.split('.')
         logger.debug(f'[inspect_name] labels: {labels}')
 
@@ -213,15 +217,16 @@ class NameGuard:
             ],
         )
 
-    def bulk_inspect_names(self, names: list[str]) -> BulkNameGuardBulkReport:
+    async def bulk_inspect_names(self, network_name: NetworkName, names: list[str]) -> BulkNameGuardBulkReport:
+        names = await resolve_all_labelhashes_in_names_querying_labelhashes(network_name, names)
         return BulkNameGuardBulkReport(
-            results=[self.inspect_name(name) for name in names],
+            results=[await self.inspect_name(network_name, name, resolve_labelhashes=False) for name in names],
         )
 
     async def inspect_namehash(self, network_name: NetworkName, namehash: str) -> NameGuardReport:
         logger.debug(f'[inspect_namehash] namehash: \'{namehash}\'')
         name = await namehash_to_name_lookup(network_name, namehash)
-        return self.inspect_name(name)
+        return await self.inspect_name(network_name, name)
 
     async def inspect_name_with_labelhash_lookup(self, network_name: NetworkName, name: str) -> NameGuardReport:
         '''
@@ -233,15 +238,7 @@ class NameGuard:
 
         logger.debug(f'[inspect_name_with_labelhash_lookup] name: \'{name}\'')
 
-        if all(not label_is_labelhash(label) for label in name.split('.')):
-            logger.debug(f'[inspect_name_with_labelhash_lookup] no labelhashes found')
-            return self.inspect_name(name)
-
-        logger.debug(f'[inspect_name_with_labelhash_lookup] labelhashes found, resolving')
-
-        name = await resolve_all_labelhashes_in_name(network_name, name)
-
-        return self.inspect_name(name)
+        return await self.inspect_name(network_name, name)
 
     def inspect_grapheme(self, grapheme: str) -> GraphemeGuardReport:
         '''
@@ -300,7 +297,7 @@ class NameGuard:
         if domain is None:
             status = SecureReverseLookupStatus.NO_PRIMARY_NAME
         else:
-            nameguard_result = self.inspect_name(domain)
+            nameguard_result = await self.inspect_name(network_name, domain)
             
             result = ens_normalize.ens_process(domain, do_normalize=True, do_beautify=True)
             if result.normalized != domain:
@@ -345,7 +342,7 @@ class NameGuard:
                 if ALCHEMY_UNKNOWN_NAME.match(title):
                     return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME, nameguard_result=None)
 
-                report = self.inspect_name(title)  # TODO add network_name
+                report = await self.inspect_name(network_name, title)
                 if ens_normalize.is_ens_normalized(title):
                     return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME, nameguard_result=report)
                 else:

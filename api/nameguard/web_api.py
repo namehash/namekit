@@ -58,7 +58,7 @@ async def inspect_name_get(
 ) -> NameGuardReport:
     logger.debug(f'[GET inspect-name] input name: \'{name}\' raw path: \'{request.scope["raw_path"]} query string: '
                  f'\'{request.scope["query_string"]}\'')
-    return nameguard.inspect_name(name)
+    return await nameguard.inspect_name(network_name, name)
 
 
 @app.post(
@@ -67,7 +67,7 @@ async def inspect_name_get(
     summary='Inspect Name'
 )
 async def inspect_name_post(api_version: ApiVersion, request: InspectNameRequest) -> NameGuardReport:
-    return nameguard.inspect_name(request.name)
+    return await nameguard.inspect_name(request.network_name, request.name)
 
 
 # -- bulk-inspect-name --
@@ -84,7 +84,7 @@ class BulkInspectNamesRequest(BaseModel):
     summary='Inspect Multiple Names'
 )
 async def bulk_inspect_names(api_version: ApiVersion, request: BulkInspectNamesRequest) -> BulkNameGuardBulkReport:
-    return nameguard.bulk_inspect_names(request.names)
+    return await nameguard.bulk_inspect_names(request.network_name, request.names)
 
 
 # -- inspect-namehash --
@@ -246,6 +246,6 @@ async def inspect_grapheme_get(
     return nameguard.inspect_grapheme(grapheme)
 
 
-
 if __name__ == '__main__':
-    nameguard.inspect_name('nick.eth')
+    import asyncio
+    asyncio.run(nameguard.inspect_name('mainnet', 'nick.eth'))
