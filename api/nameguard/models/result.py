@@ -123,7 +123,7 @@ class LabelGuardReport(ConsolidatedReport):
 
     normalization: Normalization
 
-    @computed_field
+    @computed_field(description='Beautified version of `label`.')
     @property
     def beautiful_label(self) -> Optional[str]:
         return ens_beautify(self.label) if self.normalization is Normalization.NORMALIZED else None
@@ -169,7 +169,7 @@ class ConsolidatedNameGuardReport(ConsolidatedReport):
 
     normalization: Normalization
 
-    @computed_field
+    @computed_field(description='Beautified version of `name`.')
     @property
     def beautiful_name(self) -> Optional[str]:
         return ens_beautify(self.name) if self.normalization is Normalization.NORMALIZED else None
@@ -219,7 +219,8 @@ class GraphemeGuardReport(ConsolidatedGraphemeGuardReport):
         description="Link to an external page with information about the grapheme.\n"
                     "* `null` for multi-character graphemes")
 
-    @computed_field
+    @computed_field(description='The name of the webpage that `grapheme_link` links to.\n'
+                                '* "No link is available" if `grapheme_link` is `null`')
     @property
     def grapheme_link_name(self) -> str:
         if self.grapheme_link is None:

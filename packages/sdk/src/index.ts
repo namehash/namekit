@@ -130,6 +130,9 @@ export interface CheckResult {
 
   /** A message describing the result of the check */
   message: string;
+
+  /** A human-readable name for the check */
+  check_name: string
 }
 
 /**
@@ -148,6 +151,12 @@ export interface ConsolidatedReport {
    * The `Rating` of a name considers all `CheckResult` values for the name and all of its labels and graphemes.
    */
   rating: Rating;
+
+  /** A human-readable title based on the `rating` */
+  title: string;
+
+  /** A human-readable subtitle based on the `rating` */
+  subtitle: string;
 
   /* The number of `CheckResult` values on a name/label/grapheme with a `CheckStatusCode` of `alert` or `warn`. */
   risk_count: number;
@@ -188,13 +197,6 @@ export interface ConsolidatedGraphemeGuardReport extends ConsolidatedReport {
   grapheme_script: string;
 
   /**
-   * An optional link to an "external" webpage with additional details about `grapheme`.
-   *
-   * `null` for many multi-character graphemes that are not emojis.
-   */
-  grapheme_link: string | null;
-
-  /**
    * A user-friendly description of the grapheme type.
    * */
   grapheme_description: string;
@@ -208,6 +210,20 @@ export interface GraphemeGuardReport extends ConsolidatedGraphemeGuardReport {
    * A list of the results of all the checks that NameGuard performed while inspecting the grapheme.
    */
   checks: CheckResult[];
+
+  /**
+   * An optional link to an "external" webpage with additional details about `grapheme`.
+   *
+   * `null` for many multi-character graphemes that are not emojis.
+   */
+  grapheme_link: string | null;
+
+  /** 
+   * The name of the webpage that `grapheme_link` links to.
+   * 
+   * "No link is available" if `grapheme_link` is `null`.
+   */
+  grapheme_link_name: string;
 
   /**
    * A list of `ConsolidatedGraphemeGuardReport` values that might be confused with the analyzed `grapheme`.
@@ -260,6 +276,9 @@ export interface LabelGuardReport extends ConsolidatedReport {
   /** The ENSIP-15 normalization status of `label` */
   normalization: Normalization;
 
+  /** Beautified version of `label` */
+  beautiful_label: string;
+
   /**
    * A list of the results of all the checks that NameGuard performed while inspecting `label`.
    */
@@ -307,6 +326,9 @@ interface ConsolidatedNameGuardReport extends ConsolidatedReport {
 
   /* The ENSIP-15 normalization status of `name` */
   normalization: Normalization;
+
+  /** Beautified version of `name` */
+  beautiful_name: string;
 }
 
 /**

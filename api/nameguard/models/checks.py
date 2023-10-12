@@ -169,7 +169,7 @@ class GenericCheckResult(BaseModel):
     status: CheckStatus
     message: str = Field(description='A message describing the result of the check.')
 
-    @computed_field
+    @computed_field(description='The human-readable name of the check.')
     @property
     def check_name(self) -> str:
         return self.check.human_readable_name
