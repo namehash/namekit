@@ -38,7 +38,7 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE}}
           aws-region: us-east-1
-          
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
         with:
@@ -46,8 +46,8 @@ jobs:
 
       - name: Build and deploy lambda
         run: |
-          export DOCKER_BUILDKIT=1
-          docker build . --platform linux/arm64
+          #export DOCKER_BUILDKIT=1
+          #docker build . --platform linux/arm64
           npm install -g serverless
           npm install serverless-prune-plugin
           serverless deploy --stage prod --param="PROVIDER_URI_GOERLI=${{secrets.PROVIDER_URI_GOERLI}}" --param="PROVIDER_URI_MAINNET=${{secrets.PROVIDER_URI_MAINNET}}" --param="PROVIDER_URI_SEPOLIA=${{secrets.PROVIDER_URI_SEPOLIA}}"
