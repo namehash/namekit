@@ -3,6 +3,7 @@ from fastapi import FastAPI, Path, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
+from nameguard.context import endpoint_name
 from nameguard.nameguard import NameGuard
 from nameguard.utils import validate_namehash, namehash_from_labelhash, validate_token_id, validate_ethereum_address
 from nameguard.models import (
@@ -70,6 +71,7 @@ async def inspect_name_get(
 ) -> NameGuardReport:
     logger.debug(f'[GET inspect-name] input name: \'{name}\' raw path: \'{request.scope["raw_path"]} query string: '
                  f'\'{request.scope["query_string"]}\'')
+    endpoint_name.set('inspect-name')
     return await nameguard.inspect_name(network_name, name)
 
 
@@ -79,6 +81,7 @@ async def inspect_name_get(
     summary='Inspect Name'
 )
 async def inspect_name_post(api_version: ApiVersion, request: InspectNameRequest) -> NameGuardReport:
+    endpoint_name.set('inspect-name')
     return await nameguard.inspect_name(request.network_name, request.name)
 
 
@@ -96,6 +99,7 @@ class BulkInspectNamesRequest(BaseModel):
     summary='Inspect Multiple Names'
 )
 async def bulk_inspect_names(api_version: ApiVersion, request: BulkInspectNamesRequest) -> BulkNameGuardBulkReport:
+    endpoint_name.set('bulk-inspect-name')
     return await nameguard.bulk_inspect_names(request.network_name, request.names)
 
 
@@ -125,6 +129,7 @@ async def inspect_namehash_get(
         namehash: str = Path(examples=['0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835'],
                              description='Namehash should be a decimal or a hex (prefixed with 0x) string.')
 ) -> NameGuardReport:
+    endpoint_name.set('inspect-namehash')
     return await nameguard.inspect_namehash(network_name=network_name, 
         namehash=validate_namehash(namehash=namehash),
     )
@@ -142,6 +147,7 @@ async def inspect_namehash_get(
     },
 )
 async def inspect_namehash_post(api_version: ApiVersion, request: InspectNamehashRequest) -> NameGuardReport:
+    endpoint_name.set('inspect-namehash')
     return await nameguard.inspect_namehash(network_name=request.network_name,
         namehash=validate_namehash(namehash=request.namehash),
     )
@@ -176,6 +182,7 @@ async def inspect_labelhash_get(
                               description='Labelhash should be a decimal or a hex (prefixed with 0x) string.'),
         parent_name: str = Path(default_factory=lambda: '', examples=['eth'])
 ) -> NameGuardReport:
+    endpoint_name.set('inspect-labelhash')
     valid_labelhash = validate_namehash(namehash=labelhash)
     namehash = namehash_from_labelhash(valid_labelhash, parent_name=parent_name)
     return await nameguard.inspect_namehash(network_name=network_name, namehash=namehash)
@@ -193,6 +200,7 @@ async def inspect_labelhash_get(
     },
 )
 async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelhashRequest) -> NameGuardReport:
+    endpoint_name.set('inspect-labelhash')
     valid_labelhash = validate_namehash(namehash=request.labelhash)
     namehash = namehash_from_labelhash(valid_labelhash, parent_name=request.parent_name)
     return await nameguard.inspect_namehash(network_name=request.network_name, namehash=namehash)
@@ -211,6 +219,7 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
     },
 )
 async def primary_name_get(api_version: ApiVersion, address: str, network_name: NetworkName) -> SecureReverseLookupResult:
+    endpoint_name.set('primary-name')
     address = validate_ethereum_address(address)
     return await nameguard.primary_name(address, network_name)
 
@@ -235,6 +244,7 @@ async def fake_eth_name_check_get(
         token_id: str = Path(examples=['61995921128521442959106650131462633744885269624153038309795231243542768648193'], 
                              description='The ID of the token (in hex or decimal format).')
 ) -> FakeEthNameCheckResult:
+    endpoint_name.set('fake-ens-name-check')
     contract_address = validate_ethereum_address(contract_address)
     token_id = validate_token_id(token_id)
     return await nameguard.fake_eth_name_check(network_name=network_name, contract_address=contract_address, token_id=token_id)
@@ -256,6 +266,7 @@ async def inspect_grapheme_get(
         grapheme: str = Path(description='Grapheme to inspect. Should be url-encoded (except when using the Swagger UI).',
                              examples=['ń', '%F0%9F%98%B5'])
 ) -> GraphemeGuardReport:
+    endpoint_name.set('inspect-grapheme')
     return nameguard.inspect_grapheme(grapheme)
 
 
