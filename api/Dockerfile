@@ -1,4 +1,4 @@
-FROM --platform linux/amd64,linux/arm64 public.ecr.aws/lambda/python:3.11
+FROM public.ecr.aws/lambda/python:3.11
 
 WORKDIR /app
 
