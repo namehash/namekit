@@ -19,6 +19,8 @@ provider:
     images:
       oss-nameguard:
         path: ./
+      platform: linux/amd64
+    
 
 plugins:
   - serverless-prune-plugin
