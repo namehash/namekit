@@ -74,7 +74,7 @@ jobs:
         if: ${{ needs.build-image-deploy-serverless.result == 'success'}}
         run: |
           echo "STATUS=Success  :rocket:" >> $GITHUB_ENV
-          echo "TEXT=Lambda NameGuard deployment successfully! :white_check_mark:" >> $GITHUB_ENV
+          echo "TEXT=Lambda NameGuard deployed successfully! :white_check_mark:" >> $GITHUB_ENV
 
       - name: Output status on deployment failed
         if: ${{ needs.build-image-deploy-serverless.result == 'failure' }}
