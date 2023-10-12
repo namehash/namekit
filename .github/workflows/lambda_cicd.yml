@@ -38,6 +38,11 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE}}
           aws-region: us-east-1
+          
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: arm64
 
       - name: Build and deploy lambda
         run: |
