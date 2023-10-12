@@ -1,4 +1,4 @@
-FROM public.ecr.aws/lambda/python:3.11.2023.09.29.09-arm64
+FROM public.ecr.aws/lambda/python:3.11-arm64	
 
 WORKDIR /app
 
