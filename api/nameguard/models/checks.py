@@ -1,8 +1,9 @@
 from pydantic import BaseModel, Field, computed_field
 from enum import Enum
 
-from nameguard.utils import capitalize_words
 
+def capitalize_words(s: str) -> str:
+    return ' '.join(word.capitalize() for word in s.split(' '))
 
 class CheckStatus(str, Enum):
     '''

@@ -196,8 +196,7 @@ def get_highest_risk(check_results: list[GenericCheckResult]) -> Optional[Generi
     return max((check for check in check_results if check.rating > Rating.PASS), default=None)
 
 
-def capitalize_words(s: str) -> str:
-    return ' '.join(word.casefold() for word in s.split(' '))
+
 
 
 def detect_grapheme_link_name(link: str) -> str:
