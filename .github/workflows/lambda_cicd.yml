@@ -91,7 +91,7 @@ jobs:
             {
               attachments: [{
                 color: '${{ needs.build-image-deploy-serverless.result  }}' === 'success' ? 'good' : '${{ needs.build-image-deploy-serverless.result }}' === 'failure' ? 'danger' : 'warning',
-                title: 'Lambda Nameguard deployment.',
+                title: 'Lambda NameGuard deployment.',
                 text: '${{ env.TEXT }}',
                 fields: [
                 {
