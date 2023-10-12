@@ -1,0 +1,165 @@
+service: oss-nameguard
+
+custom:
+  stage: ${opt:stage}
+  apiDomain: api.nameguard.io
+  hostedZoneName: nameguard.io.  
+  hostedZoneId: Z00825691ZLCWE2VKJQW0
+  prune:
+    automatic: true
+    number: 5
+  region: us-east-1   
+
+
+provider:
+  name: aws
+  stage: ${self:custom.stage}
+  architecture: arm64
+  ecr:
+    images:
+      oss-nameguard:
+        path: ./
+      platform: linux/arm64
+    
+
+plugins:
+  - serverless-prune-plugin
+
+functions:
+  oss-nameguard:
+    image:
+      name: oss-nameguard
+    name: oss-nameguard-${self:custom.stage}
+    memorySize: 512
+    timeout: 10
+    versionFunctions: true
+    url: true
+    role: DefaultNameGuardRole
+    provisionedConcurrency: 1
+    tags:
+      Stage: ${self:custom.stage}
+    environment:
+      PROVIDER_URI_GOERLI: ${param:PROVIDER_URI_GOERLI}
+      PROVIDER_URI_MAINNET: ${param:PROVIDER_URI_MAINNET}
+      PROVIDER_URI_SEPOLIA: ${param:PROVIDER_URI_SEPOLIA}
+
+
+resources:
+  Resources:
+    DefaultNameGuardRole:
+      Type: AWS::IAM::Role
+      Properties:
+        Path: /my/default/path/
+        RoleName: DefaultNameGuardRole # required if you want to use 'serverless deploy --function' later on
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+              Action: sts:AssumeRole
+        Policies:
+          - PolicyName: NameGuardPolicy
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: Allow # note that these rights are given in the default policy and are required if you want logs out of your lambda(s)
+                  Action:
+                    - logs:CreateLogGroup
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                    - logs:TagResource
+                  Resource:
+                    - 'Fn::Join':
+                      - ':'
+                      -
+                        - 'arn:aws:logs'
+                        - Ref: 'AWS::Region'
+                        - Ref: 'AWS::AccountId'
+                        - 'log-group:/aws/lambda/*:*:*'
+                -  Effect: "Allow"
+                   Action:
+                     - "s3:PutObject"
+                   Resource:
+                     Fn::Join:
+                       - ""
+                       - - "arn:aws:s3:::"
+                         - "Ref" : "ServerlessDeploymentBucket"
+                -  Effect: Allow
+                   Action:
+                     - ecr:BatchGetImage
+                     - ecr:GetDownloadUrlForLayer
+                   Resource: [ "*" ] 
+
+    ACMCertificate: 
+      Type: "AWS::CertificateManager::Certificate"
+      Properties: 
+        DomainName: ${self:custom.apiDomain}
+        DomainValidationOptions:
+              - DomainName: ${self:custom.apiDomain}
+                HostedZoneId: ${self:custom.hostedZoneId}
+        ValidationMethod: DNS 
+
+    ApiCloudFrontDistribution:
+      Type: AWS::CloudFront::Distribution
+      DeletionPolicy: Delete
+      Properties:
+        DistributionConfig:
+          Enabled: true
+          PriceClass: PriceClass_100
+          HttpVersion: http2
+          Comment: Api distribution for ${self:custom.apiDomain}
+          Origins:
+            - Id: ApiGateway
+              DomainName: !Select [2, !Split ["/", !GetAtt OssDashnameguardLambdaFunctionUrl.FunctionUrl]]
+              OriginPath: ''
+              CustomOriginConfig:
+                HTTPPort: 80
+                HTTPSPort: 443
+                OriginProtocolPolicy: https-only
+                OriginSSLProtocols: [TLSv1, TLSv1.1, TLSv1.2]
+          DefaultCacheBehavior:
+            TargetOriginId: ApiGateway
+            ViewerProtocolPolicy: redirect-to-https
+            Compress: true
+            DefaultTTL: 0
+            AllowedMethods:
+              - HEAD
+              - DELETE
+              - POST
+              - GET
+              - OPTIONS
+              - PUT
+              - PATCH
+            CachedMethods:
+              - HEAD
+              - OPTIONS
+              - GET
+            ForwardedValues:
+              QueryString: false
+              Headers:
+                - Accept
+                - x-api-key
+                - Authorization
+              Cookies:
+                Forward: none
+          Aliases:
+            - ${self:custom.apiDomain}
+          ViewerCertificate:
+            SslSupportMethod: sni-only
+            MinimumProtocolVersion: TLSv1.2_2019
+            AcmCertificateArn: !Ref ACMCertificate
+    ApiRecordSetGroup:
+      Type: AWS::Route53::RecordSetGroup
+      DeletionPolicy: Delete
+      DependsOn:
+        - ApiCloudFrontDistribution
+      Properties:
+        HostedZoneName: ${self:custom.hostedZoneName}
+        RecordSets:
+          - Name: ${self:custom.apiDomain}
+            Type: A
+            AliasTarget:
+              HostedZoneId: Z2FDTNDATAQYW2 #default for cloudfront
+              DNSName: { 'Fn::GetAtt': [ApiCloudFrontDistribution, DomainName] } # set the domain of your cloudfront distribution

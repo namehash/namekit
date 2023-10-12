@@ -2,19 +2,26 @@
 
 The NameHash team is proud to present NameGuard, a tool for identifying and preventing malicious use of ENS names.
 
-* Offers multiple levels of protection
-  * Confusable grapheme detection
-  * International accessibility checks
-  * Rendering checks for different fonts
-  * ENSIP-15 verification with detailed explanations and auto-suggestions
-  * Punycode and DNS hostname compatibility checks
-* Provides a unified rating system for entire names, as well as detailed explanations for each check
-* Supports many use cases
-  * Standalone Python library (PyPI link)
-  * ASGI web server
-  * [Amazon AWS Lambda](https://aws.amazon.com/lambda/) handler
+- Offers multiple levels of protection
+  - Confusable grapheme detection
+  - International accessibility checks
+  - Rendering checks for different fonts
+  - ENSIP-15 verification with detailed explanations and auto-suggestions
+  - Punycode and DNS hostname compatibility checks
+- Provides a unified rating system for entire names, as well as detailed explanations for each check
+- Supports many use cases
+  - Standalone Python library (PyPI link)
+  - ASGI web server
+  - [Amazon AWS Lambda](https://aws.amazon.com/lambda/) handler
 
 ## Getting Started
+
+### Env varaibles
+
+```bash
+AWS_ROLE - AWS Role used by GitHub actions to create the CloudFormation infrastructure for deploying NameGuard as an AWS Lambda and pushing the latest build image to AWS ECR.
+SLACK_WEBHOOK_URL - Slack webhook url used by GitHub actions to send notifications of deployment success or failure to the dev team's slack channel.
+```
 
 ### Installing the library
 
