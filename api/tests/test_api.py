@@ -137,15 +137,18 @@ def test_inspect_name_post_latin_all_pass(test_client, api_version):
     assert res_json['name'] == name
     assert res_json['namehash'] == '0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835'
     assert res_json['normalization'] == 'normalized'
-    assert res_json['highest_risk'] == None
+    assert res_json['highest_risk'] is None
     assert res_json['rating'] == 'pass'
     assert res_json['risk_count'] == 0
+    assert res_json['subtitle'] == 'All security checks passed!'
+    assert res_json['title'] == 'Looks Good'
     assert res_json['checks']
     assert len(res_json['labels']) == 2
 
     for check in res_json['checks']:
         assert 'check' in check and 'message' in check
         assert check['status'] == 'pass'
+        assert check['check_name'][0].isupper() and '_' not in check['check_name']
 
     # labels keys
     assert (set(label_res.keys()) == {'label', 'labelhash', 'normalization', 'highest_risk', 'rating', 'risk_count', 'checks', 'graphemes'}
@@ -154,24 +157,38 @@ def test_inspect_name_post_latin_all_pass(test_client, api_version):
     # grapheme keys
     assert all(
         set(grapheme_res.keys()) == {'grapheme', 'grapheme_name', 'grapheme_type', 'grapheme_script',
-                                     'grapheme_link', 'highest_risk', 'rating', 'risk_count', 'grapheme_description'}
+                                      'highest_risk', 'rating', 'risk_count', 'grapheme_description', 'subtitle', 'title'}
         for label_res in res_json['labels'] for grapheme_res in label_res['graphemes']
     )
 
     for i, label in enumerate(('vitalik', 'eth')):
         assert res_json['labels'][i]['label'] == label
+        assert res_json['labels'][i]['beautiful_label'] == label
+        assert res_json['labels'][i]['canonical_label'] == label
         assert res_json['labels'][i]['labelhash'] == labelhash_from_label(label)
         assert res_json['labels'][i]['normalization'] == 'normalized'
+        assert res_json['labels'][i]['rating'] == 'pass'
+        assert res_json['labels'][i]['risk_count'] == 0
+        assert res_json['labels'][i]['highest_risk'] is None
+        assert res_json['labels'][i]['title'] == 'Looks Good'
+        assert res_json['labels'][i]['subtitle'] == 'All security checks passed!'
         for check in res_json['labels'][i]['checks']:
             assert 'check' in check and 'message' in check
             assert check['status'] == 'pass'
+            assert check['check_name'][0].isupper() and '_' not in check['check_name']
+        print(res_json['labels'][i])
 
     for grapheme_res, expected_grapheme in zip(res_json['labels'][0]['graphemes'], list('vitalik')):
         assert grapheme_res['grapheme'] == expected_grapheme
         assert grapheme_res['grapheme_script'] == 'Latin'
-        assert grapheme_res['highest_risk'] == None
+        assert grapheme_res['highest_risk'] is None
         assert grapheme_res['rating'] == 'pass'
         assert grapheme_res['risk_count'] == 0
+        assert grapheme_res['grapheme_type'] == 'simple_letter'
+        assert grapheme_res['grapheme_description'] == 'A-Z letter'
+        assert grapheme_res['title'] == 'Looks Good'
+        assert grapheme_res['subtitle'] == 'All security checks passed!'
+
 
 
 
@@ -186,7 +203,7 @@ def test_bulk_inspect_name_post(test_client, api_version):
 
     # only these keys should be returned
     assert all(
-        [set(r.keys()) == {'name', 'namehash', 'normalization', 'highest_risk', 'rating', 'risk_count'} for r in res_json['results']]
+        [set(r.keys()) == {'name', 'namehash', 'normalization', 'highest_risk', 'rating', 'risk_count', 'beautiful_name', 'subtitle', 'title'} for r in res_json['results']]
     )
 
     # more than 250 names
@@ -469,6 +486,7 @@ def test_inspect_grapheme(test_client, api_version):
     for check in res_json['checks']:
         assert 'check' in check and 'message' in check
         assert check['status'] in ('pass', 'warn')
+        assert check['check_name'][0].isupper() and '_' not in check['check_name']
 
 
 

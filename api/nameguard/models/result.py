@@ -1,8 +1,10 @@
 from typing import Optional
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, computed_field
 from enum import Enum
+from ens_normalize import ens_beautify
 
-from nameguard.models.checks import GenericCheckResult, Rating
+from nameguard.models.checks import GenericCheckResult, Rating, Check
+from nameguard.utils import detect_grapheme_link_name
 
 
 class Normalization(str, Enum):
@@ -26,11 +28,43 @@ class ConsolidatedReport(BaseModel):
 
     rating: Rating
 
+    @computed_field(description='A human-readable title based on the `rating`.')
+    @property
+    def title(self) -> str:
+        if self.rating is Rating.PASS:
+            return 'Looks Good'
+        elif self.rating is Rating.WARN:
+            if self.highest_risk is not None and self.highest_risk.check is Check.IMPERSONATION_RISK:
+                return 'Impersonation Risk'
+            else:
+                return 'Some Risk'
+        else: # self.rating is Rating.ALERT:
+            # TODO: if fake eth name: 'Fake ENS Name'
+            return 'High Risk'
+
+    @computed_field(description='A human-readable subtitle based on the `rating`.')
+    @property
+    def subtitle(self) -> str:
+        if self.rating is Rating.PASS:
+            return 'All security checks passed!'
+        elif self.rating is Rating.WARN:
+            return 'Review risks before proceeding'
+        else: # self.rating is Rating.ALERT:
+            return f'Better not to use this {self._string_value}'
+
     risk_count: int = Field(
         description='The number of checks that have a status of `alert` or `warn`.')
 
     highest_risk: Optional[GenericCheckResult] = Field(
         description='The check considered to be the highest risk. If no check has a status of `alert` or `warn`, this field is `null`.')
+
+    @property
+    def _string_type(self) -> str:
+        raise NotImplementedError
+
+    @property
+    def _string_value(self) -> str:
+        raise NotImplementedError
 
 
 class ConsolidatedGraphemeGuardReport(ConsolidatedReport):
@@ -61,11 +95,15 @@ class ConsolidatedGraphemeGuardReport(ConsolidatedReport):
     grapheme_script: str = Field(
         description='Script name of the grapheme computed from the script names of its characters.')
 
-    grapheme_link: Optional[str] = Field(
-        description="Link to an external page with information about the grapheme.\n"
-                    "* `null` for multi-character graphemes")
-
     grapheme_description: str = Field(description="Description of the grapheme type.")
+
+    @property
+    def _string_type(self) -> str:
+        return 'grapheme'
+
+    @property
+    def _string_value(self) -> str:
+        return self.grapheme
 
 
 class LabelGuardReport(ConsolidatedReport):
@@ -85,6 +123,11 @@ class LabelGuardReport(ConsolidatedReport):
 
     normalization: Normalization
 
+    @computed_field(description='Beautified version of `label`.')
+    @property
+    def beautiful_label(self) -> Optional[str]:
+        return ens_beautify(self.label) if self.normalization is Normalization.NORMALIZED else None
+
     checks: list[GenericCheckResult] = Field(
         description='A list of checks that were performed on the label.',
     )
@@ -99,6 +142,14 @@ class LabelGuardReport(ConsolidatedReport):
                     '* `null` if the result would be unnormalized, even if the canonical form of all graphemes is known\n'
                     '* `[labelhash]` if the label is unknown',
     )
+
+    @property
+    def _string_type(self) -> str:
+        return 'label'
+
+    @property
+    def _string_value(self) -> str:
+        return self.label
 
 
 class ConsolidatedNameGuardReport(ConsolidatedReport):
@@ -117,6 +168,19 @@ class ConsolidatedNameGuardReport(ConsolidatedReport):
     )
 
     normalization: Normalization
+
+    @computed_field(description='Beautified version of `name`.')
+    @property
+    def beautiful_name(self) -> Optional[str]:
+        return ens_beautify(self.name) if self.normalization is Normalization.NORMALIZED else None
+
+    @property
+    def _string_type(self) -> str:
+        return 'name'
+
+    @property
+    def _string_value(self) -> str:
+        return self.name
 
 
 class NameGuardReport(ConsolidatedNameGuardReport):
@@ -150,6 +214,19 @@ class BulkNameGuardBulkReport(BaseModel):
 class GraphemeGuardReport(ConsolidatedGraphemeGuardReport):
     checks: list[GenericCheckResult] = Field(
         description='A list of checks that were performed on the grapheme.')
+
+    grapheme_link: Optional[str] = Field(
+        description="Link to an external page with information about the grapheme.\n"
+                    "* `null` for multi-character graphemes")
+
+    @computed_field(description='The name of the webpage that `grapheme_link` links to.\n'
+                                '* "No link is available" if `grapheme_link` is `null`')
+    @property
+    def grapheme_link_name(self) -> str:
+        if self.grapheme_link is None:
+            return 'No link is available'
+        else:
+            return detect_grapheme_link_name(self.grapheme_link)
 
     confusables: list[ConsolidatedGraphemeGuardReport] = Field(
         description='A list graphemes that can be confused with the analyzed grapheme. '

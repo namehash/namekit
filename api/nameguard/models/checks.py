@@ -1,6 +1,9 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, computed_field
 from enum import Enum
 
+
+def capitalize_words(s: str) -> str:
+    return ' '.join(word.capitalize() for word in s.split(' '))
 
 class CheckStatus(str, Enum):
     '''
@@ -136,6 +139,10 @@ class Check(str, Enum):
     IMPERSONATION_RISK = 'impersonation_risk'
     PUNYCODE_COMPATIBLE_NAME = 'punycode_compatible_name'
 
+    @property
+    def human_readable_name(self):
+        return capitalize_words(self.value.replace('_', ' '))
+
 
 SEVERITY_ORDER_DESC = [
     # highest severity first
@@ -162,6 +169,11 @@ class GenericCheckResult(BaseModel):
     check: Check
     status: CheckStatus
     message: str = Field(description='A message describing the result of the check.')
+
+    @computed_field(description='The human-readable name of the check.')
+    @property
+    def check_name(self) -> str:
+        return self.check.human_readable_name
 
     @property
     def rating(self):
