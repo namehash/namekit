@@ -215,8 +215,7 @@ export default async function Home() {
                 Have feedback or suggestions?
               </p>
               <p className="text-gray-500 font-normal leading-6 text-sm">
-                If you think any inspection result could be improved please
-                contact us with details.
+                If you think any inspection result could be improved please contact us. The NameHash team is happy to help.
               </p>
             </div>
             <div className="w-full md:w-auto flex-shrink-0">
