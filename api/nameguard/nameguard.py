@@ -325,28 +325,30 @@ class NameGuard:
         token_type = res_json['id']['tokenMetadata']['tokenType']
         
         if token_type not in ['ERC721', 'ERC1155'] and contract_address in ens_contract_adresses:
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME, nameguard_result=None)
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_names=None)
         if token_type == 'NOT_A_CONTRACT':
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None)
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_names=None)
         elif token_type == 'NO_SUPPORTED_NFT_STANDARD':
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None)  #TODO: different status?
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_names=None)
         elif token_type not in ['ERC721', 'ERC1155']:  # Alchemy does not support other types
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None)
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_names=None)
 
         title = res_json['title']
-
+        investigated_names = None  # TODO
         if contract_address in ens_contract_adresses:
-            if title == '':
-                return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME, nameguard_result=None)
+            if title == '':  # the name has never been registered
+                return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_names=None)
             else:
                 if ALCHEMY_UNKNOWN_NAME.match(title):
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME, nameguard_result=None)
+                    unknown_name = f"[{res_json['id']['tokenId'][2:]}].eth"
+                    report = await self.inspect_name(network_name, unknown_name)
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_ETH_NAME, nameguard_result=report, investigated_names=investigated_names)
 
                 report = await self.inspect_name(network_name, title)
                 if ens_normalize.is_ens_normalized(title):
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME, nameguard_result=report)
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME, nameguard_result=report, investigated_names=investigated_names)
                 else:
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.INVALID_ETH_NAME, nameguard_result=report)
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.INVALID_ETH_NAME, nameguard_result=report, investigated_names=investigated_names)
         else:
             fields_values=[]
             for keys in [['title'],
@@ -367,12 +369,12 @@ class NameGuard:
                     except DisallowedSequence:
                         canonical_name = title
                     if canonical_name.endswith('.eth'):
-                        return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, nameguard_result=None)
+                        return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, nameguard_result=None, investigated_names=investigated_names)
                     fields_values.append(canonical_name)
                 except KeyError:
                     pass
             for field_value in fields_values:
                 if '.eth' in field_value:
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME, nameguard_result=None)
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME, nameguard_result=None, investigated_names=investigated_names)
 
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME, nameguard_result=None)
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME, nameguard_result=None, investigated_names=investigated_names)
