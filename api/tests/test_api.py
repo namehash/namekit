@@ -47,7 +47,7 @@ def test_inspect_name_get(test_client, api_version):
     assert res_json['name'] == name
     assert res_json['namehash'] == '0xf8c2c01d386a4807b3ceb131e4975ff37b44824ac9307121b18223f3d77d0c2e'
     assert res_json['normalization'] == 'normalized'
-    assert res_json['highest_risk'] == None
+    assert res_json['highest_risk'] is None
     assert res_json['rating'] == 'pass'
     assert res_json['risk_count'] == 0
     assert res_json['checks']
@@ -535,7 +535,7 @@ def test_primary_name_get_unknown(test_client, api_version):
     res_json = response.json()
     print(res_json)
     assert res_json['primary_name_status'] == 'no_primary_name'
-    assert res_json['primary_name'] == None
+    assert res_json['primary_name'] is None
     assert res_json['display_name'] == 'Unnamed d8da'
 
     #TODO add example with address resolved to unnoramlized (test existence of nameguard results) name and test other networks
@@ -595,6 +595,9 @@ def test_fake_eth_name_check(test_client, api_version, contract_address, token_i
         assert res_json['nameguard_result'] is not None
     else:
         assert res_json['nameguard_result'] is None
+        
+    if res_json['status'] != FakeEthNameCheckStatus.UNKNOWN_NFT:
+        assert res_json['investigated_names']
 
 
 def test_invalid_unicode(test_client, api_version):

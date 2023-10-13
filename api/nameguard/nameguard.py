@@ -334,7 +334,17 @@ class NameGuard:
             return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_names=None)
 
         title = res_json['title']
-        investigated_names = None  # TODO
+        investigated_names = {}
+        for keys in [['title'],
+                     ['metadata', 'name'],
+                     ['contractMetadata', 'openSea', 'collectionName'],
+                     ['contractMetadata', 'name']]:
+            try:
+                name = nested_get(res_json, keys)
+                investigated_names['.'.join(keys)] = name
+            except KeyError:
+                pass
+        
         if contract_address in ens_contract_adresses:
             if title == '':  # the name has never been registered
                 return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_names=None)
@@ -351,28 +361,20 @@ class NameGuard:
                     return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.INVALID_ETH_NAME, nameguard_result=report, investigated_names=investigated_names)
         else:
             fields_values=[]
-            for keys in [['title'],
-                         ['metadata', 'name'], 
-                         ['contractMetadata', 'openSea', 'collectionName'],
-                         ['contractMetadata', 'name']]:
+            for name in investigated_names.values():
                 try:
-                    name = nested_get(res_json, keys)
-                    try:
-                        #TODO: remove invisible and then canonicalize
-                        cured_title = ens_normalize.ens_cure(name)  #TODO improve
-                        # canonicalize
-                        inspector_result = self.analyse_label(cured_title)
-                        if inspector_result.canonical_label is not None:
-                            canonical_name = inspector_result.canonical_label
-                        else:
-                            canonical_name = cured_title
-                    except DisallowedSequence:
-                        canonical_name = title
-                    if canonical_name.endswith('.eth'):
-                        return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, nameguard_result=None, investigated_names=investigated_names)
-                    fields_values.append(canonical_name)
-                except KeyError:
-                    pass
+                    cured_title = ens_normalize.ens_cure(name)  #TODO improve, e.g. remove invisible and then canonicalize
+                    inspector_result = self.analyse_label(cured_title)
+                    if inspector_result.canonical_label is not None:
+                        canonical_name = inspector_result.canonical_label
+                    else:
+                        canonical_name = cured_title
+                except DisallowedSequence:
+                    canonical_name = title
+                if canonical_name.endswith('.eth'):
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, nameguard_result=None, investigated_names=investigated_names)
+                fields_values.append(canonical_name)
+                
             for field_value in fields_values:
                 if '.eth' in field_value:
                     return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME, nameguard_result=None, investigated_names=investigated_names)
