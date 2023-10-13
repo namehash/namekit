@@ -357,7 +357,7 @@ class NameGuard:
                     name = nested_get(res_json, keys)
                     try:
                         #TODO: remove invisible and then canonicalize
-                        cured_title = ens_normalize.ens_cure(name)
+                        cured_title = ens_normalize.ens_cure(name)  #TODO improve
                         # canonicalize
                         inspector_result = self.analyse_label(cured_title)
                         if inspector_result.canonical_label is not None:
