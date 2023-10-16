@@ -132,7 +132,7 @@ export interface CheckResult {
   message: string;
 
   /** A human-readable name for the check */
-  check_name: string
+  check_name: string;
 }
 
 /**
@@ -218,9 +218,9 @@ export interface GraphemeGuardReport extends ConsolidatedGraphemeGuardReport {
    */
   grapheme_link: string | null;
 
-  /** 
+  /**
    * The name of the webpage that `grapheme_link` links to.
-   * 
+   *
    * "No link is available" if `grapheme_link` is `null`.
    */
   grapheme_link_name: string;
@@ -393,8 +393,7 @@ class NameGuardError extends Error {
   }
 }
 
-const DEFAULT_ENDPOINT =
-  "https://pyfgdpsi4jgbf5tlzu62zbokii0mhmgc.lambda-url.eu-north-1.on.aws";
+const DEFAULT_ENDPOINT = "https://api.nameguard.io";
 const DEFAULT_VERSION = "v1-beta";
 const DEFAULT_NETWORK: Network = "mainnet";
 const DEFAULT_INSPECT_LABELHASH_PARENT = "eth";
