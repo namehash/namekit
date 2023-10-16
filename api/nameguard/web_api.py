@@ -1,5 +1,6 @@
 from enum import Enum
 from fastapi import FastAPI, Path, Request
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 from nameguard.nameguard import NameGuard
@@ -30,6 +31,15 @@ class ApiVersion(str, Enum):
 
 
 app = FastAPI(title='NameGuard Service', version=ApiVersion.V1_BETA.value)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 nameguard = NameGuard()
 
 
