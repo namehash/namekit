@@ -9,10 +9,18 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      colors: {
+          "figma-black": "#201F1F",
+          "code-gray": "#434446",
+      },
+      padding: {
+        "7.5": "30px",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "gradient-test": "url('../../public/assets/background.svg')",
       },
     },
   },
