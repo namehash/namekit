@@ -114,11 +114,10 @@ export function Search() {
                   {!loading && !error && !data && (
                     <div className="w-full py-16 md:py-40 flex-col items-center text-center">
                       <p className="text-[18px] leading-6 font-semibold text-black">
-                        Start typing or check out what&apos;s hot
+                        Search for any ENS name to generate a NameGuard report
                       </p>
                       <p className="mx-6 mt-3 md:mt-2 mb-5 md:mb-4 text-sm font-normal md:font-medium leading-6 text-gray-500">
-                        Check out some collections from the community or start
-                        your search
+                        or check out some of the names below to see how it works
                       </p>
                     </div>
                   )}
