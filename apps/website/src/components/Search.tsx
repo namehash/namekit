@@ -6,9 +6,10 @@ import cc from "classcat";
 import { useInspectName } from "@namehash/nameguard-react";
 import { DebounceInput } from "react-debounce-input";
 import { Report } from "@namehash/nameguard-react";
+import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 
 export function Search() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [nameToInspect, setNameToInspect] = useState("");
 
   const onCloseModal = () => {
@@ -80,20 +81,71 @@ export function Search() {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div className="relative transform divide-y divide-gray-200 overflow-hidden md:rounded-xl bg-white shadow-2xl transition-all">
-              <DebounceInput
-                debounceTimeout={300}
-                type="text"
-                placeholder="Enter a name to inspect"
-                value={nameToInspect}
-                onChange={(event) => setNameToInspect(event.target.value)}
-              />
+            <div className="relative transform overflow-hidden md:rounded-xl bg-white shadow-2xl transition-all">
+              <div className="h-[68px] flex items-center shadow-sm px-6 space-x-3">
+                <div className="flex items-center justify-center flex-shrink-0">
+                  <MagnifyingGlassIcon className="w-5 h-5 fill-current text-gray-500" />
+                </div>
+                <div className="w-full flex-1">
+                  <div className="max-w-6xl mx-auto px-6">
+                    <DebounceInput
+                      debounceTimeout={300}
+                      type="text"
+                      placeholder="Enter a name to inspect"
+                      value={nameToInspect}
+                      onChange={(event) => setNameToInspect(event.target.value)}
+                      className="w-full border border-gray-500 bg-gray-100 rounded-lg text-black placeholder-gray-400 px-3 py-2 ring-0 outline-none"
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center justify-center flex-shrink-0">
+                  <button
+                    onClick={onCloseModal}
+                    className="flex items-center justify-between p-2"
+                  >
+                    <XMarkIcon className="w-5 h-5 fill-current text-black" />
+                  </button>
+                </div>
+              </div>
 
-              <div className="max-h-[calc(100vh-25px)] md:max-h-[calc(100vh-132px)] overflow-y-auto p-0">
-                <div className="max-w-6xl mx-auto px-6 py-12 space-y-12">
+              <div className="max-h-[calc(100vh-68px)] md:max-h-[76vh] lg:max-h-[64vh] overflow-y-auto">
+                <div className="max-w-6xl mx-auto py-12 space-y-12 px-6">
+                  {/* TODO: Move to component */}
+                  {!loading && !error && !data && (
+                    <div className="w-full py-16 md:py-40 flex-col items-center text-center">
+                      <p className="text-[18px] leading-6 font-semibold text-black">
+                        Start typing or check out what&apos;s hot
+                      </p>
+                      <p className="mx-6 mt-3 md:mt-2 mb-5 md:mb-4 text-sm font-normal md:font-medium leading-6 text-gray-500">
+                        Check out some collections from the community or start
+                        your search
+                      </p>
+                    </div>
+                  )}
+                  {/* TODO: Move to component */}
                   {loading && <p>Loading...</p>}
                   {error && <p>Error: {error.message}</p>}
                   {data && <Report data={data} />}
+                </div>
+              </div>
+              {/* TODO: Move to component */}
+              <div className="bg-gray-100 flex items-center justify-between px-5 py-4 border-t border-gray-300">
+                <div className="flex items-center space-x-3">
+                  <a href="#" className="text-sm text-black underline">
+                    Chat with us
+                  </a>
+                  <button className="text-sm text-black underline appearance-none">
+                    Search settings
+                  </button>
+                </div>
+                <div className="text-sm text-gray-500">
+                  Made with ❤️ by{" "}
+                  <a
+                    href="https://namehash.io"
+                    className="text-sm text-black underline"
+                  >
+                    NameHash
+                  </a>
                 </div>
               </div>
             </div>
