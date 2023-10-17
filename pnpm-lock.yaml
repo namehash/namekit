@@ -82,8 +82,8 @@ importers:
   packages/nameguard-react:
     dependencies:
       '@namehash/nameguard':
-        specifier: 0.0.5
-        version: 0.0.5
+        specifier: workspace:*
+        version: link:../sdk
       classcat:
         specifier: 5.0.4
         version: 5.0.4
@@ -682,14 +682,6 @@ packages:
       globby: 11.1.0
       read-yaml-file: 1.1.0
     dev: true
-
-  /@namehash/nameguard@0.0.5:
-    resolution: {integrity: sha512-MFkwnO2VWhFJEktNxB8FOZbYnEv70pA7mhqENteV5eAUXq8eDXusPi/KgccDm98oMf5QRuqqujm9/LJpqjppfA==}
-    dependencies:
-      cross-fetch: 4.0.0
-    transitivePeerDependencies:
-      - encoding
-    dev: false
 
   /@next/env@13.5.5:
     resolution: {integrity: sha512-agvIhYWp+ilbScg81s/sLueZo8CNEYLjNOqhISxheLmD/AQI4/VxV7bV76i/KzxH4iHy/va0YS9z0AOwGnw4Fg==}

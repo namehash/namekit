@@ -55,7 +55,7 @@ export function Search() {
         <Dialog
           as="div"
           className={cc([
-            "sm:p-0 md:p-20 lg:p-4 lg:pt-32 fixed inset-0 z-30 overflow-y-hidden",
+            "sm:p-0 md:p-20 lg:p-4 xl:p-16 fixed inset-0 z-30 overflow-y-hidden",
           ])}
           open={open}
           onClose={onCloseModal}
@@ -80,7 +80,7 @@ export function Search() {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div className="relative mx-auto max-w-6xl transform divide-y divide-gray-200 overflow-hidden md:rounded-xl bg-white shadow-2xl transition-all">
+            <div className="relative transform divide-y divide-gray-200 overflow-hidden md:rounded-xl bg-white shadow-2xl transition-all">
               <DebounceInput
                 debounceTimeout={300}
                 type="text"
@@ -89,10 +89,12 @@ export function Search() {
                 onChange={(event) => setNameToInspect(event.target.value)}
               />
 
-              <div className="max-h-[calc(100vh-58px)] lg:max-h-[64vh] md:max-h-[76vh] overflow-y-auto p-0">
-                {loading && <p>Loading...</p>}
-                {error && <p>Error: {error.message}</p>}
-                {data && <Report data={data} />}
+              <div className="max-h-[calc(100vh-25px)] md:max-h-[calc(100vh-132px)] overflow-y-auto p-0">
+                <div className="max-w-6xl mx-auto px-6 py-12 space-y-12">
+                  {loading && <p>Loading...</p>}
+                  {error && <p>Error: {error.message}</p>}
+                  {data && <Report data={data} />}
+                </div>
               </div>
             </div>
           </Transition.Child>
