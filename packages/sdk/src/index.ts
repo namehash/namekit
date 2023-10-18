@@ -226,6 +226,12 @@ export interface GraphemeGuardReport extends ConsolidatedGraphemeGuardReport {
   grapheme_link_name: string;
 
   /**
+   * The codepoints of the grapheme in the format `U+XXXX`.
+   * Some graphemes may have multiple codepoints.
+   */
+  codepoints: string[];
+
+  /**
    * A list of `ConsolidatedGraphemeGuardReport` values that might be confused with the analyzed `grapheme`.
    *
    * To be considered a confusable, a grapheme must meet all of the following criteria:

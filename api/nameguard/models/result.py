@@ -235,6 +235,12 @@ class GraphemeGuardReport(ConsolidatedGraphemeGuardReport):
         else:
             return detect_grapheme_link_name(self.grapheme_link)
 
+    @computed_field(description='The codepoints of the grapheme in the format `U+XXXX`. '
+                                'Some graphemes may have multiple codepoints.')
+    @property
+    def codepoints(self) -> list[str]:
+        return [f'U+{ord(c):04X}' for c in self.grapheme]
+
     confusables: list[ConsolidatedGraphemeGuardReport] = Field(
         description='A list graphemes that can be confused with the analyzed grapheme. '
                     'The list does not contain the analyzed grapheme. '

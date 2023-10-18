@@ -234,3 +234,11 @@ async def test_invalid_unicode(nameguard: NameGuard):
 
     with pytest.raises(UnicodeEncodeError):
         Web3.keccak(text='\uD801\uDC37')
+
+
+def test_grapheme_codepoints(nameguard: NameGuard):
+    r = nameguard.inspect_grapheme('😉')
+    assert r.codepoints == ['U+1F609']
+
+    r = nameguard.inspect_grapheme('a\u0328')
+    assert r.codepoints == ['U+0061', 'U+0328']
