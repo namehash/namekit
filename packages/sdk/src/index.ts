@@ -121,7 +121,7 @@ export interface FakeEthNameCheckResult {
    *
    * `null` if `status` is `unknown_nft`
    */
-  investigated_names: Record<string, string> | null;
+  investigated_names: object | null;  // TODO: dict[str,str] | null
 }
 
 /**
