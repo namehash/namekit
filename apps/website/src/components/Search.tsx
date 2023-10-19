@@ -84,7 +84,7 @@ export function Search() {
               <div className="h-[68px] flex items-center shadow relative z-30">
                 <div className="flex items-center justify-center flex-shrink-0 pl-6 pr-3 md:px-5">
                   {data ? (
-                    <Shield status={data.rating} />
+                    <Shield size="small" status={data.rating} />
                   ) : (
                     <MagnifyingGlassIcon className="w-6 h-6 fill-current text-gray-500" />
                   )}
