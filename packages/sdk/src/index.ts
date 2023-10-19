@@ -117,11 +117,11 @@ export interface FakeEthNameCheckResult {
   nameguard_result: NameGuardReport | null;
   
    /**
-   * Investigated names for the NFT.
+   * Fields with values from Alchemy response which are investigated (e.g. title, collection name, metadata) whether they look like fake .eth ENS name.
    *
    * `null` if `status` is `unknown_nft`
    */
-  investigated_names: null; // TODO dict or null
+  investigated_names: Record<string, string> | null;
 }
 
 /**

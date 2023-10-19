@@ -303,5 +303,5 @@ class FakeEthNameCheckResult(BaseModel):
     nameguard_result: Optional[NameGuardReport] = Field(description='NameGuard report for the .eth ENS NFT.\n'
                                                         '* `null` if `status` is any value except `authentic_eth_name`, `invalid_eth_name` and `unknown_eth_name` (the NFT is not associated with authentic ".eth" contracts)')
     
-    investigated_names: Optional[dict[str,str]] = Field(description='Investigated names for the NFT.\n'
+    investigated_names: Optional[dict[str,str]] = Field(description='Fields with values from Alchemy response which are investigated (e.g. title, collection name, metadata) whether they look like fake .eth ENS name.\n'
                                                                     '* `null` if `status` is `unknown_nft`')
