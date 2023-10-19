@@ -41,7 +41,7 @@ jobs:
         working-directory: ./api
         run: |
           # "&" to run server in the background 
-          uvicorn web_api:app --host 0.0.0.0 --port 8000 &
+          poetry run uvicorn web_api:app --host 0.0.0.0 --port 8000 &
           sleep 5
 
       - name: Local api healthcheck
