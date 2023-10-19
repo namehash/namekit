@@ -3,14 +3,13 @@
 import { Fragment, useState, useEffect } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 import cc from "classcat";
-import { useInspectName } from "@namehash/nameguard-react";
 import { DebounceInput } from "react-debounce-input";
-import { Report } from "@namehash/nameguard-react";
+import { useInspectName, Report, Shield } from "@namehash/nameguard-react";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 
 export function Search() {
   const [open, setOpen] = useState(true);
-  const [nameToInspect, setNameToInspect] = useState("");
+  const [nameToInspect, setNameToInspect] = useState("nótr❤️‍🔥b.eth");
 
   const onCloseModal = () => {
     setOpen(!open);
@@ -26,7 +25,7 @@ export function Search() {
 
   return (
     <Fragment>
-      <div className="lg:block relative hidden">
+      <div className="relative">
         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
           <svg
             className="h-4 w-4 fill-current text-gray-400"
@@ -81,44 +80,50 @@ export function Search() {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div className="relative transform overflow-hidden md:rounded-xl bg-white shadow-2xl transition-all">
-              <div className="h-[68px] flex items-center shadow-sm px-6 space-x-3">
-                <div className="flex items-center justify-center flex-shrink-0">
-                  <MagnifyingGlassIcon className="w-5 h-5 fill-current text-gray-500" />
+            <div className="max-w-7xl mx-auto relative transform overflow-hidden md:rounded-xl bg-white shadow-2xl transition-all">
+              <div className="h-[68px] flex items-center shadow relative z-30">
+                <div className="flex items-center justify-center flex-shrink-0 pl-6 pr-3 md:px-5">
+                  {data ? (
+                    <Shield status={data.rating} />
+                  ) : (
+                    <MagnifyingGlassIcon className="w-6 h-6 fill-current text-gray-500" />
+                  )}
                 </div>
                 <div className="w-full flex-1">
-                  <div className="max-w-6xl mx-auto px-6">
-                    <DebounceInput
-                      debounceTimeout={300}
-                      type="text"
-                      placeholder="Enter a name to inspect"
-                      value={nameToInspect}
-                      onChange={(event) => setNameToInspect(event.target.value)}
-                      className="w-full border border-gray-500 bg-gray-100 rounded-lg text-black placeholder-gray-400 px-3 py-2 ring-0 outline-none"
-                    />
-                  </div>
+                  <DebounceInput
+                    debounceTimeout={300}
+                    type="text"
+                    placeholder="Enter a name to inspect"
+                    value={nameToInspect}
+                    onChange={(event) => setNameToInspect(event.target.value)}
+                    className="w-full border border-transparent md:border-gray-500 bg-white md:bg-gray-100 rounded-lg text-black placeholder-gray-400 pl-0 md:pl-3 px-3 py-2 ring-0 outline-none"
+                  />
                 </div>
-                <div className="flex items-center justify-center flex-shrink-0">
+                <div className="flex items-center justify-center flex-shrink-0 px-1">
                   <button
                     onClick={onCloseModal}
-                    className="flex items-center justify-between p-2"
+                    className="flex items-center justify-between py-2 px-4"
                   >
-                    <XMarkIcon className="w-5 h-5 fill-current text-black" />
+                    <XMarkIcon className="w-6 h-6 fill-current text-black" />
                   </button>
                 </div>
               </div>
 
-              <div className="max-h-[calc(100vh-68px)] md:max-h-[76vh] lg:max-h-[64vh] overflow-y-auto">
-                <div className="max-w-6xl mx-auto py-12 space-y-12 px-6">
+              <div className="max-h-[calc(100vh-120px)] md:max-h-[76vh] lg:max-h-[84vh] overflow-y-auto relative">
+                <div className="max-w-6xl mx-auto p-6 md:py-12 space-y-8 xl:px-0">
                   {/* TODO: Move to component */}
                   {!loading && !error && !data && (
                     <div className="w-full py-16 md:py-40 flex-col items-center text-center">
-                      <p className="text-[18px] leading-6 font-semibold text-black">
-                        Search for any ENS name to generate a NameGuard report
-                      </p>
-                      <p className="mx-6 mt-3 md:mt-2 mb-5 md:mb-4 text-sm font-normal md:font-medium leading-6 text-gray-500">
-                        or check out some of the names below to see how it works
-                      </p>
+                      <div className="relative z-20 space-y-2">
+                        <p className="text-lg leading-6 font-semibold text-black">
+                          Search for any ENS name to generate a NameGuard report
+                        </p>
+                        <p className="text-sm leading-6 text-gray-500">
+                          or check out some of the names below to see how it
+                          works
+                        </p>
+                      </div>
+                      <div className="absolute inset-0 z-0 h-full w-full bg-[radial-gradient(#DDDDDD_1px,transparent_1px)] [background-size:24px_24px] opacity-70"></div>
                     </div>
                   )}
                   {/* TODO: Move to component */}
