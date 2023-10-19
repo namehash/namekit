@@ -83,7 +83,7 @@ export const Summary = ({ name, rating, title, subtitle }: Props) => {
         </h1>
       </div>
       <div className="flex items-center space-x-4 pt-5 md:pt-0 md:w-2/6">
-        <Shield status={rating} large />
+        <Shield status={rating} size="large" />
         <div className="space-y-1">
           <p className={text}>{title}</p>
           <p className="text-black text-sm font-normal leading-6">{subtitle}</p>
