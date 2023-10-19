@@ -13,7 +13,7 @@ export function Tooltip({ trigger, children }: Props) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(close);
+  const handleClose = () => setOpen(false);
 
   return (
     <Popover className="flex items-center justify-center">
