@@ -35,7 +35,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./api
-        run: poetry install
+        run: poetry install --with dev
 
       - name: Setup local nameguard api
         working-directory: ./api
