@@ -8,6 +8,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    env:
+      PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
+      PROVIDER_URI_GOERLI: ${{ secrets.PROVIDER_URI_GOERLI }}
+      PROVIDER_URI_SEOPLIA: ${{ secrets.PROVIDER_URI_SEOPLIA }}
+
     steps:
       - uses: actions/checkout@v3
         with:
