@@ -8,11 +8,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    env:
-      PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
-      PROVIDER_URI_GOERLI: ${{ secrets.PROVIDER_URI_GOERLI }}
-      PROVIDER_URI_SEOPLIA: ${{ secrets.PROVIDER_URI_SEOPLIA }}
-
     steps:
       - uses: actions/checkout@v3
         with:
@@ -44,6 +39,10 @@ jobs:
 
       - name: Setup local nameguard api
         working-directory: ./api
+        env:
+          PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
+          PROVIDER_URI_GOERLI: ${{ secrets.PROVIDER_URI_GOERLI }}
+          PROVIDER_URI_SEOPLIA: ${{ secrets.PROVIDER_URI_SEOPLIA }}
         run: |
           # "&" to run server in the background 
           poetry run uvicorn nameguard.web_api:app --host 0.0.0.0 --port 8000 &
