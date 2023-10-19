@@ -100,5 +100,5 @@ export function Check({ code }: { code: CheckResultCode }) {
   const tooltipText = text(code);
   const Icon = icon(code);
 
-  return <Tooltip trigger={() => Icon} children={tooltipText} />;
+  return <Tooltip trigger={Icon} children={tooltipText} />;
 }
