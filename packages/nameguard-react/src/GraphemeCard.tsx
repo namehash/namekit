@@ -24,8 +24,9 @@ export function GraphemeCard(props: ConsolidatedGraphemeGuardReport) {
               <Check code={props.rating} />
             </div>
             <p className="md:font-medium text-gray-500 md:text-black text-sm">
-              {/* TODO: Use correct API value */}
-              {props.highest_risk?.message}
+              {props.rating === "pass"
+                ? props.title
+                : props.highest_risk?.message}
             </p>
           </div>
         </div>
