@@ -52,4 +52,4 @@ jobs:
         run: curl http://0.0.0.0:8000/v1-beta/inspect-name/mainnet/test.eth
 
       - name: Run tests
-        run: pnpm test -r
+        run: NAMEGUARD_TEST_ENDPOINT=http://0.0.0.0:8000 pnpm test -r
