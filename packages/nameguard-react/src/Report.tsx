@@ -52,7 +52,7 @@ export const Report = ({ data }: { data: NameGuardReport }) => {
                     className={
                       l === label.label
                         ? "text-black font-semibold"
-                        : "text-gray-500"
+                        : "text-gray-500 grayscale"
                     }
                   >
                     {l}
