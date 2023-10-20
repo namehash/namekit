@@ -1,12 +1,29 @@
 import React from "react";
 import { CheckResultCode } from "@namehash/nameguard";
+import { Tooltip } from "./Tooltip";
 
-export default function Status({ status }: { status: CheckResultCode }) {
-  switch (status) {
+function text(code: CheckResultCode) {
+  switch (code) {
+    case "pass":
+      return "Check Passed";
+    case "warn":
+      return "Warning";
+    case "alert":
+      return "Alert";
+    case "info":
+      return "Informational Notice";
+    case "skip":
+    default:
+      return "Check Not Applicable";
+  }
+}
+
+function icon(code: CheckResultCode): React.ReactNode {
+  switch (code) {
     case "pass":
       return (
         <svg
-          className="w-5 h-5 fill-current text-[#10B981]"
+          className="w-5 h-5 fill-current text-green-600 hover:text-green-700 transition"
           viewBox="0 0 20 20"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -18,25 +35,10 @@ export default function Status({ status }: { status: CheckResultCode }) {
           />
         </svg>
       );
-    case "alert":
-      return (
-        <svg
-          className="w-5 h-5 fill-current text-[#F59E0B]"
-          viewBox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M8.4845 2.49499C9.15808 1.32833 10.842 1.32833 11.5156 2.495L17.7943 13.37C18.4678 14.5367 17.6259 15.995 16.2787 15.995H3.72136C2.37421 15.995 1.53224 14.5367 2.20582 13.37L8.4845 2.49499ZM10 5C10.4142 5 10.75 5.33579 10.75 5.75V9.25C10.75 9.66421 10.4142 10 10 10C9.58579 10 9.25 9.66421 9.25 9.25L9.25 5.75C9.25 5.33579 9.58579 5 10 5ZM10 14C10.5523 14 11 13.5523 11 13C11 12.4477 10.5523 12 10 12C9.44772 12 9 12.4477 9 13C9 13.5523 9.44772 14 10 14Z"
-          />
-        </svg>
-      );
     case "warn":
       return (
         <svg
-          className="w-5 h-5 fill-current text-[#DC2626]"
+          className="w-5 h-5 fill-current text-yellow-500 hover:text-yellow-600 transition"
           viewBox="0 0 20 20"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -48,22 +50,25 @@ export default function Status({ status }: { status: CheckResultCode }) {
           />
         </svg>
       );
-    case "skip":
+    case "alert":
       return (
         <svg
-          className="w-[12px] h-[10px] fill-current text-gray-500"
-          viewBox="0 0 12 10"
+          className="w-5 h-5 fill-current text-red-600 hover:text-red-700 transition"
+          viewBox="0 0 20 20"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path d="M0.23017 8.70938C-0.0684091 8.99647 -0.0777185 9.47125 0.209377 9.76983C0.496472 10.0684 0.971254 10.0777 1.26983 9.79063L5.76983 5.54062C5.91689 5.39922 6 5.20401 6 5C6 4.79599 5.91689 4.60078 5.76983 4.45938L1.26983 0.209376C0.971253 -0.077719 0.496471 -0.0684092 0.209376 0.230169C-0.0777189 0.528748 -0.0684095 1.00353 0.230169 1.29063L4.16792 5L0.23017 8.70938Z" />
-          <path d="M6.23017 8.70938C5.93159 8.99647 5.92228 9.47125 6.20938 9.76983C6.49647 10.0684 6.97125 10.0777 7.26983 9.79063L11.7698 5.54062C11.9169 5.39922 12 5.20401 12 5C12 4.79599 11.9169 4.60078 11.7698 4.45938L7.26983 0.209376C6.97125 -0.077719 6.49647 -0.0684092 6.20938 0.230169C5.92228 0.528748 5.93159 1.00353 6.23017 1.29063L10.1679 5L6.23017 8.70938Z" />
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M8.4845 2.49499C9.15808 1.32833 10.842 1.32833 11.5156 2.495L17.7943 13.37C18.4678 14.5367 17.6259 15.995 16.2787 15.995H3.72136C2.37421 15.995 1.53224 14.5367 2.20582 13.37L8.4845 2.49499ZM10 5C10.4142 5 10.75 5.33579 10.75 5.75V9.25C10.75 9.66421 10.4142 10 10 10C9.58579 10 9.25 9.66421 9.25 9.25L9.25 5.75C9.25 5.33579 9.58579 5 10 5ZM10 14C10.5523 14 11 13.5523 11 13C11 12.4477 10.5523 12 10 12C9.44772 12 9 12.4477 9 13C9 13.5523 9.44772 14 10 14Z"
+          />
         </svg>
       );
     case "info":
       return (
         <svg
-          className="w-5 h-5 fill-current text-gray-400"
+          className="w-5 h-5 fill-current text-gray-400 hover:text-gray-500 transition"
           viewBox="0 0 20 20"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -75,5 +80,25 @@ export default function Status({ status }: { status: CheckResultCode }) {
           />
         </svg>
       );
+    case "skip":
+    default:
+      return (
+        <svg
+          className="w-[12px] h-[10px] fill-current text-gray-400 hover:text-gray-500 transition"
+          viewBox="0 0 12 10"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M0.23017 8.70938C-0.0684091 8.99647 -0.0777185 9.47125 0.209377 9.76983C0.496472 10.0684 0.971254 10.0777 1.26983 9.79063L5.76983 5.54062C5.91689 5.39922 6 5.20401 6 5C6 4.79599 5.91689 4.60078 5.76983 4.45938L1.26983 0.209376C0.971253 -0.077719 0.496471 -0.0684092 0.209376 0.230169C-0.0777189 0.528748 -0.0684095 1.00353 0.230169 1.29063L4.16792 5L0.23017 8.70938Z" />
+          <path d="M6.23017 8.70938C5.93159 8.99647 5.92228 9.47125 6.20938 9.76983C6.49647 10.0684 6.97125 10.0777 7.26983 9.79063L11.7698 5.54062C11.9169 5.39922 12 5.20401 12 5C12 4.79599 11.9169 4.60078 11.7698 4.45938L7.26983 0.209376C6.97125 -0.077719 6.49647 -0.0684092 6.20938 0.230169C5.92228 0.528748 5.93159 1.00353 6.23017 1.29063L10.1679 5L6.23017 8.70938Z" />
+        </svg>
+      );
   }
+}
+
+export function Check({ code }: { code: CheckResultCode }) {
+  const tooltipText = text(code);
+  const Icon = icon(code);
+
+  return <Tooltip trigger={Icon} children={tooltipText} />;
 }
