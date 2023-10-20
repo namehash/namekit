@@ -43,6 +43,7 @@ from nameguard.exceptions import NamehashNotFoundInSubgraph, ProviderUnavailable
 from nameguard.logging import logger
 from nameguard.subgraph import namehash_to_name_lookup, resolve_all_labelhashes_in_name, \
     resolve_all_labelhashes_in_name_querying_labelhashes, resolve_all_labelhashes_in_names_querying_labelhashes
+from nameguard.generic_utils import capitalize_words
 
 GRAPHEME_CHECKS = [
     checks.grapheme.confusables.check_grapheme,
@@ -196,7 +197,7 @@ class NameGuard:
                     graphemes=[
                         ConsolidatedGraphemeGuardReport(
                             grapheme=grapheme.value,
-                            grapheme_name=grapheme.name,
+                            grapheme_name=capitalize_words(grapheme.name),
                             grapheme_type=grapheme.type,
                             grapheme_script=grapheme.script,
                             grapheme_link=grapheme.link,
@@ -255,7 +256,7 @@ class NameGuard:
 
         return GraphemeGuardReport(
             grapheme=grapheme_analysis.value,
-            grapheme_name=grapheme_analysis.name,
+            grapheme_name=capitalize_words(grapheme_analysis.name),
             grapheme_type=grapheme_analysis.type,
             grapheme_script=grapheme_analysis.script,
             grapheme_link=grapheme_analysis.link,
@@ -276,7 +277,7 @@ class NameGuard:
         grapheme_checks = [check(grapheme) for check in GRAPHEME_CHECKS]
         return ConsolidatedGraphemeGuardReport(
             grapheme=grapheme.value,
-            grapheme_name=grapheme.name,
+            grapheme_name=capitalize_words(grapheme.name),
             grapheme_type=grapheme.type,
             grapheme_script=grapheme.script,
             grapheme_link=grapheme.link,
