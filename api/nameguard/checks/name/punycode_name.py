@@ -5,9 +5,9 @@ from label_inspector.models import InspectorResult
 
 
 STATUS = CheckStatus.WARN
-MESSAGE_PASS = 'Name is Punycode compatible'
-MESSAGE_FAIL = 'Name is not Punycode compatible'
-MESSAGE_SKIP = 'Name contains unknown labels'
+MESSAGE_PASS = 'This name is Punycode compatible'
+MESSAGE_FAIL = 'This name is not Punycode compatible'
+MESSAGE_SKIP = 'This name contains unknown labels'
 
 
 def check_name(labels: list[Optional[InspectorResult]]) -> GenericCheckResult:
