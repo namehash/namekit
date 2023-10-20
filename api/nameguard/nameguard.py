@@ -148,12 +148,12 @@ class NameGuard:
         # merge grapheme checks into label checks
         for label_i, label_graphemes_checks in enumerate(labels_graphemes_checks):
             for grapheme_checks in label_graphemes_checks:
-                labels_checks[label_i].extend(grapheme_checks)
+                labels_checks[label_i].extend([c.raise_context() for c in grapheme_checks])
             labels_checks[label_i] = agg_checks(labels_checks[label_i])
 
         # merge label checks into name checks
         for label_checks in labels_checks:
-            name_checks.extend(label_checks)
+            name_checks.extend([c.raise_context() for c in label_checks])
         name_checks = agg_checks(name_checks)
 
         # -- generate result --

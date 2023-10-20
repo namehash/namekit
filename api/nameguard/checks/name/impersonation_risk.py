@@ -1,5 +1,5 @@
 from typing import Optional
-from nameguard.models import CheckStatus, Check, GenericCheckResult
+from nameguard.models import CheckStatus, Check, GenericCheckResult, NameCheckResult
 from nameguard.context import endpoint_name
 from label_inspector.models import InspectorResult
 
@@ -17,17 +17,17 @@ MESSAGE_SKIP_CANON = 'Name contains labels with unknown canonical forms and cann
 
 def check_name(labels: list[Optional[InspectorResult]]) -> GenericCheckResult:
     if None in labels:
-        return GenericCheckResult(
+        return NameCheckResult(
             check=Check.IMPERSONATION_RISK,
             status=CheckStatus.SKIP,
-            message=MESSAGE_SKIP_UNK,
+            _name_message=MESSAGE_SKIP_UNK,
         )
     canonicals = [label.normalized_canonical_label for label in labels]
     if None in canonicals:
-        return GenericCheckResult(
+        return NameCheckResult(
             check=Check.IMPERSONATION_RISK,
             status=CheckStatus.SKIP,
-            message=MESSAGE_SKIP_CANON,
+            _name_message=MESSAGE_SKIP_CANON,
         )
     name = '.'.join(label.label for label in labels)
     canonical = '.'.join(canonicals)
@@ -40,8 +40,8 @@ def check_name(labels: list[Optional[InspectorResult]]) -> GenericCheckResult:
     else:
         message = MESSAGE_FAIL_OTHER
 
-    return GenericCheckResult(
+    return NameCheckResult(
         check=Check.IMPERSONATION_RISK,
         status=CheckStatus.PASS if passed else STATUS,
-        message=message,
+        _name_message=message,
     )
