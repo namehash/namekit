@@ -1,5 +1,6 @@
 import fetch from "cross-fetch";
 import { countGraphemes, isEthereumAddress, isTokenId } from "./utils";
+import { isKeccak256Hash } from "./hashutils";
 
 /**
  * The network that NameGuard will use to inspect a names/labels/graphemes.
@@ -421,32 +422,6 @@ interface SecurePrimaryNameOptions {
 
 interface FakeEthNameOptions {
   network?: Network;
-}
-
-const keccak256Regex = /^(?:0x)?[0-9a-f]{64}$/i;
-
-function isKeccak256Hash(hash: string) {
-  return keccak256Regex.test(hash);
-}
-
-/**
- * Normalizes a Keccak256Hash. Allows for normalization of hashes that are prefixed or
- * unprefixed or containing hex digits of any capitalization.
- *
- * @param hash the hash to normalize
- * @returns a normalized Keccak256Hash (prefixed with 0x and all in lowercase).
- * @throws an error if the hash is not a valid Keccak256Hash.
- */
-function normalizeKeccak256Hash(hash: string) {
-  if (!isKeccak256Hash(hash)) {
-    throw new Error("Invalid Keccak-256 hash format.");
-  }
-
-  if (!hash.startsWith("0x") && !hash.startsWith("0X")) {
-    return `0x${hash.toLowerCase()}`;
-  }
-
-  return hash.toLowerCase();
 }
 
 class NameGuard {
