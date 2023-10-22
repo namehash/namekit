@@ -1,4 +1,5 @@
 import fetch from "cross-fetch";
+import { countGraphemes, isEthereumAddress, isTokenId } from "./utils";
 
 /**
  * The network that NameGuard will use to inspect a names/labels/graphemes.
@@ -423,8 +424,6 @@ interface FakeEthNameOptions {
 }
 
 const keccak256Regex = /^(?:0x)?[0-9a-f]{64}$/i;
-const ethereumAddressRegex = /^0x[0-9a-f]{40}$/i;
-const tokenIdRegex = /^(?:\d+)|(?:0x[0-9a-f]+)$/i;
 
 function isKeccak256Hash(hash: string) {
   return keccak256Regex.test(hash);
@@ -448,19 +447,6 @@ function normalizeKeccak256Hash(hash: string) {
   }
 
   return hash.toLowerCase();
-}
-
-function isEthereumAddress(address: string) {
-  return ethereumAddressRegex.test(address);
-}
-
-function isTokenId(token_id: string) {
-  return tokenIdRegex.test(token_id);
-}
-
-function countGraphemes(str: string) {
-  // TODO fix!!
-  return [...str].length;
 }
 
 class NameGuard {
