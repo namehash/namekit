@@ -37,7 +37,8 @@
     "vitest": "^0.34.5"
   },
   "dependencies": {
-    "cross-fetch": "^4.0.0"
+    "cross-fetch": "^4.0.0",
+    "viem": "^1.16.6"
   },
   "publishConfig": {
     "access": "public"
