@@ -1,6 +1,7 @@
 import fetch from "cross-fetch";
 import { countGraphemes, isEthereumAddress, isTokenId } from "./utils";
 import { isKeccak256Hash } from "./hashutils";
+import { ETH_TLD, Normalization } from "./ensname";
 
 /**
  * The network that NameGuard will use to inspect a names/labels/graphemes.
@@ -63,19 +64,6 @@ export type Rating =
   | "pass" /** `pass`: All checks passed. */
   | "warn" /** `warn`: At least one check failed with a `WARN` status but no check failed with an `ALERT` status. */
   | "alert" /** `alert`: At least one check failed with an `ALERT` status. */;
-
-/**
- * The ENSIP-15 normalization status of a name/label.
- *
- * If a label is in the format "[labelhash]" then the `Normalization` of the label is considered to be `unknown`.
- * If a name contains any label that is `unnormalized` then the `Normalization` of the entire name is considered to be `unnormalized`.
- * If a name contains no `unnormalized` labels but 1 or more `unknown` labels then the entire name is considered to be `unknown`.
- * A name is `normalized` if and only if all of its labels are `normalized`.
- */
-export type Normalization =
-  | "normalized" /** `normalized`: The name or label is normalized. */
-  | "unnormalized" /** `unnormalized`: The name or label is not normalized. */
-  | "unknown" /** `unknown`: The name or label is unknown because it cannot be looked up from its hash. */;
 
 /**
  * The status of a reverse ENS lookup performed by NameGuard.
@@ -394,7 +382,7 @@ class NameGuardError extends Error {
 const DEFAULT_ENDPOINT = "https://api.nameguard.io";
 const DEFAULT_VERSION = "v1-beta";
 const DEFAULT_NETWORK: Network = "mainnet";
-const DEFAULT_INSPECT_LABELHASH_PARENT = "eth";
+const DEFAULT_INSPECT_LABELHASH_PARENT = ETH_TLD;
 const MAX_BULK_INSPECTION_NAMES = 250;
 
 interface NameGuardOptions {
