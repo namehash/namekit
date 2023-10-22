@@ -1,7 +1,7 @@
 // using our own regex for this instead of viem's implementation of `isAddress`
 // as we want "0X..." in uppercase to also be considered an address
 const ethereumAddressRegex = /^0x[0-9a-f]{40}$/i;
-const tokenIdRegex = /^(?:\d+)|(?:0x[0-9a-f]+)$/i;
+const tokenIdRegex = /^((?:\d+)|(?:0x[0-9a-f]+))$/i;
 
 export function isEthereumAddress(address: string) {
   return ethereumAddressRegex.test(address);
