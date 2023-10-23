@@ -1,4 +1,4 @@
-import { labelhash as viem_labelhash } from 'viem'
+import { labelhash as viem_labelhash } from "viem";
 
 /**
  * Simple wrapper around the viem implementation of `labelhash` that returns a generic string instead.
@@ -6,7 +6,7 @@ import { labelhash as viem_labelhash } from 'viem'
  * @returns keccak-256 hash of the label
  */
 export function labelhash(label: string): string {
-    return viem_labelhash(label);
+  return viem_labelhash(label);
 }
 
 const keccak256Regex = /^(?:0x)?[0-9a-f]{64}$/i;
@@ -20,7 +20,7 @@ const keccak256Regex = /^(?:0x)?[0-9a-f]{64}$/i;
  * A "normalized Keccak-256 hash" is a Keccak-256 hash that is always prefixed with "0x" and all in lowercase.
  * */
 export function isKeccak256Hash(hash: string) {
-    return keccak256Regex.test(hash);
+  return keccak256Regex.test(hash);
 }
 
 /**
@@ -29,7 +29,7 @@ export function isKeccak256Hash(hash: string) {
  * @returns the encoded labelhash.
  */
 export function encodeLabelhash(labelhash: string) {
-    return `[${labelhash}]`;
+  return `[${labelhash}]`;
 }
 
 /**
@@ -38,7 +38,7 @@ export function encodeLabelhash(labelhash: string) {
  * @returns the labelhash value of the encoded labelhash.
  */
 export function decodeEncodedLabelhash(encodedLabelhash: string) {
-    return encodedLabelhash.substring(1, encodedLabelhash.length - 1);
+  return encodedLabelhash.substring(1, encodedLabelhash.length - 1);
 }
 
 /**
@@ -47,11 +47,10 @@ export function decodeEncodedLabelhash(encodedLabelhash: string) {
  * @returns true if and only if the label contains an encoded labelhash.
  */
 export function isEncodedLabelhash(label: string) {
-    if (!label.startsWith("[") || !label.endsWith("]"))
-        return false;
+  if (!label.startsWith("[") || !label.endsWith("]")) return false;
 
-    const labelhash = decodeEncodedLabelhash(label);
-    return isKeccak256Hash(labelhash);
+  const labelhash = decodeEncodedLabelhash(label);
+  return isKeccak256Hash(labelhash);
 }
 
 /**
@@ -63,23 +62,26 @@ export function isEncodedLabelhash(label: string) {
  * @returns a normalized Keccak-256 hash (conditionally prefixed with 0x) that is always all in lowercase).
  * @throws an error if the hash is not a valid Keccak-256 hash.
  */
-export function normalizeKeccak256Hash(hash: string, withPrefix: boolean = true) {
-    if (!isKeccak256Hash(hash)) {
-        throw new Error(`Invalid Keccak-256 hash format: ${hash}`);
-    }
+export function normalizeKeccak256Hash(
+  hash: string,
+  withPrefix: boolean = true
+) {
+  if (!isKeccak256Hash(hash)) {
+    throw new Error(`Invalid Keccak-256 hash format: ${hash}`);
+  }
 
-    const normalizedHashValue = hash.toLowerCase();
+  const normalizedHashValue = hash.toLowerCase();
 
-    if (withPrefix && !normalizedHashValue.startsWith("0x")) {
-        // prefix of 0x is currently missing and should be added
-        return `0x${normalizedHashValue}`;
-    } else if (!withPrefix && normalizedHashValue.startsWith("0x")) {
-        // prefix of 0x is currently present and should be removed
-        return normalizedHashValue.substring(2);
-    } else {
-        // we're already in the desired format
-        return normalizedHashValue;
-    }
+  if (withPrefix && !normalizedHashValue.startsWith("0x")) {
+    // prefix of 0x is currently missing and should be added
+    return `0x${normalizedHashValue}`;
+  } else if (!withPrefix && normalizedHashValue.startsWith("0x")) {
+    // prefix of 0x is currently present and should be removed
+    return normalizedHashValue.substring(2);
+  } else {
+    // we're already in the desired format
+    return normalizedHashValue;
+  }
 }
 
 /**
@@ -88,11 +90,11 @@ export function normalizeKeccak256Hash(hash: string, withPrefix: boolean = true)
  * @returns A normalized encoded labelhash.
  */
 export function normalizeEncodedLabelhash(label: string) {
-    if (!isEncodedLabelhash(label)) {
-        throw new Error(`Invalid EncodedLabelhash format: ${label}`);
-    }
+  if (!isEncodedLabelhash(label)) {
+    throw new Error(`Invalid EncodedLabelhash format: ${label}`);
+  }
 
-    const currentLabelhash = decodeEncodedLabelhash(label);
-    const normalizedLabelhash = normalizeKeccak256Hash(currentLabelhash, false);
-    return encodeLabelhash(normalizedLabelhash);
+  const currentLabelhash = decodeEncodedLabelhash(label);
+  const normalizedLabelhash = normalizeKeccak256Hash(currentLabelhash, false);
+  return encodeLabelhash(normalizedLabelhash);
 }

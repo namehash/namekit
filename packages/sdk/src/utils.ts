@@ -6,7 +6,7 @@ const tokenIdRegex = /^((?:\d+)|(?:0x[0-9a-f]+))$/i;
 export function isEthereumAddress(address: string) {
   return ethereumAddressRegex.test(address);
 }
-  
+
 // TODO: Write tests
 export function isTokenId(token_id: string) {
   return tokenIdRegex.test(token_id);
