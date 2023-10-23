@@ -3,6 +3,7 @@ from pydantic import BaseModel, Field, computed_field
 from enum import Enum
 from ens_normalize import ens_beautify
 
+from nameguard.context import endpoint_name
 from nameguard.models.checks import GenericCheckResult, Rating, Check
 from nameguard.utils import detect_grapheme_link_name
 
@@ -34,13 +35,19 @@ class ConsolidatedReport(BaseModel):
         if self.rating is Rating.PASS:
             return 'Looks Good'
         elif self.rating is Rating.WARN:
-            if self.highest_risk is not None and self.highest_risk.check is Check.IMPERSONATION_RISK:
+            if (
+                self.highest_risk is not None and
+                self.highest_risk.check is Check.IMPERSONATION_RISK and
+                endpoint_name.get() == 'primary-name'
+            ):
                 return 'Impersonation Risk'
             else:
                 return 'Some Risk'
         else: # self.rating is Rating.ALERT:
-            # TODO: if fake eth name: 'Fake ENS Name'
-            return 'High Risk'
+            if endpoint_name.get() == 'fake-ens-name-check':
+                return 'Fake ENS Name'
+            else:
+                return 'High Risk'
 
     @computed_field(description='A human-readable subtitle based on the `rating`.')
     @property
@@ -227,6 +234,12 @@ class GraphemeGuardReport(ConsolidatedGraphemeGuardReport):
             return 'No link is available'
         else:
             return detect_grapheme_link_name(self.grapheme_link)
+
+    @computed_field(description='The codepoints of the grapheme in the format `U+XXXX`. '
+                                'Some graphemes may have multiple codepoints.')
+    @property
+    def codepoints(self) -> list[str]:
+        return [f'U+{ord(c):04X}' for c in self.grapheme]
 
     confusables: list[ConsolidatedGraphemeGuardReport] = Field(
         description='A list graphemes that can be confused with the analyzed grapheme. '

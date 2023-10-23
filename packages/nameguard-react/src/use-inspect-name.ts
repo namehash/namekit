@@ -10,6 +10,7 @@ export function useInspectName(name = null) {
     if (name) {
       setLoading(true);
       setError(null);
+      setData(null);
 
       nameguard
         .inspectName(name)
@@ -18,6 +19,7 @@ export function useInspectName(name = null) {
         })
         .catch((err) => {
           setError(err);
+          setData(null);
         })
         .finally(() => {
           setLoading(false);

@@ -507,7 +507,7 @@ function ExitSection() {
 }
 
 function RoadMap() {
-    const  classNames = (...classes) => {
+    const classNames = (...classes: string[]) => {
         return classes.filter(Boolean).join(' ')
     }
 

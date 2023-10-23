@@ -1,7 +1,7 @@
 import React from "react";
 import { Rating } from "@namehash/nameguard";
 import cc from "classcat";
-import Shield from "./Shield";
+import { Shield } from "./Shield";
 
 function borderColor(rating: Rating) {
   switch (rating) {
@@ -57,10 +57,11 @@ function textColor(rating: Rating) {
 interface Props {
   name: string;
   rating: Rating;
-  highest_risk: any;
+  title: string;
+  subtitle: string;
 }
 
-const Summary = ({ name, rating, highest_risk }: Props) => {
+export const Summary = ({ name, rating, title, subtitle }: Props) => {
   const border = borderColor(rating);
   const shadow = shadowColor(rating);
   const text = cc(["font-semibold text-sm md:text-2xl", textColor(rating)]);
@@ -73,7 +74,7 @@ const Summary = ({ name, rating, highest_risk }: Props) => {
 
   return (
     <div className={wrapperClass}>
-      <div>
+      <div className="md:w-4/6">
         <p className="uppercase text-sm text-gray-500 font-medium">
           Rating for
         </p>
@@ -81,17 +82,13 @@ const Summary = ({ name, rating, highest_risk }: Props) => {
           {name}
         </h1>
       </div>
-      <div className="flex items-center space-x-4 pt-5 md:pt-0">
-        <Shield status={rating} />
+      <div className="flex items-center space-x-4 pt-5 md:pt-0 md:w-2/6">
+        <Shield status={rating} size="large" />
         <div className="space-y-1">
-          <p className={text}>{highest_risk?.check}</p>
-          <p className="text-black text-sm font-normal leading-6">
-            {highest_risk?.message}
-          </p>
+          <p className={text}>{title}</p>
+          <p className="text-black text-sm font-normal leading-6">{subtitle}</p>
         </div>
       </div>
     </div>
   );
 };
-
-export default Summary;

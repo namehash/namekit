@@ -1,6 +1,7 @@
 import pytest
 from web3 import Web3
 
+from nameguard.context import endpoint_name
 from nameguard.models import Rating, Check, CheckStatus, Normalization
 from nameguard.nameguard import NameGuard
 from nameguard.exceptions import NamehashNotFoundInSubgraph, NotAGrapheme
@@ -196,11 +197,22 @@ async def test_impersonation_risk(nameguard: NameGuard):
     else:
         assert False, 'IMPERSONATION_RISK check not found'
 
+    endpoint_name.set('primary-name')
     r = await nameguard.inspect_name('mainnet', 'nićk.eth')
     for check in r.checks:
         if check.check is Check.IMPERSONATION_RISK:
             assert check.rating is Rating.WARN
             assert check.message == 'Name might be an impersonation of `nick.eth`'
+            break
+    else:
+        assert False, 'IMPERSONATION_RISK check not found'
+
+    endpoint_name.set(None)
+    r = await nameguard.inspect_name('mainnet', 'nićk.eth')
+    for check in r.checks:
+        if check.check is Check.IMPERSONATION_RISK:
+            assert check.rating is Rating.WARN
+            assert check.message == 'Name may receive potential impersonation warnings'
             break
     else:
         assert False, 'IMPERSONATION_RISK check not found'
@@ -222,3 +234,11 @@ async def test_invalid_unicode(nameguard: NameGuard):
 
     with pytest.raises(UnicodeEncodeError):
         Web3.keccak(text='\uD801\uDC37')
+
+
+def test_grapheme_codepoints(nameguard: NameGuard):
+    r = nameguard.inspect_grapheme('😉')
+    assert r.codepoints == ['U+1F609']
+
+    r = nameguard.inspect_grapheme('a\u0328')
+    assert r.codepoints == ['U+0061', 'U+0328']
