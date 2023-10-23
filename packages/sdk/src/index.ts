@@ -1,4 +1,7 @@
 import fetch from "cross-fetch";
+import { countGraphemes, isEthereumAddress, isTokenId } from "./utils";
+import { isKeccak256Hash } from "./hashutils";
+import { ETH_TLD, Normalization } from "./ensname";
 
 /**
  * The network that NameGuard will use to inspect a names/labels/graphemes.
@@ -63,19 +66,6 @@ export type Rating =
   | "alert" /** `alert`: At least one check failed with an `ALERT` status. */;
 
 /**
- * The ENSIP-15 normalization status of a name/label.
- *
- * If a label is in the format "[labelhash]" then the `Normalization` of the label is considered to be `unknown`.
- * If a name contains any label that is `unnormalized` then the `Normalization` of the entire name is considered to be `unnormalized`.
- * If a name contains no `unnormalized` labels but 1 or more `unknown` labels then the entire name is considered to be `unknown`.
- * A name is `normalized` if and only if all of its labels are `normalized`.
- */
-export type Normalization =
-  | "normalized" /** `normalized`: The name or label is normalized. */
-  | "unnormalized" /** `unnormalized`: The name or label is not normalized. */
-  | "unknown" /** `unknown`: The name or label is unknown because it cannot be looked up from its hash. */;
-
-/**
  * The status of a reverse ENS lookup performed by NameGuard.
  * */
 export type SecureReverseLookupStatus =
@@ -91,16 +81,6 @@ export type FakeEthNameCheckStatus =
   | "unknown_nft" /** No information could be found on the requested NFT. This generally indicates that the NFT doesn't exist or hasn't been indexed yet. */
   | "invalid_eth_name" /** The NFT is associated with authentic ".eth" contracts, but it is unnormalized. */
   | "potentially_authentic_eth_name" /** The NFT is associated with authentic ".eth" contracts, but its label is unknown. */;
-
-/**
- * The Keccak-256 hash of a name/label.
- *
- * A labelhash is a Keccak-256 hash of a label.
- * An ENSIP-1 namehash is a recursive Keccak-256 hash of the labelhashes of all the labels in a name.
- *
- * A "normalized Keccak-256 hash" is a Keccak-256 hash that is always prefixed with "0x" and all in lowercase.
- * */
-export type Keccak256Hash = string;
 
 /**
  * The result of a fake eth name check that NameGuard performed on a contract address and token id.
@@ -277,7 +257,7 @@ export interface LabelGuardReport extends ConsolidatedReport {
    * the `labelhash` will therefore be the "labelhash" value embedded within `label`, rather than
    * the labelhash of the literal `label`.
    * */
-  labelhash: Keccak256Hash;
+  labelhash: string;
 
   /** The ENSIP-15 normalization status of `label` */
   normalization: Normalization;
@@ -328,7 +308,7 @@ interface ConsolidatedNameGuardReport extends ConsolidatedReport {
   name: string;
 
   /* The ENSIP-1 namehash of the name in hex format prefixed with 0x. */
-  namehash: Keccak256Hash;
+  namehash: string;
 
   /* The ENSIP-15 normalization status of `name` */
   normalization: Normalization;
@@ -402,7 +382,7 @@ class NameGuardError extends Error {
 const DEFAULT_ENDPOINT = "https://api.nameguard.io";
 const DEFAULT_VERSION = "v1-beta";
 const DEFAULT_NETWORK: Network = "mainnet";
-const DEFAULT_INSPECT_LABELHASH_PARENT = "eth";
+const DEFAULT_INSPECT_LABELHASH_PARENT = ETH_TLD;
 const MAX_BULK_INSPECTION_NAMES = 250;
 
 interface NameGuardOptions {
@@ -430,47 +410,6 @@ interface SecurePrimaryNameOptions {
 
 interface FakeEthNameOptions {
   network?: Network;
-}
-
-const keccak256Regex = /^(?:0x)?[0-9a-f]{64}$/i;
-const ethereumAddressRegex = /^0x[0-9a-f]{40}$/i;
-const tokenIdRegex = /^(?:\d+)|(?:0x[0-9a-f]+)$/i;
-
-function isKeccak256Hash(hash: Keccak256Hash) {
-  return keccak256Regex.test(hash);
-}
-
-/**
- * Normalizes a Keccak256Hash. Allows for normalization of hashes that are prefixed or
- * unprefixed or containing hex digits of any capitalization.
- *
- * @param hash the hash to normalize
- * @returns a normalized Keccak256Hash (prefixed with 0x and all in lowercase).
- * @throws an error if the hash is not a valid Keccak256Hash.
- */
-function normalizeKeccak256Hash(hash: Keccak256Hash) {
-  if (!isKeccak256Hash(hash)) {
-    throw new Error("Invalid Keccak-256 hash format.");
-  }
-
-  if (!hash.startsWith("0x") && !hash.startsWith("0X")) {
-    return `0x${hash.toLowerCase()}`;
-  }
-
-  return hash.toLowerCase();
-}
-
-function isEthereumAddress(address: string) {
-  return ethereumAddressRegex.test(address);
-}
-
-function isTokenId(token_id: string) {
-  return tokenIdRegex.test(token_id);
-}
-
-function countGraphemes(str: string) {
-  // TODO fix!!
-  return [...str].length;
 }
 
 class NameGuard {
@@ -656,7 +595,7 @@ class NameGuard {
    * @returns A promise that resolves with the details of the namehash.
    */
   public async inspectNamehash(
-    namehash: Keccak256Hash,
+    namehash: string,
     options?: InspectNamehashOptions
   ): Promise<NameGuardReport> {
     if (!isKeccak256Hash(namehash)) {
@@ -707,7 +646,7 @@ class NameGuard {
    * @returns A promise that resolves with a `NameGuardReport` of the resolved name.
    */
   public async inspectLabelhash(
-    labelhash: Keccak256Hash,
+    labelhash: string,
     options?: InspectLabelhashOptions
   ): Promise<NameGuardReport> {
     if (!isKeccak256Hash(labelhash)) {
