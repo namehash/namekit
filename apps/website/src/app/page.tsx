@@ -1,11 +1,17 @@
 'use client'
 
-import Image from "next/image";
-import { Highlight, themes } from "prism-react-renderer";
+import { Highlight } from "prism-react-renderer";
 import { PrismTheme } from "prism-react-renderer";
-import chat_img from "../../public/assets/chat.png";
 import React, {Fragment} from "react";
+import Image from "next/image";
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
+import impersonation_attack_img from "../../public/assets/vitalik_impersonation_attack.png";
+import fake_NFT_filter_img from "../../public/assets/fake_NFT_filter.png";
+import surface_risks_img from "../../public/assets/surface_risks.png";
+import dangerous_name_config_img from "../../public/assets/dangerous_name_configuration.png";
+import autorenewal_img from "../../public/assets/autorenewal.png";
+import ens_webfont_img from "../../public/assets/ens_webfont.png";
+import {Search} from "@/components/Search";
 
 export default function Home() {
     const exampleCode =
@@ -19,8 +25,8 @@ export default function Home() {
   return (
     <>
       <Header />
+        <HeroSection />
       <div className="md:p-32 relative">
-        <QuickStartSection />
         <ReadySection
             sectionTargetSvgPath={"M7.1875 10C7.1875 10.1726 7.04759 10.3125 6.875 10.3125C6.70241 10.3125 6.5625 10.1726 6.5625 10C6.5625 9.82741 6.70241 9.6875 6.875 9.6875C7.04759 9.6875 7.1875 9.82741 7.1875 10ZM7.1875 10H6.875M10.3125 10C10.3125 10.1726 10.1726 10.3125 10 10.3125C9.82741 10.3125 9.6875 10.1726 9.6875 10C9.6875 9.82741 9.82741 9.6875 10 9.6875C10.1726 9.6875 10.3125 9.82741 10.3125 10ZM10.3125 10H10M13.4375 10C13.4375 10.1726 13.2976 10.3125 13.125 10.3125C12.9524 10.3125 12.8125 10.1726 12.8125 10C12.8125 9.82741 12.9524 9.6875 13.125 9.6875C13.2976 9.6875 13.4375 9.82741 13.4375 10ZM13.4375 10H13.125M17.5 10C17.5 13.797 14.1421 16.875 10 16.875C9.26044 16.875 8.54588 16.7769 7.87098 16.5941C7.05847 17.1649 6.06834 17.5 5 17.5C4.83398 17.5 4.6698 17.4919 4.50806 17.4761C4.375 17.4631 4.24316 17.4449 4.11316 17.4216C4.5161 16.9461 4.80231 16.3689 4.92824 15.734C5.00378 15.3531 4.81725 14.9832 4.53903 14.7124C3.27475 13.4818 2.5 11.8238 2.5 10C2.5 6.20304 5.85786 3.125 10 3.125C14.1421 3.125 17.5 6.20304 17.5 10Z"}
             sectionTargetClientMessage={"For Web3 messengers"}
@@ -85,6 +91,13 @@ export default function Home() {
                 </svg>
             </div>
             }
+            imageSpecifics={
+            {
+                source: impersonation_attack_img.src,
+                tagWidth: 956,
+                tagHeight: 814
+            }
+        }
         />
       <ReadySection
           sectionTargetSvgPath={"M2.5 2.5H4.21296L4.55556 4.21296M5.92593 11.0648H14.4907L17.9167 4.21296H4.55556M5.92593 11.0648L4.55556 4.21296M5.92593 11.0648L3.96211 13.0286C3.42255 13.5682 3.80469 14.4907 4.56773 14.4907H14.4907M14.4907 14.4907C13.5447 14.4907 12.7778 15.2577 12.7778 16.2037C12.7778 17.1497 13.5447 17.9167 14.4907 17.9167C15.4368 17.9167 16.2037 17.1497 16.2037 16.2037C16.2037 15.2577 15.4368 14.4907 14.4907 14.4907ZM7.63889 16.2037C7.63889 17.1497 6.87197 17.9167 5.92593 17.9167C4.97988 17.9167 4.21296 17.1497 4.21296 16.2037C4.21296 15.2577 4.97988 14.4907 5.92593 14.4907C6.87197 14.4907 7.63889 15.2577 7.63889 16.2037Z"}
@@ -142,6 +155,13 @@ export default function Home() {
               </svg>
           </div>
             }
+          imageSpecifics={
+              {
+                  source: fake_NFT_filter_img.src,
+                  tagWidth: 924,
+                  tagHeight: 680
+              }
+          }
       />
           <ReadySection
               sectionTargetSvgPath={"M2.5 2.5H4.21296L4.55556 4.21296M5.92593 11.0648H14.4907L17.9167 4.21296H4.55556M5.92593 11.0648L4.55556 4.21296M5.92593 11.0648L3.96211 13.0286C3.42255 13.5682 3.80469 14.4907 4.56773 14.4907H14.4907M14.4907 14.4907C13.5447 14.4907 12.7778 15.2577 12.7778 16.2037C12.7778 17.1497 13.5447 17.9167 14.4907 17.9167C15.4368 17.9167 16.2037 17.1497 16.2037 16.2037C16.2037 15.2577 15.4368 14.4907 14.4907 14.4907ZM7.63889 16.2037C7.63889 17.1497 6.87197 17.9167 5.92593 17.9167C4.97988 17.9167 4.21296 17.1497 4.21296 16.2037C4.21296 15.2577 4.97988 14.4907 5.92593 14.4907C6.87197 14.4907 7.63889 15.2577 7.63889 16.2037Z"}
@@ -151,6 +171,13 @@ export default function Home() {
               sectionBackgroundName={"bg-green_background"}
               isCodeOnTheLeft={false}
               codeSnippet={exampleCode}
+              imageSpecifics={
+                  {
+                      source: surface_risks_img.src,
+                      tagWidth: 884,
+                      tagHeight: 682
+                  }
+              }
           />
           <ComingSoonSection
               sectionTargetSvgPath={"M17.5 10C17.5 8.96447 16.6605 8.125 15.625 8.125H12.5C12.5 9.50571 11.3807 10.625 10 10.625C8.61929 10.625 7.5 9.50571 7.5 8.125H4.375C3.33947 8.125 2.5 8.96447 2.5 10M17.5 10V15C17.5 16.0355 16.6605 16.875 15.625 16.875H4.375C3.33947 16.875 2.5 16.0355 2.5 15V10M17.5 10V7.5M2.5 10V7.5M17.5 7.5C17.5 6.46447 16.6605 5.625 15.625 5.625H4.375C3.33947 5.625 2.5 6.46447 2.5 7.5M17.5 7.5V5C17.5 3.96447 16.6605 3.125 15.625 3.125H4.375C3.33947 3.125 2.5 3.96447 2.5 5V7.5"}
@@ -158,9 +185,16 @@ export default function Home() {
               sectionHeader={<Fragment>Identify dangerous name<br />configurations</Fragment>}
               sectionDescription={"Changes in ownership of ENS names does not automatically update deposit addresses. This can result in considerable harm and lead to irreversible losses. " +
                   "ENS Name Healthchecks instantly detect all potential issues, including warnings for ENS resolver records that are improperly formatted."}
-              sectionBackgroundName={"bg-purple_background"}
+              sectionBackgroundName={"bg-purple_background_sm"}
               isTextOnTheLeft={true}
               badgeText={"Coming soon"}
+              imageSpecifics={
+                  {
+                      source: dangerous_name_config_img.src,
+                      tagWidth: 960,
+                      tagHeight: 682
+                  }
+              }
           />
           <ComingSoonSection
               sectionTargetSvgPath={"M17.5 10C17.5 8.96447 16.6605 8.125 15.625 8.125H12.5C12.5 9.50571 11.3807 10.625 10 10.625C8.61929 10.625 7.5 9.50571 7.5 8.125H4.375C3.33947 8.125 2.5 8.96447 2.5 10M17.5 10V15C17.5 16.0355 16.6605 16.875 15.625 16.875H4.375C3.33947 16.875 2.5 16.0355 2.5 15V10M17.5 10V7.5M2.5 10V7.5M17.5 7.5C17.5 6.46447 16.6605 5.625 15.625 5.625H4.375C3.33947 5.625 2.5 6.46447 2.5 7.5M17.5 7.5V5C17.5 3.96447 16.6605 3.125 15.625 3.125H4.375C3.33947 3.125 2.5 3.96447 2.5 5V7.5"}
@@ -168,18 +202,32 @@ export default function Home() {
               sectionHeader={<Fragment>Never lose a name you love with<br />ENS autorenew</Fragment>}
               sectionDescription={"Changes in ownership of ENS names does not automatically update deposit addresses. This can result in considerable harm and lead to irreversible losses. " +
                   "ENS Name Healthchecks instantly detect all potential issues, including warnings for ENS resolver records that are improperly formatted."}
-              sectionBackgroundName={"bg-green_background"}
+              sectionBackgroundName={"bg-green_background_sm"}
               isTextOnTheLeft={false}
               badgeText={"Planned"}
+              imageSpecifics={
+                  {
+                      source: autorenewal_img.src,
+                      tagWidth: 11600,
+                      tagHeight: 626
+                  }
+              }
           />
           <ComingSoonSection
               sectionTargetSvgPath={"M17.5 10C17.5 8.96447 16.6605 8.125 15.625 8.125H12.5C12.5 9.50571 11.3807 10.625 10 10.625C8.61929 10.625 7.5 9.50571 7.5 8.125H4.375C3.33947 8.125 2.5 8.96447 2.5 10M17.5 10V15C17.5 16.0355 16.6605 16.875 15.625 16.875H4.375C3.33947 16.875 2.5 16.0355 2.5 15V10M17.5 10V7.5M2.5 10V7.5M17.5 7.5C17.5 6.46447 16.6605 5.625 15.625 5.625H4.375C3.33947 5.625 2.5 6.46447 2.5 7.5M17.5 7.5V5C17.5 3.96447 16.6605 3.125 15.625 3.125H4.375C3.33947 3.125 2.5 3.96447 2.5 5V7.5"}
               sectionTargetClientMessage={"For wallets and dApps"}
               sectionHeader={<Fragment>ENS webfont</Fragment>}
               sectionDescription={`NameGuard’s ENS Webfont solution will ensure fll security against homograph attach including distinct appearances for characters like “I, 1 or i. See it in action!`}
-              sectionBackgroundName={"bg-purple_background"}
+              sectionBackgroundName={"bg-purple_background_sm"}
               isTextOnTheLeft={true}
               badgeText={"Planned"}
+              imageSpecifics={
+                  {
+                      source: ens_webfont_img.src,
+                      tagWidth: 1440,
+                      tagHeight: 958
+                  }
+              }
           />
       </div>
         <RoadMap />
@@ -341,6 +389,12 @@ function CodeSnippet(props: CodeSnippetProps) {
     </div>);
 }
 
+type ImageCharacteristics = {
+    source: string;
+    tagWidth: number;
+    tagHeight: number;
+}
+
 type ReadySectionProps = {
     sectionTargetClientMessage: string;
     sectionTargetSvgPath: string;
@@ -350,6 +404,7 @@ type ReadySectionProps = {
     isCodeOnTheLeft: boolean;
     codeSnippet: string;
     integrationsPanel?: React.ReactNode;
+    imageSpecifics: ImageCharacteristics;
 }
 
 function ReadySection(props: ReadySectionProps){
@@ -387,7 +442,7 @@ function ReadySection(props: ReadySectionProps){
             </p>
           </div>
               {props.isCodeOnTheLeft ? (
-                  <div className={`flex sm:flex-col xl:flex-row justify-center rounded-none items-center gap-10 w-full h-3/4 py-16 px-10 ${props.sectionBackgroundName} bg-center bg-no-repeat bg-cover` }>
+                  <div className={`flex sm:flex-col xl:flex-row justify-center rounded-none items-center gap-10 w-full h-full xl:h-3/4 py-16 px-10 ${props.sectionBackgroundName} bg-center bg-no-repeat bg-cover` }>
                       {props.integrationsPanel ? (
                           <div className={"flex flex-col w-full h-full justify-between items-center gap-7"}>
                               <CodeSnippet codeSnippet={props.codeSnippet}/>
@@ -396,11 +451,13 @@ function ReadySection(props: ReadySectionProps){
                               </div>
                           </div>
                       ) : (<CodeSnippet codeSnippet={props.codeSnippet}/>)}
-                      <Image className={"z-10"} src={chat_img} alt={"chat image for layout testing"} width={440} height={418}/>
+                      <Image className={`z-10 w-2/3 h-2/3 xl:w-1/3 xl:h-1/3`}
+                           src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
                   </div>
               ) : (
-                  <div className={`flex flex-col xl:flex-row justify-center items-center gap-10 w-full h-3/4 py-16 px-10 rounded-none ${props.sectionBackgroundName} bg-center bg-no-repeat bg-cover`}>
-                    <Image className={"z-10"} src={chat_img} alt={"chat image for layout testing"} width={440} height={418}/>
+                  <div className={`flex flex-col xl:flex-row justify-center items-center gap-10 w-full h-full xl:h-3/4 py-16 px-10 rounded-none ${props.sectionBackgroundName} bg-center bg-no-repeat bg-cover`}>
+                    <Image className={`z-10 w-2/3 h-2/3 xl:w-1/3 xl:h-1/3`}
+                         src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
                       {props.integrationsPanel ? (
                           <div className={"flex flex-col w-full h-full justify-between items-center gap-7"}>
                               <CodeSnippet codeSnippet={props.codeSnippet}/>
@@ -421,16 +478,16 @@ type ComingSoonSectionProps = {
     sectionBackgroundName: string;
     isTextOnTheLeft: boolean;
     badgeText: string;
+    imageSpecifics: ImageCharacteristics;
 }
 
 function ComingSoonSection(props: ComingSoonSectionProps) {
     return (
-        <section className={`w-full h-1/2 py-24 flex sm:flex-col xl:flex-row items-center justify-center gap-10`}>
+        <section className={`w-full h-1/2 py-24 px-10 flex sm:flex-col xl:flex-row items-center justify-center`}>
             {!props.isTextOnTheLeft &&
-                <div className={`w-1/2 ${props.sectionBackgroundName} rounded-none px-20 py-24 bg-origin-border bg-center bg-no-repeat bg-cover flex-shrink-0`}>
-                    <Image className={"relative z-10"}
-                           src={chat_img} alt={"chat image for layout testing"}
-                           width={440} height={418} />
+                <div className={`flex flex-row justify-center items-center w-full xl:w-1/2 ${props.sectionBackgroundName} rounded-none px-4 py-5 xl:px-20 xl:py-24 bg-origin-border bg-center bg-no-repeat bg-cover flex-shrink-0`}>
+                    <Image className={`relative z-10 w-full h-full`}
+                         src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
                 </div>
                 }
             <div className="flex flex-col gap-5 items-start w-1/2 h-full">
@@ -465,9 +522,9 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
                 </p>
 
             </div>
-            {props.isTextOnTheLeft && <div className={`w-1/2 ${props.sectionBackgroundName} rounded-none px-20 py-24 bg-origin-border bg-opacity-20 bg-center bg-no-repeat bg-contain flex-shrink-0`}>
-                <Image className={"relative z-10"}
-                       src={chat_img} alt={"chat image for layout testing"} width={440} height={418} />
+            {props.isTextOnTheLeft && <div className={`flex flex-row justify-center items-center w-full xl:w-1/2 h-full ${props.sectionBackgroundName} rounded-none px-4 py-5 xl:px-20 xl:py-24 bg-origin-border bg-opacity-20 bg-center bg-no-repeat bg-contain flex-shrink-0`}>
+                <Image className={`relative z-10 w-full h-full`}
+                     src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
             </div>}
         </section>
     );
@@ -478,12 +535,12 @@ function Footer(){
         <footer className={"relative bot-0 w-full h-fit flex flex-row justify-between py-6 px-28 items-center z-10 bg-white"}>
             <p className={"not-italic font-normal text-gray-500 text-footer_text"}>© NameHash Labs. All Rights Reserved</p>
             <div className={"flex flex-row justify-between gap-3"}>
-                <a href={"https://twitter.com/?lang=pl"}>
+                <a href={"https://twitter.com/NamehashLabs"}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M13.5222 10.7749L19.4785 4H18.0671L12.8952 9.88256L8.76437 4H4L10.2466 12.8955L4 20H5.41155L10.8732 13.7878L15.2356 20H20L13.5218 10.7749H13.5222ZM11.5889 12.9738L10.956 12.0881L5.92015 5.03974H8.0882L12.1522 10.728L12.7851 11.6137L18.0677 19.0075H15.8997L11.5889 12.9742V12.9738Z" fill="#AFAFAF"/>
                     </svg>
                 </a>
-                <a href={"https://github.com/namehash"}>
+                <a href={"https://github.com/namehash/nameguard"}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path fillRule="evenodd" clipRule="evenodd" d="M12.0413 2.25952C6.51859 2.25952 2 6.77811 2 12.3008C2 16.7357 4.84504 20.5012 8.86156 21.8401C9.36363 21.9238 9.53099 21.5891 9.53099 21.338C9.53099 21.087 9.53099 20.5012 9.53099 19.6645C6.76962 20.2502 6.18388 18.3256 6.18388 18.3256C5.76549 17.1541 5.09607 16.8194 5.09607 16.8194C4.09194 16.2337 5.09607 16.2337 5.09607 16.2337C6.1002 16.3174 6.60227 17.2378 6.60227 17.2378C7.52272 18.744 8.94524 18.3256 9.53099 18.0746C9.61466 17.4052 9.8657 16.9868 10.2004 16.7357C7.94111 16.4847 5.59814 15.6479 5.59814 11.7988C5.59814 10.711 6.01653 9.79051 6.60227 9.12109C6.60227 8.78637 6.18388 7.78224 6.76962 6.4434C6.76962 6.4434 7.6064 6.19237 9.53099 7.44753C10.3678 7.1965 11.2045 7.11282 12.0413 7.11282C12.8781 7.11282 13.7149 7.1965 14.5516 7.44753C16.4762 6.10869 17.313 6.4434 17.313 6.4434C17.8987 7.86592 17.4804 8.87005 17.3967 9.12109C18.0661 9.79051 18.4008 10.711 18.4008 11.7988C18.4008 15.6479 16.0578 16.4847 13.7985 16.7357C14.1333 17.0705 14.468 17.6562 14.468 18.5767C14.468 19.9155 14.468 21.0033 14.468 21.338C14.468 21.5891 14.6353 21.9238 15.1374 21.8401C19.1539 20.5012 21.9989 16.7357 21.9989 12.3008C22.0826 6.77811 17.564 2.25952 12.0413 2.25952Z" fill="#AFAFAF"/>
                     </svg>
@@ -504,16 +561,13 @@ function Header() {
                         <p className={"text-white not-italic text-[8.409px] font-semibold leading-[9.343px] pb-[0.5px]"}>beta</p>
                     </div>
                 </div>
-                <div className={"bg-white border border-gray-300 text-gray-400 py-[9px] px-[13px] rounded-md"}>
-                    Here will be search bar
-                </div>
+                <Search />
             </div>
             <div className={"flex flex-row justify-between items-center gap-5"}>
-                <a href={"https://github.com/namehash"}>
-                    {/*the link should be later changed to docs*/}
+                <a href={"https://api.nameguard.io/docs"}>
                     <p className={"not-italic text-black font-medium text-sm mx-[10px] my-[9px]"}>Docs</p>
                 </a>
-                <a href={"https://github.com/namehash"}>
+                <a href={"https://github.com/namehash/nameguard"}>
                     <div className={"flex flex-row justify-between items-center gap-2 py-[7px] px-[10px]"}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                 <path fillRule="evenodd" clipRule="evenodd" d="M12.0413 2.25928C6.51859 2.25928 2 6.77787 2 12.3006C2 16.7355 4.84504 20.501 8.86156 21.8398C9.36363 21.9235 9.53099 21.5888 9.53099 21.3378C9.53099 21.0867 9.53099 20.501 9.53099 19.6642C6.76962 20.25 6.18388 18.3254 6.18388 18.3254C5.76549 17.1539 5.09607 16.8192 5.09607 16.8192C4.09194 16.2334 5.09607 16.2334 5.09607 16.2334C6.1002 16.3171 6.60227 17.2376 6.60227 17.2376C7.52272 18.7438 8.94524 18.3254 9.53099 18.0743C9.61466 17.4049 9.8657 16.9865 10.2004 16.7355C7.94111 16.4845 5.59814 15.6477 5.59814 11.7985C5.59814 10.7107 6.01653 9.79026 6.60227 9.12084C6.60227 8.78613 6.18388 7.782 6.76962 6.44316C6.76962 6.44316 7.6064 6.19212 9.53099 7.44729C10.3678 7.19626 11.2045 7.11258 12.0413 7.11258C12.8781 7.11258 13.7149 7.19626 14.5516 7.44729C16.4762 6.10845 17.313 6.44316 17.313 6.44316C17.8987 7.86568 17.4804 8.86981 17.3967 9.12084C18.0661 9.79026 18.4008 10.7107 18.4008 11.7985C18.4008 15.6477 16.0578 16.4845 13.7985 16.7355C14.1333 17.0702 14.468 17.656 14.468 18.5764C14.468 19.9153 14.468 21.0031 14.468 21.3378C14.468 21.5888 14.6353 21.9235 15.1374 21.8398C19.1539 20.501 21.9989 16.7355 21.9989 12.3006C22.0826 6.77787 17.564 2.25928 12.0413 2.25928Z" fill="#0F172A"/>
@@ -526,9 +580,10 @@ function Header() {
     );
 }
 
-function QuickStartSection() {
+function HeroSection() {
+    const bg_test = `bg-[url("../../public/assets/hero_background.png")]`;
     return (
-        <section className={"w-full h-full py-24 flex flex-col items-center justify-center mb-5"}>
+        <section className={`md:p-32 relative z-10 w-full h-screen py-24 flex flex-col items-center justify-center ${bg_test} bg-no-repeat bg-center bg-contain`}>
             <div className={"inline-flex flex-col items-center gap-5"}>
                 <div className={"flex flex-col gap-2 w-fit h-fit z-10"}>
                     <p className={"text-center not-italic uppercase text-gray-500 text-xs tracking-[0.3px] font-medium"}>An open source public good</p>
@@ -549,7 +604,7 @@ function QuickStartSection() {
                         </svg>
                     </div>
                 </div>
-                <button className={"flex justify-center items-center px-[25px] py-[13px] rounded-lg bg-black z-10 sm:shadow-sm"} onClick={() => {window.location.href = "https://github.com/namehash";}}> {/* Should be replaced with url to the docs! */}
+                <button className={"flex justify-center items-center px-[25px] py-[13px] rounded-lg bg-black z-10 sm:shadow-sm"} onClick={() => {window.location.href = "https://api.nameguard.io/docs";}}> {/* Should be replaced with url to the docs! */}
                     <p className={"text-white not-italic font-medium text-base"}>View the docs</p>
                 </button>
             </div>
@@ -566,9 +621,7 @@ function ExitSection() {
                         <h1 className={"text-black not-italic text-center text-4xl leading-[52px] font-bold"}>Search for any ENS name to generate a<br />NameGuard report</h1>
                         <p className={"text-center text-gray-500 font-normal not-italic text-lg leading-7"}>Share NameGuard reports with frENS. Together we can make web3 safer.</p>
                     </div>
-                    <div className={"w-full h-fit bg-white border border-gray-300 text-gray-400 py-[9px] px-[13px] rounded-md"}>
-                        Here will be search bar
-                    </div>
+                    <Search />
                 </div>
             </div>
         </section>
@@ -579,7 +632,6 @@ type RoadMapElement = {
     stageOfCompletion: "completed" | "in progress" | "planned";
     headerText: string;
     commentSentences: string[];
-    commentsInList: boolean;
 };
 
 function RoadMap() {
@@ -605,72 +657,100 @@ function RoadMap() {
     const badgesMap = new Map<string, React.ReactNode>([["completed", completedBadge], ["in progress", inProgressBadge], ["planned", plannedBadge]]);
 
     const roadMapElements: RoadMapElement[] = [
-        { stageOfCompletion: "completed", headerText: "ENSIP-15 ENS Normalization Approval", commentSentences: ["implemented"], commentsInList: true},
-        { stageOfCompletion: "completed", headerText: "ENS Font Data", commentSentences: ["implemented"], commentsInList: true},
-        { stageOfCompletion: "completed", headerText: "Impersonation attack protections", commentSentences: ["implemented"], commentsInList: true},
-        { stageOfCompletion: "completed", headerText: "Fake ENS NFT filters", commentSentences: ["implemented"], commentsInList: true},
-        { stageOfCompletion: "completed", headerText: "Hidden risks or limitations checks", commentSentences: ["implemented"], commentsInList: true},
+        { stageOfCompletion: "completed", headerText: "ENSIP-15 ENS Normalization Approval", commentSentences: ["implemented"]},
+        { stageOfCompletion: "completed", headerText: "ENS Font Data", commentSentences: ["implemented"]},
+        { stageOfCompletion: "completed", headerText: "Impersonation attack protections", commentSentences: ["implemented"]},
+        { stageOfCompletion: "completed", headerText: "Fake ENS NFT filters", commentSentences: ["implemented"]},
+        { stageOfCompletion: "completed", headerText: "Hidden risks or limitations checks", commentSentences: ["implemented"]},
         { stageOfCompletion: "in progress", headerText: "Expand ENS Name Risks and Limitation Checks", commentSentences: ["Full DNS name support", "Offchain name support", "NameWrapper fuse checks",
-                "Enhanced support for multi-grapheme confusables", "Expanded impersonation checks for different networks (ex: Polygon, etc..) and for overall NFT collections, rather than just NFTs"], commentsInList: true},
-        { stageOfCompletion: "planned", headerText: "ENS Name Auto-Renewal", commentSentences: ["Users will be able to automate renewals with credit cards and other major forms of payment "], commentsInList: true},
+                "Enhanced support for multi-grapheme confusables", "Expanded impersonation checks for different networks (ex: Polygon, etc..) and for overall NFT collections, rather than just NFTs"]},
+        { stageOfCompletion: "planned", headerText: "ENS Name Auto-Renewal", commentSentences: ["Users will be able to automate renewals with credit cards and other major forms of payment "]},
         { stageOfCompletion: "planned", headerText: "Content Enhancements", commentSentences: ["User-friendly (non-technical) help pages for each check",
             "Information messages and help content with multiple language support (internationalization)"], commentsInList: true},
         { stageOfCompletion: "planned", headerText: "ENS Webfont", commentSentences: ["User-friendly (non-technical) help pages for each check",
             "Information messages and help content with multiple language support (internationalization)"], commentsInList: true},
-        { stageOfCompletion: "planned", headerText: "Universal “Pool” for Labelhash", commentSentences: ["Universal “pool” for labelhash -> label lookups across all networks"], commentsInList: false},
+        { stageOfCompletion: "planned", headerText: "Universal “Pool” for Labelhash", commentSentences: ["Universal “pool” for labelhash -> label lookups across all networks"]},
         { stageOfCompletion: "planned", headerText: "ENS Profile Completion Score",
-            commentSentences: ["Each ENS Profile will carry a score assessing the level to help raise awareness of opportunities for enhancement to a name’s records "], commentsInList: false},
+            commentSentences: ["Each ENS Profile will carry a score assessing the level to help raise awareness of opportunities for enhancement to a name’s records "]},
     ];
 
+
+    const positiveShield =
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path d="M12 16.9998L15 19.9998L20 12.9998M16 3.61882C13.1327 6.33432 9.26084 7.99982 5 7.99982C4.9323 7.99982 4.8647 7.9994 4.79719 7.99856C4.27986 9.57204 4 11.2533 4 12.9999C4 20.4552 9.09909 26.7196 16 28.4958C22.9009 26.7196 28 20.4552 28 12.9999C28 11.2533 27.7201 9.57204 27.2028 7.99856C27.1353 7.9994 27.0677 7.99982 27 7.99982C22.7392 7.99982 18.8673 6.33432 16 3.61882Z" stroke="#059669" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>;
+
+    const negativeShield =
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path d="M12.6667 12.6667L19.3333 19.3333M12.6667 19.3333L19.3333 12.6667M16 3.61902C13.1327 6.33452 9.26084 8.00002 5 8.00002C4.9323 8.00002 4.8647 7.9996 4.79719 7.99876C4.27986 9.57224 4 11.2535 4 13.0001C4 20.4554 9.09909 26.7198 16 28.496C22.9009 26.7198 28 20.4554 28 13.0001C28 11.2535 27.7201 9.57224 27.2028 7.99876C27.1353 7.9996 27.0677 8.00002 27 8.00002C22.7392 8.00002 18.8673 6.33452 16 3.61902Z" stroke="#DC2626" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>;
+
+    const warningShield =
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+          <path d="M16 12V17M16 3.61902C13.1327 6.33452 9.26084 8.00002 5 8.00002C4.9323 8.00002 4.8647 7.9996 4.79719 7.99876C4.27986 9.57224 4 11.2535 4 13.0001C4 20.4554 9.09909 26.7198 16 28.496C22.9009 26.7198 28 20.4554 28 13.0001C28 11.2535 27.7201 9.57224 27.2028 7.99876C27.1353 7.9996 27.0677 8.00002 27 8.00002C22.7392 8.00002 18.8673 6.33452 16 3.61902ZM16 21H16.01V21.01H16V21Z" stroke="#F59E0B" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>;
+
+    const leftSideShields = [positiveShield, negativeShield, warningShield, positiveShield, warningShield, negativeShield, warningShield, positiveShield];
+    const rightSideShields = [negativeShield, positiveShield, warningShield, negativeShield, positiveShield, warningShield, negativeShield, positiveShield];
+
     return (
-        <section className={"relative bg-white w-full h-full md:p-32 flex flex-col items-center justify-center gap-12 z-10"}>
-            <div className={"inline-flex h-fit w-4/5 flex-col items-center gap-2 z-10"}>
-                <h1 className={"text-black text-center not-italic font-bold text-4xl leading-[52px]"}>
-                    NameGuard roadmap
-                </h1>
-                <p className={"text-center text-gray-500 text-base leading-7 font-normal not-italic"}>
-                    NameGuard has a mission to keep the ENS community safe and encourage optimal use of ENS names.
-                </p>
+        <section className={"relative bg-white w-full h-full md:py-32 md:px-10 xl:px-32 flex flex-row items-center justify-center z-10 gap-10"}>
+            <div className={"w-1/5 h-full relative -top-20 flex flex-col justify-center items-center gap-36"}>
+                {leftSideShields.map((shield, idx) => (
+                    <div key={`left-${idx}-Shield`} className={`w-full h-full flex flex-row items-center ${idx % 2 === 1 ? "justify-start" : "justify-end"}`}>
+                        <div className={"inline-flex items-start p-5 gap-[10px] border rounded-full border-gray-200 shadow-sm"}>{shield}</div>
+                    </div>))}
             </div>
-            <div className={"h-fit w-4/5"}>
-                <ul role="list" className="space-y-4 w-full h-full flex-shrink-0">
-                    {roadMapElements.map((roadmapElement, idx) => (
-                        <li key={idx} className="relative flex gap-x-4"> {/* Here we can manipulate height but we should really change sizes of it's children*/}
-                            <div
-                                className={classNames(
-                                    idx === roadMapElements.length - 1 ? 'h-6' : '-bottom-6',
-                                    'absolute left-0 top-0 flex w-6 justify-center mt-2'
-                                )}
-                            >
-                                <div className={`w-[2px] ${roadmapElement.stageOfCompletion === "completed" ? "bg-black" : "bg-gray-200"} mt-5 mb-3`} />
-                            </div>
-                                <div className="relative flex h-6 w-6 flex-none items-center justify-center bg-white">
-                                    {roadmapElement.stageOfCompletion === 'completed' ? (
-                                        <CheckCircleIcon className="h-6 w-6 my-2 text-black" aria-hidden="true" />
-                                    ) : (
-                                        <div className={`h-2 w-2 rounded-full ${roadmapElement.stageOfCompletion === "in progress" ? "bg-black" : "bg-gray-200"}`} />
+            <div className={"w-3/5 h-full flex flex-col items-center justify-center gap-14"}>
+                <div className={"inline-flex h-fit w-full flex-col items-center gap-2 z-10"}>
+                    <h1 className={"text-black text-center not-italic font-bold text-4xl leading-[52px]"}>
+                        NameGuard roadmap
+                    </h1>
+                    <p className={"text-center text-gray-500 text-base leading-7 font-normal not-italic"}>
+                        NameGuard has a mission to keep the ENS community safe and encourage optimal use of ENS names.
+                    </p>
+                </div>
+                <div className={"h-fit w-full"}>
+                    <ul role="list" className="space-y-4 w-full h-full flex-shrink-0">
+                        {roadMapElements.map((roadmapElement, idx) => (
+                            <li key={idx} className="relative flex gap-x-4"> {/* Here we can manipulate height but we should really change sizes of it's children*/}
+                                <div
+                                    className={classNames(
+                                        idx === roadMapElements.length - 1 ? 'h-6' : '-bottom-6',
+                                        'absolute left-0 top-0 flex w-6 justify-center mt-2'
                                     )}
+                                >
+                                    <div className={`w-[2px] ${roadmapElement.stageOfCompletion === "completed" ? "bg-black" : "bg-gray-200"} mt-5 mb-3`} />
                                 </div>
-                                <div className={"w-full h-fit flex flex-col items-start gap-3"}>
-                                    <div className={"relative -top-2 w-full h-fit inline-flex flex-row justify-between items-start self-stretch py-1.5"}>
-                                        <h1 className={"text-black text-lg leading-6 font-semibold not-italic"}>{roadmapElement.headerText}</h1>
-                                        {badgesMap.get(roadmapElement.stageOfCompletion)}
-                                    </div>
-                                    <div className="w-full h-fit flex flex-col items-start self-stretch rounded-lg border border-gray-200 bg-gray-50 p-5">
-                                        {roadmapElement.commentsInList ? (
-                                            <ul role="list">
-                                                {roadmapElement.commentSentences.map((sentence, sentenceIdx) => (
-                                                    <li key={`${idx}${sentenceIdx}`} className="box-border text-sm leading-6 text-gray-500 font-normal not-italic">&bull;  {sentence}</li>))}
-                                            </ul>
-                                        )
-                                            : (
-                                                <p className="text-sm leading-6 text-gray-500 font-normal not-italic">{roadmapElement.commentSentences.join(" ")}</p>
+                                    <div className="relative flex h-6 w-6 flex-none items-center justify-center bg-white">
+                                        {roadmapElement.stageOfCompletion === 'completed' ? (
+                                            <CheckCircleIcon className="h-6 w-6 my-2 text-black" aria-hidden="true" />
+                                        ) : (
+                                            <div className={`h-2 w-2 rounded-full ${roadmapElement.stageOfCompletion === "in progress" ? "bg-black" : "bg-gray-200"}`} />
                                         )}
                                     </div>
-                                </div>
-                        </li>
-                    ))}
-                </ul>
+                                    <div className={"w-full h-fit flex flex-col items-start gap-3"}>
+                                        <div className={"relative -top-2 w-full h-fit inline-flex flex-row justify-between items-start self-stretch py-1.5"}>
+                                            <h1 className={"text-black text-lg leading-6 font-semibold not-italic"}>{roadmapElement.headerText}</h1>
+                                            {badgesMap.get(roadmapElement.stageOfCompletion)}
+                                        </div>
+                                        <div className="w-full h-fit flex flex-col items-start self-stretch rounded-lg border border-gray-200 bg-gray-50 p-5">
+                                                <ul role="list">
+                                                    {roadmapElement.commentSentences.map((sentence, sentenceIdx) => (
+                                                        <li key={`${idx}${sentenceIdx}`} className="box-border text-sm leading-6 text-gray-500 font-normal not-italic">&bull;  {sentence}</li>))}
+                                                </ul>
+                                        </div>
+                                    </div>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+            <div className={"w-1/5 h-full relative top-4 flex flex-col justify-center items-center gap-36"}>
+                {rightSideShields.map((shield, idx) => (
+                    <div key={`left-${idx}-Shield`} className={`w-full h-full flex flex-row items-center ${idx % 2 === 0 ? "justify-start" : "justify-end"}`}>
+                        <div className={"inline-flex items-start p-5 gap-[10px] border rounded-full border-gray-200 shadow-sm"}>{shield}</div>
+                    </div>))}
             </div>
         </section>
     );
