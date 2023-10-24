@@ -125,7 +125,7 @@ export function SearchSettingsModal({ open, onClose }: any) {
                           htmlFor="assume-eth"
                           className="font-medium text-gray-900"
                         >
-                          Assume ".eth"
+                          Assume &quot;.eth&quot;
                         </label>
                         <p
                           id="assume-eth-description"
