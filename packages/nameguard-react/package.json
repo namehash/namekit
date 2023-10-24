@@ -1,5 +1,6 @@
 {
   "name": "@namehash/nameguard-react",
+  "version": "0.0.3",
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch --clean=false"
@@ -21,6 +22,9 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
+    "@headlessui-float/react": "0.11.4",
+    "@headlessui/react": "1.7.17",
+    "@heroicons/react": "2.0.18",
     "@namehash/nameguard": "workspace:*",
     "classcat": "5.0.4",
     "react": "^18.2.0",

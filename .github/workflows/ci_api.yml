@@ -16,7 +16,7 @@ jobs:
     env:
       PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
       PROVIDER_URI_GOERLI: ${{ secrets.PROVIDER_URI_GOERLI }}
-      PROVIDER_URI_SEOPLIA: ${{ secrets.PROVIDER_URI_SEOPLIA }}
+      PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}
 
     steps:
       - uses: actions/checkout@v3

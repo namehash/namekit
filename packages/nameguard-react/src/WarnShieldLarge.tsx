@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const WarnShieldDesktop = (props) => (
+export const WarnShieldLarge = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={68}
@@ -71,5 +71,3 @@ const WarnShieldDesktop = (props) => (
     </defs>
   </svg>
 );
-
-export default WarnShieldDesktop;

@@ -1,6 +1,6 @@
 {
   "name": "@namehash/nameguard",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "type": "module",
   "exports": {
     ".": {
@@ -37,7 +37,9 @@
     "vitest": "^0.34.5"
   },
   "dependencies": {
-    "cross-fetch": "^4.0.0"
+    "@adraffy/ens-normalize": "^1.10.0",
+    "cross-fetch": "^4.0.0",
+    "viem": "^1.16.6"
   },
   "publishConfig": {
     "access": "public"

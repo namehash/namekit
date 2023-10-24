@@ -196,9 +196,6 @@ def get_highest_risk(check_results: list[GenericCheckResult]) -> Optional[Generi
     return max((check for check in check_results if check.rating > Rating.PASS), default=None)
 
 
-
-
-
 def detect_grapheme_link_name(link: str) -> str:
     '''
     Possible link formats:

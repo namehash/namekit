@@ -1,6 +1,11 @@
 import { describe, it, expect } from "vitest";
 
-import { nameguard } from ".";
+import { createClient } from ".";
+
+const nameguard = createClient({
+  // undefined will default to the production endpoint
+  endpoint: process.env.NAMEGUARD_TEST_ENDPOINT,
+});
 
 describe("NameGuard", () => {
   // Silly tests

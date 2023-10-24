@@ -1,5 +1,8 @@
 from .checks import (
     GenericCheckResult,
+    GraphemeCheckResult,
+    LabelCheckResult,
+    NameCheckResult,
     Rating,
     Check,
     CheckStatus,
