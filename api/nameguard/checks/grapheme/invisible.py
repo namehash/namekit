@@ -5,8 +5,8 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, GraphemeChe
 STATUS = CheckStatus.ALERT
 
 G_MESSAGE_PASS = 'This grapheme is visible'
-L_MESSAGE_PASS = 'This label is fully visible'
-N_MESSAGE_PASS = 'This name is fully visible'
+L_MESSAGE_PASS = 'This label does not contain invisible graphemes'
+N_MESSAGE_PASS = 'This name does not contain invisible graphemes'
 
 G_MESSAGE_FAIL = 'This grapheme is invisible'
 L_MESSAGE_FAIL = 'This label contains invisible graphemes'
