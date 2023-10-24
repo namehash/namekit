@@ -69,6 +69,30 @@ curl -d '{"name":"nick.eth"}' -H "Content-Type: application/json" -X POST http:/
 # }
 ```
 
+### Running nameguard tests
+Before running python tests, make sure you have installed the 
+required test dependencies. You can install them using pip:
+
+```bash
+pip install pytest pytest-asyncio
+```
+
+To run nameguard python tests locally, just run pytest 
+from the root directory:
+```bash
+pytest ./api/tests/
+```
+
+NameGuard also provides an option to run API tests (`api/tests/test_api.py`)
+against a remote host (e.g. Lambda) where a NameGuard instance is running.
+To enable this, you will need to set an environment variable 
+`LAMBDA_ROOT_URL` to specify the remote host URL.
+
+This can be done like this:
+```bash
+LAMBDA_ROOT_URL=remote-url pytest api/tests/test_api.py
+```
+
 ### Using the AWS Lambda handler
 
 NameGuard includes a handler for [Amazon AWS Lambda](https://aws.amazon.com/lambda/). It is available in the `nameguard.lambda` module. You can use it to create a Lambda function that will respond to HTTP requests. It uses the [mangum](https://mangum.io) library.
