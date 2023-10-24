@@ -24,6 +24,7 @@
   "dependencies": {
     "@headlessui-float/react": "0.11.4",
     "@headlessui/react": "1.7.17",
+    "@heroicons/react": "2.0.18",
     "@namehash/nameguard": "workspace:*",
     "classcat": "5.0.4",
     "react": "^18.2.0",
