@@ -351,7 +351,7 @@ class NameGuard:
             else:
                 if ALCHEMY_UNKNOWN_NAME.match(title):
                     unknown_name = f"[{res_json['id']['tokenId'][2:]}].eth"
-                    report = await self.inspect_name(network_name, unknown_name)
+                    report = await self.inspect_name(network_name, unknown_name, resolve_labelhashes=False)
                     return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_ETH_NAME, nameguard_result=report, investigated_fields=investigated_fields)
 
                 report = await self.inspect_name(network_name, title)
