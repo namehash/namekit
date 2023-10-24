@@ -561,7 +561,7 @@ function Header() {
                         <p className={"text-white not-italic text-[8.409px] font-semibold leading-[9.343px] pb-[0.5px]"}>beta</p>
                     </div>
                 </div>
-                <Search />
+                {/*<Search />*/}
             </div>
             <div className={"flex flex-row justify-between items-center gap-5"}>
                 <a href={"https://api.nameguard.io/docs"}>
@@ -621,7 +621,7 @@ function ExitSection() {
                         <h1 className={"text-black not-italic text-center text-4xl leading-[52px] font-bold"}>Search for any ENS name to generate a<br />NameGuard report</h1>
                         <p className={"text-center text-gray-500 font-normal not-italic text-lg leading-7"}>Share NameGuard reports with frENS. Together we can make web3 safer.</p>
                     </div>
-                    <Search />
+                    {/*<Search />*/}
                 </div>
             </div>
         </section>
@@ -666,9 +666,9 @@ function RoadMap() {
                 "Enhanced support for multi-grapheme confusables", "Expanded impersonation checks for different networks (ex: Polygon, etc..) and for overall NFT collections, rather than just NFTs"]},
         { stageOfCompletion: "planned", headerText: "ENS Name Auto-Renewal", commentSentences: ["Users will be able to automate renewals with credit cards and other major forms of payment "]},
         { stageOfCompletion: "planned", headerText: "Content Enhancements", commentSentences: ["User-friendly (non-technical) help pages for each check",
-            "Information messages and help content with multiple language support (internationalization)"], commentsInList: true},
+            "Information messages and help content with multiple language support (internationalization)"]},
         { stageOfCompletion: "planned", headerText: "ENS Webfont", commentSentences: ["User-friendly (non-technical) help pages for each check",
-            "Information messages and help content with multiple language support (internationalization)"], commentsInList: true},
+            "Information messages and help content with multiple language support (internationalization)"]},
         { stageOfCompletion: "planned", headerText: "Universal “Pool” for Labelhash", commentSentences: ["Universal “pool” for labelhash -> label lookups across all networks"]},
         { stageOfCompletion: "planned", headerText: "ENS Profile Completion Score",
             commentSentences: ["Each ENS Profile will carry a score assessing the level to help raise awareness of opportunities for enhancement to a name’s records "]},
