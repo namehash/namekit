@@ -71,10 +71,10 @@ curl -d '{"name":"nick.eth"}' -H "Content-Type: application/json" -X POST http:/
 
 ### Running nameguard tests
 Before running nameguard tests, make sure you have installed the 
-required test dependencies. You can install them using pip:
+required dev dependencies. You can install them with poetry:
 
 ```bash
-pip install pytest pytest-asyncio
+poetry install --with dev
 ```
 
 To run nameguard tests locally, just run pytest from the root directory:
