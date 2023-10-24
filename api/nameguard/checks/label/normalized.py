@@ -23,7 +23,7 @@ def check_label(label: Optional[InspectorResult]) -> GenericCheckResult:
             _label_message=L_MESSAGE_SKIP,
             _name_message=N_MESSAGE_SKIP,
         )
-    passed = label.status == 'normalized'
+    passed = label.status == 'normalized' and len(label.label) > 0
     return LabelCheckResult(
         check=Check.NORMALIZED,
         status=CheckStatus.PASS if passed else STATUS,
