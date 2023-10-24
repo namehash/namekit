@@ -1,10 +1,9 @@
 import os
 import re
 
-import ens_normalize
+from ens_normalize import ens_process, is_ens_normalized, ens_cure, DisallowedSequence
 import requests
 from ens import ENS
-from ens_normalize import DisallowedSequence
 import os
 
 import requests
@@ -112,7 +111,7 @@ class NameGuard:
         if resolve_labelhashes:
             name = await resolve_all_labelhashes_in_name_querying_labelhashes(network_name, name)
 
-        labels = name.split('.')
+        labels = [] if len(name) == 0 else name.split('.')
         logger.debug(f'[inspect_name] labels: {labels}')
 
         # labelhashes have `None` as their analysis
@@ -164,9 +163,10 @@ class NameGuard:
             namehash=namehash_from_name(name),
             normalization=Normalization.UNKNOWN
             if any(label_analysis is None for label_analysis in labels_analysis)
-            else Normalization.UNNORMALIZED
-            if any(label_analysis.status == 'unnormalized' for label_analysis in labels_analysis)
-            else Normalization.NORMALIZED,
+            else Normalization.NORMALIZED
+            if all(label_analysis.status == 'normalized' and len(label_analysis.label) > 0
+                   for label_analysis in labels_analysis)
+            else Normalization.UNNORMALIZED,
             rating=calculate_nameguard_rating(name_checks),
             risk_count=count_risks(name_checks),
             highest_risk=get_highest_risk(name_checks),
@@ -186,9 +186,9 @@ class NameGuard:
                         label_analysis.label) if label_analysis is not None else '0x' + label[1:-1],
                     normalization=Normalization.UNKNOWN
                     if label_analysis is None
-                    else Normalization.UNNORMALIZED
-                    if label_analysis.status == 'unnormalized'
-                    else Normalization.NORMALIZED,
+                    else Normalization.NORMALIZED
+                    if label_analysis.status == 'normalized' and len(label_analysis.label) > 0
+                    else Normalization.UNNORMALIZED,
                     rating=calculate_nameguard_rating(label_checks),
                     risk_count=count_risks(label_checks),
                     highest_risk=get_highest_risk(label_checks),
@@ -300,7 +300,7 @@ class NameGuard:
         else:
             nameguard_result = await self.inspect_name(network_name, domain)
             
-            result = ens_normalize.ens_process(domain, do_normalize=True, do_beautify=True)
+            result = ens_process(domain, do_normalize=True, do_beautify=True)
             if result.normalized != domain:
                 status = SecureReverseLookupStatus.UNNORMALIZED
             else:
@@ -344,7 +344,7 @@ class NameGuard:
                     return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME, nameguard_result=None)
 
                 report = await self.inspect_name(network_name, title)
-                if ens_normalize.is_ens_normalized(title):
+                if is_ens_normalized(title):
                     return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME, nameguard_result=report)
                 else:
                     return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.INVALID_ETH_NAME, nameguard_result=report)
@@ -358,7 +358,7 @@ class NameGuard:
                     name = nested_get(res_json, keys)
                     try:
                         #TODO: remove invisible and then canonicalize
-                        cured_title = ens_normalize.ens_cure(name)  #TODO improve
+                        cured_title = ens_cure(name)  #TODO improve
                         # canonicalize
                         inspector_result = self.analyse_label(cured_title)
                         if inspector_result.canonical_label is not None:
