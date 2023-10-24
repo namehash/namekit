@@ -1,24 +1,32 @@
 from typing import Optional
 from label_inspector.models import InspectorResult
-from nameguard.models import CheckStatus, Check, GenericCheckResult
+from nameguard.models import CheckStatus, Check, GenericCheckResult, LabelCheckResult
 
 
 STATUS = CheckStatus.ALERT
-MESSAGE_PASS = 'Label is normalized according to ENSIP-15'
-MESSAGE_FAIL = 'Label is not normalized according to ENSIP-15'
-MESSAGE_SKIP = 'Label is unknown'
+
+L_MESSAGE_PASS = 'This label is normalized according to ENSIP-15'
+N_MESSAGE_PASS = 'This name is normalized according to ENSIP-15'
+
+L_MESSAGE_FAIL = 'This label is not normalized according to ENSIP-15'
+N_MESSAGE_FAIL = 'This name is not normalized according to ENSIP-15'
+
+L_MESSAGE_SKIP = 'This label is unknown'
+N_MESSAGE_SKIP = 'This name contains unknown labels'
 
 
 def check_label(label: Optional[InspectorResult]) -> GenericCheckResult:
     if label is None:
-        return GenericCheckResult(
+        return LabelCheckResult(
             check=Check.NORMALIZED,
             status=CheckStatus.SKIP,
-            message=MESSAGE_SKIP,
+            _label_message=L_MESSAGE_SKIP,
+            _name_message=N_MESSAGE_SKIP,
         )
     passed = label.status == 'normalized'
-    return GenericCheckResult(
+    return LabelCheckResult(
         check=Check.NORMALIZED,
         status=CheckStatus.PASS if passed else STATUS,
-        message=MESSAGE_PASS if passed else MESSAGE_FAIL,
+        _label_message=L_MESSAGE_PASS if passed else L_MESSAGE_FAIL,
+        _name_message=N_MESSAGE_PASS if passed else N_MESSAGE_FAIL,
     )

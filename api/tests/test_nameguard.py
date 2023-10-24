@@ -242,3 +242,31 @@ def test_grapheme_codepoints(nameguard: NameGuard):
 
     r = nameguard.inspect_grapheme('a\u0328')
     assert r.codepoints == ['U+0061', 'U+0328']
+
+
+@pytest.mark.asyncio
+async def test_contextual_messages(nameguard: NameGuard):
+    r = await nameguard.inspect_name('mainnet', 'ą')
+
+    for check in r.checks:
+        if check.check is Check.CONFUSABLES:
+            assert check.message == 'This name contains confusable graphemes'
+            break
+    else:
+        assert False, 'CONFUSABLES check not found'
+
+    for check in r.labels[0].checks:
+        if check.check is Check.CONFUSABLES:
+            assert check.message == 'This label contains confusable graphemes'
+            break
+    else:
+        assert False, 'CONFUSABLES check not found'
+
+    r = nameguard.inspect_grapheme('ą')
+
+    for check in r.checks:
+        if check.check is Check.CONFUSABLES:
+            assert check.message == 'This grapheme is confusable'
+            break
+    else:
+        assert False, 'CONFUSABLES check not found'

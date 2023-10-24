@@ -1,9 +1,9 @@
-from pydantic import BaseModel, Field, computed_field
+from typing import Optional
+from pydantic import BaseModel, computed_field
 from enum import Enum
 
+from nameguard.generic_utils import capitalize_words
 
-def capitalize_words(s: str) -> str:
-    return ' '.join(word.capitalize() for word in s.split(' '))
 
 class CheckStatus(str, Enum):
     '''
@@ -168,7 +168,34 @@ class GenericCheckResult(BaseModel):
 
     check: Check
     status: CheckStatus
-    message: str = Field(description='A message describing the result of the check.')
+
+    def __init__(self, **data):
+        super().__init__(**data)
+        self._grapheme_message = data.get('_grapheme_message')
+        self._label_message = data.get('_label_message')
+        self._name_message = data['_name_message']
+
+    _grapheme_message: Optional[str] = None
+    _label_message: Optional[str] = None
+    _name_message: str
+
+    @property
+    def _context(self) -> str:
+        raise NotImplementedError
+    
+    def raise_context(self) -> 'GenericCheckResult':
+        raise NotImplementedError
+
+    @computed_field(description='A message describing the result of the check.')
+    @property
+    def message(self) -> str:
+        ctx = self._context
+        if ctx == 'grapheme':
+            return self._grapheme_message
+        elif ctx == 'label':
+            return self._label_message
+        else:
+            return self._name_message
 
     @computed_field(description='The human-readable name of the check.')
     @property
@@ -216,3 +243,39 @@ class GenericCheckResult(BaseModel):
 
     def __ne__(self, other):
         return self.order != other.order
+
+
+class GraphemeCheckResult(GenericCheckResult):
+    @property
+    def _context(self):
+        return 'grapheme'
+    
+    def raise_context(self):
+        return LabelCheckResult(
+            check=self.check,
+            status=self.status,
+            _grapheme_message=self._grapheme_message,
+            _label_message=self._label_message,
+            _name_message=self._name_message,
+        )
+    
+
+class LabelCheckResult(GenericCheckResult):
+    @property
+    def _context(self):
+        return 'label'
+    
+    def raise_context(self):
+        return NameCheckResult(
+            check=self.check,
+            status=self.status,
+            _grapheme_message=self._grapheme_message,
+            _label_message=self._label_message,
+            _name_message=self._name_message,
+        )
+    
+
+class NameCheckResult(GenericCheckResult):
+    @property
+    def _context(self):
+        return 'name'

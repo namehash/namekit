@@ -43,6 +43,7 @@ from nameguard.exceptions import NamehashNotFoundInSubgraph, ProviderUnavailable
 from nameguard.logging import logger
 from nameguard.subgraph import namehash_to_name_lookup, resolve_all_labelhashes_in_name, \
     resolve_all_labelhashes_in_name_querying_labelhashes, resolve_all_labelhashes_in_names_querying_labelhashes
+from nameguard.generic_utils import capitalize_words
 
 GRAPHEME_CHECKS = [
     checks.grapheme.confusables.check_grapheme,
@@ -148,12 +149,12 @@ class NameGuard:
         # merge grapheme checks into label checks
         for label_i, label_graphemes_checks in enumerate(labels_graphemes_checks):
             for grapheme_checks in label_graphemes_checks:
-                labels_checks[label_i].extend(grapheme_checks)
+                labels_checks[label_i].extend([c.raise_context() for c in grapheme_checks])
             labels_checks[label_i] = agg_checks(labels_checks[label_i])
 
         # merge label checks into name checks
         for label_checks in labels_checks:
-            name_checks.extend(label_checks)
+            name_checks.extend([c.raise_context() for c in label_checks])
         name_checks = agg_checks(name_checks)
 
         # -- generate result --
@@ -196,7 +197,7 @@ class NameGuard:
                     graphemes=[
                         ConsolidatedGraphemeGuardReport(
                             grapheme=grapheme.value,
-                            grapheme_name=grapheme.name,
+                            grapheme_name=capitalize_words(grapheme.name),
                             grapheme_type=grapheme.type,
                             grapheme_script=grapheme.script,
                             grapheme_link=grapheme.link,
@@ -255,7 +256,7 @@ class NameGuard:
 
         return GraphemeGuardReport(
             grapheme=grapheme_analysis.value,
-            grapheme_name=grapheme_analysis.name,
+            grapheme_name=capitalize_words(grapheme_analysis.name),
             grapheme_type=grapheme_analysis.type,
             grapheme_script=grapheme_analysis.script,
             grapheme_link=grapheme_analysis.link,
@@ -276,7 +277,7 @@ class NameGuard:
         grapheme_checks = [check(grapheme) for check in GRAPHEME_CHECKS]
         return ConsolidatedGraphemeGuardReport(
             grapheme=grapheme.value,
-            grapheme_name=grapheme.name,
+            grapheme_name=capitalize_words(grapheme.name),
             grapheme_type=grapheme.type,
             grapheme_script=grapheme.script,
             grapheme_link=grapheme.link,
