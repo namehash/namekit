@@ -326,54 +326,58 @@ class NameGuard:
         token_type = res_json['id']['tokenMetadata']['tokenType']
         
         if token_type not in ['ERC721', 'ERC1155'] and contract_address in ens_contract_adresses:
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME, nameguard_result=None)
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_fields=None)
         if token_type == 'NOT_A_CONTRACT':
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None)
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_fields=None)
         elif token_type == 'NO_SUPPORTED_NFT_STANDARD':
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None)  #TODO: different status?
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_fields=None)
         elif token_type not in ['ERC721', 'ERC1155']:  # Alchemy does not support other types
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None)
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_fields=None)
 
         title = res_json['title']
-
+        investigated_fields = {}
+        for keys in [['title'],
+                     ['metadata', 'name'],
+                     ['contractMetadata', 'openSea', 'collectionName'],
+                     ['contractMetadata', 'name']]:
+            try:
+                name = nested_get(res_json, keys)
+                investigated_fields['.'.join(keys)] = name
+            except KeyError:
+                pass
+        
         if contract_address in ens_contract_adresses:
-            if title == '':
-                return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME, nameguard_result=None)
+            if title == '':  # the name has never been registered
+                return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_fields=None)
             else:
                 if ALCHEMY_UNKNOWN_NAME.match(title):
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME, nameguard_result=None)
+                    unknown_name = f"[{res_json['id']['tokenId'][2:]}].eth"
+                    report = await self.inspect_name(network_name, unknown_name, resolve_labelhashes=False)
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_ETH_NAME, nameguard_result=report, investigated_fields=investigated_fields)
 
                 report = await self.inspect_name(network_name, title)
                 if is_ens_normalized(title):
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME, nameguard_result=report)
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME, nameguard_result=report, investigated_fields=investigated_fields)
                 else:
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.INVALID_ETH_NAME, nameguard_result=report)
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.INVALID_ETH_NAME, nameguard_result=report, investigated_fields=investigated_fields)
         else:
             fields_values=[]
-            for keys in [['title'],
-                         ['metadata', 'name'], 
-                         ['contractMetadata', 'openSea', 'collectionName'],
-                         ['contractMetadata', 'name']]:
+            for name in investigated_fields.values():
                 try:
-                    name = nested_get(res_json, keys)
-                    try:
-                        #TODO: remove invisible and then canonicalize
-                        cured_title = ens_cure(name)  #TODO improve
-                        # canonicalize
-                        inspector_result = self.analyse_label(cured_title)
-                        if inspector_result.canonical_label is not None:
-                            canonical_name = inspector_result.canonical_label
-                        else:
-                            canonical_name = cured_title
-                    except DisallowedSequence:
-                        canonical_name = title
-                    if canonical_name.endswith('.eth'):
-                        return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, nameguard_result=None)
-                    fields_values.append(canonical_name)
-                except KeyError:
-                    pass
+                    cured_title = ens_cure(name)  #TODO improve, e.g. remove invisible and then canonicalize
+                    inspector_result = self.analyse_label(cured_title)
+                    if inspector_result.canonical_label is not None:
+                        canonical_name = inspector_result.canonical_label
+                    else:
+                        canonical_name = cured_title
+                except DisallowedSequence:
+                    canonical_name = title
+                if canonical_name.endswith('.eth'):
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, nameguard_result=None, investigated_fields=investigated_fields)
+                fields_values.append(canonical_name)
+                
             for field_value in fields_values:
                 if '.eth' in field_value:
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME, nameguard_result=None)
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME, nameguard_result=None, investigated_fields=investigated_fields)
 
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME, nameguard_result=None)
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME, nameguard_result=None, investigated_fields=investigated_fields)

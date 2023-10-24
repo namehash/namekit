@@ -80,7 +80,7 @@ export type FakeEthNameCheckStatus =
   | "non_impersonated_eth_name" /** The NFT doesn't represent itself as a ".eth" name and doesn't belong to authentic ENS contracts. No string that visually resembles ".eth" was found within relevant NFT metadata fields. */
   | "unknown_nft" /** No information could be found on the requested NFT. This generally indicates that the NFT doesn't exist or hasn't been indexed yet. */
   | "invalid_eth_name" /** The NFT is associated with authentic ".eth" contracts, but it is unnormalized. */
-  | "potentially_authentic_eth_name" /** The NFT is associated with authentic ".eth" contracts, but its label is unknown. */;
+  | "unknown_eth_name" /** The NFT is associated with authentic ".eth" contracts, but its label is unknown or has never been registered. */;
 
 /**
  * The result of a fake eth name check that NameGuard performed on a contract address and token id.
@@ -92,9 +92,16 @@ export interface FakeEthNameCheckResult {
   /**
    * NameGuard report for the .eth ENS NFT.
    *
-   * `null` if `status` is any value except `authentic_eth_name` and `invalid_eth_name` (the NFT is not associated with authentic ".eth" contracts and label is known)
+   * `null` if `status` is any value except `authentic_eth_name`, `invalid_eth_name` and `unknown_eth_name` (the NFT is not associated with authentic ".eth" contracts)
    */
   nameguard_result: NameGuardReport | null;
+  
+   /**
+   * Fields with values from Alchemy response which are investigated (e.g. title, collection name, metadata) whether they look like fake .eth ENS name.
+   *
+   * `null` if `status` is `unknown_nft`
+   */
+  investigated_fields: object | null;  // TODO: dict[str,str] | null
 }
 
 /**
