@@ -17,7 +17,9 @@ export function ReportFooter() {
           </div>
           <div className="w-full md:w-auto flex-shrink-0">
             <a
-              href="#"
+              href="https://xmtp.chat/dm/0x4dC96AAd2Daa3f84066F3A00EC41Fd1e88c8865A"
+              target="_blank"
+              rel="noopener noreferrer"
               className="rounded-md block md:inline-block text-center bg-black text-white px-5 py-3 font-medium leading-6 transition hover:bg-gray-900"
             >
               Chat with us

@@ -10,6 +10,7 @@ import {
 import Image from "next/image";
 
 import Avatars from "../../public/avatars.png";
+import { coinbaseWalletUrl, converseUrl, xmtpChatUrl } from "@/lib/links";
 
 export const ChatSlideover = forwardRef(
   (props: any, ref: Ref<HTMLDivElement>) => {
@@ -73,7 +74,7 @@ export const ChatSlideover = forwardRef(
                       </p>
                     </div>
                     <a
-                      href="https://google.com"
+                      href={xmtpChatUrl}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="rounded-md bg-black border border-black text-white px-5 py-2 font-medium leading-6 inline-flex items-center space-x-3 transition hover:border-gray-900 hover:bg-gray-900"
@@ -86,7 +87,7 @@ export const ChatSlideover = forwardRef(
                       You can contact us using any XMTP chat app, including:{" "}
                       <br />
                       <a
-                        href="https://google.com"
+                        href={coinbaseWalletUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="underline text-black"
@@ -95,7 +96,7 @@ export const ChatSlideover = forwardRef(
                       </a>
                       <span className="text-black">&nbsp;and&nbsp;</span>
                       <a
-                        href="https://google.com"
+                        href={converseUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="underline text-black"
