@@ -24,7 +24,7 @@ export function Search() {
     }
   };
 
-  const onCloseSearch = () => {
+  const handleSearchClose = () => {
     if (settingsOpen) return;
 
     setOpen(false);
@@ -71,7 +71,7 @@ export function Search() {
               "sm:p-0 md:p-20 lg:p-4 xl:p-16 fixed inset-0 z-30 overflow-y-hidden",
             ])}
             open={open}
-            onClose={onCloseSearch}
+            onClose={handleSearchClose}
           >
             <Transition.Child
               as={Fragment}
@@ -117,7 +117,7 @@ export function Search() {
                   </div>
                   <div className="flex items-center justify-center flex-shrink-0 px-3">
                     <button
-                      onClick={onCloseSearch}
+                      onClick={handleSearchClose}
                       className="flex items-center justify-between p-2 appearance-none bg-transparent hover:bg-black/5 transition rounded-md"
                     >
                       <XMarkIcon className="w-6 h-6 fill-current text-black" />
