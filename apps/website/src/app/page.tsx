@@ -564,8 +564,8 @@ function Header() {
                 {/*<Search />*/}
             </div>
             <div className={"flex flex-row justify-between items-center gap-5"}>
-                <a href={"https://api.nameguard.io/docs"}>
-                    <p className={"not-italic text-black font-medium text-sm mx-[10px] my-[9px]"}>Docs</p>
+                <a className={"px-[9px] py-[10px] not-italic text-black font-medium text-sm rounded-md hover:bg-gray-100"} href={"https://api.nameguard.io/docs"}>
+                    Docs
                 </a>
                 <a href={"https://github.com/namehash/nameguard"}>
                     <div className={"flex flex-row justify-between items-center gap-2 py-[7px] px-[10px]"}>
