@@ -242,3 +242,66 @@ def test_grapheme_codepoints(nameguard: NameGuard):
 
     r = nameguard.inspect_grapheme('a\u0328')
     assert r.codepoints == ['U+0061', 'U+0328']
+
+
+@pytest.mark.asyncio
+async def test_contextual_messages(nameguard: NameGuard):
+    r = await nameguard.inspect_name('mainnet', 'ą')
+
+    for check in r.checks:
+        if check.check is Check.CONFUSABLES:
+            assert check.message == 'This name contains confusable graphemes'
+            break
+    else:
+        assert False, 'CONFUSABLES check not found'
+
+    for check in r.labels[0].checks:
+        if check.check is Check.CONFUSABLES:
+            assert check.message == 'This label contains confusable graphemes'
+            break
+    else:
+        assert False, 'CONFUSABLES check not found'
+
+    r = nameguard.inspect_grapheme('ą')
+
+    for check in r.checks:
+        if check.check is Check.CONFUSABLES:
+            assert check.message == 'This grapheme is confusable'
+            break
+    else:
+        assert False, 'CONFUSABLES check not found'
+
+
+@pytest.mark.asyncio
+async def test_empty_labels(nameguard: NameGuard):
+    r = await nameguard.inspect_name('mainnet', 'a.')
+    
+    assert r.rating is Rating.ALERT
+    assert r.highest_risk.check is Check.NORMALIZED
+    assert r.normalization is Normalization.UNNORMALIZED
+    
+    assert r.labels[0].rating is Rating.PASS
+    assert r.labels[0].highest_risk is None
+    assert r.labels[0].normalization is Normalization.NORMALIZED
+
+    assert r.labels[1].rating is Rating.ALERT
+    assert r.labels[1].highest_risk.check is Check.NORMALIZED
+    assert r.labels[1].normalization is Normalization.UNNORMALIZED
+
+    r = await nameguard.inspect_name('mainnet', 'a..a')
+
+    assert r.rating is Rating.ALERT
+    assert r.highest_risk.check is Check.NORMALIZED
+    assert r.normalization is Normalization.UNNORMALIZED
+
+    assert r.labels[0].rating is Rating.PASS
+    assert r.labels[0].highest_risk is None
+    assert r.labels[0].normalization is Normalization.NORMALIZED
+
+    assert r.labels[1].rating is Rating.ALERT
+    assert r.labels[1].highest_risk.check is Check.NORMALIZED
+    assert r.labels[1].normalization is Normalization.UNNORMALIZED
+
+    assert r.labels[2].rating is Rating.PASS
+    assert r.labels[2].highest_risk is None
+    assert r.labels[2].normalization is Normalization.NORMALIZED

@@ -7,5 +7,9 @@
     "target": "es6",
     "esModuleInterop": true
   },
-  "include": ["src/**/*"]
+  "include": [
+    "src/**/*",
+    "../../apps/website/src/components/SearchSettingsModal.tsx",
+    "../../apps/website/src/components/use-search-settings.tsx"
+  ]
 }

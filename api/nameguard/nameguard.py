@@ -1,10 +1,9 @@
 import os
 import re
 
-import ens_normalize
+from ens_normalize import ens_process, is_ens_normalized, ens_cure, DisallowedSequence
 import requests
 from ens import ENS
-from ens_normalize import DisallowedSequence
 import os
 
 import requests
@@ -43,6 +42,7 @@ from nameguard.exceptions import NamehashNotFoundInSubgraph, ProviderUnavailable
 from nameguard.logging import logger
 from nameguard.subgraph import namehash_to_name_lookup, resolve_all_labelhashes_in_name, \
     resolve_all_labelhashes_in_name_querying_labelhashes, resolve_all_labelhashes_in_names_querying_labelhashes
+from nameguard.generic_utils import capitalize_words
 
 GRAPHEME_CHECKS = [
     checks.grapheme.confusables.check_grapheme,
@@ -111,7 +111,7 @@ class NameGuard:
         if resolve_labelhashes:
             name = await resolve_all_labelhashes_in_name_querying_labelhashes(network_name, name)
 
-        labels = name.split('.')
+        labels = [] if len(name) == 0 else name.split('.')
         logger.debug(f'[inspect_name] labels: {labels}')
 
         # labelhashes have `None` as their analysis
@@ -148,12 +148,12 @@ class NameGuard:
         # merge grapheme checks into label checks
         for label_i, label_graphemes_checks in enumerate(labels_graphemes_checks):
             for grapheme_checks in label_graphemes_checks:
-                labels_checks[label_i].extend(grapheme_checks)
+                labels_checks[label_i].extend([c.raise_context() for c in grapheme_checks])
             labels_checks[label_i] = agg_checks(labels_checks[label_i])
 
         # merge label checks into name checks
         for label_checks in labels_checks:
-            name_checks.extend(label_checks)
+            name_checks.extend([c.raise_context() for c in label_checks])
         name_checks = agg_checks(name_checks)
 
         # -- generate result --
@@ -163,9 +163,10 @@ class NameGuard:
             namehash=namehash_from_name(name),
             normalization=Normalization.UNKNOWN
             if any(label_analysis is None for label_analysis in labels_analysis)
-            else Normalization.UNNORMALIZED
-            if any(label_analysis.status == 'unnormalized' for label_analysis in labels_analysis)
-            else Normalization.NORMALIZED,
+            else Normalization.NORMALIZED
+            if all(label_analysis.status == 'normalized' and len(label_analysis.label) > 0
+                   for label_analysis in labels_analysis)
+            else Normalization.UNNORMALIZED,
             rating=calculate_nameguard_rating(name_checks),
             risk_count=count_risks(name_checks),
             highest_risk=get_highest_risk(name_checks),
@@ -185,9 +186,9 @@ class NameGuard:
                         label_analysis.label) if label_analysis is not None else '0x' + label[1:-1],
                     normalization=Normalization.UNKNOWN
                     if label_analysis is None
-                    else Normalization.UNNORMALIZED
-                    if label_analysis.status == 'unnormalized'
-                    else Normalization.NORMALIZED,
+                    else Normalization.NORMALIZED
+                    if label_analysis.status == 'normalized' and len(label_analysis.label) > 0
+                    else Normalization.UNNORMALIZED,
                     rating=calculate_nameguard_rating(label_checks),
                     risk_count=count_risks(label_checks),
                     highest_risk=get_highest_risk(label_checks),
@@ -196,7 +197,7 @@ class NameGuard:
                     graphemes=[
                         ConsolidatedGraphemeGuardReport(
                             grapheme=grapheme.value,
-                            grapheme_name=grapheme.name,
+                            grapheme_name=capitalize_words(grapheme.name),
                             grapheme_type=grapheme.type,
                             grapheme_script=grapheme.script,
                             grapheme_link=grapheme.link,
@@ -255,7 +256,7 @@ class NameGuard:
 
         return GraphemeGuardReport(
             grapheme=grapheme_analysis.value,
-            grapheme_name=grapheme_analysis.name,
+            grapheme_name=capitalize_words(grapheme_analysis.name),
             grapheme_type=grapheme_analysis.type,
             grapheme_script=grapheme_analysis.script,
             grapheme_link=grapheme_analysis.link,
@@ -276,7 +277,7 @@ class NameGuard:
         grapheme_checks = [check(grapheme) for check in GRAPHEME_CHECKS]
         return ConsolidatedGraphemeGuardReport(
             grapheme=grapheme.value,
-            grapheme_name=grapheme.name,
+            grapheme_name=capitalize_words(grapheme.name),
             grapheme_type=grapheme.type,
             grapheme_script=grapheme.script,
             grapheme_link=grapheme.link,
@@ -299,7 +300,7 @@ class NameGuard:
         else:
             nameguard_result = await self.inspect_name(network_name, domain)
             
-            result = ens_normalize.ens_process(domain, do_normalize=True, do_beautify=True)
+            result = ens_process(domain, do_normalize=True, do_beautify=True)
             if result.normalized != domain:
                 status = SecureReverseLookupStatus.UNNORMALIZED
             else:
@@ -325,54 +326,58 @@ class NameGuard:
         token_type = res_json['id']['tokenMetadata']['tokenType']
         
         if token_type not in ['ERC721', 'ERC1155'] and contract_address in ens_contract_adresses:
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME, nameguard_result=None)
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_fields=None)
         if token_type == 'NOT_A_CONTRACT':
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None)
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_fields=None)
         elif token_type == 'NO_SUPPORTED_NFT_STANDARD':
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None)  #TODO: different status?
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_fields=None)
         elif token_type not in ['ERC721', 'ERC1155']:  # Alchemy does not support other types
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None)
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_fields=None)
 
         title = res_json['title']
-
+        investigated_fields = {}
+        for keys in [['title'],
+                     ['metadata', 'name'],
+                     ['contractMetadata', 'openSea', 'collectionName'],
+                     ['contractMetadata', 'name']]:
+            try:
+                name = nested_get(res_json, keys)
+                investigated_fields['.'.join(keys)] = name
+            except KeyError:
+                pass
+        
         if contract_address in ens_contract_adresses:
-            if title == '':
-                return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME, nameguard_result=None)
+            if title == '':  # the name has never been registered
+                return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_fields=None)
             else:
                 if ALCHEMY_UNKNOWN_NAME.match(title):
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_AUTHENTIC_ETH_NAME, nameguard_result=None)
+                    unknown_name = f"[{res_json['id']['tokenId'][2:]}].eth"
+                    report = await self.inspect_name(network_name, unknown_name, resolve_labelhashes=False)
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_ETH_NAME, nameguard_result=report, investigated_fields=investigated_fields)
 
                 report = await self.inspect_name(network_name, title)
-                if ens_normalize.is_ens_normalized(title):
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME, nameguard_result=report)
+                if is_ens_normalized(title):
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME, nameguard_result=report, investigated_fields=investigated_fields)
                 else:
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.INVALID_ETH_NAME, nameguard_result=report)
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.INVALID_ETH_NAME, nameguard_result=report, investigated_fields=investigated_fields)
         else:
             fields_values=[]
-            for keys in [['title'],
-                         ['metadata', 'name'], 
-                         ['contractMetadata', 'openSea', 'collectionName'],
-                         ['contractMetadata', 'name']]:
+            for name in investigated_fields.values():
                 try:
-                    name = nested_get(res_json, keys)
-                    try:
-                        #TODO: remove invisible and then canonicalize
-                        cured_title = ens_normalize.ens_cure(name)  #TODO improve
-                        # canonicalize
-                        inspector_result = self.analyse_label(cured_title)
-                        if inspector_result.canonical_label is not None:
-                            canonical_name = inspector_result.canonical_label
-                        else:
-                            canonical_name = cured_title
-                    except DisallowedSequence:
-                        canonical_name = title
-                    if canonical_name.endswith('.eth'):
-                        return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, nameguard_result=None)
-                    fields_values.append(canonical_name)
-                except KeyError:
-                    pass
+                    cured_title = ens_cure(name)  #TODO improve, e.g. remove invisible and then canonicalize
+                    inspector_result = self.analyse_label(cured_title)
+                    if inspector_result.canonical_label is not None:
+                        canonical_name = inspector_result.canonical_label
+                    else:
+                        canonical_name = cured_title
+                except DisallowedSequence:
+                    canonical_name = title
+                if canonical_name.endswith('.eth'):
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, nameguard_result=None, investigated_fields=investigated_fields)
+                fields_values.append(canonical_name)
+                
             for field_value in fields_values:
                 if '.eth' in field_value:
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME, nameguard_result=None)
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME, nameguard_result=None, investigated_fields=investigated_fields)
 
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME, nameguard_result=None)
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME, nameguard_result=None, investigated_fields=investigated_fields)

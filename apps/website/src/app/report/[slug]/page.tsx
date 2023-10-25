@@ -1,8 +1,9 @@
 import React from "react";
 import { nameguard } from "@namehash/nameguard";
-// import { Report } from "@namehash/nameguard-react";
 
-export default async function NamePage({
+import { ReportWrapper } from "./report-wrapper";
+
+export default async function ReportSlugPage({
   params,
 }: {
   params: { slug: string };
@@ -13,10 +14,5 @@ export default async function NamePage({
 
   const data = await nameguard.inspectName(decodedName);
 
-  return (
-    <>
-      {/* <Report data={data} /> */}
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-    </>
-  );
+  return <ReportWrapper data={data} />;
 }

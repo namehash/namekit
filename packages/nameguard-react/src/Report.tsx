@@ -1,5 +1,5 @@
 import React from "react";
-import { Summary, Check } from ".";
+import { Summary } from ".";
 import { type NameGuardReport } from "@namehash/nameguard";
 import { CheckResultCard } from "./CheckResultCard";
 import { GraphemeCard } from "./GraphemeCard";
