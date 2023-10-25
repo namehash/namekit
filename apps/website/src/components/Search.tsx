@@ -18,11 +18,6 @@ export function Search() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
 
-  const handleClickOutsideSlideover = (event: any) => {
-    // handleChatClose();
-    event.stopPropagation();
-  };
-
   const handleChatClose = () => {
     if (chatOpen) {
       setChatOpen(false);
