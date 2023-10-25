@@ -95,7 +95,7 @@ export function Search() {
             >
               <div className="max-w-7xl mx-auto relative transform overflow-hidden md:rounded-xl bg-white shadow-2xl transition-all flex flex-col h-full md:h-auto">
                 <div className="h-[56px] md:h-[68px] flex items-center shadow relative z-40">
-                  <div className="flex items-center justify-center flex-shrink-0 pl-6 pr-3 md:px-5">
+                  <div className="flex items-center justify-center flex-shrink-0 pl-5 pr-3 md:px-5">
                     {data ? (
                       <Shield size="small" status={data.rating} />
                     ) : (
@@ -126,16 +126,16 @@ export function Search() {
                 </div>
 
                 {/* <div className="max-h-[calc(100vh-120px)] md:max-h-[76vh] lg:max-h-[84vh] overflow-y-auto relative"> */}
-                <div className="md:max-h-[76vh] lg:max-h-[84vh] overflow-y-auto relative">
+                <div className="flex-1 md:max-h-[76vh] lg:max-h-[84vh] overflow-y-auto relative">
                   <ChatSlideover
                     open={chatOpen}
                     onClose={handleChatClose}
                     ref={chatRef}
                   />
-                  <div className="max-w-6xl mx-auto p-6 md:py-12 space-y-8 xl:px-0">
+                  <div className="max-w-6xl mx-auto p-6 md:py-12 space-y-8 xl:px-0 h-full">
                     {/* TODO: Move to component */}
                     {!loading && !error && !data && (
-                      <div className="w-full py-16 md:py-32 lg:py-40 flex-col items-center text-center">
+                      <div className="w-full px-5 md:px-0 py-16 md:py-32 lg:py-40 flex flex-col items-center justify-center text-center h-full">
                         <div className="relative z-20 space-y-2">
                           <p className="text-lg leading-6 font-semibold text-black">
                             Search for any ENS name to generate a NameGuard
@@ -156,7 +156,7 @@ export function Search() {
                   </div>
                 </div>
                 {/* TODO: Move to component */}
-                <div className="bg-gray-100 flex items-center justify-between px-5 py-4 border-t border-gray-300">
+                <div className="bg-gray-100 flex flex-col md:flex-row items-center justify-between px-5 py-4 border-t border-gray-300 space-y-3 md:space-y-0">
                   <div className="flex items-center space-x-3">
                     <button
                       className="text-xs text-black underline leading-5 appearance-none"

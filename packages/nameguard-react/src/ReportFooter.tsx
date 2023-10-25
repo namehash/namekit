@@ -18,7 +18,7 @@ export function ReportFooter() {
           <div className="w-full md:w-auto flex-shrink-0">
             <a
               href="#"
-              className="rounded-md block md:inline-block text-center bg-black text-white px-5 py-3 font-medium leading-6"
+              className="rounded-md block md:inline-block text-center bg-black text-white px-5 py-3 font-medium leading-6 transition hover:bg-gray-900"
             >
               Chat with us
             </a>

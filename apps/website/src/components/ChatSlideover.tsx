@@ -76,7 +76,7 @@ export const ChatSlideover = forwardRef(
                       href="https://google.com"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="rounded-md bg-black border border-black text-white px-5 py-2 font-medium leading-6 inline-flex items-center space-x-3"
+                      className="rounded-md bg-black border border-black text-white px-5 py-2 font-medium leading-6 inline-flex items-center space-x-3 transition hover:border-gray-900 hover:bg-gray-900"
                     >
                       <span>Open XMTP.chat</span>
                       <ArrowTopRightOnSquareIcon className="w-5 h-5 fill-current" />
