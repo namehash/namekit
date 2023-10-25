@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 import cc from "classcat";
 import { DebounceInput } from "react-debounce-input";
@@ -10,19 +10,28 @@ import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { ChatSlideover } from "./ChatSlideover";
 import { SearchSettingsProvider } from "./use-search-settings";
 import { SearchSettingsModal } from "./SearchSettingsModal";
+import { useOutsideClick } from "./use-outslide-click";
 
 export function Search() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [nameToInspect, setNameToInspect] = useState("");
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
 
-  const onCloseSearch = () => {
+  const handleChatClose = () => {
+    if (chatOpen) {
+      setChatOpen(false);
+    }
+  };
+
+  const handleSearchClose = () => {
     if (settingsOpen) return;
 
     setOpen(false);
     setChatOpen(false);
   };
+
+  const chatRef = useOutsideClick(handleChatClose);
 
   const { loading, error, data } = useInspectName(nameToInspect);
 
@@ -62,7 +71,7 @@ export function Search() {
               "sm:p-0 md:p-20 lg:p-4 xl:p-16 fixed inset-0 z-30 overflow-y-hidden",
             ])}
             open={open}
-            onClose={onCloseSearch}
+            onClose={handleSearchClose}
           >
             <Transition.Child
               as={Fragment}
@@ -85,8 +94,8 @@ export function Search() {
               leaveTo="opacity-0 scale-95"
             >
               <div className="max-w-7xl mx-auto relative transform overflow-hidden md:rounded-xl bg-white shadow-2xl transition-all flex flex-col h-full md:h-auto">
-                <div className="h-[68px] flex items-center shadow relative z-50">
-                  <div className="flex items-center justify-center flex-shrink-0 pl-6 pr-3 md:px-5">
+                <div className="h-[56px] md:h-[68px] flex items-center shadow relative z-40">
+                  <div className="flex items-center justify-center flex-shrink-0 pl-5 pr-3 md:px-5">
                     {data ? (
                       <Shield size="small" status={data.rating} />
                     ) : (
@@ -106,10 +115,10 @@ export function Search() {
                       className="w-full border border-transparent md:border-gray-500 bg-white md:bg-gray-100 rounded-lg text-black placeholder-gray-400 pl-0 md:pl-3 px-3 py-2 ring-0 outline-none focus:border-transparent md:focus:border-gray-500"
                     />
                   </div>
-                  <div className="flex items-center justify-center flex-shrink-0 px-1">
+                  <div className="flex items-center justify-center flex-shrink-0 px-3">
                     <button
-                      onClick={onCloseSearch}
-                      className="flex items-center justify-between py-2 px-4"
+                      onClick={handleSearchClose}
+                      className="flex items-center justify-between p-2 appearance-none bg-transparent hover:bg-black/5 transition rounded-md"
                     >
                       <XMarkIcon className="w-6 h-6 fill-current text-black" />
                     </button>
@@ -120,12 +129,13 @@ export function Search() {
                 <div className="flex-1 md:max-h-[76vh] lg:max-h-[84vh] overflow-y-auto relative">
                   <ChatSlideover
                     open={chatOpen}
-                    onClose={() => setChatOpen(false)}
+                    onClose={handleChatClose}
+                    ref={chatRef}
                   />
-                  <div className="max-w-6xl mx-auto p-6 md:py-12 space-y-8 xl:px-0">
+                  <div className="max-w-6xl mx-auto p-6 md:py-12 space-y-8 xl:px-0 h-full">
                     {/* TODO: Move to component */}
                     {!loading && !error && !data && (
-                      <div className="w-full py-16 md:py-32 lg:py-40 flex-col items-center text-center">
+                      <div className="w-full px-5 md:px-0 py-16 md:py-32 lg:py-40 flex flex-col items-center justify-center text-center h-full">
                         <div className="relative z-20 space-y-2">
                           <p className="text-lg leading-6 font-semibold text-black">
                             Search for any ENS name to generate a NameGuard
@@ -146,7 +156,7 @@ export function Search() {
                   </div>
                 </div>
                 {/* TODO: Move to component */}
-                <div className="bg-gray-100 flex items-center justify-between px-5 py-4 border-t border-gray-300">
+                <div className="bg-gray-100 flex flex-col md:flex-row items-center justify-between px-5 py-4 border-t border-gray-300 space-y-3 md:space-y-0">
                   <div className="flex items-center space-x-3">
                     <button
                       className="text-xs text-black underline leading-5 appearance-none"

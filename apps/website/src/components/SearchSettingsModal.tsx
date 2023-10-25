@@ -44,24 +44,24 @@ export function SearchSettingsModal({ open, onClose }: any) {
           leaveTo="opacity-0 scale-95"
         >
           <div className="relative z-50 flex md:items-center justify-center min-h-screen">
-            <div className="w-full max-w-lg mx-auto relative transform overflow-hidden md:rounded-xl bg-white md:shadow-2xl transition-all">
-              <div className="flex items-center justify-center shadow md:shadow-none px-6 pb-3 md:pb-0 pt-3 md:pt-2">
+            <div className="w-full max-w-lg mx-auto relative transform overflow-scroll md:rounded-xl bg-white md:shadow-2xl transition-all flex flex-col">
+              <div className="h-[56px] md:h-[68px] flex items-center justify-center md:justify-start shadow md:shadow-none px-6 pb-3 md:pb-0 pt-3 md:pt-2 text-center relative">
                 <Dialog.Title className="font-medium text-lg">
                   Search settings
                 </Dialog.Title>
-                <div className="flex items-center justify-between flex-shrink-0 ml-auto">
+                <div className="flex items-center right-0 inset-y-0 absolute pr-6 z-20">
                   <button
                     onClick={onClose}
-                    className="flex items-center justify-between p-2 -mr-3"
+                    className="flex items-center justify-between p-2 -mr-3 appearance-none bg-transparent hover:bg-black/5 transition rounded-md"
                   >
-                    <XMarkIcon className="w-6 h-6 fill-current text-gray-400" />
+                    <XMarkIcon className="w-6 h-6 fill-current text-black md:text-gray-400" />
                   </button>
                 </div>
               </div>
 
               <form
                 onSubmit={handleSubmit}
-                className="px-6 flex flex-col justify-between md:justify-start pt-6 md:pt-1"
+                className="px-6 flex flex-col justify-between md:justify-start flex-1 pt-4 md:pt-0"
               >
                 <fieldset className="space-y-4">
                   <legend className="text-gray-500 text-sm leading-6">
@@ -175,14 +175,14 @@ export function SearchSettingsModal({ open, onClose }: any) {
 
                 <div className="flex items-center justify-end space-x-3 mt-8 pb-6">
                   <button
-                    className="rounded-md text-sm bg-white shadow-sm border border-gray-300 text-black px-4 py-1.5 font-medium leading-6"
+                    className="rounded-md text-sm bg-white shadow-sm border border-gray-300 text-black px-4 py-1.5 font-medium leading-6 transition hover:bg-gray-50"
                     onClick={onClose}
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="rounded-md text-sm bg-black border border-black text-white px-4 py-1.5 font-medium leading-6"
+                    className="rounded-md text-sm bg-black border border-black text-white px-4 py-1.5 font-medium leading-6 transition hover:bg-gray-900"
                   >
                     Save
                   </button>
