@@ -17,3 +17,17 @@ export function countGraphemes(str: string) {
   // TODO verify logic here
   return [...str].length;
 }
+
+const keccak256Regex = /^(?:0x)?[0-9a-f]{64}$/i;
+
+/**
+ * The Keccak-256 hash of a name/label.
+ *
+ * A labelhash is a Keccak-256 hash of a label.
+ * An ENSIP-1 namehash is a recursive Keccak-256 hash of the labelhashes of all the labels in a name.
+ *
+ * A "normalized Keccak-256 hash" is a Keccak-256 hash that is always prefixed with "0x" and all in lowercase.
+ * */
+export function isKeccak256Hash(hash: string) {
+  return keccak256Regex.test(hash);
+}

@@ -1,4 +1,4 @@
-import { labelhash as viem_labelhash } from "viem";
+import { id } from "@ethersproject/hash";
 
 /**
  * Simple wrapper around the viem implementation of `labelhash` that returns a generic string instead.
@@ -6,7 +6,7 @@ import { labelhash as viem_labelhash } from "viem";
  * @returns keccak-256 hash of the label
  */
 export function labelhash(label: string): string {
-  return viem_labelhash(label);
+  return id(label)
 }
 
 const keccak256Regex = /^(?:0x)?[0-9a-f]{64}$/i;

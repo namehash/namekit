@@ -1,7 +1,20 @@
-import fetch from "cross-fetch";
-import { countGraphemes, isEthereumAddress, isTokenId } from "./utils";
-import { isKeccak256Hash } from "./hashutils";
-import { ETH_TLD, Normalization } from "./ensname";
+import 'whatwg-fetch'
+import { countGraphemes, isEthereumAddress, isTokenId, isKeccak256Hash } from "./utils";
+
+const ETH_TLD = "eth";
+
+/**
+ * The ENSIP-15 normalization status of a name/label.
+ *
+ * If a label is in the format "[labelhash]" then the `Normalization` of the label is considered to be `unknown`.
+ * If a name contains any label that is `unnormalized` then the `Normalization` of the entire name is considered to be `unnormalized`.
+ * If a name contains no `unnormalized` labels but 1 or more `unknown` labels then the entire name is considered to be `unknown`.
+ * A name is `normalized` if and only if all of its labels are `normalized`.
+ */
+export type Normalization =
+  | "normalized" /** `normalized`: The name or label is normalized. */
+  | "unnormalized" /** `unnormalized`: The name or label is not normalized. */
+  | "unknown" /** `unknown`: The name or label is unknown because it cannot be looked up from its hash. */;
 
 /**
  * The network that NameGuard will use to inspect a names/labels/graphemes.
@@ -95,13 +108,13 @@ export interface FakeEthNameCheckResult {
    * `null` if `status` is any value except `authentic_eth_name`, `invalid_eth_name` and `unknown_eth_name` (the NFT is not associated with authentic ".eth" contracts)
    */
   nameguard_result: NameGuardReport | null;
-  
-   /**
+
+  /**
    * Fields with values from Alchemy response which are investigated (e.g. title, collection name, metadata) whether they look like fake .eth ENS name.
    *
    * `null` if `status` is `unknown_nft`
    */
-  investigated_fields: object | null;  // TODO: dict[str,str] | null
+  investigated_fields: object | null; // TODO: dict[str,str] | null
 }
 
 /**
