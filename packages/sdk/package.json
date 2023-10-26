@@ -26,7 +26,8 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch --clean=false",
-    "test": "vitest"
+    "test": "vitest",
+    "prettier-check": "prettier --check ."
   },
   "devDependencies": {
     "@changesets/cli": "2.26.2",

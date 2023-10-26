@@ -64,7 +64,7 @@ export function isEncodedLabelhash(label: string) {
  */
 export function normalizeKeccak256Hash(
   hash: string,
-  withPrefix: boolean = true
+  withPrefix: boolean = true,
 ) {
   if (!isKeccak256Hash(hash)) {
     throw new Error(`Invalid Keccak-256 hash format: ${hash}`);

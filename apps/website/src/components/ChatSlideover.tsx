@@ -112,7 +112,7 @@ export const ChatSlideover = forwardRef(
         </div>
       </Transition.Root>
     );
-  }
+  },
 );
 
 ChatSlideover.displayName = "ChatSlideover";

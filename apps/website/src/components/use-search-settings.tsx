@@ -27,7 +27,7 @@ export const useSearchSettings = (): SearchSettingsContextType => {
   const context = useContext(SearchSettingsContext);
   if (!context) {
     throw new Error(
-      "useSearchSettings must be used within a SearchSettingsProvider"
+      "useSearchSettings must be used within a SearchSettingsProvider",
     );
   }
   return context;
@@ -39,7 +39,7 @@ export const SearchSettingsProvider = ({
   children: React.ReactNode;
 }) => {
   const [settings, setInternalSettings] = useState<SearchSettings>(
-    defaultSearchSettings
+    defaultSearchSettings,
   );
 
   const setSettings = (updatedSettings: Partial<SearchSettings>) => {

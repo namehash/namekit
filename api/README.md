@@ -34,6 +34,7 @@ pip install TODO
 ### Setting API keys
 
 NameGuard uses the Alchemy API for `primary-name/` and `fake-eth-name-check/` endpoints. Alchemy API URLs have to be set by environment variables.
+
 ```bash
 PROVIDER_URI_MAINNET=https://eth-mainnet.g.alchemy.com/v2/[YOUR_ALCHEMY_API_KEY]
 PROVIDER_URI_GOERLI=https://eth-goerli.g.alchemy.com/v2/[YOUR_ALCHEMY_API_KEY]
@@ -70,8 +71,9 @@ curl -d '{"name":"nick.eth"}' -H "Content-Type: application/json" -X POST http:/
 ```
 
 ### Running nameguard tests
-Before running nameguard tests, make sure you have installed the 
-required dependencies (along with dev dependencies). 
+
+Before running nameguard tests, make sure you have installed the
+required dependencies (along with dev dependencies).
 They are installed by default using poetry:
 
 ```bash
@@ -79,16 +81,18 @@ poetry install
 ```
 
 To run nameguard tests locally, just run pytest from the root directory:
+
 ```bash
 pytest ./api/tests/
 ```
 
 NameGuard also provides an option to run API tests (`api/tests/test_api.py`)
 against a remote host (e.g. Lambda) where a NameGuard instance is running.
-To enable this, you will need to set an environment variable 
+To enable this, you will need to set an environment variable
 `LAMBDA_ROOT_URL` to specify the remote host URL.
 
 This can be done like this:
+
 ```
 LAMBDA_ROOT_URL=<remote-url> pytest api/tests/test_api.py
 ```

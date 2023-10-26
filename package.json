@@ -6,8 +6,8 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "clean": "turbo clean",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "publish-sdk": "turbo build --filter='@namehash/nameguard' && cd packages/sdk && npm publish && cd ../../"
+    "prettier-check": "prettier --check \"**/*.{ts,tsx,md}\"",
+    "prettier-fix": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "packageManager": "pnpm@8.6.10",
   "devDependencies": {

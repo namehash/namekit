@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React, { Fragment } from "react";
 import { Summary } from ".";
 import { type NameGuardReport } from "@namehash/nameguard";
 import { CheckResultCard } from "./CheckResultCard";
@@ -48,7 +48,6 @@ export const Report = ({ data }: { data: NameGuardReport }) => {
               {rawLabels.map((l, index) => (
                 <Fragment key={index}>
                   <span
-                    
                     className={
                       l === label.label
                         ? "text-black font-semibold"
