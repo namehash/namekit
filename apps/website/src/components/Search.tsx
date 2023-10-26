@@ -15,7 +15,7 @@ import { useOutsideClick } from "./use-outslide-click";
 
 export function Search() {
   const [open, setOpen] = useState(true);
-  const [rawInput, setRawInput] = useState("");
+  const [rawInput, setRawInput] = useState("ΞSK3NDER");
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
 
@@ -34,9 +34,15 @@ export function Search() {
 
   const chatRef = useOutsideClick(handleChatClose);
 
-  const { outputName } = useMemo(() => {
+  const { outputName, transformations } = useMemo(() => {
+    // TODO: Pass settings from context provider
     return parseName(rawInput);
   }, [rawInput]);
+
+  const showWritersBlock = rawInput.length === 0;
+  const normalizationUnknown = outputName.normalization === "unknown";
+
+  console.log({ showWritersBlock, normalizationUnknown });
 
   const { loading, error, data } = useInspectName(outputName.name);
 
@@ -137,9 +143,9 @@ export function Search() {
                     onClose={handleChatClose}
                     ref={chatRef}
                   />
-                  <div className="max-w-6xl mx-auto p-6 md:py-12 space-y-8 xl:px-0 h-full">
+                  <div className="max-w-6xl mx-auto p-6 md:py-12 space-y-8 h-full">
                     {/* TODO: Move to component */}
-                    {!loading && !error && !data && (
+                    {showWritersBlock && (
                       <div className="w-full px-5 md:px-0 py-16 md:py-32 lg:py-40 flex flex-col items-center justify-center text-center h-full">
                         <div className="relative z-20 space-y-2">
                           <p className="text-lg leading-6 font-semibold text-black">
@@ -155,9 +161,14 @@ export function Search() {
                       </div>
                     )}
                     {/* TODO: Move to component */}
-                    {loading && <p>Loading...</p>}
+                    {loading && normalizationUnknown && (
+                      <p>Loading skeleton </p>
+                    )}
+                    {loading && !normalizationUnknown && <p>Inspecting</p>}
                     {error && <p>Error: {error.message}</p>}
-                    {data && <Report data={data} />}
+                    {data && !showWritersBlock && (
+                      <Report data={data} name={outputName} />
+                    )}
                   </div>
                 </div>
                 {/* TODO: Move to component */}
