@@ -380,8 +380,8 @@ describe("getRegistrationPotential", () => {
   it("ENS 2nd-level name unknown", () => {
     const result = getRegistrationPotential(
       buildENSName(
-        "[0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef].eth"
-      )
+        "[0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef].eth",
+      ),
     );
 
     expect(result).toBe("unknown");

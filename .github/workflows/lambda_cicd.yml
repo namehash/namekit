@@ -7,9 +7,9 @@ on:
       - main
 
 env:
-  NODE_VERSION: '18.16.0'
-  TS_VERSION: '4.2.3'
-  TS_NODE_VERSION: '10.0.0'
+  NODE_VERSION: "18.16.0"
+  TS_VERSION: "4.2.3"
+  TS_NODE_VERSION: "10.0.0"
 
 permissions:
   id-token: write
@@ -50,7 +50,7 @@ jobs:
           npm install -g serverless
           npm install serverless-prune-plugin
           serverless deploy --stage prod --param="PROVIDER_URI_GOERLI=${{secrets.PROVIDER_URI_GOERLI}}" --param="PROVIDER_URI_MAINNET=${{secrets.PROVIDER_URI_MAINNET}}" --param="PROVIDER_URI_SEPOLIA=${{secrets.PROVIDER_URI_SEPOLIA}}"
-        working-directory: api 
+        working-directory: api
 
       - name: Delete old images from ECR
         env:

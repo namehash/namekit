@@ -6,12 +6,13 @@
       "dependsOn": ["^build"],
       "outputs": ["!.next/cache/**", ".next/**", "dist/**"]
     },
+    "lint": {
+      "dependsOn": ["^build", "build"]
+    },
     "dev": {
       "cache": false,
       "persistent": true
     },
-    "clean": {
-      "cache": false
-    }
+    "prettier-check": {}
   }
 }

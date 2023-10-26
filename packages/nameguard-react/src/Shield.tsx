@@ -32,7 +32,7 @@ const STATUS_TO_BASE_NAME: { [key in CheckResultCode]: string } = {
 
 const getComponent = (
   status: CheckResultCode,
-  size: "small" | "medium" | "large"
+  size: "small" | "medium" | "large",
 ) => {
   const baseName = STATUS_TO_BASE_NAME[status];
   const componentName = `${baseName}${capitalizeFirstLetter(size)}`;

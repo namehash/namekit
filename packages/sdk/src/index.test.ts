@@ -31,13 +31,13 @@ describe("NameGuard", () => {
 
   it("should throw an error if invalid namehash provided", async () => {
     await expect(
-      nameguard.inspectNamehash("0x1234567890abcdef")
+      nameguard.inspectNamehash("0x1234567890abcdef"),
     ).rejects.toThrow("Invalid Keccak256 hash format for namehash.");
   });
 
   it("should throw an error if invalid labelhash provided", async () => {
     await expect(
-      nameguard.inspectLabelhash("0x1234567890abcdef")
+      nameguard.inspectLabelhash("0x1234567890abcdef"),
     ).rejects.toThrow("Invalid Keccak256 hash format for labelhash.");
   });
 
