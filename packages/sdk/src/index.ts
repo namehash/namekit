@@ -1,5 +1,10 @@
-import 'whatwg-fetch'
-import { countGraphemes, isEthereumAddress, isTokenId, isKeccak256Hash } from "./utils";
+import "whatwg-fetch";
+import {
+  countGraphemes,
+  isEthereumAddress,
+  isTokenId,
+  isKeccak256Hash,
+} from "./utils";
 
 const ETH_TLD = "eth";
 

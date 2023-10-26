@@ -1,6 +1,6 @@
 {
   "name": "@namehash/nameguard",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "type": "module",
   "exports": {
     ".": {
@@ -37,8 +37,6 @@
     "vitest": "^0.34.5"
   },
   "dependencies": {
-    "@adraffy/ens-normalize": "^1.10.0",
-    "viem": "^1.16.6",
     "whatwg-fetch": "3.6.19"
   },
   "publishConfig": {

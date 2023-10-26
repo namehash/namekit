@@ -6,7 +6,7 @@ import { id } from "@ethersproject/hash";
  * @returns keccak-256 hash of the label
  */
 export function labelhash(label: string): string {
-  return id(label)
+  return id(label);
 }
 
 const keccak256Regex = /^(?:0x)?[0-9a-f]{64}$/i;
