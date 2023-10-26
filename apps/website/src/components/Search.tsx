@@ -1,9 +1,10 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment, useState, useMemo } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 import cc from "classcat";
 import { DebounceInput } from "react-debounce-input";
+import { parseName } from "@namehash/nameparser";
 import { useInspectName, Report, Shield } from "@namehash/nameguard-react";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 
@@ -14,7 +15,7 @@ import { useOutsideClick } from "./use-outslide-click";
 
 export function Search() {
   const [open, setOpen] = useState(true);
-  const [nameToInspect, setNameToInspect] = useState("");
+  const [rawInput, setRawInput] = useState("");
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
 
@@ -33,7 +34,11 @@ export function Search() {
 
   const chatRef = useOutsideClick(handleChatClose);
 
-  const { loading, error, data } = useInspectName(nameToInspect);
+  const { outputName } = useMemo(() => {
+    return parseName(rawInput);
+  }, [rawInput]);
+
+  const { loading, error, data } = useInspectName(outputName.name);
 
   return (
     <SearchSettingsProvider>
@@ -107,8 +112,8 @@ export function Search() {
                       debounceTimeout={300}
                       type="text"
                       placeholder="Enter a name to inspect"
-                      value={nameToInspect}
-                      onChange={(event) => setNameToInspect(event.target.value)}
+                      value={rawInput}
+                      onChange={(event) => setRawInput(event.target.value)}
                       onFocus={() => {
                         if (chatOpen) setChatOpen(false);
                       }}

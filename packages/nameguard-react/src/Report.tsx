@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import { Summary } from ".";
 import { type NameGuardReport } from "@namehash/nameguard";
 import { CheckResultCard } from "./CheckResultCard";
@@ -28,8 +28,8 @@ export const Report = ({ data }: { data: NameGuardReport }) => {
         </p>
 
         <div className="grid md:grid-cols-2 gap-4">
-          {checks.map((check) => (
-            <CheckResultCard {...check} />
+          {checks.map((check, index) => (
+            <CheckResultCard key={index} {...check} />
           ))}
         </div>
       </div>
@@ -46,9 +46,9 @@ export const Report = ({ data }: { data: NameGuardReport }) => {
           >
             <div className="py-[10px] px-6 text-sm font-normal">
               {rawLabels.map((l, index) => (
-                <>
+                <Fragment key={index}>
                   <span
-                    key={index}
+                    
                     className={
                       l === label.label
                         ? "text-black font-semibold"
@@ -60,11 +60,11 @@ export const Report = ({ data }: { data: NameGuardReport }) => {
                   {index < rawLabels.length - 1 && (
                     <span className="text-gray-500">.</span>
                   )}
-                </>
+                </Fragment>
               ))}
             </div>
-            {label?.graphemes?.map((grapheme) => (
-              <GraphemeCard {...grapheme} />
+            {label?.graphemes?.map((grapheme, index) => (
+              <GraphemeCard key={index} {...grapheme} />
             ))}
           </div>
         ))}
