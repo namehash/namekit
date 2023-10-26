@@ -1,5 +1,6 @@
 import React from "react";
 import { nameguard } from "@namehash/nameguard";
+import { parseName } from "@namehash/nameparser";
 
 import { ReportWrapper } from "./report-wrapper";
 
@@ -12,7 +13,9 @@ export default async function ReportSlugPage({
 
   const decodedName = decodeURIComponent(slug);
 
-  const data = await nameguard.inspectName(decodedName);
+  const { outputName } = parseName(decodedName);
 
-  return <ReportWrapper data={data} />;
+  const data = await nameguard.inspectName(outputName);
+
+  return <ReportWrapper data={data} name={outputName} />;
 }
