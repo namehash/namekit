@@ -250,7 +250,7 @@ export function getNamespaceRoot(name: ENSName): NamespaceRoot {
  *          `unknown` if the decentralization status of the name is unknown.
  */
 export function getDecentralizationStatus(
-  name: ENSName,
+  name: ENSName
 ): DecentralizationStatus {
   switch (getNamespaceRoot(name)) {
     case "ens":
