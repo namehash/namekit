@@ -40,7 +40,10 @@ export function NewReport(props: Props) {
       <ReportHeader />
       {loading && normalizationUnknown && <LoadingSkeleton />}
       {loading && !normalizationUnknown && (
-        <LoadingSkeleton name={parseNameResponse.outputName.name} />
+        <LoadingSkeleton
+          name={parseNameResponse.outputName.name}
+          displayName={parseNameResponse.outputName.displayName}
+        />
       )}
       {data && (
         <Fragment>
@@ -100,10 +103,13 @@ export function NewReport(props: Props) {
 
 type LoadingProps = {
   name?: string;
+  displayName?: string;
 };
 
 // TODO: Move back into Banner.tsx
-function LoadingSkeleton({ name }: LoadingProps) {
+function LoadingSkeleton({ name, displayName }: LoadingProps) {
+  const displayNameDifferent = name !== displayName;
+
   return (
     <div className="rounded-xl border shadow-xl divide-y divide-gray-200 space-y-4 md:space-y-0 border-gray-200 shadow-gray-50">
       <div className="p-5 md:py-7 md:px-10 flex flex-col md:flex-row md:items-start justify-between">
@@ -112,9 +118,17 @@ function LoadingSkeleton({ name }: LoadingProps) {
             Rating for
           </p>
           {name ? (
-            <h1 className="mt-1 text-2xl md:text-4xl text-black font-semibold md:font-bold overflow-hidden overflow-ellipsis">
-              {name}
-            </h1>
+            <>
+              <h1 className="mt-1 text-2xl md:text-4xl text-black font-semibold md:font-bold overflow-hidden overflow-ellipsis">
+                {name}
+              </h1>
+              {displayNameDifferent && (
+                <p className="text-sm text-gray-500 mt-4">
+                  <span className="mr-2.5">Generally displays as:</span>
+                  <span className="text-black">{displayName}</span>
+                </p>
+              )}
+            </>
           ) : (
             <div className="mt-5 w-40 h-3 rounded bg-gradient-to-r from-gray-300 to-gray-100 animate-pulse"></div>
           )}
