@@ -3,20 +3,23 @@
 import React, { createContext, useContext, useState } from "react";
 
 export type SearchSettings = {
-  attemptNormalization: boolean;
-  assumeEth: boolean;
+  attemptEnsNormalization: boolean;
+  assumedTld: string;
   trimWhitespace: boolean;
 };
 
 export const defaultSearchSettings: SearchSettings = {
-  attemptNormalization: true,
-  assumeEth: true,
+  attemptEnsNormalization: true,
+  assumedTld: "eth",
   trimWhitespace: true,
 };
 
 type SearchSettingsContextType = {
   settings: SearchSettings;
   setSettings: (updatedSettings: Partial<SearchSettings>) => void;
+  open: boolean;
+  openModal: () => void;
+  closeModal: () => void;
 };
 
 const SearchSettingsContext = createContext<
@@ -27,7 +30,7 @@ export const useSearchSettings = (): SearchSettingsContextType => {
   const context = useContext(SearchSettingsContext);
   if (!context) {
     throw new Error(
-      "useSearchSettings must be used within a SearchSettingsProvider",
+      "useSearchSettings must be used within a SearchSettingsProvider"
     );
   }
   return context;
@@ -39,8 +42,9 @@ export const SearchSettingsProvider = ({
   children: React.ReactNode;
 }) => {
   const [settings, setInternalSettings] = useState<SearchSettings>(
-    defaultSearchSettings,
+    defaultSearchSettings
   );
+  const [open, setOpen] = useState(false);
 
   const setSettings = (updatedSettings: Partial<SearchSettings>) => {
     setInternalSettings((prevSettings) => ({
@@ -49,8 +53,13 @@ export const SearchSettingsProvider = ({
     }));
   };
 
+  const openModal = () => setOpen(true);
+  const closeModal = () => setOpen(false);
+
   return (
-    <SearchSettingsContext.Provider value={{ settings, setSettings }}>
+    <SearchSettingsContext.Provider
+      value={{ settings, setSettings, open, openModal, closeModal }}
+    >
       {children}
     </SearchSettingsContext.Provider>
   );

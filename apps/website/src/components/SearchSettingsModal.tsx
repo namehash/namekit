@@ -4,15 +4,20 @@ import { XMarkIcon } from "@heroicons/react/24/solid";
 
 import { useSearchSettings, type SearchSettings } from "./use-search-settings";
 
-export function SearchSettingsModal({ open, onClose }: any) {
-  const { settings: defaultValues, setSettings } = useSearchSettings();
+export function SearchSettingsModal() {
+  const {
+    settings: defaultValues,
+    setSettings,
+    open,
+    closeModal,
+  } = useSearchSettings();
   const [localSettings, setLocalSettings] =
     useState<SearchSettings>(defaultValues);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSettings(localSettings);
-    onClose();
+    closeModal();
   };
 
   return (
@@ -20,7 +25,7 @@ export function SearchSettingsModal({ open, onClose }: any) {
       <Dialog
         as="div"
         open={open}
-        onClose={onClose}
+        onClose={closeModal}
         className="fixed z-50 inset-0 overflow-y-auto"
       >
         <Transition.Child
@@ -51,7 +56,7 @@ export function SearchSettingsModal({ open, onClose }: any) {
                 </Dialog.Title>
                 <div className="flex items-center right-0 inset-y-0 absolute pr-6 z-20">
                   <button
-                    onClick={onClose}
+                    onClick={closeModal}
                     className="flex items-center justify-between p-2 -mr-3 appearance-none bg-transparent hover:bg-black/5 transition rounded-md"
                   >
                     <XMarkIcon className="w-6 h-6 fill-current text-black md:text-gray-400" />
@@ -71,29 +76,29 @@ export function SearchSettingsModal({ open, onClose }: any) {
                     <div className="relative flex items-start">
                       <div className="flex h-6 items-center">
                         <input
-                          id="attempt-normalization"
-                          aria-describedby="attempt-normalization-description"
-                          name="attempt-normalization"
+                          id="attempt-ens-normalization"
+                          aria-describedby="attempt-ens-normalization-description"
+                          name="attempt-ens-normalization"
                           type="checkbox"
                           className="h-4 w-4 rounded border-black text-black focus:ring-black"
-                          checked={localSettings.attemptNormalization}
+                          checked={localSettings.attemptEnsNormalization}
                           onChange={(e) =>
                             setLocalSettings((prev) => ({
                               ...prev,
-                              attemptNormalization: e.target.checked,
+                              attemptEnsNormalization: e.target.checked,
                             }))
                           }
                         />
                       </div>
                       <div className="ml-3 text-sm leading-6">
                         <label
-                          htmlFor="attempt-normalization"
+                          htmlFor="attempt-ens-normalization"
                           className="font-medium text-gray-900"
                         >
                           Attempt normalization
                         </label>
                         <p
-                          id="attempt-normalization-description"
+                          id="attempt-ens-normalization-description"
                           className="text-gray-500 text-sm leading-5"
                         >
                           Attempt ENS Normalization before inspecting search
@@ -106,29 +111,29 @@ export function SearchSettingsModal({ open, onClose }: any) {
                     <div className="relative flex items-start">
                       <div className="flex h-6 items-center">
                         <input
-                          id="assume-eth"
-                          aria-describedby="assume-eth-description"
-                          name="assume-eth"
+                          id="assume-tld"
+                          aria-describedby="assume-tld-description"
+                          name="assume-tld"
                           type="checkbox"
                           className="h-4 w-4 rounded border-black text-black focus:ring-black"
-                          checked={localSettings.assumeEth}
+                          checked={localSettings.assumedTld === "eth"}
                           onChange={(e) =>
                             setLocalSettings((prev) => ({
                               ...prev,
-                              assumeEth: e.target.checked,
+                              assumedTld: e.target.checked ? "eth" : "",
                             }))
                           }
                         />
                       </div>
                       <div className="ml-3 text-sm leading-6">
                         <label
-                          htmlFor="assume-eth"
+                          htmlFor="assume-tld"
                           className="font-medium text-gray-900"
                         >
                           Assume &quot;.eth&quot;
                         </label>
                         <p
-                          id="assume-eth-description"
+                          id="assume-tld-description"
                           className="text-gray-500 text-sm leading-5"
                         >
                           Automatically adds “.eth” as an assumed top-level
@@ -176,7 +181,7 @@ export function SearchSettingsModal({ open, onClose }: any) {
                 <div className="flex items-center justify-end space-x-3 mt-8 pb-6">
                   <button
                     className="rounded-md text-sm bg-white shadow-sm border border-gray-300 text-black px-4 py-1.5 font-medium leading-6 transition hover:bg-gray-50"
-                    onClick={onClose}
+                    onClick={closeModal}
                   >
                     Cancel
                   </button>
