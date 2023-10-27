@@ -2,7 +2,7 @@
 
 import { Highlight } from "prism-react-renderer";
 import { PrismTheme } from "prism-react-renderer";
-import React, {Fragment} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import Image from "next/image";
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 import impersonation_attack_img from "../../public/assets/vitalik_impersonation_attack.png";
@@ -12,6 +12,8 @@ import dangerous_name_config_img from "../../public/assets/dangerous_name_config
 import autorenewal_img from "../../public/assets/autorenewal.png";
 import ens_webfont_img from "../../public/assets/ens_webfont.png";
 import {Search} from "@/components/Search";
+import {Tooltip} from "@namehash/nameguard-react";
+
 
 export default function Home() {
     const exampleCode =
@@ -536,54 +538,90 @@ function Footer(){
             <p className={"not-italic font-normal text-gray-500 text-footer_text"}>© NameHash Labs. All Rights Reserved</p>
             <div className={"flex flex-row justify-between gap-3"}>
                 <a href={"https://twitter.com/NamehashLabs"}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path d="M13.5222 10.7749L19.4785 4H18.0671L12.8952 9.88256L8.76437 4H4L10.2466 12.8955L4 20H5.41155L10.8732 13.7878L15.2356 20H20L13.5218 10.7749H13.5222ZM11.5889 12.9738L10.956 12.0881L5.92015 5.03974H8.0882L12.1522 10.728L12.7851 11.6137L18.0677 19.0075H15.8997L11.5889 12.9742V12.9738Z" fill="#AFAFAF"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={"group"}>
+                        <path className={"transition group-hover:fill-black"} d="M13.5222 10.7749L19.4785 4H18.0671L12.8952 9.88256L8.76437 4H4L10.2466 12.8955L4 20H5.41155L10.8732 13.7878L15.2356 20H20L13.5218 10.7749H13.5222ZM11.5889 12.9738L10.956 12.0881L5.92015 5.03974H8.0882L12.1522 10.728L12.7851 11.6137L18.0677 19.0075H15.8997L11.5889 12.9742V12.9738Z" fill="#AFAFAF"/>
                     </svg>
                 </a>
                 <a href={"https://github.com/namehash/nameguard"}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path fillRule="evenodd" clipRule="evenodd" d="M12.0413 2.25952C6.51859 2.25952 2 6.77811 2 12.3008C2 16.7357 4.84504 20.5012 8.86156 21.8401C9.36363 21.9238 9.53099 21.5891 9.53099 21.338C9.53099 21.087 9.53099 20.5012 9.53099 19.6645C6.76962 20.2502 6.18388 18.3256 6.18388 18.3256C5.76549 17.1541 5.09607 16.8194 5.09607 16.8194C4.09194 16.2337 5.09607 16.2337 5.09607 16.2337C6.1002 16.3174 6.60227 17.2378 6.60227 17.2378C7.52272 18.744 8.94524 18.3256 9.53099 18.0746C9.61466 17.4052 9.8657 16.9868 10.2004 16.7357C7.94111 16.4847 5.59814 15.6479 5.59814 11.7988C5.59814 10.711 6.01653 9.79051 6.60227 9.12109C6.60227 8.78637 6.18388 7.78224 6.76962 6.4434C6.76962 6.4434 7.6064 6.19237 9.53099 7.44753C10.3678 7.1965 11.2045 7.11282 12.0413 7.11282C12.8781 7.11282 13.7149 7.1965 14.5516 7.44753C16.4762 6.10869 17.313 6.4434 17.313 6.4434C17.8987 7.86592 17.4804 8.87005 17.3967 9.12109C18.0661 9.79051 18.4008 10.711 18.4008 11.7988C18.4008 15.6479 16.0578 16.4847 13.7985 16.7357C14.1333 17.0705 14.468 17.6562 14.468 18.5767C14.468 19.9155 14.468 21.0033 14.468 21.338C14.468 21.5891 14.6353 21.9238 15.1374 21.8401C19.1539 20.5012 21.9989 16.7357 21.9989 12.3008C22.0826 6.77811 17.564 2.25952 12.0413 2.25952Z" fill="#AFAFAF"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={"group"} >
+                        <path className={"transition group-hover:fill-black"} fillRule="evenodd" clipRule="evenodd" d="M12.0413 2.25952C6.51859 2.25952 2 6.77811 2 12.3008C2 16.7357 4.84504 20.5012 8.86156 21.8401C9.36363 21.9238 9.53099 21.5891 9.53099 21.338C9.53099 21.087 9.53099 20.5012 9.53099 19.6645C6.76962 20.2502 6.18388 18.3256 6.18388 18.3256C5.76549 17.1541 5.09607 16.8194 5.09607 16.8194C4.09194 16.2337 5.09607 16.2337 5.09607 16.2337C6.1002 16.3174 6.60227 17.2378 6.60227 17.2378C7.52272 18.744 8.94524 18.3256 9.53099 18.0746C9.61466 17.4052 9.8657 16.9868 10.2004 16.7357C7.94111 16.4847 5.59814 15.6479 5.59814 11.7988C5.59814 10.711 6.01653 9.79051 6.60227 9.12109C6.60227 8.78637 6.18388 7.78224 6.76962 6.4434C6.76962 6.4434 7.6064 6.19237 9.53099 7.44753C10.3678 7.1965 11.2045 7.11282 12.0413 7.11282C12.8781 7.11282 13.7149 7.1965 14.5516 7.44753C16.4762 6.10869 17.313 6.4434 17.313 6.4434C17.8987 7.86592 17.4804 8.87005 17.3967 9.12109C18.0661 9.79051 18.4008 10.711 18.4008 11.7988C18.4008 15.6479 16.0578 16.4847 13.7985 16.7357C14.1333 17.0705 14.468 17.6562 14.468 18.5767C14.468 19.9155 14.468 21.0033 14.468 21.338C14.468 21.5891 14.6353 21.9238 15.1374 21.8401C19.1539 20.5012 21.9989 16.7357 21.9989 12.3008C22.0826 6.77811 17.564 2.25952 12.0413 2.25952Z" fill="#AFAFAF"/>
                     </svg>
                 </a>
             </div>
-            <p className={"not-italic font-normal text-gray-500 text-footer_text"}>Made with  ❤  by <a href={"https://namehash.io/"}><u className={"text-black"}>NameHash</u></a></p>
+            <p className={"not-italic font-normal text-gray-500 text-footer_text"}>Made with  ❤  by <a className={"text-black underline underline-offset-[5px] transition hover:underline-offset-[2px]"} href={"https://namehash.io/"}>NameHash</a></p>
         </footer>
     );
 }
 
 function Header() {
     return (
-        <header className={"relative top-0 w-full h-[70px] flex flex-row justify-between px-28 py-4 z-10 border-b border-gray-300"}>
+        <header className={"relative top-0 w-full z-10 border-b border-gray-300 " +
+            "inline-flex h-[56px] px-[20px] py-[9px] gap-9 items-start justify-center" +
+            "sm:flex sm:flex-row sm:justify-between sm:h-[70px] sm:px-28 sm:py-4"}>
             <div className={"flex flex-row gap-7 justify-between items-center"}>
                 <div className={"flex flex-row justify-between items-center gap-1"}>
-                    <p className={"text-black not-italic font-bold text-[27.816px] leading-[27.816px] tracking-[-1.113px]"}>NameGuard</p>
+                    <p className={"text-black not-italic font-bold " +
+                        "text-[22.683px] leading-[22.683px] tracking-[-0.907px]" +
+                        "sm:text-[27.816px] sm:leading-[27.816px] sm:tracking-[-1.113px]"}>NameGuard</p>
                     <div className={"relative -top-1.5 bg-black w-fit h-fit p-[2.8px] rounded-[2.8px] flex-shrink-0"}>
-                        <p className={"text-white not-italic text-[8.409px] font-semibold leading-[9.343px] pb-[0.5px]"}>beta</p>
+                        <p className={"text-white not-italic font-semibold pb-[0.5px] " +
+                            "text-[6.857px] leading-[7.619px]" +
+                            "sm:text-[8.409px] sm:leading-[9.343px]"}>beta</p>
                     </div>
                 </div>
-                {/*<Search />*/}
+                <Search className={"hidden sm:block"}/>
             </div>
-            <div className={"flex flex-row justify-between items-center gap-5"}>
-                <a className={"px-[9px] py-[10px] not-italic text-black font-medium text-sm rounded-md hover:bg-gray-100"} href={"https://api.nameguard.io/docs"}>
+            <div className={"flex flex-row items-center " +
+                "justify-end gap-0" +
+                "sm:justify-between sm:gap-5"}>
+                <a className={"px-[10px] py-[9px] not-italic text-black font-medium text-sm leading-5 rounded-md hover:bg-gray-100"} href={"https://api.nameguard.io/docs"}>
                     Docs
                 </a>
-                <a href={"https://github.com/namehash/nameguard"}>
+                <a className={"rounded-md hover:bg-gray-100"} href={"https://github.com/namehash/nameguard"}>
                     <div className={"flex flex-row justify-between items-center gap-2 py-[7px] px-[10px]"}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" className={"hidden sm:block"}>
                                 <path fillRule="evenodd" clipRule="evenodd" d="M12.0413 2.25928C6.51859 2.25928 2 6.77787 2 12.3006C2 16.7355 4.84504 20.501 8.86156 21.8398C9.36363 21.9235 9.53099 21.5888 9.53099 21.3378C9.53099 21.0867 9.53099 20.501 9.53099 19.6642C6.76962 20.25 6.18388 18.3254 6.18388 18.3254C5.76549 17.1539 5.09607 16.8192 5.09607 16.8192C4.09194 16.2334 5.09607 16.2334 5.09607 16.2334C6.1002 16.3171 6.60227 17.2376 6.60227 17.2376C7.52272 18.7438 8.94524 18.3254 9.53099 18.0743C9.61466 17.4049 9.8657 16.9865 10.2004 16.7355C7.94111 16.4845 5.59814 15.6477 5.59814 11.7985C5.59814 10.7107 6.01653 9.79026 6.60227 9.12084C6.60227 8.78613 6.18388 7.782 6.76962 6.44316C6.76962 6.44316 7.6064 6.19212 9.53099 7.44729C10.3678 7.19626 11.2045 7.11258 12.0413 7.11258C12.8781 7.11258 13.7149 7.19626 14.5516 7.44729C16.4762 6.10845 17.313 6.44316 17.313 6.44316C17.8987 7.86568 17.4804 8.86981 17.3967 9.12084C18.0661 9.79026 18.4008 10.7107 18.4008 11.7985C18.4008 15.6477 16.0578 16.4845 13.7985 16.7355C14.1333 17.0702 14.468 17.656 14.468 18.5764C14.468 19.9153 14.468 21.0031 14.468 21.3378C14.468 21.5888 14.6353 21.9235 15.1374 21.8398C19.1539 20.501 21.9989 16.7355 21.9989 12.3006C22.0826 6.77787 17.564 2.25928 12.0413 2.25928Z" fill="#0F172A"/>
                             </svg>
-                            <p className={"not-italic text-black font-medium text-sm"}>Github</p>
+                            <p className={"not-italic text-black font-medium text-sm leading-5"}>Github</p>
                     </div>
                 </a>
+                <div className={"block flex justify-center items-center gap-2 p-[7px] cursor-pointer sm:hidden"}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path fillRule="evenodd" clipRule="evenodd" d="M9 3.5C5.96243 3.5 3.5 5.96243 3.5 9C3.5 12.0376 5.96243 14.5 9 14.5C10.519 14.5 11.893 13.8852 12.8891 12.8891C13.8852 11.893 14.5 10.519 14.5 9C14.5 5.96243 12.0376 3.5 9 3.5ZM2 9C2 5.13401 5.13401 2 9 2C12.866 2 16 5.13401 16 9C16 10.6625 15.4197 12.1906 14.4517 13.3911L17.7803 16.7197C18.0732 17.0126 18.0732 17.4874 17.7803 17.7803C17.4874 18.0732 17.0126 18.0732 16.7197 17.7803L13.3911 14.4517C12.1906 15.4197 10.6625 16 9 16C5.13401 16 2 12.866 2 9Z" fill="#0F172A"/>
+                    </svg>
+                </div>
             </div>
         </header>
     );
 }
 
 function HeroSection() {
-    const bg_test = `bg-[url("../../public/assets/hero_background.png")]`;
+    const bg_crests = `bg-[url("../../public/assets/hero_background.png")]`;
+    const copyIcon =
+        <div className={"w-fit h-fit z-10 cursor-pointer"} onClick={() => {
+            setCopiedToClipboard(true);
+            navigator.clipboard.writeText("npm init @nameguard/nameguard@latest");
+        }}>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
+             stroke="#808080" className="w-6 h-6 transition hover:stroke-black">
+            <path strokeLinecap="round" strokeLinejoin="round"
+                  d="M16.5 8.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v8.25A2.25 2.25 0 006 16.5h2.25m8.25-8.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-7.5A2.25 2.25 0 018.25 18v-1.5m8.25-8.25h-6a2.25 2.25 0 00-2.25 2.25v6"/>
+        </svg>
+    </div>;
+
+    const [copiedToClipboard, setCopiedToClipboard] = useState<boolean>(false);
+
+    const copiedText: React.ReactNode = <>Copied!</>;
+    const copyText: React.ReactNode = <>Copy to Clipboard</>;
+
+    useEffect(() => {
+        setTimeout(() => {
+            setCopiedToClipboard(false);
+        }, 5000);
+    }, [copiedToClipboard]);
+
     return (
-        <section className={`md:p-32 relative z-10 w-full h-screen py-24 flex flex-col items-center justify-center ${bg_test} bg-no-repeat bg-center bg-contain`}>
+        <section className={`md:p-32 relative z-10 w-full h-screen py-24 flex flex-col items-center justify-center ${bg_crests} bg-no-repeat bg-center bg-contain`}>
             <div className={"inline-flex flex-col items-center gap-5"}>
                 <div className={"flex flex-col gap-2 w-fit h-fit z-10"}>
                     <p className={"text-center not-italic uppercase text-gray-500 text-xs tracking-[0.3px] font-medium"}>An open source public good</p>
@@ -596,15 +634,9 @@ function HeroSection() {
                 </p>
                 <div className={"flex items-center gap-3 py-[13px] pl-[20px] pr-[16px] rounded-lg bg-black bg-opacity-5 border border-gray-300"}>
                     <p>npm init @nameguard/nameguard@latest</p>
-                    <div className={"w-fit h-fit z-10 cursor-pointer"} onClick={() => navigator.clipboard.writeText("npm init @nameguard/nameguard@latest")}>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
-                             stroke="#808080" className="w-6 h-6">
-                            <path strokeLinecap="round" strokeLinejoin="round"
-                                  d="M16.5 8.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v8.25A2.25 2.25 0 006 16.5h2.25m8.25-8.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-7.5A2.25 2.25 0 018.25 18v-1.5m8.25-8.25h-6a2.25 2.25 0 00-2.25 2.25v6"/>
-                        </svg>
-                    </div>
+                    <Tooltip trigger={copyIcon} children={copiedToClipboard ? copiedText : copyText}/>
                 </div>
-                <button className={"flex justify-center items-center px-[25px] py-[13px] rounded-lg bg-black z-10 sm:shadow-sm"} onClick={() => {window.location.href = "https://api.nameguard.io/docs";}}> {/* Should be replaced with url to the docs! */}
+                <button className={"flex justify-center items-center px-[25px] py-[13px] rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-800"} onClick={() => {window.location.href = "https://api.nameguard.io/docs";}}> {/* Should be replaced with url to the docs! */}
                     <p className={"text-white not-italic font-medium text-base"}>View the docs</p>
                 </button>
             </div>
@@ -621,7 +653,7 @@ function ExitSection() {
                         <h1 className={"text-black not-italic text-center text-4xl leading-[52px] font-bold"}>Search for any ENS name to generate a<br />NameGuard report</h1>
                         <p className={"text-center text-gray-500 font-normal not-italic text-lg leading-7"}>Share NameGuard reports with frENS. Together we can make web3 safer.</p>
                     </div>
-                    {/*<Search />*/}
+                    <Search />
                 </div>
             </div>
         </section>
