@@ -67,7 +67,7 @@ const transformationText = {
 };
 
 export function Banner({ report, parsedName }: Props) {
-  const { name, title, subtitle, rating } = report;
+  const { name, title, subtitle, rating, beautiful_name } = report;
   const { outputName, transformations } = parsedName;
 
   const border = borderColor(rating);
@@ -80,7 +80,10 @@ export function Banner({ report, parsedName }: Props) {
     shadow,
   ]);
 
-  const displayNameDifferent = name !== outputName.displayName;
+  const displayNameDifferent = ![
+    outputName.displayName,
+    beautiful_name,
+  ].includes(name);
   const displayTransformations = transformations.length >= 1;
 
   return (
@@ -96,12 +99,16 @@ export function Banner({ report, parsedName }: Props) {
           {displayNameDifferent && (
             <p className="text-sm text-gray-500 mt-4">
               <span className="mr-2.5">Generally displays as:</span>
-              <span className="text-black">{outputName.displayName}</span>
+              <span className="text-black">
+                {beautiful_name || outputName.displayName}
+              </span>
             </p>
           )}
         </div>
         <div className="flex items-start space-x-4 pt-5 md:pt-0 md:w-2/6">
-          <Shield status={rating} size="large" />
+          <div className="flex-shrink-0">
+            <Shield status={rating} size="large" />
+          </div>
           <div className="space-y-1">
             <p className={text}>{title}</p>
             <p className="text-black text-sm font-normal leading-6">

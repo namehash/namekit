@@ -3,7 +3,6 @@
 import { Fragment, useState } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 import cc from "classcat";
-import { DebounceInput } from "react-debounce-input";
 
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 
@@ -87,8 +86,7 @@ export function SearchModal() {
                   {/* )} */}
                 </div>
                 <div className="w-full flex-1">
-                  <DebounceInput
-                    debounceTimeout={300}
+                  <input
                     type="text"
                     placeholder="Enter a name to inspect"
                     value={input}
