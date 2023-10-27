@@ -37,7 +37,7 @@ export default function Home() {
             sectionBackgroundName={"bg-green_background"}
             isCodeOnTheLeft={false}
             codeSnippet={exampleCode}
-            integrationsPanel={          <div className={"inline-flex items-center gap-6 z-10"}>
+            integrationsPanel={          <div className={"hidden gt_mobile:inline-flex items-center gap-6 z-10"}>
                 <p className={"text-gray-500 text-lg leading-6 font-normal not-italic"}>
                     Composable integrations include
                 </p>
@@ -236,7 +236,7 @@ export default function Home() {
         <ExitSection />
       <Footer />
 
-      <div className="fixed inset-0 z-0 h-full w-full bg-[radial-gradient(#DDDDDD_1px,transparent_1px)] [background-size:24px_24px] opacity-70"></div>
+      <div className="fixed inset-0 z-0 h-full w-full overflow-x-hidden bg-[radial-gradient(#DDDDDD_1px,transparent_1px)] [background-size:24px_24px] opacity-70"></div>
     </>
   );
 }
@@ -347,7 +347,7 @@ function CodeSnippet(props: CodeSnippetProps) {
         ],
     }
     return (
-        <div className="hidden mobile:block bg-black rounded-xl pb-4 max-w-full h-fit bg-gradient-to-b from-figma-black to-black z-10">
+        <div className="hidden gt_mobile:block bg-black rounded-xl pb-4 max-w-full h-fit bg-gradient-to-b from-figma-black to-black z-10">
         <div className="flex flex-col gap-2.5 px-2.5 py-3">
             <div className="flex justify-start gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
@@ -411,10 +411,10 @@ type ReadySectionProps = {
 
 function ReadySection(props: ReadySectionProps){
   return (
-      <section className={`w-full h-full py-24 flex flex-col items-center justify-center`}>
-          <div className="max-w-full mx-auto px-6 flex flex-col items-center gap-3">
-          <div className="flex flex-col gap-5 items-center w-1/2">
-            <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-3xl gap-2 justify-center items-center z-10">
+      <section className={`w-full h-full py-10 px-5 flex flex-col items-center justify-center gt_mobile:py-24 gt_mobile:px-0`}>
+          <div className="max-w-full flex flex-col items-center gt_mobile:mx-auto gt_mobile:px-6 gt_mobile:gap-3">
+          <div className="w-full flex flex-col gap-5 items-center gt_mobile:w-1/2">
+            <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-[20px] gap-2 justify-center items-center z-10">
               <svg
                   width="20"
                   height="20"
@@ -430,38 +430,38 @@ function ReadySection(props: ReadySectionProps){
                     strokeLinejoin="round"
                 />
               </svg>
-              <span className="text-black text-center text-sm not-italic font-medium z-10">
+              <span className="text-black text-center text-sm not-italic font-medium z-10 leading-5">
                       {props.sectionTargetClientMessage}
                     </span>
             </div>
 
-            <h1 className="text-black text-center text-4xl font-bold not-italic z-10">
+            <h1 className="text-black text-center not-italic z-10 text-2xl leading-8 font-semibold gt_mobile:text-4xl gt_mobile:font-bold gt_mobile:leading-10">
                 {props.sectionHeader}
             </h1>
 
-            <p className="text-gray-500 text-lg not-italic font-normal text-center w-4/5 z-10">
+            <p className="z-10 text-gray-500 text-center not-italic font-normal text-sm leading-6 gt_mobile:text-lg gt_mobile:leading-7 gt_mobile:w-4/5">
                 {props.sectionDescription}
             </p>
           </div>
               {props.isCodeOnTheLeft ? (
-                  <div className={`flex sm:flex-col xl:flex-row justify-center rounded-none items-center gap-10 w-full h-full xl:h-3/4 py-16 px-10 ${props.sectionBackgroundName} bg-center bg-no-repeat bg-cover` }>
+                  <div className={`flex sm:flex-col xl:flex-row justify-center border-0 rounded-none items-center gap-10 w-full h-full xl:h-3/4 py-16 px-10 ${props.sectionBackgroundName} bg-center bg-no-repeat bg-cover flex-shrink-0 gt_mobile:gap-10` }>
                       {props.integrationsPanel ? (
-                          <div className={"flex flex-col w-full h-full justify-between items-center gap-7"}>
+                          <div className={"hidden gt_mobile:flex flex-col w-full h-full justify-between items-center gap-7"}>
                               <CodeSnippet codeSnippet={props.codeSnippet}/>
                               <div className={"inline-flex items-center gap-6"}>
                                   {props.integrationsPanel}
                               </div>
                           </div>
                       ) : (<CodeSnippet codeSnippet={props.codeSnippet}/>)}
-                      <Image className={`z-10 w-2/3 h-2/3 xl:w-1/3 xl:h-1/3`}
+                      <Image className={`z-10 w-full h-full gt_mobile:w-2/3 gt_mobile:h-2/3 xl:w-1/3 xl:h-1/3`}
                            src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
                   </div>
               ) : (
-                  <div className={`flex flex-col xl:flex-row justify-center items-center gap-10 w-full h-full xl:h-3/4 py-16 px-10 rounded-none ${props.sectionBackgroundName} bg-center bg-no-repeat bg-cover`}>
-                    <Image className={`z-10 w-2/3 h-2/3 xl:w-1/3 xl:h-1/3`}
+                  <div className={`flex sm:flex-col xl:flex-row justify-center items-center w-full h-full xl:h-3/4 py-16 px-10 border-0 rounded-none ${props.sectionBackgroundName} bg-center bg-no-repeat bg-cover flex-shrink-0 gt_mobile:gap-10`}>
+                    <Image className={`z-10 w-full h-full gt_mobile:w-2/3 gt_mobile:h-2/3 xl:w-1/3 xl:h-1/3`}
                          src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
                       {props.integrationsPanel ? (
-                          <div className={"flex flex-col w-full h-full justify-between items-center gap-7"}>
+                          <div className={"hidden gt_mobile:flex flex-col w-full h-full justify-between items-center gap-7"}>
                               <CodeSnippet codeSnippet={props.codeSnippet}/>
                               {props.integrationsPanel}
                           </div>
@@ -534,21 +534,21 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
 
 function Footer(){
     return (
-        <footer className={"relative bot-0 w-full h-fit flex flex-row justify-between py-6 px-28 items-center z-10 bg-white"}>
+        <footer className={"z-10 bg-white relative bot-0 w-full h-fit flex flex-col gap-3 py-5 items-center self-stretch gt_mobile:flex-row gt_mobile:justify-between gt_mobile:py-6 gt_mobile:px-28 gt_mobile:self-stretch"}>
             <p className={"not-italic font-normal text-gray-500 text-footer_text"}>© NameHash Labs. All Rights Reserved</p>
             <div className={"flex flex-row justify-between gap-3"}>
                 <a href={"https://twitter.com/NamehashLabs"}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={"group"}>
-                        <path className={"transition group-hover:fill-black"} d="M13.5222 10.7749L19.4785 4H18.0671L12.8952 9.88256L8.76437 4H4L10.2466 12.8955L4 20H5.41155L10.8732 13.7878L15.2356 20H20L13.5218 10.7749H13.5222ZM11.5889 12.9738L10.956 12.0881L5.92015 5.03974H8.0882L12.1522 10.728L12.7851 11.6137L18.0677 19.0075H15.8997L11.5889 12.9742V12.9738Z" fill="#AFAFAF"/>
+                        <path className={"gt_mobile:transition gt_mobile:group-hover:fill-black"} d="M13.5222 10.7749L19.4785 4H18.0671L12.8952 9.88256L8.76437 4H4L10.2466 12.8955L4 20H5.41155L10.8732 13.7878L15.2356 20H20L13.5218 10.7749H13.5222ZM11.5889 12.9738L10.956 12.0881L5.92015 5.03974H8.0882L12.1522 10.728L12.7851 11.6137L18.0677 19.0075H15.8997L11.5889 12.9742V12.9738Z" fill="#AFAFAF"/>
                     </svg>
                 </a>
                 <a href={"https://github.com/namehash/nameguard"}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={"group"} >
-                        <path className={"transition group-hover:fill-black"} fillRule="evenodd" clipRule="evenodd" d="M12.0413 2.25952C6.51859 2.25952 2 6.77811 2 12.3008C2 16.7357 4.84504 20.5012 8.86156 21.8401C9.36363 21.9238 9.53099 21.5891 9.53099 21.338C9.53099 21.087 9.53099 20.5012 9.53099 19.6645C6.76962 20.2502 6.18388 18.3256 6.18388 18.3256C5.76549 17.1541 5.09607 16.8194 5.09607 16.8194C4.09194 16.2337 5.09607 16.2337 5.09607 16.2337C6.1002 16.3174 6.60227 17.2378 6.60227 17.2378C7.52272 18.744 8.94524 18.3256 9.53099 18.0746C9.61466 17.4052 9.8657 16.9868 10.2004 16.7357C7.94111 16.4847 5.59814 15.6479 5.59814 11.7988C5.59814 10.711 6.01653 9.79051 6.60227 9.12109C6.60227 8.78637 6.18388 7.78224 6.76962 6.4434C6.76962 6.4434 7.6064 6.19237 9.53099 7.44753C10.3678 7.1965 11.2045 7.11282 12.0413 7.11282C12.8781 7.11282 13.7149 7.1965 14.5516 7.44753C16.4762 6.10869 17.313 6.4434 17.313 6.4434C17.8987 7.86592 17.4804 8.87005 17.3967 9.12109C18.0661 9.79051 18.4008 10.711 18.4008 11.7988C18.4008 15.6479 16.0578 16.4847 13.7985 16.7357C14.1333 17.0705 14.468 17.6562 14.468 18.5767C14.468 19.9155 14.468 21.0033 14.468 21.338C14.468 21.5891 14.6353 21.9238 15.1374 21.8401C19.1539 20.5012 21.9989 16.7357 21.9989 12.3008C22.0826 6.77811 17.564 2.25952 12.0413 2.25952Z" fill="#AFAFAF"/>
+                        <path className={"gt_mobile:transition gt_mobile:group-hover:fill-black"} fillRule="evenodd" clipRule="evenodd" d="M12.0413 2.25952C6.51859 2.25952 2 6.77811 2 12.3008C2 16.7357 4.84504 20.5012 8.86156 21.8401C9.36363 21.9238 9.53099 21.5891 9.53099 21.338C9.53099 21.087 9.53099 20.5012 9.53099 19.6645C6.76962 20.2502 6.18388 18.3256 6.18388 18.3256C5.76549 17.1541 5.09607 16.8194 5.09607 16.8194C4.09194 16.2337 5.09607 16.2337 5.09607 16.2337C6.1002 16.3174 6.60227 17.2378 6.60227 17.2378C7.52272 18.744 8.94524 18.3256 9.53099 18.0746C9.61466 17.4052 9.8657 16.9868 10.2004 16.7357C7.94111 16.4847 5.59814 15.6479 5.59814 11.7988C5.59814 10.711 6.01653 9.79051 6.60227 9.12109C6.60227 8.78637 6.18388 7.78224 6.76962 6.4434C6.76962 6.4434 7.6064 6.19237 9.53099 7.44753C10.3678 7.1965 11.2045 7.11282 12.0413 7.11282C12.8781 7.11282 13.7149 7.1965 14.5516 7.44753C16.4762 6.10869 17.313 6.4434 17.313 6.4434C17.8987 7.86592 17.4804 8.87005 17.3967 9.12109C18.0661 9.79051 18.4008 10.711 18.4008 11.7988C18.4008 15.6479 16.0578 16.4847 13.7985 16.7357C14.1333 17.0705 14.468 17.6562 14.468 18.5767C14.468 19.9155 14.468 21.0033 14.468 21.338C14.468 21.5891 14.6353 21.9238 15.1374 21.8401C19.1539 20.5012 21.9989 16.7357 21.9989 12.3008C22.0826 6.77811 17.564 2.25952 12.0413 2.25952Z" fill="#AFAFAF"/>
                     </svg>
                 </a>
             </div>
-            <p className={"not-italic font-normal text-gray-500 text-footer_text"}>Made with  ❤  by <a className={"text-black underline underline-offset-[5px] transition hover:underline-offset-[2px]"} href={"https://namehash.io/"}>NameHash</a></p>
+            <p className={"not-italic font-normal text-gray-500 text-footer_text"}>Made with  ❤  by <a className={"text-black underline gt_mobile:underline-offset-[5px] gt_mobile:transition gt_mobile:hover:underline-offset-[2px]"} href={"https://namehash.io/"}>NameHash</a></p>
         </footer>
     );
 }
@@ -556,36 +556,38 @@ function Footer(){
 function Header() {
     return (
         <header className={"relative top-0 w-full z-10 border-b border-gray-300 " +
-            "inline-flex h-[56px] px-[20px] py-[9px] gap-9 items-start justify-center" +
-            "sm:flex sm:flex-row sm:justify-between sm:h-[70px] sm:px-28 sm:py-4"}>
+            "inline-flex h-[56px] px-[20px] py-[9px] gap-9 items-center justify-center" +
+            " gt_mobile:flex gt_mobile:flex-row gt_mobile:justify-between gt_mobile:h-[70px] gt_mobile:px-28 gt_mobile:py-4"}>
             <div className={"flex flex-row gap-7 justify-between items-center"}>
                 <div className={"flex flex-row justify-between items-center gap-1"}>
                     <p className={"text-black not-italic font-bold " +
                         "text-[22.683px] leading-[22.683px] tracking-[-0.907px]" +
-                        "sm:text-[27.816px] sm:leading-[27.816px] sm:tracking-[-1.113px]"}>NameGuard</p>
+                        "gt_mobile:text-[27.816px] gt_mobile:leading-[27.816px] gt_mobile:tracking-[-1.113px]"}>NameGuard</p>
                     <div className={"relative -top-1.5 bg-black w-fit h-fit p-[2.8px] rounded-[2.8px] flex-shrink-0"}>
                         <p className={"text-white not-italic font-semibold pb-[0.5px] " +
                             "text-[6.857px] leading-[7.619px]" +
-                            "sm:text-[8.409px] sm:leading-[9.343px]"}>beta</p>
+                            "gt_mobile:text-[8.409px] gt_mobile:leading-[9.343px]"}>beta</p>
                     </div>
                 </div>
-                <Search className={"hidden sm:block"}/>
+                <div className={"hidden gt_mobile:block gt_mobile:w-full gt_mobile:h-full gt_mobile:p-0 gt_mobile:m-0"}>
+                    <Search/>
+                </div>
             </div>
             <div className={"flex flex-row items-center " +
                 "justify-end gap-0" +
-                "sm:justify-between sm:gap-5"}>
-                <a className={"px-[10px] py-[9px] not-italic text-black font-medium text-sm leading-5 rounded-md hover:bg-gray-100"} href={"https://api.nameguard.io/docs"}>
+                "gt_mobile:justify-between gt_mobile:gap-5"}>
+                <a className={"px-[10px] py-[9px] not-italic text-black font-medium text-sm leading-5 rounded-md gt_mobile:hover:bg-gray-100"} href={"https://api.nameguard.io/docs"}>
                     Docs
                 </a>
-                <a className={"rounded-md hover:bg-gray-100"} href={"https://github.com/namehash/nameguard"}>
+                <a className={"rounded-md gt_mobile:hover:bg-gray-100"} href={"https://github.com/namehash/nameguard"}>
                     <div className={"flex flex-row justify-between items-center gap-2 py-[7px] px-[10px]"}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" className={"hidden sm:block"}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" className={"hidden gt_mobile:block"}>
                                 <path fillRule="evenodd" clipRule="evenodd" d="M12.0413 2.25928C6.51859 2.25928 2 6.77787 2 12.3006C2 16.7355 4.84504 20.501 8.86156 21.8398C9.36363 21.9235 9.53099 21.5888 9.53099 21.3378C9.53099 21.0867 9.53099 20.501 9.53099 19.6642C6.76962 20.25 6.18388 18.3254 6.18388 18.3254C5.76549 17.1539 5.09607 16.8192 5.09607 16.8192C4.09194 16.2334 5.09607 16.2334 5.09607 16.2334C6.1002 16.3171 6.60227 17.2376 6.60227 17.2376C7.52272 18.7438 8.94524 18.3254 9.53099 18.0743C9.61466 17.4049 9.8657 16.9865 10.2004 16.7355C7.94111 16.4845 5.59814 15.6477 5.59814 11.7985C5.59814 10.7107 6.01653 9.79026 6.60227 9.12084C6.60227 8.78613 6.18388 7.782 6.76962 6.44316C6.76962 6.44316 7.6064 6.19212 9.53099 7.44729C10.3678 7.19626 11.2045 7.11258 12.0413 7.11258C12.8781 7.11258 13.7149 7.19626 14.5516 7.44729C16.4762 6.10845 17.313 6.44316 17.313 6.44316C17.8987 7.86568 17.4804 8.86981 17.3967 9.12084C18.0661 9.79026 18.4008 10.7107 18.4008 11.7985C18.4008 15.6477 16.0578 16.4845 13.7985 16.7355C14.1333 17.0702 14.468 17.656 14.468 18.5764C14.468 19.9153 14.468 21.0031 14.468 21.3378C14.468 21.5888 14.6353 21.9235 15.1374 21.8398C19.1539 20.501 21.9989 16.7355 21.9989 12.3006C22.0826 6.77787 17.564 2.25928 12.0413 2.25928Z" fill="#0F172A"/>
                             </svg>
                             <p className={"not-italic text-black font-medium text-sm leading-5"}>Github</p>
                     </div>
                 </a>
-                <div className={"block flex justify-center items-center gap-2 p-[7px] cursor-pointer sm:hidden"}>
+                <div className={"block flex justify-center items-center gap-2 p-[7px] cursor-pointer gt_mobile:hidden"}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                         <path fillRule="evenodd" clipRule="evenodd" d="M9 3.5C5.96243 3.5 3.5 5.96243 3.5 9C3.5 12.0376 5.96243 14.5 9 14.5C10.519 14.5 11.893 13.8852 12.8891 12.8891C13.8852 11.893 14.5 10.519 14.5 9C14.5 5.96243 12.0376 3.5 9 3.5ZM2 9C2 5.13401 5.13401 2 9 2C12.866 2 16 5.13401 16 9C16 10.6625 15.4197 12.1906 14.4517 13.3911L17.7803 16.7197C18.0732 17.0126 18.0732 17.4874 17.7803 17.7803C17.4874 18.0732 17.0126 18.0732 16.7197 17.7803L13.3911 14.4517C12.1906 15.4197 10.6625 16 9 16C5.13401 16 2 12.866 2 9Z" fill="#0F172A"/>
                     </svg>
@@ -596,14 +598,18 @@ function Header() {
 }
 
 function HeroSection() {
-    const bg_crests = `bg-[url("../../public/assets/hero_background.png")]`;
+    const bg_crests = `gt_mobile:bg-[url("../../public/assets/hero_background.png")]`;
     const copyIcon =
         <div className={"w-fit h-fit z-10 cursor-pointer"} onClick={() => {
             setCopiedToClipboard(true);
             navigator.clipboard.writeText("npm init @nameguard/nameguard@latest");
         }}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none" className="block w-5 h-5 gt_mobile:hidden">
+                <path d="M14.25 6.875V5C14.25 3.96447 13.4105 3.125 12.375 3.125H5.5C4.46447 3.125 3.625 3.96447 3.625 5V11.875C3.625 12.9105 4.46447 13.75 5.5 13.75H7.375M14.25 6.875H15.5C16.5355 6.875 17.375 7.71447 17.375 8.75V15C17.375 16.0355 16.5355 16.875 15.5 16.875H9.25C8.21447 16.875 7.375 16.0355 7.375 15V13.75M14.25 6.875H9.25C8.21447 6.875 7.375 7.71447 7.375 8.75V13.75"
+                      stroke="#808080" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5"
-             stroke="#808080" className="w-6 h-6 transition hover:stroke-black">
+             stroke="#808080" className="hidden w-6 h-6 transition hover:stroke-black gt_mobile:block">
             <path strokeLinecap="round" strokeLinejoin="round"
                   d="M16.5 8.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v8.25A2.25 2.25 0 006 16.5h2.25m8.25-8.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-7.5A2.25 2.25 0 018.25 18v-1.5m8.25-8.25h-6a2.25 2.25 0 00-2.25 2.25v6"/>
         </svg>
@@ -614,30 +620,33 @@ function HeroSection() {
     const copiedText: React.ReactNode = <>Copied!</>;
     const copyText: React.ReactNode = <>Copy to Clipboard</>;
 
+    const displayCopiedFor = 4000;
+
     useEffect(() => {
         setTimeout(() => {
             setCopiedToClipboard(false);
-        }, 5000);
+        }, displayCopiedFor);
     }, [copiedToClipboard]);
 
     return (
-        <section className={`md:p-32 relative z-10 w-full h-screen py-24 flex flex-col items-center justify-center ${bg_crests} bg-no-repeat bg-center bg-contain`}>
+        <section className={`box-border relative z-10 w-full h-screen py-24 px-5 flex flex-col items-center justify-center bg-hero_background bg-no-repeat bg-center bg-contain md:p-32 ${bg_crests}`}>
             <div className={"inline-flex flex-col items-center gap-5"}>
                 <div className={"flex flex-col gap-2 w-fit h-fit z-10"}>
                     <p className={"text-center not-italic uppercase text-gray-500 text-xs tracking-[0.3px] font-medium"}>An open source public good</p>
-                    <h1 className="text-black text-center text-5xl leading-[52px] font-bold not-italic">
+                    <h1 className="text-black text-center not-italic font-bold text-4xl leading-10 gt_mobile:text-5xl gt_mobile:leading-[52px]">
                         Protect your community<br />with NameGuard for ENS
                     </h1>
                 </div>
-                <p className={"text-center not-italic font-normal text-gray-500 text-base"}>
+                <p className={"text-center not-italic font-normal text-gray-500 text-base leading-6"}>
                     Guard your users from heartbreak and encourage best practice usage of ENS
                 </p>
-                <div className={"flex items-center gap-3 py-[13px] pl-[20px] pr-[16px] rounded-lg bg-black bg-opacity-5 border border-gray-300"}>
-                    <p>npm init @nameguard/nameguard@latest</p>
-                    <Tooltip trigger={copyIcon} children={copiedToClipboard ? copiedText : copyText}/>
+                <div className={"flex items-center gap-2 py-[9px] pl-4 pr-[14px] rounded-lg bg-black bg-opacity-5 border border-gray-300 " +
+                    "gt_mobile:gap-3 gt_mobile:py-[13px] gt_mobile:pl-[20px] gt_mobile:pr-[16px]"}>
+                    <p className={"text-black leading-6 font-normal text-sm gt_mobile:text-base"}>npm init @nameguard/nameguard@latest</p>
+                    <Tooltip trigger={copyIcon}>{copiedToClipboard ? copiedText : copyText}</Tooltip>
                 </div>
                 <button className={"flex justify-center items-center px-[25px] py-[13px] rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-800"} onClick={() => {window.location.href = "https://api.nameguard.io/docs";}}> {/* Should be replaced with url to the docs! */}
-                    <p className={"text-white not-italic font-medium text-base"}>View the docs</p>
+                    <p className={"text-white not-italic font-medium text-base leading-6"}>View the docs</p>
                 </button>
             </div>
         </section>
@@ -646,12 +655,12 @@ function HeroSection() {
 
 function ExitSection() {
     return (
-        <section className={"w-full h-1/2 py-24 flex flex-col items-center justify-center bg-exit_section_background bg-opacity-10 bg-no-repeat bg-bottom bg-contain"}>
-            <div className={"inline-flex flex-col items-start p-[10px] gap-[10px] z-10"}>
+        <section className={"w-full h-full flex flex-col items-center justify-center bg-exit_section_background bg-no-repeat bg-bottom bg-contain px-5 pb-5 gt_mobile:h-1/2 gt_mobile:py-24"}>
+            <div className={"z-10 flex flex-col items-center pt-10 pb-5 gt_mobile:inline-flex gt_mobile:items-start gt_mobile:p-[10px] gt_mobile:gap-[10px]"}>
                 <div className={"flex flex-col items-center gap-5"}>
-                    <div>
-                        <h1 className={"text-black not-italic text-center text-4xl leading-[52px] font-bold"}>Search for any ENS name to generate a<br />NameGuard report</h1>
-                        <p className={"text-center text-gray-500 font-normal not-italic text-lg leading-7"}>Share NameGuard reports with frENS. Together we can make web3 safer.</p>
+                    <div className={"flex flex-col justify-start items-center gap-5 gt_mobile:block"}>
+                        <h1 className={"text-black not-italic text-center font-bold text-2xl leading-8 gt_mobile:text-4xl gt_mobile:leading-[52px]"}>Search for any ENS name to generate a<br />NameGuard report</h1>
+                        <p className={"text-center text-gray-500 font-normal not-italic text-sm leading-6 gt_mobile:text-lg gt_mobile:leading-7"}>Share NameGuard reports with frENS. Together we can make web3 safer.</p>
                     </div>
                     <Search />
                 </div>
