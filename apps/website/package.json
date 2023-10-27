@@ -19,6 +19,7 @@
     "classcat": "5.0.4",
     "lodash.debounce": "4.0.8",
     "next": "latest",
+    "prism-react-renderer": "2.1.0",
     "react": "latest",
     "react-debounce-input": "3.3.0",
     "react-dom": "latest"
