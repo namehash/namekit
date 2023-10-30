@@ -3,7 +3,7 @@ import { useRef, useEffect, type MutableRefObject } from "react";
 type Callback = () => void;
 
 export const useOutsideClick = (
-  callback: Callback,
+  callback: Callback
 ): MutableRefObject<null | HTMLDivElement> => {
   const ref = useRef<null | HTMLDivElement>(null);
 

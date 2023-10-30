@@ -56,7 +56,9 @@ export interface ParsedName {
 
 export function trimOuterWhitespace(labels: string[]): string[] {
   return labels.map((label, index) => {
-    if (index == 0) {
+    if (labels.length === 1) {
+      return label.trim();
+    } else if (index == 0) {
       return label.trimStart();
     } else if (index == labels.length - 1) {
       return label.trimEnd();
@@ -121,9 +123,12 @@ export function assumeTld(labels: string[], assumedTld: string): string[] {
 
 export function parseName(
   inputName: string,
-  options?: NameParserOptions,
+  options?: NameParserOptions
 ): ParsedName {
-  const trimWhitespace = options?.trimWhitespace || DEFAULT_TRIM_WHITESPACE;
+  const trimWhitespace =
+    options?.trimWhitespace !== undefined
+      ? options.trimWhitespace
+      : DEFAULT_TRIM_WHITESPACE;
   const tryNormalization =
     options?.attemptEnsNormalization || DEFAULT_ATTEMPT_ENS_NORMALIZATION;
   const assumedTld = options ? options.assumedTld : DEFAULT_ASSUMED_TLD;
@@ -160,6 +165,7 @@ export function parseName(
   }
 
   const healedName = labels.join(LABEL_SEPARATOR);
+
   const outputName = buildENSName(healedName);
 
   return {

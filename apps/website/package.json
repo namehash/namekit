@@ -21,9 +21,11 @@
     "next": "latest",
     "react": "latest",
     "react-debounce-input": "3.3.0",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "swr": "2.2.4"
   },
   "devDependencies": {
+    "@types/lodash.debounce": "4.0.8",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",

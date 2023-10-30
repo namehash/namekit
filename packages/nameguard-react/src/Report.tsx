@@ -1,45 +1,34 @@
 import React, { Fragment } from "react";
-import { Summary } from ".";
-import { type NameGuardReport } from "@namehash/nameguard";
-import { CheckResultCard } from "./CheckResultCard";
-import { GraphemeCard } from "./GraphemeCard";
-import { ReportFooter } from "./ReportFooter";
 
-export const Report = ({ data }: { data: NameGuardReport }) => {
-  const { name, rating, risk_count, checks, labels, title, subtitle } = data;
+import { Banner, CheckResultCard, GraphemeCard } from ".";
 
-  const rawLabels = labels.map((label) => label.label);
+export const Report = (props: any) => {
+  const { parseNameResponse, data } = props;
+
+  const rawLabels = data?.labels.map((label) => label.label) ?? [];
+
+  if (!parseNameResponse || !data) return null;
 
   return (
-    <>
-      <div className="space-y-2">
-        <h2 className="text-black text-2xl font-semibold">NameGuard Report</h2>
-        <p className="text-gray-500 text-sm leading-6 font-normal">
-          NameGuard protects you from hidden risks or limitations that an ENS
-          name might contain.
-        </p>
-      </div>
-
-      <Summary name={name} rating={rating} title={title} subtitle={subtitle} />
-
+    <Fragment>
+      <Banner parsedName={parseNameResponse} report={data} />
       <div className="space-y-4 md:space-y-5">
         <p className="text-black font-semibold text-lg leading-6">
-          {risk_count} of {checks.length} risks found
+          {data?.risk_count} of {data?.checks.length} risks found
         </p>
 
         <div className="grid md:grid-cols-2 gap-4">
-          {checks.map((check, index) => (
+          {data?.checks.map((check, index) => (
             <CheckResultCard key={index} {...check} />
           ))}
         </div>
       </div>
-
       <div className="space-y-4 md:space-y-5">
         <p className="text-black font-semibold text-lg leading-6">
           Name inspection
         </p>
 
-        {labels.map((label, index) => (
+        {data?.labels.map((label, index) => (
           <div
             key={index}
             className="border border-gray-200 rounded-md divide-y divide-gray-200"
@@ -68,8 +57,6 @@ export const Report = ({ data }: { data: NameGuardReport }) => {
           </div>
         ))}
       </div>
-
-      <ReportFooter />
-    </>
+    </Fragment>
   );
 };
