@@ -1,18 +1,6 @@
-# NameHash NameGuard
+# NameGuard Python
 
-The NameHash team is proud to present NameGuard, a tool for identifying and preventing malicious use of ENS names.
-
-- Offers multiple levels of protection
-  - Confusable grapheme detection
-  - International accessibility checks
-  - Rendering checks for different fonts
-  - ENSIP-15 verification with detailed explanations and auto-suggestions
-  - Punycode and DNS hostname compatibility checks
-- Provides a unified rating system for entire names, as well as detailed explanations for each check
-- Supports many use cases
-  - Standalone Python library (PyPI link)
-  - ASGI web server
-  - [Amazon AWS Lambda](https://aws.amazon.com/lambda/) handler
+This repository contains the core logic for NameGuard, a python library, web API server, and AWS Lambda handler.
 
 ## Getting Started
 
@@ -36,9 +24,9 @@ pip install TODO
 NameGuard uses the Alchemy API for `primary-name/` and `fake-eth-name-check/` endpoints. Alchemy API URLs have to be set by environment variables.
 
 ```bash
-PROVIDER_URI_MAINNET=https://eth-mainnet.g.alchemy.com/v2/[YOUR_ALCHEMY_API_KEY]
-PROVIDER_URI_GOERLI=https://eth-goerli.g.alchemy.com/v2/[YOUR_ALCHEMY_API_KEY]
-PROVIDER_URI_SEPOLIA=https://eth-sepolia.g.alchemy.com/v2/[YOUR_ALCHEMY_API_KEY]
+export PROVIDER_URI_MAINNET=https://eth-mainnet.g.alchemy.com/v2/[YOUR_ALCHEMY_API_KEY]
+export PROVIDER_URI_GOERLI=https://eth-goerli.g.alchemy.com/v2/[YOUR_ALCHEMY_API_KEY]
+export PROVIDER_URI_SEPOLIA=https://eth-sepolia.g.alchemy.com/v2/[YOUR_ALCHEMY_API_KEY]
 ```
 
 ### Starting the web server
@@ -58,19 +46,26 @@ uvicorn nameguard.web_api:app
 Make an example request:
 
 ```bash
-curl -d '{"name":"nick.eth"}' -H "Content-Type: application/json" -X POST http://localhost:8000
+curl -d '{"name":"nick.eth", "network_name": "mainnet"}' -H "Content-Type: application/json" -X POST http://localhost:8000/v1-beta/inspect-name
 # {
-#   "verdict": "GREEN",
-#   "check_results": [
-#     "CheckInvisible(GREEN)",
-#     "CheckENSNormalized(GREEN)",
-#     "CheckConfusables(GREEN)",
-#     "CheckTypingDifficulty(GREEN)",
-#     "CheckMixedScripts(GREEN)"]
+#   "rating": "pass",
+#   "risk_count": 0,
+#   "highest_risk": null,
+#   "name": "nick.eth",
+#   "namehash": "0x05a67c0ee82964c4f7394cdd47fee7f4d9503a23c09c38341779ea012afe6e00",
+#   "normalization": "normalized",
+#   "checks": [...],
+#   "labels": [...],
+#   "canonical_name": "nick.eth",
+#   "title": "Looks Good",
+#   "subtitle": "All security checks passed!",
+#   "beautiful_name": "nick.eth"
 # }
 ```
 
-### Running nameguard tests
+## Development
+
+### Running tests
 
 Before running nameguard tests, make sure you have installed the
 required dependencies (along with dev dependencies).
@@ -93,7 +88,7 @@ To enable this, you will need to set an environment variable
 
 This can be done like this:
 
-```
+```bash
 LAMBDA_ROOT_URL=<remote-url> pytest api/tests/test_api.py
 ```
 
@@ -101,4 +96,4 @@ LAMBDA_ROOT_URL=<remote-url> pytest api/tests/test_api.py
 
 NameGuard includes a handler for [Amazon AWS Lambda](https://aws.amazon.com/lambda/). It is available in the `nameguard.lambda` module. You can use it to create a Lambda function that will respond to HTTP requests. It uses the [mangum](https://mangum.io) library.
 
-TODO
+Check out the included [Dockerfile](./Dockerfile) for an example of how to build a Lambda container image.
