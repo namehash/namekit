@@ -165,6 +165,7 @@ export function parseName(
   }
 
   const healedName = labels.join(LABEL_SEPARATOR);
+
   const outputName = buildENSName(healedName);
 
   return {

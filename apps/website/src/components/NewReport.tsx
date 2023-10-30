@@ -21,7 +21,7 @@ export function NewReport(props: Props) {
 
   const normalizationUnknown = name.outputName.normalization === "unknown";
 
-  const { data, error } = useSWR<NameGuardReport>(
+  const { data, error, isLoading } = useSWR<NameGuardReport>(
     name.outputName.name,
     fetchName
   );
@@ -29,8 +29,8 @@ export function NewReport(props: Props) {
   return (
     <Fragment>
       <ReportHeader />
-      {!data && normalizationUnknown && <LoadingSkeleton />}
-      {!data && !normalizationUnknown && (
+      {isLoading && normalizationUnknown && <LoadingSkeleton />}
+      {isLoading && !normalizationUnknown && (
         <LoadingSkeleton
           name={name.outputName.name}
           displayName={name.outputName.displayName}

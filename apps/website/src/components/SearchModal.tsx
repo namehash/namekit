@@ -40,7 +40,7 @@ export function SearchModal() {
 
   const chatRef = useOutsideClick(closeChatModal);
 
-  const showWritersBlock = parseNameResponse.outputName.name.length === 0;
+  const showWritersBlock = parseNameResponse.outputName.name === ".eth";
 
   return (
     <Fragment>

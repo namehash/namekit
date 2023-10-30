@@ -89,13 +89,13 @@ export function Banner({ report, parsedName }: Props) {
           <p className="uppercase text-[12px] text-gray-500 font-medium">
             Rating for
           </p>
-          <h1 className="mt-1 text-2xl md:text-4xl text-black font-semibold md:font-bold">
+          <h1 className="mt-1 text-2xl md:text-4xl text-black font-semibold md:font-bold overflow-hidden overflow-ellipsis">
             {name || outputName.displayName}
           </h1>
           {displayNameDifferent && (
             <p className="text-sm text-gray-500 mt-4">
               <span className="mr-2.5">Generally displays as:</span>
-              <span className="text-black">
+              <span className="text-black overflow-hidden overflow-ellipsis">
                 {beautiful_name || outputName.displayName}
               </span>
             </p>

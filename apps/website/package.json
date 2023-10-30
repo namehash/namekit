@@ -25,6 +25,7 @@
     "swr": "2.2.4"
   },
   "devDependencies": {
+    "@types/lodash.debounce": "4.0.8",
     "@types/node": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
