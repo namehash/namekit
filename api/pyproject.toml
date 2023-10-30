@@ -11,11 +11,11 @@ packages = [{ include = "nameguard" }]
 [tool.poetry.dependencies]
 python = ">=3.9,<3.12"
 ens-label-inspector = { git = "https://github.com/namehash/ens-label-inspector.git", branch = "main" }
-fastapi = "^0.104.0"
+fastapi = "^0.100.1"
 mangum = {version = "^0.17.0", optional = true}
-web3 = "^6.11.1"
+web3 = "^6.9.0"
 hexbytes = "^0.3.1"
-httpx = "^0.25.0"
+httpx = "^0.24.1"
 python-dotenv = "^1.0.0"
 
 
