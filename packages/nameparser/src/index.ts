@@ -69,6 +69,10 @@ export function trimOuterWhitespace(labels: string[]): string[] {
 }
 
 export function assumeTld(labels: string[], assumedTld: string): string[] {
+  if (labelsEqual(labels, [""])) {
+    return labels;
+  }
+
   let normalizedAssumedTld: string;
   try {
     normalizedAssumedTld = ens_normalize(assumedTld);
