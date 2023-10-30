@@ -2,7 +2,6 @@
 
 import { useMemo, Fragment } from "react";
 import {
-  useInspectName,
   Shield,
   ReportHeader,
   Banner,
@@ -12,7 +11,12 @@ import {
 } from "@namehash/nameguard-react";
 import { parseName } from "@namehash/nameparser";
 import { useSearchSettings } from "./use-search-settings";
-import { NameGuardReport } from "@namehash/nameguard";
+import { NameGuardReport, nameguard } from "@namehash/nameguard";
+import useSWR from "swr";
+
+async function fetchName(name: string) {
+  return nameguard.inspectName(name);
+}
 
 type Props = {
   input: string;
@@ -29,17 +33,18 @@ export function NewReport(props: Props) {
   const normalizationUnknown =
     parseNameResponse.outputName.normalization === "unknown";
 
-  const { loading, error, data } = useInspectName(
-    parseNameResponse.outputName.name
-  ) as { loading: boolean; error: any; data: NameGuardReport | null };
+  const { data, error } = useSWR<NameGuardReport>(
+    parseNameResponse.outputName.name,
+    fetchName
+  );
 
   const rawLabels = data?.labels.map((label) => label.label) ?? [];
 
   return (
     <Fragment>
       <ReportHeader />
-      {loading && normalizationUnknown && <LoadingSkeleton />}
-      {loading && !normalizationUnknown && (
+      {!data && normalizationUnknown && <LoadingSkeleton />}
+      {!data && !normalizationUnknown && (
         <LoadingSkeleton
           name={parseNameResponse.outputName.name}
           displayName={parseNameResponse.outputName.displayName}

@@ -1,5 +1,3 @@
-export { useInspectName } from "./use-inspect-name";
-
 export { ReportHeader } from "./ReportHeader";
 export { ReportFooter } from "./ReportFooter";
 export { Banner } from "./Banner";
