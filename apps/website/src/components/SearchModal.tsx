@@ -6,25 +6,20 @@ import cc from "classcat";
 
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 
-import { ChatSlideover } from "./ChatSlideover";
+import { ChatModal } from "./ChatModal";
 import { useSearchSettings } from "./use-search-settings";
 import { useOutsideClick } from "./use-outslide-click";
 import { SearchLauncherInput } from "./SearchLauncherInput";
 import { SearchFooter } from "./SearchFooter";
 import { WritersBlock } from "./WritersBlock";
 import { NewReport } from "./NewReport";
+import { useChatModal } from "./use-chat-modal";
 
 export function SearchModal() {
   const [open, setOpen] = useState(true);
   const [input, setInput] = useState("ΞSK3NDER");
-  const [chatOpen, setChatOpen] = useState(false);
   const { open: settingsOpen } = useSearchSettings();
-
-  const handleChatClose = () => {
-    if (chatOpen) {
-      setChatOpen(false);
-    }
-  };
+  const { closeModal: closeChatModal } = useChatModal();
 
   const handleSearchOpen = () => {
     if (open) return;
@@ -36,10 +31,10 @@ export function SearchModal() {
     if (settingsOpen) return;
 
     setOpen(false);
-    setChatOpen(false);
+    closeChatModal();
   };
 
-  const chatRef = useOutsideClick(handleChatClose);
+  const chatRef = useOutsideClick(closeChatModal);
 
   const showWritersBlock = input.length === 0;
 
@@ -91,7 +86,7 @@ export function SearchModal() {
                     placeholder="Enter a name to inspect"
                     value={input}
                     onChange={(event) => setInput(event.target.value)}
-                    onFocus={handleChatClose}
+                    onFocus={closeChatModal}
                     className="w-full border border-transparent md:border-gray-500 bg-white md:bg-gray-100 rounded-lg text-black placeholder-gray-400 pl-0 md:pl-3 px-3 py-2 ring-0 outline-none focus:border-transparent md:focus:border-gray-500 focus:ring-0"
                   />
                 </div>
@@ -106,11 +101,7 @@ export function SearchModal() {
               </div>
 
               <div className="flex-1 md:max-h-[76vh] lg:max-h-[84vh] overflow-y-auto relative">
-                <ChatSlideover
-                  open={chatOpen}
-                  onClose={handleChatClose}
-                  ref={chatRef}
-                />
+                <ChatModal ref={chatRef} />
                 <div className="max-w-6xl mx-auto p-6 md:py-12 space-y-8 h-full">
                   {showWritersBlock && <WritersBlock />}
                   {!showWritersBlock && <NewReport input={input} />}

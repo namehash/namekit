@@ -74,11 +74,7 @@ export function Banner({ report, parsedName }: Props) {
   const shadow = shadowColor(rating);
   const text = cc(["font-semibold text-sm md:text-2xl", textColor(rating)]);
 
-  const wrapperClass = cc([
-    "rounded-xl border shadow-xl divide-y divide-gray-200 space-y-4 md:space-y-0",
-    border,
-    shadow,
-  ]);
+  const wrapperClass = cc(["rounded-xl border shadow-xl", border, shadow]);
 
   const displayNameDifferent = ![
     outputName.displayName,
@@ -118,19 +114,21 @@ export function Banner({ report, parsedName }: Props) {
         </div>
       </div>
       {displayTransformations && (
-        <div className="w-full px-5 md:px-10 py-4 md:py-3 flex items-center flex-wrap">
-          <span className="text-sm text-gray-500 mr-2.5">
-            Changes applied to your search:
-          </span>
-          <div className="space-x-1.5 flex items-center">
-            {transformations.map((t, i) => (
-              <span
-                className="bg-gray-100 rounded-full px-3 py-0.5 text-sm font-medium text-black"
-                key={i}
-              >
-                {transformationText[t]}
-              </span>
-            ))}
+        <div className="border-t border-gray-200 mx-6 md:mx-0">
+          <div className="w-full md:px-10 py-4 md:py-3 flex items-center flex-wrap">
+            <span className="text-sm text-gray-500 mr-2.5">
+              Changes applied to your search:
+            </span>
+            <div className="space-x-1.5 flex items-center mt-2 md:mt-0">
+              {transformations.map((t, i) => (
+                <span
+                  className="bg-gray-100 rounded-full px-3 py-0.5 text-sm font-medium text-black"
+                  key={i}
+                >
+                  {transformationText[t]}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       )}
