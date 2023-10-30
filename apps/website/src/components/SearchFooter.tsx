@@ -1,8 +1,8 @@
 import { useChatModal } from "./use-chat-modal";
-import { useSearchSettings } from "./use-search-settings";
+import { useSettings } from "./use-settings";
 
 export function SearchFooter() {
-  const { openModal: openSettingsModal } = useSearchSettings();
+  const { openModal: openSettingsModal } = useSettings();
   const { openModal: openChatModal } = useChatModal();
 
   return (

@@ -7,10 +7,5 @@
     "target": "es6",
     "esModuleInterop": true
   },
-  "include": [
-    "src/**/*",
-    "../../apps/website/src/components/ChatModal.tsx",
-    "../../apps/website/src/components/use-chat-modal.tsx",
-    "../../apps/website/src/components/use-outslide-click.ts"
-  ]
+  "include": ["src/**/*"]
 }

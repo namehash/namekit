@@ -1,17 +1,17 @@
 "use client";
 
-import { SearchSettingsProvider } from "./use-search-settings";
-import { SearchSettingsModal } from "./SearchSettingsModal";
+import { SettingsProvider } from "./use-settings";
+import { SearchSettingsModal } from "./SettingsModal";
 import { ChatModalProvider } from "./use-chat-modal";
 import { SearchModal } from "./SearchModal";
 
 export function Search() {
   return (
-    <SearchSettingsProvider>
+    <SettingsProvider>
       <ChatModalProvider>
         <SearchModal />
         <SearchSettingsModal />
       </ChatModalProvider>
-    </SearchSettingsProvider>
+    </SettingsProvider>
   );
 }

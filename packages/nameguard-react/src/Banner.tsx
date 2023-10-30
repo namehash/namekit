@@ -85,23 +85,23 @@ export function Banner({ report, parsedName }: Props) {
   return (
     <div className={wrapperClass}>
       <div className="p-5 md:py-7 md:px-10 flex flex-col md:flex-row md:items-start justify-between">
-        <div className="md:w-4/6">
+        <div className="md:w-4/6 overflow-hidden overflow-ellipsis whitespace-nowrap">
           <p className="uppercase text-[12px] text-gray-500 font-medium">
             Rating for
           </p>
-          <h1 className="mt-1 text-2xl md:text-4xl text-black font-semibold md:font-bold overflow-hidden overflow-ellipsis">
+          <h1 className="mt-1 text-2xl md:text-4xl text-black font-semibold md:font-bold overflow-hidden overflow-ellipsis whitespace-nowrap">
             {name || outputName.displayName}
           </h1>
           {displayNameDifferent && (
             <p className="text-sm text-gray-500 mt-4">
               <span className="mr-2.5">Generally displays as:</span>
-              <span className="text-black overflow-hidden overflow-ellipsis">
+              <span className="text-black overflow-hidden overflow-ellipsis whitespace-nowrap">
                 {beautiful_name || outputName.displayName}
               </span>
             </p>
           )}
         </div>
-        <div className="flex items-start space-x-4 pt-5 md:pt-0 md:w-2/6">
+        <div className="flex items-start space-x-4 pt-5 md:pt-0 md:w-2/6 flex-shrink-0">
           <div className="flex-shrink-0">
             <Shield status={rating} size="large" />
           </div>

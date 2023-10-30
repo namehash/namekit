@@ -3,11 +3,11 @@
 import { Fragment, useState, useMemo } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 import cc from "classcat";
-import { parseName, ParsedName } from "@namehash/nameparser";
+import { parseName } from "@namehash/nameparser";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 
 import { ChatModal } from "./ChatModal";
-import { useSearchSettings } from "./use-search-settings";
+import { useSettings } from "./use-settings";
 import { useOutsideClick } from "./use-outslide-click";
 import { SearchLauncherInput } from "./SearchLauncherInput";
 import { SearchFooter } from "./SearchFooter";
@@ -18,7 +18,7 @@ import { useChatModal } from "./use-chat-modal";
 export function SearchModal() {
   const [open, setOpen] = useState(true);
   const [input, setInput] = useState("ΞSK3NDER");
-  const { open: settingsOpen, settings } = useSearchSettings();
+  const { open: settingsOpen, settings } = useSettings();
   const { closeModal: closeChatModal } = useChatModal();
 
   const parseNameResponse = useMemo(() => {

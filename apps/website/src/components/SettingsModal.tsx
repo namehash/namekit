@@ -2,7 +2,7 @@ import React, { useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
-import { useSearchSettings, type SearchSettings } from "./use-search-settings";
+import { useSettings, type Settings } from "./use-settings";
 
 export function SearchSettingsModal() {
   const {
@@ -10,9 +10,8 @@ export function SearchSettingsModal() {
     setSettings,
     open,
     closeModal,
-  } = useSearchSettings();
-  const [localSettings, setLocalSettings] =
-    useState<SearchSettings>(defaultValues);
+  } = useSettings();
+  const [localSettings, setLocalSettings] = useState<Settings>(defaultValues);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
