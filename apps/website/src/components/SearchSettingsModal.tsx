@@ -120,7 +120,7 @@ export function SearchSettingsModal() {
                           onChange={(e) =>
                             setLocalSettings((prev) => ({
                               ...prev,
-                              assumedTld: e.target.checked ? "eth" : "",
+                              assumedTld: e.target.checked ? "eth" : null,
                             }))
                           }
                         />

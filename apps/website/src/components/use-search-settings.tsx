@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState } from "react";
 
 export type SearchSettings = {
   attemptEnsNormalization: boolean;
-  assumedTld: string;
+  assumedTld: string | null;
   trimWhitespace: boolean;
 };
 

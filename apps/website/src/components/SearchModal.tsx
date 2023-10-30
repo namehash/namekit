@@ -1,9 +1,9 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { Fragment, useState, useMemo } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 import cc from "classcat";
-
+import { parseName, ParsedName } from "@namehash/nameparser";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 
 import { ChatModal } from "./ChatModal";
@@ -18,8 +18,12 @@ import { useChatModal } from "./use-chat-modal";
 export function SearchModal() {
   const [open, setOpen] = useState(true);
   const [input, setInput] = useState("ΞSK3NDER");
-  const { open: settingsOpen } = useSearchSettings();
+  const { open: settingsOpen, settings } = useSearchSettings();
   const { closeModal: closeChatModal } = useChatModal();
+
+  const parseNameResponse = useMemo(() => {
+    return parseName(input, settings);
+  }, [input, settings]);
 
   const handleSearchOpen = () => {
     if (open) return;
@@ -36,7 +40,7 @@ export function SearchModal() {
 
   const chatRef = useOutsideClick(closeChatModal);
 
-  const showWritersBlock = input.length === 0;
+  const showWritersBlock = parseNameResponse.outputName.name.length === 0;
 
   return (
     <Fragment>
@@ -104,7 +108,7 @@ export function SearchModal() {
                 <ChatModal ref={chatRef} />
                 <div className="max-w-6xl mx-auto p-6 md:py-12 space-y-8 h-full">
                   {showWritersBlock && <WritersBlock />}
-                  {!showWritersBlock && <NewReport input={input} />}
+                  {!showWritersBlock && <NewReport name={parseNameResponse} />}
                 </div>
               </div>
               <SearchFooter />
