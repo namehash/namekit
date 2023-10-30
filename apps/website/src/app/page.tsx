@@ -413,7 +413,7 @@ function ReadySection(props: ReadySectionProps){
   return (
       <section className={`w-full h-full py-10 px-5 flex flex-col items-center justify-center gt_mobile:py-24 gt_mobile:px-0`}>
           <div className="max-w-full flex flex-col items-center gt_mobile:mx-auto gt_mobile:px-6 gt_mobile:gap-3">
-          <div className="w-full flex flex-col gap-5 items-center gt_mobile:w-1/2">
+          <div className="w-full flex flex-col gap-5 items-center hero_br:w-1/2">
             <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-[20px] gap-2 justify-center items-center z-10">
               <svg
                   width="20"
@@ -439,20 +439,23 @@ function ReadySection(props: ReadySectionProps){
                 {props.sectionHeader}
             </h1>
 
-            <p className="z-10 text-gray-500 text-center not-italic font-normal text-sm leading-6 gt_mobile:text-lg gt_mobile:leading-7 gt_mobile:w-4/5">
+            <p className="z-10 text-gray-500 text-center not-italic font-normal text-sm leading-6 gt_mobile:text-lg gt_mobile:leading-7 desktop_br:w-4/5">
                 {props.sectionDescription}
             </p>
           </div>
               {props.isCodeOnTheLeft ? (
                   <div className={`flex sm:flex-col xl:flex-row justify-center border-0 rounded-none items-center gap-10 w-full h-full xl:h-3/4 py-16 px-10 ${props.sectionBackgroundName} bg-center bg-no-repeat bg-cover flex-shrink-0 gt_mobile:gap-10` }>
                       {props.integrationsPanel ? (
-                          <div className={"hidden gt_mobile:flex flex-col w-full h-full justify-between items-center gap-7"}>
+                          <div className={"hidden desktop_br:flex flex-col w-full h-full justify-between items-center gap-7"}>
                               <CodeSnippet codeSnippet={props.codeSnippet}/>
                               <div className={"inline-flex items-center gap-6"}>
                                   {props.integrationsPanel}
                               </div>
                           </div>
-                      ) : (<CodeSnippet codeSnippet={props.codeSnippet}/>)}
+                      ) : (
+                          <div className={"hidden desktop_br:flex flex-col w-full h-full justify-between items-center gap-7"}>
+                              <CodeSnippet codeSnippet={props.codeSnippet}/>
+                          </div>)}
                       <Image className={`z-10 w-full h-full gt_mobile:w-2/3 gt_mobile:h-2/3 xl:w-1/3 xl:h-1/3`}
                            src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
                   </div>
@@ -461,11 +464,14 @@ function ReadySection(props: ReadySectionProps){
                     <Image className={`z-10 w-full h-full gt_mobile:w-2/3 gt_mobile:h-2/3 xl:w-1/3 xl:h-1/3`}
                          src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
                       {props.integrationsPanel ? (
-                          <div className={"hidden gt_mobile:flex flex-col w-full h-full justify-between items-center gap-7"}>
+                          <div className={"hidden desktop_br:flex flex-col w-full h-full justify-between items-center gap-7"}>
                               <CodeSnippet codeSnippet={props.codeSnippet}/>
                               {props.integrationsPanel}
                           </div>
-                      ) : (<CodeSnippet codeSnippet={props.codeSnippet}/>)}
+                      ) : (
+                          <div className={"hidden desktop_br:flex flex-col w-full h-full justify-between items-center gap-7"}>
+                            <CodeSnippet codeSnippet={props.codeSnippet}/>
+                          </div>)}
                   </div>
               )}
         </div>
@@ -487,12 +493,12 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
     return (
         <section className={`w-full flex flex-col xl:flex-row items-center justify-center h-full py-10 px-5 gt_mobile:h-1/2 gt_mobile:py-24 gt_mobile:px-10`}>
             {!props.isTextOnTheLeft &&
-                <div className={`hidden gt_mobile:flex flex-row justify-center items-center w-full xl:w-1/2 ${props.sectionBackgroundName} rounded-none px-4 py-5 xl:px-20 xl:py-24 bg-origin-border bg-center bg-no-repeat bg-cover flex-shrink-0`}>
+                <div className={`hidden gt_mobile:flex flex-row justify-center items-center w-full max-w-3xl xl:w-1/2 ${props.sectionBackgroundName} rounded-none px-4 py-5 xl:px-20 xl:py-24 bg-origin-border bg-center bg-no-repeat bg-cover flex-shrink-0`}>
                     <Image className={`relative z-10 w-full h-full`}
                          src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
                 </div>
                 }
-            <div className="flex flex-col gap-5 h-full w-full items-center gt_mobile:items-start gt_mobile:w-1/2">
+            <div className="flex flex-col gap-5 h-full w-full max-w-3xl items-center xl:items-start xl:w-1/2">
                 <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-3xl gap-2 justify-center items-center z-10">
                     <svg
                         width="20"
@@ -513,7 +519,7 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
                         {props.sectionTargetClientMessage}
                     </span>
                 </div>
-                <h1 className="hidden gt_mobile:block text-black font-bold not-italic z-10 text-left text-4xl leading-10">
+                <h1 className="hidden gt_mobile:block text-black font-bold not-italic z-10 text-center xl:text-left text-4xl leading-10">
                     {props.sectionHeader}
                     <span className="hidden gt_mobile:relative gt_mobile:-top-1 gt_mobile:inline-flex items-center justify-center rounded-xl bg-green-100 mx-3 px-3 py-0.5 text-center text-green-800 font-medium not-italic text-sm leading-5">
                         {props.badgeText}
@@ -525,11 +531,11 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
                         {props.badgeText}
                     </span>
                 </div>
-                <p className="text-gray-500 not-italic font-normal z-10 text-center text-sm leading-6 gt_mobile:text-left gt_mobile:text-lg gt_mobile:w-4/5 gt_mobile:leading-7">
+                <p className="text-gray-500 not-italic font-normal z-10 text-center text-sm leading-6 xl:text-left gt_mobile:text-lg gt_mobile:w-4/5 gt_mobile:leading-7">
                     {props.sectionDescription}
                 </p>
             </div>
-            {props.isTextOnTheLeft && <div className={`hidden gt_mobile:flex flex-row justify-center items-center w-full xl:w-1/2 h-full ${props.sectionBackgroundName} rounded-none px-4 py-5 xl:px-20 xl:py-24 bg-origin-border bg-center bg-no-repeat bg-contain flex-shrink-0`}>
+            {props.isTextOnTheLeft && <div className={`hidden gt_mobile:flex flex-row justify-center items-center w-full max-w-3xl xl:w-1/2 h-full ${props.sectionBackgroundName} rounded-none px-4 py-5 xl:px-20 xl:py-24 bg-origin-border bg-center bg-no-repeat bg-contain flex-shrink-0`}>
                 <Image className={`relative z-10 w-full h-full`}
                      src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
             </div>}
@@ -607,7 +613,7 @@ function Header() {
 }
 
 function HeroSection() {
-    const bg_crests = `gt_mobile:bg-[url("../../public/assets/hero_background.png")]`;
+    const bg_crests = `hero_br:bg-[url("../../public/assets/hero_background.png")]`;
     const copyIcon =
         <div className={"w-fit h-fit z-10 cursor-pointer"} onClick={() => {
             setCopiedToClipboard(true);
@@ -638,25 +644,27 @@ function HeroSection() {
     }, [copiedToClipboard]);
 
     return (
-        <section className={`box-border relative z-10 w-full h-fit gt_mobile:h-screen py-[61px] gt_mobile:py-24 px-5 flex flex-col items-center justify-center bg-hero_background bg-no-repeat bg-center bg-contain md:p-32 ${bg_crests}`}>
-            <div className={"inline-flex flex-col items-center gap-5"}>
-                <div className={"flex flex-col gap-2 w-fit h-fit z-10"}>
-                    <p className={"text-center not-italic uppercase text-gray-500 text-xs tracking-[0.3px] font-medium"}>An open source public good</p>
-                    <h1 className="text-black text-center not-italic font-bold text-4xl leading-10 gt_mobile:text-5xl gt_mobile:leading-[52px]">
-                        Protect your community<br />with NameGuard for ENS
-                    </h1>
+        <section className={`box-border relative z-10 w-full h-fit xl:h-screen py-[61px] gt_mobile:pb-24 gt_mobile:pt-8 px-5 flex flex-col items-center justify-center bg-hero_background bg-no-repeat bg-center bg-contain md:px-10 md:pt-10 md:pb-32`}>
+            <div className={`flex flex-col items-center justify-center w-full h-full max-w-[125rem] ${bg_crests} bg-no-repeat bg-center bg-contain`}>
+                <div className={`inline-flex flex-col items-center gap-5 w-full h-fit`}>
+                    <div className={"flex flex-col gap-2 w-fit h-fit z-10"}>
+                        <p className={"text-center not-italic uppercase text-gray-500 text-xs tracking-[0.3px] font-medium"}>An open source public good</p>
+                        <h1 className="text-black text-center not-italic font-bold text-4xl leading-10 gt_mobile:text-5xl gt_mobile:leading-[52px]">
+                            Protect your community<br />with NameGuard for ENS
+                        </h1>
+                    </div>
+                    <p className={"text-center not-italic font-normal text-gray-500 text-base leading-6"}>
+                        Guard your users from heartbreak and encourage best practice usage of ENS
+                    </p>
+                    <div className={"flex items-center gap-2 py-[9px] pl-4 pr-[14px] rounded-lg bg-black bg-opacity-5 border border-gray-300 " +
+                        "gt_mobile:gap-3 gt_mobile:py-[13px] gt_mobile:pl-[20px] gt_mobile:pr-[16px]"}>
+                        <p className={"text-black leading-6 font-normal text-sm gt_mobile:text-base"}>npm init @nameguard/nameguard@latest</p>
+                        <Tooltip trigger={copyIcon}>{copiedToClipboard ? copiedText : copyText}</Tooltip>
+                    </div>
+                    <button className={"flex justify-center items-center px-[25px] py-[13px] rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-800"} onClick={() => {window.location.href = "https://api.nameguard.io/docs";}}> {/* Should be replaced with url to the docs! */}
+                        <p className={"text-white not-italic font-medium text-base leading-6"}>View the docs</p>
+                    </button>
                 </div>
-                <p className={"text-center not-italic font-normal text-gray-500 text-base leading-6"}>
-                    Guard your users from heartbreak and encourage best practice usage of ENS
-                </p>
-                <div className={"flex items-center gap-2 py-[9px] pl-4 pr-[14px] rounded-lg bg-black bg-opacity-5 border border-gray-300 " +
-                    "gt_mobile:gap-3 gt_mobile:py-[13px] gt_mobile:pl-[20px] gt_mobile:pr-[16px]"}>
-                    <p className={"text-black leading-6 font-normal text-sm gt_mobile:text-base"}>npm init @nameguard/nameguard@latest</p>
-                    <Tooltip trigger={copyIcon}>{copiedToClipboard ? copiedText : copyText}</Tooltip>
-                </div>
-                <button className={"flex justify-center items-center px-[25px] py-[13px] rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-800"} onClick={() => {window.location.href = "https://api.nameguard.io/docs";}}> {/* Should be replaced with url to the docs! */}
-                    <p className={"text-white not-italic font-medium text-base leading-6"}>View the docs</p>
-                </button>
             </div>
         </section>
     );
@@ -760,13 +768,14 @@ function RoadMap() {
                         NameGuard has a mission to keep the ENS community safe and encourage optimal use of ENS names.
                     </p>
                 </div>
-                <div className={"h-fit w-full"}>
+                <div className={"h-fit w-full max-w-[1050px]"}>
                     <ul role="list" className="space-y-4 w-full h-full flex-shrink-0">
                         {roadMapElements.map((roadmapElement, idx) => (
-                            <li key={idx} className="relative flex gap-x-4"> {/* Here we can manipulate height but we should really change sizes of it's children*/}
+                            <li key={idx} className="relative flex gap-x-4">
                                 <div
                                     className={classNames(
-                                        idx === roadMapElements.length - 1 ? 'h-6' : '-bottom-6',
+                                        // idx === roadMapElements.length - 1 ? 'h-6' :
+                                            '-bottom-6',
                                         'absolute left-0 top-0 flex w-6 justify-center mt-2'
                                     )}
                                 >

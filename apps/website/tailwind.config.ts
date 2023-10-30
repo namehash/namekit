@@ -29,6 +29,8 @@ const config: Config = {
       },
       screens: {
         'gt_mobile': '376px',
+        'desktop_br': '800px',
+        'hero_br': '1150px',
       },
       fontSize: {
         footer_text: ['12px', '20px'],
