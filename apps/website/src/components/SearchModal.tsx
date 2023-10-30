@@ -2,7 +2,6 @@
 
 import { Fragment, useState, useMemo } from "react";
 import { Transition, Dialog } from "@headlessui/react";
-import cc from "classcat";
 import { parseName } from "@namehash/nameparser";
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 
@@ -16,8 +15,8 @@ import { NewReport } from "./NewReport";
 import { useChatModal } from "./use-chat-modal";
 
 export function SearchModal() {
-  const [open, setOpen] = useState(true);
-  const [input, setInput] = useState("ΞSK3NDER");
+  const [open, setOpen] = useState(false);
+  const [input, setInput] = useState("");
   const { open: settingsOpen, settings } = useSettings();
   const { closeModal: closeChatModal } = useChatModal();
 
@@ -61,7 +60,7 @@ export function SearchModal() {
           </Transition.Child>
 
           <div className="fixed inset-0 z-10 overflow-y-auto">
-            <div className="flex items-start justify-start sm:items-start w-full max-w-7xl mx-auto absolute inset-0 sm:py-12">
+            <div className="flex items-start justify-start md:items-start w-full max-w-7xl mx-auto absolute inset-0 md:py-12 md:px-6">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
