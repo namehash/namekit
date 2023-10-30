@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-import { Banner, CheckResultCard, GraphemeCard } from ".";
+import { Banner, CheckResultCard, GraphemeCard, ReportFooter } from ".";
 
 export const Report = (props: any) => {
   const { parseNameResponse, data } = props;
@@ -57,6 +57,7 @@ export const Report = (props: any) => {
           </div>
         ))}
       </div>
+      <ReportFooter />
     </Fragment>
   );
 };
