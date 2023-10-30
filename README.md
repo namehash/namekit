@@ -3,6 +3,7 @@
 The NameHash team is proud to present NameGuard, a tool for identifying and preventing malicious use of ENS names.
 
 * Offers multiple levels of protection
+  * Impersonated name detection
   * Confusable grapheme detection
   * International accessibility checks
   * Rendering checks for different fonts
@@ -20,47 +21,75 @@ The NameHash team is proud to present NameGuard, a tool for identifying and prev
 
 ## Getting Started
 
-### Installing the library
+### [Try the official web app](https://nameguard.io)
 
-NameGuard is available as a Python library on [PyPI]. You can install it with `pip`:
+### Using the public API
+
+NameGuard is hosted at <https://api.nameguard.io>
+
+You can make a basic request to the API like this:
+
+```bash
+curl https://api.nameguard.io/v1-beta/inspect-name/mainnet/nick.eth
+```
+
+The API documentation is available at <https://api.nameguard.io/redoc> or <https://api.nameguard.io/docs>.
+
+### Using the SDK
+
+Quickstart:
+
+```bash
+npm install @namehash/nameguard
+```
+
+```ts
+import { nameguard } from "@namehash/nameguard";
+await nameguard.inspectName("nick.eth");
+```
+
+See the [SDK README](./packages/sdk/README.md) for more details.
+
+### Using the Python library
+
+Quickstart:
 
 ```bash
 pip install TODO
 ```
 
-### Starting the web server
-
-A FastAPI application is included in the `nameguard.web_api` module. The default installation from PyPI does not include an ASGI server, so you will need to install one separately. For example, to install [uvicorn](https://www.uvicorn.org):
-
-```bash
-pip install 'uvicorn[standard]'
+```python
+from nameguard import NameGuard
+ng = NameGuard()
+await ng.inspect_name(network_name='mainnet', name='nick.eth')
 ```
 
-You can start the web server with:
+See the [NameGuard Python README](./api/README.md) for more details.
 
-```bash
-uvicorn nameguard.web_api:app
-```
+### Running your own NameGuard instance
 
-Make an example request:
+See the [NameGuard Python README](./api/README.md) for more details.
 
-```bash
-curl http://localhost:8000/v1-beta/inspect-name/nick.eth
-# {
-#   "name":"nick.eth",
-#   "namehash":"...",
-#   "normalization":"normalized",
-#   "summary":{
-#     "rating":"PASS",
-#     "risk_count":0,
-#     "highest_risk":null
-#   },
-#   ...
-# }
-```
+## NameGuard Specification
 
-### Using the AWS Lambda handler
+### Checks
 
-NameGuard includes a handler for [Amazon AWS Lambda](https://aws.amazon.com/lambda/). It is available in the `nameguard.lambda` module. You can use it to create a Lambda function that will respond to HTTP requests. It uses the [mangum](https://mangum.io) library.
+1. **Impersonation**: Detects names that could be trying to impersonate a different name by using similar characters.
 
-Check out the included [Dockerfile](./Dockerfile) for an example of how to build a Lambda container image.
+2. **Confusables**: Detects characters that can be confused with other characters.
+
+3. **Font Support**: Checks if the characters in the name are supported by commonly used fonts.
+
+4. **Invisibles**: Detects invisible characters.
+
+5. **Typing Difficulty**: Detects names that are difficult to type on some keyboards.
+
+6. **Mixed Scripts**: Detects names that contain characters from multiple scripts or alphabets.
+
+7. **Name Wrapper**: Checks if the name is supported by the new ENS Name Wrapper.
+
+8. **ENSIP-15**: Checks if the name is normalized according to ENSIP-15.
+
+9. **Punycode**: Checks if the name is compatible with Punycode encoding.
+
+10. **Unknown Labels**: Checks if the name contains unknown labels (e.g. `[0123abcd...].eth`).
