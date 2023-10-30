@@ -59,6 +59,7 @@ async def test_highest_risk(nameguard: NameGuard):
     assert result.highest_risk.check is Check.NORMALIZED
     assert result.highest_risk.rating is Rating.ALERT
 
+
 @pytest.mark.asyncio
 async def test_check_skip(nameguard: NameGuard):
     sup = 'a'
@@ -86,17 +87,23 @@ async def test_check_skip(nameguard: NameGuard):
     ('nick.eth', Normalization.NORMALIZED, Normalization.NORMALIZED, Normalization.NORMALIZED),
     ('[zzz].eth', Normalization.UNNORMALIZED, Normalization.UNNORMALIZED, Normalization.NORMALIZED),
 
-    ('[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth', Normalization.NORMALIZED, Normalization.NORMALIZED, Normalization.NORMALIZED),  # nick.eth
-    ('[5D5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth', Normalization.UNNORMALIZED, Normalization.UNNORMALIZED, Normalization.NORMALIZED),  # nick.eth  uppercase hex
-    ('[291aa4f6b79b45c2da078242837f39c773527f1bdb269cc37f1aba8f72e308a8].eth', Normalization.UNNORMALIZED, Normalization.UNNORMALIZED, Normalization.NORMALIZED),  # [zzz].eth
+    ('[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth', Normalization.NORMALIZED,
+     Normalization.NORMALIZED, Normalization.NORMALIZED),  # nick.eth
+    ('[5D5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth', Normalization.UNNORMALIZED,
+     Normalization.UNNORMALIZED, Normalization.NORMALIZED),  # nick.eth  uppercase hex
+    ('[291aa4f6b79b45c2da078242837f39c773527f1bdb269cc37f1aba8f72e308a8].eth', Normalization.UNNORMALIZED,
+     Normalization.UNNORMALIZED, Normalization.NORMALIZED),  # [zzz].eth
 
-    ('[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth', Normalization.UNKNOWN, Normalization.UNKNOWN, Normalization.NORMALIZED),  # unkown label
+    ('[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth', Normalization.UNKNOWN,
+     Normalization.UNKNOWN, Normalization.NORMALIZED),  # unkown label
     # [f3e579667f05ae575146e5f418b0e8c0de3527a84c92e839c722a97901cd4b67].loopring.eth is unknown for Graph, but it is jkestel.loopring.eth
-    ('[f3e579667f05ae575146e5f418b0e8c0de3527a84c92e839c722a97901cd4b67].loopring.eth', Normalization.NORMALIZED, Normalization.NORMALIZED, Normalization.NORMALIZED),  # jkestel.loopring.eth
-    ('jkestel.[ab5e71b02a15ad804e7f48ba6b9ce9444eefb3797e3e347e98af3ee29adfbbf0].eth', Normalization.NORMALIZED, Normalization.NORMALIZED, Normalization.NORMALIZED),  # jkestel.loopring.eth
+    ('[f3e579667f05ae575146e5f418b0e8c0de3527a84c92e839c722a97901cd4b67].loopring.eth', Normalization.NORMALIZED,
+     Normalization.NORMALIZED, Normalization.NORMALIZED),  # jkestel.loopring.eth
+    ('jkestel.[ab5e71b02a15ad804e7f48ba6b9ce9444eefb3797e3e347e98af3ee29adfbbf0].eth', Normalization.NORMALIZED,
+     Normalization.NORMALIZED, Normalization.NORMALIZED),  # jkestel.loopring.eth
 ])
 async def test_normalization_status(nameguard: NameGuard, name, n, l0, l1):
-    network_name='mainnet'
+    network_name = 'mainnet'
     r = await nameguard.inspect_name_with_labelhash_lookup(network_name, name)
     assert r.normalization is n
     assert r.labels[0].normalization is l0
@@ -113,7 +120,8 @@ async def test_hashes(nameguard: NameGuard):
     assert r.labels[1].label == 'eth'
     assert r.labels[1].labelhash == '0x4f5b812789fc606be1b3b16908db13fc7a9adf7ca72641f84d75b47069d3d7f0'
 
-    r = await nameguard.inspect_name('mainnet','[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth')
+    r = await nameguard.inspect_name('mainnet',
+                                     '[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth')
     assert r.name == 'nick.eth'
     assert r.namehash == '0x05a67c0ee82964c4f7394cdd47fee7f4d9503a23c09c38341779ea012afe6e00'
     assert r.labels[0].label == 'nick'
@@ -125,7 +133,8 @@ async def test_hashes(nameguard: NameGuard):
 @pytest.mark.asyncio
 async def test_hashes_uppercase(nameguard: NameGuard):
     # this should be treated not as labelhash but normal string
-    r = await nameguard.inspect_name('mainnet','[5D5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth')
+    r = await nameguard.inspect_name('mainnet',
+                                     '[5D5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth')
     assert r.name == '[5D5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth'
     assert r.namehash != '0x05a67c0ee82964c4f7394cdd47fee7f4d9503a23c09c38341779ea012afe6e00'
     assert r.labels[0].label == '[5D5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f]'
@@ -136,7 +145,8 @@ async def test_hashes_uppercase(nameguard: NameGuard):
 
 @pytest.mark.asyncio
 async def test_unknown_label(nameguard: NameGuard):
-    r = await nameguard.inspect_name('mainnet','[56d7ba27aed5cd36fc16684baeb86f73d6d0c60b6501487725bcfc9056378075].eth')
+    r = await nameguard.inspect_name('mainnet',
+                                     '[56d7ba27aed5cd36fc16684baeb86f73d6d0c60b6501487725bcfc9056378075].eth')
     assert r.labels[0].label == '[56d7ba27aed5cd36fc16684baeb86f73d6d0c60b6501487725bcfc9056378075]'
     assert r.rating is Rating.ALERT
     assert r.highest_risk.check is Check.UNKNOWN_LABEL
@@ -145,11 +155,13 @@ async def test_unknown_label(nameguard: NameGuard):
 @pytest.mark.asyncio
 async def test_namehash_non_null_name(nameguard: NameGuard):
     network_name = 'mainnet'
-    r = await nameguard.inspect_namehash(network_name, '0xe0fe380f4d877f643e88ceabbed4e5ee0efe66f079aabba23e8902336f7948da')
+    r = await nameguard.inspect_namehash(network_name,
+                                         '0xe0fe380f4d877f643e88ceabbed4e5ee0efe66f079aabba23e8902336f7948da')
     assert r.name == '[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth'
 
     with pytest.raises(NamehashNotFoundInSubgraph):
-        await nameguard.inspect_namehash(network_name, '0xe0fe380f4d877f643e88ceabbed4e5ee0efb66f079aabba23e8902336f7948da')
+        await nameguard.inspect_namehash(network_name,
+                                         '0xe0fe380f4d877f643e88ceabbed4e5ee0efb66f079aabba23e8902336f7948da')
 
 
 def test_inspect_grapheme_multi(nameguard: NameGuard):
@@ -174,10 +186,23 @@ async def test_canonicals(nameguard: NameGuard):
     r = nameguard.inspect_grapheme('Ĳ')
     assert r.canonical_grapheme is None
 
-    r = await nameguard.inspect_name('mainnet', 'ńićk.[56d7ba27aed5cd36fc16684baeb86f73d6d0c60b6501487725bcfc9056378075].eth')
+    r = await nameguard.inspect_name('mainnet',
+                                     'ńićk.[56d7ba27aed5cd36fc16684baeb86f73d6d0c60b6501487725bcfc9056378075].eth')
     assert r.canonical_name == 'nick.[56d7ba27aed5cd36fc16684baeb86f73d6d0c60b6501487725bcfc9056378075].eth'
     assert r.labels[0].canonical_label == 'nick'
     assert r.labels[1].canonical_label == '[56d7ba27aed5cd36fc16684baeb86f73d6d0c60b6501487725bcfc9056378075]'
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize('name,canonical', [
+    ('Blockchain.eth', None), # canonical is Blockchain and is unnormalized
+    ('ΐάΰό', None), # ιαυο is unnormalized
+    ('n’diaye', 'n’diaye'),
+])
+async def test_canonicals2(nameguard: NameGuard, name, canonical):
+    r = await nameguard.inspect_name('mainnet', name)
+    assert r.canonical_name == canonical
+
+
 
 @pytest.mark.asyncio
 async def test_grapheme_description(nameguard: NameGuard):
@@ -186,6 +211,7 @@ async def test_grapheme_description(nameguard: NameGuard):
 
     r = nameguard.inspect_grapheme('😉')
     assert r.grapheme_description == 'Emoji'
+
 
 @pytest.mark.asyncio
 async def test_impersonation_risk(nameguard: NameGuard):
@@ -217,7 +243,8 @@ async def test_impersonation_risk(nameguard: NameGuard):
     else:
         assert False, 'IMPERSONATION_RISK check not found'
 
-    r = await nameguard.inspect_name('mainnet', 'nick.[d941683d8cbb29d555b64e348d39171ee55ae8234118165add0175a8d4636c13].eth')
+    r = await nameguard.inspect_name('mainnet',
+                                     'nick.[d941683d8cbb29d555b64e348d39171ee55ae8234118165add0175a8d4636c13].eth')
     for check in r.checks:
         if check.check is Check.IMPERSONATION_RISK:
             assert check.rating is Rating.PASS
@@ -275,11 +302,11 @@ async def test_contextual_messages(nameguard: NameGuard):
 @pytest.mark.asyncio
 async def test_empty_labels(nameguard: NameGuard):
     r = await nameguard.inspect_name('mainnet', 'a.')
-    
+
     assert r.rating is Rating.ALERT
     assert r.highest_risk.check is Check.NORMALIZED
     assert r.normalization is Normalization.UNNORMALIZED
-    
+
     assert r.labels[0].rating is Rating.PASS
     assert r.labels[0].highest_risk is None
     assert r.labels[0].normalization is Normalization.NORMALIZED
