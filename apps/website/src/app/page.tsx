@@ -236,7 +236,7 @@ export default function Home() {
         <ExitSection />
       <Footer />
 
-      <div className="fixed inset-0 z-0 h-full w-full overflow-x-hidden bg-[radial-gradient(#DDDDDD_1px,transparent_1px)] [background-size:24px_24px] opacity-70"></div>
+      <div className="fixed inset-0 z-0 h-full w-[100vw] max-w-[100vw] overflow-x-hidden bg-[radial-gradient(#DDDDDD_1px,transparent_1px)] [background-size:24px_24px] opacity-70"></div>
     </>
   );
 }
@@ -485,14 +485,14 @@ type ComingSoonSectionProps = {
 
 function ComingSoonSection(props: ComingSoonSectionProps) {
     return (
-        <section className={`w-full h-1/2 py-24 px-10 flex sm:flex-col xl:flex-row items-center justify-center`}>
+        <section className={`w-full flex flex-col xl:flex-row items-center justify-center h-full py-10 px-5 gt_mobile:h-1/2 gt_mobile:py-24 gt_mobile:px-10`}>
             {!props.isTextOnTheLeft &&
-                <div className={`flex flex-row justify-center items-center w-full xl:w-1/2 ${props.sectionBackgroundName} rounded-none px-4 py-5 xl:px-20 xl:py-24 bg-origin-border bg-center bg-no-repeat bg-cover flex-shrink-0`}>
+                <div className={`hidden gt_mobile:flex flex-row justify-center items-center w-full xl:w-1/2 ${props.sectionBackgroundName} rounded-none px-4 py-5 xl:px-20 xl:py-24 bg-origin-border bg-center bg-no-repeat bg-cover flex-shrink-0`}>
                     <Image className={`relative z-10 w-full h-full`}
                          src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
                 </div>
                 }
-            <div className="flex flex-col gap-5 items-start w-1/2 h-full">
+            <div className="flex flex-col gap-5 h-full w-full items-center gt_mobile:items-start gt_mobile:w-1/2">
                 <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-3xl gap-2 justify-center items-center z-10">
                     <svg
                         width="20"
@@ -509,25 +509,34 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
                             strokeLinejoin="round"
                         />
                     </svg>
-                    <span className="text-black text-center text-sm not-italic font-medium z-10">
+                    <span className="text-black text-center text-sm leading-5 not-italic font-medium z-10">
                         {props.sectionTargetClientMessage}
                     </span>
                 </div>
-                <h1 className="text-black text-left text-4xl font-bold not-italic z-10">
+                <h1 className="hidden gt_mobile:block text-black font-bold not-italic z-10 text-left text-4xl leading-10">
                     {props.sectionHeader}
-                    <span className="relative -top-1 inline-flex items-center justify-center rounded-xl bg-green-100 mx-3 px-3 py-0.5 text-center text-green-800 font-medium not-italic text-sm leading-5">
+                    <span className="hidden gt_mobile:relative gt_mobile:-top-1 gt_mobile:inline-flex items-center justify-center rounded-xl bg-green-100 mx-3 px-3 py-0.5 text-center text-green-800 font-medium not-italic text-sm leading-5">
                         {props.badgeText}
                     </span>
                 </h1>
-                <p className="text-gray-500 text-lg not-italic font-normal w-4/5 z-10">
+                <div className={"flex flex-col items-center gap-3 gt_mobile:hidden"}>
+                    <h1 className="gt_mobile:hidden text-black font-bold not-italic z-10 text-center text-2xl leading-8">{props.sectionHeader}</h1>
+                <span className="gt_mobile:hidden inline-flex items-center justify-center rounded-xl bg-green-100 mx-3 px-3 py-0.5 text-center text-green-800 font-medium not-italic text-sm leading-5">
+                        {props.badgeText}
+                    </span>
+                </div>
+                <p className="text-gray-500 not-italic font-normal z-10 text-center text-sm leading-6 gt_mobile:text-left gt_mobile:text-lg gt_mobile:w-4/5 gt_mobile:leading-7">
                     {props.sectionDescription}
                 </p>
-
             </div>
-            {props.isTextOnTheLeft && <div className={`flex flex-row justify-center items-center w-full xl:w-1/2 h-full ${props.sectionBackgroundName} rounded-none px-4 py-5 xl:px-20 xl:py-24 bg-origin-border bg-opacity-20 bg-center bg-no-repeat bg-contain flex-shrink-0`}>
+            {props.isTextOnTheLeft && <div className={`hidden gt_mobile:flex flex-row justify-center items-center w-full xl:w-1/2 h-full ${props.sectionBackgroundName} rounded-none px-4 py-5 xl:px-20 xl:py-24 bg-origin-border bg-center bg-no-repeat bg-contain flex-shrink-0`}>
                 <Image className={`relative z-10 w-full h-full`}
                      src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
             </div>}
+            <div className={`flex gt_mobile:hidden flex-row justify-center items-center w-full h-full ${props.sectionBackgroundName} rounded-none px-4 py-5 bg-origin-border bg-center bg-no-repeat bg-contain flex-shrink-0`}>
+                <Image className={`relative z-10 w-full h-full`}
+                       src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
+            </div>
         </section>
     );
 }
@@ -555,8 +564,8 @@ function Footer(){
 
 function Header() {
     return (
-        <header className={"relative top-0 w-full z-10 border-b border-gray-300 " +
-            "inline-flex h-[56px] px-[20px] py-[9px] gap-9 items-center justify-center" +
+        <header className={"relative top-0 w-full z-10 border-b border-gray-300 box-border " +
+            "inline-flex h-[56px] px-[20px] py-[9px] items-center justify-between" +
             " gt_mobile:flex gt_mobile:flex-row gt_mobile:justify-between gt_mobile:h-[70px] gt_mobile:px-28 gt_mobile:py-4"}>
             <div className={"flex flex-row gap-7 justify-between items-center"}>
                 <div className={"flex flex-row justify-between items-center gap-1"}>
@@ -629,7 +638,7 @@ function HeroSection() {
     }, [copiedToClipboard]);
 
     return (
-        <section className={`box-border relative z-10 w-full h-screen py-24 px-5 flex flex-col items-center justify-center bg-hero_background bg-no-repeat bg-center bg-contain md:p-32 ${bg_crests}`}>
+        <section className={`box-border relative z-10 w-full h-fit gt_mobile:h-screen py-[61px] gt_mobile:py-24 px-5 flex flex-col items-center justify-center bg-hero_background bg-no-repeat bg-center bg-contain md:p-32 ${bg_crests}`}>
             <div className={"inline-flex flex-col items-center gap-5"}>
                 <div className={"flex flex-col gap-2 w-fit h-fit z-10"}>
                     <p className={"text-center not-italic uppercase text-gray-500 text-xs tracking-[0.3px] font-medium"}>An open source public good</p>
@@ -655,9 +664,9 @@ function HeroSection() {
 
 function ExitSection() {
     return (
-        <section className={"w-full h-full flex flex-col items-center justify-center bg-exit_section_background bg-no-repeat bg-bottom bg-contain px-5 pb-5 gt_mobile:h-1/2 gt_mobile:py-24"}>
+        <section className={"w-full h-full flex flex-col items-center justify-center bg-exit_section_background bg-no-repeat bg-bottom bg-contain pb-5 px-5 gt_mobile:h-1/2 gt_mobile:py-24"}>
             <div className={"z-10 flex flex-col items-center pt-10 pb-5 gt_mobile:inline-flex gt_mobile:items-start gt_mobile:p-[10px] gt_mobile:gap-[10px]"}>
-                <div className={"flex flex-col items-center gap-5"}>
+                <div className={"flex flex-col items-center gap-5 w-full h-fit"}>
                     <div className={"flex flex-col justify-start items-center gap-5 gt_mobile:block"}>
                         <h1 className={"text-black not-italic text-center font-bold text-2xl leading-8 gt_mobile:text-4xl gt_mobile:leading-[52px]"}>Search for any ENS name to generate a<br />NameGuard report</h1>
                         <p className={"text-center text-gray-500 font-normal not-italic text-sm leading-6 gt_mobile:text-lg gt_mobile:leading-7"}>Share NameGuard reports with frENS. Together we can make web3 safer.</p>
@@ -681,17 +690,17 @@ function RoadMap() {
     };
 
     const completedBadge = (
-        <span className="relative inline-flex items-center justify-center rounded-xl bg-black px-3 py-0.5 text-center font-medium text-white not-italic text-sm leading-5">
+        <span className="relative inline-flex items-center justify-center rounded-[10px] gt_mobile:rounded-xl bg-black px-[10px] gt_mobile:px-3 py-0.5 text-center font-medium text-white not-italic text-xs leading-4 gt_mobile:text-sm gt_mobile:leading-5">
             Completed
         </span>);
 
     const inProgressBadge = (
-        <span className="relative inline-flex items-center justify-center rounded-xl border border-black bg-white px-3 py-0.5 text-center font-medium text-black not-italic text-sm leading-5">
+        <span className="relative inline-flex w-fit h-auto items-center whitespace-nowrap justify-center rounded-[10px] gt_mobile:rounded-xl border border-black bg-white px-[10px] gt_mobile:px-3 py-0.5 text-center font-medium text-black not-italic text-xs leading-4 gt_mobile:text-sm gt_mobile:leading-5">
             In progress
         </span>);
 
     const plannedBadge = (
-        <span className="relative inline-flex items-center justify-center rounded-xl bg-black bg-opacity-5 px-3 py-0.5 text-center font-medium text-black not-italic text-sm leading-5">
+        <span className="relative inline-flex items-center justify-center rounded-[10px] gt_mobile:rounded-xl bg-black bg-opacity-5 px-[10px] gt_mobile:px-3 py-0.5 text-center font-medium text-black not-italic text-xs leading-4 gt_mobile:text-sm gt_mobile:leading-5">
             Planned
         </span>);
 
@@ -735,16 +744,16 @@ function RoadMap() {
     const rightSideShields = [negativeShield, positiveShield, warningShield, negativeShield, positiveShield, warningShield, negativeShield, positiveShield];
 
     return (
-        <section className={"relative bg-white w-full h-full md:py-32 md:px-10 xl:px-32 flex flex-row items-center justify-center z-10 gap-10"}>
-            <div className={"w-1/5 h-full relative -top-20 flex flex-col justify-center items-center gap-36"}>
+        <section className={"relative bg-white w-full h-full px-5 md:py-32 md:px-10 xl:px-32 flex flex-row items-center justify-center z-10 gap-10"}>
+            <div className={"hidden w-1/5 h-full relative -top-20 gt_mobile:flex flex-col justify-center items-center gap-36"}>
                 {leftSideShields.map((shield, idx) => (
                     <div key={`left-${idx}-Shield`} className={`w-full h-full flex flex-row items-center ${idx % 2 === 1 ? "justify-start" : "justify-end"}`}>
                         <div className={"inline-flex items-start p-5 gap-[10px] border rounded-full border-gray-200 shadow-sm"}>{shield}</div>
                     </div>))}
             </div>
-            <div className={"w-3/5 h-full flex flex-col items-center justify-center gap-14"}>
-                <div className={"inline-flex h-fit w-full flex-col items-center gap-2 z-10"}>
-                    <h1 className={"text-black text-center not-italic font-bold text-4xl leading-[52px]"}>
+            <div className={"w-full gt_mobile:w-3/5 h-full flex flex-col items-center justify-center pt-10 gt_mobile:pt-0 pb-5 gt_mobile:pb-0 gap-5 gt_mobile:gap-14"}>
+                <div className={"inline-flex h-fit w-full flex-col items-center gap-5 gt_mobile:gap-2 z-10"}>
+                    <h1 className={"text-black text-center not-italic font-bold text-2xl leading-8 gt_mobile:text-4xl gt_mobile:leading-[52px]"}>
                         NameGuard roadmap
                     </h1>
                     <p className={"text-center text-gray-500 text-base leading-7 font-normal not-italic"}>
@@ -772,7 +781,7 @@ function RoadMap() {
                                     </div>
                                     <div className={"w-full h-fit flex flex-col items-start gap-3"}>
                                         <div className={"relative -top-2 w-full h-fit inline-flex flex-row justify-between items-start self-stretch py-1.5"}>
-                                            <h1 className={"text-black text-lg leading-6 font-semibold not-italic"}>{roadmapElement.headerText}</h1>
+                                            <h1 className={"text-black text-lg leading-6 font-semibold not-italic pr-2"}>{roadmapElement.headerText}</h1>
                                             {badgesMap.get(roadmapElement.stageOfCompletion)}
                                         </div>
                                         <div className="w-full h-fit flex flex-col items-start self-stretch rounded-lg border border-gray-200 bg-gray-50 p-5">
@@ -787,7 +796,7 @@ function RoadMap() {
                     </ul>
                 </div>
             </div>
-            <div className={"w-1/5 h-full relative top-4 flex flex-col justify-center items-center gap-36"}>
+            <div className={"hidden w-1/5 h-full relative top-4 gt_mobile:flex flex-col justify-center items-center gap-36"}>
                 {rightSideShields.map((shield, idx) => (
                     <div key={`left-${idx}-Shield`} className={`w-full h-full flex flex-row items-center ${idx % 2 === 0 ? "justify-start" : "justify-end"}`}>
                         <div className={"inline-flex items-start p-5 gap-[10px] border rounded-full border-gray-200 shadow-sm"}>{shield}</div>
