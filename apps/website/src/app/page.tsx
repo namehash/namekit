@@ -413,7 +413,7 @@ function ReadySection(props: ReadySectionProps){
   return (
       <section className={`w-full h-full py-10 px-5 flex flex-col items-center justify-center gt_mobile:py-24 gt_mobile:px-0`}>
           <div className="max-w-full flex flex-col items-center gt_mobile:mx-auto gt_mobile:px-6 gt_mobile:gap-3">
-          <div className="w-full flex flex-col gap-5 items-center hero_br:w-1/2">
+          <div className="w-full flex flex-col gap-5 items-center xl:w-1/2">
             <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-[20px] gap-2 justify-center items-center z-10">
               <svg
                   width="20"
@@ -439,21 +439,21 @@ function ReadySection(props: ReadySectionProps){
                 {props.sectionHeader}
             </h1>
 
-            <p className="z-10 text-gray-500 text-center not-italic font-normal text-sm leading-6 gt_mobile:text-lg gt_mobile:leading-7 desktop_br:w-4/5">
+            <p className="z-10 text-gray-500 text-center not-italic font-normal text-sm leading-6 gt_mobile:text-lg gt_mobile:leading-7 md:w-4/5">
                 {props.sectionDescription}
             </p>
           </div>
               {props.isCodeOnTheLeft ? (
                   <div className={`flex sm:flex-col xl:flex-row justify-center border-0 rounded-none items-center gap-10 w-full h-full xl:h-3/4 py-16 px-10 ${props.sectionBackgroundName} bg-center bg-no-repeat bg-cover flex-shrink-0 gt_mobile:gap-10` }>
                       {props.integrationsPanel ? (
-                          <div className={"hidden desktop_br:flex flex-col w-full h-full justify-between items-center gap-7"}>
+                          <div className={"hidden md:flex flex-col w-full h-full justify-between items-center gap-7"}>
                               <CodeSnippet codeSnippet={props.codeSnippet}/>
                               <div className={"inline-flex items-center gap-6"}>
                                   {props.integrationsPanel}
                               </div>
                           </div>
                       ) : (
-                          <div className={"hidden desktop_br:flex flex-col w-full h-full justify-between items-center gap-7"}>
+                          <div className={"hidden md:flex flex-col w-full h-full justify-between items-center gap-7"}>
                               <CodeSnippet codeSnippet={props.codeSnippet}/>
                           </div>)}
                       <Image className={`z-10 w-full h-full gt_mobile:w-2/3 gt_mobile:h-2/3 xl:w-1/3 xl:h-1/3`}
@@ -464,12 +464,12 @@ function ReadySection(props: ReadySectionProps){
                     <Image className={`z-10 w-full h-full gt_mobile:w-2/3 gt_mobile:h-2/3 xl:w-1/3 xl:h-1/3`}
                          src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
                       {props.integrationsPanel ? (
-                          <div className={"hidden desktop_br:flex flex-col w-full h-full justify-between items-center gap-7"}>
+                          <div className={"hidden md:flex flex-col w-full h-full justify-between items-center gap-7"}>
                               <CodeSnippet codeSnippet={props.codeSnippet}/>
                               {props.integrationsPanel}
                           </div>
                       ) : (
-                          <div className={"hidden desktop_br:flex flex-col w-full h-full justify-between items-center gap-7"}>
+                          <div className={"hidden md:flex flex-col w-full h-full justify-between items-center gap-7"}>
                             <CodeSnippet codeSnippet={props.codeSnippet}/>
                           </div>)}
                   </div>
@@ -572,7 +572,7 @@ function Header() {
     return (
         <header className={"relative top-0 w-full z-10 border-b border-gray-300 box-border " +
             "inline-flex h-[56px] px-[20px] py-[9px] items-center justify-between" +
-            " gt_mobile:flex gt_mobile:flex-row gt_mobile:justify-between gt_mobile:h-[70px] gt_mobile:px-28 gt_mobile:py-4"}>
+            " gt_mobile:flex gt_mobile:justify-center lg:justify-between gt_mobile:flex-row gt_mobile:h-[70px] gt_mobile:px-28 gt_mobile:py-4"}>
             <div className={"flex flex-row gap-7 justify-between items-center"}>
                 <div className={"flex flex-row justify-between items-center gap-1"}>
                     <p className={"text-black not-italic font-bold " +
@@ -584,13 +584,13 @@ function Header() {
                             "gt_mobile:text-[8.409px] gt_mobile:leading-[9.343px]"}>beta</p>
                     </div>
                 </div>
-                <div className={"hidden gt_mobile:block gt_mobile:w-full gt_mobile:h-full gt_mobile:p-0 gt_mobile:m-0"}>
+                <div className={"hidden md:block gt_mobile:w-full gt_mobile:h-full gt_mobile:p-0 gt_mobile:m-0"}>
                     <Search/>
                 </div>
             </div>
             <div className={"flex flex-row items-center " +
-                "justify-end gap-0" +
-                "gt_mobile:justify-between gt_mobile:gap-5"}>
+                "justify-end gap-0 " +
+                "gt_mobile:justify-between gt_mobile:gap-1 md:gap-5"}>
                 <a className={"px-[10px] py-[9px] not-italic text-black font-medium text-sm leading-5 rounded-md gt_mobile:hover:bg-gray-100"} href={"https://api.nameguard.io/docs"}>
                     Docs
                 </a>
@@ -602,7 +602,7 @@ function Header() {
                             <p className={"not-italic text-black font-medium text-sm leading-5"}>Github</p>
                     </div>
                 </a>
-                <div className={"block flex justify-center items-center gap-2 p-[7px] cursor-pointer gt_mobile:hidden"}>
+                <div className={"flex justify-center items-center gap-2 p-[7px] cursor-pointer md:hidden"}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                         <path fillRule="evenodd" clipRule="evenodd" d="M9 3.5C5.96243 3.5 3.5 5.96243 3.5 9C3.5 12.0376 5.96243 14.5 9 14.5C10.519 14.5 11.893 13.8852 12.8891 12.8891C13.8852 11.893 14.5 10.519 14.5 9C14.5 5.96243 12.0376 3.5 9 3.5ZM2 9C2 5.13401 5.13401 2 9 2C12.866 2 16 5.13401 16 9C16 10.6625 15.4197 12.1906 14.4517 13.3911L17.7803 16.7197C18.0732 17.0126 18.0732 17.4874 17.7803 17.7803C17.4874 18.0732 17.0126 18.0732 16.7197 17.7803L13.3911 14.4517C12.1906 15.4197 10.6625 16 9 16C5.13401 16 2 12.866 2 9Z" fill="#0F172A"/>
                     </svg>
@@ -613,7 +613,7 @@ function Header() {
 }
 
 function HeroSection() {
-    const bg_crests = `hero_br:bg-[url("../../public/assets/hero_background.png")]`;
+    const bg_crests = `xl:bg-[url("../../public/assets/hero_background.png")]`;
     const copyIcon =
         <div className={"w-fit h-fit z-10 cursor-pointer"} onClick={() => {
             setCopiedToClipboard(true);
@@ -753,7 +753,7 @@ function RoadMap() {
 
     return (
         <section className={"relative bg-white w-full h-full px-5 md:py-32 md:px-10 xl:px-32 flex flex-row items-center justify-center z-10 gap-10"}>
-            <div className={"hidden w-1/5 h-full relative -top-20 gt_mobile:flex flex-col justify-center items-center gap-36"}>
+            <div className={"hidden w-1/5 h-full relative -top-20 md:flex flex-col justify-center items-center gap-36"}>
                 {leftSideShields.map((shield, idx) => (
                     <div key={`left-${idx}-Shield`} className={`w-full h-full flex flex-row items-center ${idx % 2 === 1 ? "justify-start" : "justify-end"}`}>
                         <div className={"inline-flex items-start p-5 gap-[10px] border rounded-full border-gray-200 shadow-sm"}>{shield}</div>
@@ -805,7 +805,7 @@ function RoadMap() {
                     </ul>
                 </div>
             </div>
-            <div className={"hidden w-1/5 h-full relative top-4 gt_mobile:flex flex-col justify-center items-center gap-36"}>
+            <div className={"hidden w-1/5 h-full relative top-4 md:flex flex-col justify-center items-center gap-36"}>
                 {rightSideShields.map((shield, idx) => (
                     <div key={`left-${idx}-Shield`} className={`w-full h-full flex flex-row items-center ${idx % 2 === 0 ? "justify-start" : "justify-end"}`}>
                         <div className={"inline-flex items-start p-5 gap-[10px] border rounded-full border-gray-200 shadow-sm"}>{shield}</div>
