@@ -1,20 +1,8 @@
 import React from "react";
 import { ConsolidatedGraphemeGuardReport } from "@namehash/nameguard";
+
 import { Check } from "./Check";
-
-function RiskCounter({
-  count,
-}: {
-  count: ConsolidatedGraphemeGuardReport["risk_count"];
-}) {
-  if (count === 0 || count === 1) return null;
-
-  return (
-    <span className="bg-yellow-100 rounded-full px-3 py-0.5 text-yellow-800 text-xs md:text-sm font-medium">
-      + {count - 1} more risk{count - 1 >= 2 && "s"}
-    </span>
-  );
-}
+import { RiskCounter } from "./RiskCounter";
 
 export function GraphemeCard(props: ConsolidatedGraphemeGuardReport) {
   return (
