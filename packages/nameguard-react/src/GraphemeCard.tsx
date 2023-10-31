@@ -2,6 +2,20 @@ import React from "react";
 import { ConsolidatedGraphemeGuardReport } from "@namehash/nameguard";
 import { Check } from "./Check";
 
+function RiskCounter({
+  count,
+}: {
+  count: ConsolidatedGraphemeGuardReport["risk_count"];
+}) {
+  if (count === 0 || count === 1) return null;
+
+  return (
+    <span className="bg-yellow-100 rounded-full px-3 py-0.5 text-yellow-800 text-xs md:text-sm font-medium">
+      + {count - 1} more risk{count - 1 >= 2 && "s"}
+    </span>
+  );
+}
+
 export function GraphemeCard(props: ConsolidatedGraphemeGuardReport) {
   return (
     <div className="grid grid-cols-8 md:grid-cols-12 gap-4 py-5 pl-6">
@@ -19,15 +33,22 @@ export function GraphemeCard(props: ConsolidatedGraphemeGuardReport) {
         </div>
 
         <div className="md:col-span-4 flex space-between space-x-3">
-          <div className="flex items-center flex-row-reverse md:flex-row md:space-between justify-between md:justify-start space-y-1 md:space-y-0 md:space-x-2 flex-1 pr-6 md:pr-0">
-            <div className="flex-shrink-0 flex items-center justify-center">
+          <div className="flex items-center md:space-between justify-between md:justify-start space-y-1 md:space-y-0 md:space-x-2 flex-1 pr-6 md:pr-12 flex-wrap">
+            <div className="flex-grow md:order-2 flex items-center">
+              <p className="md:font-medium text-gray-500 md:text-black text-sm w-full md:pl-2">
+                {props.rating === "pass"
+                  ? props.title
+                  : props.highest_risk?.message}
+              </p>
+            </div>
+
+            <div className="flex-shrink-0 md:order-3 flex items-center md:ml-auto">
+              <RiskCounter count={props.risk_count} />
+            </div>
+
+            <div className="flex-shrink-0 ml-auto md:ml-auto md:order-1 flex items-center">
               <Check code={props.rating} />
             </div>
-            <p className="md:font-medium text-gray-500 md:text-black text-sm">
-              {props.rating === "pass"
-                ? props.title
-                : props.highest_risk?.message}
-            </p>
           </div>
         </div>
       </div>
