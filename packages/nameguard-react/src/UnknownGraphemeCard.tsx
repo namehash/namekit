@@ -11,7 +11,7 @@ type Props = {
 export function UnknownGraphemeCard({ title, description }: Props) {
   return (
     <div className="bg-red-50 grid grid-cols-8 lg:grid-cols-12 gap-4 py-5 pl-6 rounded-b-md">
-      <div className="flex md:items-center justify-center flex-shrink-0">
+      <div className="flex md:items-center justify-center">
         <div className="bg-red-100 rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0">
           <ShieldExclamationIcon className="w-6 h-6 text-red-600 fill-current" />
         </div>
