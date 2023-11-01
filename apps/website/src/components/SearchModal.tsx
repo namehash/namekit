@@ -56,10 +56,10 @@ export function SearchModal() {
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm" />
+            <Dialog.Overlay className="fixed z-10 inset-0 bg-black/50 backdrop-blur-sm" />
           </Transition.Child>
 
-          <div className="fixed inset-0 z-10 overflow-y-auto">
+          <div className="fixed inset-0 z-20 overflow-y-auto">
             <div className="flex items-start justify-start md:items-start w-full max-w-7xl mx-auto absolute inset-0 md:py-12 md:px-6">
               <Transition.Child
                 as={Fragment}
@@ -70,7 +70,7 @@ export function SearchModal() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <div className="mx-auto w-full relative transform overflow-hidden md:rounded-xl bg-white shadow-2xl transition-all flex flex-col h-full md:h-auto max-h-full">
+                <Dialog.Panel className="mx-auto w-full relative transform overflow-hidden md:rounded-xl bg-white shadow-2xl transition-all flex flex-col h-full md:h-auto max-h-full">
                   <div className="h-[56px] md:h-[68px] flex items-center shadow z-40 absolute top-0 inset-x-0 bg-white">
                     <div className="flex items-center justify-center flex-shrink-0 pl-5 pr-3 md:px-5">
                       {/* {data ? (
@@ -111,7 +111,7 @@ export function SearchModal() {
                   <div className="absolute bottom-0 inset-x-0 z-20">
                     <SearchFooter />
                   </div>
-                </div>
+                </Dialog.Panel>
               </Transition.Child>
             </div>
           </div>

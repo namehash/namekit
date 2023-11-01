@@ -48,7 +48,7 @@ export function SearchSettingsModal() {
           leaveTo="opacity-0 scale-95"
         >
           <div className="relative z-50 flex md:items-center justify-center min-h-screen">
-            <div className="w-full max-w-lg mx-auto relative transform overflow-scroll md:rounded-xl bg-white md:shadow-2xl transition-all flex flex-col">
+            <Dialog.Panel className="w-full max-w-lg mx-auto relative transform overflow-scroll md:rounded-xl bg-white md:shadow-2xl transition-all flex flex-col">
               <div className="h-[56px] md:h-[68px] flex items-center justify-center md:justify-start shadow md:shadow-none px-6 pb-3 md:pb-0 pt-3 md:pt-2 text-center relative">
                 <Dialog.Title className="font-medium text-lg">
                   Search settings
@@ -192,7 +192,7 @@ export function SearchSettingsModal() {
                   </button>
                 </div>
               </form>
-            </div>
+            </Dialog.Panel>
           </div>
         </Transition.Child>
       </Dialog>
