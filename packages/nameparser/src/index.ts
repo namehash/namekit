@@ -134,7 +134,9 @@ export function parseName(
       ? options.trimWhitespace
       : DEFAULT_TRIM_WHITESPACE;
   const tryNormalization =
-    options?.attemptEnsNormalization || DEFAULT_ATTEMPT_ENS_NORMALIZATION;
+    options?.attemptEnsNormalization !== undefined
+      ? options.attemptEnsNormalization
+      : DEFAULT_ATTEMPT_ENS_NORMALIZATION;
   const assumedTld = options ? options.assumedTld : DEFAULT_ASSUMED_TLD;
 
   let transformations: NameParserTransformation[] = [];
