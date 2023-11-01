@@ -14,8 +14,6 @@ export function FormattedDisplayName({
   const displayNameDifferent =
     normalization === "normalized" && name !== displayName;
 
-  if (!displayNameDifferent) return null;
-
   if (displayNameDifferent)
     return (
       <p className="text-sm text-gray-500 mt-4">
@@ -25,4 +23,6 @@ export function FormattedDisplayName({
         </span>
       </p>
     );
+
+  return null;
 }
