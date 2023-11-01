@@ -5,10 +5,15 @@ import { Shield } from "@namehash/nameguard-react";
 type LoadingProps = {
   name?: string;
   displayName?: string;
+  normalized?: boolean;
 };
 
-export function LoadingSkeleton({ name, displayName }: LoadingProps) {
-  const displayNameDifferent = name !== displayName;
+export function LoadingSkeleton({
+  name,
+  displayName,
+  normalized,
+}: LoadingProps) {
+  const displayNameDifferent = normalized && name !== displayName;
 
   return (
     <div className="rounded-xl border shadow-xl space-y-4 md:space-y-0 border-gray-200 shadow-gray-50">

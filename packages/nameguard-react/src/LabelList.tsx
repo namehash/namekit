@@ -23,18 +23,18 @@ export function LabelList({ items = [] }: LabelListProps) {
       >
         <div className="py-[10px] px-6 md:flex md:items-center md:justify-between space-y-1 md:space-y-0">
           <div className="text-sm font-normal break-all">
-            {rawLabels.map((l, index) => (
+            {rawLabels.map((l, labelIndex) => (
               <Fragment key={index}>
                 <span
                   className={
-                    l === label.label
+                    index === labelIndex
                       ? "text-black font-semibold"
                       : "text-gray-500 grayscale"
                   }
                 >
                   {l === "" ? "[empty]" : l}
                 </span>
-                {index < rawLabels.length - 1 && (
+                {labelIndex < rawLabels.length - 1 && (
                   <span className="text-gray-500">.</span>
                 )}
               </Fragment>

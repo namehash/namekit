@@ -67,8 +67,10 @@ const transformationText = {
 };
 
 export function Banner({ report, parsedName }: Props) {
-  const { name, title, subtitle, rating, beautiful_name } = report;
+  const { name, title, subtitle, rating, beautiful_name, normalization } =
+    report;
   const { outputName, transformations } = parsedName;
+  const normalized = normalization === "normalized";
 
   const border = borderColor(rating);
   const shadow = shadowColor(rating);
@@ -76,10 +78,8 @@ export function Banner({ report, parsedName }: Props) {
 
   const wrapperClass = cc(["rounded-xl border shadow-xl", border, shadow]);
 
-  const displayNameDifferent = ![
-    outputName.displayName,
-    beautiful_name,
-  ].includes(name);
+  const displayNameDifferent =
+    normalized && ![outputName.displayName, beautiful_name].includes(name);
   const displayTransformations = transformations.length >= 1;
 
   return (
