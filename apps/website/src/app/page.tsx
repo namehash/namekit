@@ -570,7 +570,7 @@ function Footer(){
 
 function Header() {
     return (
-        <header className={"relative top-0 w-full z-10 border-b border-gray-300 box-border " +
+        <header className={"bg-white md:bg-transparent shadow md:shadow-none relative top-0 w-full z-10 border-b border-gray-300 box-border " +
             "inline-flex h-[56px] px-[20px] py-[9px] items-center justify-between" +
             " gt_mobile:flex gt_mobile:flex-row gt_mobile:justify-between gt_mobile:h-[70px] gt_mobile:px-28 gt_mobile:py-4"}>
             <div className={"flex flex-row gap-7 justify-between items-center"}>
@@ -584,7 +584,7 @@ function Header() {
                             "gt_mobile:text-[8.409px] gt_mobile:leading-[9.343px]"}>beta</p>
                     </div>
                 </div>
-                <div className={"hidden md:block gt_mobile:w-full gt_mobile:h-full gt_mobile:p-0 gt_mobile:m-0"}>
+                <div className="hidden md:block md:h-full md:w-80">
                     <Search/>
                 </div>
             </div>
@@ -675,8 +675,9 @@ function HeroSection() {
               Guard your users from heartbreak and encourage best practice usage
               of ENS
             </p>
-            <div className="md:hidden ">
+            <div className="md:hidden space-y-5 w-full">
               <Search />
+              <p className="text-gray-500 text-sm text-center">or</p>
             </div>
             <div
               className={
@@ -696,11 +697,12 @@ function HeroSection() {
               </Tooltip>
             </div>
             <a
-            href="https://api.nameguard.io/docs"
-            target="_blank"
-            rel="noreferrer noopener"
-            className="px-6 py-3 rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-900 text-white not-italic font-medium text-base leading-6">
-                View the docs
+              href="https://api.nameguard.io/docs"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="rounded-md text-sm md:text-base bg-black border border-black text-white px-4 md:px-6 py-1.5 md:py-3 font-medium leading-6 transition hover:bg-gray-900 w-full text-center md:w-auto"
+            >
+              View the docs
             </a>
           </div>
         </div>
@@ -717,7 +719,10 @@ function ExitSection() {
                         <h1 className={"text-black not-italic text-center font-bold text-2xl leading-8 gt_mobile:text-4xl gt_mobile:leading-[52px]"}>Search for any ENS name to generate a<br />NameGuard report</h1>
                         <p className={"text-center text-gray-500 font-normal not-italic text-sm leading-6 gt_mobile:text-lg gt_mobile:leading-7"}>Share NameGuard reports with frENS. Together we can make web3 safer.</p>
                     </div>
+                    <div className="hidden md:block w-full md:w-80">
+
                     <Search />
+                    </div>
                 </div>
             </div>
         </section>
