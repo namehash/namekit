@@ -584,14 +584,14 @@ function Header() {
                             "gt_mobile:text-[8.409px] gt_mobile:leading-[9.343px]"}>beta</p>
                     </div>
                 </div>
-                <div className={"hidden gt_mobile:block gt_mobile:w-full gt_mobile:h-full gt_mobile:p-0 gt_mobile:m-0"}>
+                <div className={"hidden md:block gt_mobile:w-full gt_mobile:h-full gt_mobile:p-0 gt_mobile:m-0"}>
                     <Search/>
                 </div>
             </div>
             <div className={"flex flex-row items-center " +
                 "justify-end gap-0" +
                 "gt_mobile:justify-between gt_mobile:gap-5"}>
-                <a className={"px-[10px] py-[9px] not-italic text-black font-medium text-sm leading-5 rounded-md gt_mobile:hover:bg-gray-100"} href={"https://api.nameguard.io/docs"}>
+                <a className="px-[10px] py-[9px] not-italic text-black font-medium text-sm leading-5 rounded-md gt_mobile:hover:bg-gray-100" href="https://api.nameguard.io/docs">
                     Docs
                 </a>
                 <a className={"rounded-md gt_mobile:hover:bg-gray-100"} href={"https://github.com/namehash/nameguard"}>
@@ -644,29 +644,67 @@ function HeroSection() {
     }, [copiedToClipboard]);
 
     return (
-        <section className={`box-border relative z-10 w-full h-fit xl:h-screen py-[61px] gt_mobile:pb-24 gt_mobile:pt-8 px-5 flex flex-col items-center justify-center bg-hero_background bg-no-repeat bg-center bg-contain md:px-10 md:pt-10 md:pb-32`}>
-            <div className={`flex flex-col items-center justify-center w-full h-full max-w-[125rem] ${bg_crests} bg-no-repeat bg-center bg-contain`}>
-                <div className={`inline-flex flex-col items-center gap-5 w-full h-fit`}>
-                    <div className={"flex flex-col gap-2 w-fit h-fit z-10"}>
-                        <p className={"text-center not-italic uppercase text-gray-500 text-xs tracking-[0.3px] font-medium"}>An open source public good</p>
-                        <h1 className="text-black text-center not-italic font-bold text-4xl leading-10 gt_mobile:text-5xl gt_mobile:leading-[52px]">
-                            Protect your community<br />with NameGuard for ENS
-                        </h1>
-                    </div>
-                    <p className={"text-center not-italic font-normal text-gray-500 text-base leading-6"}>
-                        Guard your users from heartbreak and encourage best practice usage of ENS
-                    </p>
-                    <div className={"flex items-center gap-2 py-[9px] pl-4 pr-[14px] rounded-lg bg-black bg-opacity-5 border border-gray-300 " +
-                        "gt_mobile:gap-3 gt_mobile:py-[13px] gt_mobile:pl-[20px] gt_mobile:pr-[16px]"}>
-                        <p className={"text-black leading-6 font-normal text-sm gt_mobile:text-base"}>npm init @nameguard/nameguard@latest</p>
-                        <Tooltip trigger={copyIcon}>{copiedToClipboard ? copiedText : copyText}</Tooltip>
-                    </div>
-                    <button className={"flex justify-center items-center px-[25px] py-[13px] rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-800"} onClick={() => {window.location.href = "https://api.nameguard.io/docs";}}> {/* Should be replaced with url to the docs! */}
-                        <p className={"text-white not-italic font-medium text-base leading-6"}>View the docs</p>
-                    </button>
-                </div>
+      <section
+        className={`box-border relative z-10 w-full h-fit xl:h-screen py-[61px] gt_mobile:pb-24 gt_mobile:pt-8 px-5 flex flex-col items-center justify-center bg-hero_background bg-no-repeat bg-center bg-contain md:px-10 md:pt-10 md:pb-32`}
+      >
+        <div
+          className={`flex flex-col items-center justify-center w-full h-full max-w-[125rem] ${bg_crests} bg-no-repeat bg-center bg-contain`}
+        >
+          <div
+            className={`inline-flex flex-col items-center gap-5 w-full h-fit`}
+          >
+            <div className={"flex flex-col gap-2 w-fit h-fit z-10"}>
+              <p
+                className={
+                  "text-center not-italic uppercase text-gray-500 text-xs tracking-[0.3px] font-medium"
+                }
+              >
+                An open source public good
+              </p>
+              <h1 className="text-black text-center not-italic font-bold text-4xl leading-10 gt_mobile:text-5xl gt_mobile:leading-[52px]">
+                Protect your community
+                <br />
+                with NameGuard for ENS
+              </h1>
             </div>
-        </section>
+            <p
+              className={
+                "text-center not-italic font-normal text-gray-500 text-base leading-6"
+              }
+            >
+              Guard your users from heartbreak and encourage best practice usage
+              of ENS
+            </p>
+            <div className="md:hidden ">
+              <Search />
+            </div>
+            <div
+              className={
+                "hidden md:flex items-center gap-2 py-[9px] pl-4 pr-[14px] rounded-lg bg-black bg-opacity-5 border border-gray-300 " +
+                "gt_mobile:gap-3 gt_mobile:py-[13px] gt_mobile:pl-[20px] gt_mobile:pr-[16px]"
+              }
+            >
+              <p
+                className={
+                  "text-black leading-6 font-normal text-sm gt_mobile:text-base"
+                }
+              >
+                npm init @nameguard/nameguard@latest
+              </p>
+              <Tooltip trigger={copyIcon}>
+                {copiedToClipboard ? copiedText : copyText}
+              </Tooltip>
+            </div>
+            <a
+            href="https://api.nameguard.io/docs"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="px-6 py-3 rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-900 text-white not-italic font-medium text-base leading-6">
+                View the docs
+            </a>
+          </div>
+        </div>
+      </section>
     );
 }
 
