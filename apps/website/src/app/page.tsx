@@ -617,7 +617,7 @@ function HeroSection() {
     const copyIcon =
         <div className={"w-fit h-fit z-10 cursor-pointer"} onClick={() => {
             setCopiedToClipboard(true);
-            navigator.clipboard.writeText("npm init @nameguard/nameguard@latest");
+            navigator.clipboard.writeText("npm install @namehash/nameguard");
         }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none" className="block w-5 h-5 gt_mobile:hidden">
                 <path d="M14.25 6.875V5C14.25 3.96447 13.4105 3.125 12.375 3.125H5.5C4.46447 3.125 3.625 3.96447 3.625 5V11.875C3.625 12.9105 4.46447 13.75 5.5 13.75H7.375M14.25 6.875H15.5C16.5355 6.875 17.375 7.71447 17.375 8.75V15C17.375 16.0355 16.5355 16.875 15.5 16.875H9.25C8.21447 16.875 7.375 16.0355 7.375 15V13.75M14.25 6.875H9.25C8.21447 6.875 7.375 7.71447 7.375 8.75V13.75"
@@ -689,7 +689,7 @@ function HeroSection() {
                   "text-black leading-6 font-normal text-sm gt_mobile:text-base"
                 }
               >
-                npm init @nameguard/nameguard@latest
+                npm install @namehash/nameguard
               </p>
               <Tooltip trigger={copyIcon}>
                 {copiedToClipboard ? copiedText : copyText}
