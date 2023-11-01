@@ -202,8 +202,7 @@ export default function Home() {
               sectionTargetSvgPath={"M17.5 10C17.5 8.96447 16.6605 8.125 15.625 8.125H12.5C12.5 9.50571 11.3807 10.625 10 10.625C8.61929 10.625 7.5 9.50571 7.5 8.125H4.375C3.33947 8.125 2.5 8.96447 2.5 10M17.5 10V15C17.5 16.0355 16.6605 16.875 15.625 16.875H4.375C3.33947 16.875 2.5 16.0355 2.5 15V10M17.5 10V7.5M2.5 10V7.5M17.5 7.5C17.5 6.46447 16.6605 5.625 15.625 5.625H4.375C3.33947 5.625 2.5 6.46447 2.5 7.5M17.5 7.5V5C17.5 3.96447 16.6605 3.125 15.625 3.125H4.375C3.33947 3.125 2.5 3.96447 2.5 5V7.5"}
               sectionTargetClientMessage={"For wallets and dApps"}
               sectionHeader={<Fragment>Never lose a name you love with<br />ENS autorenew</Fragment>}
-              sectionDescription={"Changes in ownership of ENS names does not automatically update deposit addresses. This can result in considerable harm and lead to irreversible losses. " +
-                  "ENS Name Healthchecks instantly detect all potential issues, including warnings for ENS resolver records that are improperly formatted."}
+              sectionDescription={"Never lose a name that you love. ENS name owners no longer have to worry about forgetting to renew their ENS names. Autorenewal provides peace of mind that your domain is yours as long as you want to hold it."}
               sectionBackgroundName={"bg-green_background_sm"}
               isTextOnTheLeft={false}
               badgeText={"Planned"}
