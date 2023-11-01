@@ -20,7 +20,6 @@ export function NewReport(props: Props) {
   const { name } = props;
 
   const normalizationUnknown = name.outputName.normalization === "unknown";
-  const normalized = name.outputName.normalization === "normalized";
 
   const { data, error, isLoading } = useSWR<NameGuardReport>(
     name.outputName.name,
@@ -30,13 +29,11 @@ export function NewReport(props: Props) {
   return (
     <Fragment>
       <ReportHeader />
-      {isLoading && normalizationUnknown && <LoadingSkeleton />}
+      {isLoading && normalizationUnknown && (
+        <LoadingSkeleton parsedName={name} />
+      )}
       {isLoading && !normalizationUnknown && (
-        <LoadingSkeleton
-          name={name.outputName.name}
-          displayName={name.outputName.displayName}
-          normalized={normalized}
-        />
+        <LoadingSkeleton parsedName={name} />
       )}
       {data && <Report parseNameResponse={name} data={data} />}
       {error && <p>Error: {error.message}</p>}

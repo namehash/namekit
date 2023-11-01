@@ -1,18 +1,16 @@
 "use client";
 
-import { Shield } from "@namehash/nameguard-react";
+import { ParsedName } from "@namehash/nameparser";
+import { Shield, ChangesApplied } from "@namehash/nameguard-react";
 
 type LoadingProps = {
-  name?: string;
-  displayName?: string;
-  normalized?: boolean;
+  parsedName: ParsedName;
 };
 
-export function LoadingSkeleton({
-  name,
-  displayName,
-  normalized,
-}: LoadingProps) {
+export function LoadingSkeleton({ parsedName }: LoadingProps) {
+  const { transformations, outputName } = parsedName;
+  const { name, displayName, normalization } = outputName;
+  const normalized = normalization === "normalized";
   const displayNameDifferent = normalized && name !== displayName;
 
   return (
@@ -52,6 +50,7 @@ export function LoadingSkeleton({
           </div>
         </div>
       </div>
+      <ChangesApplied transformations={transformations} />
     </div>
   );
 }

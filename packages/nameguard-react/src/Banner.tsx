@@ -3,6 +3,7 @@ import cc from "classcat";
 import type { NameGuardReport, Rating } from "@namehash/nameguard";
 
 import { Shield } from "./Shield";
+import { ChangesApplied } from "./ChangesApplied";
 
 function borderColor(rating: Rating) {
   switch (rating) {
@@ -60,12 +61,6 @@ type Props = {
   parsedName: any;
 };
 
-const transformationText = {
-  ens_normalize: "ENS Normalization",
-  trim_whitespace: "Trimmed whitespace",
-  assume_tld: `Added ".eth"`,
-};
-
 export function Banner({ report, parsedName }: Props) {
   const { name, title, subtitle, rating, beautiful_name } = report;
   const { outputName, transformations } = parsedName;
@@ -80,7 +75,6 @@ export function Banner({ report, parsedName }: Props) {
     outputName.displayName,
     beautiful_name,
   ].includes(name);
-  const displayTransformations = transformations.length >= 1;
 
   return (
     <div className={wrapperClass}>
@@ -113,25 +107,7 @@ export function Banner({ report, parsedName }: Props) {
           </div>
         </div>
       </div>
-      {displayTransformations && (
-        <div className="border-t border-gray-200 mx-6 md:mx-0">
-          <div className="w-full md:px-10 py-4 md:py-3 flex items-center flex-wrap">
-            <span className="text-sm text-gray-500 mr-2.5">
-              Changes applied to your search:
-            </span>
-            <div className="space-x-1.5 flex items-center mt-2 md:mt-0">
-              {transformations.map((t, i) => (
-                <span
-                  className="bg-gray-100 rounded-full px-3 py-0.5 text-sm font-medium text-black"
-                  key={i}
-                >
-                  {transformationText[t]}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
+      <ChangesApplied transformations={transformations} />
     </div>
   );
 }
