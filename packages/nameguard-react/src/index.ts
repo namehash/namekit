@@ -8,3 +8,4 @@ export { Tooltip } from "./Tooltip";
 export { CheckResultCard } from "./CheckResultCard";
 export { LabelList } from "./LabelList";
 export { GraphemeCard } from "./GraphemeCard";
+export { NoGraphemesWarning } from "./NoGraphemesWarning";

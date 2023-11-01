@@ -8,7 +8,7 @@ type Props = {
   description: string;
 };
 
-export function UnknownGraphemeCard({ title, description }: Props) {
+export function NoGraphemesWarning({ title, description }: Props) {
   return (
     <div className="bg-red-50 grid grid-cols-8 lg:grid-cols-12 gap-4 py-5 pl-6 rounded-b-md">
       <div className="flex md:items-center justify-center">

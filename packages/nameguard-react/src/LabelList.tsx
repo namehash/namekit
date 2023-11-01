@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import type { NameGuardReport } from "@namehash/nameguard";
 import { ShieldExclamationIcon } from "@heroicons/react/20/solid";
 
-import { UnknownGraphemeCard } from "./UnknownGraphemeCard";
+import { NoGraphemesWarning } from "./NoGraphemesWarning";
 import { GraphemeCard } from "./GraphemeCard";
 
 type LabelListProps = {
@@ -53,13 +53,13 @@ export function LabelList({ items = [] }: LabelListProps) {
           )}
         </div>
         {unknown && (
-          <UnknownGraphemeCard
+          <NoGraphemesWarning
             title="Unknown label"
             description="This part of the name was registered in a way that makes it unknown."
           />
         )}
         {empty && (
-          <UnknownGraphemeCard
+          <NoGraphemesWarning
             title="Empty label"
             description="This part of the name is empty."
           />
