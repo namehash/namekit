@@ -21,9 +21,9 @@ export function SearchFooter() {
           Search settings
         </button>
       </div>
-      <div className="text-sm text-gray-500">
+      <div className="text-xs text-gray-500">
         Made with ❤️ by{" "}
-        <a href="https://namehash.io" className="text-sm text-black underline">
+        <a href="https://namehash.io" className="text-black underline">
           NameHash
         </a>
       </div>
