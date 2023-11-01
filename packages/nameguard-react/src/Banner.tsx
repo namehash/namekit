@@ -85,7 +85,7 @@ export function Banner({ report, parsedName }: Props) {
   return (
     <div className={wrapperClass}>
       <div className="p-5 md:py-7 md:px-10 flex flex-col md:flex-row md:items-start justify-between">
-        <div className="md:w-4/6 overflow-hidden overflow-ellipsis whitespace-nowrap">
+        <div className="md:w-4/6 overflow-hidden overflow-ellipsis">
           <p className="uppercase text-[12px] text-gray-500 font-medium">
             Rating for
           </p>
@@ -107,7 +107,7 @@ export function Banner({ report, parsedName }: Props) {
           </div>
           <div className="space-y-1">
             <p className={text}>{title}</p>
-            <p className="text-black text-sm font-normal leading-6">
+            <p className="text-black text-sm font-normal leading-6 break-all">
               {subtitle}
             </p>
           </div>

@@ -70,7 +70,7 @@ export function SearchModal() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="mx-auto w-full relative transform overflow-hidden md:rounded-xl bg-white shadow-2xl transition-all flex flex-col h-full md:h-auto max-h-full">
+                <Dialog.Panel className="mx-auto w-full relative transform overflow-hidden md:rounded-xl bg-white shadow-2xl transition-all flex flex-col h-full md:h-auto max-h-full pb-20 md:pb-0">
                   <div className="h-[56px] md:h-[68px] flex items-center shadow z-40 absolute top-0 inset-x-0 bg-white">
                     <div className="flex items-center justify-center flex-shrink-0 pl-5 pr-3 md:px-5">
                       {/* {data ? (
@@ -100,14 +100,14 @@ export function SearchModal() {
                   </div>
 
                   <div className="overflow-y-scroll relative">
-                    <ChatModal ref={chatRef} />
-                    <div className="p-6 md:py-24 space-y-8 h-full">
+                    <div className="px-6 pt-20 md:py-24 space-y-8 h-full">
                       {showWritersBlock && <WritersBlock />}
                       {!showWritersBlock && (
                         <NewReport name={parseNameResponse} />
                       )}
                     </div>
                   </div>
+                  <ChatModal ref={chatRef} />
                   <div className="absolute bottom-0 inset-x-0 z-20">
                     <SearchFooter />
                   </div>
