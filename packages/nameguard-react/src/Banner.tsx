@@ -4,6 +4,7 @@ import type { NameGuardReport, Rating } from "@namehash/nameguard";
 
 import { Shield } from "./Shield";
 import { ChangesApplied } from "./ChangesApplied";
+import { FormattedDisplayName } from "./FormattedDisplayName";
 
 function borderColor(rating: Rating) {
   switch (rating) {
@@ -62,7 +63,8 @@ type Props = {
 };
 
 export function Banner({ report, parsedName }: Props) {
-  const { name, title, subtitle, rating, beautiful_name } = report;
+  const { name, title, subtitle, rating, beautiful_name, normalization } =
+    report;
   const { outputName, transformations } = parsedName;
 
   const border = borderColor(rating);
@@ -70,11 +72,6 @@ export function Banner({ report, parsedName }: Props) {
   const text = cc(["font-semibold text-sm md:text-2xl", textColor(rating)]);
 
   const wrapperClass = cc(["rounded-xl border shadow-xl", border, shadow]);
-
-  const displayNameDifferent = ![
-    outputName.displayName,
-    beautiful_name,
-  ].includes(name);
 
   return (
     <div className={wrapperClass}>
@@ -86,14 +83,11 @@ export function Banner({ report, parsedName }: Props) {
           <h1 className="mt-1 text-2xl md:text-4xl text-black font-semibold md:font-bold overflow-hidden overflow-ellipsis whitespace-nowrap">
             {name || outputName.displayName}
           </h1>
-          {displayNameDifferent && (
-            <p className="text-sm text-gray-500 mt-4">
-              <span className="mr-2.5">Generally displays as:</span>
-              <span className="text-black overflow-hidden overflow-ellipsis whitespace-nowrap">
-                {beautiful_name || outputName.displayName}
-              </span>
-            </p>
-          )}
+          <FormattedDisplayName
+            normalization={normalization}
+            name={name}
+            displayName={beautiful_name || outputName.displayName}
+          />
         </div>
         <div className="flex items-start space-x-4 pt-5 md:pt-0 md:w-2/6 flex-shrink-0">
           <div className="flex-shrink-0">

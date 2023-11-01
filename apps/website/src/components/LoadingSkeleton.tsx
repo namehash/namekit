@@ -1,7 +1,11 @@
 "use client";
 
 import { ParsedName } from "@namehash/nameparser";
-import { Shield, ChangesApplied } from "@namehash/nameguard-react";
+import {
+  Shield,
+  ChangesApplied,
+  FormattedDisplayName,
+} from "@namehash/nameguard-react";
 
 type LoadingProps = {
   parsedName: ParsedName;
@@ -10,8 +14,6 @@ type LoadingProps = {
 export function LoadingSkeleton({ parsedName }: LoadingProps) {
   const { transformations, outputName } = parsedName;
   const { name, displayName, normalization } = outputName;
-  const normalized = normalization === "normalized";
-  const displayNameDifferent = normalized && name !== displayName;
 
   return (
     <div className="rounded-xl border shadow-xl space-y-4 md:space-y-0 border-gray-200 shadow-gray-50">
@@ -25,14 +27,11 @@ export function LoadingSkeleton({ parsedName }: LoadingProps) {
               <h1 className="mt-1 text-2xl md:text-4xl text-black font-semibold md:font-bold overflow-hidden overflow-ellipsis">
                 {name}
               </h1>
-              {displayNameDifferent && (
-                <div className="text-sm text-gray-500 mt-4 overflow-hidden overflow-ellipsis">
-                  <span className="mr-2.5 mb-1 md:mb-0">
-                    Generally displays as:
-                  </span>
-                  <span className="text-black">{displayName}</span>
-                </div>
-              )}
+              <FormattedDisplayName
+                normalization={normalization}
+                name={name}
+                displayName={displayName}
+              />
             </>
           ) : (
             <div className="mt-5 w-40 h-3 rounded bg-gradient-to-r from-gray-300 to-gray-100 animate-pulse"></div>
