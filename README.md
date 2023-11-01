@@ -15,7 +15,7 @@ The NameHash team is proud to present NameGuard, a tool for identifying and prev
   * :yellow_circle: Warn: potential issues found
   * :red_circle: Fail: serious issues found
 * Supports many use cases
-  * Standalone Python library (TODO PyPI link)
+  * Standalone Python library ([PyPI](https://pypi.org/project/nameguard/))
   * ASGI web server
   * [Amazon AWS Lambda](https://aws.amazon.com/lambda/) handler
 
@@ -55,7 +55,7 @@ See the [SDK README](./packages/sdk/README.md) for more details.
 Quickstart:
 
 ```bash
-pip install TODO
+pip install nameguard
 ```
 
 ```python
