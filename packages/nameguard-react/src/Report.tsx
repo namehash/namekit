@@ -1,11 +1,15 @@
 import React, { Fragment } from "react";
 
-import { Banner, CheckResultCard, GraphemeCard, ReportFooter } from ".";
+import { Banner, CheckResultCard, LabelList, ReportFooter } from ".";
+import type { NameGuardReport } from "@namehash/nameguard";
 
-export const Report = (props: any) => {
+type Props = {
+  parseNameResponse: unknown;
+  data: NameGuardReport;
+};
+
+export const Report = (props: Props) => {
   const { parseNameResponse, data } = props;
-
-  const rawLabels = data?.labels.map((label) => label.label) ?? [];
 
   if (!parseNameResponse || !data) return null;
 
@@ -28,34 +32,7 @@ export const Report = (props: any) => {
           Name inspection
         </p>
 
-        {data?.labels.map((label, index) => (
-          <div
-            key={index}
-            className="border border-gray-200 rounded-md divide-y divide-gray-200"
-          >
-            <div className="py-[10px] px-6 text-sm font-normal">
-              {rawLabels.map((l, index) => (
-                <Fragment key={index}>
-                  <span
-                    className={
-                      l === label.label
-                        ? "text-black font-semibold"
-                        : "text-gray-500 grayscale"
-                    }
-                  >
-                    {l}
-                  </span>
-                  {index < rawLabels.length - 1 && (
-                    <span className="text-gray-500">.</span>
-                  )}
-                </Fragment>
-              ))}
-            </div>
-            {label?.graphemes?.map((grapheme, index) => (
-              <GraphemeCard key={index} {...grapheme} />
-            ))}
-          </div>
-        ))}
+        <LabelList items={data.labels} />
       </div>
       <ReportFooter />
     </Fragment>
