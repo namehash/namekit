@@ -13,10 +13,10 @@ SLACK_WEBHOOK_URL - Slack webhook url used by GitHub actions to send notificatio
 
 ### Installing the library
 
-NameGuard is available as a Python library on [PyPI]. You can install it with `pip`:
+NameGuard is available as a Python library on [PyPI](https://pypi.org/project/nameguard/). You can install it with `pip`:
 
 ```bash
-pip install TODO
+pip install nameguard
 ```
 
 ### Setting API keys
