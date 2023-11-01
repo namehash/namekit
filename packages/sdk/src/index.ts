@@ -398,14 +398,14 @@ export interface SecureReverseLookupResult {
 class NameGuardError extends Error {
   constructor(
     public status: number,
-    message?: string,
+    message?: string
   ) {
     super(message);
   }
 }
 
 const DEFAULT_ENDPOINT = "https://api.nameguard.io";
-const DEFAULT_VERSION = "v1-beta";
+export const API_VERSION = "v1-beta";
 const DEFAULT_NETWORK: Network = "mainnet";
 const DEFAULT_INSPECT_LABELHASH_PARENT = ETH_TLD;
 const MAX_BULK_INSPECTION_NAMES = 250;
@@ -444,7 +444,7 @@ class NameGuard {
 
   constructor({
     endpoint = DEFAULT_ENDPOINT,
-    version = DEFAULT_VERSION,
+    version = API_VERSION,
     network = DEFAULT_NETWORK,
   } = {}) {
     this.endpoint = new URL(endpoint);
@@ -454,7 +454,7 @@ class NameGuard {
 
   private async fetchNameGuardReport(
     name: string,
-    options?: InspectNameOptions,
+    options?: InspectNameOptions
   ): Promise<NameGuardReport> {
     const url = `${this.endpoint}${this.version}/inspect-name`;
 
@@ -477,7 +477,7 @@ class NameGuard {
 
   private async fetchConsolidatedNameGuardReports(
     names: string[],
-    options?: InspectNameOptions,
+    options?: InspectNameOptions
   ): Promise<BulkConsolidatedNameGuardReport> {
     const url = `${this.endpoint}${this.version}/bulk-inspect-names`;
 
@@ -494,7 +494,7 @@ class NameGuard {
     if (!response.ok) {
       throw new NameGuardError(
         response.status,
-        `Failed to fetch names in batch.`,
+        `Failed to fetch names in batch.`
       );
     }
 
@@ -503,7 +503,7 @@ class NameGuard {
 
   private async fetchSecurePrimaryName(
     address: string,
-    options?: SecurePrimaryNameOptions,
+    options?: SecurePrimaryNameOptions
   ): Promise<SecureReverseLookupResult> {
     const network_name = options?.network || this.network;
 
@@ -514,7 +514,7 @@ class NameGuard {
     if (!response.ok) {
       throw new NameGuardError(
         response.status,
-        "Error looking up secure primary name.",
+        "Error looking up secure primary name."
       );
     }
 
@@ -524,7 +524,7 @@ class NameGuard {
   private async fetchFakeEthName(
     contract_address: string,
     token_id: string,
-    options?: FakeEthNameOptions,
+    options?: FakeEthNameOptions
   ): Promise<FakeEthNameCheckResult> {
     const network_name = options?.network || this.network;
 
@@ -535,7 +535,7 @@ class NameGuard {
     if (!response.ok) {
       throw new NameGuardError(
         response.status,
-        "Error looking up .eth name impersonation status of NFT.",
+        "Error looking up .eth name impersonation status of NFT."
       );
     }
 
@@ -543,7 +543,7 @@ class NameGuard {
   }
 
   private async fetchGraphemeGuardReport(
-    grapheme: string,
+    grapheme: string
   ): Promise<GraphemeGuardReport> {
     const grapheme_encoded = encodeURIComponent(grapheme);
 
@@ -554,7 +554,7 @@ class NameGuard {
     if (!response.ok) {
       throw new NameGuardError(
         response.status,
-        `Error looking up GraphemeGuardReport.`,
+        `Error looking up GraphemeGuardReport.`
       );
     }
 
@@ -575,7 +575,7 @@ class NameGuard {
    */
   public inspectName(
     name: string,
-    options?: InspectNameOptions,
+    options?: InspectNameOptions
   ): Promise<NameGuardReport> {
     return this.fetchNameGuardReport(name, options);
   }
@@ -596,11 +596,11 @@ class NameGuard {
    */
   public bulkInspectNames(
     names: string[],
-    options?: InspectNameOptions,
+    options?: InspectNameOptions
   ): Promise<BulkConsolidatedNameGuardReport> {
     if (names.length > MAX_BULK_INSPECTION_NAMES) {
       throw new Error(
-        `Bulk inspection of more than ${MAX_BULK_INSPECTION_NAMES} names at a time is not supported.`,
+        `Bulk inspection of more than ${MAX_BULK_INSPECTION_NAMES} names at a time is not supported.`
       );
     }
     return this.fetchConsolidatedNameGuardReports(names, options);
@@ -621,7 +621,7 @@ class NameGuard {
    */
   public async inspectNamehash(
     namehash: string,
-    options?: InspectNamehashOptions,
+    options?: InspectNamehashOptions
   ): Promise<NameGuardReport> {
     if (!isKeccak256Hash(namehash)) {
       throw new Error("Invalid Keccak256 hash format for namehash.");
@@ -636,7 +636,7 @@ class NameGuard {
     if (!response.ok) {
       throw new NameGuardError(
         response.status,
-        `Failed to inspect namehash ${namehash} using the network ${network}.`,
+        `Failed to inspect namehash ${namehash} using the network ${network}.`
       );
     }
 
@@ -672,7 +672,7 @@ class NameGuard {
    */
   public async inspectLabelhash(
     labelhash: string,
-    options?: InspectLabelhashOptions,
+    options?: InspectLabelhashOptions
   ): Promise<NameGuardReport> {
     if (!isKeccak256Hash(labelhash)) {
       throw new Error("Invalid Keccak256 hash format for labelhash.");
@@ -696,7 +696,7 @@ class NameGuard {
   public inspectGrapheme(grapheme: string): Promise<GraphemeGuardReport> {
     if (countGraphemes(grapheme) !== 1) {
       throw new Error(
-        `The provided grapheme: "${grapheme}" is not a single grapheme. (i.e. it is not a single character or a sequence of characters that represent a single grapheme).`,
+        `The provided grapheme: "${grapheme}" is not a single grapheme. (i.e. it is not a single character or a sequence of characters that represent a single grapheme).`
       );
     }
 
@@ -705,11 +705,11 @@ class NameGuard {
 
   public getSecurePrimaryName(
     address: string,
-    options?: SecurePrimaryNameOptions,
+    options?: SecurePrimaryNameOptions
   ): Promise<SecureReverseLookupResult> {
     if (!isEthereumAddress(address)) {
       throw new Error(
-        `The provided address: "${address}" is not in a valid Ethereum address format.`,
+        `The provided address: "${address}" is not in a valid Ethereum address format.`
       );
     }
 
@@ -719,17 +719,17 @@ class NameGuard {
   public fakeEthNameCheck(
     contract_address: string,
     token_id: string,
-    options?: FakeEthNameOptions,
+    options?: FakeEthNameOptions
   ): Promise<FakeEthNameCheckResult> {
     if (!isEthereumAddress(contract_address)) {
       throw new Error(
-        `The provided address: "${contract_address}" is not in a valid Ethereum address format.`,
+        `The provided address: "${contract_address}" is not in a valid Ethereum address format.`
       );
     }
 
     if (!isTokenId(token_id)) {
       throw new Error(
-        `The provided token_id: "${token_id}" is not in a valid token id format.`,
+        `The provided token_id: "${token_id}" is not in a valid token id format.`
       );
     }
 
