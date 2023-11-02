@@ -4,18 +4,18 @@ import { Banner, CheckResultCard, LabelList, ReportFooter } from ".";
 import type { NameGuardReport } from "@namehash/nameguard";
 
 type Props = {
-  parseNameResponse: unknown;
+  parsedName: any;
   data: NameGuardReport;
 };
 
 export const Report = (props: Props) => {
-  const { parseNameResponse, data } = props;
+  const { parsedName, data } = props;
 
-  if (!parseNameResponse || !data) return null;
+  if (!parsedName || !data) return null;
 
   return (
     <Fragment>
-      <Banner parsedName={parseNameResponse} report={data} />
+      <Banner parsedName={parsedName} report={data} />
       <div className="space-y-4 md:space-y-5">
         <p className="text-black font-semibold text-lg leading-6">
           {data?.risk_count} of {data?.checks.length} risks found

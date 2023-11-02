@@ -65,7 +65,7 @@ type Props = {
 export function Banner({ report, parsedName }: Props) {
   const { name, title, subtitle, rating, beautiful_name, normalization } =
     report;
-  const { outputName, transformations } = parsedName;
+  const { transformations } = parsedName;
 
   const border = borderColor(rating);
   const shadow = shadowColor(rating);
@@ -81,12 +81,12 @@ export function Banner({ report, parsedName }: Props) {
             Rating for
           </p>
           <h1 className="mt-1 text-2xl md:text-4xl text-black font-semibold md:font-bold overflow-hidden overflow-ellipsis whitespace-nowrap">
-            {name || outputName.displayName}
+            {name}
           </h1>
           <FormattedDisplayName
             normalization={normalization}
             name={name}
-            displayName={beautiful_name || outputName.displayName}
+            displayName={beautiful_name}
           />
         </div>
         <div className="flex items-start space-x-4 pt-5 md:pt-0 md:w-2/6 flex-shrink-0">

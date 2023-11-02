@@ -35,7 +35,7 @@ export function NewReport(props: Props) {
       {isLoading && !normalizationUnknown && (
         <LoadingSkeleton parsedName={name} />
       )}
-      {data && <Report parseNameResponse={name} data={data} />}
+      {data && <Report parsedName={name} data={data} />}
       {error && <p>Error: {error.message}</p>}
     </Fragment>
   );
