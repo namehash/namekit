@@ -493,11 +493,41 @@ def test_inspect_grapheme(test_client, api_version):
 def test_inspect_grapheme_multi(test_client, api_version):
     response = test_client.get(f'/{api_version}/inspect-grapheme/aś')
     assert response.status_code == 422
-
-
+    
+@pytest.mark.parametrize(
+    "address, primary_name_status, primary_name, display_name, canonical_name, impersonation_risk, name",
+    [
+        ('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', 'normalized', 'vitalik.eth', 'vitalik.eth', 'vitalik.eth', False, 'vitalik.eth'),
+        ('0x8Ae0e6dd8eACe27045d9e017C8Cf6dAa9D08C776', 'normalized', 'vitalìk.eth', 'vitalìk.eth', 'vitalik.eth', True, 'vitalìk.eth'),
+        ('0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd', 'normalized', 'exampleprimary.cb.id', 'exampleprimary.cb.id',
+         'exampleprimary.cb.id', False, 'exampleprimary.cb.id'),
+        #TODO normalized without canonical
+        ('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96046', 'no_primary_name', None, 'Unnamed d8da', None, False, None),
+        ('0xfA9A134f997b3d48e122d043E12d04E909b11073', 'unnormalized', None, 'Unnamed fa9a', None, False, '888‍‍.eth'),
+        ('0x76fd9b1B2d8F2cd9Ba06c925506627883F97B97C', 'unnormalized', None, 'Unnamed 76fd', None, False, '‍‍❤‍‍.eth'),
+        ('0xf537a27F31d7A014c5b8008a0069c61f827fA7A1', 'unnormalized', None, 'Unnamed f537', None, False, '٠٠۱.eth'),  # normalizable
+        ('0x0ebDfD75d33c05025074fd7845848D44966AB367', 'unnormalized', None, 'Unnamed 0ebd', None, False, '۸۸۷۵۴۲.eth'),  # normalizable
+        ('0xaf738F6C83d7D2C46723b727Ce794F9c79Cc47E6', 'unnormalized', None, 'Unnamed af73', '99999.eth', True, '୨୨୨୨୨.eth'),
+        ('0xb281405429C3bc91e52707a21754cDaCeCbB035E', 'unnormalized', None, 'Unnamed b281', None, False, '┣▇▇▇═─.eth'),
+        ('0x0d756ee0e8C250f88f5e0eDd7C723dc3A0BF75cF', 'unnormalized', None, 'Unnamed 0d75', 'c6ep.eth', True, 'сбер.eth'),
+    ]
+)
+def test_primary_name(test_client, api_version, address, primary_name_status, primary_name, display_name, canonical_name, impersonation_risk, name):
+    response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
+    assert response.status_code == 200
+    res_json = response.json()
+    print(res_json)
+    assert res_json['primary_name_status'] == primary_name_status
+    assert res_json['primary_name'] == primary_name
+    assert res_json['display_name'] == display_name
+    if primary_name_status!='no_primary_name':
+        assert res_json['nameguard_result']['name'] == name
+        assert res_json['nameguard_result']['canonical_name'] == canonical_name
+        assert any(check['check'] == 'impersonation_risk' and check['status'] == 'warn' for check in res_json['nameguard_result']['checks']) == impersonation_risk
+        
 def test_primary_name_get(test_client, api_version):
     address='0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
-    response = test_client.get(f'/{api_version}/primary-name/mainnet/{address}')
+    response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
@@ -508,7 +538,7 @@ def test_primary_name_get(test_client, api_version):
 
 def test_primary_name_get_uppercase(test_client, api_version):
     address='0XD8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
-    response = test_client.get(f'/{api_version}/primary-name/mainnet/{address}')
+    response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
@@ -519,7 +549,7 @@ def test_primary_name_get_uppercase(test_client, api_version):
 
 def test_primary_name_get_offchain(test_client, api_version):
     address='0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd'
-    response = test_client.get(f'/{api_version}/primary-name/mainnet/{address}')
+    response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
@@ -530,7 +560,7 @@ def test_primary_name_get_offchain(test_client, api_version):
 
 def test_primary_name_get_unknown(test_client, api_version):
     address='0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96046'
-    response = test_client.get(f'/{api_version}/primary-name/mainnet/{address}')
+    response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
@@ -538,14 +568,26 @@ def test_primary_name_get_unknown(test_client, api_version):
     assert res_json['primary_name'] is None
     assert res_json['display_name'] == 'Unnamed d8da'
 
-    #TODO add example with address resolved to unnoramlized (test existence of nameguard results) name and test other networks
+def test_primary_name_get_unnormalized(test_client, api_version):
+    address = '0xfA9A134f997b3d48e122d043E12d04E909b11073' # 888‍‍.eth
+    response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
+    assert response.status_code == 200
+    res_json = response.json()
+    print(res_json)
+    assert res_json['primary_name_status'] == 'unnormalized'
+    assert res_json['primary_name'] is None
+    assert res_json['display_name'] == 'Unnamed fa9a'
 
+def test_primary_name_get_invalid_address(test_client, api_version):
+    address = '0xfA9A134f997b3d48e122d043E12d04E909b1107g'
+    response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
+    assert response.status_code == 422
 
 def test_primary_name_get_empty(test_client, api_version):
-    response = test_client.get(f'/{api_version}/primary-name/mainnet')
+    response = test_client.get(f'/{api_version}/secure-primary-name/mainnet')
     assert response.status_code == 404
 
-    response = test_client.get(f'/{api_version}/primary-name')
+    response = test_client.get(f'/{api_version}/secure-primary-name')
     assert response.status_code == 404
 
 
