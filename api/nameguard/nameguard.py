@@ -287,7 +287,7 @@ class NameGuard:
             grapheme_description=grapheme.description,
         )
 
-    async def primary_name(self, address: str, network_name: str) -> SecureReverseLookupResult:
+    async def secure_primary_name(self, address: str, network_name: str) -> SecureReverseLookupResult:
         try:
             domain = self.ns[network_name].name(address)
         except requests.exceptions.ConnectionError as ex:
