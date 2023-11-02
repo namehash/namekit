@@ -31,6 +31,8 @@ from ens.utils import address_to_reverse_domain, is_empty_name, is_none_or_zero_
 from eth_typing import ChecksumAddress
 from eth_utils import to_checksum_address, is_address, to_bytes
 from hexbytes import HexBytes
+from web3.contract import Contract
+
 
 def label_to_hash(label: str) -> HexBytes:
     # label = normalize_name(label)
