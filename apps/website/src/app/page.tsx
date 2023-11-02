@@ -495,7 +495,7 @@ type ComingSoonSectionProps = {
 
 function ComingSoonSection(props: ComingSoonSectionProps) {
     const imageDiv = cc(["hidden gt_mobile:flex flex-row justify-center items-center w-full max-w-3xl xl:w-1/2 rounded-none px-4 py-5 xl:px-20 xl:py-24 bg-origin-border bg-center bg-no-repeat bg-cover flex-shrink-0", props.sectionBackgroundName]);
-    const mobileImageDiv = cc(["flex gt_mobile:hidden flex-row justify-center items-center w-full h-full rounded-none px-4 py-5 bg-origin-border bg-center bg-no-repeat bg-contain flex-shrink-0"], props.sectionBackgroundName);
+    const mobileImageDiv = cc(["flex gt_mobile:hidden flex-row justify-center items-center w-full h-full rounded-none px-4 py-5 bg-origin-border bg-center bg-no-repeat bg-contain flex-shrink-0",  props.sectionBackgroundName]);
 
     return (
         <section className="w-full flex flex-col xl:flex-row items-center justify-center h-full py-10 px-5 gt_mobile:h-1/2 gt_mobile:py-24 gt_mobile:px-10">
@@ -616,7 +616,7 @@ function Header() {
 }
 
 function HeroSection() {
-    const heroBackgroundDiv = cc(["flex flex-col items-center justify-center w-full h-full min-w- max-w-[125rem] bg-no-repeat bg-center bg-contain", 'xl:bg-[url("../../public/assets/hero_background.png")]'])
+    const heroBackgroundDiv = cc(["flex flex-col items-center justify-center w-full h-full min-w- max-w-[125rem] bg-no-repeat bg-center bg-contain", 'xl:bg-[url("../../public/assets/hero_background.png")]']);
     const npmCommand = "npm install @namehash/nameguard";
     const copyIcon =
         <div className="w-fit h-fit z-10 cursor-pointer" onClick={() => {
