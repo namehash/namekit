@@ -13,17 +13,19 @@ import autorenewal_img from "../../public/assets/autorenewal.png";
 import ens_webfont_img from "../../public/assets/ens_webfont.png";
 import {Search} from "@/components/Search";
 import {Tooltip} from "@namehash/nameguard-react";
+import cc from "classcat";
 
 
 export default function Home() {
     const exampleCode =
-        `<figure class="md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800"/>
+        `<figure class="md:flex bg-slate-100 rounded-xl p-8 md:p-0
+         dark:bg-slate-800"/>
             <img class="w-24 h-24 md:w-48 md:h-auto md:rounded-none 
-            rounded-full mx-auto" src="/sarah-dayan.jpg" alt="" width="384" 
-            height="512">
-                <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
-                    <blockquote>
-                        <p class="text-lg font-medium">`;
+         rounded-full mx-auto" src="/sarah-dayan.jpg" alt="" width="384" 
+         height="512">
+            <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
+                <blockquote>
+                    <p class="text-lg font-medium">`;
   return (
     <>
       <Header />
@@ -411,8 +413,9 @@ type ReadySectionProps = {
 }
 
 function ReadySection(props: ReadySectionProps){
+    const mediaDiv = cc(["flex sm:flex-col xl:flex-row justify-center border-0 rounded-none items-center gap-10 w-full h-full xl:h-3/4 py-16 px-10 bg-center bg-no-repeat bg-cover flex-shrink-0 gt_mobile:gap-10", props.sectionBackgroundName]);
   return (
-      <section className={`w-full h-full py-10 px-5 flex flex-col items-center justify-center gt_mobile:py-24 gt_mobile:px-0`}>
+      <section className="w-full h-full py-10 px-5 flex flex-col items-center justify-center gt_mobile:py-24 gt_mobile:px-0">
           <div className="max-w-full flex flex-col items-center gt_mobile:mx-auto gt_mobile:px-6 gt_mobile:gap-3">
           <div className="w-full flex flex-col gap-5 items-center xl:w-1/2">
             <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-[20px] gap-2 justify-center items-center z-10">
@@ -445,7 +448,7 @@ function ReadySection(props: ReadySectionProps){
             </p>
           </div>
               {props.isCodeOnTheLeft ? (
-                  <div className={`flex sm:flex-col xl:flex-row justify-center border-0 rounded-none items-center gap-10 w-full h-full xl:h-3/4 py-16 px-10 ${props.sectionBackgroundName} bg-center bg-no-repeat bg-cover flex-shrink-0 gt_mobile:gap-10` }>
+                  <div className={mediaDiv}>
                       {props.integrationsPanel ? (
                           <div className="hidden md:flex flex-col w-full h-full justify-between items-center gap-7">
                               <CodeSnippet codeSnippet={props.codeSnippet}/>
@@ -461,7 +464,7 @@ function ReadySection(props: ReadySectionProps){
                            src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
                   </div>
               ) : (
-                  <div className={`flex sm:flex-col xl:flex-row justify-center items-center w-full h-full xl:h-3/4 py-16 px-10 border-0 rounded-none ${props.sectionBackgroundName} bg-center bg-no-repeat bg-cover flex-shrink-0 gt_mobile:gap-10`}>
+                  <div className={mediaDiv}>
                     <Image className="z-10 w-full h-full gt_mobile:w-2/3 gt_mobile:h-2/3 xl:w-1/2 xl:h-1/2 max-w-lg"
                          src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
                       {props.integrationsPanel ? (
@@ -491,10 +494,13 @@ type ComingSoonSectionProps = {
 }
 
 function ComingSoonSection(props: ComingSoonSectionProps) {
+    const imageDiv = cc(["hidden gt_mobile:flex flex-row justify-center items-center w-full max-w-3xl xl:w-1/2 rounded-none px-4 py-5 xl:px-20 xl:py-24 bg-origin-border bg-center bg-no-repeat bg-cover flex-shrink-0", props.sectionBackgroundName]);
+    const mobileImageDiv = cc(["flex gt_mobile:hidden flex-row justify-center items-center w-full h-full rounded-none px-4 py-5 bg-origin-border bg-center bg-no-repeat bg-contain flex-shrink-0"], props.sectionBackgroundName);
+
     return (
         <section className="w-full flex flex-col xl:flex-row items-center justify-center h-full py-10 px-5 gt_mobile:h-1/2 gt_mobile:py-24 gt_mobile:px-10">
             {!props.isTextOnTheLeft &&
-                <div className={`hidden gt_mobile:flex flex-row justify-center items-center w-full max-w-3xl xl:w-1/2 ${props.sectionBackgroundName} rounded-none px-4 py-5 xl:px-20 xl:py-24 bg-origin-border bg-center bg-no-repeat bg-cover flex-shrink-0`}>
+                <div className={imageDiv}>
                     <Image className="relative z-10 w-full h-full"
                          src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
                 </div>
@@ -536,11 +542,11 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
                     {props.sectionDescription}
                 </p>
             </div>
-            {props.isTextOnTheLeft && <div className={`hidden gt_mobile:flex flex-row justify-center items-center w-full max-w-3xl xl:w-1/2 h-full ${props.sectionBackgroundName} rounded-none px-4 py-5 xl:px-20 xl:py-24 bg-origin-border bg-center bg-no-repeat bg-contain flex-shrink-0`}>
+            {props.isTextOnTheLeft && <div className={imageDiv}>
                 <Image className="relative z-10 w-full h-full"
                      src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
             </div>}
-            <div className={`flex gt_mobile:hidden flex-row justify-center items-center w-full h-full ${props.sectionBackgroundName} rounded-none px-4 py-5 bg-origin-border bg-center bg-no-repeat bg-contain flex-shrink-0`}>
+            <div className={mobileImageDiv}>
                 <Image className="relative z-10 w-full h-full"
                        src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
             </div>
@@ -574,10 +580,10 @@ function Header() {
         <header className="relative top-0 w-full z-10 border-b border-gray-300 box-border inline-flex h-[56px] px-[20px] py-[9px] items-center justify-between gt_mobile:flex gt_mobile:justify-center lg:justify-between gt_mobile:flex-row gt_mobile:h-[70px] gt_mobile:px-28 gt_mobile:py-4">
             <div className="flex flex-row gap-7 justify-between items-center">
                 <div className="flex flex-row justify-between items-center gap-1 cursor-pointer">
-                    <a href={"https://namehash.io/"} > {/*change the link to the one to nameguard homepage as soon as i get it*/}
+                    <a href={"https://nameguard.io"} >
                         <p className="text-black not-italic font-bold text-[22.683px] leading-[22.683px] tracking-[-0.907px] gt_mobile:text-[27.816px] gt_mobile:leading-[27.816px] gt_mobile:tracking-[-1.113px]">NameGuard</p>
                     </a>
-                    <a href={"https://namehash.io/"}> {/*change the link to the one to nameguard homepage as soon as i get it*/}
+                    <a href={"https://nameguard.io"}>
                         <div className="relative -top-1.5 bg-black w-fit h-fit p-[2.8px] rounded-[2.8px] flex-shrink-0">
                             <p className="text-white not-italic font-semibold pb-[0.5px] text-[6.857px] leading-[7.619px] gt_mobile:text-[8.409px] gt_mobile:leading-[9.343px]">beta</p>
                         </div>
@@ -610,11 +616,12 @@ function Header() {
 }
 
 function HeroSection() {
-    const bg_crests = `xl:bg-[url("../../public/assets/hero_background.png")]`;
+    const heroBackgroundDiv = cc(["flex flex-col items-center justify-center w-full h-full min-w- max-w-[125rem] bg-no-repeat bg-center bg-contain", 'xl:bg-[url("../../public/assets/hero_background.png")]'])
+    const npmCommand = "npm install @namehash/nameguard";
     const copyIcon =
         <div className="w-fit h-fit z-10 cursor-pointer" onClick={() => {
             setCopiedToClipboard(true);
-            navigator.clipboard.writeText("npm init @nameguard/nameguard@latest");
+            navigator.clipboard.writeText(npmCommand);
         }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none" className="block w-5 h-5 gt_mobile:hidden">
                 <path d="M14.25 6.875V5C14.25 3.96447 13.4105 3.125 12.375 3.125H5.5C4.46447 3.125 3.625 3.96447 3.625 5V11.875C3.625 12.9105 4.46447 13.75 5.5 13.75H7.375M14.25 6.875H15.5C16.5355 6.875 17.375 7.71447 17.375 8.75V15C17.375 16.0355 16.5355 16.875 15.5 16.875H9.25C8.21447 16.875 7.375 16.0355 7.375 15V13.75M14.25 6.875H9.25C8.21447 6.875 7.375 7.71447 7.375 8.75V13.75"
@@ -626,11 +633,6 @@ function HeroSection() {
                   d="M16.5 8.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v8.25A2.25 2.25 0 006 16.5h2.25m8.25-8.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-7.5A2.25 2.25 0 018.25 18v-1.5m8.25-8.25h-6a2.25 2.25 0 00-2.25 2.25v6"/>
         </svg>
     </div>;
-
-    const viewDocsButton =
-        <button className="flex justify-center items-center px-[25px] py-[13px] rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-800 cursor-pointer" onClick={() => {window.location.href = "https://api.nameguard.io/docs";}}> {/* Should be replaced with url to the docs! */}
-            <p className="text-white not-italic font-medium text-base leading-6">View the docs</p>
-        </button>;
 
     const [copiedToClipboard, setCopiedToClipboard] = useState<boolean>(false);
 
@@ -646,8 +648,8 @@ function HeroSection() {
     }, [copiedToClipboard]);
 
     return (
-        <section className={`box-border relative z-10 w-full h-fit xl:h-screen py-[61px] gt_mobile:pb-24 gt_mobile:pt-8 px-5 flex flex-col items-center justify-center bg-hero_background bg-no-repeat bg-center bg-contain md:px-10 md:pt-10 md:pb-32`}>
-            <div className={`flex flex-col items-center justify-center w-full h-full min-w- max-w-[125rem] ${bg_crests} bg-no-repeat bg-center bg-contain`}>
+        <section className="box-border relative z-10 w-full h-fit xl:h-screen py-[61px] gt_mobile:pb-24 gt_mobile:pt-8 px-5 flex flex-col items-center justify-center bg-hero_background bg-no-repeat bg-center bg-contain md:px-10 md:pt-10 md:pb-32">
+            <div className={heroBackgroundDiv}>
                 <div className="inline-flex flex-col items-center gap-5 w-full h-fit">
                     <div className="flex flex-col gap-2 w-fit h-fit z-10">
                         <p className="text-center not-italic uppercase text-gray-500 text-xs tracking-[0.3px] font-medium">An open source public good</p>
@@ -659,10 +661,14 @@ function HeroSection() {
                         Guard your users from heartbreak and encourage best practice usage of ENS
                     </p>
                     <div className="flex items-center gap-2 py-[9px] pl-4 pr-[14px] rounded-lg bg-black bg-opacity-5 border border-gray-300 gt_mobile:gap-3 gt_mobile:py-[13px] gt_mobile:pl-[20px] gt_mobile:pr-[16px]">
-                        <p className="text-black leading-6 font-normal text-sm gt_mobile:text-base">npm init @nameguard/nameguard@latest</p>
+                        <p className="text-black leading-6 font-normal text-sm gt_mobile:text-base">{npmCommand}</p>
                         <Tooltip trigger={copyIcon}>{copiedToClipboard ? copiedText : copyText}</Tooltip>
                     </div>
-                    <Tooltip trigger={viewDocsButton}><span>https://api.nameguard.io/docs</span></Tooltip>
+                    <a href={"https://api.nameguard.io/docs"}>
+                        <button className="flex justify-center items-center px-[25px] py-[13px] rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-800 cursor-pointer">
+                            <p className="text-white not-italic font-medium text-base leading-6">View the docs</p>
+                        </button>
+                    </a>
                 </div>
             </div>
         </section>
@@ -688,7 +694,7 @@ function ExitSection() {
 type RoadMapElement = {
     stageOfCompletion: "completed" | "in progress" | "planned";
     headerText: string;
-    commentSentences: string[];
+    commentSentences: string[] | React.ReactNode[];
 };
 
 function RoadMap() {
@@ -714,13 +720,16 @@ function RoadMap() {
     const badgesMap = new Map<string, React.ReactNode>([["completed", completedBadge], ["in progress", inProgressBadge], ["planned", plannedBadge]]);
 
     const roadMapElements: RoadMapElement[] = [
-        { stageOfCompletion: "completed", headerText: "ENSIP-15 ENS Normalization Approval", commentSentences: ["implemented"]},
+        { stageOfCompletion: "completed", headerText: "Python ENS Normalize", commentSentences: ["ENSIP-15 ENS Normalization Approval"]},
         { stageOfCompletion: "completed", headerText: "ENS Font Data", commentSentences: ["implemented"]},
+        { stageOfCompletion: "completed", headerText: "ENS label inspector", commentSentences:
+                [<Fragment>Description with <a className="text-black underline gt_mobile:underline-offset-[6px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]" href={"https://namehash.io/"}>hyperlink</a></Fragment>]},
+        { stageOfCompletion: "completed", headerText: "Hidden risks or limitations checks", commentSentences: ["implemented"]},
         { stageOfCompletion: "completed", headerText: "Impersonation attack protections", commentSentences: ["implemented"]},
         { stageOfCompletion: "completed", headerText: "Fake ENS NFT filters", commentSentences: ["implemented"]},
-        { stageOfCompletion: "completed", headerText: "Hidden risks or limitations checks", commentSentences: ["implemented"]},
         { stageOfCompletion: "in progress", headerText: "Expand ENS Name Risks and Limitation Checks", commentSentences: ["Full DNS name support", "Offchain name support", "NameWrapper fuse checks",
                 "Enhanced support for multi-grapheme confusables", "Expanded impersonation checks for different networks (ex: Polygon, etc..) and for overall NFT collections, rather than just NFTs"]},
+
         { stageOfCompletion: "planned", headerText: "ENS Name Auto-Renewal", commentSentences: ["Users will be able to automate renewals with credit cards and other major forms of payment "]},
         { stageOfCompletion: "planned", headerText: "Content Enhancements", commentSentences: ["User-friendly (non-technical) help pages for each check",
             "Information messages and help content with multiple language support (internationalization)"]},
@@ -750,11 +759,12 @@ function RoadMap() {
     const leftSideShields = [positiveShield, negativeShield, warningShield, positiveShield, warningShield, negativeShield, warningShield, positiveShield];
     const rightSideShields = [negativeShield, positiveShield, warningShield, negativeShield, positiveShield, warningShield, negativeShield, positiveShield];
 
+
     return (
         <section className="relative bg-white w-full h-full px-5 md:py-32 md:px-10 xl:px-32 flex flex-row items-center justify-center z-10 gap-10">
             <div className="hidden w-1/5 h-full relative -top-20 md:flex flex-col justify-center items-center gap-36">
                 {leftSideShields.map((shield, idx) => (
-                    <div key={`left-${idx}-Shield`} className={`w-full h-full flex flex-row items-center ${idx % 2 === 1 ? "justify-start" : "justify-end"}`}>
+                    <div key={`left-${idx}-Shield`} className={cc(["w-full h-full flex flex-row items-center", idx % 2 === 1 ? "justify-start" : "justify-end"])}>
                         <div className="inline-flex items-start p-5 gap-[10px] border rounded-full border-gray-200 shadow-sm">{shield}</div>
                     </div>))}
             </div>
@@ -778,13 +788,13 @@ function RoadMap() {
                                         'absolute left-0 top-0 flex w-6 justify-center mt-2'
                                     )}
                                 >
-                                    <div className={`w-[2px] ${roadmapElement.stageOfCompletion === "completed" ? "bg-black" : "bg-gray-200"} mt-5 mb-3`} />
+                                    <div className={cc(["w-[2px] mt-5 mb-3", roadmapElement.stageOfCompletion === "completed" ? "bg-black" : "bg-gray-200"])} />
                                 </div>
                                     <div className="relative flex h-6 w-6 flex-none items-center justify-center bg-white">
                                         {roadmapElement.stageOfCompletion === 'completed' ? (
                                             <CheckCircleIcon className="h-6 w-6 my-2 text-black" aria-hidden="true" />
                                         ) : (
-                                            <div className={`h-2 w-2 rounded-full ${roadmapElement.stageOfCompletion === "in progress" ? "bg-black" : "bg-gray-200"}`} />
+                                            <div className={cc(["h-2 w-2 rounded-full", roadmapElement.stageOfCompletion === "in progress" ? "bg-black" : "bg-gray-200"])} />
                                         )}
                                     </div>
                                     <div className="w-full h-fit flex flex-col items-start gap-3">
@@ -806,7 +816,7 @@ function RoadMap() {
             </div>
             <div className="hidden w-1/5 h-full relative top-4 md:flex flex-col justify-center items-center gap-36">
                 {rightSideShields.map((shield, idx) => (
-                    <div key={`left-${idx}-Shield`} className={`w-full h-full flex flex-row items-center ${idx % 2 === 0 ? "justify-start" : "justify-end"}`}>
+                    <div key={`left-${idx}-Shield`} className={cc(["w-full h-full flex flex-row items-center", idx % 2 === 0 ? "justify-start" : "justify-end"])}>
                         <div className="inline-flex items-start p-5 gap-[10px] border rounded-full border-gray-200 shadow-sm">{shield}</div>
                     </div>))}
             </div>
