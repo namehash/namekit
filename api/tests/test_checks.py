@@ -109,13 +109,13 @@ def test_label_namewrapper(nameguard: NameGuard):
 
 def test_label_normalized(nameguard: NameGuard):
     l = nameguard.analyse_label('ab')
-    r = checks.label.normalized.check_label(l)
+    r = checks.dna.normalized.check_label(l)
     assert r.check == Check.NORMALIZED
     assert r.rating == Rating.PASS
     assert r.message == 'This label is normalized according to ENSIP-15'
 
     l = nameguard.analyse_label('a_a')
-    r = checks.label.normalized.check_label(l)
+    r = checks.dna.normalized.check_label(l)
     assert r.check == Check.NORMALIZED
     assert r.rating == Rating.ALERT
     assert r.message == 'This label is not normalized according to ENSIP-15'

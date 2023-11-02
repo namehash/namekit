@@ -107,20 +107,28 @@ class Check(str, Enum):
     '''
     The type of a check.
 
+    Common:
+    * `normalized`: A name/label/grapheme is ENSIP-15 normalized.
+
+    Grapheme:
     * `confusables`: A grapheme is visually confusable.
     * `invisible`: A grapheme is invisible.
     * `typing_difficulty`: A grapheme is difficult to type.
     * `font_support`: A grapheme is not supported by common fonts.
 
+    Label:
     * `mixed_scripts`: A label contains multiple scripts.
     * `namewrapper_compatible`: TODO
-    * `normalized`: A label is ENSIP-15 normalized.
     * `punycode_compatible_label`: A label is compatible with Punycode.
     * `unknown_label`: A label is unknown.
 
+    Name:
     * `impersonation_risk`: A name might be used for impersonation.
     * `punycode_compatible_name`: A name is compatible with Punycode.
     '''
+
+    # Common
+    NORMALIZED = 'normalized'
 
     # Grapheme
     CONFUSABLES = 'confusables'
@@ -131,7 +139,6 @@ class Check(str, Enum):
     # Label
     MIXED_SCRIPTS = 'mixed_scripts'
     NAMEWRAPPER_COMPATIBLE = 'namewrapper_compatible'
-    NORMALIZED = 'normalized'
     PUNYCODE_COMPATIBLE_LABEL = 'punycode_compatible_label'
     UNKNOWN_LABEL = 'unknown_label'
 

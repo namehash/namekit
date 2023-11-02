@@ -16,6 +16,7 @@ from .result import (
     BulkNameGuardBulkReport,
     ConsolidatedReport,
     Normalization,
+    GraphemeNormalization,
     GraphemeGuardReport,
     SecureReverseLookupResult,
     SecureReverseLookupStatus,
