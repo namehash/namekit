@@ -1,6 +1,6 @@
 import os
 import re
-
+from nameguard.our_ens import OurENS
 from ens_normalize import ens_process, is_ens_normalized, ens_cure, DisallowedSequence
 import requests
 from ens import ENS
@@ -94,7 +94,7 @@ class NameGuard:
                                       (NetworkName.SEPOLIA, 'PROVIDER_URI_SEPOLIA')):
             if os.environ.get(env_var) is None:
                 logger.warning(f'Environment variable {env_var} is not set')
-            self.ns[network_name] = ENS(HTTPProvider(os.environ.get(env_var)))
+            self.ns[network_name] = OurENS(HTTPProvider(os.environ.get(env_var)))
 
     def analyse_label(self, label: str):
         return self._inspector.analyse_label(label, simple_confusables=True)
