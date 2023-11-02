@@ -334,21 +334,20 @@ async def test_empty_labels(nameguard: NameGuard):
     assert r.labels[2].normalization is Normalization.NORMALIZED
 
 
-
-
 def test_generic_check_result_operators():
-    assert GenericCheckResult(**{'check': Check.NORMALIZED, 'status': CheckStatus.INFO, '_name_message': ''}) == \
-           GenericCheckResult(**{'check': Check.NORMALIZED, 'status': CheckStatus.INFO, '_name_message': ''})
-    assert GenericCheckResult(**{'check': Check.CONFUSABLES, 'status': CheckStatus.WARN, '_name_message': ''}) != \
-           GenericCheckResult(**{'check': Check.FONT_SUPPORT, 'status': CheckStatus.WARN, '_name_message': ''})
-    assert GenericCheckResult(**{'check': Check.NORMALIZED, 'status': CheckStatus.INFO, '_name_message': ''}) < \
-           GenericCheckResult(**{'check': Check.FONT_SUPPORT, 'status': CheckStatus.PASS, '_name_message': ''})
-    assert GenericCheckResult(**{'check': Check.NORMALIZED, 'status': CheckStatus.WARN, '_name_message': ''}) <= \
-           GenericCheckResult(**{'check': Check.FONT_SUPPORT, 'status': CheckStatus.ALERT, '_name_message': ''})
-    assert GenericCheckResult(**{'check': Check.NORMALIZED, 'status': CheckStatus.PASS, '_name_message': ''}) > \
-           GenericCheckResult(**{'check': Check.CONFUSABLES, 'status': CheckStatus.PASS, '_name_message': ''})
-    assert GenericCheckResult(**{'check': Check.NORMALIZED, 'status': CheckStatus.ALERT, '_name_message': ''}) >= \
-           GenericCheckResult(**{'check': Check.FONT_SUPPORT, 'status': CheckStatus.ALERT, '_name_message': ''})
+    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.INFO, _name_message='') == \
+           GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.INFO, _name_message='')
+    assert GenericCheckResult(check=Check.CONFUSABLES, status=CheckStatus.WARN, _name_message='') != \
+           GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.WARN, _name_message='')
+    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.INFO, _name_message='') < \
+           GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.PASS, _name_message='')
+    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.WARN, _name_message='') <= \
+           GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.ALERT, _name_message='')
+    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.PASS, _name_message='') > \
+           GenericCheckResult(check=Check.CONFUSABLES, status=CheckStatus.PASS, _name_message='')
+    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.ALERT, _name_message='') >= \
+           GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.ALERT, _name_message='')
+
 
 def test_generic_check_result_repr():
     assert repr(GenericCheckResult(**{'check': Check.NORMALIZED, 'status': CheckStatus.PASS, '_name_message': ''})) == \
