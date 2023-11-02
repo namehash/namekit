@@ -60,6 +60,6 @@ describe("NameGuard", () => {
       "61995921128521442959106650131462633744885269624153038309795231243542768648193"
     );
 
-    expect(data).toBe("impersonated_ens_name");
+    expect(data.status).toBe("impersonated_eth_name");
   });
 });
