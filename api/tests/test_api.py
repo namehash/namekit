@@ -510,6 +510,8 @@ def test_inspect_grapheme_multi(test_client, api_version):
         ('0xaf738F6C83d7D2C46723b727Ce794F9c79Cc47E6', 'unnormalized', None, 'Unnamed af73', '99999.eth', True, '୨୨୨୨୨.eth'),
         ('0xb281405429C3bc91e52707a21754cDaCeCbB035E', 'unnormalized', None, 'Unnamed b281', None, False, '┣▇▇▇═─.eth'),
         ('0x0d756ee0e8C250f88f5e0eDd7C723dc3A0BF75cF', 'unnormalized', None, 'Unnamed 0d75', 'c6ep.eth', True, 'сбер.eth'),
+        ('0x7Da3CdE891a76416ec9D1c3354B8EfE550Bd4e20', 'unnormalized', None, 'Unnamed 7da3', 'vitalik.eth', True, 'vitȧlik.eth'),
+        ('0xC9f598BC5BB554B6A15A96D19954B041C9FDbF14', 'unnormalized', None, 'Unnamed c9f5', 'vitalik.eth', True, 'vıtalik.eth'),
     ]
 )
 def test_primary_name(test_client, api_version, address, primary_name_status, primary_name, display_name, canonical_name, impersonation_risk, name):
