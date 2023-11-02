@@ -723,7 +723,7 @@ function RoadMap() {
         { stageOfCompletion: "completed", headerText: "Python ENS Normalize", commentSentences: ["ENSIP-15 ENS Normalization Approval"]},
         { stageOfCompletion: "completed", headerText: "ENS Font Data", commentSentences: ["implemented"]},
         { stageOfCompletion: "completed", headerText: "ENS label inspector", commentSentences:
-                [<Fragment>Description with <a className="text-black underline gt_mobile:underline-offset-[6px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]" href={"https://namehash.io/"}>hyperlink</a></Fragment>]},
+                [<Fragment>Description with <a key={"ENSLabelInspectorFragment"} className="text-black underline gt_mobile:underline-offset-[6px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]" href={"https://namehash.io/"}>hyperlink</a></Fragment>]},
         { stageOfCompletion: "completed", headerText: "Hidden risks or limitations checks", commentSentences: ["implemented"]},
         { stageOfCompletion: "completed", headerText: "Impersonation attack protections", commentSentences: ["implemented"]},
         { stageOfCompletion: "completed", headerText: "Fake ENS NFT filters", commentSentences: ["implemented"]},
