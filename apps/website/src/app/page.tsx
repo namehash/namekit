@@ -617,7 +617,7 @@ function HeroSection() {
     const copyIcon =
         <div className={"w-fit h-fit z-10 cursor-pointer"} onClick={() => {
             setCopiedToClipboard(true);
-            navigator.clipboard.writeText("npm init @nameguard/nameguard@latest");
+            navigator.clipboard.writeText("npm init @namehash/nameguard@latest");
         }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none" className="block w-5 h-5 gt_mobile:hidden">
                 <path d="M14.25 6.875V5C14.25 3.96447 13.4105 3.125 12.375 3.125H5.5C4.46447 3.125 3.625 3.96447 3.625 5V11.875C3.625 12.9105 4.46447 13.75 5.5 13.75H7.375M14.25 6.875H15.5C16.5355 6.875 17.375 7.71447 17.375 8.75V15C17.375 16.0355 16.5355 16.875 15.5 16.875H9.25C8.21447 16.875 7.375 16.0355 7.375 15V13.75M14.25 6.875H9.25C8.21447 6.875 7.375 7.71447 7.375 8.75V13.75"
@@ -658,7 +658,7 @@ function HeroSection() {
                     </p>
                     <div className={"flex items-center gap-2 py-[9px] pl-4 pr-[14px] rounded-lg bg-black bg-opacity-5 border border-gray-300 " +
                         "gt_mobile:gap-3 gt_mobile:py-[13px] gt_mobile:pl-[20px] gt_mobile:pr-[16px]"}>
-                        <p className={"text-black leading-6 font-normal text-sm gt_mobile:text-base"}>npm init @nameguard/nameguard@latest</p>
+                        <p className={"text-black leading-6 font-normal text-sm gt_mobile:text-base"}>npm init @namehash/nameguard@latest</p>
                         <Tooltip trigger={copyIcon}>{copiedToClipboard ? copiedText : copyText}</Tooltip>
                     </div>
                     <button className={"flex justify-center items-center px-[25px] py-[13px] rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-800"} onClick={() => {window.location.href = "https://api.nameguard.io/docs";}}> {/* Should be replaced with url to the docs! */}
