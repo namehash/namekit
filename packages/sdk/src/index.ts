@@ -507,7 +507,7 @@ class NameGuard {
   ): Promise<SecureReverseLookupResult> {
     const network_name = options?.network || this.network;
 
-    const url = `${this.endpoint}${this.version}/primary-name/${network_name}/${address}`;
+    const url = `${this.endpoint}${this.version}/secure-primary-name/${network_name}/${address}`;
 
     const response = await fetch(url);
 
