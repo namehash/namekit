@@ -13,17 +13,19 @@ import autorenewal_img from "../../public/assets/autorenewal.png";
 import ens_webfont_img from "../../public/assets/ens_webfont.png";
 import {Search} from "@/components/Search";
 import {Tooltip} from "@namehash/nameguard-react";
+import cc from "classcat";
 
 
 export default function Home() {
     const exampleCode =
-        `<figure class="md:flex bg-slate-100 rounded-xl p-8 md:p-0 dark:bg-slate-800"/>
+        `<figure class="md:flex bg-slate-100 rounded-xl p-8 md:p-0
+         dark:bg-slate-800"/>
             <img class="w-24 h-24 md:w-48 md:h-auto md:rounded-none 
-            rounded-full mx-auto" src="/sarah-dayan.jpg" alt="" width="384" 
-            height="512">
-                <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
-                    <blockquote>
-                        <p class="text-lg font-medium">`;
+         rounded-full mx-auto" src="/sarah-dayan.jpg" alt="" width="384" 
+         height="512">
+            <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
+                <blockquote>
+                    <p class="text-lg font-medium">`;
   return (
     <>
       <Header />
@@ -37,8 +39,8 @@ export default function Home() {
             sectionBackgroundName={"bg-green_background"}
             isCodeOnTheLeft={false}
             codeSnippet={exampleCode}
-            integrationsPanel={          <div className={"hidden gt_mobile:inline-flex items-center gap-6 z-10"}>
-                <p className={"text-gray-500 text-lg leading-6 font-normal not-italic"}>
+            integrationsPanel={          <div className="hidden gt_mobile:inline-flex items-center gap-6 z-10">
+                <p className="text-gray-500 text-lg leading-6 font-normal not-italic">
                     Composable integrations include
                 </p>
                 <svg xmlns="http://www.w3.org/2000/svg" width="116" height="36" viewBox="0 0 116 36" fill="none">
@@ -105,13 +107,13 @@ export default function Home() {
           sectionTargetSvgPath={"M2.5 2.5H4.21296L4.55556 4.21296M5.92593 11.0648H14.4907L17.9167 4.21296H4.55556M5.92593 11.0648L4.55556 4.21296M5.92593 11.0648L3.96211 13.0286C3.42255 13.5682 3.80469 14.4907 4.56773 14.4907H14.4907M14.4907 14.4907C13.5447 14.4907 12.7778 15.2577 12.7778 16.2037C12.7778 17.1497 13.5447 17.9167 14.4907 17.9167C15.4368 17.9167 16.2037 17.1497 16.2037 16.2037C16.2037 15.2577 15.4368 14.4907 14.4907 14.4907ZM7.63889 16.2037C7.63889 17.1497 6.87197 17.9167 5.92593 17.9167C4.97988 17.9167 4.21296 17.1497 4.21296 16.2037C4.21296 15.2577 4.97988 14.4907 5.92593 14.4907C6.87197 14.4907 7.63889 15.2577 7.63889 16.2037Z"}
           sectionTargetClientMessage={"For NFT Marketplaces"}
           sectionHeader={<Fragment>Filter out fake ENS NFTs</Fragment>}
-          sectionDescription={`Just because an NFT names itself “nick.eth” doesn’t mean it’s an ENS name. NameGuard makes it easy to stop fake ENS names from being sold on NFT marketplaces every day.`}
+          sectionDescription={`Just because an NFT names itself “nick.eth” doesn’t mean it’s an ENS name. NameGuard makes it easy to stop fake ENS names from being sold on NFT marketplaces. Let’s put an end to these scams !`}
           sectionBackgroundName={"bg-purple_background"}
           isCodeOnTheLeft={true}
           codeSnippet={exampleCode}
           integrationsPanel={
-          <div className={"inline-flex items-center gap-6 z-10"}>
-              <p className={"text-gray-500 text-lg leading-6 font-normal not-italic"}>
+          <div className="inline-flex items-center gap-6 z-10">
+              <p className="text-gray-500 text-lg leading-6 font-normal not-italic">
                   Composable integrations include
               </p>
               <svg xmlns="http://www.w3.org/2000/svg" width="140" height="36" viewBox="0 0 140 36" fill="none">
@@ -169,7 +171,7 @@ export default function Home() {
               sectionTargetSvgPath={"M2.5 2.5H4.21296L4.55556 4.21296M5.92593 11.0648H14.4907L17.9167 4.21296H4.55556M5.92593 11.0648L4.55556 4.21296M5.92593 11.0648L3.96211 13.0286C3.42255 13.5682 3.80469 14.4907 4.56773 14.4907H14.4907M14.4907 14.4907C13.5447 14.4907 12.7778 15.2577 12.7778 16.2037C12.7778 17.1497 13.5447 17.9167 14.4907 17.9167C15.4368 17.9167 16.2037 17.1497 16.2037 16.2037C16.2037 15.2577 15.4368 14.4907 14.4907 14.4907ZM7.63889 16.2037C7.63889 17.1497 6.87197 17.9167 5.92593 17.9167C4.97988 17.9167 4.21296 17.1497 4.21296 16.2037C4.21296 15.2577 4.97988 14.4907 5.92593 14.4907C6.87197 14.4907 7.63889 15.2577 7.63889 16.2037Z"}
               sectionTargetClientMessage={"For ENS Registrars & Marketplaces"}
               sectionHeader={<Fragment>Surface hidden risks or limitations<br />before final checkout</Fragment>}
-              sectionDescription={`NameGuard offers detailed 10 point-inspections on any ENS name, including NameWrapper fuses, offchain names, and DNS compatibility. Ensure no shocking disappointments after purchase.`}
+              sectionDescription={`NameGuard offers a detailed 10+ point-inspection on any ENS name, including NameWrapper fuses, offchain names, and DNS compatibility. Ensure no shocking disappointments after purchase.`}
               sectionBackgroundName={"bg-green_background"}
               isCodeOnTheLeft={false}
               codeSnippet={exampleCode}
@@ -185,8 +187,8 @@ export default function Home() {
               sectionTargetSvgPath={"M17.5 10C17.5 8.96447 16.6605 8.125 15.625 8.125H12.5C12.5 9.50571 11.3807 10.625 10 10.625C8.61929 10.625 7.5 9.50571 7.5 8.125H4.375C3.33947 8.125 2.5 8.96447 2.5 10M17.5 10V15C17.5 16.0355 16.6605 16.875 15.625 16.875H4.375C3.33947 16.875 2.5 16.0355 2.5 15V10M17.5 10V7.5M2.5 10V7.5M17.5 7.5C17.5 6.46447 16.6605 5.625 15.625 5.625H4.375C3.33947 5.625 2.5 6.46447 2.5 7.5M17.5 7.5V5C17.5 3.96447 16.6605 3.125 15.625 3.125H4.375C3.33947 3.125 2.5 3.96447 2.5 5V7.5"}
               sectionTargetClientMessage={"For wallets and dApps"}
               sectionHeader={<Fragment>Identify dangerous name<br />configurations</Fragment>}
-              sectionDescription={"Changes in ownership of ENS names does not automatically update deposit addresses. This can result in considerable harm and lead to irreversible losses. " +
-                  "ENS Name Healthchecks instantly detect all potential issues, including warnings for ENS resolver records that are improperly formatted."}
+              sectionDescription={"Protect your community from improperly configured resolver records with ENS HealthChecks. These defend from issues ranging from considerable irreversible losses to web3 profiles that are " +
+                  "incorrectly formatted and may not load properly."}
               sectionBackgroundName={"bg-purple_background_sm"}
               isTextOnTheLeft={true}
               badgeText={"Coming soon"}
@@ -202,8 +204,8 @@ export default function Home() {
               sectionTargetSvgPath={"M17.5 10C17.5 8.96447 16.6605 8.125 15.625 8.125H12.5C12.5 9.50571 11.3807 10.625 10 10.625C8.61929 10.625 7.5 9.50571 7.5 8.125H4.375C3.33947 8.125 2.5 8.96447 2.5 10M17.5 10V15C17.5 16.0355 16.6605 16.875 15.625 16.875H4.375C3.33947 16.875 2.5 16.0355 2.5 15V10M17.5 10V7.5M2.5 10V7.5M17.5 7.5C17.5 6.46447 16.6605 5.625 15.625 5.625H4.375C3.33947 5.625 2.5 6.46447 2.5 7.5M17.5 7.5V5C17.5 3.96447 16.6605 3.125 15.625 3.125H4.375C3.33947 3.125 2.5 3.96447 2.5 5V7.5"}
               sectionTargetClientMessage={"For wallets and dApps"}
               sectionHeader={<Fragment>Never lose a name you love with<br />ENS autorenew</Fragment>}
-              sectionDescription={"Changes in ownership of ENS names does not automatically update deposit addresses. This can result in considerable harm and lead to irreversible losses. " +
-                  "ENS Name Healthchecks instantly detect all potential issues, including warnings for ENS resolver records that are improperly formatted."}
+              sectionDescription={"Life gets busy. It can be easy to forget to renew your ENS names. Give your community peace of mind (and earn recurring revenue!) with ENS AutoRenew. Help others save on gas fees too. " +
+                  "Renewal transactions will be intelligently triggered at the optimal time when gas fees are low."}
               sectionBackgroundName={"bg-green_background_sm"}
               isTextOnTheLeft={false}
               badgeText={"Planned"}
@@ -219,7 +221,8 @@ export default function Home() {
               sectionTargetSvgPath={"M17.5 10C17.5 8.96447 16.6605 8.125 15.625 8.125H12.5C12.5 9.50571 11.3807 10.625 10 10.625C8.61929 10.625 7.5 9.50571 7.5 8.125H4.375C3.33947 8.125 2.5 8.96447 2.5 10M17.5 10V15C17.5 16.0355 16.6605 16.875 15.625 16.875H4.375C3.33947 16.875 2.5 16.0355 2.5 15V10M17.5 10V7.5M2.5 10V7.5M17.5 7.5C17.5 6.46447 16.6605 5.625 15.625 5.625H4.375C3.33947 5.625 2.5 6.46447 2.5 7.5M17.5 7.5V5C17.5 3.96447 16.6605 3.125 15.625 3.125H4.375C3.33947 3.125 2.5 3.96447 2.5 5V7.5"}
               sectionTargetClientMessage={"For wallets and dApps"}
               sectionHeader={<Fragment>ENS webfont</Fragment>}
-              sectionDescription={`NameGuard’s ENS Webfont solution will ensure fll security against homograph attach including distinct appearances for characters like “I, 1 or i. See it in action!`}
+              sectionDescription={`Unicode is a complex beast. Have you prepared to handle the display of all possible ENS names in your UI?
+               ENS Webfont provides enhanced security against homograph attacks and increases rendering support for emojis and other special graphemes.`}
               sectionBackgroundName={"bg-purple_background_sm"}
               isTextOnTheLeft={true}
               badgeText={"Planned"}
@@ -375,7 +378,7 @@ function CodeSnippet(props: CodeSnippetProps) {
                 language="html"
             >
                 {({ className, style, tokens, getLineProps, getTokenProps }) => (
-                    <pre className={"w-full overflow-x-auto pb-4"} style={style}>
+                    <pre className="w-full overflow-x-auto pb-4" style={style}>
                                 {tokens.map((line, i) => (
                                     <div key={i} {...getLineProps({ line })}>
                                         <span className="pr-8 text-code-gray">{i + 1}</span>
@@ -410,10 +413,11 @@ type ReadySectionProps = {
 }
 
 function ReadySection(props: ReadySectionProps){
+    const mediaDiv = cc(["flex sm:flex-col xl:flex-row justify-center border-0 rounded-none items-center gap-10 w-full h-full xl:h-3/4 py-16 px-10 bg-center bg-no-repeat bg-cover flex-shrink-0 gt_mobile:gap-10", props.sectionBackgroundName]);
   return (
-      <section className={`w-full h-full py-10 px-5 flex flex-col items-center justify-center gt_mobile:py-24 gt_mobile:px-0`}>
+      <section className="w-full h-full py-10 px-5 flex flex-col items-center justify-center gt_mobile:py-24 gt_mobile:px-0">
           <div className="max-w-full flex flex-col items-center gt_mobile:mx-auto gt_mobile:px-6 gt_mobile:gap-3">
-          <div className="w-full flex flex-col gap-5 items-center hero_br:w-1/2">
+          <div className="w-full flex flex-col gap-5 items-center xl:w-1/2">
             <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-[20px] gap-2 justify-center items-center z-10">
               <svg
                   width="20"
@@ -439,37 +443,37 @@ function ReadySection(props: ReadySectionProps){
                 {props.sectionHeader}
             </h1>
 
-            <p className="z-10 text-gray-500 text-center not-italic font-normal text-sm leading-6 gt_mobile:text-lg gt_mobile:leading-7 desktop_br:w-4/5">
+            <p className="z-10 text-gray-500 text-center not-italic font-normal text-sm leading-6 gt_mobile:text-lg gt_mobile:leading-7 md:w-4/5">
                 {props.sectionDescription}
             </p>
           </div>
               {props.isCodeOnTheLeft ? (
-                  <div className={`flex sm:flex-col xl:flex-row justify-center border-0 rounded-none items-center gap-10 w-full h-full xl:h-3/4 py-16 px-10 ${props.sectionBackgroundName} bg-center bg-no-repeat bg-cover flex-shrink-0 gt_mobile:gap-10` }>
+                  <div className={mediaDiv}>
                       {props.integrationsPanel ? (
-                          <div className={"hidden desktop_br:flex flex-col w-full h-full justify-between items-center gap-7"}>
+                          <div className="hidden md:flex flex-col w-full h-full justify-between items-center gap-7">
                               <CodeSnippet codeSnippet={props.codeSnippet}/>
-                              <div className={"inline-flex items-center gap-6"}>
+                              <div className="inline-flex items-center gap-6">
                                   {props.integrationsPanel}
                               </div>
                           </div>
                       ) : (
-                          <div className={"hidden desktop_br:flex flex-col w-full h-full justify-between items-center gap-7"}>
+                          <div className="hidden md:flex flex-col w-full h-full justify-between items-center gap-7 max-w-3xl">
                               <CodeSnippet codeSnippet={props.codeSnippet}/>
                           </div>)}
-                      <Image className={`z-10 w-full h-full gt_mobile:w-2/3 gt_mobile:h-2/3 xl:w-1/3 xl:h-1/3`}
+                      <Image className="z-10 w-full h-full gt_mobile:w-2/3 gt_mobile:h-2/3 xl:w-1/2 xl:h-1/2 max-w-lg"
                            src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
                   </div>
               ) : (
-                  <div className={`flex sm:flex-col xl:flex-row justify-center items-center w-full h-full xl:h-3/4 py-16 px-10 border-0 rounded-none ${props.sectionBackgroundName} bg-center bg-no-repeat bg-cover flex-shrink-0 gt_mobile:gap-10`}>
-                    <Image className={`z-10 w-full h-full gt_mobile:w-2/3 gt_mobile:h-2/3 xl:w-1/3 xl:h-1/3`}
+                  <div className={mediaDiv}>
+                    <Image className="z-10 w-full h-full gt_mobile:w-2/3 gt_mobile:h-2/3 xl:w-1/2 xl:h-1/2 max-w-lg"
                          src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
                       {props.integrationsPanel ? (
-                          <div className={"hidden desktop_br:flex flex-col w-full h-full justify-between items-center gap-7"}>
+                          <div className="hidden md:flex flex-col w-full h-full justify-between items-center gap-7 max-w-3xl">
                               <CodeSnippet codeSnippet={props.codeSnippet}/>
                               {props.integrationsPanel}
                           </div>
                       ) : (
-                          <div className={"hidden desktop_br:flex flex-col w-full h-full justify-between items-center gap-7"}>
+                          <div className="hidden md:flex flex-col w-full h-full justify-between items-center gap-7">
                             <CodeSnippet codeSnippet={props.codeSnippet}/>
                           </div>)}
                   </div>
@@ -490,11 +494,14 @@ type ComingSoonSectionProps = {
 }
 
 function ComingSoonSection(props: ComingSoonSectionProps) {
+    const imageDiv = cc(["hidden gt_mobile:flex flex-row justify-center items-center w-full max-w-3xl xl:w-1/2 rounded-none px-4 py-5 xl:px-20 xl:py-24 bg-origin-border bg-center bg-no-repeat bg-cover flex-shrink-0", props.sectionBackgroundName]);
+    const mobileImageDiv = cc(["flex gt_mobile:hidden flex-row justify-center items-center w-full h-full rounded-none px-4 py-5 bg-origin-border bg-center bg-no-repeat bg-contain flex-shrink-0",  props.sectionBackgroundName]);
+
     return (
-        <section className={`w-full flex flex-col xl:flex-row items-center justify-center h-full py-10 px-5 gt_mobile:h-1/2 gt_mobile:py-24 gt_mobile:px-10`}>
+        <section className="w-full flex flex-col xl:flex-row items-center justify-center h-full py-10 px-5 gt_mobile:h-1/2 gt_mobile:py-24 gt_mobile:px-10">
             {!props.isTextOnTheLeft &&
-                <div className={`hidden gt_mobile:flex flex-row justify-center items-center w-full max-w-3xl xl:w-1/2 ${props.sectionBackgroundName} rounded-none px-4 py-5 xl:px-20 xl:py-24 bg-origin-border bg-center bg-no-repeat bg-cover flex-shrink-0`}>
-                    <Image className={`relative z-10 w-full h-full`}
+                <div className={imageDiv}>
+                    <Image className="relative z-10 w-full h-full"
                          src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
                 </div>
                 }
@@ -525,7 +532,7 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
                         {props.badgeText}
                     </span>
                 </h1>
-                <div className={"flex flex-col items-center gap-3 gt_mobile:hidden"}>
+                <div className="flex flex-col items-center gap-3 gt_mobile:hidden">
                     <h1 className="gt_mobile:hidden text-black font-bold not-italic z-10 text-center text-2xl leading-8">{props.sectionHeader}</h1>
                 <span className="gt_mobile:hidden inline-flex items-center justify-center rounded-xl bg-green-100 mx-3 px-3 py-0.5 text-center text-green-800 font-medium not-italic text-sm leading-5">
                         {props.badgeText}
@@ -535,12 +542,12 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
                     {props.sectionDescription}
                 </p>
             </div>
-            {props.isTextOnTheLeft && <div className={`hidden gt_mobile:flex flex-row justify-center items-center w-full max-w-3xl xl:w-1/2 h-full ${props.sectionBackgroundName} rounded-none px-4 py-5 xl:px-20 xl:py-24 bg-origin-border bg-center bg-no-repeat bg-contain flex-shrink-0`}>
-                <Image className={`relative z-10 w-full h-full`}
+            {props.isTextOnTheLeft && <div className={imageDiv}>
+                <Image className="relative z-10 w-full h-full"
                      src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
             </div>}
-            <div className={`flex gt_mobile:hidden flex-row justify-center items-center w-full h-full ${props.sectionBackgroundName} rounded-none px-4 py-5 bg-origin-border bg-center bg-no-repeat bg-contain flex-shrink-0`}>
-                <Image className={`relative z-10 w-full h-full`}
+            <div className={mobileImageDiv}>
+                <Image className="relative z-10 w-full h-full"
                        src={props.imageSpecifics.source} alt={"chat image"} width={props.imageSpecifics.tagWidth} height={props.imageSpecifics.tagHeight}/>
             </div>
         </section>
@@ -549,60 +556,56 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
 
 function Footer(){
     return (
-        <footer className={"z-10 bg-white relative bot-0 w-full h-fit flex flex-col gap-3 py-5 items-center self-stretch gt_mobile:flex-row gt_mobile:justify-between gt_mobile:py-6 gt_mobile:px-28 gt_mobile:self-stretch"}>
-            <p className={"not-italic font-normal text-gray-500 text-footer_text"}>© NameHash Labs. All Rights Reserved</p>
-            <div className={"flex flex-row justify-between gap-3"}>
+        <footer className="z-10 bg-white relative bot-0 w-full h-fit flex flex-col gap-3 py-5 items-center self-stretch gt_mobile:flex-row gt_mobile:justify-between gt_mobile:py-6 gt_mobile:px-28 gt_mobile:self-stretch">
+            <p className="not-italic font-normal text-gray-500 text-footer_text">© NameHash Labs. All Rights Reserved</p>
+            <div className="flex flex-row justify-between gap-3">
                 <a href={"https://twitter.com/NamehashLabs"}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={"group"}>
-                        <path className={"gt_mobile:transition gt_mobile:group-hover:fill-black"} d="M13.5222 10.7749L19.4785 4H18.0671L12.8952 9.88256L8.76437 4H4L10.2466 12.8955L4 20H5.41155L10.8732 13.7878L15.2356 20H20L13.5218 10.7749H13.5222ZM11.5889 12.9738L10.956 12.0881L5.92015 5.03974H8.0882L12.1522 10.728L12.7851 11.6137L18.0677 19.0075H15.8997L11.5889 12.9742V12.9738Z" fill="#AFAFAF"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="group">
+                        <path className="gt_mobile:transition gt_mobile:group-hover:fill-black" d="M13.5222 10.7749L19.4785 4H18.0671L12.8952 9.88256L8.76437 4H4L10.2466 12.8955L4 20H5.41155L10.8732 13.7878L15.2356 20H20L13.5218 10.7749H13.5222ZM11.5889 12.9738L10.956 12.0881L5.92015 5.03974H8.0882L12.1522 10.728L12.7851 11.6137L18.0677 19.0075H15.8997L11.5889 12.9742V12.9738Z" fill="#AFAFAF"/>
                     </svg>
                 </a>
                 <a href={"https://github.com/namehash/nameguard"}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className={"group"} >
-                        <path className={"gt_mobile:transition gt_mobile:group-hover:fill-black"} fillRule="evenodd" clipRule="evenodd" d="M12.0413 2.25952C6.51859 2.25952 2 6.77811 2 12.3008C2 16.7357 4.84504 20.5012 8.86156 21.8401C9.36363 21.9238 9.53099 21.5891 9.53099 21.338C9.53099 21.087 9.53099 20.5012 9.53099 19.6645C6.76962 20.2502 6.18388 18.3256 6.18388 18.3256C5.76549 17.1541 5.09607 16.8194 5.09607 16.8194C4.09194 16.2337 5.09607 16.2337 5.09607 16.2337C6.1002 16.3174 6.60227 17.2378 6.60227 17.2378C7.52272 18.744 8.94524 18.3256 9.53099 18.0746C9.61466 17.4052 9.8657 16.9868 10.2004 16.7357C7.94111 16.4847 5.59814 15.6479 5.59814 11.7988C5.59814 10.711 6.01653 9.79051 6.60227 9.12109C6.60227 8.78637 6.18388 7.78224 6.76962 6.4434C6.76962 6.4434 7.6064 6.19237 9.53099 7.44753C10.3678 7.1965 11.2045 7.11282 12.0413 7.11282C12.8781 7.11282 13.7149 7.1965 14.5516 7.44753C16.4762 6.10869 17.313 6.4434 17.313 6.4434C17.8987 7.86592 17.4804 8.87005 17.3967 9.12109C18.0661 9.79051 18.4008 10.711 18.4008 11.7988C18.4008 15.6479 16.0578 16.4847 13.7985 16.7357C14.1333 17.0705 14.468 17.6562 14.468 18.5767C14.468 19.9155 14.468 21.0033 14.468 21.338C14.468 21.5891 14.6353 21.9238 15.1374 21.8401C19.1539 20.5012 21.9989 16.7357 21.9989 12.3008C22.0826 6.77811 17.564 2.25952 12.0413 2.25952Z" fill="#AFAFAF"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="group">
+                        <path className="gt_mobile:transition gt_mobile:group-hover:fill-black" fillRule="evenodd" clipRule="evenodd" d="M12.0413 2.25952C6.51859 2.25952 2 6.77811 2 12.3008C2 16.7357 4.84504 20.5012 8.86156 21.8401C9.36363 21.9238 9.53099 21.5891 9.53099 21.338C9.53099 21.087 9.53099 20.5012 9.53099 19.6645C6.76962 20.2502 6.18388 18.3256 6.18388 18.3256C5.76549 17.1541 5.09607 16.8194 5.09607 16.8194C4.09194 16.2337 5.09607 16.2337 5.09607 16.2337C6.1002 16.3174 6.60227 17.2378 6.60227 17.2378C7.52272 18.744 8.94524 18.3256 9.53099 18.0746C9.61466 17.4052 9.8657 16.9868 10.2004 16.7357C7.94111 16.4847 5.59814 15.6479 5.59814 11.7988C5.59814 10.711 6.01653 9.79051 6.60227 9.12109C6.60227 8.78637 6.18388 7.78224 6.76962 6.4434C6.76962 6.4434 7.6064 6.19237 9.53099 7.44753C10.3678 7.1965 11.2045 7.11282 12.0413 7.11282C12.8781 7.11282 13.7149 7.1965 14.5516 7.44753C16.4762 6.10869 17.313 6.4434 17.313 6.4434C17.8987 7.86592 17.4804 8.87005 17.3967 9.12109C18.0661 9.79051 18.4008 10.711 18.4008 11.7988C18.4008 15.6479 16.0578 16.4847 13.7985 16.7357C14.1333 17.0705 14.468 17.6562 14.468 18.5767C14.468 19.9155 14.468 21.0033 14.468 21.338C14.468 21.5891 14.6353 21.9238 15.1374 21.8401C19.1539 20.5012 21.9989 16.7357 21.9989 12.3008C22.0826 6.77811 17.564 2.25952 12.0413 2.25952Z" fill="#AFAFAF"/>
                     </svg>
                 </a>
             </div>
-            <p className={"not-italic font-normal text-gray-500 text-footer_text"}>Made with  ❤  by <a className={"text-black underline gt_mobile:underline-offset-[5px] gt_mobile:transition gt_mobile:hover:underline-offset-[2px]"} href={"https://namehash.io/"}>NameHash</a></p>
+            <p className="not-italic font-normal text-gray-500 text-footer_text">Made with  ❤  by <a className="text-black underline gt_mobile:underline-offset-[6px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]" href={"https://namehash.io/"}>NameHash Labs</a></p>
         </footer>
     );
 }
 
 function Header() {
     return (
-        <header className={"relative top-0 w-full z-10 border-b border-gray-300 box-border " +
-            "inline-flex h-[56px] px-[20px] py-[9px] items-center justify-between" +
-            " gt_mobile:flex gt_mobile:flex-row gt_mobile:justify-between gt_mobile:h-[70px] gt_mobile:px-28 gt_mobile:py-4"}>
-            <div className={"flex flex-row gap-7 justify-between items-center"}>
-                <div className={"flex flex-row justify-between items-center gap-1"}>
-                    <p className={"text-black not-italic font-bold " +
-                        "text-[22.683px] leading-[22.683px] tracking-[-0.907px]" +
-                        "gt_mobile:text-[27.816px] gt_mobile:leading-[27.816px] gt_mobile:tracking-[-1.113px]"}>NameGuard</p>
-                    <div className={"relative -top-1.5 bg-black w-fit h-fit p-[2.8px] rounded-[2.8px] flex-shrink-0"}>
-                        <p className={"text-white not-italic font-semibold pb-[0.5px] " +
-                            "text-[6.857px] leading-[7.619px]" +
-                            "gt_mobile:text-[8.409px] gt_mobile:leading-[9.343px]"}>beta</p>
-                    </div>
+        <header className="relative top-0 w-full z-10 border-b border-gray-300 box-border inline-flex h-[56px] px-[20px] py-[9px] items-center justify-between gt_mobile:flex gt_mobile:justify-center lg:justify-between gt_mobile:flex-row gt_mobile:h-[70px] gt_mobile:px-28 gt_mobile:py-4">
+            <div className="flex flex-row gap-7 justify-between items-center">
+                <div className="flex flex-row justify-between items-center gap-1 cursor-pointer">
+                    <a href={"https://nameguard.io"} >
+                        <p className="text-black not-italic font-bold text-[22.683px] leading-[22.683px] tracking-[-0.907px] gt_mobile:text-[27.816px] gt_mobile:leading-[27.816px] gt_mobile:tracking-[-1.113px]">NameGuard</p>
+                    </a>
+                    <a href={"https://nameguard.io"}>
+                        <div className="relative -top-1.5 bg-black w-fit h-fit p-[2.8px] rounded-[2.8px] flex-shrink-0">
+                            <p className="text-white not-italic font-semibold pb-[0.5px] text-[6.857px] leading-[7.619px] gt_mobile:text-[8.409px] gt_mobile:leading-[9.343px]">beta</p>
+                        </div>
+                    </a>
                 </div>
-                <div className={"hidden gt_mobile:block gt_mobile:w-full gt_mobile:h-full gt_mobile:p-0 gt_mobile:m-0"}>
+                <div className="hidden md:block gt_mobile:w-full gt_mobile:h-full gt_mobile:p-0 gt_mobile:m-0">
                     <Search/>
                 </div>
             </div>
-            <div className={"flex flex-row items-center " +
-                "justify-end gap-0" +
-                "gt_mobile:justify-between gt_mobile:gap-5"}>
-                <a className={"px-[10px] py-[9px] not-italic text-black font-medium text-sm leading-5 rounded-md gt_mobile:hover:bg-gray-100"} href={"https://api.nameguard.io/docs"}>
+            <div className="flex flex-row items-center justify-end gap-0 gt_mobile:justify-between gt_mobile:gap-1 md:gap-5">
+                <a className="px-[10px] py-[9px] not-italic text-black font-medium text-sm leading-5 rounded-md gt_mobile:hover:bg-gray-100" href={"https://api.nameguard.io/docs"}>
                     Docs
                 </a>
-                <a className={"rounded-md gt_mobile:hover:bg-gray-100"} href={"https://github.com/namehash/nameguard"}>
-                    <div className={"flex flex-row justify-between items-center gap-2 py-[7px] px-[10px]"}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" className={"hidden gt_mobile:block"}>
+                <a className="rounded-md gt_mobile:hover:bg-gray-100" href={"https://github.com/namehash/nameguard"}>
+                    <div className="flex flex-row justify-between items-center gap-2 py-[7px] px-[10px]">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" className="hidden gt_mobile:block">
                                 <path fillRule="evenodd" clipRule="evenodd" d="M12.0413 2.25928C6.51859 2.25928 2 6.77787 2 12.3006C2 16.7355 4.84504 20.501 8.86156 21.8398C9.36363 21.9235 9.53099 21.5888 9.53099 21.3378C9.53099 21.0867 9.53099 20.501 9.53099 19.6642C6.76962 20.25 6.18388 18.3254 6.18388 18.3254C5.76549 17.1539 5.09607 16.8192 5.09607 16.8192C4.09194 16.2334 5.09607 16.2334 5.09607 16.2334C6.1002 16.3171 6.60227 17.2376 6.60227 17.2376C7.52272 18.7438 8.94524 18.3254 9.53099 18.0743C9.61466 17.4049 9.8657 16.9865 10.2004 16.7355C7.94111 16.4845 5.59814 15.6477 5.59814 11.7985C5.59814 10.7107 6.01653 9.79026 6.60227 9.12084C6.60227 8.78613 6.18388 7.782 6.76962 6.44316C6.76962 6.44316 7.6064 6.19212 9.53099 7.44729C10.3678 7.19626 11.2045 7.11258 12.0413 7.11258C12.8781 7.11258 13.7149 7.19626 14.5516 7.44729C16.4762 6.10845 17.313 6.44316 17.313 6.44316C17.8987 7.86568 17.4804 8.86981 17.3967 9.12084C18.0661 9.79026 18.4008 10.7107 18.4008 11.7985C18.4008 15.6477 16.0578 16.4845 13.7985 16.7355C14.1333 17.0702 14.468 17.656 14.468 18.5764C14.468 19.9153 14.468 21.0031 14.468 21.3378C14.468 21.5888 14.6353 21.9235 15.1374 21.8398C19.1539 20.501 21.9989 16.7355 21.9989 12.3006C22.0826 6.77787 17.564 2.25928 12.0413 2.25928Z" fill="#0F172A"/>
                             </svg>
-                            <p className={"not-italic text-black font-medium text-sm leading-5"}>Github</p>
+                            <p className="not-italic text-black font-medium text-sm leading-5">Github</p>
                     </div>
                 </a>
-                <div className={"block flex justify-center items-center gap-2 p-[7px] cursor-pointer gt_mobile:hidden"}>
+                <div className="flex justify-center items-center gap-2 p-[7px] cursor-pointer md:hidden">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                         <path fillRule="evenodd" clipRule="evenodd" d="M9 3.5C5.96243 3.5 3.5 5.96243 3.5 9C3.5 12.0376 5.96243 14.5 9 14.5C10.519 14.5 11.893 13.8852 12.8891 12.8891C13.8852 11.893 14.5 10.519 14.5 9C14.5 5.96243 12.0376 3.5 9 3.5ZM2 9C2 5.13401 5.13401 2 9 2C12.866 2 16 5.13401 16 9C16 10.6625 15.4197 12.1906 14.4517 13.3911L17.7803 16.7197C18.0732 17.0126 18.0732 17.4874 17.7803 17.7803C17.4874 18.0732 17.0126 18.0732 16.7197 17.7803L13.3911 14.4517C12.1906 15.4197 10.6625 16 9 16C5.13401 16 2 12.866 2 9Z" fill="#0F172A"/>
                     </svg>
@@ -613,11 +616,12 @@ function Header() {
 }
 
 function HeroSection() {
-    const bg_crests = `hero_br:bg-[url("../../public/assets/hero_background.png")]`;
+    const heroBackgroundDiv = cc(["flex flex-col items-center justify-center w-full h-full min-w- max-w-[125rem] bg-no-repeat bg-center bg-contain", 'xl:bg-[url("../../public/assets/hero_background.png")]']);
+    const npmCommand = "npm install @namehash/nameguard";
     const copyIcon =
-        <div className={"w-fit h-fit z-10 cursor-pointer"} onClick={() => {
+        <div className="w-fit h-fit z-10 cursor-pointer" onClick={() => {
             setCopiedToClipboard(true);
-            navigator.clipboard.writeText("npm init @nameguard/nameguard@latest");
+            navigator.clipboard.writeText(npmCommand);
         }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none" className="block w-5 h-5 gt_mobile:hidden">
                 <path d="M14.25 6.875V5C14.25 3.96447 13.4105 3.125 12.375 3.125H5.5C4.46447 3.125 3.625 3.96447 3.625 5V11.875C3.625 12.9105 4.46447 13.75 5.5 13.75H7.375M14.25 6.875H15.5C16.5355 6.875 17.375 7.71447 17.375 8.75V15C17.375 16.0355 16.5355 16.875 15.5 16.875H9.25C8.21447 16.875 7.375 16.0355 7.375 15V13.75M14.25 6.875H9.25C8.21447 6.875 7.375 7.71447 7.375 8.75V13.75"
@@ -644,26 +648,27 @@ function HeroSection() {
     }, [copiedToClipboard]);
 
     return (
-        <section className={`box-border relative z-10 w-full h-fit xl:h-screen py-[61px] gt_mobile:pb-24 gt_mobile:pt-8 px-5 flex flex-col items-center justify-center bg-hero_background bg-no-repeat bg-center bg-contain md:px-10 md:pt-10 md:pb-32`}>
-            <div className={`flex flex-col items-center justify-center w-full h-full max-w-[125rem] ${bg_crests} bg-no-repeat bg-center bg-contain`}>
-                <div className={`inline-flex flex-col items-center gap-5 w-full h-fit`}>
-                    <div className={"flex flex-col gap-2 w-fit h-fit z-10"}>
-                        <p className={"text-center not-italic uppercase text-gray-500 text-xs tracking-[0.3px] font-medium"}>An open source public good</p>
+        <section className="box-border relative z-10 w-full h-fit xl:h-screen py-[61px] gt_mobile:pb-24 gt_mobile:pt-8 px-5 flex flex-col items-center justify-center bg-hero_background bg-no-repeat bg-center bg-contain md:px-10 md:pt-10 md:pb-32">
+            <div className={heroBackgroundDiv}>
+                <div className="inline-flex flex-col items-center gap-5 w-full h-fit">
+                    <div className="flex flex-col gap-2 w-fit h-fit z-10">
+                        <p className="text-center not-italic uppercase text-gray-500 text-xs tracking-[0.3px] font-medium">An open source public good</p>
                         <h1 className="text-black text-center not-italic font-bold text-4xl leading-10 gt_mobile:text-5xl gt_mobile:leading-[52px]">
                             Protect your community<br />with NameGuard for ENS
                         </h1>
                     </div>
-                    <p className={"text-center not-italic font-normal text-gray-500 text-base leading-6"}>
+                    <p className="text-center not-italic font-normal text-gray-500 text-base leading-6">
                         Guard your users from heartbreak and encourage best practice usage of ENS
                     </p>
-                    <div className={"flex items-center gap-2 py-[9px] pl-4 pr-[14px] rounded-lg bg-black bg-opacity-5 border border-gray-300 " +
-                        "gt_mobile:gap-3 gt_mobile:py-[13px] gt_mobile:pl-[20px] gt_mobile:pr-[16px]"}>
-                        <p className={"text-black leading-6 font-normal text-sm gt_mobile:text-base"}>npm init @nameguard/nameguard@latest</p>
+                    <div className="flex items-center gap-2 py-[9px] pl-4 pr-[14px] rounded-lg bg-black bg-opacity-5 border border-gray-300 gt_mobile:gap-3 gt_mobile:py-[13px] gt_mobile:pl-[20px] gt_mobile:pr-[16px]">
+                        <p className="text-black leading-6 font-normal text-sm gt_mobile:text-base">{npmCommand}</p>
                         <Tooltip trigger={copyIcon}>{copiedToClipboard ? copiedText : copyText}</Tooltip>
                     </div>
-                    <button className={"flex justify-center items-center px-[25px] py-[13px] rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-800"} onClick={() => {window.location.href = "https://api.nameguard.io/docs";}}> {/* Should be replaced with url to the docs! */}
-                        <p className={"text-white not-italic font-medium text-base leading-6"}>View the docs</p>
-                    </button>
+                    <a href={"https://api.nameguard.io/docs"}>
+                        <button className="flex justify-center items-center px-[25px] py-[13px] rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-800 cursor-pointer">
+                            <p className="text-white not-italic font-medium text-base leading-6">View the docs</p>
+                        </button>
+                    </a>
                 </div>
             </div>
         </section>
@@ -672,12 +677,12 @@ function HeroSection() {
 
 function ExitSection() {
     return (
-        <section className={"w-full h-full flex flex-col items-center justify-center bg-exit_section_background bg-no-repeat bg-bottom bg-contain pb-5 px-5 gt_mobile:h-1/2 gt_mobile:py-24"}>
-            <div className={"z-10 flex flex-col items-center pt-10 pb-5 gt_mobile:inline-flex gt_mobile:items-start gt_mobile:p-[10px] gt_mobile:gap-[10px]"}>
-                <div className={"flex flex-col items-center gap-5 w-full h-fit"}>
-                    <div className={"flex flex-col justify-start items-center gap-5 gt_mobile:block"}>
-                        <h1 className={"text-black not-italic text-center font-bold text-2xl leading-8 gt_mobile:text-4xl gt_mobile:leading-[52px]"}>Search for any ENS name to generate a<br />NameGuard report</h1>
-                        <p className={"text-center text-gray-500 font-normal not-italic text-sm leading-6 gt_mobile:text-lg gt_mobile:leading-7"}>Share NameGuard reports with frENS. Together we can make web3 safer.</p>
+        <section className="w-full h-full flex flex-col items-center justify-center bg-exit_section_background bg-no-repeat bg-bottom bg-contain pb-5 px-5 gt_mobile:h-1/2 gt_mobile:py-24">
+            <div className="z-10 flex flex-col items-center pt-10 pb-5 gt_mobile:inline-flex gt_mobile:items-start gt_mobile:p-[10px] gt_mobile:gap-[10px]">
+                <div className="flex flex-col items-center gap-5 w-full h-fit">
+                    <div className="flex flex-col justify-start items-center gap-5 gt_mobile:block">
+                        <h1 className="text-black not-italic text-center font-bold text-2xl leading-8 gt_mobile:text-4xl gt_mobile:leading-[52px]">Search for any ENS name to generate a<br />NameGuard report</h1>
+                        <p className="text-center text-gray-500 font-normal not-italic text-sm leading-6 gt_mobile:text-lg gt_mobile:leading-7">Share NameGuard reports with frENS. Together we can make web3 safer.</p>
                     </div>
                     <Search />
                 </div>
@@ -689,7 +694,7 @@ function ExitSection() {
 type RoadMapElement = {
     stageOfCompletion: "completed" | "in progress" | "planned";
     headerText: string;
-    commentSentences: string[];
+    commentSentences: string[] | React.ReactNode[];
 };
 
 function RoadMap() {
@@ -715,13 +720,16 @@ function RoadMap() {
     const badgesMap = new Map<string, React.ReactNode>([["completed", completedBadge], ["in progress", inProgressBadge], ["planned", plannedBadge]]);
 
     const roadMapElements: RoadMapElement[] = [
-        { stageOfCompletion: "completed", headerText: "ENSIP-15 ENS Normalization Approval", commentSentences: ["implemented"]},
+        { stageOfCompletion: "completed", headerText: "Python ENS Normalize", commentSentences: ["ENSIP-15 ENS Normalization Approval"]},
         { stageOfCompletion: "completed", headerText: "ENS Font Data", commentSentences: ["implemented"]},
+        { stageOfCompletion: "completed", headerText: "ENS label inspector", commentSentences:
+                [<span key={"ENSLabelInspectorFragment"}>Description with <a className="text-black underline gt_mobile:underline-offset-[6px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]" href={"https://namehash.io/"}>hyperlink</a></span>]},
+        { stageOfCompletion: "completed", headerText: "Hidden risks or limitations checks", commentSentences: ["implemented"]},
         { stageOfCompletion: "completed", headerText: "Impersonation attack protections", commentSentences: ["implemented"]},
         { stageOfCompletion: "completed", headerText: "Fake ENS NFT filters", commentSentences: ["implemented"]},
-        { stageOfCompletion: "completed", headerText: "Hidden risks or limitations checks", commentSentences: ["implemented"]},
         { stageOfCompletion: "in progress", headerText: "Expand ENS Name Risks and Limitation Checks", commentSentences: ["Full DNS name support", "Offchain name support", "NameWrapper fuse checks",
                 "Enhanced support for multi-grapheme confusables", "Expanded impersonation checks for different networks (ex: Polygon, etc..) and for overall NFT collections, rather than just NFTs"]},
+
         { stageOfCompletion: "planned", headerText: "ENS Name Auto-Renewal", commentSentences: ["Users will be able to automate renewals with credit cards and other major forms of payment "]},
         { stageOfCompletion: "planned", headerText: "Content Enhancements", commentSentences: ["User-friendly (non-technical) help pages for each check",
             "Information messages and help content with multiple language support (internationalization)"]},
@@ -751,24 +759,25 @@ function RoadMap() {
     const leftSideShields = [positiveShield, negativeShield, warningShield, positiveShield, warningShield, negativeShield, warningShield, positiveShield];
     const rightSideShields = [negativeShield, positiveShield, warningShield, negativeShield, positiveShield, warningShield, negativeShield, positiveShield];
 
+
     return (
-        <section className={"relative bg-white w-full h-full px-5 md:py-32 md:px-10 xl:px-32 flex flex-row items-center justify-center z-10 gap-10"}>
-            <div className={"hidden w-1/5 h-full relative -top-20 gt_mobile:flex flex-col justify-center items-center gap-36"}>
+        <section className="relative bg-white w-full h-full px-5 md:py-32 md:px-10 xl:px-32 flex flex-row items-center justify-center z-10 gap-10">
+            <div className="hidden w-1/5 h-full relative -top-20 md:flex flex-col justify-center items-center gap-36">
                 {leftSideShields.map((shield, idx) => (
-                    <div key={`left-${idx}-Shield`} className={`w-full h-full flex flex-row items-center ${idx % 2 === 1 ? "justify-start" : "justify-end"}`}>
-                        <div className={"inline-flex items-start p-5 gap-[10px] border rounded-full border-gray-200 shadow-sm"}>{shield}</div>
+                    <div key={`left-${idx}-Shield`} className={cc(["w-full h-full flex flex-row items-center", idx % 2 === 1 ? "justify-start" : "justify-end"])}>
+                        <div className="inline-flex items-start p-5 gap-[10px] border rounded-full border-gray-200 shadow-sm">{shield}</div>
                     </div>))}
             </div>
-            <div className={"w-full gt_mobile:w-3/5 h-full flex flex-col items-center justify-center pt-10 gt_mobile:pt-0 pb-5 gt_mobile:pb-0 gap-5 gt_mobile:gap-14"}>
-                <div className={"inline-flex h-fit w-full flex-col items-center gap-5 gt_mobile:gap-2 z-10"}>
-                    <h1 className={"text-black text-center not-italic font-bold text-2xl leading-8 gt_mobile:text-4xl gt_mobile:leading-[52px]"}>
+            <div className="w-full gt_mobile:w-3/5 h-full flex flex-col items-center justify-center pt-10 gt_mobile:pt-0 pb-5 gt_mobile:pb-0 gap-5 gt_mobile:gap-14">
+                <div className="inline-flex h-fit w-full flex-col items-center gap-5 gt_mobile:gap-2 z-10">
+                    <h1 className="text-black text-center not-italic font-bold text-2xl leading-8 gt_mobile:text-4xl gt_mobile:leading-[52px]">
                         NameGuard roadmap
                     </h1>
-                    <p className={"text-center text-gray-500 text-base leading-7 font-normal not-italic"}>
+                    <p className="text-center text-gray-500 text-base leading-7 font-normal not-italic">
                         NameGuard has a mission to keep the ENS community safe and encourage optimal use of ENS names.
                     </p>
                 </div>
-                <div className={"h-fit w-full max-w-[1050px]"}>
+                <div className="h-fit w-full max-w-[1050px]">
                     <ul role="list" className="space-y-4 w-full h-full flex-shrink-0">
                         {roadMapElements.map((roadmapElement, idx) => (
                             <li key={idx} className="relative flex gap-x-4">
@@ -779,18 +788,18 @@ function RoadMap() {
                                         'absolute left-0 top-0 flex w-6 justify-center mt-2'
                                     )}
                                 >
-                                    <div className={`w-[2px] ${roadmapElement.stageOfCompletion === "completed" ? "bg-black" : "bg-gray-200"} mt-5 mb-3`} />
+                                    <div className={cc(["w-[2px] mt-5 mb-3", roadmapElement.stageOfCompletion === "completed" ? "bg-black" : "bg-gray-200"])} />
                                 </div>
                                     <div className="relative flex h-6 w-6 flex-none items-center justify-center bg-white">
                                         {roadmapElement.stageOfCompletion === 'completed' ? (
                                             <CheckCircleIcon className="h-6 w-6 my-2 text-black" aria-hidden="true" />
                                         ) : (
-                                            <div className={`h-2 w-2 rounded-full ${roadmapElement.stageOfCompletion === "in progress" ? "bg-black" : "bg-gray-200"}`} />
+                                            <div className={cc(["h-2 w-2 rounded-full", roadmapElement.stageOfCompletion === "in progress" ? "bg-black" : "bg-gray-200"])} />
                                         )}
                                     </div>
-                                    <div className={"w-full h-fit flex flex-col items-start gap-3"}>
-                                        <div className={"relative -top-2 w-full h-fit inline-flex flex-row justify-between items-start self-stretch py-1.5"}>
-                                            <h1 className={"text-black text-lg leading-6 font-semibold not-italic pr-2"}>{roadmapElement.headerText}</h1>
+                                    <div className="w-full h-fit flex flex-col items-start gap-3">
+                                        <div className="relative -top-2 w-full h-fit inline-flex flex-row justify-between items-start self-stretch py-1.5">
+                                            <h1 className="text-black text-lg leading-6 font-semibold not-italic pr-2">{roadmapElement.headerText}</h1>
                                             {badgesMap.get(roadmapElement.stageOfCompletion)}
                                         </div>
                                         <div className="w-full h-fit flex flex-col items-start self-stretch rounded-lg border border-gray-200 bg-gray-50 p-5">
@@ -805,10 +814,10 @@ function RoadMap() {
                     </ul>
                 </div>
             </div>
-            <div className={"hidden w-1/5 h-full relative top-4 gt_mobile:flex flex-col justify-center items-center gap-36"}>
+            <div className="hidden w-1/5 h-full relative top-4 md:flex flex-col justify-center items-center gap-36">
                 {rightSideShields.map((shield, idx) => (
-                    <div key={`left-${idx}-Shield`} className={`w-full h-full flex flex-row items-center ${idx % 2 === 0 ? "justify-start" : "justify-end"}`}>
-                        <div className={"inline-flex items-start p-5 gap-[10px] border rounded-full border-gray-200 shadow-sm"}>{shield}</div>
+                    <div key={`left-${idx}-Shield`} className={cc(["w-full h-full flex flex-row items-center", idx % 2 === 0 ? "justify-start" : "justify-end"])}>
+                        <div className="inline-flex items-start p-5 gap-[10px] border rounded-full border-gray-200 shadow-sm">{shield}</div>
                     </div>))}
             </div>
         </section>
