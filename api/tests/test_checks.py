@@ -14,6 +14,15 @@ def analyse_grapheme(nameguard: NameGuard, grapheme: str):
     return nameguard.analyse_label(grapheme).graphemes[0]
 
 
+def test_ordering():
+    assert CheckStatus.SKIP < CheckStatus.INFO < CheckStatus.PASS < CheckStatus.WARN < CheckStatus.ALERT
+    assert CheckStatus.WARN > CheckStatus.INFO
+    assert CheckStatus.SKIP == CheckStatus.SKIP
+    assert CheckStatus.ALERT != CheckStatus.WARN
+    assert CheckStatus.SKIP <= CheckStatus.INFO
+    assert CheckStatus.WARN >= CheckStatus.WARN
+
+
 # -- GRAPHEME CHECKS --
 
 

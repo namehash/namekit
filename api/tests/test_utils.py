@@ -69,3 +69,13 @@ def test_validate_namehash():
 
     with pytest.raises(InvalidNameHash):  # too short hex-string
         _ = validate_namehash('0xb18223f3d77d0c2e')
+
+
+def test_mangum_lambda():
+    try:
+        import mangum
+    except ImportError:
+        pass
+    else:
+        import importlib
+        importlib.import_module('nameguard.lambda')  # for full coverage

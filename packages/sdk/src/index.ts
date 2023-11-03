@@ -104,6 +104,10 @@ export type SecureReverseLookupStatus =
   | "no_primary_name" /** The ENS primary name was not found. */
   | "unnormalized" /** The ENS primary name was found, but it is not normalized. */;
 
+export type ImpersonationStatus =
+  | "unlikely" /** The name is unlikely to be impersonating. */
+  | "potential" /** The name is potentially impersonating. */
+  
 export type FakeEthNameCheckStatus =
   | "authentic_eth_name" /** The NFT is associated with authentic ".eth" contracts. */
   | "impersonated_eth_name" /** The NFT appears to impersonate a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" at the end of relevant NFT metadata fields. Consider automated rejection of this NFT from marketplaces. */
@@ -391,6 +395,13 @@ export interface SecureReverseLookupResult {
   primary_name_status: SecureReverseLookupStatus;
 
   /**
+   * Impersonation status of the `primary_name`.
+   *
+   * `null` if primary name is unknown or primary name is unnormalized.
+   */
+  impersonation_status: ImpersonationStatus | null;
+  
+  /**
    * Primary ENS name for the Ethereum address.
    *
    * `null` if `primary_name_status` is any value except `normalized`.
@@ -525,7 +536,7 @@ class NameGuard {
   ): Promise<SecureReverseLookupResult> {
     const network_name = options?.network || this.network;
 
-    const url = `${this.endpoint}${this.version}/primary-name/${network_name}/${address}`;
+    const url = `${this.endpoint}${this.version}/secure-primary-name/${network_name}/${address}`;
 
     const response = await fetch(url);
 

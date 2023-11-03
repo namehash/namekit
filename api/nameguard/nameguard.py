@@ -1,10 +1,8 @@
 import os
 import re
 
+from nameguard.our_ens import OurENS
 from ens_normalize import ens_process, is_ens_normalized, ens_cure, DisallowedSequence
-import requests
-from ens import ENS
-import os
 
 import requests
 from label_inspector.inspector import Inspector
@@ -27,8 +25,10 @@ from nameguard.models import (
     NetworkName,
     SecureReverseLookupResult,
     SecureReverseLookupStatus,
-    FakeEthNameCheckStatus, 
+    FakeEthNameCheckStatus,
     FakeEthNameCheckResult,
+    CheckStatus,
+    ImpersonationStatus,
 )
 from nameguard.provider import get_nft_metadata
 from nameguard.utils import (
@@ -100,7 +100,7 @@ class NameGuard:
                                       (NetworkName.SEPOLIA, 'PROVIDER_URI_SEPOLIA')):
             if os.environ.get(env_var) is None:
                 logger.warning(f'Environment variable {env_var} is not set')
-            self.ns[network_name] = ENS(HTTPProvider(os.environ.get(env_var)))
+            self.ns[network_name] = OurENS(HTTPProvider(os.environ.get(env_var)))
 
     def analyse_label(self, label: str):
         return self._inspector.analyse_label(label, simple_confusables=True)
@@ -315,7 +315,7 @@ class NameGuard:
             grapheme_description=grapheme.description,
         )
 
-    async def primary_name(self, address: str, network_name: str) -> SecureReverseLookupResult:
+    async def secure_primary_name(self, address: str, network_name: str) -> SecureReverseLookupResult:
         try:
             domain = self.ns[network_name].name(address)
         except requests.exceptions.ConnectionError as ex:
@@ -325,19 +325,25 @@ class NameGuard:
         nameguard_result = None
         if domain is None:
             status = SecureReverseLookupStatus.NO_PRIMARY_NAME
+            impersonation_status = None
         else:
             nameguard_result = await self.inspect_name(network_name, domain)
             
             result = ens_process(domain, do_normalize=True, do_beautify=True)
             if result.normalized != domain:
                 status = SecureReverseLookupStatus.UNNORMALIZED
+                impersonation_status = None
             else:
                 display_name = result.beautified
                 status = SecureReverseLookupStatus.NORMALIZED
                 primary_name = domain
 
+                impersonation_status = ImpersonationStatus.UNLIKELY if any(check.check == 'impersonation_risk' and check.status == CheckStatus.PASS for check in
+                    nameguard_result.checks) else ImpersonationStatus.POTENTIAL
+
 
         return SecureReverseLookupResult(primary_name=primary_name,
+                                         impersonation_status=impersonation_status,
                                          display_name=display_name,
                                          primary_name_status=status,
                                          nameguard_result=nameguard_result)
