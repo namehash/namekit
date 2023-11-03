@@ -22,6 +22,17 @@ export type Normalization =
   | "unknown" /** `unknown`: The name or label is unknown because it cannot be looked up from its hash. */;
 
 /**
+ * The ENSIP-15 normalization status of a grapheme.
+ * 
+ * This check does not consider the context of the grapheme and is **not** equivalent to `ens_normalize(grapheme)`.
+ * A normalized grapheme can be combined with other normalized graphemes to form an unnormalized label.
+ * The position of a grapheme in a label can also affect the normalization status of the label.
+ */
+export type GraphemeNormalization =
+  | "normalized" /** `normalized`: The grapheme is normalized. */
+  | "unnormalized" /** `unnormalized`: The grapheme is not normalized. */
+
+/**
  * The network that NameGuard will use to inspect a names/labels/graphemes.
  *
  * The network is used to determine:
@@ -42,6 +53,9 @@ export type Network = "mainnet" | "goerli" | "sepolia";
 
 /** The type of a check that NameGuard performed. */
 export type CheckType =
+  // Common checks
+  | "normalized" /** A name/label/grapheme is normalized. */
+
   // Grapheme-level checks
   | "confusables" /** A grapheme is visually confusable. */
   | "invisible" /** A grapheme is invisible. */
@@ -51,7 +65,6 @@ export type CheckType =
   // Label-level checks
   | "mixed_scripts" /** A label contains multiple scripts. */
   | "namewrapper_compatible" /** A label cannot be wrapped by the ENS NameWrapper */
-  | "normalized" /** A label is not ENSIP-15 normalized. */
   | "punycode_compatible_label" /** A label is not compatible with Punycode. */
   | "unknown_label" /** A label is unknown. */
 
@@ -185,6 +198,11 @@ export interface ConsolidatedGraphemeGuardReport extends ConsolidatedReport {
    * Never an empty string.
    */
   grapheme: string;
+
+  /**
+   * The ENSIP-15 normalization status of `grapheme`.
+   */
+  normalization: GraphemeNormalization;
 
   /**
    * The name of `grapheme`.
