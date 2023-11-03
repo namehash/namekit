@@ -91,6 +91,10 @@ export type SecureReverseLookupStatus =
   | "no_primary_name" /** The ENS primary name was not found. */
   | "unnormalized" /** The ENS primary name was found, but it is not normalized. */;
 
+export type ImpersonationStatus =
+  | "unlikely" /** The address is unlikely to be impersonating. */
+  | "potential" /** The address is potentially impersonating. */
+  
 export type FakeEthNameCheckStatus =
   | "authentic_eth_name" /** The NFT is associated with authentic ".eth" contracts. */
   | "impersonated_eth_name" /** The NFT appears to impersonate a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" at the end of relevant NFT metadata fields. Consider automated rejection of this NFT from marketplaces. */
@@ -372,6 +376,13 @@ export interface BulkConsolidatedNameGuardReport {
 export interface SecureReverseLookupResult {
   primary_name_status: SecureReverseLookupStatus;
 
+  /**
+   * Impersonation status of an Ethereum address.
+   *
+   * `null` if primary name is unknown or primary name is unnormalized.
+   */
+  impersonation_status: ImpersonationStatus | null;
+  
   /**
    * Primary ENS name for the Ethereum address.
    *

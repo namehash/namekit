@@ -495,34 +495,36 @@ def test_inspect_grapheme_multi(test_client, api_version):
     assert response.status_code == 422
     
 @pytest.mark.parametrize(
-    "address, primary_name_status, primary_name, display_name, canonical_name, impersonation_risk, name",
+    "address, impersonation_status, primary_name_status, primary_name, display_name, canonical_name, impersonation_risk, name",
     [
-        ('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', 'normalized', 'vitalik.eth', 'vitalik.eth', 'vitalik.eth', False, 'vitalik.eth'),
-        ('0x8Ae0e6dd8eACe27045d9e017C8Cf6dAa9D08C776', 'normalized', 'vitalìk.eth', 'vitalìk.eth', 'vitalik.eth', True, 'vitalìk.eth'),
-        ('0x8B7863d67e1083EE1becbDD277cbBFf1c1CCB631', 'normalized', '٧٣٧.eth', '٧٣٧.eth', None, False, '٧٣٧.eth'),  # normalized without canonical
-        ('0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd', 'normalized', 'exampleprimary.cb.id', 'exampleprimary.cb.id',
+        ('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', 'unlikely', 'normalized', 'vitalik.eth', 'vitalik.eth', 'vitalik.eth', False, 'vitalik.eth'),
+        ('0x8Ae0e6dd8eACe27045d9e017C8Cf6dAa9D08C776', 'potential', 'normalized', 'vitalìk.eth', 'vitalìk.eth', 'vitalik.eth', True, 'vitalìk.eth'),
+        ('0x8B7863d67e1083EE1becbDD277cbBFf1c1CCB631', 'unlikely', 'normalized', '٧٣٧.eth', '٧٣٧.eth', None, False, '٧٣٧.eth'),  # normalized without canonical
+        ('0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd', 'unlikely', 'normalized', 'exampleprimary.cb.id', 'exampleprimary.cb.id',
          'exampleprimary.cb.id', False, 'exampleprimary.cb.id'),
-        ('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96046', 'no_primary_name', None, 'Unnamed d8da', None, False, None),
-        ('0xfA9A134f997b3d48e122d043E12d04E909b11073', 'unnormalized', None, 'Unnamed fa9a', None, False, '888‍‍.eth'),
-        ('0x76fd9b1B2d8F2cd9Ba06c925506627883F97B97C', 'unnormalized', None, 'Unnamed 76fd', None, False, '‍‍❤‍‍.eth'),
-        ('0xf537a27F31d7A014c5b8008a0069c61f827fA7A1', 'unnormalized', None, 'Unnamed f537', None, False, '٠٠۱.eth'),  # normalizable
-        ('0x0ebDfD75d33c05025074fd7845848D44966AB367', 'unnormalized', None, 'Unnamed 0ebd', None, False, '۸۸۷۵۴۲.eth'),  # normalizable
-        ('0xaf738F6C83d7D2C46723b727Ce794F9c79Cc47E6', 'unnormalized', None, 'Unnamed af73', '99999.eth', True, '୨୨୨୨୨.eth'),
-        ('0xb281405429C3bc91e52707a21754cDaCeCbB035E', 'unnormalized', None, 'Unnamed b281', None, False, '┣▇▇▇═─.eth'),
-        ('0x0d756ee0e8C250f88f5e0eDd7C723dc3A0BF75cF', 'unnormalized', None, 'Unnamed 0d75', 'c6ep.eth', True, 'сбер.eth'),
-        ('0x7Da3CdE891a76416ec9D1c3354B8EfE550Bd4e20', 'unnormalized', None, 'Unnamed 7da3', 'vitalik.eth', True, 'vitȧlik.eth'),
-        ('0xC9f598BC5BB554B6A15A96D19954B041C9FDbF14', 'unnormalized', None, 'Unnamed c9f5', 'vitalik.eth', True, 'vıtalik.eth'),
+        ('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96046', None, 'no_primary_name', None, 'Unnamed d8da', None, False, None),
+        ('0xfA9A134f997b3d48e122d043E12d04E909b11073', None, 'unnormalized', None, 'Unnamed fa9a', None, False, '888‍‍.eth'),
+        ('0x76fd9b1B2d8F2cd9Ba06c925506627883F97B97C', None, 'unnormalized', None, 'Unnamed 76fd', None, False, '‍‍❤‍‍.eth'),
+        ('0xf537a27F31d7A014c5b8008a0069c61f827fA7A1', None, 'unnormalized', None, 'Unnamed f537', None, False, '٠٠۱.eth'),  # normalizable
+        ('0x0ebDfD75d33c05025074fd7845848D44966AB367', None, 'unnormalized', None, 'Unnamed 0ebd', None, False, '۸۸۷۵۴۲.eth'),  # normalizable
+        ('0xaf738F6C83d7D2C46723b727Ce794F9c79Cc47E6', None, 'unnormalized', None, 'Unnamed af73', '99999.eth', True, '୨୨୨୨୨.eth'),
+        ('0xb281405429C3bc91e52707a21754cDaCeCbB035E', None, 'unnormalized', None, 'Unnamed b281', None, False, '┣▇▇▇═─.eth'),
+        ('0x0d756ee0e8C250f88f5e0eDd7C723dc3A0BF75cF', None, 'unnormalized', None, 'Unnamed 0d75', 'c6ep.eth', True, 'сбер.eth'),
+        ('0x7Da3CdE891a76416ec9D1c3354B8EfE550Bd4e20', None, 'unnormalized', None, 'Unnamed 7da3', 'vitalik.eth', True, 'vitȧlik.eth'),
+        ('0xC9f598BC5BB554B6A15A96D19954B041C9FDbF14', None, 'unnormalized', None, 'Unnamed c9f5', 'vitalik.eth', True, 'vıtalik.eth'),
+        #TODO unknown primary name
     ]
 )
-def test_primary_name(test_client, api_version, address, primary_name_status, primary_name, display_name, canonical_name, impersonation_risk, name):
+def test_primary_name(test_client, api_version, address, impersonation_status, primary_name_status, primary_name, display_name, canonical_name, impersonation_risk, name):
     response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
+    assert res_json['impersonation_status'] == impersonation_status
     assert res_json['primary_name_status'] == primary_name_status
     assert res_json['primary_name'] == primary_name
     assert res_json['display_name'] == display_name
-    if primary_name_status!='no_primary_name':
+    if primary_name_status != 'no_primary_name':
         assert res_json['nameguard_result']['name'] == name
         assert res_json['nameguard_result']['canonical_name'] == canonical_name
         assert any(check['check'] == 'impersonation_risk' and check['status'] == 'warn' for check in res_json['nameguard_result']['checks']) == impersonation_risk
@@ -533,6 +535,7 @@ def test_primary_name_get(test_client, api_version):
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
+    assert res_json['impersonation_status'] == 'unlikely'
     assert res_json['primary_name_status'] == 'normalized'
     assert res_json['primary_name'] == 'vitalik.eth'
     assert res_json['display_name'] == 'vitalik.eth'
@@ -544,6 +547,7 @@ def test_primary_name_get_uppercase(test_client, api_version):
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
+    assert res_json['impersonation_status'] == 'unlikely'
     assert res_json['primary_name_status'] == 'normalized'
     assert res_json['primary_name'] == 'vitalik.eth'
     assert res_json['display_name'] == 'vitalik.eth'
@@ -555,6 +559,7 @@ def test_primary_name_get_offchain(test_client, api_version):
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
+    assert res_json['impersonation_status'] == 'unlikely'
     assert res_json['primary_name_status'] == 'normalized'
     assert res_json['primary_name'] == 'exampleprimary.cb.id'
     assert res_json['display_name'] == 'exampleprimary.cb.id'
@@ -566,6 +571,7 @@ def test_primary_name_get_unknown(test_client, api_version):
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
+    assert res_json['impersonation_status'] is None
     assert res_json['primary_name_status'] == 'no_primary_name'
     assert res_json['primary_name'] is None
     assert res_json['display_name'] == 'Unnamed d8da'
@@ -576,6 +582,7 @@ def test_primary_name_get_unnormalized(test_client, api_version):
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
+    assert res_json['impersonation_status'] is None
     assert res_json['primary_name_status'] == 'unnormalized'
     assert res_json['primary_name'] is None
     assert res_json['display_name'] == 'Unnamed fa9a'
