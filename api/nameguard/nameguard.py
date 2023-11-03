@@ -1,10 +1,8 @@
 import os
 import re
+
 from nameguard.our_ens import OurENS
 from ens_normalize import ens_process, is_ens_normalized, ens_cure, DisallowedSequence
-import requests
-from ens import ENS
-import os
 
 import requests
 from label_inspector.inspector import Inspector
@@ -24,8 +22,10 @@ from nameguard.models import (
     NetworkName,
     SecureReverseLookupResult,
     SecureReverseLookupStatus,
-    FakeEthNameCheckStatus, 
+    FakeEthNameCheckStatus,
     FakeEthNameCheckResult,
+    CheckStatus,
+    ImpersonationStatus,
 )
 from nameguard.provider import get_nft_metadata
 from nameguard.utils import (
@@ -297,19 +297,25 @@ class NameGuard:
         nameguard_result = None
         if domain is None:
             status = SecureReverseLookupStatus.NO_PRIMARY_NAME
+            impersonation_status = None
         else:
             nameguard_result = await self.inspect_name(network_name, domain)
             
             result = ens_process(domain, do_normalize=True, do_beautify=True)
             if result.normalized != domain:
                 status = SecureReverseLookupStatus.UNNORMALIZED
+                impersonation_status = None
             else:
                 display_name = result.beautified
                 status = SecureReverseLookupStatus.NORMALIZED
                 primary_name = domain
 
+                impersonation_status = ImpersonationStatus.POTENTIAL if any(check.check == 'impersonation_risk' and check.status == CheckStatus.WARN for check in
+                    nameguard_result.checks) else ImpersonationStatus.UNLIKELY
+
 
         return SecureReverseLookupResult(primary_name=primary_name,
+                                         impersonation_status=impersonation_status,
                                          display_name=display_name,
                                          primary_name_status=status,
                                          nameguard_result=nameguard_result)
