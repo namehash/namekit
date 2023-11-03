@@ -499,9 +499,9 @@ def test_inspect_grapheme_multi(test_client, api_version):
     [
         ('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', 'normalized', 'vitalik.eth', 'vitalik.eth', 'vitalik.eth', False, 'vitalik.eth'),
         ('0x8Ae0e6dd8eACe27045d9e017C8Cf6dAa9D08C776', 'normalized', 'vitalìk.eth', 'vitalìk.eth', 'vitalik.eth', True, 'vitalìk.eth'),
+        ('0x8B7863d67e1083EE1becbDD277cbBFf1c1CCB631', 'normalized', '٧٣٧.eth', '٧٣٧.eth', None, False, '٧٣٧.eth'),  # normalized without canonical
         ('0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd', 'normalized', 'exampleprimary.cb.id', 'exampleprimary.cb.id',
          'exampleprimary.cb.id', False, 'exampleprimary.cb.id'),
-        #TODO normalized without canonical
         ('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96046', 'no_primary_name', None, 'Unnamed d8da', None, False, None),
         ('0xfA9A134f997b3d48e122d043E12d04E909b11073', 'unnormalized', None, 'Unnamed fa9a', None, False, '888‍‍.eth'),
         ('0x76fd9b1B2d8F2cd9Ba06c925506627883F97B97C', 'unnormalized', None, 'Unnamed 76fd', None, False, '‍‍❤‍‍.eth'),
