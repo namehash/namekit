@@ -1,6 +1,6 @@
 import React from "react";
 import { CheckResultCode } from "@namehash/nameguard";
-// import { Tooltip } from "./Tooltip";
+import { Tooltip } from "../Tooltip/Tooltip";
 
 function text(code: CheckResultCode) {
   switch (code) {
@@ -100,6 +100,5 @@ export function Check({ code }: { code: CheckResultCode }) {
   const tooltipText = text(code);
   const Icon = icon(code);
 
-  // return <Tooltip trigger={Icon} children={tooltipText} />;
-  return Icon;
+  return <Tooltip trigger={Icon} children={tooltipText} />;
 }
