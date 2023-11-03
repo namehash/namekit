@@ -12,7 +12,7 @@ type SearchState = {
 export const useSearchStore = create<SearchState>((set) => ({
   name: "",
   setName: (name: string) => set({ name }),
-  modalOpen: true,
+  modalOpen: false,
   openModal: () => set({ modalOpen: true }),
   closeModal: () => set({ modalOpen: false }),
 }));
