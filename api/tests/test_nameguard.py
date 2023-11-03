@@ -2,7 +2,7 @@ import pytest
 from web3 import Web3
 
 from nameguard.context import endpoint_name
-from nameguard.models import Rating, Check, CheckStatus, Normalization
+from nameguard.models import Rating, Check, CheckStatus, Normalization, GraphemeNormalization
 from nameguard.nameguard import NameGuard
 from nameguard.exceptions import NamehashNotFoundInSubgraph, NotAGrapheme
 
@@ -332,3 +332,48 @@ async def test_empty_labels(nameguard: NameGuard):
     assert r.labels[2].rating is Rating.PASS
     assert r.labels[2].highest_risk is None
     assert r.labels[2].normalization is Normalization.NORMALIZED
+
+
+@pytest.mark.asyncio
+async def test_all_normalization(nameguard: NameGuard):
+    r = await nameguard.inspect_name('mainnet', 'a.a’a.e†h')
+
+    assert r.highest_risk.check is Check.NORMALIZED
+    assert r.normalization is Normalization.UNNORMALIZED
+
+    assert r.labels[0].highest_risk is None
+    assert r.labels[0].normalization is Normalization.NORMALIZED
+
+    assert r.labels[1].highest_risk.check is Check.CONFUSABLES
+    assert r.labels[1].normalization is Normalization.NORMALIZED
+
+    assert r.labels[2].highest_risk.check is Check.NORMALIZED
+    assert r.labels[2].normalization is Normalization.UNNORMALIZED
+
+    assert r.labels[1].graphemes[0].highest_risk is None
+    assert r.labels[1].graphemes[0].normalization is GraphemeNormalization.NORMALIZED
+
+    assert r.labels[1].graphemes[1].highest_risk.check is Check.CONFUSABLES
+    assert r.labels[1].graphemes[1].normalization is GraphemeNormalization.NORMALIZED
+
+    assert r.labels[2].graphemes[0].highest_risk is None
+    assert r.labels[2].graphemes[0].normalization is GraphemeNormalization.NORMALIZED
+
+    assert r.labels[2].graphemes[1].highest_risk.check is Check.NORMALIZED
+    assert r.labels[2].graphemes[1].normalization is GraphemeNormalization.UNNORMALIZED
+
+    r = nameguard.inspect_grapheme('a')
+    assert r.highest_risk is None
+    assert r.normalization is GraphemeNormalization.NORMALIZED
+
+    r = nameguard.inspect_grapheme('†')
+    assert r.highest_risk.check is Check.NORMALIZED
+    assert r.normalization is GraphemeNormalization.UNNORMALIZED
+
+    r = nameguard.inspect_grapheme('_')
+    assert r.highest_risk is None
+    assert r.normalization is GraphemeNormalization.NORMALIZED
+
+    r = nameguard.inspect_grapheme('’')
+    assert r.highest_risk.check is Check.CONFUSABLES
+    assert r.normalization is GraphemeNormalization.NORMALIZED
