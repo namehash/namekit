@@ -18,3 +18,11 @@ def test_ordering():
     assert Rating.PASS < Rating.WARN < Rating.ALERT
 
     assert max([Rating.PASS, Rating.WARN]) == Rating.WARN
+
+
+def test_ordering_all_operators():
+    assert Rating.PASS == Rating.PASS
+    assert Rating.PASS != Rating.WARN
+    assert Rating.PASS < Rating.WARN
+    assert Rating.PASS <= Rating.WARN
+    assert Rating.ALERT >= Rating.WARN

@@ -213,7 +213,7 @@ class GenericCheckResult(BaseModel):
         }[self.status]
 
     def __repr__(self):
-        return f'{self.check}({self.rating.name})'
+        return f'{self.check.value}({self.rating.value})'
 
     @property
     def order(self):
