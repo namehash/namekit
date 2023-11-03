@@ -1,10 +1,13 @@
 [tool.poetry]
 name = "nameguard"
 version = "0.1.0"
-description = ""
-authors = []
+description = "Security \"x-ray\" for ENS names"
+authors = ["NameHash Team <devops@namehash.io>"]
+maintainers = ["NameHash Team <devops@namehash.io>"]
+homepage = "https://github.com/namehash/nameguard"
+repository = "https://github.com/namehash/nameguard"
 readme = "README.md"
-license = "../LICENSE"
+license = "LICENSE"
 packages = [{ include = "nameguard" }]
 
 
@@ -28,6 +31,7 @@ pytest = "^7.4.0"
 flake8 = "^6.1.0"
 uvicorn = {extras = ["standard"], version = "^0.23.2"}
 pytest-asyncio = "^0.21.1"
+pytest-cov = "^4.1.0"
 
 
 [build-system]

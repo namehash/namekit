@@ -28,9 +28,7 @@ const config: Config = {
         "hero_background": "linear-gradient(180deg, rgba(249, 250, 251, 0.00) 0%, #F9FAFB 100%);",
       },
       screens: {
-        'gt_mobile': '376px',
-        'desktop_br': '800px',
-        'hero_br': '1150px',
+        'gt_mobile': '430px',
       },
       fontSize: {
         footer_text: ['12px', '20px'],

@@ -2,7 +2,7 @@ import pytest
 from web3 import Web3
 
 from nameguard.context import endpoint_name
-from nameguard.models import Rating, Check, CheckStatus, Normalization
+from nameguard.models import Rating, Check, CheckStatus, Normalization, GenericCheckResult
 from nameguard.nameguard import NameGuard
 from nameguard.exceptions import NamehashNotFoundInSubgraph, NotAGrapheme
 
@@ -332,3 +332,23 @@ async def test_empty_labels(nameguard: NameGuard):
     assert r.labels[2].rating is Rating.PASS
     assert r.labels[2].highest_risk is None
     assert r.labels[2].normalization is Normalization.NORMALIZED
+
+
+def test_generic_check_result_operators():
+    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.INFO, _name_message='') == \
+           GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.INFO, _name_message='')
+    assert GenericCheckResult(check=Check.CONFUSABLES, status=CheckStatus.WARN, _name_message='') != \
+           GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.WARN, _name_message='')
+    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.INFO, _name_message='') < \
+           GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.PASS, _name_message='')
+    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.WARN, _name_message='') <= \
+           GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.ALERT, _name_message='')
+    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.PASS, _name_message='') > \
+           GenericCheckResult(check=Check.CONFUSABLES, status=CheckStatus.PASS, _name_message='')
+    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.ALERT, _name_message='') >= \
+           GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.ALERT, _name_message='')
+
+
+def test_generic_check_result_repr():
+    assert repr(GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.PASS, _name_message='')) == \
+           'normalized(pass)'
