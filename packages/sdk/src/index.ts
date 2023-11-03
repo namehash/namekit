@@ -92,8 +92,8 @@ export type SecureReverseLookupStatus =
   | "unnormalized" /** The ENS primary name was found, but it is not normalized. */;
 
 export type ImpersonationStatus =
-  | "unlikely" /** The address is unlikely to be impersonating. */
-  | "potential" /** The address is potentially impersonating. */
+  | "unlikely" /** The name is unlikely to be impersonating. */
+  | "potential" /** The name is potentially impersonating. */
   
 export type FakeEthNameCheckStatus =
   | "authentic_eth_name" /** The NFT is associated with authentic ".eth" contracts. */
@@ -377,7 +377,7 @@ export interface SecureReverseLookupResult {
   primary_name_status: SecureReverseLookupStatus;
 
   /**
-   * Impersonation status of an Ethereum address.
+   * Impersonation status of the `primary_name`.
    *
    * `null` if primary name is unknown or primary name is unnormalized.
    */

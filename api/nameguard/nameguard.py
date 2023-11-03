@@ -310,8 +310,8 @@ class NameGuard:
                 status = SecureReverseLookupStatus.NORMALIZED
                 primary_name = domain
 
-                impersonation_status = ImpersonationStatus.POTENTIAL if any(check.check == 'impersonation_risk' and check.status == CheckStatus.WARN for check in
-                    nameguard_result.checks) else ImpersonationStatus.UNLIKELY
+                impersonation_status = ImpersonationStatus.UNLIKELY if any(check.check == 'impersonation_risk' and check.status == CheckStatus.PASS for check in
+                    nameguard_result.checks) else ImpersonationStatus.POTENTIAL
 
 
         return SecureReverseLookupResult(primary_name=primary_name,

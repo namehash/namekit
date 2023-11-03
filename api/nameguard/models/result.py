@@ -268,10 +268,10 @@ class SecureReverseLookupStatus(str, Enum):
 
 class ImpersonationStatus(str, Enum):
     """
-    The impersonation status of an Ethereum address.
+    The predicted impersonation status of an ENS name.
     
-    * `unlikely`: The address is unlikely to be impersonating.
-    * `potential`: The address is potentially impersonating.
+    * `unlikely`: The ENS name is unlikely to be impersonating.
+    * `potential`: The ENS name is potentially impersonating.
     """
     UNLIKELY = 'unlikely'
     POTENTIAL = 'potential'
@@ -283,7 +283,7 @@ class SecureReverseLookupResult(BaseModel):
     primary_name_status: SecureReverseLookupStatus
     
     impersonation_status: Optional[ImpersonationStatus] = Field(
-        description='Impersonation status of an Ethereum address.\n'
+        description='Impersonation status of the `primary_name`.\n'
                     '* `null` if primary name is unknown or primary name is unnormalized',
     )
 

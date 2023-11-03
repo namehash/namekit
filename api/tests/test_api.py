@@ -499,7 +499,7 @@ def test_inspect_grapheme_multi(test_client, api_version):
     [
         ('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', 'unlikely', 'normalized', 'vitalik.eth', 'vitalik.eth', 'vitalik.eth', False, 'vitalik.eth'),
         ('0x8Ae0e6dd8eACe27045d9e017C8Cf6dAa9D08C776', 'potential', 'normalized', 'vitalìk.eth', 'vitalìk.eth', 'vitalik.eth', True, 'vitalìk.eth'),
-        ('0x8B7863d67e1083EE1becbDD277cbBFf1c1CCB631', 'unlikely', 'normalized', '٧٣٧.eth', '٧٣٧.eth', None, False, '٧٣٧.eth'),  # normalized without canonical
+        ('0x8B7863d67e1083EE1becbDD277cbBFf1c1CCB631', 'potential', 'normalized', '٧٣٧.eth', '٧٣٧.eth', None, False, '٧٣٧.eth'),  # normalized without canonical
         ('0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd', 'unlikely', 'normalized', 'exampleprimary.cb.id', 'exampleprimary.cb.id',
          'exampleprimary.cb.id', False, 'exampleprimary.cb.id'),
         ('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96046', None, 'no_primary_name', None, 'Unnamed d8da', None, False, None),
@@ -512,7 +512,7 @@ def test_inspect_grapheme_multi(test_client, api_version):
         ('0x0d756ee0e8C250f88f5e0eDd7C723dc3A0BF75cF', None, 'unnormalized', None, 'Unnamed 0d75', 'c6ep.eth', True, 'сбер.eth'),
         ('0x7Da3CdE891a76416ec9D1c3354B8EfE550Bd4e20', None, 'unnormalized', None, 'Unnamed 7da3', 'vitalik.eth', True, 'vitȧlik.eth'),
         ('0xC9f598BC5BB554B6A15A96D19954B041C9FDbF14', None, 'unnormalized', None, 'Unnamed c9f5', 'vitalik.eth', True, 'vıtalik.eth'),
-        #TODO unknown primary name
+        # unknown primary name is impossible
     ]
 )
 def test_primary_name(test_client, api_version, address, impersonation_status, primary_name_status, primary_name, display_name, canonical_name, impersonation_risk, name):
@@ -565,7 +565,7 @@ def test_primary_name_get_offchain(test_client, api_version):
     assert res_json['display_name'] == 'exampleprimary.cb.id'
 
 
-def test_primary_name_get_unknown(test_client, api_version):
+def test_primary_name_get_no_primary_name(test_client, api_version):
     address='0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96046'
     response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
     assert response.status_code == 200
