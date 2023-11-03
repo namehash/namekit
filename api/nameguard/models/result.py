@@ -22,6 +22,21 @@ class Normalization(str, Enum):
     UNKNOWN = 'unknown'
 
 
+class GraphemeNormalization(str, Enum):
+    '''
+    The ENSIP-15 normalization status of a grapheme.
+    This check does not consider the context of the grapheme and is **not** equivalent to `ens_normalize(grapheme)`.
+    A normalized grapheme can be combined with other normalized graphemes to form an unnormalized label.
+    The position of a grapheme in a label can also affect the normalization status of the label.
+
+    * `normalized`: The grapheme is normalized.
+    * `unnormalized`: The grapheme is not normalized.
+    '''
+
+    NORMALIZED = 'normalized'
+    UNNORMALIZED = 'unnormalized'
+
+
 class ConsolidatedReport(BaseModel):
     '''
     The risk summary of a name, label, or grapheme.
@@ -78,6 +93,8 @@ class ConsolidatedGraphemeGuardReport(ConsolidatedReport):
     '''
     Grapheme analysis result.
     '''
+
+    normalization: GraphemeNormalization
 
     grapheme: str = Field(
         description='The analyzed grapheme.')
@@ -326,9 +343,9 @@ class FakeEthNameCheckResult(BaseModel):
     Fake .eth ENS name check result.
     """
     status: FakeEthNameCheckStatus
-    
+
     nameguard_result: Optional[NameGuardReport] = Field(description='NameGuard report for the .eth ENS NFT.\n'
                                                         '* `null` if `status` is any value except `authentic_eth_name`, `invalid_eth_name` and `unknown_eth_name` (the NFT is not associated with authentic ".eth" contracts)')
-    
+
     investigated_fields: Optional[dict[str,str]] = Field(description='Fields with values from Alchemy response which are investigated (e.g. title, collection name, metadata) whether they look like fake .eth ENS name.\n'
                                                                     '* `null` if `status` is `unknown_nft`')

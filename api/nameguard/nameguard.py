@@ -13,11 +13,14 @@ from dotenv import load_dotenv
 
 from nameguard import checks
 from nameguard.models import (
+    CheckStatus,
+    Check,
     NameGuardReport,
     LabelGuardReport,
     ConsolidatedGraphemeGuardReport,
     BulkNameGuardBulkReport,
     Normalization,
+    GraphemeNormalization,
     GraphemeGuardReport,
     NetworkName,
     SecureReverseLookupResult,
@@ -38,11 +41,15 @@ from nameguard.utils import (
     label_is_labelhash,
     compute_canonical_from_list,
 )
-from nameguard.exceptions import NamehashNotFoundInSubgraph, ProviderUnavailable, NotAGrapheme
+from nameguard.exceptions import ProviderUnavailable, NotAGrapheme
 from nameguard.logging import logger
 from nameguard.subgraph import namehash_to_name_lookup, resolve_all_labelhashes_in_name, \
     resolve_all_labelhashes_in_name_querying_labelhashes, resolve_all_labelhashes_in_names_querying_labelhashes
 from nameguard.generic_utils import capitalize_words
+
+DNA_CHECKS = [
+    (checks.dna.normalized.check_grapheme, checks.dna.normalized.check_label, checks.dna.normalized.check_name),
+]
 
 GRAPHEME_CHECKS = [
     checks.grapheme.confusables.check_grapheme,
@@ -52,7 +59,6 @@ GRAPHEME_CHECKS = [
 ]
 
 LABEL_CHECKS = [
-    checks.label.normalized.check_label,
     checks.label.mixed_scripts.check_label,
     checks.label.namewrapper.check_label,
     checks.label.punycode.check_label,
@@ -156,6 +162,16 @@ class NameGuard:
             name_checks.extend([c.raise_context() for c in label_checks])
         name_checks = agg_checks(name_checks)
 
+        # -- DNA checks --
+
+        for check_g, check_l, check_n in DNA_CHECKS:
+            for label_i, label_analysis in enumerate(labels_analysis):
+                if label_analysis is not None:
+                    for grapheme_i, grapheme in enumerate(label_analysis.graphemes):
+                        labels_graphemes_checks[label_i][grapheme_i].append(check_g(grapheme))
+                labels_checks[label_i].append(check_l(label_analysis))
+            name_checks.append(check_n(labels_analysis))
+
         # -- generate result --
 
         return NameGuardReport(
@@ -196,6 +212,10 @@ class NameGuard:
                     canonical_label=label_analysis.normalized_canonical_label if label_analysis is not None else label, # labelhash
                     graphemes=[
                         ConsolidatedGraphemeGuardReport(
+                            normalization=GraphemeNormalization.NORMALIZED
+                            if any(check.status == CheckStatus.PASS and check.check is Check.NORMALIZED
+                                   for check in grapheme_checks)
+                            else GraphemeNormalization.UNNORMALIZED,
                             grapheme=grapheme.value,
                             grapheme_name=capitalize_words(grapheme.name),
                             grapheme_type=grapheme.type,
@@ -252,9 +272,13 @@ class NameGuard:
             raise NotAGrapheme(f'The input contains {label_analysis.grapheme_length} graphemes.')
 
         grapheme_analysis = label_analysis.graphemes[0]
-        grapheme_checks = [check(grapheme_analysis) for check in GRAPHEME_CHECKS]
+        grapheme_checks = [check(grapheme_analysis) for check in GRAPHEME_CHECKS + [c[0] for c in DNA_CHECKS]]
 
         return GraphemeGuardReport(
+            normalization=GraphemeNormalization.NORMALIZED
+            if any(check.status == CheckStatus.PASS and check.check is Check.NORMALIZED
+                   for check in grapheme_checks)
+            else GraphemeNormalization.UNNORMALIZED,
             grapheme=grapheme_analysis.value,
             grapheme_name=capitalize_words(grapheme_analysis.name),
             grapheme_type=grapheme_analysis.type,
@@ -274,8 +298,12 @@ class NameGuard:
         )
 
     def _inspect_confusable(self, grapheme: InspectorConfusableGraphemeResult) -> ConsolidatedGraphemeGuardReport:
-        grapheme_checks = [check(grapheme) for check in GRAPHEME_CHECKS]
+        grapheme_checks = [check(grapheme) for check in GRAPHEME_CHECKS + [c[0] for c in DNA_CHECKS]]
         return ConsolidatedGraphemeGuardReport(
+            normalization=GraphemeNormalization.NORMALIZED
+            if any(check.status == CheckStatus.PASS and check.check is Check.NORMALIZED
+                   for check in grapheme_checks)
+            else GraphemeNormalization.UNNORMALIZED,
             grapheme=grapheme.value,
             grapheme_name=capitalize_words(grapheme.name),
             grapheme_type=grapheme.type,
