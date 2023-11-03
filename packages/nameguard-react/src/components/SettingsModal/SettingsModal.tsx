@@ -2,30 +2,32 @@ import React, { useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
 
-import { useSettings, type Settings } from "./use-settings";
+import { useSettingsStore, type Settings } from "../../stores/settings";
 
-export function SearchSettingsModal() {
+export const SettingsModal = () => {
   const {
     settings: defaultValues,
-    setSettings,
-    open,
+    updateSettings,
+    modalOpen,
     closeModal,
-  } = useSettings();
+  } = useSettingsStore();
+
   const [localSettings, setLocalSettings] = useState<Settings>(defaultValues);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSettings(localSettings);
+    updateSettings(localSettings);
     closeModal();
   };
 
   return (
-    <Transition.Root show={open} as={Fragment}>
+    <Transition.Root show={modalOpen} as={Fragment}>
       <Dialog
         as="div"
-        open={open}
+        open={modalOpen}
         onClose={closeModal}
         className="fixed z-50 inset-0 overflow-y-auto"
+        static
       >
         <Transition.Child
           as={Fragment}
@@ -41,11 +43,11 @@ export function SearchSettingsModal() {
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
-          enterFrom="opacity-0 scale-95"
-          enterTo="opacity-100 scale-100"
+          enterFrom="md:opacity-0 md:scale-95"
+          enterTo="md:opacity-100 md:scale-100"
           leave="ease-in duration-200"
-          leaveFrom="opacity-100 scale-100"
-          leaveTo="opacity-0 scale-95"
+          leaveFrom="md:opacity-100 md:scale-100"
+          leaveTo="md:opacity-0 md:scale-95"
         >
           <div className="relative z-50 flex md:items-center justify-center min-h-screen">
             <Dialog.Panel className="w-full max-w-lg mx-auto relative transform overflow-scroll md:rounded-xl bg-white md:shadow-2xl transition-all flex flex-col">
@@ -198,4 +200,4 @@ export function SearchSettingsModal() {
       </Dialog>
     </Transition.Root>
   );
-}
+};

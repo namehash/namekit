@@ -1,6 +1,6 @@
 import React from "react";
 import { CheckResult } from "@namehash/nameguard";
-import { Check } from ".";
+import { Check } from "./Check";
 
 export function CheckResultCard(props: CheckResult) {
   return (

@@ -11,8 +11,8 @@ import surface_risks_img from "../../public/assets/surface_risks.png";
 import dangerous_name_config_img from "../../public/assets/dangerous_name_configuration.png";
 import autorenewal_img from "../../public/assets/autorenewal.png";
 import ens_webfont_img from "../../public/assets/ens_webfont.png";
-import {Search} from "@/components/Search";
-import {Tooltip} from "@namehash/nameguard-react";
+import {Search} from "@namehash/nameguard-react";
+// import {Tooltip} from "@namehash/nameguard-react";
 
 
 export default function Home() {
@@ -659,7 +659,7 @@ function HeroSection() {
                     <div className={"flex items-center gap-2 py-[9px] pl-4 pr-[14px] rounded-lg bg-black bg-opacity-5 border border-gray-300 " +
                         "gt_mobile:gap-3 gt_mobile:py-[13px] gt_mobile:pl-[20px] gt_mobile:pr-[16px]"}>
                         <p className={"text-black leading-6 font-normal text-sm gt_mobile:text-base"}>npm init @nameguard/nameguard@latest</p>
-                        <Tooltip trigger={copyIcon}>{copiedToClipboard ? copiedText : copyText}</Tooltip>
+                        
                     </div>
                     <button className={"flex justify-center items-center px-[25px] py-[13px] rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-800"} onClick={() => {window.location.href = "https://api.nameguard.io/docs";}}> {/* Should be replaced with url to the docs! */}
                         <p className={"text-white not-italic font-medium text-base leading-6"}>View the docs</p>

@@ -1,8 +1,10 @@
-import { Search } from "@/components/Search";
+"use client";
 
-export default function SearchExampleForDemoPurposes() {
+import { Search } from "@namehash/nameguard-react";
+
+export default function Namekit() {
   return (
-    <div className="h-full absolute w-full flex items-center justify-center">
+    <div className="h-full w-full flex items-center justify-center p-32">
       <Search />
     </div>
   );
