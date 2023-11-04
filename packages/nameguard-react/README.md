@@ -2,7 +2,7 @@
 
 ## Usage
 
-These components are shared between the website and NameKit.
+These components can be used to interface with NameGuard with React.
 
 ### Search
 
@@ -16,7 +16,7 @@ export default () => <Search />;
 
 ### Report
 
-If you want to load a report for an ENS name, just pass the `name` prop with your value. **NameGuard will always parse this name.**
+If you want to load a report for an ENS name, just pass the `name` prop with your value.
 
 ```tsx
 import { Report } from "@namehash/nameguard-react";
@@ -24,7 +24,7 @@ import { Report } from "@namehash/nameguard-react";
 export default () => <Report name="notrab.eth" />;
 ```
 
-If you want to customize any of the settings used to parse the name, you can pass an optional `settings` prop.
+If you want to customize any of the settings used to with NameParser, you can pass an optional `settings` prop.
 
 ```tsx
 import { Report, NameParserSettings } from "@namehash/nameguard-react";
