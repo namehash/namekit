@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useState } from "react";
 import { Float } from "@headlessui-float/react";
 import { Popover } from "@headlessui/react";

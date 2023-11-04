@@ -1,6 +1,6 @@
 import React from "react";
 
-export function ReportHeader() {
+export const ReportHeader = () => {
   return (
     <div className="space-y-2">
       <h2 className="text-black text-2xl font-semibold">NameGuard Report</h2>
@@ -10,4 +10,4 @@ export function ReportHeader() {
       </p>
     </div>
   );
-}
+};

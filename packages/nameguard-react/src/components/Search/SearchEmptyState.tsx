@@ -1,4 +1,6 @@
-export function WritersBlock() {
+import React from "react";
+
+export const SearchEmptyState = () => {
   return (
     <div className="w-full px-5 md:px-0 py-16 md:py-32 lg:py-40 flex flex-col items-center justify-center text-center h-full">
       <div className="relative z-20 space-y-2">
@@ -12,4 +14,4 @@ export function WritersBlock() {
       <div className="absolute inset-0 z-0 h-full w-full bg-[radial-gradient(#DDDDDD_1px,transparent_1px)] [background-size:24px_24px] opacity-70"></div>
     </div>
   );
-}
+};

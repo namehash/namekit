@@ -1,13 +1,10 @@
-import React, { Fragment, forwardRef, type Ref } from "react";
+import React, { forwardRef, Fragment, type Ref } from "react";
 import { Transition } from "@headlessui/react";
 import {
   ChevronDoubleRightIcon,
   ArrowTopRightOnSquareIcon,
   XMarkIcon,
 } from "@heroicons/react/24/solid";
-import { useChatModal } from "./use-chat-modal";
-
-// import Avatars from "../../public/avatars.png";
 
 export const xmtpChatUrl =
   "https://xmtp.chat/dm/0x4dC96AAd2Daa3f84066F3A00EC41Fd1e88c8865A";
@@ -15,12 +12,11 @@ export const converseUrl = "https://getconverse.app/";
 export const coinbaseWalletUrl = "https://www.coinbase.com/wallet";
 
 export const ChatModal = forwardRef((props: any, ref: Ref<HTMLDivElement>) => {
-  const { onClose } = props;
-  const { chatOpen } = useChatModal();
+  const { open, onClose } = props;
 
   return (
-    <Transition.Root show={chatOpen} as={Fragment}>
-      <div className="fixed md:absolute z-40 md:z-30 inset-0 overflow-hidden">
+    <Transition.Root show={open} as={Fragment}>
+      <div className="fixed z-50 md:z-30 inset-0 overflow-hidden m-0">
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -30,7 +26,7 @@ export const ChatModal = forwardRef((props: any, ref: Ref<HTMLDivElement>) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="fixed md:absolute inset-0 backdrop-blur-sm" />
+          <div className="fixed inset-0 backdrop-blur-sm" />
         </Transition.Child>
         <Transition.Child
           as={Fragment}

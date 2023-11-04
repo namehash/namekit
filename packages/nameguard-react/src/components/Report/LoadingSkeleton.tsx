@@ -1,13 +1,16 @@
-"use client";
+import React from "react";
 
-import { Shield } from "@namehash/nameguard-react";
+import { Shield } from "./Shield";
 
-type LoadingProps = {
+type LoadingSkeletonProps = {
   name?: string;
   displayName?: string;
 };
 
-export function LoadingSkeleton({ name, displayName }: LoadingProps) {
+export const LoadingSkeleton = ({
+  name,
+  displayName,
+}: LoadingSkeletonProps) => {
   const displayNameDifferent = name !== displayName;
 
   return (
@@ -49,4 +52,4 @@ export function LoadingSkeleton({ name, displayName }: LoadingProps) {
       </div>
     </div>
   );
-}
+};

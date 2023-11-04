@@ -1,6 +1,6 @@
 import React from "react";
 import { CheckResultCode } from "@namehash/nameguard";
-import { Tooltip } from "./Tooltip";
+import { Tooltip } from "../Tooltip/Tooltip";
 
 function text(code: CheckResultCode) {
   switch (code) {
