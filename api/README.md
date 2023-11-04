@@ -4,7 +4,7 @@ This repository contains the core logic for NameGuard, a python library, web API
 
 ## Getting Started
 
-### Env varaibles
+### Env variables
 
 ```bash
 AWS_ROLE - AWS Role used by GitHub actions to create the CloudFormation infrastructure for deploying NameGuard as an AWS Lambda and pushing the latest build image to AWS ECR.
