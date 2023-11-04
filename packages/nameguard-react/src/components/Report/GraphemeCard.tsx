@@ -3,10 +3,20 @@ import { ConsolidatedGraphemeGuardReport } from "@namehash/nameguard";
 
 import { Check } from "./Check";
 import { RiskCounter } from "./RiskCounter";
+import { useGraphemeModalStore } from "../../stores/grapheme";
 
 export function GraphemeCard(props: ConsolidatedGraphemeGuardReport) {
+  const { openGraphemeModal } = useGraphemeModalStore();
+
+  const handleClick = () => {
+    openGraphemeModal(props.grapheme);
+  };
+
   return (
-    <div className="grid grid-cols-8 md:grid-cols-12 gap-4 py-5 pl-6">
+    <div
+      className="grid grid-cols-8 md:grid-cols-12 gap-4 py-5 pl-6"
+      onClick={handleClick}
+    >
       <div className="flex md:items-center justify-center">
         <p className="text-4xl text-black font-bold">{props.grapheme}</p>
       </div>

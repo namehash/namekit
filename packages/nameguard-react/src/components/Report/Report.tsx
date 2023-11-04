@@ -11,6 +11,7 @@ import {
 import { FeedbackNotice } from "./FeedbackNotice";
 import { ReportFooter } from "./ReportFooter";
 import { ChatModal } from "../ChatModal/ChatModal";
+import { GraphemeModal } from "../GraphemeModal/GraphemeModal";
 import { useOutsideClick } from "../../hooks/use-outside-click";
 import { SearchEmptyState } from "../Search/SearchEmptyState";
 import { ReportHeader } from "./ReportHeader";
@@ -18,6 +19,7 @@ import { LoadingSkeleton } from "./LoadingSkeleton";
 import { Banner } from "./Banner";
 import { CheckResultCard } from "./CheckResultCard";
 import { LabelList } from "./LabelList";
+import { useGraphemeModalStore } from "../../stores/grapheme";
 
 type ReportProps = {
   name?: string;
@@ -31,8 +33,10 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
     : defaultUseChatModalStore();
 
   const { isChatModalOpen, openChatModal, closeChatModal } = store;
+  const { closeGraphemeModal } = useGraphemeModalStore();
 
-  const outsideClickRef = useOutsideClick(store.closeChatModal);
+  const outsideChatClickRef = useOutsideClick(store.closeChatModal);
+  const outsideGraphemeClickRef = useOutsideClick(closeGraphemeModal);
 
   const parsedName = useMemo(() => {
     return parseName(name, settings);
@@ -54,7 +58,7 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
         <ChatModal
           open={isChatModalOpen}
           onClose={closeChatModal}
-          ref={outsideClickRef}
+          ref={outsideChatClickRef}
         />
         <SearchEmptyState />
       </Fragment>
@@ -65,8 +69,9 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
       <ChatModal
         open={isChatModalOpen}
         onClose={closeChatModal}
-        ref={outsideClickRef}
+        ref={outsideChatClickRef}
       />
+      <GraphemeModal ref={outsideGraphemeClickRef} />
       <div className="space-y-8">
         <ReportHeader />
 
