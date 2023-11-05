@@ -47,7 +47,7 @@ export const SearchModal = () => {
             >
               <Dialog.Panel className="mx-auto w-full relative transform overflow-hidden md:rounded-xl bg-white shadow-2xl transition-all flex flex-col h-full md:h-auto max-h-full pt-[56px] md:pt-[68px]">
                 <SearchModalHeader />
-                <div className="overflow-y-scroll relative px-6 md:py-10 space-y-8 h-full">
+                <div className="overflow-y-scroll relative px-6 md:py-10 h-full">
                   <Report
                     name={name}
                     settings={settings}

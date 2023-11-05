@@ -20,13 +20,17 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
 
   return (
     <Slideover
-      title={data?.grapheme_name ?? "Loading"}
+      title={
+        data?.grapheme_name ?? (
+          <div className="w-56 h-3 rounded bg-gradient-to-r from-gray-300 to-gray-100 animate-pulse"></div>
+        )
+      }
       isOpen={isGraphemeModalOpen}
       onClose={closeGraphemeModal}
       ref={ref}
     >
       {!data ? (
-        <p>Loading...</p>
+        <p>Loading</p>
       ) : (
         <div className="p-6 space-y-8 w-full">
           <RatedBox rating={data?.rating}>

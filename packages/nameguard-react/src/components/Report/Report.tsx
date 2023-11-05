@@ -20,6 +20,7 @@ import { Banner } from "./Banner";
 import { CheckResultCard } from "./CheckResultCard";
 import { LabelList } from "./LabelList";
 import { useGraphemeModalStore } from "../../stores/grapheme";
+import { ReportError } from "./ReportError";
 
 type ReportProps = {
   name?: string;
@@ -75,13 +76,14 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
       <div className="space-y-8">
         <ReportHeader />
 
-        {isLoading && normalizationUnknown && <LoadingSkeleton />}
-        {isLoading && !normalizationUnknown && (
-          <LoadingSkeleton
-            name={parsedName.outputName.name}
-            displayName={parsedName.outputName.displayName}
-          />
+        {isLoading && !error && normalizationUnknown && (
+          <LoadingSkeleton parsedName={parsedName} />
         )}
+        {isLoading && !error && !normalizationUnknown && (
+          <LoadingSkeleton parsedName={parsedName} />
+        )}
+
+        {error && <ReportError />}
 
         {data && (
           <Fragment>

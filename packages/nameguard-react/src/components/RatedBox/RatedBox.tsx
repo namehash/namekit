@@ -42,8 +42,6 @@ type RatedBoxProps = {
 };
 
 export const RatedBox = ({ rating, children }: RatedBoxProps) => {
-  if (!rating) return null;
-
   const border = borderColor(rating);
   const shadow = shadowColor(rating);
 
