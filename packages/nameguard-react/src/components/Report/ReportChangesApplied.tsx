@@ -16,7 +16,7 @@ export function ReportChangesApplied({ transformations = [] }: Props) {
   return (
     <div className="border-t border-gray-200 mx-6 md:mx-0">
       <div className="w-full md:px-10 py-4 md:py-3 flex items-center flex-wrap">
-        <span className="text-sm text-gray-500 mr-2.5 w-full">
+        <span className="text-sm text-gray-500 mr-2.5 w-full md:w-auto">
           Changes applied to your search:
         </span>
         <div className="space-x-1.5 flex items-center mt-2 md:mt-0">
