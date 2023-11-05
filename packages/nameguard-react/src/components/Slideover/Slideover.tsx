@@ -25,7 +25,7 @@ export const Slideover = forwardRef(
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 backdrop-blur-sm" />
+            <div className="fixed inset-0" />
           </Transition.Child>
           <Transition.Child
             as={Fragment}
@@ -36,7 +36,7 @@ export const Slideover = forwardRef(
             leaveFrom="md:opacity-100 md:translate-x-0"
             leaveTo="md:opacity-0 md:translate-x-28"
           >
-            <div className="relative z-50 md:z-40 flex justify-end h-full">
+            <div className="relative z-50 md:z-40 flex justify-end h-full md:pt-[68px] md:pb-[53px]">
               <div
                 className="w-full lg:max-w-[668px] transform overflow-y-auto bg-white md:shadow-2xl transition-all h-full flex flex-col"
                 ref={ref}
@@ -46,7 +46,7 @@ export const Slideover = forwardRef(
                   <div className="flex items-center right-0 md:left-0 md:right-auto inset-y-0 absolute pr-3 md:pr-0 md:pl-3 z-20">
                     <button
                       onClick={onClose}
-                      className="flex items-center justify-between p-2"
+                      className="flex items-center justify-between p-2 appearance-none bg-transparent hover:bg-black/5 transition rounded-md"
                     >
                       <ChevronDoubleRightIcon className="hidden md:block w-6 h-6 fill-current text-black" />
                       <XMarkIcon className="md:hidden w-6 h-6 fill-current text-black md:text-gray-400" />
@@ -54,9 +54,7 @@ export const Slideover = forwardRef(
                   </div>
                 </div>
 
-                <div className="flex items-center justify-center h-full py-12">
-                  {children}
-                </div>
+                <div className="h-full">{children}</div>
               </div>
             </div>
           </Transition.Child>

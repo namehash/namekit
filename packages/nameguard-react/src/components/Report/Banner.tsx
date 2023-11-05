@@ -3,40 +3,7 @@ import cc from "classcat";
 import type { NameGuardReport, Rating } from "@namehash/nameguard";
 
 import { Shield } from "./Shield";
-
-function borderColor(rating: Rating) {
-  switch (rating) {
-    case "alert": {
-      return "border-red-200";
-    }
-    case "pass": {
-      return "border-green-200";
-    }
-    case "warn": {
-      return "border-yellow-200";
-    }
-    default: {
-      return "border-gray-200";
-    }
-  }
-}
-
-function shadowColor(rating: Rating) {
-  switch (rating) {
-    case "alert": {
-      return "shadow-red-50";
-    }
-    case "pass": {
-      return "shadow-green-50";
-    }
-    case "warn": {
-      return "shadow-yellow-50";
-    }
-    default: {
-      return "shadow-gray-50";
-    }
-  }
-}
+import { RatedBox } from "../RatedBox/RatedBox";
 
 function textColor(rating: Rating) {
   switch (rating) {
@@ -70,11 +37,7 @@ export function Banner({ report, parsedName }: Props) {
   const { name, title, subtitle, rating, beautiful_name } = report;
   const { outputName, transformations } = parsedName;
 
-  const border = borderColor(rating);
-  const shadow = shadowColor(rating);
   const text = cc(["font-semibold text-sm md:text-2xl", textColor(rating)]);
-
-  const wrapperClass = cc(["rounded-xl border shadow-xl", border, shadow]);
 
   const displayNameDifferent = ![
     outputName.displayName,
@@ -83,7 +46,7 @@ export function Banner({ report, parsedName }: Props) {
   const displayTransformations = transformations.length >= 1;
 
   return (
-    <div className={wrapperClass}>
+    <RatedBox rating={rating}>
       <div className="p-5 md:py-7 md:px-10 flex flex-col md:flex-row md:items-start justify-between">
         <div className="md:w-4/6 overflow-hidden overflow-ellipsis">
           <p className="uppercase text-[12px] text-gray-500 font-medium">
@@ -132,6 +95,6 @@ export function Banner({ report, parsedName }: Props) {
           </div>
         </div>
       )}
-    </div>
+    </RatedBox>
   );
 }
