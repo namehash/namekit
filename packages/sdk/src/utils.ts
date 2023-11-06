@@ -12,12 +12,6 @@ export function isTokenId(token_id: string) {
   return tokenIdRegex.test(token_id);
 }
 
-// TODO: Write tests
-export function countGraphemes(str: string) {
-  // TODO verify logic here
-  return [...str].length;
-}
-
 const keccak256Regex = /^(?:0x)?[0-9a-f]{64}$/i;
 
 /**

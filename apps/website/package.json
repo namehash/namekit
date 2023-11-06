@@ -10,7 +10,6 @@
     "prettier-check": "prettier --check ."
   },
   "dependencies": {
-    "@headlessui/react": "1.7.17",
     "@heroicons/react": "2.0.18",
     "@namehash/nameguard-react": "workspace:*",
     "@tailwindcss/forms": "0.5.6",
