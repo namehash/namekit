@@ -9,9 +9,15 @@ These components can be used to interface with NameGuard with React.
 The `<Search />` contains its own state for the chat modal and settings, the settings can be changed inside the search modal.
 
 ```tsx
-import { Search } from "@namehash/nameguard-react";
+import { Search, SearchModal, SettingsModal } from "@namehash/nameguard-react";
 
-export default () => <Search />;
+export default () => (
+  <>
+    <Search />
+    <SettingsModal />
+    <SearchModal />
+  </>
+);
 ```
 
 ### Report
