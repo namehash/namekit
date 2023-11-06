@@ -1,4 +1,4 @@
-import React, { Fragment, forwardRef, type Ref } from "react";
+import React, { forwardRef, type Ref } from "react";
 import useSWR from "swr";
 import { type GraphemeGuardReport, nameguard } from "@namehash/nameguard";
 
@@ -7,7 +7,7 @@ import { Slideover } from "../Slideover/Slideover";
 import { CheckResultCard } from "../Report/CheckResultCard";
 import { Shield } from "../Report/Shield";
 import { RatedBox } from "../RatedBox/RatedBox";
-// import { LabelList } from "../Report/LabelList";
+import { ConfusableList } from "./ConfusableList";
 
 export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
   const { isGraphemeModalOpen, closeGraphemeModal, currentGrapheme } =
@@ -29,7 +29,7 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
       onClose={closeGraphemeModal}
       ref={ref}
     >
-      {!data ? (
+      {isLoading ? (
         <p>Loading</p>
       ) : (
         <div className="p-6 space-y-8 w-full">
@@ -81,20 +81,20 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
           </div>
 
           {data?.confusables?.length > 0 && (
-            <div className="space-y-1">
-              <p className="text-black font-semibold text-lg leading-6">
-                Could be confused with
-              </p>
-              <p className="text-gray-500 text-sm leading-6">
-                Some people could visually confuse this charracter for a
-                different character.
-              </p>
+            <div className="space-y-4 md:space-y-5">
+              <div className="space-y-1">
+                <p className="text-black font-semibold text-lg leading-6">
+                  Could be confused with
+                </p>
+                <p className="text-gray-500 text-sm leading-6">
+                  Some people could visually confuse this charracter for a
+                  different character.
+                </p>
+              </div>
 
-              {/* <LabelList items={data?.} /> */}
+              <ConfusableList items={data?.confusables} />
             </div>
           )}
-
-          {/* <pre>{JSON.stringify(data, null, 2)}</pre> */}
         </div>
       )}
     </Slideover>

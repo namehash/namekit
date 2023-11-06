@@ -21,7 +21,7 @@ export const SearchModal = () => {
 
   return (
     <Transition.Root show={modalOpen} as={Fragment}>
-      <Dialog as="div" open={modalOpen} onClose={handleClose} static>
+      <Dialog as="div" open={modalOpen} onClose={() => {}} static>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
