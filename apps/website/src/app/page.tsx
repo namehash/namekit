@@ -27,7 +27,7 @@ export default function Home() {
     <>
       <Header />
       <HeroSection />
-      <div className="md:p-32 relative">
+      <div className="md:px-32 relative">
         <ReadySection
           sectionTargetSvgPath={
             "M7.1875 10C7.1875 10.1726 7.04759 10.3125 6.875 10.3125C6.70241 10.3125 6.5625 10.1726 6.5625 10C6.5625 9.82741 6.70241 9.6875 6.875 9.6875C7.04759 9.6875 7.1875 9.82741 7.1875 10ZM7.1875 10H6.875M10.3125 10C10.3125 10.1726 10.1726 10.3125 10 10.3125C9.82741 10.3125 9.6875 10.1726 9.6875 10C9.6875 9.82741 9.82741 9.6875 10 9.6875C10.1726 9.6875 10.3125 9.82741 10.3125 10ZM10.3125 10H10M13.4375 10C13.4375 10.1726 13.2976 10.3125 13.125 10.3125C12.9524 10.3125 12.8125 10.1726 12.8125 10C12.8125 9.82741 12.9524 9.6875 13.125 9.6875C13.2976 9.6875 13.4375 9.82741 13.4375 10ZM13.4375 10H13.125M17.5 10C17.5 13.797 14.1421 16.875 10 16.875C9.26044 16.875 8.54588 16.7769 7.87098 16.5941C7.05847 17.1649 6.06834 17.5 5 17.5C4.83398 17.5 4.6698 17.4919 4.50806 17.4761C4.375 17.4631 4.24316 17.4449 4.11316 17.4216C4.5161 16.9461 4.80231 16.3689 4.92824 15.734C5.00378 15.3531 4.81725 14.9832 4.53903 14.7124C3.27475 13.4818 2.5 11.8238 2.5 10C2.5 6.20304 5.85786 3.125 10 3.125C14.1421 3.125 17.5 6.20304 17.5 10Z"
@@ -217,6 +217,7 @@ export default function Home() {
             tagHeight: 814,
           }}
         />
+        <MobileSectionDivider />
         <ReadySection
           sectionTargetSvgPath={
             "M2.5 2.5H4.21296L4.55556 4.21296M5.92593 11.0648H14.4907L17.9167 4.21296H4.55556M5.92593 11.0648L4.55556 4.21296M5.92593 11.0648L3.96211 13.0286C3.42255 13.5682 3.80469 14.4907 4.56773 14.4907H14.4907M14.4907 14.4907C13.5447 14.4907 12.7778 15.2577 12.7778 16.2037C12.7778 17.1497 13.5447 17.9167 14.4907 17.9167C15.4368 17.9167 16.2037 17.1497 16.2037 16.2037C16.2037 15.2577 15.4368 14.4907 14.4907 14.4907ZM7.63889 16.2037C7.63889 17.1497 6.87197 17.9167 5.92593 17.9167C4.97988 17.9167 4.21296 17.1497 4.21296 16.2037C4.21296 15.2577 4.97988 14.4907 5.92593 14.4907C6.87197 14.4907 7.63889 15.2577 7.63889 16.2037Z"
@@ -372,6 +373,7 @@ export default function Home() {
             tagHeight: 680,
           }}
         />
+        <MobileSectionDivider />
         <ReadySection
           sectionTargetSvgPath={
             "M2.5 2.5H4.21296L4.55556 4.21296M5.92593 11.0648H14.4907L17.9167 4.21296H4.55556M5.92593 11.0648L4.55556 4.21296M5.92593 11.0648L3.96211 13.0286C3.42255 13.5682 3.80469 14.4907 4.56773 14.4907H14.4907M14.4907 14.4907C13.5447 14.4907 12.7778 15.2577 12.7778 16.2037C12.7778 17.1497 13.5447 17.9167 14.4907 17.9167C15.4368 17.9167 16.2037 17.1497 16.2037 16.2037C16.2037 15.2577 15.4368 14.4907 14.4907 14.4907ZM7.63889 16.2037C7.63889 17.1497 6.87197 17.9167 5.92593 17.9167C4.97988 17.9167 4.21296 17.1497 4.21296 16.2037C4.21296 15.2577 4.97988 14.4907 5.92593 14.4907C6.87197 14.4907 7.63889 15.2577 7.63889 16.2037Z"
@@ -394,6 +396,7 @@ export default function Home() {
             tagHeight: 682,
           }}
         />
+        <MobileSectionDivider />
         <ComingSoonSection
           sectionTargetSvgPath={
             "M17.5 10C17.5 8.96447 16.6605 8.125 15.625 8.125H12.5C12.5 9.50571 11.3807 10.625 10 10.625C8.61929 10.625 7.5 9.50571 7.5 8.125H4.375C3.33947 8.125 2.5 8.96447 2.5 10M17.5 10V15C17.5 16.0355 16.6605 16.875 15.625 16.875H4.375C3.33947 16.875 2.5 16.0355 2.5 15V10M17.5 10V7.5M2.5 10V7.5M17.5 7.5C17.5 6.46447 16.6605 5.625 15.625 5.625H4.375C3.33947 5.625 2.5 6.46447 2.5 7.5M17.5 7.5V5C17.5 3.96447 16.6605 3.125 15.625 3.125H4.375C3.33947 3.125 2.5 3.96447 2.5 5V7.5"
@@ -419,6 +422,7 @@ export default function Home() {
             tagHeight: 682,
           }}
         />
+        <MobileSectionDivider />
         <ComingSoonSection
           sectionTargetSvgPath={
             "M17.5 10C17.5 8.96447 16.6605 8.125 15.625 8.125H12.5C12.5 9.50571 11.3807 10.625 10 10.625C8.61929 10.625 7.5 9.50571 7.5 8.125H4.375C3.33947 8.125 2.5 8.96447 2.5 10M17.5 10V15C17.5 16.0355 16.6605 16.875 15.625 16.875H4.375C3.33947 16.875 2.5 16.0355 2.5 15V10M17.5 10V7.5M2.5 10V7.5M17.5 7.5C17.5 6.46447 16.6605 5.625 15.625 5.625H4.375C3.33947 5.625 2.5 6.46447 2.5 7.5M17.5 7.5V5C17.5 3.96447 16.6605 3.125 15.625 3.125H4.375C3.33947 3.125 2.5 3.96447 2.5 5V7.5"
@@ -444,6 +448,7 @@ export default function Home() {
             tagHeight: 626,
           }}
         />
+        <MobileSectionDivider />
         <ComingSoonSection
           sectionTargetSvgPath={
             "M17.5 10C17.5 8.96447 16.6605 8.125 15.625 8.125H12.5C12.5 9.50571 11.3807 10.625 10 10.625C8.61929 10.625 7.5 9.50571 7.5 8.125H4.375C3.33947 8.125 2.5 8.96447 2.5 10M17.5 10V15C17.5 16.0355 16.6605 16.875 15.625 16.875H4.375C3.33947 16.875 2.5 16.0355 2.5 15V10M17.5 10V7.5M2.5 10V7.5M17.5 7.5C17.5 6.46447 16.6605 5.625 15.625 5.625H4.375C3.33947 5.625 2.5 6.46447 2.5 7.5M17.5 7.5V5C17.5 3.96447 16.6605 3.125 15.625 3.125H4.375C3.33947 3.125 2.5 3.96447 2.5 5V7.5"
@@ -462,6 +467,7 @@ export default function Home() {
           }}
         />
       </div>
+      <MobileSectionDivider />
       <RoadMap />
       <ExitSection />
       <Footer />
@@ -660,11 +666,11 @@ type ReadySectionProps = {
 
 function ReadySection(props: ReadySectionProps) {
   const mediaDiv = cc([
-    "flex sm:flex-col xl:flex-row justify-center border-0 rounded-none items-center gap-10 w-full h-full xl:h-3/4 py-16 px-10 bg-center bg-no-repeat bg-cover flex-shrink-0 gt_mobile:gap-10",
+    "flex sm:flex-col xl:flex-row justify-center border-0 rounded-none items-center gap-12 w-full h-full xl:h-3/4 py-16 px-10 bg-center bg-no-repeat bg-cover flex-shrink-0 gt_mobile:gap-10",
     props.sectionBackgroundName,
   ]);
   return (
-    <section className="w-full h-full py-10 px-5 flex flex-col items-center justify-center gt_mobile:py-24 gt_mobile:px-0">
+    <section className="z-10 relative w-full h-full py-10 px-5 flex flex-col items-center justify-center bg-white gt_mobile:bg-transparent gt_mobile:py-24 gt_mobile:px-0">
       <div className="max-w-full flex flex-col items-center gt_mobile:mx-auto gt_mobile:px-6 gt_mobile:gap-3">
         <div className="w-full flex flex-col gap-5 items-center xl:w-1/2">
           <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-[20px] gap-2 justify-center items-center z-10">
@@ -692,14 +698,14 @@ function ReadySection(props: ReadySectionProps) {
             {props.sectionHeader}
           </h1>
 
-          <p className="z-10 text-gray-500 text-center not-italic font-normal text-sm leading-6 gt_mobile:text-lg gt_mobile:leading-7 md:w-4/5">
+          <p className="z-10 text-gray-500 text-center not-italic font-normal text-lg leading-7 gt_mobile:text-lg gt_mobile:leading-7 gt_mobile:font-light md:w-4/5">
             {props.sectionDescription}
           </p>
         </div>
         {props.isCodeOnTheLeft ? (
           <div className={mediaDiv}>
             {props.integrationsPanel ? (
-              <div className="hidden md:flex flex-col w-full h-full justify-between items-center gap-7">
+              <div className="hidden md:flex flex-col w-full h-full justify-between items-center gap-7 max-w-3xl">
                 <CodeSnippet codeSnippet={props.codeSnippet} />
                 <div className="inline-flex items-center gap-6">
                   {props.integrationsPanel}
@@ -711,7 +717,7 @@ function ReadySection(props: ReadySectionProps) {
               </div>
             )}
             <Image
-              className="z-10 w-full h-full gt_mobile:w-2/3 gt_mobile:h-2/3 xl:w-1/2 xl:h-1/2 max-w-lg"
+              className="z-10 w-full h-full gt_mobile:w-2/3 gt_mobile:h-2/3 max-w-[34rem]"
               src={props.imageSpecifics.source}
               alt={"chat image"}
               width={props.imageSpecifics.tagWidth}
@@ -721,7 +727,7 @@ function ReadySection(props: ReadySectionProps) {
         ) : (
           <div className={mediaDiv}>
             <Image
-              className="z-10 w-full h-full gt_mobile:w-2/3 gt_mobile:h-2/3 xl:w-1/2 xl:h-1/2 max-w-lg"
+              className="z-10 w-full h-full gt_mobile:w-2/3 gt_mobile:h-2/3 max-w-[34rem]"
               src={props.imageSpecifics.source}
               alt={"chat image"}
               width={props.imageSpecifics.tagWidth}
@@ -733,7 +739,7 @@ function ReadySection(props: ReadySectionProps) {
                 {props.integrationsPanel}
               </div>
             ) : (
-              <div className="hidden md:flex flex-col w-full h-full justify-between items-center gap-7">
+              <div className="hidden md:flex flex-col w-full h-full justify-between items-center gap-7 max-w-3xl">
                 <CodeSnippet codeSnippet={props.codeSnippet} />
               </div>
             )}
@@ -757,7 +763,7 @@ type ComingSoonSectionProps = {
 
 function ComingSoonSection(props: ComingSoonSectionProps) {
   const imageDiv = cc([
-    "hidden gt_mobile:flex flex-row justify-center items-center w-full max-w-3xl xl:w-1/2 rounded-none px-4 py-5 xl:px-20 xl:py-24 bg-origin-border bg-center bg-no-repeat bg-cover flex-shrink-0",
+    "hidden gt_mobile:flex flex-row justify-center items-center w-full max-w-2xl xl:w-1/2 rounded-none bg-origin-border bg-center bg-no-repeat bg-cover flex-shrink-0",
     props.sectionBackgroundName,
   ]);
   const mobileImageDiv = cc([
@@ -766,9 +772,9 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
   ]);
 
   return (
-    <section className="w-full flex flex-col xl:flex-row items-center justify-center h-full py-10 px-5 gt_mobile:h-1/2 gt_mobile:py-24 gt_mobile:px-10">
+    <section className="z-10 relative w-full flex flex-col xl:flex-row items-center justify-center h-full py-10 px-5 bg-white gt_mobile:bg-transparent gt_mobile:h-1/2 gt_mobile:py-20 gt_mobile:px-10">
       {!props.isTextOnTheLeft && (
-        <div className={imageDiv}>
+        <div className={cc([imageDiv, "box-border pr-16"])}>
           <Image
             className="relative z-10 w-full h-full"
             src={props.imageSpecifics.source}
@@ -813,7 +819,7 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
             {props.badgeText}
           </span>
         </div>
-        <p className="text-gray-500 not-italic font-normal z-10 text-center text-sm leading-6 xl:text-left gt_mobile:text-lg gt_mobile:w-4/5 gt_mobile:leading-7">
+        <p className="text-gray-500 not-italic font-normal z-10 text-center text-lg leading-7 xl:text-left gt_mobile:text-lg gt_mobile:w-4/5 gt_mobile:leading-7 gt_mobile:font-light">
           {props.sectionDescription}
         </p>
       </div>
@@ -844,7 +850,7 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
 function Footer() {
   return (
     <footer className="z-10 bg-white relative bot-0 w-full h-fit flex flex-col gap-3 py-5 items-center self-stretch gt_mobile:flex-row gt_mobile:justify-between gt_mobile:py-6 gt_mobile:px-28 gt_mobile:self-stretch">
-      <p className="not-italic font-normal text-gray-500 text-footer_text">
+      <p className="not-italic font-normal text-gray-500 text-sm gt_mobile:text-footer_text gt_mobile:font-light">
         © NameHash Labs. All Rights Reserved
       </p>
       <div className="flex flex-row justify-between gap-3">
@@ -881,7 +887,7 @@ function Footer() {
           </svg>
         </a>
       </div>
-      <p className="not-italic font-normal text-gray-500 text-footer_text">
+      <p className="not-italic font-normal text-gray-500 text-sm gt_mobile:text-footer_text gt_mobile:font-light">
         Made with ❤ by{" "}
         <a
           className="text-black underline gt_mobile:underline-offset-[6px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
@@ -899,6 +905,10 @@ function Header() {
     <header className="relative top-0 w-full z-10 border-b border-gray-300 box-border inline-flex h-[56px] px-[20px] py-[9px] items-center justify-between gt_mobile:flex gt_mobile:justify-center lg:justify-between gt_mobile:flex-row gt_mobile:h-[70px] gt_mobile:px-28 gt_mobile:py-4">
       <div className="flex flex-row gap-7 justify-between items-center">
         <div className="flex flex-row justify-between items-center gap-1 cursor-pointer">
+          <a href={"https://nameguard.io"}>
+            <NameGuardLogoLarge />
+            <NameGuardLogoSmall />
+          </a>
           <a href={"https://nameguard.io"}>
             <p className="text-black not-italic font-bold text-[22.683px] leading-[22.683px] tracking-[-0.907px] gt_mobile:text-[27.816px] gt_mobile:leading-[27.816px] gt_mobile:tracking-[-1.113px]">
               NameGuard
@@ -1043,7 +1053,7 @@ function HeroSection() {
               with NameGuard for ENS
             </h1>
           </div>
-          <p className="text-center not-italic font-normal text-gray-500 text-base leading-6">
+          <p className="text-center not-italic font-normal text-gray-500 text-lg leading-7 gt_mobile:text-base gt_mobile:leading-6 gt_mobile:font-light">
             Guard your users from heartbreak and encourage best practice usage
             of ENS
           </p>
@@ -1070,15 +1080,15 @@ function HeroSection() {
 
 function ExitSection() {
   return (
-    <section className="w-full h-full flex flex-col items-center justify-center bg-exit_section_background bg-no-repeat bg-bottom bg-contain pb-5 px-5 gt_mobile:h-1/2 gt_mobile:py-24">
+    <section className="w-full h-full flex flex-col items-center justify-center bg-exit_section_background bg-no-repeat bg-bottom bg-contain pb-5 px-5 gt_mobile:h-1/2 gt_mobile:py-20">
       <div className="z-10 flex flex-col items-center pt-10 pb-5 gt_mobile:inline-flex gt_mobile:items-start gt_mobile:p-[10px] gt_mobile:gap-[10px]">
-        <div className="flex flex-col items-center gap-5 w-full h-fit">
+        <div className="flex flex-col items-center gap-5 w-full h-fit gt_mobile:gap-8">
           <div className="flex flex-col justify-start items-center gap-5 gt_mobile:block">
             <h1 className="text-black not-italic text-center font-bold text-2xl leading-8 gt_mobile:text-4xl gt_mobile:leading-[52px]">
               Search for any ENS name to generate a<br />
               NameGuard report
             </h1>
-            <p className="text-center text-gray-500 font-normal not-italic text-sm leading-6 gt_mobile:text-lg gt_mobile:leading-7">
+            <p className="text-center text-gray-500 font-normal not-italic text-lg leading-7 gt_mobile:text-lg gt_mobile:leading-7 gt_mobile:font-light">
               Share NameGuard reports with frENS. Together we can make web3
               safer.
             </p>
@@ -1293,7 +1303,7 @@ function RoadMap() {
   ];
 
   return (
-    <section className="relative bg-white w-full h-full px-5 md:py-32 md:px-10 xl:px-32 flex flex-row items-center justify-center z-10 gap-10">
+    <section className="relative bg-white w-full h-full px-5 md:pt-24 md:pb-12 md:px-10 xl:px-32 flex flex-row items-center justify-center z-10 gap-10">
       <div className="hidden w-1/5 h-full relative -top-20 md:flex flex-col justify-center items-center gap-36">
         {leftSideShields.map((shield, idx) => (
           <div
@@ -1314,7 +1324,7 @@ function RoadMap() {
           <h1 className="text-black text-center not-italic font-bold text-2xl leading-8 gt_mobile:text-4xl gt_mobile:leading-[52px]">
             NameGuard roadmap
           </h1>
-          <p className="text-center text-gray-500 text-base leading-7 font-normal not-italic">
+          <p className="text-center text-gray-500 text-lg leading-7 font-normal not-italic gt_mobile:text-base gt_mobile:font-light">
             NameGuard has a mission to keep the ENS community safe and encourage
             optimal use of ENS names.
           </p>
@@ -1399,5 +1409,49 @@ function RoadMap() {
         ))}
       </div>
     </section>
+  );
+}
+
+function NameGuardLogoLarge() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="28"
+      height="30"
+      viewBox="0 0 28 30"
+      fill="none"
+      className="hidden gt_mobile:block"
+    >
+      <path
+        d="M27.5231 0.45459H16.932C16.8449 0.45459 16.7752 0.524273 16.7752 0.611371V7.56184C16.7752 7.64894 16.8274 7.70119 16.9145 7.71861C17.3152 7.77087 17.9597 7.80572 18.5172 7.82314C18.7959 7.82314 19.0397 7.84055 19.2488 7.84055H19.5101C19.5972 7.84055 19.6669 7.77087 19.6669 7.68377V3.50304C19.6669 3.41594 19.7365 3.34627 19.8236 3.34627H24.6315C24.7186 3.34627 24.7882 3.41594 24.7882 3.50304V26.4448C24.7882 26.5319 24.7186 26.6016 24.6315 26.6016H19.7714C19.7714 26.6016 19.7714 26.6016 19.754 26.6016C19.6843 26.6016 19.6146 26.5493 19.6146 26.4796C19.6146 26.4622 19.6146 26.4622 19.6146 26.4448C19.2139 22.3512 16.3397 18.9717 12.5596 17.7524C11.5841 17.4388 10.5563 17.282 9.51116 17.282H4.72074C4.63364 17.282 4.56397 17.3517 4.56397 17.4388V20.0169C4.56397 20.104 4.63364 20.1737 4.72074 20.1737H7.96081C7.96081 20.1737 7.99565 20.1737 8.08275 20.1737C8.55308 20.1737 10.3473 20.1911 10.9744 20.3131L11.0615 20.3305C11.288 20.3827 11.497 20.435 11.706 20.5047C13.0474 20.9228 14.2493 21.7415 15.1377 22.8389C16.2003 24.128 16.7752 25.748 16.7752 27.4203V29.3365C16.7752 29.4236 16.8449 29.4932 16.932 29.4932H27.5406C27.6277 29.4932 27.6973 29.4236 27.6973 29.3365V0.611371C27.6799 0.524273 27.6102 0.45459 27.5231 0.45459ZM23.0114 9.47801H19.6494C19.6494 9.47801 19.1268 9.478 18.4997 9.46058C17.8726 9.44316 17.1584 9.40832 16.7578 9.33864L16.7055 9.32123L16.6532 9.30381C16.0261 9.16445 15.4164 8.93799 14.8416 8.64185C13.9706 8.18894 13.1867 7.56184 12.5596 6.79537C11.5144 5.50631 10.9222 3.86886 10.9222 2.21399V0.611371C10.9222 0.524273 10.8525 0.45459 10.7654 0.45459H0.156782C0.0696831 0.45459 0 0.524273 0 0.611371V29.3365C0 29.4236 0.0696831 29.4932 0.156782 29.4932H10.7654C10.8525 29.4932 10.9222 29.4236 10.9222 29.3365V22.055C10.9222 21.9679 10.8699 21.9157 10.7828 21.8983C10.2951 21.8286 9.42407 21.7937 8.77954 21.7763H8.2221C8.13501 21.7763 8.06533 21.846 8.06533 21.9331V26.4274C8.06533 26.5145 7.99565 26.5842 7.90855 26.5842H3.10071C3.01361 26.5842 2.94393 26.5145 2.94393 26.4274V3.50304C2.94393 3.41594 3.01361 3.34627 3.10071 3.34627H7.99565C8.06533 3.34627 8.13501 3.39853 8.15243 3.46821C8.58792 6.95215 10.7828 9.89608 13.8313 11.3593C14.7197 11.7948 15.6952 12.091 16.7055 12.2477C17.1933 12.3174 17.7158 12.3697 18.221 12.3697H23.0114C23.0985 12.3697 23.1682 12.3 23.1682 12.2129V9.63478C23.1682 9.54768 23.0985 9.47801 23.0114 9.47801Z"
+        fill="black"
+      />
+    </svg>
+  );
+}
+
+function NameGuardLogoSmall() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="23"
+      height="25"
+      viewBox="0 0 23 25"
+      fill="none"
+      className="block gt_mobile:hidden"
+    >
+      <path
+        d="M22.6419 0.196777H13.9291C13.8574 0.196777 13.8001 0.254102 13.8001 0.325754V6.04355C13.8001 6.1152 13.8431 6.15819 13.9147 6.17252C14.2443 6.21551 14.7746 6.24418 15.2331 6.25851C15.4624 6.25851 15.663 6.27283 15.835 6.27283H16.0499C16.1216 6.27283 16.1789 6.21551 16.1789 6.14386V2.70458C16.1789 2.63293 16.2362 2.57561 16.3079 2.57561H20.2631C20.3347 2.57561 20.392 2.63293 20.392 2.70458V21.5776C20.392 21.6493 20.3347 21.7066 20.2631 21.7066H16.2649C16.2649 21.7066 16.2649 21.7066 16.2506 21.7066C16.1933 21.7066 16.1359 21.6636 16.1359 21.6063C16.1359 21.5919 16.1359 21.5919 16.1359 21.5776C15.8063 18.21 13.4418 15.4299 10.3322 14.4268C9.52966 14.1688 8.68417 14.0399 7.82435 14.0399H3.88352C3.81186 14.0399 3.75454 14.0972 3.75454 14.1688V16.2897C3.75454 16.3614 3.81186 16.4187 3.88352 16.4187H6.54895C6.54895 16.4187 6.57762 16.4187 6.64927 16.4187C7.03619 16.4187 8.51221 16.433 9.0281 16.5333L9.09975 16.5477C9.28604 16.5907 9.45801 16.6337 9.62997 16.691C10.7334 17.0349 11.7222 17.7084 12.453 18.6112C13.3272 19.6717 13.8001 21.0044 13.8001 22.3801V23.9564C13.8001 24.0281 13.8574 24.0854 13.9291 24.0854H22.6562C22.7279 24.0854 22.7852 24.0281 22.7852 23.9564V0.325754C22.7709 0.254102 22.7135 0.196777 22.6419 0.196777ZM18.9303 7.61989H16.1646C16.1646 7.61989 15.7347 7.61988 15.2188 7.60555C14.7029 7.59122 14.1154 7.56256 13.7858 7.50524L13.7428 7.49091L13.6998 7.47658C13.1839 7.36194 12.6823 7.17564 12.2094 6.93203C11.4929 6.55944 10.848 6.04355 10.3322 5.41302C9.47234 4.35257 8.98511 3.00552 8.98511 1.64414V0.325754C8.98511 0.254102 8.92779 0.196777 8.85614 0.196777H0.128976C0.0573247 0.196777 0 0.254102 0 0.325754V23.9564C0 24.0281 0.0573247 24.0854 0.128976 24.0854H8.85614C8.92779 24.0854 8.98511 24.0281 8.98511 23.9564V17.9664C8.98511 17.8947 8.94212 17.8517 8.87047 17.8374C8.46922 17.7801 7.7527 17.7514 7.22248 17.7371H6.76391C6.69226 17.7371 6.63494 17.7944 6.63494 17.8661V21.5633C6.63494 21.6349 6.57762 21.6923 6.50597 21.6923H2.5508C2.47915 21.6923 2.42183 21.6349 2.42183 21.5633V2.70458C2.42183 2.63293 2.47915 2.57561 2.5508 2.57561H6.57762C6.63494 2.57561 6.69226 2.61861 6.70659 2.67593C7.06485 5.54199 8.87047 7.96381 11.3783 9.16756C12.1091 9.52582 12.9116 9.76943 13.7428 9.8984C14.144 9.95572 14.5739 9.99872 14.9895 9.99872H18.9303C19.002 9.99872 19.0593 9.94139 19.0593 9.86974V7.74886C19.0593 7.6772 19.002 7.61989 18.9303 7.61989Z"
+        fill="black"
+      />
+    </svg>
+  );
+}
+
+function MobileSectionDivider() {
+  return (
+    <div className="flex gt_mobile:hidden items-center justify-center w-full h-fit px-5">
+      <span className="bg-gray-200 h-[1px] w-full"></span>
+    </div>
   );
 }
