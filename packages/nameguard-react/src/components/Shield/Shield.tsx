@@ -40,6 +40,12 @@ export const Shield = ({ name }: ShieldProps) => {
     (n: string) => nameguard.inspectName(parseName(n).outputName.name)
   );
 
+  if (isLoading || !data) {
+    return (
+      <ShieldIcon status={isLoading ? "info" : data.rating} size="small" />
+    );
+  }
+
   const textClass = cc(["font-semibold", textColor(data.rating)]);
 
   return (
