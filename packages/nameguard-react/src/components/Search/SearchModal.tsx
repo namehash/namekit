@@ -21,7 +21,7 @@ export const SearchModal = () => {
 
   return (
     <Transition.Root show={modalOpen} as={Fragment}>
-      <Dialog as="div" open={modalOpen} onClose={() => {}} static>
+      <Dialog as="div" className="relative z-10" onClose={handleClose}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -31,7 +31,7 @@ export const SearchModal = () => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Dialog.Overlay className="fixed z-10 inset-0 bg-black/50 backdrop-blur-sm" />
+          <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm" />
         </Transition.Child>
 
         <div className="fixed inset-0 z-20 overflow-y-auto">

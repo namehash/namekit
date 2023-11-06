@@ -34,10 +34,16 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
     : defaultUseChatModalStore();
 
   const { isChatModalOpen, openChatModal, closeChatModal } = store;
-  const { closeGraphemeModal } = useGraphemeModalStore();
+  const { closeGraphemeModal, isGraphemeModalOpen } = useGraphemeModalStore();
 
-  const outsideChatClickRef = useOutsideClick(store.closeChatModal);
-  const outsideGraphemeClickRef = useOutsideClick(closeGraphemeModal);
+  const outsideChatClickRef = useOutsideClick(
+    store.closeChatModal,
+    store.isChatModalOpen
+  );
+  const outsideGraphemeClickRef = useOutsideClick(
+    closeGraphemeModal,
+    isGraphemeModalOpen
+  );
 
   const parsedName = useMemo(() => {
     return parseName(name, settings);
@@ -67,12 +73,6 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
 
   return (
     <Fragment>
-      <ChatModal
-        open={isChatModalOpen}
-        onClose={closeChatModal}
-        ref={outsideChatClickRef}
-      />
-      <GraphemeModal ref={outsideGraphemeClickRef} />
       <div className="space-y-8">
         <ReportHeader />
 
@@ -112,6 +112,13 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
           </Fragment>
         )}
       </div>
+
+      <ChatModal
+        open={isChatModalOpen}
+        onClose={closeChatModal}
+        ref={outsideChatClickRef}
+      />
+      <GraphemeModal ref={outsideGraphemeClickRef} />
     </Fragment>
   );
 };

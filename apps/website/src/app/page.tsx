@@ -11,7 +11,12 @@ import surface_risks_img from "../../public/assets/surface_risks.png";
 import dangerous_name_config_img from "../../public/assets/dangerous_name_configuration.png";
 import autorenewal_img from "../../public/assets/autorenewal.png";
 import ens_webfont_img from "../../public/assets/ens_webfont.png";
-import { Tooltip, Search } from "@namehash/nameguard-react";
+import {
+  Tooltip,
+  Search,
+  SearchModal,
+  SettingsModal,
+} from "@namehash/nameguard-react";
 import cc from "classcat";
 
 export default function Home() {
@@ -25,6 +30,8 @@ export default function Home() {
                     <p class="text-lg font-medium">`;
   return (
     <>
+      <SearchModal />
+      <SettingsModal />
       <Header />
       <HeroSection />
       <div className="md:p-32 relative">

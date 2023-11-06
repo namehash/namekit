@@ -25,7 +25,7 @@ export const Slideover = forwardRef(
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0" />
+            <div className="fixed inset-0 backdrop-blur-sm" />
           </Transition.Child>
           <Transition.Child
             as={Fragment}

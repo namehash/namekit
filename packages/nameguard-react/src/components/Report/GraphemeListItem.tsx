@@ -13,7 +13,7 @@ export function GraphemeListItem({ item }: GraphemeListItemProps) {
   const { openGraphemeModal } = useGraphemeModalStore();
 
   const handleClick = () => {
-    openGraphemeModal(item.grapheme);
+    openGraphemeModal(decodeURIComponent(item.grapheme));
   };
 
   return (
