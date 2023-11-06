@@ -62,8 +62,8 @@ function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export const Shield = ({ status, size = "medium" }: Props) => {
+export const Shield = ({ status, size = "medium", ...props }: Props) => {
   const Component = getComponent(status, size);
 
-  return Component ? <Component /> : null;
+  return Component ? <Component {...props} /> : null;
 };
