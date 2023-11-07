@@ -787,24 +787,24 @@ function RoadMap() {
   ];
 
   const leftSideShields = [
-    <RoadmapPositiveShield />,
-    <RoadmapNegativeShield />,
-    <RoadmapWarningShield />,
-    <RoadmapPositiveShield />,
-    <RoadmapWarningShield />,
-    <RoadmapNegativeShield />,
-    <RoadmapWarningShield />,
-    <RoadmapPositiveShield />,
+    <RoadmapPositiveShield key="leftShieldSVG0" />,
+    <RoadmapNegativeShield key="leftShieldSVG1" />,
+    <RoadmapWarningShield key="leftShieldSVG2" />,
+    <RoadmapPositiveShield key="leftShieldSVG3" />,
+    <RoadmapWarningShield key="leftShieldSVG4" />,
+    <RoadmapNegativeShield key="leftShieldSVG5" />,
+    <RoadmapWarningShield key="leftShieldSVG6" />,
+    <RoadmapPositiveShield key="leftShieldSVG7" />,
   ];
   const rightSideShields = [
-    <RoadmapNegativeShield />,
-    <RoadmapPositiveShield />,
-    <RoadmapWarningShield />,
-    <RoadmapNegativeShield />,
-    <RoadmapPositiveShield />,
-    <RoadmapWarningShield />,
-    <RoadmapNegativeShield />,
-    <RoadmapPositiveShield />,
+    <RoadmapNegativeShield key="rightShieldSVG0" />,
+    <RoadmapPositiveShield key="rightShieldSVG1" />,
+    <RoadmapWarningShield key="rightShieldSVG2" />,
+    <RoadmapNegativeShield key="rightShieldSVG3" />,
+    <RoadmapPositiveShield key="rightShieldSVG4" />,
+    <RoadmapWarningShield key="rightShieldSVG5" />,
+    <RoadmapNegativeShield key="rightShieldSVG6" />,
+    <RoadmapPositiveShield key="rightShieldSVG7" />,
   ];
 
   return (
