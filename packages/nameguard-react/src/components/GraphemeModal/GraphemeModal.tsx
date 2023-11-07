@@ -8,6 +8,7 @@ import { CheckResultCard } from "../Report/CheckResultCard";
 import { Shield } from "../Report/Shield";
 import { RatedBox } from "../RatedBox/RatedBox";
 import { ConfusableList } from "./ConfusableList";
+import { LoadingSkeleton } from "./LoadingSkeleton";
 
 export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
   const { isGraphemeModalOpen, closeGraphemeModal, currentGrapheme } =
@@ -29,12 +30,12 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
       onClose={closeGraphemeModal}
       ref={ref}
     >
-      {isLoading ? (
-        <p>Loading</p>
+      {isLoading || !data ? (
+        <LoadingSkeleton />
       ) : (
         <div className="p-6 space-y-8 w-full">
           <RatedBox rating={data?.rating}>
-            <div className="px-5 pt-7 pb-10 rounded-xl md:py-7 lg:pt-8 lg:pb-10 md:px-[30px] flex flex-col">
+            <div className="px-5 pt-7 pb-10 md:py-7 lg:pt-8 lg:pb-10 md:px-[30px] flex flex-col">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2.5">
                   <Shield status={data?.rating} size="small" />
@@ -42,7 +43,7 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
                 </div>
               </div>
 
-              <div className="flex flex-col justify-center items-center space-y-5">
+              <div className="flex flex-col justify-center items-center space-y-8">
                 <h2 className="text-[82px] text-black font-extrabold leading-[60px]">
                   {data?.grapheme}
                 </h2>
