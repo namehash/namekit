@@ -606,7 +606,7 @@ function HeroSection() {
   }, [copiedToClipboard]);
 
   return (
-    <section className="box-border relative z-10 w-full h-fit xl:h-screen py-[61px] gt_mobile:pb-24 gt_mobile:pt-8 px-5 flex flex-col items-center justify-center bg-hero_background bg-no-repeat bg-center bg-contain md:px-10 md:pt-10 md:pb-32">
+    <section className="box-border relative z-10 w-full h-fit xl:h-screen py-[61px] gt_mobile:pb-24 gt_mobile:pt-8 px-5 flex flex-col items-center justify-center bg-hero_background bg-no-repeat bg-center bg-contain md:px-10 md:pt-10 md:pb-0">
       <div className={heroBackgroundDiv}>
         <div className="inline-flex flex-col items-center gap-5 w-full h-fit">
           <div className="flex flex-col gap-2 w-fit h-fit z-10">
@@ -640,6 +640,7 @@ function HeroSection() {
           </a>
         </div>
       </div>
+      <Carousel />
     </section>
   );
 }
@@ -924,6 +925,196 @@ function RoadMap() {
   );
 }
 
+function MobileSectionDivider() {
+  return (
+    <div className="flex gt_mobile:hidden items-center justify-center w-full h-fit px-5">
+      <span className="bg-gray-200 h-[1px] w-full"></span>
+    </div>
+  );
+}
+
+type carouselItem = {
+  name: string;
+  riskInformation: React.ReactNode;
+  shield: React.ReactNode;
+};
+
+function Carousel() {
+  const riskInformation: React.ReactNode = //ERRORS HERE! FIX
+    (
+      <div className="w-full h-full flex flex-row gap-3 items-start justify-center">
+        RISK INFO
+      </div>
+    ); //text / general data in here should be obtained by some sdk request (if I remember corectly) ???
+
+  const items: carouselItem[] = [
+    {
+      name: "👪👨‍👩‍👦.eth",
+      riskInformation: riskInformation,
+      shield: <RiskShieldSmall />,
+    },
+    {
+      name: "פעילותהבינאום.eth",
+      riskInformation: riskInformation,
+      shield: <RiskShieldSmall />,
+    },
+    {
+      name: "😵💫😵💫😵💫.eth",
+      riskInformation: riskInformation,
+      shield: <RiskShieldSmall />,
+    },
+    {
+      name: "פإنترنت.eth",
+      riskInformation: riskInformation,
+      shield: <RiskShieldSmall />,
+    },
+    {
+      name: "vitalik.eth",
+      riskInformation: riskInformation,
+      shield: <RiskShieldSmall />,
+    },
+    {
+      name: "פעילותהבינאום.eth",
+      riskInformation: riskInformation,
+      shield: <RiskShieldSmall />,
+    },
+    {
+      name: "😵💫😵💫😵💫.eth",
+      riskInformation: riskInformation,
+      shield: <RiskShieldSmall />,
+    },
+    {
+      name: "פإنترنت.eth",
+      riskInformation: riskInformation,
+      shield: <RiskShieldSmall />,
+    },
+    {
+      name: "👪👨‍👩‍👦.eth",
+      riskInformation: riskInformation,
+      shield: <RiskShieldSmall />,
+    },
+    {
+      name: "פעילותהבינאום.eth",
+      riskInformation: riskInformation,
+      shield: <RiskShieldSmall />,
+    },
+    {
+      name: "😵💫😵💫😵💫.eth",
+      riskInformation: riskInformation,
+      shield: <RiskShieldSmall />,
+    },
+    {
+      name: "פإنترنت.eth",
+      riskInformation: riskInformation,
+      shield: <RiskShieldSmall />,
+    },
+    {
+      name: "vitalik.eth",
+      riskInformation: riskInformation,
+      shield: <RiskShieldSmall />,
+    },
+    {
+      name: "פإنترنت.eth",
+      riskInformation: riskInformation,
+      shield: <RiskShieldSmall />,
+    },
+    {
+      name: "👪👨‍👩‍👦.eth",
+      riskInformation: riskInformation,
+      shield: <RiskShieldSmall />,
+    },
+    {
+      name: "פעילותהבינאום.eth",
+      riskInformation: riskInformation,
+      shield: <RiskShieldSmall />,
+    },
+    {
+      name: "😵💫😵💫😵💫.eth",
+      riskInformation: riskInformation,
+      shield: <RiskShieldSmall />,
+    },
+    {
+      name: "פإنترنت.eth",
+      riskInformation: riskInformation,
+      shield: <RiskShieldSmall />,
+    },
+    {
+      name: "vitalik.eth",
+      riskInformation: riskInformation,
+      shield: <RiskShieldSmall />,
+    },
+    {
+      name: "👪👨‍👩‍👦.eth",
+      riskInformation: riskInformation,
+      shield: <RiskShieldSmall />,
+    },
+    {
+      name: "פעילותהבינאום.eth",
+      riskInformation: riskInformation,
+      shield: <RiskShieldSmall />,
+    },
+    {
+      name: "😵💫😵💫😵💫.eth",
+      riskInformation: riskInformation,
+      shield: <RiskShieldSmall />,
+    },
+    {
+      name: "פإنترنت.eth",
+      riskInformation: riskInformation,
+      shield: <RiskShieldSmall />,
+    },
+  ];
+
+  return (
+    <section className="w-full h-40 py-5 flex flex-col justify-center items-center gap-5">
+      <p className="text-center not-italic font-normal text-gray-500 text-lg leading-7 gt_mobile:font-light">
+        Identify hidden risks or limitations in an ENS name
+      </p>
+      <div className="relative overflow-x-hidden w-full h-10">
+        <div className="z-10 absolute top-0 w-full h-full pointer-events-none shadow-carousel_blur"></div>
+        <div className="absolute top-2 left-0 flex flex-row flex-nowrap w-[200%] h-fit justify-center items-center gap-2 animate-carousel hover:pause pointer-events-none">
+          {items.map((item, idx) => (
+            <Tooltip
+              key={`tooltip-carousel-${idx}`}
+              trigger={
+                <div
+                  key={`carsouel-item-${idx}`}
+                  className="flex flex-row w-fit h-fit justify-center items-center gap-[6px] py-[2px] pl-[10px] pr-[8px] bg-white rounded-md border border-gray-200 pointer-events-auto"
+                >
+                  <p className="text-sm not-italic leading-5 font-medium whitespace-nowrap">
+                    {item.name}
+                  </p>
+                  {item.shield}
+                </div>
+              }
+            >
+              {item.riskInformation}
+            </Tooltip>
+          ))}
+          {items.map((item, idx) => (
+            <Tooltip
+              key={`2-tooltip-carousel-${idx}`}
+              trigger={
+                <div
+                  key={`carsouel-item-${idx}`}
+                  className="flex flex-row w-fit h-fit justify-center items-center gap-[6px] py-[2px] pl-[10px] pr-[8px] bg-white rounded-md border border-gray-200 pointer-events-auto"
+                >
+                  <p className="text-sm not-italic leading-5 font-medium whitespace-nowrap">
+                    {item.name}
+                  </p>
+                  {item.shield}
+                </div>
+              }
+            >
+              {item.riskInformation}
+            </Tooltip>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function NameGuardLogoLarge() {
   return (
     <svg
@@ -960,11 +1151,23 @@ function NameGuardLogoSmall() {
   );
 }
 
-function MobileSectionDivider() {
+function RiskShieldSmall() {
   return (
-    <div className="flex gt_mobile:hidden items-center justify-center w-full h-fit px-5">
-      <span className="bg-gray-200 h-[1px] w-full"></span>
-    </div>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      fill="none"
+    >
+      <path
+        d="M8 6.00006V8.50006M8 1.80957C6.56634 3.16732 4.63042 4.00007 2.5 4.00007C2.46615 4.00007 2.43235 3.99986 2.3986 3.99944C2.13993 4.78618 2 5.6268 2 6.5001C2 10.2278 4.54955 13.36 8 14.2481C11.4505 13.36 14 10.2278 14 6.5001C14 5.6268 13.8601 4.78618 13.6014 3.99944C13.5677 3.99986 13.5339 4.00007 13.5 4.00007C11.3696 4.00007 9.43366 3.16732 8 1.80957ZM8 10.5001H8.005V10.5051H8V10.5001Z"
+        stroke="#F59E0B"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
 
