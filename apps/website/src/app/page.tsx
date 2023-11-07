@@ -890,7 +890,7 @@ function Footer() {
       <p className="not-italic font-normal text-gray-500 text-sm gt_mobile:text-footer_text gt_mobile:font-light">
         Made with ❤ by{" "}
         <a
-          className="text-black underline gt_mobile:underline-offset-[6px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+          className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
           href={"https://namehash.io/"}
         >
           NameHash Labs
@@ -905,10 +905,6 @@ function Header() {
     <header className="relative top-0 w-full z-10 border-b border-gray-300 box-border inline-flex h-[56px] px-[20px] py-[9px] items-center justify-between gt_mobile:flex gt_mobile:justify-center lg:justify-between gt_mobile:flex-row gt_mobile:h-[70px] gt_mobile:px-28 gt_mobile:py-4">
       <div className="flex flex-row gap-7 justify-between items-center">
         <div className="flex flex-row justify-between items-center gap-1 cursor-pointer">
-          <a href={"https://nameguard.io"}>
-            <NameGuardLogoLarge />
-            <NameGuardLogoSmall />
-          </a>
           <a href={"https://nameguard.io"}>
             <p className="text-black not-italic font-bold text-[22.683px] leading-[22.683px] tracking-[-0.907px] gt_mobile:text-[27.816px] gt_mobile:leading-[27.816px] gt_mobile:tracking-[-1.113px]">
               NameGuard
@@ -1153,7 +1149,7 @@ function RoadMap() {
         <span key={"ENSLabelInspectorFragment"}>
           Description with{" "}
           <a
-            className="text-black underline gt_mobile:underline-offset-[6px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
             href={"https://namehash.io/"}
           >
             hyperlink
