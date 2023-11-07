@@ -31,13 +31,13 @@ describe("NameGuard", () => {
 
   it("should throw an error if invalid namehash provided", async () => {
     await expect(
-      nameguard.inspectNamehash("0x1234567890abcdef"),
+      nameguard.inspectNamehash("0x1234567890abcdef")
     ).rejects.toThrow("Invalid Keccak256 hash format for namehash.");
   });
 
   it("should throw an error if invalid labelhash provided", async () => {
     await expect(
-      nameguard.inspectLabelhash("0x1234567890abcdef"),
+      nameguard.inspectLabelhash("0x1234567890abcdef")
     ).rejects.toThrow("Invalid Keccak256 hash format for labelhash.");
   });
 
@@ -49,7 +49,9 @@ describe("NameGuard", () => {
   });
 
   it("should analyze a primary name", async () => {
-    const data = await nameguard.getSecurePrimaryName("0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5");
+    const data = await nameguard.getSecurePrimaryName(
+      "0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5"
+    );
 
     expect(data.display_name).toBe("nick.eth");
   });
@@ -61,5 +63,17 @@ describe("NameGuard", () => {
     );
 
     expect(data.status).toBe("impersonated_eth_name");
+  });
+
+  it("should check a secure primary endpoint", async () => {
+    const data = await nameguard.getSecurePrimaryName(
+      "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+    );
+
+    expect(data.display_name).toBe("vitalik.eth");
+    expect(data.primary_name_status).toBe("normalized");
+    expect(data.impersonation_status).toBe("unlikely");
+    expect(data.primary_name).toBe("vitalik.eth");
+    expect(data.nameguard_result).not.toBeNull();
   });
 });
