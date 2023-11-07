@@ -1,0 +1,47 @@
+{
+  "contract": {
+    "address": "0xd8b287885cab9e377de8f61f000ff9b3f50e2f4d"
+  },
+  "id": {
+    "tokenId": "0x4",
+    "tokenMetadata": {
+      "tokenType": "ERC721"
+    }
+  },
+  "title": "Vitalik #4",
+  "description": "By Roger Haus, 2022",
+  "tokenUri": {
+    "gateway": "https://alchemy.mypinata.cloud/ipfs/QmfWtvETvEiJKodb5r5hQ8emgnpxNCwceMBG1ohqtJ9R78/metadata.json",
+    "raw": "ipfs://QmfWtvETvEiJKodb5r5hQ8emgnpxNCwceMBG1ohqtJ9R78/metadata.json"
+  },
+  "media": [
+    {
+      "gateway": "https://nft-cdn.alchemy.com/eth-mainnet/e99b33472f05bc3b413c7857053289c9",
+      "thumbnail": "https://res.cloudinary.com/alchemyapi/image/upload/thumbnailv2/eth-mainnet/e99b33472f05bc3b413c7857053289c9",
+      "raw": "ipfs://QmW8QL6KeSdmabSG3vYYg25oga4hY7hnyFX7p2pU15WNWq/nft.png",
+      "format": "png",
+      "bytes": 1706738
+    }
+  ],
+  "metadata": {
+    "name": "Vitalik #4",
+    "description": "By Roger Haus, 2022",
+    "image": "ipfs://QmW8QL6KeSdmabSG3vYYg25oga4hY7hnyFX7p2pU15WNWq/nft.png"
+  },
+  "timeLastUpdated": "2023-11-06T13:32:39.395Z",
+  "contractMetadata": {
+    "name": "Vitalik.eth",
+    "symbol": "VITALIK",
+    "totalSupply": "4",
+    "tokenType": "ERC721",
+    "contractDeployer": "0x876d91d1f121e9fe0d926efdb3dbd9ad91433547",
+    "deployedBlockNumber": 16301287,
+    "openSea": {
+      "floorPrice": 0.0,
+      "collectionName": "Vitalik.eth V4",
+      "collectionSlug": "vitalik-eth-v4",
+      "safelistRequestStatus": "not_requested",
+      "lastIngestedAt": "2023-10-29T15:14:12.000Z"
+    }
+  }
+}

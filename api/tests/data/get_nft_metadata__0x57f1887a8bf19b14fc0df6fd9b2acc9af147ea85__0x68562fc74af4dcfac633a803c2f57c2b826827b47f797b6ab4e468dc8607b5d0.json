@@ -1,0 +1,84 @@
+{
+  "contract": {
+    "address": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85"
+  },
+  "id": {
+    "tokenId": "0x68562fc74af4dcfac633a803c2f57c2b826827b47f797b6ab4e468dc8607b5d0",
+    "tokenMetadata": {
+      "tokenType": "ERC721"
+    }
+  },
+  "title": "brantly.eth",
+  "description": "brantly.eth, an ENS name.",
+  "tokenUri": {
+    "gateway": "https://metadata.ens.domains/mainnet/0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85/0x68562fc74af4dcfac633a803c2f57c2b826827b47f797b6ab4e468dc8607b5d0",
+    "raw": "https://metadata.ens.domains/mainnet/0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85/0x68562fc74af4dcfac633a803c2f57c2b826827b47f797b6ab4e468dc8607b5d0"
+  },
+  "media": [
+    {
+      "gateway": "https://nft-cdn.alchemy.com/eth-mainnet/a1b140fff992a23a63bda5232f0fa865",
+      "raw": "https://metadata.ens.domains/mainnet/0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85/0x68562fc74af4dcfac633a803c2f57c2b826827b47f797b6ab4e468dc8607b5d0/image",
+      "format": "svg+xml"
+    }
+  ],
+  "metadata": {
+    "background_image": "https://metadata.ens.domains/mainnet/avatar/brantly.eth",
+    "image": "https://metadata.ens.domains/mainnet/0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85/0x68562fc74af4dcfac633a803c2f57c2b826827b47f797b6ab4e468dc8607b5d0/image",
+    "last_request_date": 1696439983776,
+    "is_normalized": true,
+    "image_url": "https://metadata.ens.domains/mainnet/0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85/0x68562fc74af4dcfac633a803c2f57c2b826827b47f797b6ab4e468dc8607b5d0/image",
+    "name": "brantly.eth",
+    "description": "brantly.eth, an ENS name.",
+    "attributes": [
+      {
+        "display_type": "date",
+        "value": 1497494438000,
+        "trait_type": "Created Date"
+      },
+      {
+        "display_type": "number",
+        "value": 7,
+        "trait_type": "Length"
+      },
+      {
+        "display_type": "number",
+        "value": 7,
+        "trait_type": "Segment Length"
+      },
+      {
+        "display_type": "string",
+        "value": "letter",
+        "trait_type": "Character Set"
+      },
+      {
+        "display_type": "date",
+        "value": 1580783039000,
+        "trait_type": "Registration Date"
+      },
+      {
+        "display_type": "date",
+        "value": 2093461632000,
+        "trait_type": "Expiration Date"
+      }
+    ],
+    "version": 0,
+    "url": "https://app.ens.domains/name/brantly.eth"
+  },
+  "timeLastUpdated": "2023-11-07T20:23:40.882Z",
+  "contractMetadata": {
+    "tokenType": "ERC721",
+    "contractDeployer": "0x4fe4e666be5752f1fdd210f4ab5de2cc26e3e0e8",
+    "deployedBlockNumber": 9380410,
+    "openSea": {
+      "floorPrice": 0.0012,
+      "collectionName": "ENS: Ethereum Name Service",
+      "collectionSlug": "ens",
+      "safelistRequestStatus": "verified",
+      "imageUrl": "https://i.seadn.io/gae/0cOqWoYA7xL9CkUjGlxsjreSYBdrUBE0c6EO1COG4XE8UeP-Z30ckqUNiL872zHQHQU5MUNMNhfDpyXIP17hRSC5HQ?w=500&auto=format",
+      "description": "Ethereum Name Service (ENS) domains are secure domain names for the decentralized world. ENS domains provide a way for users to map human readable names to blockchain and non-blockchain resources, like Ethereum addresses, IPFS hashes, or website URLs. ENS domains can be bought and sold on secondary markets.",
+      "externalUrl": "https://ens.domains",
+      "twitterUsername": "ensdomains",
+      "lastIngestedAt": "2023-11-06T16:50:37.000Z"
+    }
+  }
+}

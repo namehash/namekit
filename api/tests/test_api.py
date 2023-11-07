@@ -1,3 +1,5 @@
+import json
+
 import pytest
 from fastapi.testclient import TestClient
 from urllib.parse import quote
@@ -600,6 +602,8 @@ def test_primary_name_get_empty(test_client, api_version):
     response = test_client.get(f'/{api_version}/secure-primary-name')
     assert response.status_code == 404
 
+async def mock_get_nft_metadata(contract_address: str, token_id: str) -> dict:
+    return json.load(open(f'data/get_nft_metadata__{contract_address}__{token_id}.json'))
 
 @pytest.mark.parametrize(
     "contract_address, token_id, fake",
@@ -636,8 +640,12 @@ def test_primary_name_get_empty(test_client, api_version):
         # ('0xcc6c63044bfe4e991f3a13b35b6ee924b54cd304', '440', FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME),
     ]
 )
-def test_fake_eth_name_check(test_client, api_version, contract_address, token_id, fake):
+def test_fake_eth_name_check(test_client, api_version, contract_address, token_id, fake, monkeypatch):
     network_name = 'mainnet'
+
+    monkeypatch.setattr("nameguard.nameguard.get_nft_metadata", mock_get_nft_metadata)
+    # json.dump(res_json, open(f'data/get_nft_metadata__{contract_address}__{token_id}.json', 'w'), indent=2,
+    #           ensure_ascii=False)
 
     response = test_client.get(f'/{api_version}/fake-eth-name-check/{network_name}/{contract_address}/{token_id}')
     assert response.status_code == 200

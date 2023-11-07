@@ -1,0 +1,47 @@
+{
+  "contract": {
+    "address": "0x495f947276749ce646f68ac8c248420045cb7b5e"
+  },
+  "id": {
+    "tokenId": "115299889408293060529275095010636973531920388509401805939660647627196198813697",
+    "tokenMetadata": {
+      "tokenType": "ERC1155"
+    }
+  },
+  "title": "Bob.eth",
+  "description": "SPACE  ID is building a universal name service network which seamlessly connects people, information, assets, and applications across blockchains. It’s chain-agnostic, decentralized, censorship-resistant, and open-sourced.",
+  "tokenUri": {
+    "gateway": "https://api.opensea.io/api/v1/metadata/0x495f947276749ce646f68ac8c248420045cb7b5e/0xfee96cbdab0f36f9fe28636b66eceae9f416a717000000000007af0000000001",
+    "raw": "https://api.opensea.io/api/v1/metadata/0x495f947276749Ce646f68AC8c248420045cb7b5e/0x{id}"
+  },
+  "media": [
+    {
+      "gateway": "https://nft-cdn.alchemy.com/eth-mainnet/861a24ecde778db803da05cd074f4594",
+      "thumbnail": "https://res.cloudinary.com/alchemyapi/image/upload/thumbnailv2/eth-mainnet/861a24ecde778db803da05cd074f4594",
+      "raw": "https://i.seadn.io/gae/UbhNpDmpk6q56KfYM-z1tlMS7CmKrQeKop9BEwIu2xccho30wWNBEHISjtNbiElLp0uuUanUWMIvzmkUg_g3jvp9DF0KOdhCiBpdng?w=500&auto=format",
+      "format": "png",
+      "bytes": 101114
+    }
+  ],
+  "metadata": {
+    "name": "Bob.eth",
+    "image": "https://i.seadn.io/gae/UbhNpDmpk6q56KfYM-z1tlMS7CmKrQeKop9BEwIu2xccho30wWNBEHISjtNbiElLp0uuUanUWMIvzmkUg_g3jvp9DF0KOdhCiBpdng?w=500&auto=format",
+    "description": "SPACE  ID is building a universal name service network which seamlessly connects people, information, assets, and applications across blockchains. It’s chain-agnostic, decentralized, censorship-resistant, and open-sourced."
+  },
+  "timeLastUpdated": "2023-11-02T13:32:39.095Z",
+  "contractMetadata": {
+    "name": "OpenSea Shared Storefront",
+    "symbol": "OPENSTORE",
+    "tokenType": "ERC1155",
+    "contractDeployer": "0x5b3256965e7c3cf26e11fcaf296dfc8807c01073",
+    "deployedBlockNumber": 11374506,
+    "openSea": {
+      "floorPrice": 0.0,
+      "collectionName": "OS Shared Storefront Collection",
+      "collectionSlug": "os-shared-storefront-collection",
+      "safelistRequestStatus": "not_requested",
+      "description": "",
+      "lastIngestedAt": "2023-11-07T08:07:36.000Z"
+    }
+  }
+}

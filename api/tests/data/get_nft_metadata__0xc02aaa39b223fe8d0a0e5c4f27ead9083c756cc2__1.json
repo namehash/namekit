@@ -1,0 +1,46 @@
+{
+  "contract": {
+    "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+  },
+  "id": {
+    "tokenId": "1",
+    "tokenMetadata": {
+      "tokenType": "NO_SUPPORTED_NFT_STANDARD"
+    }
+  },
+  "title": "",
+  "description": "",
+  "tokenUri": {
+    "gateway": "",
+    "raw": ""
+  },
+  "media": [
+    {
+      "gateway": "",
+      "raw": ""
+    }
+  ],
+  "metadata": {
+    "metadata": [],
+    "attributes": []
+  },
+  "timeLastUpdated": "2023-11-07T20:23:53.798Z",
+  "error": "Malformed token uri, do not retry",
+  "contractMetadata": {
+    "name": "Wrapped Ether",
+    "symbol": "WETH",
+    "totalSupply": "2147483647",
+    "tokenType": "NO_SUPPORTED_NFT_STANDARD",
+    "contractDeployer": "0x4f26ffbe5f04ed43630fdc30a87638d53d0b0876",
+    "deployedBlockNumber": 4719568,
+    "openSea": {
+      "floorPrice": 0.0,
+      "collectionName": "Wrapped Ether",
+      "collectionSlug": "wrapped-ether",
+      "safelistRequestStatus": "not_requested",
+      "imageUrl": "https://storage.googleapis.com/opensea-static/tokens-high-res/WETH.png",
+      "description": "This is the collection of owners of Wrapped Ether",
+      "lastIngestedAt": "2023-03-22T00:41:03.000Z"
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "contract": {
+    "address": "0x495f947276749ce646f68ac8c248420045cb7b5e"
+  },
+  "id": {
+    "tokenId": "7432975079437310392139769917906933533429658990679450758216769878461532602369",
+    "tokenMetadata": {
+      "tokenType": "ERC1155"
+    }
+  },
+  "title": "",
+  "description": "",
+  "tokenUri": {
+    "gateway": "https://api.opensea.io/api/v1/metadata/0x495f947276749ce646f68ac8c248420045cb7b5e/0x106eea30d3575f992b1f8aa15b17b75bd6e54ce60000000000001d0000000001",
+    "raw": "https://api.opensea.io/api/v1/metadata/0x495f947276749Ce646f68AC8c248420045cb7b5e/0x{id}"
+  },
+  "media": [
+    {
+      "gateway": "",
+      "raw": ""
+    }
+  ],
+  "metadata": {
+    "metadata": [],
+    "attributes": []
+  },
+  "timeLastUpdated": "2023-11-07T18:02:38.792Z",
+  "error": "Bad token URI",
+  "contractMetadata": {
+    "name": "OpenSea Shared Storefront",
+    "symbol": "OPENSTORE",
+    "tokenType": "ERC1155",
+    "contractDeployer": "0x5b3256965e7c3cf26e11fcaf296dfc8807c01073",
+    "deployedBlockNumber": 11374506,
+    "openSea": {
+      "floorPrice": 0.0,
+      "collectionName": "OS Shared Storefront Collection",
+      "collectionSlug": "os-shared-storefront-collection",
+      "safelistRequestStatus": "not_requested",
+      "description": "",
+      "lastIngestedAt": "2023-11-07T08:07:36.000Z"
+    }
+  }
+}

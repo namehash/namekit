@@ -1,0 +1,30 @@
+{
+  "contract": {
+    "address": "0xbd3531da5cf5857e7cfaa92426877b022e612cf9"
+  },
+  "id": {
+    "tokenId": "2028",
+    "tokenMetadata": {
+      "tokenType": "NOT_A_CONTRACT"
+    }
+  },
+  "title": "",
+  "description": "",
+  "tokenUri": {
+    "gateway": "",
+    "raw": ""
+  },
+  "media": [
+    {
+      "gateway": "",
+      "raw": ""
+    }
+  ],
+  "metadata": {},
+  "timeLastUpdated": "2023-11-07T20:24:00.665Z",
+  "error": "Contract does not have any code",
+  "contractMetadata": {
+    "tokenType": "NOT_A_CONTRACT",
+    "openSea": {}
+  }
+}

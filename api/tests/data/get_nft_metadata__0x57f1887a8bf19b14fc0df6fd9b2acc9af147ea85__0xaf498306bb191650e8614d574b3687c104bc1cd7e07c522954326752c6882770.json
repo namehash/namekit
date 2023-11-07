@@ -1,0 +1,82 @@
+{
+  "contract": {
+    "address": "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85"
+  },
+  "id": {
+    "tokenId": "0xaf498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770",
+    "tokenMetadata": {
+      "tokenType": "ERC721"
+    }
+  },
+  "title": "[0xaf49...2770].eth",
+  "description": "[0xaf49...2770].eth, an ENS name. ([af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth is not in normalized form)",
+  "tokenUri": {
+    "gateway": "https://metadata.ens.domains/mainnet/0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85/0xaf498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770",
+    "raw": "https://metadata.ens.domains/mainnet/0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85/0xaf498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770"
+  },
+  "media": [
+    {
+      "gateway": "https://nft-cdn.alchemy.com/eth-mainnet/fdd59491929d09a04ae6ef6d04cbba4c",
+      "raw": "https://metadata.ens.domains/mainnet/0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85/0xaf498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770/image",
+      "format": "svg+xml"
+    }
+  ],
+  "metadata": {
+    "image": "https://metadata.ens.domains/mainnet/0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85/0xaf498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770/image",
+    "last_request_date": 1698830678524,
+    "is_normalized": false,
+    "image_url": "https://metadata.ens.domains/mainnet/0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85/0xaf498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770/image",
+    "name": "[0xaf49...2770].eth",
+    "description": "[0xaf49...2770].eth, an ENS name. ([af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth is not in normalized form)",
+    "attributes": [
+      {
+        "display_type": "date",
+        "value": 1665698327000,
+        "trait_type": "Created Date"
+      },
+      {
+        "display_type": "number",
+        "value": 66,
+        "trait_type": "Length"
+      },
+      {
+        "display_type": "number",
+        "value": 66,
+        "trait_type": "Segment Length"
+      },
+      {
+        "display_type": "string",
+        "value": "mixed",
+        "trait_type": "Character Set"
+      },
+      {
+        "display_type": "date",
+        "value": 1665698327000,
+        "trait_type": "Registration Date"
+      },
+      {
+        "display_type": "date",
+        "value": 1697234327000,
+        "trait_type": "Expiration Date"
+      }
+    ],
+    "version": 0
+  },
+  "timeLastUpdated": "2023-11-07T20:23:42.930Z",
+  "contractMetadata": {
+    "tokenType": "ERC721",
+    "contractDeployer": "0x4fe4e666be5752f1fdd210f4ab5de2cc26e3e0e8",
+    "deployedBlockNumber": 9380410,
+    "openSea": {
+      "floorPrice": 0.0012,
+      "collectionName": "ENS: Ethereum Name Service",
+      "collectionSlug": "ens",
+      "safelistRequestStatus": "verified",
+      "imageUrl": "https://i.seadn.io/gae/0cOqWoYA7xL9CkUjGlxsjreSYBdrUBE0c6EO1COG4XE8UeP-Z30ckqUNiL872zHQHQU5MUNMNhfDpyXIP17hRSC5HQ?w=500&auto=format",
+      "description": "Ethereum Name Service (ENS) domains are secure domain names for the decentralized world. ENS domains provide a way for users to map human readable names to blockchain and non-blockchain resources, like Ethereum addresses, IPFS hashes, or website URLs. ENS domains can be bought and sold on secondary markets.",
+      "externalUrl": "https://ens.domains",
+      "twitterUsername": "ensdomains",
+      "lastIngestedAt": "2023-11-06T16:50:37.000Z"
+    }
+  }
+}

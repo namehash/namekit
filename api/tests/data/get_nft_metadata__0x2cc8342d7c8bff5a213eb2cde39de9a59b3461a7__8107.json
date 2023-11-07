@@ -1,0 +1,84 @@
+{
+  "contract": {
+    "address": "0x2cc8342d7c8bff5a213eb2cde39de9a59b3461a7"
+  },
+  "id": {
+    "tokenId": "8107",
+    "tokenMetadata": {
+      "tokenType": "ERC721"
+    }
+  },
+  "title": "vitalik.eth",
+  "description": "From the first NFT contract on Ethereum, launched August 8, 2015. Bytecode: 0x766974616c696b2e657468000000000000000000000000000000000000000000",
+  "tokenUri": {
+    "gateway": "http://api.linagee.vision:8080/8107",
+    "raw": "http://api.linagee.vision:8080/8107"
+  },
+  "media": [
+    {
+      "gateway": "https://nft-cdn.alchemy.com/eth-mainnet/85d4cce62235964d3958d15f8c4e4030",
+      "thumbnail": "https://res.cloudinary.com/alchemyapi/image/upload/thumbnailv2/eth-mainnet/85d4cce62235964d3958d15f8c4e4030",
+      "raw": "http://api.linagee.vision:8080/image/8107",
+      "format": "svg+xml; charset=utf-8",
+      "bytes": 2117
+    }
+  ],
+  "metadata": {
+    "name": "vitalik.eth",
+    "description": "From the first NFT contract on Ethereum, launched August 8, 2015. Bytecode: 0x766974616c696b2e657468000000000000000000000000000000000000000000",
+    "image": "http://api.linagee.vision:8080/image/8107",
+    "external_url": "https://linagee.vision/",
+    "attributes": [
+      {
+        "value": "No",
+        "trait_type": "Normalized"
+      },
+      {
+        "value": 11,
+        "trait_type": "Length"
+      },
+      {
+        "value": "No",
+        "trait_type": "1 Letter (uppercase)"
+      },
+      {
+        "value": "No",
+        "trait_type": "2 Letters (uppercase)"
+      },
+      {
+        "value": "No",
+        "trait_type": "3 Letters (uppercase)"
+      },
+      {
+        "value": "No",
+        "trait_type": "4 Letters (uppercase)"
+      },
+      {
+        "value": "No",
+        "trait_type": "Historic"
+      }
+    ]
+  },
+  "timeLastUpdated": "2023-10-01T19:16:57.402Z",
+  "contractMetadata": {
+    "name": "ETHRegistrarLinageeWrapper",
+    "symbol": "ERLW",
+    "totalSupply": "69614",
+    "tokenType": "ERC721",
+    "contractDeployer": "0x9ff81de5f866f4691f18392792be16f63f586ff7",
+    "deployedBlockNumber": 15663114,
+    "openSea": {
+      "floorPrice": 0.0001,
+      "collectionName": "Linagee Name Registrar (LNR)",
+      "collectionSlug": "linageenamewrapper",
+      "safelistRequestStatus": "approved",
+      "imageUrl": "https://i.seadn.io/gcs/files/240ac5920778f5ae0de8a3f6176b4d3c.png?w=500&auto=format",
+      "description": "By Linagee, from the first NFT contract on Ethereum, launched August 8, 2015.  \n  \nDisclaimer:  \nPlease use the bytecode to confirm any names. The categories act as a guide but we cannot guarantee the accuracy of every name.",
+      "externalUrl": "https://linagee.vision/",
+      "twitterUsername": "LinageeDomains",
+      "discordUrl": "https://discord.gg/DAKRWGfMyx",
+      "bannerImageUrl": "https://i.seadn.io/gcs/files/e93a7eee826c9b0c6d47f12bb379baf2.png?w=500&auto=format",
+      "lastIngestedAt": "2023-10-30T20:16:39.000Z"
+    }
+  }
+}

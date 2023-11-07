@@ -1,0 +1,87 @@
+{
+  "contract": {
+    "address": "0x47dd5f6335ffecbe77e982d8a449263d1e501301"
+  },
+  "id": {
+    "tokenId": "79",
+    "tokenMetadata": {
+      "tokenType": "ERC721"
+    }
+  },
+  "title": "vitalik.eth",
+  "description": "Genesis Hashrune **#79**, uniquely generated from the name \"**vitalik.eth**\" and stored on the blockchain. Minted on [Hashrunes.com](https://www.hashrunes.com).",
+  "tokenUri": {
+    "gateway": "https://api.hashrunes.com/v1/runes/79",
+    "raw": "https://api.hashrunes.com/v1/runes/79"
+  },
+  "media": [
+    {
+      "gateway": "https://nft-cdn.alchemy.com/eth-mainnet/0dfafb3bec81942760f7f3ea52135252",
+      "thumbnail": "https://res.cloudinary.com/alchemyapi/image/upload/thumbnailv2/eth-mainnet/0dfafb3bec81942760f7f3ea52135252",
+      "raw": "https://api.hashrunes.com/v1/runes-png/0/79.png",
+      "format": "png",
+      "bytes": 225192
+    }
+  ],
+  "metadata": {
+    "name": "vitalik.eth",
+    "description": "Genesis Hashrune **#79**, uniquely generated from the name \"**vitalik.eth**\" and stored on the blockchain. Minted on [Hashrunes.com](https://www.hashrunes.com).",
+    "attributes": [
+      {
+        "value": "Genesis",
+        "trait_type": "Edition"
+      },
+      {
+        "value": 11,
+        "trait_type": "Name Length"
+      },
+      {
+        "value": "Arrows",
+        "trait_type": "Theme"
+      },
+      {
+        "value": 37.890625,
+        "trait_type": "Density",
+        "max_value": 100
+      },
+      {
+        "value": 329.0208661311176,
+        "trait_type": "Hue",
+        "max_value": 360
+      },
+      {
+        "value": 54.86097638920828,
+        "trait_type": "Lightness",
+        "max_value": 100
+      },
+      {
+        "value": 80.91713251534964,
+        "trait_type": "Saturation",
+        "max_value": 100
+      }
+    ],
+    "image_data": "https://api.hashrunes.com/v1/runes-png/0/79.png"
+  },
+  "timeLastUpdated": "2023-01-06T03:38:47.274Z",
+  "contractMetadata": {
+    "name": "Hashrunes",
+    "symbol": "RUNE",
+    "totalSupply": "392",
+    "tokenType": "ERC721",
+    "contractDeployer": "0x30dd12344ce6bb4596c37f68b507028fabfe2e0f",
+    "deployedBlockNumber": 11984191,
+    "openSea": {
+      "floorPrice": 0.2,
+      "collectionName": "Hashrunes",
+      "collectionSlug": "hashrunes",
+      "safelistRequestStatus": "verified",
+      "imageUrl": "https://i.seadn.io/gae/31QZZ7k7wYrKj5Z6BGIz_7qt3JBifwqOrQ-l4vlzx0jQ0gkffKIpOg4mtdkuCB7XkZjkutwhVtMWX_wOziOpN8BUl-q2ecWOwlO09A?w=500&auto=format",
+      "description": "**On-chain art, summoned by you.** Hashrunes are the **first on-chain named** pieces of generative art. The **name, design, and colors** of each Hashrune all live **completely on the blockchain**. Each **NFT** (non-fungible token) is born from the **unique name** given by its creator. No two Hashrunes are alike. Once a name is claimed, its Hashrune **can't** be minted again. Hashrunes are **very scarce** due to an increasing minting fee. There are two editions: **Genesis Hashrunes** are the original Hashrunes with a pure design. **First Edition Hashrunes** have a corner design that distinguishes them from Genesis Hashrunes. They have a maximum supply. Genesis owners can mint their First Edition versions for free (other people can't mint them). To mint, visit **[Hashrunes.com](https://www.hashrunes.com)**.",
+      "externalUrl": "https://www.hashrunes.com",
+      "twitterUsername": "joshuawu0",
+      "discordUrl": "https://discord.gg/yNzV52rdwQ",
+      "bannerImageUrl": "https://i.seadn.io/gae/l4w_0JYTKIw3sGxfJADdCJqHXUOCzoqsrCEX05BFIj-ommA7K1Nf_RvZOWwfBS-jrmNPW7cl7K5dfo2ZY3hQMOyABZKq0NzVd-kO?w=500&auto=format",
+      "lastIngestedAt": "2023-10-30T14:45:14.000Z"
+    }
+  }
+}
