@@ -602,8 +602,10 @@ def test_primary_name_get_empty(test_client, api_version):
     response = test_client.get(f'/{api_version}/secure-primary-name')
     assert response.status_code == 404
 
+TESTS_DATA_PATH = os.path.join(os.path.dirname(__file__), 'data')
+
 async def mock_get_nft_metadata(contract_address: str, token_id: str) -> dict:
-    return json.load(open(f'data/get_nft_metadata__{contract_address}__{token_id}.json'))
+    return json.load(open(f'{TESTS_DATA_PATH}/get_nft_metadata__{contract_address}__{token_id}.json'))
 
 @pytest.mark.parametrize(
     "contract_address, token_id, fake",
