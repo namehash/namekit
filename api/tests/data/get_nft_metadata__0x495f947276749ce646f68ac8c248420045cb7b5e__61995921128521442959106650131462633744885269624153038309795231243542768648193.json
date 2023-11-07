@@ -1,0 +1,46 @@
+{
+  "contract": {
+    "address": "0x495f947276749ce646f68ac8c248420045cb7b5e"
+  },
+  "id": {
+    "tokenId": "61995921128521442959106650131462633744885269624153038309795231243542768648193",
+    "tokenMetadata": {
+      "tokenType": "ERC1155"
+    }
+  },
+  "title": "nick.eth",
+  "description": "",
+  "tokenUri": {
+    "gateway": "https://api.opensea.io/api/v1/metadata/0x495f947276749ce646f68ac8c248420045cb7b5e/61995921128521442959106650131462633744885269624153038309795231243542768648193",
+    "raw": "https://api.opensea.io/api/v1/metadata/0x495f947276749Ce646f68AC8c248420045cb7b5e/0x{id}"
+  },
+  "media": [
+    {
+      "gateway": "https://nft-cdn.alchemy.com/eth-mainnet/9168170fa6a739d3e18d3f9caadb9594",
+      "thumbnail": "https://res.cloudinary.com/alchemyapi/image/upload/thumbnailv2/eth-mainnet/9168170fa6a739d3e18d3f9caadb9594",
+      "raw": "https://i.seadn.io/s/raw/files/72fa6b418246ac689a87505f345e3772.gif?w=500&auto=format",
+      "format": "gif",
+      "bytes": 85098
+    }
+  ],
+  "metadata": {
+    "name": "nick.eth",
+    "image": "https://i.seadn.io/s/raw/files/72fa6b418246ac689a87505f345e3772.gif?w=500&auto=format"
+  },
+  "timeLastUpdated": "2023-10-18T16:22:36.805Z",
+  "contractMetadata": {
+    "name": "OpenSea Shared Storefront",
+    "symbol": "OPENSTORE",
+    "tokenType": "ERC1155",
+    "contractDeployer": "0x5b3256965e7c3cf26e11fcaf296dfc8807c01073",
+    "deployedBlockNumber": 11374506,
+    "openSea": {
+      "floorPrice": 0.0,
+      "collectionName": "OS Shared Storefront Collection",
+      "collectionSlug": "os-shared-storefront-collection",
+      "safelistRequestStatus": "not_requested",
+      "description": "",
+      "lastIngestedAt": "2023-11-07T08:07:36.000Z"
+    }
+  }
+}

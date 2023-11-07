@@ -1,0 +1,75 @@
+{
+  "contract": {
+    "address": "0xbd3531da5cf5857e7cfaa92426877b022e612cf8"
+  },
+  "id": {
+    "tokenId": "2028",
+    "tokenMetadata": {
+      "tokenType": "ERC721"
+    }
+  },
+  "title": "Pudgy Penguin #2028",
+  "description": "A collection 8888 Cute Chubby Pudgy Penquins sliding around on the freezing ETH blockchain.",
+  "tokenUri": {
+    "gateway": "https://alchemy.mypinata.cloud/ipfs/bafybeibc5sgo2plmjkq2tzmhrn54bk3crhnc23zd2msg4ea7a4pxrkgfna/2028",
+    "raw": "ipfs://bafybeibc5sgo2plmjkq2tzmhrn54bk3crhnc23zd2msg4ea7a4pxrkgfna/2028"
+  },
+  "media": [
+    {
+      "gateway": "https://nft-cdn.alchemy.com/eth-mainnet/2c3d42f6e7050a0466487b8e2bb7dd29",
+      "thumbnail": "https://res.cloudinary.com/alchemyapi/image/upload/thumbnailv2/eth-mainnet/2c3d42f6e7050a0466487b8e2bb7dd29",
+      "raw": "ipfs://QmNf1UsmdGaMbpatQ6toXSkzDpizaGmC9zfunCyoz1enD5/penguin/2028.png",
+      "format": "png",
+      "bytes": 249708
+    }
+  ],
+  "metadata": {
+    "name": "Pudgy Penguin #2028",
+    "description": "A collection 8888 Cute Chubby Pudgy Penquins sliding around on the freezing ETH blockchain.",
+    "image": "ipfs://QmNf1UsmdGaMbpatQ6toXSkzDpizaGmC9zfunCyoz1enD5/penguin/2028.png",
+    "attributes": [
+      {
+        "value": "Blue",
+        "trait_type": "Background"
+      },
+      {
+        "value": "Normal",
+        "trait_type": "Skin"
+      },
+      {
+        "value": "Kimono Brown",
+        "trait_type": "Body"
+      },
+      {
+        "value": "Blushing",
+        "trait_type": "Face"
+      },
+      {
+        "value": "Hat Red",
+        "trait_type": "Head"
+      }
+    ]
+  },
+  "timeLastUpdated": "2023-11-03T00:38:38.989Z",
+  "contractMetadata": {
+    "name": "PudgyPenguins",
+    "symbol": "PPG",
+    "totalSupply": "8888",
+    "tokenType": "ERC721",
+    "contractDeployer": "0xe9da256a28630efdc637bfd4c65f0887be1aeda8",
+    "deployedBlockNumber": 12876179,
+    "openSea": {
+      "floorPrice": 5.29,
+      "collectionName": "Pudgy Penguins",
+      "collectionSlug": "pudgypenguins",
+      "safelistRequestStatus": "verified",
+      "imageUrl": "https://i.seadn.io/gae/yNi-XdGxsgQCPpqSio4o31ygAV6wURdIdInWRcFIl46UjUQ1eV7BEndGe8L661OoG-clRi7EgInLX4LPu9Jfw4fq0bnVYHqg7RFi?w=500&auto=format",
+      "description": "Pudgy Penguins is a collection of 8,888 NFT’s, accelerating Web3 innovation through IP utilization and community empowerment. Embodying love, empathy, & compassion, the Pudgy Penguins are a beacon of good vibes & positivity for everyone. Each holder receives exclusive access to experiences, events, IP licensing opportunities and more. Let’s break through the boundaries of Web3 together.\r\n\r\nPudgy Collections:\r\n[Lil Pudgys](https://opensea.io/collection/lilpudgys) | [Pudgy Rods](https://opensea.io/collection/pudgyrods)",
+      "externalUrl": "https://www.pudgypenguins.com/",
+      "twitterUsername": "pudgypenguins",
+      "discordUrl": "https://discord.gg/pudgypenguins",
+      "bannerImageUrl": "https://i.seadn.io/gcs/files/89f0cd4457af5632e66fb44bf43309cd.png?w=500&auto=format",
+      "lastIngestedAt": "2023-11-05T14:14:00.000Z"
+    }
+  }
+}

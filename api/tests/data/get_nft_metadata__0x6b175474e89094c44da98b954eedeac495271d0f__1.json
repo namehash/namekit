@@ -1,0 +1,46 @@
+{
+  "contract": {
+    "address": "0x6b175474e89094c44da98b954eedeac495271d0f"
+  },
+  "id": {
+    "tokenId": "1",
+    "tokenMetadata": {
+      "tokenType": "NO_SUPPORTED_NFT_STANDARD"
+    }
+  },
+  "title": "",
+  "description": "",
+  "tokenUri": {
+    "gateway": "",
+    "raw": ""
+  },
+  "media": [
+    {
+      "gateway": "",
+      "raw": ""
+    }
+  ],
+  "metadata": {
+    "metadata": [],
+    "attributes": []
+  },
+  "timeLastUpdated": "2023-11-07T20:23:53.528Z",
+  "error": "Malformed token uri, do not retry",
+  "contractMetadata": {
+    "name": "Dai Stablecoin",
+    "symbol": "DAI",
+    "totalSupply": "2147483647",
+    "tokenType": "NO_SUPPORTED_NFT_STANDARD",
+    "contractDeployer": "0xddb108893104de4e1c6d0e47c42237db4e617acc",
+    "deployedBlockNumber": 8928158,
+    "openSea": {
+      "floorPrice": 0.0,
+      "collectionName": "Dai Stablecoin",
+      "collectionSlug": "dai-stablecoin",
+      "safelistRequestStatus": "not_requested",
+      "imageUrl": "https://i.seadn.io/gcs/dai-stablecoin-1-1574133684.png?w=500&auto=format",
+      "description": "",
+      "lastIngestedAt": "2023-10-29T00:59:45.000Z"
+    }
+  }
+}

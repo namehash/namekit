@@ -1,0 +1,47 @@
+{
+  "contract": {
+    "address": "0xfe4f558a0fee0657bfa044792f5545f5a8f4ecb1"
+  },
+  "id": {
+    "tokenId": "1",
+    "tokenMetadata": {
+      "tokenType": "ERC721"
+    }
+  },
+  "title": "ENS EMOJI PUNK - NICK.ETH",
+  "description": "Nick Johnson, AKA \"Nick.eth\" is the founder and lead developer of the \"Ethereum Name Service\" - https://app.ens.domains\n\nSoon after I got introduced to ENS back in 2021, I realised that there was so much more utility hidden below the surface layer of what this Web3 Protocol offers. \n\nUsing my curiosity and love of Art, Tech and Blockchain development, I naturally wanted to test the extremes of what was possible...\n\nThis Artwork is a 1of1 NFT, a result of many many hours experimenting with using Emojis to formulate ENS (.eth) Domain combinations, that when displayed on the correct screen size/format produce this new and revolutionary artistic style.\n\nMy plan is to continue exploring the possibilities within this new dimension of Web3 Art. I hope you will enjoy this journey with me into the Metaverse!\n\nHowever, the question still remains - Is this Art or a Domain ? \n\n🤔🙂💡\n\n\n\n",
+  "tokenUri": {
+    "gateway": "https://alchemy.mypinata.cloud/ipfs/QmcdywDbHCRPkaWy4m7mCwsT6dYoxB3UUGTehdcGt7C3GW/metadata.json",
+    "raw": "ipfs://QmcdywDbHCRPkaWy4m7mCwsT6dYoxB3UUGTehdcGt7C3GW/metadata.json"
+  },
+  "media": [
+    {
+      "gateway": "https://nft-cdn.alchemy.com/eth-mainnet/19d6baeafb56be8e020cf11c7c147049",
+      "thumbnail": "https://res.cloudinary.com/alchemyapi/image/upload/thumbnailv2/eth-mainnet/19d6baeafb56be8e020cf11c7c147049",
+      "raw": "ipfs://QmUi1tdwNhFWVkV4zYDtcNHHCDFm4MHQxoahxFTVJneWKN/nft.jpg",
+      "format": "jpeg",
+      "bytes": 2825948
+    }
+  ],
+  "metadata": {
+    "name": "ENS EMOJI PUNK - NICK.ETH",
+    "description": "Nick Johnson, AKA \"Nick.eth\" is the founder and lead developer of the \"Ethereum Name Service\" - https://app.ens.domains\n\nSoon after I got introduced to ENS back in 2021, I realised that there was so much more utility hidden below the surface layer of what this Web3 Protocol offers. \n\nUsing my curiosity and love of Art, Tech and Blockchain development, I naturally wanted to test the extremes of what was possible...\n\nThis Artwork is a 1of1 NFT, a result of many many hours experimenting with using Emojis to formulate ENS (.eth) Domain combinations, that when displayed on the correct screen size/format produce this new and revolutionary artistic style.\n\nMy plan is to continue exploring the possibilities within this new dimension of Web3 Art. I hope you will enjoy this journey with me into the Metaverse!\n\nHowever, the question still remains - Is this Art or a Domain ? \n\n🤔🙂💡\n\n\n\n",
+    "image": "ipfs://QmUi1tdwNhFWVkV4zYDtcNHHCDFm4MHQxoahxFTVJneWKN/nft.jpg"
+  },
+  "timeLastUpdated": "2023-11-07T20:23:47.323Z",
+  "contractMetadata": {
+    "name": "ENS????",
+    "symbol": "PUNKS",
+    "totalSupply": "4",
+    "tokenType": "ERC721",
+    "contractDeployer": "0x4a8c67d1b3fc10fccbe4e28d2a501a90f9844031",
+    "deployedBlockNumber": 15644375,
+    "openSea": {
+      "floorPrice": 0.0,
+      "collectionName": "ENS - wMZyJHiap2",
+      "collectionSlug": "ens-wmzyjhiap2",
+      "safelistRequestStatus": "not_requested",
+      "lastIngestedAt": "2023-10-30T01:05:24.000Z"
+    }
+  }
+}
