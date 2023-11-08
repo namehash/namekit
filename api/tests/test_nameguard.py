@@ -150,6 +150,7 @@ async def test_unknown_label(nameguard: NameGuard):
     assert r.labels[0].label == '[56d7ba27aed5cd36fc16684baeb86f73d6d0c60b6501487725bcfc9056378075]'
     assert r.rating is Rating.ALERT
     assert r.highest_risk.check is Check.UNKNOWN_LABEL
+    assert r.canonical_name == '[56d7ba27aed5cd36fc16684baeb86f73d6d0c60b6501487725bcfc9056378075].eth'
 
 
 @pytest.mark.asyncio
