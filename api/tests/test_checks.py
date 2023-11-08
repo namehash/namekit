@@ -25,19 +25,22 @@ def test_ordering():
 
 # -- GRAPHEME CHECKS --
 
-
-def test_grapheme_confusable(nameguard: NameGuard):
-    g = analyse_grapheme(nameguard, 'a')
+@pytest.mark.parametrize(
+    "grapheme, rating, message",
+    [
+        ('a', Rating.PASS, 'This grapheme is not confusable'),
+        ('ą', Rating.WARN, 'This grapheme is confusable'),
+        ('ဩ', Rating.WARN, 'This grapheme is confusable'),
+        ('¤', Rating.PASS, 'This grapheme is not confusable'),
+        ('Ɇ', Rating.PASS, 'It has not been checked if this grapheme is confusable'),
+    ]
+)
+def test_grapheme_confusable(nameguard: NameGuard, grapheme, rating, message):
+    g = analyse_grapheme(nameguard, grapheme)
     r = checks.grapheme.confusables.check_grapheme(g)
     assert r.check == Check.CONFUSABLES
-    assert r.rating == Rating.PASS
-    assert r.message == 'This grapheme is not confusable'
-
-    g = analyse_grapheme(nameguard, 'ą')
-    r = checks.grapheme.confusables.check_grapheme(g)
-    assert r.check == Check.CONFUSABLES
-    assert r.rating == Rating.WARN
-    assert r.message == 'This grapheme is confusable'
+    assert r.rating == rating
+    assert r.message == message
 
 
 def test_grapheme_font_support(nameguard: NameGuard):
