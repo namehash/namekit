@@ -92,9 +92,9 @@ export type Rating =
   | "alert" /** `alert`: At least one check failed with an `ALERT` status. */;
 
 /**
- * The status of a reverse ENS lookup performed by NameGuard.
+ * The status of a secure primary ENS name lookup performed by NameGuard.
  * */
-export type SecureReverseLookupStatus =
+export type SecurePrimaryNameStatus =
   | "normalized" /** The ENS primary name was found and it is normalized. */
   | "no_primary_name" /** The ENS primary name was not found. */
   | "unnormalized" /** The ENS primary name was found, but it is not normalized. */;
@@ -377,7 +377,8 @@ export interface NameGuardReport extends ConsolidatedNameGuardReport {
    * If a label is represented as `[labelhash]` in `name`,
    * the `canonical_name` will also contain the label represented as `[labelhash]`.
    *
-   * `canonical_name` is guaranteed to be normalized.
+   * `canonical_name` is guaranteed to be normalized with the exception of the case
+   * where `normalization` is `unknown` and one or more labels are represented as `[labelhash]`.
    */
   canonical_name: string | null;
 }
@@ -386,13 +387,16 @@ export interface BulkConsolidatedNameGuardReport {
   results: ConsolidatedNameGuardReport[];
 }
 
-export interface SecureReverseLookupResult {
-  primary_name_status: SecureReverseLookupStatus;
+export interface SecurePrimaryNameResult {
+  /**
+   * Secure primary name status of the Ethereum address.
+   */
+  primary_name_status: SecurePrimaryNameStatus;
 
   /**
    * Impersonation status of the `primary_name`.
    *
-   * `null` if primary name is unknown or primary name is unnormalized.
+   * `null` if `primary_name` is `null`.
    */
   impersonation_status: ImpersonationStatus | null;
 
@@ -406,7 +410,7 @@ export interface SecureReverseLookupResult {
   /**
    * ENS beautified version of `primary_name`.
    *
-   * If `primary_name` is `null` then provides a fallback `display_name` of "Unnamed [first four hex digits of Ethereum address]", e.g. "Unnamed C2A6".
+   * If `primary_name` is `null` then provides a fallback `display_name` of "Unnamed [first four hex digits of Ethereum address]", e.g. "Unnamed c2a6".
    */
   display_name: string;
 
@@ -418,7 +422,7 @@ export interface SecureReverseLookupResult {
   nameguard_result: NameGuardReport | null;
 }
 
-// TODO: I think we want to apply more formalization to this error class.
+// TODO: Let's apply more formalization to this error class.
 class NameGuardError extends Error {
   constructor(
     public status: number,
@@ -528,7 +532,7 @@ class NameGuard {
   private async fetchSecurePrimaryName(
     address: string,
     options?: SecurePrimaryNameOptions
-  ): Promise<SecureReverseLookupResult> {
+  ): Promise<SecurePrimaryNameResult> {
     const network_name = options?.network || this.network;
 
     const url = `${this.endpoint}${this.version}/secure-primary-name/${network_name}/${address}`;
@@ -724,7 +728,7 @@ class NameGuard {
   public getSecurePrimaryName(
     address: string,
     options?: SecurePrimaryNameOptions
-  ): Promise<SecureReverseLookupResult> {
+  ): Promise<SecurePrimaryNameResult> {
     if (!isEthereumAddress(address)) {
       throw new Error(
         `The provided address: "${address}" is not in a valid Ethereum address format.`
