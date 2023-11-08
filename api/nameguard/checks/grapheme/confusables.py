@@ -1,4 +1,6 @@
 from label_inspector.models import InspectorGraphemeWithConfusablesResult as Grapheme
+
+from nameguard.grapheme_normalization import grapheme_is_normalized
 from nameguard.models import CheckStatus, Check, GenericCheckResult, GraphemeCheckResult
 
 
@@ -18,7 +20,7 @@ N_MESSAGE_SKIP = 'It has not been checked if this name contains confusable graph
 
 
 def check_grapheme(grapheme: Grapheme) -> GenericCheckResult:
-    if not isinstance(grapheme, Grapheme):
+    if not isinstance(grapheme, Grapheme) or not grapheme_is_normalized(grapheme.value):
         return GraphemeCheckResult(
             check=Check.CONFUSABLES,
             status=CheckStatus.SKIP,
@@ -26,7 +28,8 @@ def check_grapheme(grapheme: Grapheme) -> GenericCheckResult:
             _label_message=L_MESSAGE_SKIP,
             _name_message=N_MESSAGE_SKIP,
         )
-    passed = len(grapheme.confusables_other) == 0
+
+    passed = len(grapheme.confusables_other) == 0 and (grapheme.confusables_canonical is None or grapheme.confusables_canonical == grapheme.value)
     return GraphemeCheckResult(
         check=Check.CONFUSABLES,
         status=CheckStatus.PASS if passed else STATUS,
