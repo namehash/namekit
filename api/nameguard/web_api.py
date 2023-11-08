@@ -9,7 +9,7 @@ from nameguard.utils import validate_namehash, namehash_from_labelhash, validate
 from nameguard.models import (
     NameGuardReport,
     BulkNameGuardBulkReport,
-    SecureReverseLookupResult,
+    SecurePrimaryNameResult,
     NetworkName,
     GraphemeGuardReport,
     FakeEthNameCheckResult
@@ -218,7 +218,7 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
         **ProviderUnavailable.get_responses_spec(),
     },
 )
-async def secure_primary_name_get(api_version: ApiVersion, address: str, network_name: NetworkName) -> SecureReverseLookupResult:
+async def secure_primary_name_get(api_version: ApiVersion, address: str, network_name: NetworkName) -> SecurePrimaryNameResult:
     nameguard.context.endpoint_name.set('primary-name')
     address = validate_ethereum_address(address)
     return await ng.secure_primary_name(address, network_name)
