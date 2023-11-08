@@ -141,7 +141,7 @@ describe("NameGuard", () => {
     expect(data.display_name).toBe("Unnamed af73");
     expect(data.nameguard_result).not.toBeNull();
     expect(data.nameguard_result?.name).toBe("୨୨୨୨୨.eth");
-    expect(data.nameguard_result?.canonical_name).toBe("99999.eth");
+    expect(data.nameguard_result?.canonical_name)..toBeNull();
   });
 
   it("getSecurePrimaryName: unnormalized but normalizable", async () => {
