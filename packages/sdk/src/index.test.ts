@@ -8,18 +8,15 @@ const nameguard = createClient({
 });
 
 describe("NameGuard", () => {
-  // Silly tests
   // No mocking (we should probably mock)
   // Test urlencoded
 
-  // This is a dumb test
   it("should fetch the NameGuard report for a single name", async () => {
     const data = await nameguard.inspectName("notrab.eth");
 
     expect(data.name).toBe("notrab.eth");
   });
 
-  // I'm so lazy right now but this works
   it("should fetch the consolidated NameGuard reports of multiple names", async () => {
     const data = await nameguard.bulkInspectNames([
       "notrab.eth",
@@ -65,15 +62,116 @@ describe("NameGuard", () => {
     expect(data.status).toBe("impersonated_eth_name");
   });
 
-  it("should check a secure primary endpoint", async () => {
+  it("getSecurePrimaryName: normalized - unlikely impersonation", async () => {
     const data = await nameguard.getSecurePrimaryName(
       "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
     );
 
-    expect(data.display_name).toBe("vitalik.eth");
     expect(data.primary_name_status).toBe("normalized");
     expect(data.impersonation_status).toBe("unlikely");
     expect(data.primary_name).toBe("vitalik.eth");
+    expect(data.display_name).toBe("vitalik.eth");
     expect(data.nameguard_result).not.toBeNull();
+    expect(data.nameguard_result?.name).toBe("vitalik.eth");
+    expect(data.nameguard_result?.canonical_name).toBe("vitalik.eth");
   });
+
+  it("getSecurePrimaryName: normalized - potential impersonation", async () => {
+    const data = await nameguard.getSecurePrimaryName(
+      "0x8Ae0e6dd8eACe27045d9e017C8Cf6dAa9D08C776"
+    );
+
+    expect(data.primary_name_status).toBe("normalized");
+    expect(data.impersonation_status).toBe("potential");
+    expect(data.primary_name).toBe("vitalìk.eth");
+    expect(data.display_name).toBe("vitalìk.eth");
+    expect(data.nameguard_result).not.toBeNull();
+    expect(data.nameguard_result?.name).toBe("vitalìk.eth");
+    expect(data.nameguard_result?.canonical_name).toBe("vitalik.eth");
+  });
+
+  it("getSecurePrimaryName: normalized - unlikely impersonation - offchain name", async () => {
+    const data = await nameguard.getSecurePrimaryName(
+      "0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd"
+    );
+
+    expect(data.primary_name_status).toBe("normalized");
+    expect(data.impersonation_status).toBe("unlikely");
+    expect(data.primary_name).toBe("exampleprimary.cb.id");
+    expect(data.display_name).toBe("exampleprimary.cb.id");
+    expect(data.nameguard_result).not.toBeNull();
+    expect(data.nameguard_result?.name).toBe("exampleprimary.cb.id");
+    expect(data.nameguard_result?.canonical_name).toBe("exampleprimary.cb.id");
+  });
+
+  it("getSecurePrimaryName: no primary name", async () => {
+    const data = await nameguard.getSecurePrimaryName(
+      "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96046"
+    );
+
+    expect(data.primary_name_status).toBe("no_primary_name");
+    expect(data.impersonation_status).toBeNull();
+    expect(data.primary_name).toBeNull();
+    expect(data.display_name).toBe("Unnamed d8da");
+    expect(data.nameguard_result).toBeNull();
+  });
+
+  it("getSecurePrimaryName: unnormalized", async () => {
+    const data = await nameguard.getSecurePrimaryName(
+      "0xfA9A134f997b3d48e122d043E12d04E909b11073"
+    );
+
+    expect(data.primary_name_status).toBe("unnormalized");
+    expect(data.impersonation_status).toBeNull();
+    expect(data.primary_name).toBeNull();
+    expect(data.display_name).toBe("Unnamed fa9a");
+    expect(data.nameguard_result).not.toBeNull();
+    expect(data.nameguard_result?.name).toBe("888‍‍.eth");
+    expect(data.nameguard_result?.canonical_name).toBeNull();
+  });
+
+  it("getSecurePrimaryName: unnormalized with canonical", async () => {
+    const data = await nameguard.getSecurePrimaryName(
+      "0xaf738F6C83d7D2C46723b727Ce794F9c79Cc47E6"
+    );
+
+    expect(data.primary_name_status).toBe("unnormalized");
+    expect(data.impersonation_status).toBeNull();
+    expect(data.primary_name).toBeNull();
+    expect(data.display_name).toBe("Unnamed af73");
+    expect(data.nameguard_result).not.toBeNull();
+    expect(data.nameguard_result?.name).toBe("୨୨୨୨୨.eth");
+    expect(data.nameguard_result?.canonical_name).toBe("99999.eth");
+  });
+
+  it("getSecurePrimaryName: unnormalized but normalizable", async () => {
+    const data = await nameguard.getSecurePrimaryName(
+      "0xf537a27F31d7A014c5b8008a0069c61f827fA7A1"
+    );
+
+    expect(data.primary_name_status).toBe("unnormalized");
+    expect(data.impersonation_status).toBeNull();
+    expect(data.primary_name).toBeNull();
+    expect(data.display_name).toBe("Unnamed f537");
+    expect(data.nameguard_result).not.toBeNull();
+    expect(data.nameguard_result?.name).toBe("٠٠۱.eth");
+    expect(data.nameguard_result?.canonical_name).toBeNull();
+  });
+
+  it("getSecurePrimaryName: normalized with different display_name", async () => {
+    const data = await nameguard.getSecurePrimaryName(
+      "0x7c7160A23b32402ad24ED5a617b8a83f434642d4"
+    );
+
+    expect(data.primary_name_status).toBe("normalized");
+    expect(data.impersonation_status).toBe("unlikely");
+    expect(data.primary_name).toBe("vincξnt.eth")
+    expect(data.display_name).toBe("vincΞnt.eth");
+    expect(data.nameguard_result).not.toBeNull();
+    expect(data.nameguard_result?.name).toBe("vincξnt.eth");
+    expect(data.nameguard_result?.canonical_name).toBe("vincξnt.eth");
+  });
+
+  // 
+
 });
