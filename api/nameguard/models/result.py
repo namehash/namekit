@@ -270,13 +270,13 @@ class GraphemeGuardReport(ConsolidatedGraphemeGuardReport):
                     '* does not imply that the canonical grapheme/label/name is normalized')
 
 
-class SecureReverseLookupStatus(str, Enum):
+class SecurePrimaryNameStatus(str, Enum):
     '''
-    The reverse lookup status of an Ethereum address.
+    The status of a secure primary ENS name lookup performed by NameGuard.
 
-    * `normalized`: ENS primary name was found and it is normalized.
-    * `no_primary_name`: ENS primary name was not found.
-    * `unnormalized`: ENS primary name was found, but it is not normalized.
+    * `normalized`: The ENS primary name was found and it is normalized.
+    * `no_primary_name`: The ENS primary name was not found.
+    * `unnormalized`: The ENS primary name was found, but it is not normalized.
     '''
 
     NORMALIZED = 'normalized'
@@ -293,15 +293,15 @@ class ImpersonationStatus(str, Enum):
     UNLIKELY = 'unlikely'
     POTENTIAL = 'potential'
 
-class SecureReverseLookupResult(BaseModel):
+class SecurePrimaryNameResult(BaseModel):
     '''
     Reverse lookup result.
     '''
-    primary_name_status: SecureReverseLookupStatus
+    primary_name_status: SecurePrimaryNameStatus
     
     impersonation_status: Optional[ImpersonationStatus] = Field(
         description='Impersonation status of the `primary_name`.\n'
-                    '* `null` if primary name is unknown or primary name is unnormalized',
+                    '* `null` if `primary_name` is `null`',
     )
 
     primary_name: Optional[str] = Field(
@@ -311,7 +311,7 @@ class SecureReverseLookupResult(BaseModel):
 
     display_name: str = Field(
         description='ENS beautified version of `primary_name`.\n'
-                    '* if `primary_name` is `null` then provides a fallback `display_name` of "Unnamed [first four hex digits of Ethereum address]", e.g. "Unnamed C2A6"',
+                    '* if `primary_name` is `null` then provides a fallback `display_name` of "Unnamed [first four hex digits of Ethereum address]", e.g. "Unnamed c2a6"',
     )
 
     nameguard_result: Optional[NameGuardReport] = Field(description='NameGuard report for the `primary_name`.\n'

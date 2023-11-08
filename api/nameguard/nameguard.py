@@ -23,8 +23,8 @@ from nameguard.models import (
     GraphemeNormalization,
     GraphemeGuardReport,
     NetworkName,
-    SecureReverseLookupResult,
-    SecureReverseLookupStatus,
+    SecurePrimaryNameResult,
+    SecurePrimaryNameStatus,
     FakeEthNameCheckStatus,
     FakeEthNameCheckResult,
     CheckStatus,
@@ -315,7 +315,7 @@ class NameGuard:
             grapheme_description=grapheme.description,
         )
 
-    async def secure_primary_name(self, address: str, network_name: str) -> SecureReverseLookupResult:
+    async def secure_primary_name(self, address: str, network_name: str) -> SecurePrimaryNameResult:
         try:
             domain = self.ns[network_name].name(address)
         except requests.exceptions.ConnectionError as ex:
@@ -324,29 +324,29 @@ class NameGuard:
         primary_name = None
         nameguard_result = None
         if domain is None:
-            status = SecureReverseLookupStatus.NO_PRIMARY_NAME
+            status = SecurePrimaryNameStatus.NO_PRIMARY_NAME
             impersonation_status = None
         else:
             nameguard_result = await self.inspect_name(network_name, domain)
             
             result = ens_process(domain, do_normalize=True, do_beautify=True)
             if result.normalized != domain:
-                status = SecureReverseLookupStatus.UNNORMALIZED
+                status = SecurePrimaryNameStatus.UNNORMALIZED
                 impersonation_status = None
             else:
                 display_name = result.beautified
-                status = SecureReverseLookupStatus.NORMALIZED
+                status = SecurePrimaryNameStatus.NORMALIZED
                 primary_name = domain
 
                 impersonation_status = ImpersonationStatus.UNLIKELY if any(check.check == 'impersonation_risk' and check.status == CheckStatus.PASS for check in
                     nameguard_result.checks) else ImpersonationStatus.POTENTIAL
 
 
-        return SecureReverseLookupResult(primary_name=primary_name,
-                                         impersonation_status=impersonation_status,
-                                         display_name=display_name,
-                                         primary_name_status=status,
-                                         nameguard_result=nameguard_result)
+        return SecurePrimaryNameResult(primary_name=primary_name,
+                                       impersonation_status=impersonation_status,
+                                       display_name=display_name,
+                                       primary_name_status=status,
+                                       nameguard_result=nameguard_result)
 
     async def fake_eth_name_check(self, network_name, contract_address, token_id) -> FakeEthNameCheckResult:
         """
