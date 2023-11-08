@@ -377,7 +377,8 @@ export interface NameGuardReport extends ConsolidatedNameGuardReport {
    * If a label is represented as `[labelhash]` in `name`,
    * the `canonical_name` will also contain the label represented as `[labelhash]`.
    *
-   * `canonical_name` is guaranteed to be normalized.
+   * `canonical_name` is guaranteed to be normalized with the exception of the case
+   * where `normalization` is `unknown` and one or more labels are represented as `[labelhash]`.
    */
   canonical_name: string | null;
 }
