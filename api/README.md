@@ -89,7 +89,7 @@ To enable this, you will need to set an environment variable
 This can be done like this:
 
 ```bash
-LAMBDA_ROOT_URL=<remote-url> pytest api/tests/test_api.py
+LAMBDA_ROOT_URL=https://api.nameguard.io poetry run pytest api/tests/test_api.py
 ```
 
 ### Using the AWS Lambda handler
@@ -97,3 +97,9 @@ LAMBDA_ROOT_URL=<remote-url> pytest api/tests/test_api.py
 NameGuard includes a handler for [Amazon AWS Lambda](https://aws.amazon.com/lambda/). It is available in the `nameguard.lambda` module. You can use it to create a Lambda function that will respond to HTTP requests. It uses the [mangum](https://mangum.io) library.
 
 Check out the included [Dockerfile](./Dockerfile) for an example of how to build a Lambda container image.
+
+### Disable monkeypatch tests
+
+```bash
+MONKEYPATCH=0 poetry run pytest
+```

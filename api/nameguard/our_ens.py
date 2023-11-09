@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+# import json
 from functools import wraps
 from typing import Optional, Union, Tuple, cast
 
@@ -130,7 +131,11 @@ class OurENS(ENS):
 
         # To be absolutely certain of the name, via reverse resolution,
         # the address must match in the forward resolution
-        return name if to_checksum_address(address) == self.address(name) else None
+        result = name if to_checksum_address(address) == self.address(name) else None
+
+        # json.dump(result, open(f'data/name__{address}.json', 'w'), indent=2,
+        #           ensure_ascii=False)
+        return result
     
     def resolver(self, name: str) -> Optional["Contract"]:
         """

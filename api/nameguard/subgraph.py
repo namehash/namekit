@@ -1,3 +1,6 @@
+# import hashlib
+# import json
+
 import httpx
 
 from nameguard.logging import logger
@@ -51,6 +54,11 @@ async def call_subgraph(network_name: NetworkName, query: str, variables: dict) 
         logger.error(f"Unexpected response body: {response_json}")
         raise ENSSubgraphUnavailable(f"Unexpected response body: {response_json}")
     else:
+
+        # h = hashlib.md5(json.dumps((network_name, query, variables), sort_keys=True).encode('utf-8')).hexdigest()
+        # json.dump(response_json['data'], open(f'data/call_subgraph__{h}.json', 'w'), indent=2,
+        #           ensure_ascii=False)
+        
         return response_json['data']
 
 
@@ -213,14 +221,17 @@ async def resolve_all_labelhashes_in_name_querying_labelhashes(network_name: Net
 async def resolve_all_labelhashes_in_names_querying_labelhashes(network_name: NetworkName, names: list[str]) -> list[str]:
     segmented_names = []
     labelhashes = set()
+    labelhashes_list = []
     for name in names:
         labels = name.split('.')
         segmented_names.append(labels)
         for label in labels:
             if label_is_labelhash(label):
-                labelhashes.add(label)
+                if label not in labelhashes:
+                    labelhashes.add(label)
+                    labelhashes_list.append(label) 
     
-    resolved_labelhashes = await resolve_labelhashes_querying_labelhashes(network_name, labelhashes)
+    resolved_labelhashes = await resolve_labelhashes_querying_labelhashes(network_name, labelhashes_list)
     
     resolved_names = []
     for labels in segmented_names:
