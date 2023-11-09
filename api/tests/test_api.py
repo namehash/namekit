@@ -437,7 +437,7 @@ def test_inspect_labelhash_post(test_client, api_version, labelhash, parent, exp
 
 @pytest.mark.skipif(running_lambda_tests, reason='cannot monkeypatch if testing lambda')
 def test_inspect_labelhash_get_unexpected_response_body(monkeypatch, test_client, api_version):
-    labelhash = labelhash_from_label('vitalik')
+    labelhash = labelhash_from_label('vitalik1')
     network_name = 'mainnet'
 
     async def return_mock_response(*args, **kwargs):
@@ -451,7 +451,7 @@ def test_inspect_labelhash_get_unexpected_response_body(monkeypatch, test_client
 
 @pytest.mark.skipif(running_lambda_tests, reason='cannot monkeypatch if testing lambda')
 def test_inspect_labelhash_get_unexpected_status_code(monkeypatch, test_client, api_version):
-    labelhash = labelhash_from_label('vitalik')
+    labelhash = labelhash_from_label('vitalik2')
     network_name = 'mainnet'
 
     async def return_mock_response(*args, **kwargs):
@@ -465,7 +465,7 @@ def test_inspect_labelhash_get_unexpected_status_code(monkeypatch, test_client, 
 
 @pytest.mark.skipif(running_lambda_tests, reason='cannot monkeypatch if testing lambda')
 def test_inspect_labelhash_get_http_error(monkeypatch, test_client, api_version):
-    labelhash = labelhash_from_label('vitalik')
+    labelhash = labelhash_from_label('vitalik3')
     network_name = 'mainnet'
 
     async def return_mock_response(*args, **kwargs):
@@ -602,10 +602,6 @@ def test_primary_name_get_empty(test_client, api_version):
     response = test_client.get(f'/{api_version}/secure-primary-name')
     assert response.status_code == 404
 
-TESTS_DATA_PATH = os.path.join(os.path.dirname(__file__), 'data')
-
-async def mock_get_nft_metadata(contract_address: str, token_id: str) -> dict:
-    return json.load(open(f'{TESTS_DATA_PATH}/get_nft_metadata__{contract_address}__{token_id}.json'))
 
 @pytest.mark.parametrize(
     "contract_address, token_id, fake",
@@ -644,10 +640,6 @@ async def mock_get_nft_metadata(contract_address: str, token_id: str) -> dict:
 )
 def test_fake_eth_name_check(test_client, api_version, contract_address, token_id, fake, monkeypatch):
     network_name = 'mainnet'
-
-    monkeypatch.setattr("nameguard.nameguard.get_nft_metadata", mock_get_nft_metadata)
-    # json.dump(res_json, open(f'data/get_nft_metadata__{contract_address}__{token_id}.json', 'w'), indent=2,
-    #           ensure_ascii=False)
 
     response = test_client.get(f'/{api_version}/fake-eth-name-check/{network_name}/{contract_address}/{token_id}')
     assert response.status_code == 200
