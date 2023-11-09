@@ -349,7 +349,7 @@ function ReadySection(props: ReadySectionProps) {
     props.sectionBackgroundName,
   ]);
   return (
-    <section className="z-10 relative w-full h-full py-10 px-5 flex flex-col items-center justify-center bg-white gt_mobile:bg-transparent gt_mobile:py-24 gt_mobile:px-0">
+    <section className="z-10 relative w-full h-full py-10 px-5 flex flex-col items-center justify-center bg-white gt_mobile:bg-transparent md:py-24 gt_mobile:px-0">
       <div className="max-w-full flex flex-col items-center gt_mobile:mx-auto gt_mobile:px-6 gt_mobile:gap-3">
         <div className="w-full flex flex-col gap-5 items-center xl:w-1/2">
           <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-[20px] gap-2 justify-center items-center z-10">
@@ -382,7 +382,7 @@ function ReadySection(props: ReadySectionProps) {
               </div>
             )}
             <Image
-              className="z-10 w-full h-full gt_mobile:w-2/3 gt_mobile:h-2/3 max-w-[34rem]"
+              className="z-10 w-full h-full max-w-[34rem]"
               src={props.imageSpecifics.source}
               alt={"chat image"}
               width={props.imageSpecifics.tagWidth}
@@ -392,7 +392,7 @@ function ReadySection(props: ReadySectionProps) {
         ) : (
           <div className={mediaDiv}>
             <Image
-              className="z-10 w-full h-full gt_mobile:w-2/3 gt_mobile:h-2/3 max-w-[34rem]"
+              className="z-10 w-full h-full max-w-[34rem]"
               src={props.imageSpecifics.source}
               alt={"chat image"}
               width={props.imageSpecifics.tagWidth}
@@ -427,7 +427,7 @@ type ComingSoonSectionProps = {
 };
 
 function ComingSoonSection(props: ComingSoonSectionProps) {
-  const imageDiv = cc([
+  const rightImageDiv = cc([
     "hidden gt_mobile:flex flex-row justify-center items-center w-full max-w-2xl xl:w-1/2 rounded-none bg-origin-border bg-center bg-no-repeat bg-cover flex-shrink-0",
     props.sectionBackgroundName,
   ]);
@@ -436,10 +436,15 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
     props.sectionBackgroundName,
   ]);
 
+  const leftImageDiv = cc([
+    "hidden xl:flex flex-row justify-center items-center w-full max-w-2xl xl:w-1/2 rounded-none bg-origin-border bg-center bg-no-repeat bg-cover flex-shrink-0 box-border pr-16",
+    props.sectionBackgroundName,
+  ]);
+
   return (
-    <section className="z-10 relative w-full flex flex-col xl:flex-row items-center justify-center h-full py-10 px-5 bg-white gt_mobile:bg-transparent gt_mobile:h-1/2 gt_mobile:py-20 gt_mobile:px-10">
+    <section className="z-10 relative w-full flex flex-col xl:flex-row items-center justify-center h-full py-10 px-5 bg-white gt_mobile:bg-transparent gt_mobile:h-1/2 md:py-20 gt_mobile:px-10">
       {!props.isTextOnTheLeft && (
-        <div className={cc([imageDiv, "box-border pr-16"])}>
+        <div className={leftImageDiv}>
           <Image
             className="relative z-10 w-full h-full"
             src={props.imageSpecifics.source}
@@ -474,8 +479,18 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
           {props.sectionDescription}
         </p>
       </div>
-      {props.isTextOnTheLeft && (
-        <div className={imageDiv}>
+      {props.isTextOnTheLeft ? (
+        <div className={rightImageDiv}>
+          <Image
+            className="relative z-10 w-full h-full"
+            src={props.imageSpecifics.source}
+            alt={"chat image"}
+            width={props.imageSpecifics.tagWidth}
+            height={props.imageSpecifics.tagHeight}
+          />
+        </div>
+      ) : (
+        <div className={cc([rightImageDiv, "xl:hidden pt-8"])}>
           <Image
             className="relative z-10 w-full h-full"
             src={props.imageSpecifics.source}
@@ -565,9 +580,6 @@ function Header() {
             </p>
           </div>
         </a>
-        <div className="flex justify-center items-center gap-2 p-[7px] cursor-pointer md:hidden">
-          <MagnifyingGlassIcon />
-        </div>
       </div>
     </header>
   );
@@ -623,7 +635,7 @@ function HeroSection() {
             Guard your users from heartbreak and encourage best practice usage
             of ENS
           </p>
-          <div className="flex items-center gap-2 py-[9px] pl-4 pr-[14px] rounded-lg bg-black bg-opacity-5 border border-gray-300 gt_mobile:gap-3 gt_mobile:py-[13px] gt_mobile:pl-[20px] gt_mobile:pr-[16px]">
+          <div className="hidden md:flex items-center gap-2 py-[9px] pl-4 pr-[14px] rounded-lg bg-black bg-opacity-5 border border-gray-300 gt_mobile:gap-3 gt_mobile:py-[13px] gt_mobile:pl-[20px] gt_mobile:pr-[16px]">
             <p className="text-black leading-6 font-normal text-sm gt_mobile:text-base">
               {npmCommand}
             </p>
@@ -631,13 +643,29 @@ function HeroSection() {
               {copiedToClipboard ? copiedText : copyText}
             </Tooltip>
           </div>
-          <a href={"https://api.nameguard.io/docs"}>
+          <a href={"https://api.nameguard.io/docs"} className="hidden md:block">
             <button className="flex justify-center items-center px-[25px] py-[13px] rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-800 cursor-pointer">
               <p className="text-white not-italic font-medium text-base leading-6">
                 View the docs
               </p>
             </button>
           </a>
+          <div className="flex md:hidden flex-col items-center gap-3 self-stretch">
+            <Search />
+            <p className="w-full h-fit text-gray-500 text-sm leading-6 font-normal text-center gt_mobile:font-light">
+              or
+            </p>
+            <a
+              href={"https://api.nameguard.io/docs"}
+              className="w-full h-fit max-w-xs"
+            >
+              <button className="w-full h-fit box-border flex justify-center items-center self-stretch px-[17px] py-[9px] rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-800 cursor-pointer">
+                <p className="text-white not-italic font-medium text-base leading-6">
+                  View the docs
+                </p>
+              </button>
+            </a>
+          </div>
         </div>
       </div>
     </section>
