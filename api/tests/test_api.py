@@ -55,7 +55,7 @@ def test_inspect_name_get(test_client, api_version):
     assert all([label['labelhash'] for label in res_json['labels']])
 
 
-CORRECT_CHECKS_ORDER = ['alert', 'warn', 'pass', 'info', 'skip']
+CORRECT_CHECKS_ORDER = ['alert', 'warn', 'skip', 'pass', 'info']
 
 
 def check_order_of_list(l: list[str]):
