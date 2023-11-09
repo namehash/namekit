@@ -26,9 +26,9 @@ class CheckStatus(str, Enum):
     @property
     def order(self):
         return {
-            CheckStatus.SKIP: 0,
-            CheckStatus.INFO: 1,
-            CheckStatus.PASS: 2,
+            CheckStatus.INFO: 0,
+            CheckStatus.PASS: 1,
+            CheckStatus.SKIP: 2,
             CheckStatus.WARN: 3,
             CheckStatus.ALERT: 4,
         }[self]
