@@ -83,6 +83,15 @@ async def test_check_skip(nameguard: NameGuard):
 
 
 @pytest.mark.asyncio
+async def test_check_skip_confusable(nameguard: NameGuard):
+    result = await nameguard.inspect_name('mainnet', 'Ɇ')
+    c = [c for c in result.checks if c.check is Check.CONFUSABLES][0]
+    assert c.rating is Rating.PASS
+    assert c.status is CheckStatus.SKIP
+    assert c.message == 'It has not been checked if this name contains confusable graphemes'
+
+
+@pytest.mark.asyncio
 @pytest.mark.parametrize('name,n,l0,l1', [
     ('nick.eth', Normalization.NORMALIZED, Normalization.NORMALIZED, Normalization.NORMALIZED),
     ('[zzz].eth', Normalization.UNNORMALIZED, Normalization.UNNORMALIZED, Normalization.NORMALIZED),
