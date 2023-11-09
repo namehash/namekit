@@ -16,9 +16,9 @@ class CheckStatus(str, Enum):
     * `alert`: This check failed, this is a major issue.
     '''
 
-    SKIP = 'skip'
     INFO = 'info'
     PASS = 'pass'
+    SKIP = 'skip'
     WARN = 'warn'
     ALERT = 'alert'
 
