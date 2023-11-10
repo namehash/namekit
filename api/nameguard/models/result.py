@@ -72,7 +72,7 @@ class ConsolidatedReport(BaseModel):
         elif self.rating is Rating.WARN:
             return 'Review risks before proceeding'
         else: # self.rating is Rating.ALERT:
-            return f'Better not to use this {self._string_value}'
+            return f'Better not to use this {self._string_type}'
 
     risk_count: int = Field(
         description='The number of checks that have a status of `alert` or `warn`.')
