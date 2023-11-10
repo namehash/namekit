@@ -34,14 +34,15 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
     : defaultUseChatModalStore();
 
   const { isChatModalOpen, openChatModal, closeChatModal } = store;
-  const { closeGraphemeModal, isGraphemeModalOpen } = useGraphemeModalStore();
+  const { isGraphemeModalOpen, closeAllGraphemeModals } =
+    useGraphemeModalStore();
 
   const outsideChatClickRef = useOutsideClick(
     store.closeChatModal,
     store.isChatModalOpen
   );
   const outsideGraphemeClickRef = useOutsideClick(
-    closeGraphemeModal,
+    closeAllGraphemeModals,
     isGraphemeModalOpen
   );
 

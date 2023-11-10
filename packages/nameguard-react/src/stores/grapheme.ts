@@ -6,6 +6,7 @@ export type GraphemeModalState = {
   isGraphemeModalOpen: boolean;
   openGraphemeModal: (grapheme: string) => void;
   closeGraphemeModal: (grapheme?: string) => void;
+  closeAllGraphemeModals: () => void;
 };
 
 export const useGraphemeModalStore = create<GraphemeModalState>((set, get) => ({
@@ -36,6 +37,14 @@ export const useGraphemeModalStore = create<GraphemeModalState>((set, get) => ({
         ? newGraphemes[newGraphemes.length - 1]
         : undefined,
       isGraphemeModalOpen: isAnyGraphemeOpen,
+    });
+  },
+
+  closeAllGraphemeModals: () => {
+    set({
+      graphemes: [],
+      currentGrapheme: null,
+      isGraphemeModalOpen: false,
     });
   },
 }));
