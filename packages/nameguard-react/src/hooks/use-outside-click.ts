@@ -12,10 +12,9 @@ export const useOutsideClick = (
     if (!isOpen) return;
 
     const handleClick = (event: MouseEvent) => {
-      event.preventDefault();
-
       if (ref.current && !ref.current.contains(event.target as Node)) {
         callback();
+        event.preventDefault();
       }
     };
 
