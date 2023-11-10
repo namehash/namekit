@@ -542,7 +542,7 @@ function Footer() {
 
 function Header() {
   return (
-    <header className="relative top-0 w-full z-10 border-b border-gray-300 box-border inline-flex h-[56px] px-[20px] py-[9px] items-center justify-between gt_mobile:flex gt_mobile:justify-center lg:justify-between gt_mobile:flex-row gt_mobile:h-[70px] gt_mobile:px-28 gt_mobile:py-4">
+    <header className="relative top-0 w-full z-10 border-b border-gray-300 box-border inline-flex h-[56px] px-[20px] py-[9px] items-center justify-between gt_mobile:flex gt_mobile:flex-row gt_mobile:h-[70px] md:px-28 gt_mobile:py-4">
       <div className="flex flex-row gap-7 justify-between items-center">
         <div className="flex flex-row justify-between items-center gap-1 cursor-pointer">
           <a href={"https://nameguard.io"}>
@@ -558,7 +558,7 @@ function Header() {
             </div>
           </a>
         </div>
-        <div className="hidden md:block gt_mobile:w-full gt_mobile:h-full gt_mobile:p-0 gt_mobile:m-0">
+        <div className="hidden flex search_bar_change:block gt_mobile:w-full gt_mobile:h-full gt_mobile:p-0 gt_mobile:m-0">
           <Search />
         </div>
       </div>
@@ -635,7 +635,7 @@ function HeroSection() {
             Guard your users from heartbreak and encourage best practice usage
             of ENS
           </p>
-          <div className="hidden md:flex items-center gap-2 py-[9px] pl-4 pr-[14px] rounded-lg bg-black bg-opacity-5 border border-gray-300 gt_mobile:gap-3 gt_mobile:py-[13px] gt_mobile:pl-[20px] gt_mobile:pr-[16px]">
+          <div className="hidden flex search_bar_change:flex items-center gap-2 py-[9px] pl-4 pr-[14px] rounded-lg bg-black bg-opacity-5 border border-gray-300 gt_mobile:gap-3 gt_mobile:py-[13px] gt_mobile:pl-[20px] gt_mobile:pr-[16px]">
             <p className="text-black leading-6 font-normal text-sm gt_mobile:text-base">
               {npmCommand}
             </p>
@@ -643,14 +643,17 @@ function HeroSection() {
               {copiedToClipboard ? copiedText : copyText}
             </Tooltip>
           </div>
-          <a href={"https://api.nameguard.io/docs"} className="hidden md:block">
+          <a
+            href={"https://api.nameguard.io/docs"}
+            className="hidden flex search_bar_change:block"
+          >
             <button className="flex justify-center items-center px-[25px] py-[13px] rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-800 cursor-pointer">
               <p className="text-white not-italic font-medium text-base leading-6">
                 View the docs
               </p>
             </button>
           </a>
-          <div className="flex md:hidden flex-col items-center gap-3 self-stretch">
+          <div className="flex search_bar_change:hidden flex-col items-center gap-3 self-stretch">
             <Search />
             <p className="w-full h-fit text-gray-500 text-sm leading-6 font-normal text-center gt_mobile:font-light">
               or
@@ -830,6 +833,7 @@ function RoadMap() {
     <RoadmapNegativeShield key="leftShieldSVG5" />,
     <RoadmapWarningShield key="leftShieldSVG6" />,
     <RoadmapPositiveShield key="leftShieldSVG7" />,
+    <RoadmapNegativeShield key="leftShieldSVG8" />,
   ];
   const rightSideShields = [
     <RoadmapNegativeShield key="rightShieldSVG0" />,
@@ -840,11 +844,12 @@ function RoadMap() {
     <RoadmapWarningShield key="rightShieldSVG5" />,
     <RoadmapNegativeShield key="rightShieldSVG6" />,
     <RoadmapPositiveShield key="rightShieldSVG7" />,
+    <RoadmapWarningShield key="rightShieldSVG8" />,
   ];
 
   return (
     <section className="relative bg-white w-full h-full px-5 md:pt-24 md:pb-12 md:px-10 xl:px-32 flex flex-row items-center justify-center z-10 gap-10">
-      <div className="hidden w-1/5 h-full relative -top-20 md:flex flex-col justify-center items-center gap-36">
+      <div className="hidden w-1/6 h-full relative -top-20 md:flex flex-col justify-center items-center gap-[10.5rem]">
         {leftSideShields.map((shield, idx) => (
           <div
             key={`left-${idx}-Shield`}
@@ -859,7 +864,7 @@ function RoadMap() {
           </div>
         ))}
       </div>
-      <div className="w-full gt_mobile:w-3/5 h-full flex flex-col items-center justify-center pt-10 gt_mobile:pt-0 pb-5 gt_mobile:pb-0 gap-5 gt_mobile:gap-14">
+      <div className="w-full gt_mobile:w-4/6 h-full flex flex-col items-center justify-center pt-10 gt_mobile:pt-0 pb-5 gt_mobile:pb-0 gap-5 gt_mobile:gap-20">
         <div className="inline-flex h-fit w-full flex-col items-center gap-5 gt_mobile:gap-2 z-10">
           <h1 className="text-black text-center not-italic font-bold text-2xl leading-8 gt_mobile:text-4xl gt_mobile:leading-[52px]">
             NameGuard roadmap
@@ -875,7 +880,7 @@ function RoadMap() {
               <li key={idx} className="relative flex gap-x-4">
                 <div
                   className={classNames(
-                    // idx === roadMapElements.length - 1 ? 'h-6' :
+                    idx === roadMapElements.length - 1 ? "h-4/5" : "h-full",
                     "-bottom-6",
                     "absolute left-0 top-0 flex w-6 justify-center mt-2"
                   )}
@@ -906,22 +911,25 @@ function RoadMap() {
                     />
                   )}
                 </div>
-                <div className="w-full h-fit flex flex-col items-start gap-3">
+                <div className="w-full h-fit flex flex-col items-start gap-2 pb-6">
                   <div className="relative -top-2 w-full h-fit inline-flex flex-row justify-between items-start self-stretch py-1.5">
                     <h1 className="text-black text-lg leading-6 font-semibold not-italic pr-2">
                       {roadmapElement.headerText}
                     </h1>
                     {badgesMap.get(roadmapElement.stageOfCompletion)}
                   </div>
-                  <div className="w-full h-fit flex flex-col items-start self-stretch rounded-lg border border-gray-200 bg-gray-50 p-5">
-                    <ul role="list">
+                  <div className="relative -top-2 w-full h-fit flex flex-col items-start self-stretch rounded-lg border border-gray-200 bg-gray-50 p-5">
+                    <ul
+                      role="list"
+                      className="list-disc list-outside ml-[15px]"
+                    >
                       {roadmapElement.commentSentences.map(
                         (sentence, sentenceIdx) => (
                           <li
                             key={`${idx}${sentenceIdx}`}
                             className="box-border text-sm leading-6 text-gray-500 font-normal not-italic"
                           >
-                            &bull; {sentence}
+                            {sentence}
                           </li>
                         )
                       )}
@@ -933,7 +941,7 @@ function RoadMap() {
           </ul>
         </div>
       </div>
-      <div className="hidden w-1/5 h-full relative top-4 md:flex flex-col justify-center items-center gap-36">
+      <div className="hidden w-1/6 h-full relative top-4 md:flex flex-col justify-center items-center gap-[10.5rem]">
         {rightSideShields.map((shield, idx) => (
           <div
             key={`left-${idx}-Shield`}
