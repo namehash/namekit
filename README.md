@@ -30,7 +30,7 @@ NameGuard is hosted at <https://api.nameguard.io>
 You can make a basic request to the API like this:
 
 ```bash
-curl https://api.nameguard.io/v1-beta/inspect-name/mainnet/nick.eth
+curl https://api.nameguard.io/v0.8-beta/inspect-name/mainnet/nick.eth
 ```
 
 The API documentation is available at <https://api.nameguard.io/redoc> or <https://api.nameguard.io/docs>.

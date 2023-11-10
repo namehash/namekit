@@ -31,7 +31,7 @@ def test_client():
 @pytest.fixture(scope="module")
 def api_version():
     from nameguard.web_api import ApiVersion
-    return ApiVersion.V1_BETA.value
+    return ApiVersion.V08_BETA.value
 
 
 # -- inspect-name --
