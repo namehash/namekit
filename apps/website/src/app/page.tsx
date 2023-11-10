@@ -7,9 +7,9 @@ import Image from "next/image";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import impersonation_attack_img from "../../public/assets/vitalik_impersonation_attack.png";
 import fake_NFT_filter_img from "../../public/assets/fake_NFT_filter.png";
-import surface_risks_img from "../../public/assets/surface_risks.png";
-import dangerous_name_config_img from "../../public/assets/dangerous_name_configuration.png";
-import autorenewal_img from "../../public/assets/autorenewal.png";
+import surface_risks_img from "../../public/assets/surface_risks_newer.png";
+import dangerous_name_config_img from "../../public/assets/dangerous_name_configuration_new.png";
+import autorenewal_img from "../../public/assets/autorenewal_new.png";
 import ens_webfont_img from "../../public/assets/ens_webfont.png";
 import {
   Tooltip,
@@ -178,7 +178,7 @@ export default function Home() {
       </div>
       <MobileSectionDivider />
       <RoadMap />
-      <ExitSection />
+      <NewExitSection />
       <Footer />
 
       <div className="fixed inset-0 z-0 h-full w-[100vw] max-w-[100vw] overflow-x-hidden bg-[radial-gradient(#DDDDDD_1px,transparent_1px)] [background-size:24px_24px] opacity-70"></div>
@@ -432,7 +432,7 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
     props.sectionBackgroundName,
   ]);
   const mobileImageDiv = cc([
-    "flex gt_mobile:hidden flex-row justify-center items-center w-full h-full rounded-none px-4 py-5 bg-origin-border bg-center bg-no-repeat bg-contain flex-shrink-0",
+    "flex gt_mobile:hidden flex-row justify-center items-center w-full h-full rounded-none py-5 bg-origin-border bg-center bg-no-repeat bg-contain flex-shrink-0",
     props.sectionBackgroundName,
   ]);
 
@@ -515,7 +515,7 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
 
 function Footer() {
   return (
-    <footer className="z-10 bg-white relative bot-0 w-full h-fit flex flex-col gap-3 py-5 items-center self-stretch gt_mobile:flex-row gt_mobile:justify-between gt_mobile:py-6 gt_mobile:px-28 gt_mobile:self-stretch">
+    <footer className="z-10 bg-white relative bot-0 w-full h-fit flex flex-col gap-3 py-5 items-center self-stretch gt_mobile:flex-row gt_mobile:justify-between gt_mobile:py-6 gt_mobile:px-28 gt_mobile:self-stretch border-t border-gray-200">
       <p className="not-italic font-normal text-gray-500 text-sm gt_mobile:text-footer_text gt_mobile:font-light">
         © NameHash Labs. All Rights Reserved
       </p>
@@ -531,7 +531,7 @@ function Footer() {
         Made with ❤ by{" "}
         <a
           className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
-          href={"https://namehash.io/"}
+          href={"https://namehashlabs.org"}
         >
           NameHash Labs
         </a>
@@ -691,6 +691,47 @@ function ExitSection() {
             </p>
           </div>
           <Search />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function NewExitSection() {
+  return (
+    <section className="relative w-full h-full flex flex-col items-center justify-center py-5 px-5 gap-5 z-10 bg-white lg:bg-transparent md:px-[112px] lg:pt-10 lg:pb-[45px] lg:flex-row lg:gap-10">
+      <div className="flex flex-col justify-center items-center h-full max-h-[334px] md:max-h-[315px] w-full max-w-3xl rounded-xl border border-gray-200 bg-generate_raport_background bg-no-repeat bg-top bg-[length:180%_200%] lg:bg-[length:100%_250%]">
+        <div className="w-full h-full flex flex-col justify-center items-center gap-6 py-[63px] px-5 box-border lg:max-w-[508px] lg:w-full lg:px-10">
+          <div className="flex flex-col gap-4 items-center">
+            <h1 className="text-center text-black not-italic text-3xl leading-9 font-bold ">
+              Generate a report
+            </h1>
+            <p className="text-center text-gray-500 not-italic text-lg leading-7 font-normal gt_mobile:font-light lg:leading-8">
+              Search for any ENS name to generate a report. Share NameGuard
+              reports with frENS.{" "}
+            </p>
+          </div>
+          <Search />
+        </div>
+      </div>
+      <div className="flex flex-col justify-center items-center h-full max-h-[334px] md:max-h-[315px] w-full max-w-3xl rounded-xl border border-gray-200 bg-in_touch_background bg-no-repeat bg-top bg-[length:180%_200%] lg:bg-[length:100%_250%]">
+        <div className="h-full w-full box-border inline-flex flex-col justify-center items-center gap-10 py-10 px-5 box-border flex-shrink-0 lg:max-w-[508px] lg:w-full lg:px-10">
+          <div className="flex flex-col h-fit w-full max-w-[295px] items-center justify-center gap-6">
+            <div className="flex flex-col gap-4 items-center">
+              <h1 className="text-center text-black not-italic text-3xl leading-9 font-bold ">
+                Get in touch
+              </h1>
+              <p className="text-center text-gray-500 not-italic text-lg leading-7 font-normal gt_mobile:font-light lg:leading-8">
+                NameHash Labs collaborates with teams across web3, and we’re
+                always look forward to meeting new frens.
+              </p>
+            </div>
+            <button className="max-h-12 flex justify-center items-center px-[25px] py-[13px] rounded-lg border border-gray-300 bg-white z-10 shadow-sm transition hover:bg-gray-100 cursor-pointer">
+              <p className="text-black not-italic font-medium text-base leading-6">
+                Schedule a call
+              </p>
+            </button>
+          </div>
         </div>
       </div>
     </section>
