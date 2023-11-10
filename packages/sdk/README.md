@@ -1,17 +1,21 @@
-# NameGuard Client
+# NameGuard SDK
 
-NameGuard provides methods to inspect and prevent malicious use of ENS names as well as:
+[NameGuard](https://nameguard.io) is designed to inspect and prevent malicious use of Ethereum Name Service (ENS) names. It provides a comprehensive set of functionalities to check the normalization status of names, labels, and graphemes, conduct various safety checks on ENS names, and verify the authenticity of ".eth" names in NFTs.
 
-- Confusable grapheme detection
-- International accessibility checks
-- Rendering checks for different fonts
-- ENSIP-15 verification with detailed explanations and auto-suggestions
-- Punycode and DNS hostname compatibility checks
-- Provides a unified rating system for entire names, as well as detailed explanations for each check
+NameGuard also supports multiple networks including Ethereum Mainnet and testnets.
 
-The `@namehash/nameguard` SDK provides full type-safety when working with the NameGuard API. The client is built using `cross-fetch` so it can work in both server and client contexts.
+## Features
 
-## Installation
+- **Normalization Status Checks**: Determine if a name, label, or grapheme is normalized, unnormalized, or unknown.
+- **Safety Checks**: Conduct various checks on ENS names for risks like impersonation, typing difficulty, and font support.
+- **ENS Name Verification**: Verify the authenticity of ".eth" names associated with NFTs.
+- **Network-Specific Inspections**: Customize inspections based on different Ethereum networks.
+
+The `@namehash/nameguard` SDK provides full type-safety when working with the NameGuard API.
+
+## Install
+
+Install NameGuard via npm, yarn or pnpm:
 
 ```bash
 npm install @namehash/nameguard
@@ -19,33 +23,93 @@ npm install @namehash/nameguard
 
 ## Usage
 
-The easiest way to get started is by using the `nameguard` singleton.
+Import `nameguard`:
 
 ```ts
 import { nameguard } from "@namehash/nameguard";
-
-// single name
-await nameguard.inspectName("...");
-
-// multiple names
-await nameguard.bulkInspectNames(["...", "..."]);
-
-// namehash
-await nameguard.inspectNamehash("...");
-
-// labelhash
-await nameguard.inspectLabelhash("...");
 ```
+
+### Basic Inspections
+
+Inspect a name:
+
+```ts
+const nameGuardReport = await nameguard.inspectName("nick.eth");
+```
+
+### Batch Name Inspections
+
+Inspect multiple names at once:
+
+```ts
+const names = ["vitalik.eth", "notrab.eth"];
+const reports = await nameguard.bulkInspectNames(names);
+```
+
+### Secure Primary Name Lookup
+
+Lookup the secure primary ENS name for an Ethereum address:
+
+```ts
+const ethereumAddress = "0x..."; // replace with actual Ethereum address
+const securePrimaryNameResult =
+  await nameguard.getSecurePrimaryName(ethereumAddress);
+```
+
+This function is crucial for verifying the primary ENS name associated with an Ethereum address, ensuring its normalization status and checking for potential impersonation risks.
+
+### Verify ".eth" Names
+
+Check if an NFT is associated with an authentic ".eth" name:
+
+```ts
+const fakeNameCheckResult = await nameguard.fakeEthNameCheck(
+  contractAddress,
+  tokenId
+);
+```
+
+### Inspecting Graphemes
+
+Inspect a single grapheme for various checks:
+
+```ts
+const graphemeReport = await nameguard.inspectGrapheme("𝒶");
+```
+
+### Inspecting Labelhashes
+
+Inspect a name based on a labelhash:
+
+```ts
+const labelhash = "0x..."; // replace with actual labelhash
+const parentName = "eth"; // optional, defaults to 'eth'
+const labelhashReport = await nameguard.inspectLabelhash(labelhash, {
+  parent: parentName,
+});
+```
+
+### Inspecting Namehashes
+
+Inspect the name associated with a specific namehash:
+
+```ts
+const namehash = "0x..."; // replace with actual namehash
+const namehashReport = await nameguard.inspectNamehash(namehash);
+```
+
+These functions allow for a more granular level of inspection, particularly useful for applications that deal directly with ENS internals or require detailed analysis of the component parts of ENS names.
 
 ## Custom client
 
-You may have a different NameGuard API URL or version, you can instantiate a different client should you need to by importing `createClient`.
+You may have a different NameGuard API URL, version or network, you can instantiate a different client should you need to by importing `createClient`.
 
 ```ts
-import { createClient } from "@namehash/nameguard";
+import { createClient, Network } from "@namehash/nameguard";
 
 const nameguard = createClient({
   url: "...",
   version: "v2",
+  network: "goerli",
 });
 ```
