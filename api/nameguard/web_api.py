@@ -28,10 +28,10 @@ from nameguard.exceptions import (
 
 
 class ApiVersion(str, Enum):
-    V1_BETA = 'v1-beta'
+    V08_BETA = 'v0.8-beta'
 
 
-app = FastAPI(title='NameGuard Service', version=ApiVersion.V1_BETA.value)
+app = FastAPI(title='NameGuard Service', version=ApiVersion.V08_BETA.value)
 
 app.add_middleware(
     CORSMiddleware,
