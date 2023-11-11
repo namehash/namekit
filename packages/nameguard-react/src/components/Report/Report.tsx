@@ -21,6 +21,7 @@ import { CheckResultCard } from "./CheckResultCard";
 import { LabelList } from "./LabelList";
 import { useGraphemeModalStore } from "../../stores/grapheme";
 import { ReportError } from "./ReportError";
+import { Share } from "../Share/Share";
 
 type ReportProps = {
   name?: string;
@@ -34,14 +35,15 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
     : defaultUseChatModalStore();
 
   const { isChatModalOpen, openChatModal, closeChatModal } = store;
-  const { closeGraphemeModal, isGraphemeModalOpen } = useGraphemeModalStore();
+  const { isGraphemeModalOpen, closeAllGraphemeModals } =
+    useGraphemeModalStore();
 
   const outsideChatClickRef = useOutsideClick(
     store.closeChatModal,
     store.isChatModalOpen
   );
   const outsideGraphemeClickRef = useOutsideClick(
-    closeGraphemeModal,
+    closeAllGraphemeModals,
     isGraphemeModalOpen
   );
 
@@ -59,6 +61,25 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
     (n: string) => nameguard.inspectName(n)
   );
 
+  const shareLinks = [
+    {
+      text: "ENS.domains",
+      href: `https://app.ens.domains/${parsedName.outputName.name}`,
+    },
+    {
+      text: "Adraffy's resolver",
+      href: `https://adraffy.github.io/ens-normalize.js/test/resolver.html#${parsedName.outputName.name}`,
+    },
+    {
+      text: "ENS tools",
+      href: `https://tools.ens.domains/check/${parsedName.outputName.name}`,
+    },
+    {
+      text: "Etherscan",
+      href: `https://etherscan.io/name-lookup-search?id=${parsedName.outputName.name}`,
+    },
+  ];
+
   if (showEmptyState)
     return (
       <Fragment>
@@ -74,7 +95,10 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
   return (
     <Fragment>
       <div className="space-y-8">
-        <ReportHeader />
+        <div className="flex justify-between">
+          <ReportHeader />
+          <Share title="View name in" links={shareLinks} />
+        </div>
 
         {isLoading && !error && normalizationUnknown && (
           <LoadingSkeleton parsedName={parsedName} />

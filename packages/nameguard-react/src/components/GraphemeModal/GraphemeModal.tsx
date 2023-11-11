@@ -19,6 +19,10 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
     (g: string) => nameguard.inspectGrapheme(g)
   );
 
+  const handleClose = () => {
+    closeGraphemeModal(currentGrapheme);
+  };
+
   return (
     <Slideover
       title={
@@ -27,7 +31,7 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
         )
       }
       isOpen={isGraphemeModalOpen}
-      onClose={closeGraphemeModal}
+      onClose={handleClose}
       ref={ref}
     >
       {isLoading || !data ? (

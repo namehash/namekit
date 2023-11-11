@@ -15,7 +15,7 @@ export const FeedbackNotice = ({ onChatClick }: FeedbackNoticeProps) => {
           </p>
           <p className="text-gray-500 font-normal leading-6 text-sm">
             If you think any inspection result could be improved please contact
-            us. The NameHash team is happy to help.
+            us. The NameHash Labs team is happy to help.
           </p>
         </div>
 

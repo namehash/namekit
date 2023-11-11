@@ -5,7 +5,7 @@ import { Tooltip } from "../Tooltip/Tooltip";
 function text(code: CheckResultCode) {
   switch (code) {
     case "pass":
-      return "Check Passed";
+      return "All Checks Passed";
     case "warn":
       return "Warning";
     case "alert":
@@ -23,7 +23,7 @@ function icon(code: CheckResultCode): React.ReactNode {
     case "pass":
       return (
         <svg
-          className="w-5 h-5 fill-current text-green-600 hover:text-green-700 transition"
+          className="w-5 h-5 fill-current text-green-600 hover:text-green-700 transition cursor-pointer"
           viewBox="0 0 20 20"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +38,7 @@ function icon(code: CheckResultCode): React.ReactNode {
     case "warn":
       return (
         <svg
-          className="w-5 h-5 fill-current text-yellow-500 hover:text-yellow-600 transition"
+          className="w-5 h-5 fill-current text-yellow-500 hover:text-yellow-600 transition cursor-pointer"
           viewBox="0 0 20 20"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +53,7 @@ function icon(code: CheckResultCode): React.ReactNode {
     case "alert":
       return (
         <svg
-          className="w-5 h-5 fill-current text-red-600 hover:text-red-700 transition"
+          className="w-5 h-5 fill-current text-red-600 hover:text-red-700 transition cursor-pointer"
           viewBox="0 0 20 20"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +68,7 @@ function icon(code: CheckResultCode): React.ReactNode {
     case "info":
       return (
         <svg
-          className="w-5 h-5 fill-current text-gray-400 hover:text-gray-500 transition"
+          className="w-5 h-5 fill-current text-gray-400 hover:text-gray-500 transition cursor-pointer"
           viewBox="0 0 20 20"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -84,7 +84,7 @@ function icon(code: CheckResultCode): React.ReactNode {
     default:
       return (
         <svg
-          className="w-[12px] h-[10px] fill-current text-gray-400 hover:text-gray-500 transition"
+          className="w-[12px] h-[10px] fill-current text-gray-400 hover:text-gray-500 transition cursor-pointer"
           viewBox="0 0 12 10"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

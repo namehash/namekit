@@ -25,7 +25,7 @@ export const Slideover = forwardRef(
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
           >
-            <div className="fixed inset-0 backdrop-blur-sm" />
+            <div className="fixed inset-0" />
           </Transition.Child>
           <Transition.Child
             as={Fragment}
@@ -41,7 +41,7 @@ export const Slideover = forwardRef(
                 className="w-full lg:max-w-[668px] transform overflow-y-auto bg-white md:shadow-2xl transition-all h-full flex flex-col"
                 ref={ref}
               >
-                <div className="h-[56px] md:h-[68px] flex items-center justify-center shadow px-6 py-5 relative bg-white z-40">
+                <div className="h-[56px] md:h-[68px] flex items-center justify-center shadow px-6 py-5 flex-none relative bg-white z-40">
                   <h2 className="font-medium text-lg">{title}</h2>
                   <div className="flex items-center right-0 md:left-0 md:right-auto inset-y-0 absolute pr-3 md:pr-0 md:pl-3 z-20">
                     <button

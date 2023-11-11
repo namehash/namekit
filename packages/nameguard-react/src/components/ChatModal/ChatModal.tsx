@@ -3,10 +3,10 @@ import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";
 
 import { Slideover } from "../Slideover/Slideover";
 
-export const xmtpChatUrl =
-  "https://xmtp.chat/dm/0x4dC96AAd2Daa3f84066F3A00EC41Fd1e88c8865A";
-export const converseUrl = "https://getconverse.app/";
-export const coinbaseWalletUrl = "https://www.coinbase.com/wallet";
+const xmtpChatUrl =
+  "https://xmtp.chat/dm/0x91b40c01b12E7f1383E028fA91722fb53C871969";
+const converseUrl = "https://getconverse.app/";
+const coinbaseWalletUrl = "https://www.coinbase.com/wallet";
 
 type ChatModalProps = {
   open: boolean;
