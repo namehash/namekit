@@ -5,6 +5,7 @@ from nameguard.context import endpoint_name
 from nameguard.models import Rating, Check, CheckStatus, Normalization, GenericCheckResult, GraphemeNormalization
 from nameguard.nameguard import NameGuard
 from nameguard.exceptions import NamehashNotFoundInSubgraph, NotAGrapheme
+from nameguard.endpoints import Endpoints
 
 
 @pytest.fixture(scope='module')
@@ -240,7 +241,7 @@ async def test_impersonation_risk(nameguard: NameGuard):
     else:
         assert False, 'IMPERSONATION_RISK check not found'
 
-    endpoint_name.set('secure-primary-name')
+    endpoint_name.set(Endpoints.SECURE_PRIMARY_NAME)
     r = await nameguard.inspect_name('mainnet', 'nićk.eth')
     for check in r.checks:
         if check.check is Check.IMPERSONATION_RISK:
