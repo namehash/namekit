@@ -33,7 +33,18 @@ class ApiVersion(str, Enum):
     V08_BETA = 'v0.8-beta'
 
 
-app = FastAPI(title='NameGuard Service', version=ApiVersion.V08_BETA.value)
+app = FastAPI(
+    title='NameGuard API',
+    version=ApiVersion.V08_BETA.value,
+    description=
+'''Welcome to NameGuard, a powerful tool developed by [NameHash Labs](https://namehashlabs.org) to identify and prevent malicious use of Ethereum Name Service (ENS) names.
+
+## Important Notes
+⚠️ Beta Version: Please be aware that NameGuard is currently in beta. We appreciate your feedback as we work towards a stable v1 release. Expect changes to the API to address community feedback and improve functionality.
+
+## Documentation
+These documentation pages focus specifically on the NameGuard API. For information on the NameGuard Library, SDK, and UI Kit, please refer to the [NameGuard GitHub repository](https://github.com/namehash/nameguard).''',
+)
 
 app.add_middleware(
     CORSMiddleware,
