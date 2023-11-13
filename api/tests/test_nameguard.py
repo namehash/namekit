@@ -240,7 +240,7 @@ async def test_impersonation_risk(nameguard: NameGuard):
     else:
         assert False, 'IMPERSONATION_RISK check not found'
 
-    endpoint_name.set('primary-name')
+    endpoint_name.set('secure-primary-name')
     r = await nameguard.inspect_name('mainnet', 'nićk.eth')
     for check in r.checks:
         if check.check is Check.IMPERSONATION_RISK:
@@ -414,3 +414,19 @@ def test_generic_check_result_operators():
 def test_generic_check_result_repr():
     assert repr(GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.PASS, _name_message='')) == \
            'normalized(pass)'
+
+
+@pytest.mark.asyncio
+async def test_dynamic_check_order(nameguard: NameGuard):
+    r = await nameguard.inspect_name('mainnet', 'Ō')
+    assert r.checks[0].check == Check.NORMALIZED
+    assert r.checks[0].status == CheckStatus.ALERT
+    assert r.checks[1].check == Check.IMPERSONATION_RISK
+    assert r.checks[1].status == CheckStatus.WARN
+
+    # normalized is ALERT but impersonation risk is WARN
+    r = await nameguard.secure_primary_name('0xC9f598BC5BB554B6A15A96D19954B041C9FDbF14', 'mainnet')
+    assert r.nameguard_result.checks[0].check == Check.NORMALIZED
+    assert r.nameguard_result.checks[0].status == CheckStatus.ALERT
+    assert r.nameguard_result.checks[1].check == Check.IMPERSONATION_RISK
+    assert r.nameguard_result.checks[1].status == CheckStatus.WARN

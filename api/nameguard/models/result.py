@@ -53,7 +53,7 @@ class ConsolidatedReport(BaseModel):
             if (
                 self.highest_risk is not None and
                 self.highest_risk.check is Check.IMPERSONATION_RISK and
-                endpoint_name.get() == 'primary-name'
+                endpoint_name.get() == 'secure-primary-name'
             ):
                 return 'Impersonation Risk'
             else:
