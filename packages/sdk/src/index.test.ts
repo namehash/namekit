@@ -177,7 +177,7 @@ describe("NameGuard", () => {
       "0x744Ec0A91D420c257aE3eE471B79B1A6a0312E36"
     );
 
-    expect(data.primary_name_status).toBe("normalized");
+    expect(data.primary_name_status).toBe("unnormalized");
     expect(data.impersonation_status).toBeNull();
     expect(data.primary_name).toBeNull();
     expect(data.display_name).toBe("Unnamed 744e");
