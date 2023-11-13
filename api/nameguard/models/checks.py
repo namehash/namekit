@@ -4,6 +4,7 @@ from enum import Enum
 
 from nameguard.generic_utils import capitalize_words
 import nameguard.context
+from nameguard.endpoints import Endpoints
 
 
 class CheckStatus(str, Enum):
@@ -168,7 +169,7 @@ SEVERITY_DEFAULT = make_severity_dict_from_order([
 
 
 SEVERITY_PER_ENDPOINT = {
-    'secure-primary-name': make_severity_dict_from_order([
+    Endpoints.SECURE_PRIMARY_NAME: make_severity_dict_from_order([
         Check.IMPERSONATION_RISK,
         Check.NORMALIZED,
         Check.INVISIBLE,
