@@ -7,9 +7,9 @@ import Image from "next/image";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import impersonation_attack_img from "../../public/assets/vitalik_impersonation_attack.png";
 import fake_NFT_filter_img from "../../public/assets/fake_NFT_filter.png";
-import surface_risks_img from "../../public/assets/surface_risks_newer.png";
-import dangerous_name_config_img from "../../public/assets/dangerous_name_configuration_new.png";
-import autorenewal_img from "../../public/assets/autorenewal_new.png";
+import surface_risks_img from "../../public/assets/surface_risks.png";
+import dangerous_name_config_img from "../../public/assets/dangerous_name_configuration.png";
+import autorenewal_img from "../../public/assets/autorenewal.png";
 import ens_webfont_img from "../../public/assets/ens_webfont.png";
 import {
   Tooltip,
