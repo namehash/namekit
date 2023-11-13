@@ -4,6 +4,8 @@
 
 NameGuard also supports multiple networks including Ethereum Mainnet and testnets.
 
+⚠️ **This SDK is BETA. Things will change based on the community feedback.**
+
 ## Features
 
 - **Normalization Status Checks**: Determine if a name, label, or grapheme is normalized, unnormalized, or unknown.
