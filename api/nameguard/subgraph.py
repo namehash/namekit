@@ -54,11 +54,6 @@ async def call_subgraph(network_name: NetworkName, query: str, variables: dict) 
         logger.error(f"Unexpected response body: {response_json}")
         raise ENSSubgraphUnavailable(f"Unexpected response body: {response_json}")
     else:
-
-        # h = hashlib.md5(json.dumps((network_name, query, variables), sort_keys=True).encode('utf-8')).hexdigest()
-        # json.dump(response_json['data'], open(f'data/call_subgraph__{h}.json', 'w'), indent=2,
-        #           ensure_ascii=False)
-        
         return response_json['data']
 
 

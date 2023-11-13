@@ -133,8 +133,6 @@ class OurENS(ENS):
         # the address must match in the forward resolution
         result = name if to_checksum_address(address) == self.address(name) else None
 
-        # json.dump(result, open(f'data/name__{address}.json', 'w'), indent=2,
-        #           ensure_ascii=False)
         return result
     
     def resolver(self, name: str) -> Optional["Contract"]:

@@ -515,6 +515,7 @@ def test_inspect_grapheme_multi(test_client, api_version):
         ('0x7Da3CdE891a76416ec9D1c3354B8EfE550Bd4e20', None, 'unnormalized', None, 'Unnamed 7da3', 'vitalik.eth', True, 'vitȧlik.eth'),
         ('0xC9f598BC5BB554B6A15A96D19954B041C9FDbF14', None, 'unnormalized', None, 'Unnamed c9f5', 'vitalik.eth', True, 'vıtalik.eth'),
         ('0x7c7160A23b32402ad24ED5a617b8a83f434642d4', 'unlikely', 'normalized', 'vincξnt.eth', 'vincΞnt.eth', 'vincξnt.eth', False, 'vincξnt.eth'),
+        ('0x744Ec0A91D420c257aE3eE471B79B1A6a0312E36', None, 'unnormalized', None, 'Unnamed 744e', None, False, 'hello<world>!.eth'),  # attempt code injection
         # unknown primary name is impossible
     ]
 )
