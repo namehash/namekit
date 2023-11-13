@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+
 import { GithubLogo } from "@/app/components/icons/GithubLogo";
 import { Search } from "@namehash/nameguard-react";
 

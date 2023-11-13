@@ -11,15 +11,8 @@ import surface_risks_img from "../../public/assets/surface_risks.png";
 import dangerous_name_config_img from "../../public/assets/dangerous_name_configuration.png";
 import autorenewal_img from "../../public/assets/autorenewal.png";
 import ens_webfont_img from "../../public/assets/ens_webfont.png";
-import {
-  Tooltip,
-  Search,
-  SearchModal,
-  SettingsModal,
-} from "@namehash/nameguard-react";
+import { Tooltip, Search } from "@namehash/nameguard-react";
 import cc from "classcat";
-import { Footer } from "@/app/components/Footer";
-import { Header } from "@/app/components/Header";
 
 export default function Home() {
   const exampleCode = `<figure class="md:flex bg-slate-100 rounded-xl p-8 md:p-0
@@ -32,14 +25,11 @@ export default function Home() {
                     <p class="text-lg font-medium">`;
   return (
     <>
-      <SearchModal />
-      <SettingsModal />
-      <Header />
       <HeroSection />
       <div className="md:px-32 relative">
         <ReadySection
           sectionTargetSvg={<MessageIcon />}
-          sectionTargetClientMessage={"For Web3 messengers"}
+          sectionTargetClientMessage="For Web3 messengers"
           sectionHeader={
             <Fragment>
               Alert from deceptive
@@ -47,8 +37,8 @@ export default function Home() {
               impersonation attacks
             </Fragment>
           }
-          sectionDescription={`Inbound messages from deceptive look-alike names can exploit trusted relationships. NameGuard’s homograph and canonical name algorithms help you handle higher-risk messages.`}
-          sectionBackgroundName={"bg-green_background"}
+          sectionDescription="Inbound messages from deceptive look-alike names can exploit trusted relationships. NameGuard's homograph and canonical name algorithms help you handle higher-risk messages."
+          sectionBackgroundName="bg-green_background"
           isCodeOnTheLeft={false}
           codeSnippet={exampleCode}
           integrationsPanel={
@@ -70,9 +60,9 @@ export default function Home() {
         <MobileSectionDivider />
         <ReadySection
           sectionTargetSvg={<ShoppingCartIcon />}
-          sectionTargetClientMessage={"For NFT Marketplaces"}
+          sectionTargetClientMessage="For NFT Marketplaces"
           sectionHeader={<Fragment>Filter out fake ENS NFTs</Fragment>}
-          sectionDescription={`Just because an NFT names itself “nick.eth” doesn’t mean it’s an ENS name. NameGuard makes it easy to stop fake ENS names from being sold on NFT marketplaces. Let’s put an end to these scams !`}
+          sectionDescription={`Just because an NFT names itself "nick.eth" doesn't mean it's an ENS name. NameGuard makes it easy to stop fake ENS names from being sold on NFT marketplaces. Let's put an end to these scams !`}
           sectionBackgroundName={"bg-purple_background"}
           isCodeOnTheLeft={true}
           codeSnippet={exampleCode}
@@ -95,7 +85,7 @@ export default function Home() {
         <MobileSectionDivider />
         <ReadySection
           sectionTargetSvg={<ShoppingCartIcon />}
-          sectionTargetClientMessage={"For ENS Registrars & Marketplaces"}
+          sectionTargetClientMessage="For ENS Registrars & Marketplaces"
           sectionHeader={
             <Fragment>
               Surface hidden risks or limitations
@@ -103,8 +93,8 @@ export default function Home() {
               before final checkout
             </Fragment>
           }
-          sectionDescription={`NameGuard offers a detailed 10+ point-inspection on any ENS name, including NameWrapper fuses, offchain names, and DNS compatibility. Ensure no shocking disappointments after purchase.`}
-          sectionBackgroundName={"bg-green_background"}
+          sectionDescription="NameGuard offers a detailed 10+ point-inspection on any ENS name, including NameWrapper fuses, offchain names, and DNS compatibility. Ensure no shocking disappointments after purchase."
+          sectionBackgroundName="bg-green_background"
           isCodeOnTheLeft={false}
           codeSnippet={exampleCode}
           imageSpecifics={{
@@ -116,7 +106,7 @@ export default function Home() {
         <MobileSectionDivider />
         <ComingSoonSection
           sectionTargetSvg={<WalletIcon />}
-          sectionTargetClientMessage={"For wallets and dApps"}
+          sectionTargetClientMessage="For wallets and dApps"
           sectionHeader={
             <Fragment>
               Identify dangerous name
@@ -124,13 +114,10 @@ export default function Home() {
               configurations
             </Fragment>
           }
-          sectionDescription={
-            "Protect your community from improperly configured resolver records with ENS HealthChecks. These defend from issues ranging from considerable irreversible losses to web3 profiles that are " +
-            "incorrectly formatted and may not load properly."
-          }
+          sectionDescription="Protect your community from improperly configured resolver records with ENS HealthChecks. These defend from issues ranging from considerable irreversible losses to web3 profiles that are incorrectly formatted and may not load properly."
           sectionBackgroundName={"bg-purple_background_sm"}
           isTextOnTheLeft={true}
-          badgeText={"Coming soon"}
+          badgeText="Coming soon"
           imageSpecifics={{
             source: dangerous_name_config_img.src,
             tagWidth: 960,
@@ -140,7 +127,7 @@ export default function Home() {
         <MobileSectionDivider />
         <ComingSoonSection
           sectionTargetSvg={<WalletIcon />}
-          sectionTargetClientMessage={"For wallets and dApps"}
+          sectionTargetClientMessage="For wallets and dApps"
           sectionHeader={
             <Fragment>
               Never lose a name you love with
@@ -148,13 +135,10 @@ export default function Home() {
               ENS autorenew
             </Fragment>
           }
-          sectionDescription={
-            "Life gets busy. It can be easy to forget to renew your ENS names. Give your community peace of mind (and earn recurring revenue!) with ENS AutoRenew. Help others save on gas fees too. " +
-            "Renewal transactions will be intelligently triggered at the optimal time when gas fees are low."
-          }
-          sectionBackgroundName={"bg-green_background_sm"}
+          sectionDescription="Life gets busy. It can be easy to forget to renew your ENS names. Give your community peace of mind (and earn recurring revenue!) with ENS AutoRenew. Help others save on gas fees too. Renewal transactions will be intelligently triggered at the optimal time when gas fees are low."
+          sectionBackgroundName="bg-green_background_sm"
           isTextOnTheLeft={false}
-          badgeText={"Planned"}
+          badgeText="Planned"
           imageSpecifics={{
             source: autorenewal_img.src,
             tagWidth: 11600,
@@ -164,11 +148,10 @@ export default function Home() {
         <MobileSectionDivider />
         <ComingSoonSection
           sectionTargetSvg={<WalletIcon />}
-          sectionTargetClientMessage={"For wallets and dApps"}
+          sectionTargetClientMessage="For wallets and dApps"
           sectionHeader={<Fragment>ENS webfont</Fragment>}
-          sectionDescription={`Unicode is a complex beast. Have you prepared to handle the display of all possible ENS names in your UI?
-               ENS Webfont provides enhanced security against homograph attacks and increases rendering support for emojis and other special graphemes.`}
-          sectionBackgroundName={"bg-purple_background_sm"}
+          sectionDescription="Unicode is a complex beast. Have you prepared to handle the display of all possible ENS names in your UI? ENS Webfont provides enhanced security against homograph attacks and increases rendering support for emojis and other special graphemes."
+          sectionBackgroundName="bg-purple_background_sm"
           isTextOnTheLeft={true}
           badgeText={"Planned"}
           imageSpecifics={{
@@ -181,7 +164,6 @@ export default function Home() {
       <MobileSectionDivider />
       <RoadMap />
       <NewExitSection />
-      <Footer />
 
       <div className="fixed inset-0 z-0 h-full w-[100vw] max-w-[100vw] overflow-x-hidden bg-[radial-gradient(#DDDDDD_1px,transparent_1px)] [background-size:24px_24px] opacity-70"></div>
     </>
@@ -486,7 +468,7 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
           <Image
             className="relative z-10 w-full h-full"
             src={props.imageSpecifics.source}
-            alt={"chat image"}
+            alt="chat image"
             width={props.imageSpecifics.tagWidth}
             height={props.imageSpecifics.tagHeight}
           />
@@ -496,7 +478,7 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
           <Image
             className="relative z-10 w-full h-full"
             src={props.imageSpecifics.source}
-            alt={"chat image"}
+            alt="chat image"
             width={props.imageSpecifics.tagWidth}
             height={props.imageSpecifics.tagHeight}
           />
@@ -506,7 +488,7 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
         <Image
           className="relative z-10 w-full h-full"
           src={props.imageSpecifics.source}
-          alt={"chat image"}
+          alt="chat image"
           width={props.imageSpecifics.tagWidth}
           height={props.imageSpecifics.tagHeight}
         />

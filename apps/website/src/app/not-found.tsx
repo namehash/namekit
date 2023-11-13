@@ -1,18 +1,12 @@
 "use client";
 
-import React from "react";
-import { Footer } from "@/app/components/Footer";
-import { Header } from "@/app/components/Header";
-import { SearchModal } from "@namehash/nameguard-react";
-// import { useSearchStore } from "../../../../packages/nameguard-react/src/stores/search";
+import { useSearchStore } from "@namehash/nameguard-react";
 
 export default function NotFound() {
-  // const { openModal } = useSearchStore();
+  const { openModal } = useSearchStore();
 
   return (
     <>
-      <SearchModal />
-      <Header />
       <div className="w-full h-[calc(100vh-185px)] gt_mobile:h-[calc(100vh-144px)] flex flex-col justify-center items-center px-5 pt-[108px] pb-[85px] gt_mobile:p-0 bg-error404_background bg-[50%_0%] gt_mobile:bg-[50%_30%] bg-no-repeat bg-[length:100%_60%]">
         <div className="z-10 relative w-full h-fit max-w-[500px] inline-flex flex-col items-center justify-center gap-10 md:gap-[60px]">
           <Error404IconSmall />
@@ -23,12 +17,12 @@ export default function NotFound() {
                 Page not found
               </h2>
               <p className="text-center text-gray-500 not-italic text-base leading-6 font-normal px-10 gt_mobile:px-5 md:px-0 gt_mobile:font-light gt_mobile:text-sm">
-                We can’t seem to find the page you’re looking for
+                We can&apos;t seem to find the page you&apos;re looking for
               </p>
             </div>
             <button
-              // onclick={openModal}
-              className="flex justify-center items-center px-[17px] py-[9px] bg-white rounded-lg border border-gray-300 shadow-sm pointer-cursor"
+              onClick={openModal}
+              className="flex justify-center items-center px-[17px] py-[9px] bg-white rounded-lg border border-gray-300 shadow-sm pointer-cursor hover:bg-gray-50 transition-colors"
             >
               <p className="text-black text-base leading-6 font-medium gt_mobile:text-sm gt_mobile:leading-5">
                 Inspect any ENS name
@@ -37,7 +31,7 @@ export default function NotFound() {
           </div>
         </div>
       </div>
-      <Footer />
+
       <div className="fixed inset-0 z-0 h-full w-[100vw] max-w-[100vw] overflow-x-hidden bg-[radial-gradient(#DDDDDD_1px,transparent_1px)] [background-size:24px_24px] opacity-70"></div>
     </>
   );
@@ -88,16 +82,16 @@ const Error404IconLarge = () => (
     xmlns="http://www.w3.org/2000/svg"
     className="hidden md:block flex-shrink-0"
   >
-    <g clip-path="url(#clip0_1447_5217)">
+    <g clipPath="url(#clip0_1447_5217)">
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M-0.468079 132.061V159.582H78.8675V188.637H112.281V159.582H132.78V131.577H112.281V23.3477H92.265H79.5132H68.537L-0.468079 132.061ZM79.5132 61.4417H78.2219L34.7205 130.285V131.577H79.5132V61.4417ZM367 132.061V159.582H446.336V188.637H479.749V159.582H500.248V131.577H479.749V23.3477H459.733H446.981H436.005L367 132.061ZM446.981 61.4417H445.69L402.189 130.285V131.577H446.981V61.4417Z"
         fill="url(#paint0_linear_1447_5217)"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M255 5.37109L265.297 15.0931C280.541 29.4844 301.093 38.2966 323.75 38.2966C324.111 38.2966 324.472 38.2944 324.832 38.2899L335.821 38.1539L339.263 48.5906C342.99 59.891 345 71.9513 345 84.4503C345 137.945 308.302 182.809 258.728 195.529L255 196.486L251.272 195.529C201.698 182.809 165 137.945 165 84.4503C165 71.9513 167.01 59.891 170.737 48.5906L174.179 38.1539L185.168 38.2899C185.528 38.2944 185.889 38.2966 186.25 38.2966C208.907 38.2966 229.459 29.4844 244.703 15.0931L255 5.37109ZM196.632 67.8349C195.562 73.1992 195 78.7537 195 84.4503C195 122.512 220.224 154.78 255 165.423C289.776 154.78 315 122.512 315 84.4503C315 78.7537 314.438 73.1992 313.368 67.8349C291.604 65.8903 271.572 57.8932 255 45.5521C238.428 57.8932 218.396 65.8903 196.632 67.8349Z"
         fill="url(#paint1_linear_1447_5217)"
       />
@@ -111,7 +105,7 @@ const Error404IconLarge = () => (
         y2="188.637"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#4F4F4F" />
+        <stop stopColor="#4F4F4F" />
         <stop offset="1" />
       </linearGradient>
       <linearGradient
@@ -122,7 +116,7 @@ const Error404IconLarge = () => (
         y2="196.486"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#4F4F4F" />
+        <stop stopColor="#4F4F4F" />
         <stop offset="1" />
       </linearGradient>
       <clipPath id="clip0_1447_5217">
