@@ -419,8 +419,6 @@ def test_generic_check_result_repr():
 
 @pytest.mark.asyncio
 async def test_dynamic_check_order(nameguard: NameGuard):
-    endpoint_name.set(Endpoints.SECURE_PRIMARY_NAME)
-    
     r = await nameguard.inspect_name('mainnet', 'Ō')
     assert r.checks[0].check == Check.NORMALIZED
     assert r.checks[0].status == CheckStatus.ALERT
@@ -434,6 +432,14 @@ async def test_dynamic_check_order(nameguard: NameGuard):
     assert r.nameguard_result.checks[1].check == Check.IMPERSONATION_RISK
     assert r.nameguard_result.checks[1].status == CheckStatus.WARN
 
+    r = await nameguard.secure_primary_name('0xd8da6bf26964af9d7eed9e03e53415d37aa96045', 'mainnet')
+    assert r.nameguard_result.checks[0].check == Check.NORMALIZED
+    assert r.nameguard_result.checks[0].status == CheckStatus.PASS
+    assert r.nameguard_result.checks[1].check == Check.IMPERSONATION_RISK
+    assert r.nameguard_result.checks[1].status == CheckStatus.PASS
+
+    endpoint_name.set(Endpoints.SECURE_PRIMARY_NAME)
+    
     r = await nameguard.secure_primary_name('0xd8da6bf26964af9d7eed9e03e53415d37aa96045', 'mainnet')
     assert r.nameguard_result.checks[0].check == Check.IMPERSONATION_RISK
     assert r.nameguard_result.checks[0].status == CheckStatus.PASS
