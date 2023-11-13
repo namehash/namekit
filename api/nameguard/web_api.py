@@ -198,8 +198,8 @@ async def inspect_labelhash_get(
                               description='Labelhash should be a decimal or a hex (prefixed with 0x) string.'),
         parent_name: str = Path(default_factory=lambda: '', examples=['eth'])
 ) -> NameGuardReport:
-    logger.debug(f"{json.dumps({'endpoint': 'inspect-labelhash', 'method': 'GET', 'api_version': api_version, 'network_name': network_name, 'labelhash': labelhash, 'parent_name': parent_name})}")
-    nameguard.context.endpoint_name.set('inspect-labelhash')
+    logger.debug(f"{json.dumps({'endpoint': Endpoints.INSPECT_LABELHASH, 'method': 'GET', 'api_version': api_version, 'network_name': network_name, 'labelhash': labelhash, 'parent_name': parent_name})}")
+    nameguard.context.endpoint_name.set(Endpoints.INSPECT_LABELHASH)
     valid_labelhash = validate_namehash(namehash=labelhash)
     namehash = namehash_from_labelhash(valid_labelhash, parent_name=parent_name)
     return await ng.inspect_namehash(network_name=network_name, namehash=namehash)
@@ -218,8 +218,8 @@ async def inspect_labelhash_get(
 )
 async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelhashRequest) -> NameGuardReport:
     logger.debug(
-        f"{json.dumps({'endpoint': 'inspect-labelhash', 'method': 'POST', 'api_version': api_version, 'network_name': request.network_name, 'labelhash': request.labelhash, 'parent_name': request.parent_name})}")
-    nameguard.context.endpoint_name.set('inspect-labelhash')
+        f"{json.dumps({'endpoint': Endpoints.INSPECT_LABELHASH, 'method': 'POST', 'api_version': api_version, 'network_name': request.network_name, 'labelhash': request.labelhash, 'parent_name': request.parent_name})}")
+    nameguard.context.endpoint_name.set(Endpoints.INSPECT_LABELHASH)
     valid_labelhash = validate_namehash(namehash=request.labelhash)
     namehash = namehash_from_labelhash(valid_labelhash, parent_name=request.parent_name)
     return await ng.inspect_namehash(network_name=request.network_name, namehash=namehash)
@@ -292,8 +292,8 @@ async def inspect_grapheme_get(
             examples=['ń', '%F0%9F%98%B5'])
 ) -> GraphemeGuardReport:
     logger.debug(
-        f"{json.dumps({'endpoint': Endpoints.INSPECT_NAMEHASH, 'method': 'GET', 'api_version': api_version, 'grapheme': grapheme})}")
-    nameguard.context.endpoint_name.set(Endpoints.INSPECT_NAMEHASH)
+        f"{json.dumps({'endpoint': Endpoints.INSPECT_GRAPHEME, 'method': 'GET', 'api_version': api_version, 'grapheme': grapheme})}")
+    nameguard.context.endpoint_name.set(Endpoints.INSPECT_GRAPHEME)
     return ng.inspect_grapheme(grapheme)
 
 
