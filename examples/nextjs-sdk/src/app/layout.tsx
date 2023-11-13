@@ -77,7 +77,7 @@ export default function RootLayout({
                 {messages.map(({ address }, index) => (
                   <Link
                     key={index}
-                    href={`/${address}`}
+                    href={`/address/${address}`}
                     className="flex justify-between items-center border-0 border-b border-gray-200 outline-blue outline-b-0 h-min cursor-pointer p-4 overflow-ellipsis hover:bg-gray-200 space-x-3"
                   >
                     <img

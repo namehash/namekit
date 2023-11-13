@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { nameguard } from "@namehash/nameguard";
-import { Shield } from "../components/Shield";
+import { Shield } from "../../components/Shield";
 
 export default async function Page({
   params,
