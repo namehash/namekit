@@ -172,7 +172,7 @@ describe("NameGuard", () => {
     expect(data.nameguard_result?.canonical_name).toBe("vincξnt.eth");
   });
 
-  it("getSecurePrimaryName: code injection with primary name", async () => {
+  it("getSecurePrimaryName: attempted code injection with primary name", async () => {
     const data = await nameguard.getSecurePrimaryName(
       "0x744Ec0A91D420c257aE3eE471B79B1A6a0312E36"
     );
