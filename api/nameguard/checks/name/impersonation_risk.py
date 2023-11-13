@@ -35,7 +35,7 @@ def check_name(labels: list[Optional[InspectorResult]]) -> GenericCheckResult:
 
     if passed:
         message = MESSAGE_PASS
-    elif endpoint_name.get() == 'primary-name':
+    elif endpoint_name.get() == 'secure-primary-name':
         message = MESSAGE_FAIL.format('.'.join(label.beautiful_canonical_label for label in labels))
     else:
         message = MESSAGE_FAIL_OTHER

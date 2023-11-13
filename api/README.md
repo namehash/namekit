@@ -21,7 +21,7 @@ pip install nameguard
 
 ### Setting API keys
 
-NameGuard uses the Alchemy API for `primary-name/` and `fake-eth-name-check/` endpoints. Alchemy API URLs have to be set by environment variables.
+NameGuard uses the Alchemy API for `secure-primary-name/` and `fake-eth-name-check/` endpoints. Alchemy API URLs have to be set by environment variables.
 
 ```bash
 export PROVIDER_URI_MAINNET=https://eth-mainnet.g.alchemy.com/v2/[YOUR_ALCHEMY_API_KEY]

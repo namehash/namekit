@@ -229,7 +229,7 @@ async def secure_primary_name_get(api_version: ApiVersion, address: str,
                                   network_name: NetworkName) -> SecurePrimaryNameResult:
     logger.debug(
         f"{json.dumps({'endpoint': 'secure-primary-name', 'method': 'GET', 'api_version': api_version, 'network_name': network_name, 'address': address})}")
-    nameguard.context.endpoint_name.set('primary-name')
+    nameguard.context.endpoint_name.set('secure-primary-name')
     address = validate_ethereum_address(address)
     return await ng.secure_primary_name(address, network_name)
 
