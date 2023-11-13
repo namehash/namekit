@@ -3,6 +3,7 @@ from pydantic import BaseModel, computed_field
 from enum import Enum
 
 from nameguard.generic_utils import capitalize_words
+import nameguard.context
 
 
 class CheckStatus(str, Enum):
@@ -151,21 +152,38 @@ class Check(str, Enum):
         return capitalize_words(self.value.replace('_', ' '))
 
 
-SEVERITY_ORDER_DESC = [
+def make_severity_dict_from_order(order):
+    return {check: len(order) - i for i, check in enumerate(order)}
+
+
+SEVERITY_DEFAULT = make_severity_dict_from_order([
     # highest severity first
-    Check.IMPERSONATION_RISK,
     Check.NORMALIZED,
+    Check.IMPERSONATION_RISK,
     Check.INVISIBLE,
     Check.CONFUSABLES,
     Check.TYPING_DIFFICULTY,
     # all other checks get severity 0
-]
+])
 
-SEVERITY = {check: len(SEVERITY_ORDER_DESC) - i for i, check in enumerate(SEVERITY_ORDER_DESC)}
+
+SEVERITY_PER_ENDPOINT = {
+    'secure-primary-name': make_severity_dict_from_order([
+        Check.IMPERSONATION_RISK,
+        Check.NORMALIZED,
+        Check.INVISIBLE,
+        Check.CONFUSABLES,
+        Check.TYPING_DIFFICULTY,
+    ]),
+}
 
 
 def get_check_severity(check: Check) -> int:
-    return SEVERITY.get(check, 0)
+    endpoint = nameguard.context.endpoint_name.get()
+    if endpoint is None:
+        return SEVERITY_DEFAULT.get(check, 0)
+    else:
+        return SEVERITY_PER_ENDPOINT.get(endpoint, SEVERITY_DEFAULT).get(check, 0)
 
 
 class GenericCheckResult(BaseModel):
