@@ -172,6 +172,20 @@ describe("NameGuard", () => {
     expect(data.nameguard_result?.canonical_name).toBe("vincξnt.eth");
   });
 
+  it("getSecurePrimaryName: code injection with primary name", async () => {
+    const data = await nameguard.getSecurePrimaryName(
+      "0x744Ec0A91D420c257aE3eE471B79B1A6a0312E36"
+    );
+
+    expect(data.primary_name_status).toBe("normalized");
+    expect(data.impersonation_status).toBeNull();
+    expect(data.primary_name).toBeNull();
+    expect(data.display_name).toBe("Unnamed 744e");
+    expect(data.nameguard_result).not.toBeNull();
+    expect(data.nameguard_result?.name).toBe("hello<world>!.eth");
+    expect(data.nameguard_result?.canonical_name).toBeNull();
+  });
+  
   // 
 
 });
