@@ -192,7 +192,7 @@ def test_inspect_name_post_latin_all_pass(test_client, api_version):
 
 
 
-# -- bulk-inspect-name --
+# -- bulk-inspect-names --
 
 def test_bulk_inspect_name_post(test_client, api_version):
     names = ['vitalik.eth', 'byczong.mydomain.eth']

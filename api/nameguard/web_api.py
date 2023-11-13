@@ -86,7 +86,7 @@ async def inspect_name_post(api_version: ApiVersion, request: InspectNameRequest
     return await ng.inspect_name(request.network_name, request.name)
 
 
-# -- bulk-inspect-name --
+# -- bulk-inspect-names --
 
 
 class BulkInspectNamesRequest(BaseModel):
@@ -101,7 +101,7 @@ class BulkInspectNamesRequest(BaseModel):
 )
 async def bulk_inspect_names(api_version: ApiVersion, request: BulkInspectNamesRequest) -> BulkNameGuardBulkReport:
     logger.debug(f"{json.dumps({'endpoint': 'bulk-inspect-names', 'method': 'POST', 'api_version': api_version, 'network_name': request.network_name, 'names': request.names})}")
-    nameguard.context.endpoint_name.set('bulk-inspect-name')
+    nameguard.context.endpoint_name.set('bulk-inspect-names')
     return await ng.bulk_inspect_names(request.network_name, request.names)
 
 
