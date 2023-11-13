@@ -100,6 +100,8 @@ Check out the included [Dockerfile](./Dockerfile) for an example of how to build
 
 ### Disable monkeypatch tests
 
+By default, the tests are using mock responses from external APIs. If you want to run tests using real requests to external APIs then set `MONKEYPATCH=0`.
+
 ```bash
 MONKEYPATCH=0 poetry run pytest
 ```
