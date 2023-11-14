@@ -32,6 +32,12 @@ const messages = [
   {
     address: "0x7c7160A23b32402ad24ED5a617b8a83f434642d4",
   },
+  {
+    address: "0x99578a1a733456aA292Ea2b4583253Fa814B16a7",
+  },
+  {
+    address: "0x4735F0ce83c1d328045a7737a7Dd53504714DFA5",
+  },
 ] as const;
 
 export default function RootLayout({
