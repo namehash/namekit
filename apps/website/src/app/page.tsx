@@ -11,12 +11,7 @@ import surface_risks_img from "../../public/assets/surface_risks.png";
 import dangerous_name_config_img from "../../public/assets/dangerous_name_configuration.png";
 import autorenewal_img from "../../public/assets/autorenewal.png";
 import ens_webfont_img from "../../public/assets/ens_webfont.png";
-import {
-  Tooltip,
-  Search,
-  SearchModal,
-  SettingsModal,
-} from "@namehash/nameguard-react";
+import { Tooltip, Search } from "@namehash/nameguard-react";
 import cc from "classcat";
 
 export default function Home() {
@@ -30,14 +25,11 @@ export default function Home() {
                     <p class="text-lg font-medium">`;
   return (
     <>
-      <SearchModal />
-      <SettingsModal />
-      <Header />
       <HeroSection />
       <div className="md:px-32 relative">
         <ReadySection
           sectionTargetSvg={<MessageIcon />}
-          sectionTargetClientMessage={"For Web3 messengers"}
+          sectionTargetClientMessage="For Web3 messengers"
           sectionHeader={
             <Fragment>
               Alert from deceptive
@@ -45,8 +37,8 @@ export default function Home() {
               impersonation attacks
             </Fragment>
           }
-          sectionDescription={`Inbound messages from deceptive look-alike names can exploit trusted relationships. NameGuard’s homograph and canonical name algorithms help you handle higher-risk messages.`}
-          sectionBackgroundName={"bg-green_background"}
+          sectionDescription="Inbound messages from deceptive look-alike names can exploit trusted relationships. NameGuard's homograph and canonical name algorithms help you handle higher-risk messages."
+          sectionBackgroundName="bg-green_background"
           isCodeOnTheLeft={false}
           codeSnippet={exampleCode}
           integrationsPanel={
@@ -68,9 +60,9 @@ export default function Home() {
         <MobileSectionDivider />
         <ReadySection
           sectionTargetSvg={<ShoppingCartIcon />}
-          sectionTargetClientMessage={"For NFT Marketplaces"}
+          sectionTargetClientMessage="For NFT Marketplaces"
           sectionHeader={<Fragment>Filter out fake ENS NFTs</Fragment>}
-          sectionDescription={`Just because an NFT names itself “nick.eth” doesn’t mean it’s an ENS name. NameGuard makes it easy to stop fake ENS names from being sold on NFT marketplaces. Let’s put an end to these scams !`}
+          sectionDescription={`Just because an NFT names itself "nick.eth" doesn't mean it's an ENS name. NameGuard makes it easy to stop fake ENS names from being sold on NFT marketplaces. Let's put an end to these scams !`}
           sectionBackgroundName={"bg-purple_background"}
           isCodeOnTheLeft={true}
           codeSnippet={exampleCode}
@@ -93,7 +85,7 @@ export default function Home() {
         <MobileSectionDivider />
         <ReadySection
           sectionTargetSvg={<ShoppingCartIcon />}
-          sectionTargetClientMessage={"For ENS Registrars & Marketplaces"}
+          sectionTargetClientMessage="For ENS Registrars & Marketplaces"
           sectionHeader={
             <Fragment>
               Surface hidden risks or limitations
@@ -101,8 +93,8 @@ export default function Home() {
               before final checkout
             </Fragment>
           }
-          sectionDescription={`NameGuard offers a detailed 10+ point-inspection on any ENS name, including NameWrapper fuses, offchain names, and DNS compatibility. Ensure no shocking disappointments after purchase.`}
-          sectionBackgroundName={"bg-green_background"}
+          sectionDescription="NameGuard offers a detailed 10+ point-inspection on any ENS name, including NameWrapper fuses, offchain names, and DNS compatibility. Ensure no shocking disappointments after purchase."
+          sectionBackgroundName="bg-green_background"
           isCodeOnTheLeft={false}
           codeSnippet={exampleCode}
           imageSpecifics={{
@@ -114,7 +106,7 @@ export default function Home() {
         <MobileSectionDivider />
         <ComingSoonSection
           sectionTargetSvg={<WalletIcon />}
-          sectionTargetClientMessage={"For wallets and dApps"}
+          sectionTargetClientMessage="For wallets and dApps"
           sectionHeader={
             <Fragment>
               Identify dangerous name
@@ -122,13 +114,10 @@ export default function Home() {
               configurations
             </Fragment>
           }
-          sectionDescription={
-            "Protect your community from improperly configured resolver records with ENS HealthChecks. These defend from issues ranging from considerable irreversible losses to web3 profiles that are " +
-            "incorrectly formatted and may not load properly."
-          }
+          sectionDescription="Protect your community from improperly configured resolver records with ENS HealthChecks. These defend from issues ranging from considerable irreversible losses to web3 profiles that are incorrectly formatted and may not load properly."
           sectionBackgroundName={"bg-purple_background_sm"}
           isTextOnTheLeft={true}
-          badgeText={"Coming soon"}
+          badgeText="Coming soon"
           imageSpecifics={{
             source: dangerous_name_config_img.src,
             tagWidth: 960,
@@ -138,7 +127,7 @@ export default function Home() {
         <MobileSectionDivider />
         <ComingSoonSection
           sectionTargetSvg={<WalletIcon />}
-          sectionTargetClientMessage={"For wallets and dApps"}
+          sectionTargetClientMessage="For wallets and dApps"
           sectionHeader={
             <Fragment>
               Never lose a name you love with
@@ -146,13 +135,10 @@ export default function Home() {
               ENS autorenew
             </Fragment>
           }
-          sectionDescription={
-            "Life gets busy. It can be easy to forget to renew your ENS names. Give your community peace of mind (and earn recurring revenue!) with ENS AutoRenew. Help others save on gas fees too. " +
-            "Renewal transactions will be intelligently triggered at the optimal time when gas fees are low."
-          }
-          sectionBackgroundName={"bg-green_background_sm"}
+          sectionDescription="Life gets busy. It can be easy to forget to renew your ENS names. Give your community peace of mind (and earn recurring revenue!) with ENS AutoRenew. Help others save on gas fees too. Renewal transactions will be intelligently triggered at the optimal time when gas fees are low."
+          sectionBackgroundName="bg-green_background_sm"
           isTextOnTheLeft={false}
-          badgeText={"Planned"}
+          badgeText="Planned"
           imageSpecifics={{
             source: autorenewal_img.src,
             tagWidth: 11600,
@@ -162,11 +148,10 @@ export default function Home() {
         <MobileSectionDivider />
         <ComingSoonSection
           sectionTargetSvg={<WalletIcon />}
-          sectionTargetClientMessage={"For wallets and dApps"}
+          sectionTargetClientMessage="For wallets and dApps"
           sectionHeader={<Fragment>ENS webfont</Fragment>}
-          sectionDescription={`Unicode is a complex beast. Have you prepared to handle the display of all possible ENS names in your UI?
-               ENS Webfont provides enhanced security against homograph attacks and increases rendering support for emojis and other special graphemes.`}
-          sectionBackgroundName={"bg-purple_background_sm"}
+          sectionDescription="Unicode is a complex beast. Have you prepared to handle the display of all possible ENS names in your UI? ENS Webfont provides enhanced security against homograph attacks and increases rendering support for emojis and other special graphemes."
+          sectionBackgroundName="bg-purple_background_sm"
           isTextOnTheLeft={true}
           badgeText={"Planned"}
           imageSpecifics={{
@@ -179,7 +164,6 @@ export default function Home() {
       <MobileSectionDivider />
       <RoadMap />
       <NewExitSection />
-      <Footer />
 
       <div className="fixed inset-0 z-0 h-full w-[100vw] max-w-[100vw] overflow-x-hidden bg-[radial-gradient(#DDDDDD_1px,transparent_1px)] [background-size:24px_24px] opacity-70"></div>
     </>
@@ -484,7 +468,7 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
           <Image
             className="relative z-10 w-full h-full"
             src={props.imageSpecifics.source}
-            alt={"chat image"}
+            alt="chat image"
             width={props.imageSpecifics.tagWidth}
             height={props.imageSpecifics.tagHeight}
           />
@@ -494,7 +478,7 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
           <Image
             className="relative z-10 w-full h-full"
             src={props.imageSpecifics.source}
-            alt={"chat image"}
+            alt="chat image"
             width={props.imageSpecifics.tagWidth}
             height={props.imageSpecifics.tagHeight}
           />
@@ -504,84 +488,12 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
         <Image
           className="relative z-10 w-full h-full"
           src={props.imageSpecifics.source}
-          alt={"chat image"}
+          alt="chat image"
           width={props.imageSpecifics.tagWidth}
           height={props.imageSpecifics.tagHeight}
         />
       </div>
     </section>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="z-10 bg-white relative bot-0 w-full h-fit flex flex-col gap-3 py-5 items-center self-stretch gt_mobile:flex-row gt_mobile:justify-between gt_mobile:py-6 gt_mobile:px-28 gt_mobile:self-stretch border-t border-gray-200">
-      <p className="not-italic font-normal text-gray-500 text-sm gt_mobile:text-footer_text gt_mobile:font-light">
-        © NameHash Labs. All Rights Reserved
-      </p>
-      <div className="flex flex-row justify-between gap-3">
-        <a href={"https://twitter.com/NamehashLabs"}>
-          <TwitterIcon />
-        </a>
-        <a href={"https://github.com/namehash/nameguard"}>
-          <GithubHoverableLogo />
-        </a>
-      </div>
-      <p className="not-italic font-normal text-gray-500 text-sm gt_mobile:text-footer_text gt_mobile:font-light">
-        Made with ❤ by{" "}
-        <a
-          className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
-          href={"https://namehashlabs.org"}
-        >
-          NameHash Labs
-        </a>
-      </p>
-    </footer>
-  );
-}
-
-function Header() {
-  return (
-    <header className="relative top-0 w-full z-10 border-b border-gray-300 box-border inline-flex h-[56px] px-[20px] py-[9px] items-center justify-between gt_mobile:flex gt_mobile:flex-row gt_mobile:h-[70px] md:px-28 gt_mobile:py-4">
-      <div className="flex flex-row gap-7 justify-between items-center">
-        <div className="flex flex-row justify-between items-center gap-1 cursor-pointer">
-          <a href={"https://nameguard.io"}>
-            <p className="text-black not-italic font-bold text-[22.683px] leading-[22.683px] tracking-[-0.907px] gt_mobile:text-[27.816px] gt_mobile:leading-[27.816px] gt_mobile:tracking-[-1.113px]">
-              NameGuard
-            </p>
-          </a>
-          <a href={"https://nameguard.io"}>
-            <div className="relative -top-1.5 bg-black w-fit h-fit p-[2.8px] rounded-[2.8px] flex-shrink-0">
-              <p className="text-white not-italic font-semibold pb-[0.5px] text-[6.857px] leading-[7.619px] gt_mobile:text-[8.409px] gt_mobile:leading-[9.343px]">
-                beta
-              </p>
-            </div>
-          </a>
-        </div>
-        <div className="hidden flex search_bar_change:block gt_mobile:w-full gt_mobile:h-full gt_mobile:p-0 gt_mobile:m-0">
-          <Search />
-        </div>
-      </div>
-      <div className="flex flex-row items-center justify-end gap-0 gt_mobile:justify-between gt_mobile:gap-1 md:gap-5">
-        <a
-          className="px-[10px] py-[9px] not-italic text-black font-medium text-sm leading-5 rounded-md gt_mobile:hover:bg-gray-100"
-          href={"https://api.nameguard.io/docs"}
-        >
-          Docs
-        </a>
-        <a
-          className="rounded-md gt_mobile:hover:bg-gray-100"
-          href={"https://github.com/namehash/nameguard"}
-        >
-          <div className="flex flex-row justify-between items-center gap-2 py-[7px] px-[10px]">
-            <GithubLogo />
-            <p className="not-italic text-black font-medium text-sm leading-5">
-              Github
-            </p>
-          </div>
-        </a>
-      </div>
-    </header>
   );
 }
 
@@ -1504,64 +1416,6 @@ function WalletIcon() {
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function TwitterIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      className="group"
-    >
-      <path
-        className="gt_mobile:transition gt_mobile:group-hover:fill-black"
-        d="M13.5222 10.7749L19.4785 4H18.0671L12.8952 9.88256L8.76437 4H4L10.2466 12.8955L4 20H5.41155L10.8732 13.7878L15.2356 20H20L13.5218 10.7749H13.5222ZM11.5889 12.9738L10.956 12.0881L5.92015 5.03974H8.0882L12.1522 10.728L12.7851 11.6137L18.0677 19.0075H15.8997L11.5889 12.9742V12.9738Z"
-        fill="#AFAFAF"
-      />
-    </svg>
-  );
-}
-
-function GithubHoverableLogo() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      className="group"
-    >
-      <path
-        className="gt_mobile:transition gt_mobile:group-hover:fill-black"
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M12.0413 2.25952C6.51859 2.25952 2 6.77811 2 12.3008C2 16.7357 4.84504 20.5012 8.86156 21.8401C9.36363 21.9238 9.53099 21.5891 9.53099 21.338C9.53099 21.087 9.53099 20.5012 9.53099 19.6645C6.76962 20.2502 6.18388 18.3256 6.18388 18.3256C5.76549 17.1541 5.09607 16.8194 5.09607 16.8194C4.09194 16.2337 5.09607 16.2337 5.09607 16.2337C6.1002 16.3174 6.60227 17.2378 6.60227 17.2378C7.52272 18.744 8.94524 18.3256 9.53099 18.0746C9.61466 17.4052 9.8657 16.9868 10.2004 16.7357C7.94111 16.4847 5.59814 15.6479 5.59814 11.7988C5.59814 10.711 6.01653 9.79051 6.60227 9.12109C6.60227 8.78637 6.18388 7.78224 6.76962 6.4434C6.76962 6.4434 7.6064 6.19237 9.53099 7.44753C10.3678 7.1965 11.2045 7.11282 12.0413 7.11282C12.8781 7.11282 13.7149 7.1965 14.5516 7.44753C16.4762 6.10869 17.313 6.4434 17.313 6.4434C17.8987 7.86592 17.4804 8.87005 17.3967 9.12109C18.0661 9.79051 18.4008 10.711 18.4008 11.7988C18.4008 15.6479 16.0578 16.4847 13.7985 16.7357C14.1333 17.0705 14.468 17.6562 14.468 18.5767C14.468 19.9155 14.468 21.0033 14.468 21.338C14.468 21.5891 14.6353 21.9238 15.1374 21.8401C19.1539 20.5012 21.9989 16.7357 21.9989 12.3008C22.0826 6.77811 17.564 2.25952 12.0413 2.25952Z"
-        fill="#AFAFAF"
-      />
-    </svg>
-  );
-}
-
-function GithubLogo() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      className="hidden gt_mobile:block"
-    >
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M12.0413 2.25928C6.51859 2.25928 2 6.77787 2 12.3006C2 16.7355 4.84504 20.501 8.86156 21.8398C9.36363 21.9235 9.53099 21.5888 9.53099 21.3378C9.53099 21.0867 9.53099 20.501 9.53099 19.6642C6.76962 20.25 6.18388 18.3254 6.18388 18.3254C5.76549 17.1539 5.09607 16.8192 5.09607 16.8192C4.09194 16.2334 5.09607 16.2334 5.09607 16.2334C6.1002 16.3171 6.60227 17.2376 6.60227 17.2376C7.52272 18.7438 8.94524 18.3254 9.53099 18.0743C9.61466 17.4049 9.8657 16.9865 10.2004 16.7355C7.94111 16.4845 5.59814 15.6477 5.59814 11.7985C5.59814 10.7107 6.01653 9.79026 6.60227 9.12084C6.60227 8.78613 6.18388 7.782 6.76962 6.44316C6.76962 6.44316 7.6064 6.19212 9.53099 7.44729C10.3678 7.19626 11.2045 7.11258 12.0413 7.11258C12.8781 7.11258 13.7149 7.19626 14.5516 7.44729C16.4762 6.10845 17.313 6.44316 17.313 6.44316C17.8987 7.86568 17.4804 8.86981 17.3967 9.12084C18.0661 9.79026 18.4008 10.7107 18.4008 11.7985C18.4008 15.6477 16.0578 16.4845 13.7985 16.7355C14.1333 17.0702 14.468 17.656 14.468 18.5764C14.468 19.9153 14.468 21.0031 14.468 21.3378C14.468 21.5888 14.6353 21.9235 15.1374 21.8398C19.1539 20.501 21.9989 16.7355 21.9989 12.3006C22.0826 6.77787 17.564 2.25928 12.0413 2.25928Z"
-        fill="#0F172A"
       />
     </svg>
   );

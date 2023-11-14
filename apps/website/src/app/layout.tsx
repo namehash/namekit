@@ -5,6 +5,10 @@ import Favicon from "../../public/favicon/favicon_package_v0-2/favicon.ico";
 import AppleTouchIcon from "../../public/favicon/favicon_package_v0-2/apple-touch-icon.png";
 import og_img from "../../public/openGraph/og-image.png";
 import og_image_twitter from "../../public/openGraph/og-image-twitter.png";
+import { NameGuardWrapper } from "./components/NameGuardWrapper";
+
+import { Footer } from "@/app/components/Footer";
+import { Header } from "@/app/components/Header";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 
@@ -48,7 +52,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.variable}>{children}</body>
+      <body className={inter.variable}>
+        <Header />
+        {children}
+        <Footer />
+        <NameGuardWrapper />
+      </body>
     </html>
   );
 }
