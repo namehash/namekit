@@ -26,7 +26,7 @@ const messages = [
     address: "0xaf738F6C83d7D2C46723b727Ce794F9c79Cc47E6",
   },
   {
-    address: "0xf537a27F31d7A014c5b8008a0069c61f827fA7A1",
+    address: "0xd0eFbeDFEd3C813fEB87248dABfc5d5AB21770dF",
   },
   {
     address: "0x7c7160A23b32402ad24ED5a617b8a83f434642d4",

@@ -24,11 +24,11 @@ function textColor(rating?: Rating) {
   }
 }
 
-type ShieldProps = {
+type ImpersonationShieldProps = {
   data?: SecurePrimaryNameResult;
 };
 
-export function Shield({ data }: ShieldProps) {
+export function ImpersonationShield({ data }: ImpersonationShieldProps) {
   if (
     !data ||
     data?.impersonation_status === null ||
