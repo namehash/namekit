@@ -19,16 +19,7 @@ const messages = [
     address: "0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd",
   },
   {
-    address: "0xFF040ebe9806689aBD1414e47EA61F70E18fe660",
-  },
-  {
-    address: "0x63A93f5843aD57d756097ef102A2886F05c7a29c",
-  },
-  {
     address: "0xfA9A134f997b3d48e122d043E12d04E909b11073",
-  },
-  {
-    address: "0xa007D946BaD4e53C4E57f37E7e10Bef28e5bbc5E",
   },
   {
     address: "0xaf738F6C83d7D2C46723b727Ce794F9c79Cc47E6",
