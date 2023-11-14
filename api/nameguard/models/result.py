@@ -6,6 +6,7 @@ from ens_normalize import ens_beautify
 from nameguard.context import endpoint_name
 from nameguard.models.checks import GenericCheckResult, Rating, Check
 from nameguard.utils import detect_grapheme_link_name
+from nameguard.endpoints import Endpoints
 
 
 class Normalization(str, Enum):
@@ -53,7 +54,7 @@ class ConsolidatedReport(BaseModel):
             if (
                 self.highest_risk is not None and
                 self.highest_risk.check is Check.IMPERSONATION_RISK and
-                endpoint_name.get() == 'primary-name'
+                endpoint_name.get() == Endpoints.SECURE_PRIMARY_NAME
             ):
                 return 'Impersonation Risk'
             else:

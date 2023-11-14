@@ -1,3 +1,4 @@
+import json
 from enum import Enum
 from fastapi import FastAPI, Path, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -14,6 +15,7 @@ from nameguard.models import (
     GraphemeGuardReport,
     FakeEthNameCheckResult
 )
+from nameguard.endpoints import Endpoints
 from nameguard.logging import logger
 from nameguard.exceptions import (
     InvalidNameHash,
@@ -21,7 +23,7 @@ from nameguard.exceptions import (
     NamehashMismatchError,
     NamehashNotFoundInSubgraph,
     InvalidEthereumAddress,
-    ProviderUnavailable, 
+    ProviderUnavailable,
     InvalidTokenID,
     NotAGrapheme,
 )
@@ -31,7 +33,18 @@ class ApiVersion(str, Enum):
     V08_BETA = 'v0.8-beta'
 
 
-app = FastAPI(title='NameGuard Service', version=ApiVersion.V08_BETA.value)
+app = FastAPI(
+    title='NameGuard API',
+    version=ApiVersion.V08_BETA.value,
+    description=
+'''Welcome to NameGuard, a powerful tool developed by [NameHash Labs](https://namehashlabs.org) to identify and prevent malicious use of Ethereum Name Service (ENS) names.
+
+## Important Notes
+⚠️ Beta Version: Please be aware that NameGuard is currently in beta. We appreciate your feedback as we work towards a stable v1 release. Expect changes to the API to address community feedback and improve functionality.
+
+## Documentation
+These documentation pages focus specifically on the NameGuard API. For information on the NameGuard Library, SDK, and UI Kit, please refer to the [NameGuard GitHub repository](https://github.com/namehash/nameguard).''',
+)
 
 app.add_middleware(
     CORSMiddleware,
@@ -58,20 +71,19 @@ class InspectNameRequest(BaseModel):
 @app.get(
     '/{api_version}/inspect-name/{network_name}/{name:path}',
     tags=['name'],
-    summary='Inspect Name GET'
+    summary='Inspect Name'
 )
 @app.get('/{api_version}/inspect-name/{network_name}', include_in_schema=False)
 async def inspect_name_get(
         api_version: ApiVersion,
         network_name: NetworkName,
-        request: Request,
         name: str = Path(default_factory=lambda: '',
                          description='**Name should be url-encoded (except when using the Swagger UI).**',
                          examples=['iam%2Falice%3F.eth']),
 ) -> NameGuardReport:
-    logger.debug(f'[GET inspect-name] input name: \'{name}\' raw path: \'{request.scope["raw_path"]} query string: '
-                 f'\'{request.scope["query_string"]}\'')
-    nameguard.context.endpoint_name.set('inspect-name')
+    logger.debug(
+        f"{json.dumps({'endpoint': Endpoints.INSPECT_NAME, 'method': 'GET', 'api_version': api_version, 'network_name': network_name, 'name': name})}")
+    nameguard.context.endpoint_name.set(Endpoints.INSPECT_NAME)
     return await ng.inspect_name(network_name, name)
 
 
@@ -81,11 +93,12 @@ async def inspect_name_get(
     summary='Inspect Name'
 )
 async def inspect_name_post(api_version: ApiVersion, request: InspectNameRequest) -> NameGuardReport:
-    nameguard.context.endpoint_name.set('inspect-name')
+    logger.debug(f"{json.dumps({'endpoint': Endpoints.INSPECT_NAME, 'method': 'POST', 'api_version': api_version, 'network_name': request.network_name, 'name': request.name})}")
+    nameguard.context.endpoint_name.set(Endpoints.INSPECT_NAME)
     return await ng.inspect_name(request.network_name, request.name)
 
 
-# -- bulk-inspect-name --
+# -- bulk-inspect-names --
 
 
 class BulkInspectNamesRequest(BaseModel):
@@ -99,7 +112,8 @@ class BulkInspectNamesRequest(BaseModel):
     summary='Inspect Multiple Names'
 )
 async def bulk_inspect_names(api_version: ApiVersion, request: BulkInspectNamesRequest) -> BulkNameGuardBulkReport:
-    nameguard.context.endpoint_name.set('bulk-inspect-name')
+    logger.debug(f"{json.dumps({'endpoint': Endpoints.BULK_INSPECT_NAMES, 'method': 'POST', 'api_version': api_version, 'network_name': request.network_name, 'names': request.names})}")
+    nameguard.context.endpoint_name.set(Endpoints.BULK_INSPECT_NAMES)
     return await ng.bulk_inspect_names(request.network_name, request.names)
 
 
@@ -129,10 +143,11 @@ async def inspect_namehash_get(
         namehash: str = Path(examples=['0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835'],
                              description='Namehash should be a decimal or a hex (prefixed with 0x) string.')
 ) -> NameGuardReport:
-    nameguard.context.endpoint_name.set('inspect-namehash')
-    return await ng.inspect_namehash(network_name=network_name, 
-        namehash=validate_namehash(namehash=namehash),
-    )
+    logger.debug(f"{json.dumps({'endpoint': Endpoints.INSPECT_NAMEHASH, 'method': 'GET', 'api_version': api_version, 'network_name': network_name, 'namehash': namehash})}")
+    nameguard.context.endpoint_name.set(Endpoints.INSPECT_NAMEHASH)
+    return await ng.inspect_namehash(network_name=network_name,
+                                     namehash=validate_namehash(namehash=namehash),
+                                     )
 
 
 @app.post(
@@ -147,10 +162,11 @@ async def inspect_namehash_get(
     },
 )
 async def inspect_namehash_post(api_version: ApiVersion, request: InspectNamehashRequest) -> NameGuardReport:
-    nameguard.context.endpoint_name.set('inspect-namehash')
+    logger.debug(f"{json.dumps({'endpoint': Endpoints.INSPECT_NAMEHASH, 'method': 'POST', 'api_version': api_version, 'network_name': request.network_name, 'namehash': request.namehash})}")
+    nameguard.context.endpoint_name.set(Endpoints.INSPECT_NAMEHASH)
     return await ng.inspect_namehash(network_name=request.network_name,
-        namehash=validate_namehash(namehash=request.namehash),
-    )
+                                     namehash=validate_namehash(namehash=request.namehash),
+                                     )
 
 
 # -- inspect-labelhash --
@@ -182,7 +198,8 @@ async def inspect_labelhash_get(
                               description='Labelhash should be a decimal or a hex (prefixed with 0x) string.'),
         parent_name: str = Path(default_factory=lambda: '', examples=['eth'])
 ) -> NameGuardReport:
-    nameguard.context.endpoint_name.set('inspect-labelhash')
+    logger.debug(f"{json.dumps({'endpoint': Endpoints.INSPECT_LABELHASH, 'method': 'GET', 'api_version': api_version, 'network_name': network_name, 'labelhash': labelhash, 'parent_name': parent_name})}")
+    nameguard.context.endpoint_name.set(Endpoints.INSPECT_LABELHASH)
     valid_labelhash = validate_namehash(namehash=labelhash)
     namehash = namehash_from_labelhash(valid_labelhash, parent_name=parent_name)
     return await ng.inspect_namehash(network_name=network_name, namehash=namehash)
@@ -200,7 +217,9 @@ async def inspect_labelhash_get(
     },
 )
 async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelhashRequest) -> NameGuardReport:
-    nameguard.context.endpoint_name.set('inspect-labelhash')
+    logger.debug(
+        f"{json.dumps({'endpoint': Endpoints.INSPECT_LABELHASH, 'method': 'POST', 'api_version': api_version, 'network_name': request.network_name, 'labelhash': request.labelhash, 'parent_name': request.parent_name})}")
+    nameguard.context.endpoint_name.set(Endpoints.INSPECT_LABELHASH)
     valid_labelhash = validate_namehash(namehash=request.labelhash)
     namehash = namehash_from_labelhash(valid_labelhash, parent_name=request.parent_name)
     return await ng.inspect_namehash(network_name=request.network_name, namehash=namehash)
@@ -218,8 +237,11 @@ async def inspect_labelhash_post(api_version: ApiVersion, request: InspectLabelh
         **ProviderUnavailable.get_responses_spec(),
     },
 )
-async def secure_primary_name_get(api_version: ApiVersion, address: str, network_name: NetworkName) -> SecurePrimaryNameResult:
-    nameguard.context.endpoint_name.set('primary-name')
+async def secure_primary_name_get(api_version: ApiVersion, address: str,
+                                  network_name: NetworkName) -> SecurePrimaryNameResult:
+    logger.debug(
+        f"{json.dumps({'endpoint': Endpoints.SECURE_PRIMARY_NAME, 'method': 'GET', 'api_version': api_version, 'network_name': network_name, 'address': address})}")
+    nameguard.context.endpoint_name.set(Endpoints.SECURE_PRIMARY_NAME)
     address = validate_ethereum_address(address)
     return await ng.secure_primary_name(address, network_name)
 
@@ -240,11 +262,13 @@ async def fake_eth_name_check_get(
         api_version: ApiVersion,
         network_name: NetworkName,
         contract_address: str = Path(examples=['0x495f947276749ce646f68ac8c248420045cb7b5e'],
-                              description='Contract address for the NFT contract (ERC721 and ERC1155 supported).'),
-        token_id: str = Path(examples=['61995921128521442959106650131462633744885269624153038309795231243542768648193'], 
+                                     description='Contract address for the NFT contract (ERC721 and ERC1155 supported).'),
+        token_id: str = Path(examples=['61995921128521442959106650131462633744885269624153038309795231243542768648193'],
                              description='The ID of the token (in hex or decimal format).')
 ) -> FakeEthNameCheckResult:
-    nameguard.context.endpoint_name.set('fake-ens-name-check')
+    logger.debug(
+        f"{json.dumps({'endpoint': Endpoints.FAKE_ETH_NAME_CHECK, 'method': 'GET', 'api_version': api_version, 'network_name': network_name, 'contract_address': contract_address, 'token_id': token_id})}")
+    nameguard.context.endpoint_name.set(Endpoints.FAKE_ETH_NAME_CHECK)
     contract_address = validate_ethereum_address(contract_address)
     token_id = validate_token_id(token_id)
     return await ng.fake_eth_name_check(network_name=network_name, contract_address=contract_address, token_id=token_id)
@@ -263,13 +287,17 @@ async def fake_eth_name_check_get(
 )
 async def inspect_grapheme_get(
         api_version: ApiVersion,
-        grapheme: str = Path(description='Grapheme to inspect. Should be url-encoded (except when using the Swagger UI).',
-                             examples=['ń', '%F0%9F%98%B5'])
+        grapheme: str = Path(
+            description='Grapheme to inspect. Should be url-encoded (except when using the Swagger UI).',
+            examples=['ń', '%F0%9F%98%B5'])
 ) -> GraphemeGuardReport:
-    nameguard.context.endpoint_name.set('inspect-grapheme')
+    logger.debug(
+        f"{json.dumps({'endpoint': Endpoints.INSPECT_GRAPHEME, 'method': 'GET', 'api_version': api_version, 'grapheme': grapheme})}")
+    nameguard.context.endpoint_name.set(Endpoints.INSPECT_GRAPHEME)
     return ng.inspect_grapheme(grapheme)
 
 
 if __name__ == '__main__':
     import asyncio
+
     asyncio.run(ng.inspect_name('mainnet', 'nick.eth'))

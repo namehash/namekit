@@ -1,0 +1,44 @@
+{
+  "contract": {
+    "address": "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11"
+  },
+  "id": {
+    "tokenId": "1",
+    "tokenMetadata": {
+      "tokenType": "NO_SUPPORTED_NFT_STANDARD"
+    }
+  },
+  "title": "",
+  "description": "",
+  "tokenUri": {
+    "gateway": "",
+    "raw": ""
+  },
+  "media": [
+    {
+      "gateway": "",
+      "raw": ""
+    }
+  ],
+  "metadata": {
+    "metadata": [],
+    "attributes": []
+  },
+  "timeLastUpdated": "2023-11-07T20:23:54.046Z",
+  "error": "Malformed token uri, do not retry",
+  "contractMetadata": {
+    "name": "Uniswap V2",
+    "symbol": "UNI-V2",
+    "totalSupply": "2147483647",
+    "tokenType": "NO_SUPPORTED_NFT_STANDARD",
+    "contractDeployer": "0x74aa01d162e6dc6a657cac857418c403d48e2d77",
+    "deployedBlockNumber": 10042267,
+    "openSea": {
+      "floorPrice": 0.0,
+      "collectionName": "Uniswap V2 - LKyvSnNgFL",
+      "collectionSlug": "uniswap-v2-lkyvsnngfl",
+      "safelistRequestStatus": "not_requested",
+      "lastIngestedAt": "2023-11-06T15:36:53.000Z"
+    }
+  }
+}

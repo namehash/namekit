@@ -2,22 +2,24 @@
 
 The NameHash team is proud to present NameGuard, a tool for identifying and preventing malicious use of ENS names.
 
-* Offers multiple levels of protection
-  * Impersonated name detection
-  * Confusable grapheme detection
-  * International accessibility checks
-  * Rendering checks for different fonts
-  * ENSIP-15 verification with detailed explanations and auto-suggestions
-  * Punycode and DNS hostname compatibility checks
-  * and more!
-* Provides a unified rating system for entire names, as well as detailed explanations for each check
-  * :green_circle: Pass: no issues found
-  * :yellow_circle: Warn: potential issues found
-  * :red_circle: Fail: serious issues found
-* Supports many use cases
-  * Standalone Python library ([PyPI](https://pypi.org/project/nameguard/))
-  * ASGI web server
-  * [Amazon AWS Lambda](https://aws.amazon.com/lambda/) handler
+- Offers multiple levels of protection
+  - Impersonated name detection
+  - Confusable grapheme detection
+  - International accessibility checks
+  - Rendering checks for different fonts
+  - ENSIP-15 verification with detailed explanations and auto-suggestions
+  - Punycode and DNS hostname compatibility checks
+  - and more!
+- Provides a unified rating system for entire names, as well as detailed explanations for each check
+  - :green_circle: Pass: no issues found
+  - :yellow_circle: Warn: potential issues found
+  - :red_circle: Fail: serious issues found
+- Supports many use cases
+  - Standalone Python library ([PyPI](https://pypi.org/project/nameguard/))
+  - ASGI web server
+  - [Amazon AWS Lambda](https://aws.amazon.com/lambda/) handler
+
+⚠️ **This SDK is BETA. Things will change based on the community feedback.**
 
 ## Getting Started
 

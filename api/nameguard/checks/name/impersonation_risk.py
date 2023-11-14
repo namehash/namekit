@@ -1,6 +1,7 @@
 from typing import Optional
 from nameguard.models import CheckStatus, Check, GenericCheckResult, NameCheckResult
 from nameguard.context import endpoint_name
+from nameguard.endpoints import Endpoints
 from label_inspector.models import InspectorResult
 
 
@@ -35,7 +36,7 @@ def check_name(labels: list[Optional[InspectorResult]]) -> GenericCheckResult:
 
     if passed:
         message = MESSAGE_PASS
-    elif endpoint_name.get() == 'primary-name':
+    elif endpoint_name.get() == Endpoints.SECURE_PRIMARY_NAME:
         message = MESSAGE_FAIL.format('.'.join(label.beautiful_canonical_label for label in labels))
     else:
         message = MESSAGE_FAIL_OTHER

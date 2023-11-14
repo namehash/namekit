@@ -4,3 +4,4 @@ export { Report } from "./components/Report/Report";
 export { SearchModal } from "./components/Search/SearchModal";
 export { SettingsModal } from "./components/SettingsModal/SettingsModal";
 export { useChatModalStore } from "./stores/chat";
+export { useSearchStore } from "./stores/search";
