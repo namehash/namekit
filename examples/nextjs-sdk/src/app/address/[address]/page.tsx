@@ -3,26 +3,12 @@ import { nameguard } from "@namehash/nameguard";
 import { ImpersonationShield } from "../../components/ImpersonationShield";
 import { Avatar } from "@/app/components/Avatar";
 
-function formatEthereumAddress(address: string) {
-  if (!address || address.length < 10) {
-    return address;
-  }
-
-  const firstSix = address.substring(0, 6);
-  const lastFour = address.substring(address.length - 4);
-
-  return `${firstSix}...${lastFour}`;
-}
-
 export default async function Page({
   params,
-  searchParams,
 }: {
   params: { address: string };
-  searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const { address } = params;
-  const { disabled } = searchParams;
 
   const data = await nameguard.getSecurePrimaryName(address);
 
@@ -35,14 +21,8 @@ export default async function Page({
             <Avatar address={address} name={data.primary_name} />
             <div className="ml-2 md:ml-4">
               <div className="font-bold text-md flex items-center space-x-1.5">
-                {Boolean(disabled) ? (
-                  <span>{formatEthereumAddress(address)}</span>
-                ) : (
-                  <>
-                    <span>{data.display_name}</span>
-                    <ImpersonationShield data={data} />
-                  </>
-                )}
+                <span>{data.display_name}</span>
+                <ImpersonationShield data={data} />
               </div>
               <div className="font-mono text-sm max-md:text-xs h-5 text-gray-500">
                 {address}
@@ -53,13 +33,7 @@ export default async function Page({
       </div>
       <div className="h-full overflow-auto flex flex-col">
         <div className="p-6 space-y-1.5">
-          <div className="rounded-xl bg-gradient-to-r from-gray-300 to-gray-200 h-4 w-12"></div>
-          <div className="rounded-xl bg-gradient-to-r from-gray-300 to-gray-200 h-4 w-52"></div>
-          <div className="rounded-xl bg-gradient-to-r from-gray-300 to-gray-200 h-4 w-32"></div>
-          <div className="pt-6 space-y-6">
-            <hr />
-            {!Boolean(disabled) && <pre>{JSON.stringify(data, null, 2)}</pre>}
-          </div>
+          <pre>{JSON.stringify(data, null, 2)}</pre>
         </div>
       </div>
       <div className="flex flex-col border border-gray-300 rounded-2xl m-4">

@@ -1,11 +1,9 @@
-/* eslint-disable @next/next/no-img-element */
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
 
 import "./globals.css";
 import { Avatar } from "./components/Avatar";
-import { ToggleNameGuard } from "./components/ToggleNameGuard";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -75,16 +73,20 @@ export default function RootLayout({
               <div></div>
               <div></div>
             </div>
-            <div className="flex flex-col w-full h-screen overflow-y-auto md:max-w-[350px]">
+            <div className="flex flex-col h-screen overflow-y-auto w-[350px]">
               <div className="border-l border-r border-b border-gray-200 bg-gray-100 h-16 p-4 pt-5 flex items-center">
-                <ToggleNameGuard />
+                <div className="flex justify-between items-center">
+                  <span className="flex">
+                    <h1 className="font-bold text-lg mr-2">All messages</h1>
+                  </span>
+                </div>
               </div>
-              <div className="overflow-hidden flex flex-col h-full bg-gray-100 border-x">
+              <div className="overflow-x-hidden overflow-y-scroll flex flex-col h-full bg-gray-100 border-x">
                 {messages.map(({ address }, index) => (
                   <Link
                     key={index}
                     href={`/address/${address}`}
-                    className="flex justify-between items-center border-0 border-b border-gray-200 outline-blue outline-b-0 h-min cursor-pointer p-4 hover:bg-gray-200 space-x-3 font-mono"
+                    className="flex items-center border-0 border-b border-gray-200 outline-blue outline-b-0 h-min cursor-pointer p-4 hover:bg-gray-200 space-x-3 font-mono"
                   >
                     <Avatar address={address} />
                     <span className="overflow-clip overflow-ellipsis">
