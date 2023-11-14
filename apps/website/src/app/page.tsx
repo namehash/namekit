@@ -9,10 +9,11 @@ import impersonation_attack_img from "../../public/assets/vitalik_impersonation_
 import fake_NFT_filter_img from "../../public/assets/fake_NFT_filter.png";
 import surface_risks_img from "../../public/assets/surface_risks.png";
 import dangerous_name_config_img from "../../public/assets/dangerous_name_configuration.png";
-import autorenewal_img from "../../public/assets/autorenewal.png";
+import autorenew_img from "../../public/assets/autorenew.png";
 import ens_webfont_img from "../../public/assets/ens_webfont.png";
 import { Tooltip, Search } from "@namehash/nameguard-react";
 import cc from "classcat";
+import { getCalApi } from "@calcom/embed-react";
 
 export default function Home() {
   const exampleCode = `<figure class="md:flex bg-slate-100 rounded-xl p-8 md:p-0
@@ -43,7 +44,7 @@ export default function Home() {
           codeSnippet={exampleCode}
           integrationsPanel={
             <div className="hidden gt_mobile:inline-flex items-center gap-6 z-10">
-              <p className="text-gray-500 text-lg leading-6 font-normal not-italic">
+              <p className="text-gray-500 text-lg leading-6 font-normal not-italic whitespace-nowrap">
                 Composable integrations include
               </p>
               <XMTPLogo />
@@ -68,7 +69,7 @@ export default function Home() {
           codeSnippet={exampleCode}
           integrationsPanel={
             <div className="inline-flex items-center gap-6 z-10">
-              <p className="text-gray-500 text-lg leading-6 font-normal not-italic">
+              <p className="text-gray-500 text-lg leading-6 font-normal not-italic whitespace-nowrap">
                 Composable integrations include
               </p>
               <OpenSeaLogo />
@@ -114,7 +115,7 @@ export default function Home() {
               configurations
             </Fragment>
           }
-          sectionDescription="Protect your community from improperly configured resolver records with ENS HealthChecks. These defend from issues ranging from considerable irreversible losses to web3 profiles that are incorrectly formatted and may not load properly."
+          sectionDescription="Safeguard your community from improperly configured resolver records with ENS HealthChecks. These checks shield against major issues, spanning significant irreversible losses to web3 profiles that are incorrectly formatted and may not load properly."
           sectionBackgroundName={"bg-purple_background_sm"}
           isTextOnTheLeft={true}
           badgeText="Coming soon"
@@ -132,15 +133,15 @@ export default function Home() {
             <Fragment>
               Never lose a name you love with
               <br />
-              ENS autorenew
+              ENS AutoRenew
             </Fragment>
           }
-          sectionDescription="Life gets busy. It can be easy to forget to renew your ENS names. Give your community peace of mind (and earn recurring revenue!) with ENS AutoRenew. Help others save on gas fees too. Renewal transactions will be intelligently triggered at the optimal time when gas fees are low."
+          sectionDescription="In the hustle and bustle of life, ENS name renewals can slip through the cracks. Give your community peace of mind (and earn recurring revenue!) with ENS AutoRenew. What’s more, it also helps everyone save on gas fees, intelligently initiating renewal transactions at the most cost-effective moments. "
           sectionBackgroundName="bg-green_background_sm"
           isTextOnTheLeft={false}
           badgeText="Planned"
           imageSpecifics={{
-            source: autorenewal_img.src,
+            source: autorenew_img.src,
             tagWidth: 11600,
             tagHeight: 626,
           }}
@@ -150,7 +151,7 @@ export default function Home() {
           sectionTargetSvg={<WalletIcon />}
           sectionTargetClientMessage="For wallets and dApps"
           sectionHeader={<Fragment>ENS webfont</Fragment>}
-          sectionDescription="Unicode is a complex beast. Have you prepared to handle the display of all possible ENS names in your UI? ENS Webfont provides enhanced security against homograph attacks and increases rendering support for emojis and other special graphemes."
+          sectionDescription="Unicode is a complex beast. Are you certain you are prepared to handle the display of all possible ENS names in your UI? ENS Webfont not only enhances security against homograph attacks but also expands rendering support for emojis and other unique graphemes."
           sectionBackgroundName="bg-purple_background_sm"
           isTextOnTheLeft={true}
           badgeText={"Planned"}
@@ -164,8 +165,6 @@ export default function Home() {
       <MobileSectionDivider />
       <RoadMap />
       <NewExitSection />
-
-      <div className="fixed inset-0 z-0 h-full w-[100vw] max-w-[100vw] overflow-x-hidden bg-[radial-gradient(#DDDDDD_1px,transparent_1px)] [background-size:24px_24px] opacity-70"></div>
     </>
   );
 }
@@ -347,7 +346,7 @@ function ReadySection(props: ReadySectionProps) {
             {props.sectionHeader}
           </h1>
 
-          <p className="z-10 text-gray-500 text-center not-italic font-normal text-lg leading-7 gt_mobile:text-lg gt_mobile:leading-7 gt_mobile:font-light md:w-4/5">
+          <p className="z-10 text-gray-500 text-center not-italic font-normal text-lg leading-7 gt_mobile:text-lg gt_mobile:leading-7 gt_mobile:font-light">
             {props.sectionDescription}
           </p>
         </div>
@@ -544,8 +543,7 @@ function HeroSection() {
             </h1>
           </div>
           <p className="text-center not-italic font-normal text-gray-500 text-lg leading-7 gt_mobile:text-base gt_mobile:leading-6 gt_mobile:font-light">
-            Guard your users from heartbreak and encourage best practice usage
-            of ENS
+            Guard your users from heartbreak and keep ENS usage safe across web3
           </p>
           <div className="hidden flex search_bar_change:flex items-center gap-2 py-[9px] pl-4 pr-[14px] rounded-lg bg-black bg-opacity-5 border border-gray-300 gt_mobile:gap-3 gt_mobile:py-[13px] gt_mobile:pl-[20px] gt_mobile:pr-[16px]">
             <p className="text-black leading-6 font-normal text-sm gt_mobile:text-base">
@@ -610,10 +608,21 @@ function ExitSection() {
 }
 
 function NewExitSection() {
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi();
+      cal("ui", {
+        styles: { branding: { brandColor: "#000000" } },
+        hideEventTypeDetails: false,
+        layout: "month_view",
+      });
+    })();
+  }, []);
+
   return (
-    <section className="relative w-full h-full flex flex-col items-center justify-center py-5 px-5 gap-5 z-10 bg-white lg:bg-transparent md:px-[112px] lg:pt-10 lg:pb-[45px] lg:flex-row lg:gap-10">
+    <section className="relative w-full h-full flex flex-col items-center justify-center py-5 px-5 gap-5 z-10 bg-white md:bg-transparent md:px-[112px] lg:pt-10 lg:pb-[45px] lg:flex-row lg:gap-10">
       <div className="flex flex-col justify-center items-center h-full max-h-[334px] md:max-h-[315px] w-full max-w-3xl rounded-xl border border-gray-200 bg-generate_raport_background bg-no-repeat bg-top bg-[length:180%_200%] lg:bg-[length:100%_250%]">
-        <div className="w-full h-full flex flex-col justify-center items-center gap-6 py-[63px] px-5 box-border lg:max-w-[508px] lg:w-full lg:px-10">
+        <div className="w-full h-full flex flex-col justify-center items-center gap-6 py-[63px] px-5 box-border lg:py-[60px] lg:max-w-[508px] lg:w-full lg:px-10">
           <div className="flex flex-col gap-4 items-center">
             <h1 className="text-center text-black not-italic text-3xl leading-9 font-bold ">
               Generate a report
@@ -628,20 +637,23 @@ function NewExitSection() {
       </div>
       <div className="flex flex-col justify-center items-center h-full max-h-[334px] md:max-h-[315px] w-full max-w-3xl rounded-xl border border-gray-200 bg-in_touch_background bg-no-repeat bg-top bg-[length:180%_200%] lg:bg-[length:100%_250%]">
         <div className="h-full w-full box-border inline-flex flex-col justify-center items-center gap-10 py-10 px-5 box-border flex-shrink-0 lg:max-w-[508px] lg:w-full lg:px-10">
-          <div className="flex flex-col h-fit w-full max-w-[295px] items-center justify-center gap-6">
+          <div className="flex flex-col h-fit w-full max-w-[295px] gt_mobile:max-w-full items-center justify-center gap-6">
             <div className="flex flex-col gap-4 items-center">
               <h1 className="text-center text-black not-italic text-3xl leading-9 font-bold ">
                 Get in touch
               </h1>
               <p className="text-center text-gray-500 not-italic text-lg leading-7 font-normal gt_mobile:font-light lg:leading-8">
-                NameHash Labs collaborates with teams across web3, and we’re
-                always look forward to meeting new frens.
+                Keep your users safe with NameGuard, the choice of leading web3
+                teams. Ready for seamless integration into your web3 app? Our
+                team is here to assist you.
               </p>
             </div>
-            <button className="max-h-12 flex justify-center items-center px-[25px] py-[13px] rounded-lg border border-gray-300 bg-white z-10 shadow-sm transition hover:bg-gray-100 cursor-pointer">
-              <p className="text-black not-italic font-medium text-base leading-6">
-                Schedule a call
-              </p>
+            <button
+              data-cal-link="namehashlabs/nameguard"
+              data-cal-config='{"layout":"month_view"}'
+              className="max-h-12 flex justify-center items-center px-[25px] py-[13px] rounded-lg border border-gray-300 bg-white z-10 shadow-sm transition hover:bg-gray-100 cursor-pointer text-black not-italic font-medium text-base leading-6"
+            >
+              Schedule a call
             </button>
           </div>
         </div>

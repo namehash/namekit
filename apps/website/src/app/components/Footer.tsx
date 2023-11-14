@@ -1,12 +1,13 @@
 import React from "react";
 import { TwitterIcon } from "@/app/components/icons/TwitterIcon";
 import { GithubHoverableLogo } from "@/app/components/icons/GithubHoverableLogo";
+import { EmailIcon } from "@/app/components/icons/EmailIcon";
 
 export const Footer = () => {
   return (
-    <footer className="z-10 bg-white relative bot-0 w-full h-fit flex flex-col gap-3 py-5 items-center self-stretch gt_mobile:flex-row gt_mobile:justify-between gt_mobile:py-6 gt_mobile:px-28 gt_mobile:self-stretch border-t border-gray-200">
+    <footer className="z-10 bg-white relative bot-0 w-full h-fit flex flex-col gap-3 py-5 items-center self-stretch md:flex-row gt_mobile:justify-between gt_mobile:py-6 gt_mobile:px-28 gt_mobile:self-stretch border-t border-gray-200">
       <p className="not-italic font-normal text-gray-500 text-sm gt_mobile:text-footer_text gt_mobile:font-light">
-        © NameHash Labs. All Rights Reserved
+        &copy; NameHash Labs. All Rights Reserved
       </p>
       <div className="flex flex-row justify-between gap-3">
         <a href={"https://twitter.com/NamehashLabs"}>
@@ -14,6 +15,9 @@ export const Footer = () => {
         </a>
         <a href={"https://github.com/namehash/nameguard"}>
           <GithubHoverableLogo />
+        </a>
+        <a href="mailto:hello@namehashlabs.org">
+          <EmailIcon />
         </a>
       </div>
       <p className="not-italic font-normal text-gray-500 text-sm gt_mobile:text-footer_text gt_mobile:font-light">
