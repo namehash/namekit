@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import Link from "next/link";
 
 import "./globals.css";
+import { Avatar } from "./components/Avatar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -78,14 +79,12 @@ export default function RootLayout({
                   <Link
                     key={index}
                     href={`/address/${address}`}
-                    className="flex justify-between items-center border-0 border-b border-gray-200 outline-blue outline-b-0 h-min cursor-pointer p-4 overflow-ellipsis hover:bg-gray-200 space-x-3"
+                    className="flex justify-between items-center border-0 border-b border-gray-200 outline-blue outline-b-0 h-min cursor-pointer p-4 hover:bg-gray-200 space-x-3"
                   >
-                    <img
-                      src={`https://effigy.im/a/${address}.png`}
-                      className="min-w-[30px] max-w-[30px] h-[30px] rounded-full"
-                      alt={address}
-                    />
-                    <span>{address}</span>
+                    <Avatar address={address} />
+                    <span className="overflow-clip overflow-ellipsis">
+                      {address}
+                    </span>
                   </Link>
                 ))}
               </div>

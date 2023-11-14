@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 type AvatarProps = {
   address: string;
-  name: string | null;
+  name?: string | null;
 };
 
 export function Avatar({ address, name }: AvatarProps) {
