@@ -10,7 +10,7 @@ STATUS = CheckStatus.WARN
 MESSAGE_PASS = 'Name shows no signs of impersonation'
 
 MESSAGE_FAIL = 'Name might be an impersonation of `{}`'
-MESSAGE_FAIL_EMOJI = 'Emojis in this name contain many variations that may be difficult to detect'
+MESSAGE_FAIL_EMOJI = 'Emojis used in this name may be visually confused with other similar emojis'
 MESSAGE_FAIL_OTHER = 'Name may receive potential impersonation warnings'
 
 MESSAGE_SKIP_UNK = 'Name contains unknown labels and cannot be checked for impersonation risk'
