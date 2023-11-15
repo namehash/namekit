@@ -180,6 +180,30 @@ def test_name_punycode_name(nameguard: NameGuard):
     assert r.status == CheckStatus.WARN
     assert r.message == 'This name is not Punycode compatible'
 
+
+@pytest.mark.parametrize(
+    "name, rating, message",
+    [
+        ("", Rating.PASS, 'This name is decentralized'),
+        ("eth", Rating.PASS, 'This name is decentralized'),
+        ("abc.eth", Rating.PASS, 'This name is decentralized'),
+        ("123.abc.eth", Rating.WARN, 'This name may not be decentralized'),
+        ("com", Rating.WARN, 'This name is not decentralized'),
+        ("abc.com", Rating.WARN, 'This name is not decentralized'),
+        ("limo", Rating.WARN, 'This name may not be decentralized'),
+        ("eth.limo", Rating.WARN, 'This name may not be decentralized'),
+        ("[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth", Rating.PASS, 'This name is decentralized'),
+        ("abc.[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770]", Rating.WARN, 'This name may not be decentralized'),
+    ]
+)
+def test_decentralized(nameguard: NameGuard, name, rating, message):
+    ls = [nameguard.analyse_label(l) for l in name.split('.')]
+    r = checks.name.decentralized_name.check_name(ls)
+    assert r.check == Check.DECENTRALIZED_NAME
+    assert r.rating == rating
+    assert r.message == message
+
+    
 def test_name_impersonation(nameguard: NameGuard):
     n = 'niąck.eth'
     ls = [nameguard.analyse_label(l) for l in n.split('.')]
@@ -204,3 +228,4 @@ def test_name_impersonation(nameguard: NameGuard):
     assert r.message == 'Emojis used in this name may be visually confused with other similar emojis'
 
     endpoint_name.set(None)
+

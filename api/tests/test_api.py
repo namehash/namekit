@@ -149,7 +149,7 @@ def test_inspect_name_post_latin_all_pass(test_client, api_version):
 
     for check in res_json['checks']:
         assert 'check' in check and 'message' in check
-        assert check['status'] == 'pass'
+        assert check['status'] in ('pass', 'info')  # TODO remove info when fuses check implemented
         assert check['check_name'][0].isupper() and '_' not in check['check_name']
 
     # labels keys
