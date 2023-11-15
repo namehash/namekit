@@ -127,7 +127,7 @@ class Check(str, Enum):
     Name:
     * `impersonation_risk`: A name might be used for impersonation.
     * `punycode_compatible_name`: A name is compatible with Punycode.
-    * `namewrapper_fuses`: TODO
+    * `namewrapper_fuses`: The NameWrapper configuration of a name is safe.
     * `decentralized_name`: A name is decentralized.
     '''
 
