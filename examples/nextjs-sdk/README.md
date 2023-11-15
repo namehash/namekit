@@ -1,1 +1,0 @@
-# Next.js + NameGuard SDK
