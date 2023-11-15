@@ -201,6 +201,6 @@ def test_name_impersonation(nameguard: NameGuard):
     r = checks.name.impersonation_risk.check_name(ls)
     assert r.check == Check.IMPERSONATION_RISK
     assert r.rating == Rating.WARN
-    assert r.message == 'Emojis in this name contain many variations that may be difficult to detect'
+    assert r.message == 'Emojis used in this name may be visually confused with other similar emojis'
 
     endpoint_name.set(None)
