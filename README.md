@@ -98,4 +98,4 @@ See the [NameGuard Python README](./api/README.md) for more details.
 
 11. **Decentralized Name**: Checks if the name is decentralized (unruggable).
 
-12. **NameWrapper fuses**: TODO
+12. **NameWrapper fuses**: Checks that the NameWrapper configuration of a name is safe.
