@@ -94,7 +94,7 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
 
   return (
     <Fragment>
-      <div className="space-y-8">
+      <div className="space-y-8 w-full">
         <div className="flex justify-between">
           <ReportHeader />
           <Share title="View name in" links={shareLinks} />
