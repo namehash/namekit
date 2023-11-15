@@ -1,4 +1,4 @@
-import React from "../../../../node_modules/react";
+import * as React from "react";
 
 export const GithubLogo = () => {
   return (
