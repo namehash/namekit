@@ -13,20 +13,9 @@ import autorenew_img from "../../public/assets/autorenew.png";
 import ens_webfont_img from "../../public/assets/ens_webfont.png";
 import { Tooltip, Search } from "@namehash/nameguard-react";
 import cc from "classcat";
-import { getCalApi } from "@calcom/embed-react";
+import { CalButton } from "@/app/atoms/CalButton";
 
 export default function Home() {
-  useEffect(() => {
-    (async function () {
-      const cal = await getCalApi();
-      cal("ui", {
-        styles: { branding: { brandColor: "#000000" } },
-        hideEventTypeDetails: false,
-        layout: "month_view",
-      });
-    })();
-  }, []);
-
   const exampleCode = `<figure class="md:flex bg-slate-100 rounded-xl p-8 md:p-0
          dark:bg-slate-800"/>
             <img class="w-24 h-24 md:w-48 md:h-auto md:rounded-none 
@@ -648,13 +637,9 @@ function NewExitSection() {
                 team is here to assist you.
               </p>
             </div>
-            <button
-              data-cal-link="namehashlabs/nameguard"
-              data-cal-config='{"layout":"month_view"}'
-              className="max-h-12 flex justify-center items-center px-[25px] py-[13px] rounded-lg border border-gray-300 bg-white z-10 shadow-sm transition hover:bg-gray-100 cursor-pointer text-black not-italic font-medium text-base leading-6"
-            >
+            <CalButton className="max-h-12 flex justify-center items-center px-[25px] py-[13px] rounded-lg border border-gray-300 bg-white z-10 shadow-sm transition hover:bg-gray-100 cursor-pointer text-black not-italic font-medium text-base leading-6">
               Schedule a call
-            </button>
+            </CalButton>
           </div>
         </div>
       </div>

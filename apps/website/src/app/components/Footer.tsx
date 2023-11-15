@@ -1,7 +1,7 @@
 import React from "react";
-import { TwitterIcon } from "@/app/components/icons/TwitterIcon";
-import { GithubHoverableLogo } from "@/app/components/icons/GithubHoverableLogo";
-import { EmailIcon } from "@/app/components/icons/EmailIcon";
+import { TwitterIcon } from "@/app/atoms/icons/TwitterIcon";
+import { GithubHoverableLogo } from "@/app/atoms/icons/GithubHoverableLogo";
+import { EmailIcon } from "@/app/atoms/icons/EmailIcon";
 
 export const Footer = () => {
   return (
