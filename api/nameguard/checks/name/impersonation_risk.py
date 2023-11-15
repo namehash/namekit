@@ -10,6 +10,7 @@ STATUS = CheckStatus.WARN
 MESSAGE_PASS = 'Name shows no signs of impersonation'
 
 MESSAGE_FAIL = 'Name might be an impersonation of `{}`'
+MESSAGE_FAIL_EMOJI = 'Emojis used in this name may be visually confused with other similar emojis'
 MESSAGE_FAIL_OTHER = 'Name may receive potential impersonation warnings'
 
 MESSAGE_SKIP_UNK = 'Name contains unknown labels and cannot be checked for impersonation risk'
@@ -37,7 +38,16 @@ def check_name(labels: list[Optional[InspectorResult]]) -> GenericCheckResult:
     if passed:
         message = MESSAGE_PASS
     elif endpoint_name.get() == Endpoints.SECURE_PRIMARY_NAME:
-        message = MESSAGE_FAIL.format('.'.join(label.beautiful_canonical_label for label in labels))
+        CHANGED_EMOJI=False
+        for label in labels:
+            for grapheme in label.graphemes:
+                if grapheme.type == 'emoji' and grapheme.confusables_canonical != grapheme.value:
+                    CHANGED_EMOJI = True
+                    break
+        if CHANGED_EMOJI:
+            message = MESSAGE_FAIL_EMOJI
+        else:
+            message = MESSAGE_FAIL.format('.'.join(label.beautiful_canonical_label for label in labels))
     else:
         message = MESSAGE_FAIL_OTHER
 
