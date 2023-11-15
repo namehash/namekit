@@ -613,7 +613,7 @@ def test_primary_name_get_emoji(test_client, api_version):
     assert res_json['primary_name_status'] == 'normalized'
     assert res_json['primary_name'] == '👩🏿\u200d🦱.eth'
     assert res_json['display_name'] == '👩🏿\u200d🦱.eth'
-    assert res_json['nameguard_result']['highest_risk']['message'] == 'Emojis in this name contain many variations that may be difficult to detect'
+    assert res_json['nameguard_result']['highest_risk']['message'] == 'Emojis used in this name may be visually confused with other similar emojis'
 
 @pytest.mark.parametrize(
     "contract_address, token_id, fake",
