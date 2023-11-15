@@ -177,3 +177,23 @@ def test_name_punycode_name(nameguard: NameGuard):
     assert r.check == Check.PUNYCODE_COMPATIBLE_NAME
     assert r.status == CheckStatus.WARN
     assert r.message == 'This name is not Punycode compatible'
+
+@pytest.mark.parametrize(
+    "name, rating, message",
+    [
+        ("", Rating.PASS, 'This name is decentralized'),
+        ("eth", Rating.PASS, 'This name is decentralized'),
+        ("abc.eth", Rating.PASS, 'This name is decentralized'),
+        ("123.abc.eth", Rating.WARN, 'This name may not be decentralized'),
+        ("com", Rating.WARN, 'This name is not decentralized'),
+        ("abc.com", Rating.WARN, 'This name is not decentralized'),
+        ("limo", Rating.WARN, 'This name may not be decentralized'),
+        ("eth.limo", Rating.WARN, 'This name may not be decentralized'),
+    ]
+)
+def test_decentralized(nameguard: NameGuard, name, rating, message):
+    ls = [nameguard.analyse_label(l) for l in name.split('.')]
+    r = checks.name.decentralized_name.check_name(ls)
+    assert r.check == Check.DECENTRALIZED_NAME
+    assert r.rating == rating
+    assert r.message == message

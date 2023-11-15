@@ -95,3 +95,7 @@ See the [NameGuard Python README](./api/README.md) for more details.
 9. **Punycode**: Checks if the name is compatible with Punycode encoding.
 
 10. **Unknown Labels**: Checks if the name contains unknown labels (e.g. `[0123abcd...].eth`).
+
+11. **Decentralized Name**: Checks if the name is decentralized (unruggable).
+
+12. **NameWrapper fuses**: TODO
