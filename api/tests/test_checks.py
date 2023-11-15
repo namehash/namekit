@@ -189,6 +189,8 @@ def test_name_punycode_name(nameguard: NameGuard):
         ("abc.com", Rating.WARN, 'This name is not decentralized'),
         ("limo", Rating.WARN, 'This name may not be decentralized'),
         ("eth.limo", Rating.WARN, 'This name may not be decentralized'),
+        ("[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth", Rating.PASS, 'This name is decentralized'),
+        ("abc.[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770]", Rating.WARN, 'This name may not be decentralized'),
     ]
 )
 def test_decentralized(nameguard: NameGuard, name, rating, message):

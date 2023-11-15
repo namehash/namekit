@@ -13,6 +13,13 @@ DNS_TLD_WHITELIST = {"com", "net", "org", "id", "io"}
 
 
 def valid_DNS_tld(label: Optional[str]) -> Optional[bool]:
+    """
+    Identifies if a label represents a valid TLD in the DNS namespace.
+    :param label: the TLD of a name
+    :return: True if the label is known to be valid in the DNS namespace. False if the label is
+           known to be invalid in the DNS namespace. None if the status of the label is
+           unknown in DNS.
+    """
     if label == ETH_TLD:
         return False
     elif label == "":
@@ -24,6 +31,13 @@ def valid_DNS_tld(label: Optional[str]) -> Optional[bool]:
 
 
 def namespace_root(labels: list[Optional[str]]) -> str:
+    """
+    Identifies the namespace root of a name.
+    :param labels: The labels of the name to identify the namespace root of.
+    :return: `ens` if the namespace root is known to be ENS.
+           `dns` if the namespace root is known to be DNS.
+           `unknown` if the namespace root is unknown.
+    """
     if not labels:
         return 'ens'
     elif len(labels) == 1 and labels[0] == '':
@@ -39,6 +53,13 @@ def namespace_root(labels: list[Optional[str]]) -> str:
 
 
 def decentralization_status(labels: list[Optional[str]]):
+    """
+    Identifies the decentralization status of a name.
+    :param labels: The labels of the name to identify the decentralization status of.
+    :return: `unruggable` if ownership of the name is guaranteed to be decentralized and therefore unruggable.
+            `icann` if ownership of the name falls under the jurisdiction of ICANN and therefore is not decentralized.
+            `unknown` if the decentralization status of the name is unknown.
+    """
     root = namespace_root(labels)
     if root == 'ens':
         if len(labels) > 2:
