@@ -127,6 +127,8 @@ class Check(str, Enum):
     Name:
     * `impersonation_risk`: A name might be used for impersonation.
     * `punycode_compatible_name`: A name is compatible with Punycode.
+    * `namewrapper_fuses`: TODO
+    * `decentralized_name`: A name is decentralized.
     '''
 
     # Common
@@ -147,6 +149,8 @@ class Check(str, Enum):
     # Name
     IMPERSONATION_RISK = 'impersonation_risk'
     PUNYCODE_COMPATIBLE_NAME = 'punycode_compatible_name'
+    NAMEWRAPPER_FUSES = 'namewrapper_fuses'
+    DECENTRALIZED_NAME = 'decentralized_name'
 
     @property
     def human_readable_name(self):
