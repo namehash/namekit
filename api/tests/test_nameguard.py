@@ -445,3 +445,5 @@ async def test_dynamic_check_order(nameguard: NameGuard):
     assert r.nameguard_result.checks[0].status == CheckStatus.PASS
     assert r.nameguard_result.checks[1].check == Check.NORMALIZED
     assert r.nameguard_result.checks[1].status == CheckStatus.PASS
+
+    endpoint_name.set(None)
