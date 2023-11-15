@@ -1,6 +1,8 @@
 import pytest
 
 from nameguard import checks
+from nameguard.context import endpoint_name
+from nameguard.endpoints import Endpoints
 from nameguard.nameguard import NameGuard
 from nameguard.models import Rating, Check, CheckStatus
 
@@ -177,3 +179,28 @@ def test_name_punycode_name(nameguard: NameGuard):
     assert r.check == Check.PUNYCODE_COMPATIBLE_NAME
     assert r.status == CheckStatus.WARN
     assert r.message == 'This name is not Punycode compatible'
+
+def test_name_impersonation(nameguard: NameGuard):
+    n = 'niąck.eth'
+    ls = [nameguard.analyse_label(l) for l in n.split('.')]
+    r = checks.name.impersonation_risk.check_name(ls)
+    assert r.check == Check.IMPERSONATION_RISK
+    assert r.rating == Rating.WARN
+    assert r.message == 'Name may receive potential impersonation warnings'
+
+    endpoint_name.set(Endpoints.SECURE_PRIMARY_NAME)
+    n = 'niąck.eth'
+    ls = [nameguard.analyse_label(l) for l in n.split('.')]
+    r = checks.name.impersonation_risk.check_name(ls)
+    assert r.check == Check.IMPERSONATION_RISK
+    assert r.rating == Rating.WARN
+    assert r.message == 'Name might be an impersonation of `niack.eth`'
+    
+    n = 'a👩🏽‍⚕.eth'
+    ls = [nameguard.analyse_label(l) for l in n.split('.')]
+    r = checks.name.impersonation_risk.check_name(ls)
+    assert r.check == Check.IMPERSONATION_RISK
+    assert r.rating == Rating.WARN
+    assert r.message == 'Emojis in this name contain many variations that may be difficult to detect'
+
+    endpoint_name.set(None)
