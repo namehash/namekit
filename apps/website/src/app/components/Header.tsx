@@ -1,6 +1,6 @@
 "use client";
 
-import { GithubLogo } from "@/app/components/icons/GithubLogo";
+import { GithubLogo } from "@/app/atoms/icons/GithubLogo";
 import { Search } from "@namehash/nameguard-react";
 
 export const Header = () => {

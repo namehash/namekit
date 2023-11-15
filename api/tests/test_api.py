@@ -603,6 +603,17 @@ def test_primary_name_get_empty(test_client, api_version):
     response = test_client.get(f'/{api_version}/secure-primary-name')
     assert response.status_code == 404
 
+def test_primary_name_get_emoji(test_client, api_version):
+    address='0x63A93f5843aD57d756097ef102A2886F05c7a29c'
+    response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
+    assert response.status_code == 200
+    res_json = response.json()
+
+    assert res_json['impersonation_status'] == 'potential'
+    assert res_json['primary_name_status'] == 'normalized'
+    assert res_json['primary_name'] == '👩🏿\u200d🦱.eth'
+    assert res_json['display_name'] == '👩🏿\u200d🦱.eth'
+    assert res_json['nameguard_result']['highest_risk']['message'] == 'Emojis used in this name may be visually confused with other similar emojis'
 
 @pytest.mark.parametrize(
     "contract_address, token_id, fake",

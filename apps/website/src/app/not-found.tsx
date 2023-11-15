@@ -31,8 +31,6 @@ export default function NotFound() {
           </div>
         </div>
       </div>
-
-      <div className="fixed inset-0 z-0 h-full w-[100vw] max-w-[100vw] overflow-x-hidden bg-[radial-gradient(#DDDDDD_1px,transparent_1px)] [background-size:24px_24px] opacity-70"></div>
     </>
   );
 }
