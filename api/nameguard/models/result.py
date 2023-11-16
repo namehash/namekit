@@ -43,7 +43,7 @@ class ConsolidatedReport(BaseModel):
     The risk summary of a name, label, or grapheme.
     '''
 
-    rating: Rating
+    rating: Rating = Field(examples=[Rating.WARN])
 
     @computed_field(description='A human-readable title based on the `rating`.')
     @property
@@ -76,10 +76,13 @@ class ConsolidatedReport(BaseModel):
             return f'Better not to use this {self._string_type}'
 
     risk_count: int = Field(
-        description='The number of checks that have a status of `alert` or `warn`.')
+        description='The number of checks that have a status of `alert` or `warn`.',
+        examples=[2],
+    )
 
     highest_risk: Optional[GenericCheckResult] = Field(
-        description='The check considered to be the highest risk. If no check has a status of `alert` or `warn`, this field is `null`.')
+        description='The check considered to be the highest risk. If no check has a status of `alert` or `warn`, this field is `null`.',
+    )
 
     @property
     def _string_type(self) -> str:
@@ -98,10 +101,14 @@ class ConsolidatedGraphemeGuardReport(ConsolidatedReport):
     normalization: GraphemeNormalization
 
     grapheme: str = Field(
-        description='The analyzed grapheme.')
+        description='The analyzed grapheme.',
+        examples=['v'],
+    )
 
     grapheme_name: str = Field(
-        description='The name of the grapheme.')
+        description='The name of the grapheme.',
+        examples=['Latin Small Letter V'],
+    )
 
     grapheme_type: str = Field(
         description='The type of the grapheme. If all characters in the grapheme have the same type, that type is returned. Otherwise, `special` is returned.\n'
@@ -114,13 +121,19 @@ class ConsolidatedGraphemeGuardReport(ConsolidatedReport):
             '* `underscore` - an underscore\n'
             '* `emoji` - an emoji or emoji ZWJ sequence\n'
             '* `invisible` - zero width joiner or non-joiner\n'
-            '* `special` - for any grapheme that doesn\'t match one of the other classifications or if characters have different types'
+            '* `special` - for any grapheme that doesn\'t match one of the other classifications or if characters have different types',
+        examples=['simple_letter'],
     )
 
     grapheme_script: str = Field(
-        description='Script name of the grapheme computed from the script names of its characters.')
+        description='Script name of the grapheme computed from the script names of its characters.',
+        examples=['Latin'],
+    )
 
-    grapheme_description: str = Field(description="Description of the grapheme type.")
+    grapheme_description: str = Field(
+        description="Description of the grapheme type.",
+        examples=['A-Z letter'],
+    )
 
     @property
     def _string_type(self) -> str:
@@ -138,12 +151,12 @@ class LabelGuardReport(ConsolidatedReport):
 
     label: str = Field(
         description='The analyzed label. If the label is unknown, this field is `[labelhash]`.',
-        examples=['nick', '[99b91f5ec34a22cf0fb21c9f43be6c6417d9991e979c1dca532a8e74d1feec23]'],
+        examples=['vitalìk', '[99b91f5ec34a22cf0fb21c9f43be6c6417d9991e979c1dca532a8e74d1feec23]'],
     )
 
     labelhash: str = Field(
         description='The labelhash of the label in hex format prefixed with `0x`.',
-        examples=['0x99b91f5ec34a22cf0fb21c9f43be6c6417d9991e979c1dca532a8e74d1feec23'],
+        examples=['0x41459971a5b847d0eef67bc11e2845f1074a2aed1ac6a357378b18fba50816e4'],
     )
 
     normalization: Normalization
@@ -166,6 +179,7 @@ class LabelGuardReport(ConsolidatedReport):
                     '* `null` if the canonical form of any grapheme is not known\n'
                     '* `null` if the result would be unnormalized, even if the canonical form of all graphemes is known\n'
                     '* `[labelhash]` if the label is unknown',
+        examples=['vitalik'],
     )
 
     @property
@@ -184,12 +198,12 @@ class ConsolidatedNameGuardReport(ConsolidatedReport):
 
     name: str = Field(
         description='The analyzed name. Can contain labelhashes when some labels are unknown.',
-        examples=['vitalik.eth', '[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth'],
+        examples=['vitalìk.eth', '[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth'],
     )
 
     namehash: str = Field(
         description='The namehash of the name in hex format prefixed with `0x`.',
-        examples=['0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835'],
+        examples=['0xd48fd5598e605861cbd8e45419b41b83739bff52eaef0e283181bbe0a43a5b32'],
     )
 
     normalization: Normalization
@@ -225,6 +239,7 @@ class NameGuardReport(ConsolidatedNameGuardReport):
         description='The canonical form of the analyzed name.\n'
                     '* `null` if the canonical form of any label is not known\n'
                     '* `can contain labelhashes when some labels are unknown`',
+        examples=['vitalik.eth']
     )
 
 
@@ -242,7 +257,9 @@ class GraphemeGuardReport(ConsolidatedGraphemeGuardReport):
 
     grapheme_link: Optional[str] = Field(
         description="Link to an external page with information about the grapheme.\n"
-                    "* `null` for multi-character graphemes")
+                    "* `null` for multi-character graphemes",
+        examples=['https://unicodeplus.com/U+0076'],
+    )
 
     @computed_field(description='The name of the webpage that `grapheme_link` links to.\n'
                                 '* "No link is available" if `grapheme_link` is `null`')
@@ -268,7 +285,9 @@ class GraphemeGuardReport(ConsolidatedGraphemeGuardReport):
     canonical_grapheme: Optional[str] = Field(
         description='A grapheme that is the canonical form of the analyzed grapheme.\n'
                     '* `null` if the canonical form is not known\n'
-                    '* does not imply that the canonical grapheme/label/name is normalized')
+                    '* does not imply that the canonical grapheme/label/name is normalized',
+        examples=['v'],
+    )
 
 
 class SecurePrimaryNameStatus(str, Enum):
@@ -308,11 +327,13 @@ class SecurePrimaryNameResult(BaseModel):
     primary_name: Optional[str] = Field(
         description='Primary ENS name for the Ethereum address.\n'
                     '* `null` if `primary_name_status` is any value except `normalized`',
+        examples=['vitalik.eth'],
     )
 
     display_name: str = Field(
         description='ENS beautified version of `primary_name`.\n'
                     '* if `primary_name` is `null` then provides a fallback `display_name` of "Unnamed [first four hex digits of Ethereum address]", e.g. "Unnamed c2a6"',
+        examples=['vitalik.eth'],
     )
 
     nameguard_result: Optional[NameGuardReport] = Field(description='NameGuard report for the `primary_name`.\n'
