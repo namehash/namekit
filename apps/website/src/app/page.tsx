@@ -23,6 +23,7 @@ const fakeEthNameCheck = `import { nameguard } from "@namehash/nameguard";
 
 const contract = "0x8Ae0e6dd8eACe27045d9e017C8Cf6dAa9D08C776";
 const tokenId = "61995921128521442959106650131462633744885269624153038309795231243542768648193";
+
 const result = await nameguard.fakeEthNameCheck(contract, tokenId);`;
 
 const bulkInspectNames = `import { nameguard } from "@namehash/nameguard";
@@ -30,6 +31,7 @@ const bulkInspectNames = `import { nameguard } from "@namehash/nameguard";
 const name = "abc123🚀.eth";
 const result = await nameguard.inspectName(name);
 const names = ["abc.eth", "123.eth", "xyz.eth"];
+
 const results = await nameguard.bulkInspectNames(names);`;
 
 export default function Home() {
