@@ -93,7 +93,7 @@ async def test_check_skip_confusable(nameguard: NameGuard):
 
 @pytest.mark.asyncio
 async def test_check_skip_font_support(nameguard: NameGuard):
-    result = await nameguard.inspect_name('mainnet', '🤹‍♀a')
+    result = await nameguard.inspect_name('mainnet', '🏃🏻‍➡a')
     c = [c for c in result.checks if c.check is Check.FONT_SUPPORT][0]
     assert c.rating is Rating.PASS
     assert c.status is CheckStatus.SKIP
