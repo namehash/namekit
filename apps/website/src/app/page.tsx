@@ -1,7 +1,6 @@
 "use client";
 
-import { Highlight } from "prism-react-renderer";
-import { PrismTheme } from "prism-react-renderer";
+import { Highlight, themes } from "prism-react-renderer";
 import React, { Fragment, useEffect, useState } from "react";
 import Image from "next/image";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
@@ -15,15 +14,27 @@ import { Tooltip, Search } from "@namehash/nameguard-react";
 import cc from "classcat";
 import { CalButton } from "@/app/atoms/CalButton";
 
+const getSecurePrimaryName = `import { nameguard } from "@namehash/nameguard";
+
+const address = "0x8Ae0e6dd8eACe27045d9e017C8Cf6dAa9D08C776";
+const result = await nameguard.getSecurePrimaryName(address);`;
+
+const fakeEthNameCheck = `import { nameguard } from "@namehash/nameguard";
+
+const contract = "0x8Ae0e6dd8eACe27045d9e017C8Cf6dAa9D08C776";
+const tokenId = "61995921128521442959106650131462633744885269624153038309795231243542768648193";
+
+const result = await nameguard.fakeEthNameCheck(contract, tokenId);`;
+
+const bulkInspectNames = `import { nameguard } from "@namehash/nameguard";
+
+const name = "abc123🚀.eth";
+const result = await nameguard.inspectName(name);
+const names = ["abc.eth", "123.eth", "xyz.eth"];
+
+const results = await nameguard.bulkInspectNames(names);`;
+
 export default function Home() {
-  const exampleCode = `<figure class="md:flex bg-slate-100 rounded-xl p-8 md:p-0
-         dark:bg-slate-800"/>
-            <img class="w-24 h-24 md:w-48 md:h-auto md:rounded-none 
-         rounded-full mx-auto" src="/sarah-dayan.jpg" alt="" width="384" 
-         height="512">
-            <div class="pt-6 md:p-8 text-center md:text-left space-y-4">
-                <blockquote>
-                    <p class="text-lg font-medium">`;
   return (
     <>
       <HeroSection />
@@ -41,7 +52,7 @@ export default function Home() {
           sectionDescription="Inbound messages from deceptive look-alike names can exploit trusted relationships. NameGuard's homograph and canonical name algorithms help you handle higher-risk messages."
           sectionBackgroundName="bg-green_background"
           isCodeOnTheLeft={false}
-          codeSnippet={exampleCode}
+          codeSnippet={getSecurePrimaryName}
           integrationsPanel={
             <div className="hidden gt_mobile:inline-flex items-center gap-6 z-10">
               <p className="text-gray-500 text-lg leading-6 font-normal not-italic whitespace-nowrap">
@@ -66,7 +77,7 @@ export default function Home() {
           sectionDescription={`Just because an NFT names itself "nick.eth" doesn't mean it's an ENS name. NameGuard makes it easy to stop fake ENS names from being sold on NFT marketplaces. Let's put an end to these scams !`}
           sectionBackgroundName={"bg-purple_background"}
           isCodeOnTheLeft={true}
-          codeSnippet={exampleCode}
+          codeSnippet={fakeEthNameCheck}
           integrationsPanel={
             <div className="inline-flex items-center gap-6 z-10">
               <p className="text-gray-500 text-lg leading-6 font-normal not-italic whitespace-nowrap">
@@ -97,7 +108,7 @@ export default function Home() {
           sectionDescription="NameGuard offers a detailed 10+ point-inspection on any ENS name, including NameWrapper fuses, offchain names, and DNS compatibility. Ensure no shocking disappointments after purchase."
           sectionBackgroundName="bg-green_background"
           isCodeOnTheLeft={false}
-          codeSnippet={exampleCode}
+          codeSnippet={bulkInspectNames}
           imageSpecifics={{
             source: surface_risks_img.src,
             tagWidth: 884,
@@ -175,124 +186,27 @@ type CodeSnippetProps = {
 };
 
 function CodeSnippet(props: CodeSnippetProps) {
-  const figmaTheme: PrismTheme = {
-    plain: {
-      backgroundColor: "transparent",
-      color: "hsl(220, 14%, 71%)",
-      textShadow: "0 1px rgba(0, 0, 0, 0.3)",
-    },
-    styles: [
-      {
-        types: ["comment", "prolog", "cdata"],
-        style: {
-          color: "rgba(255,255,255, 1)",
-        },
-      },
-      {
-        types: ["doctype", "punctuation", "entity"],
-        style: {
-          color: "rgba(255,255,255, 1)",
-        },
-      },
-      {
-        types: [
-          "attr-name",
-          "class-name",
-          "maybe-class-name",
-          "boolean",
-          "constant",
-          "number",
-          "atrule",
-        ],
-        style: { color: "rgba(255,255,255, 1)" },
-      },
-      {
-        types: ["keyword"],
-        style: { color: "rgba(255,255,255, 1)" },
-      },
-      {
-        types: ["property", "tag", "symbol", "deleted", "important"],
-        style: {
-          color: "rgba(255,255,255, 1)",
-        },
-      },
-
-      {
-        types: [
-          "selector",
-          "string",
-          "char",
-          "builtin",
-          "inserted",
-          "regex",
-          "attr-value",
-        ],
-        style: {
-          color: "rgba(255,255,255, 1)",
-        },
-      },
-      {
-        types: ["variable", "operator", "function"],
-        style: {
-          color: "rgba(255,255,255, 1)",
-        },
-      },
-      {
-        types: ["url"],
-        style: {
-          color: "rgba(255,255,255, 1)",
-        },
-      },
-      {
-        types: ["deleted"],
-        style: {
-          textDecorationLine: "line-through",
-        },
-      },
-      {
-        types: ["inserted"],
-        style: {
-          textDecorationLine: "underline",
-        },
-      },
-      {
-        types: ["italic"],
-        style: {
-          fontStyle: "italic",
-        },
-      },
-      {
-        types: ["important", "bold"],
-        style: {
-          fontWeight: "bold",
-        },
-      },
-      {
-        types: ["important"],
-        style: {
-          color: "rgba(255,255,255, 1)",
-        },
-      },
-    ],
-  };
   return (
     <div className="hidden gt_mobile:block bg-black rounded-xl pb-4 max-w-full h-fit bg-gradient-to-b from-figma-black to-black z-10">
       <div className="flex flex-col gap-2.5 px-2.5 py-3">
         <div className="flex justify-start gap-2">
-          <CodeSnippetDotSvg />
-          <CodeSnippetDotSvg />
-          <CodeSnippetDotSvg />
+          <div className="rounded-full w-3 h-3 bg-[#434446]"></div>
+          <div className="rounded-full w-3 h-3 bg-[#434446]"></div>
+          <div className="rounded-full w-3 h-3 bg-[#434446]"></div>
         </div>
       </div>
       <hr className="border-code-gray" />
       <div className="py-4 px-5 max-w-full">
         <Highlight
-          theme={figmaTheme}
+          theme={themes.oneDark}
           code={`${props.codeSnippet}`}
-          language="html"
+          language="typescript"
         >
           {({ className, style, tokens, getLineProps, getTokenProps }) => (
-            <pre className="w-full overflow-x-auto pb-4" style={style}>
+            <pre
+              className={`${className} w-full overflow-x-auto pb-4`}
+              // style={style}
+            >
               {tokens.map((line, i) => (
                 <div key={i} {...getLineProps({ line })}>
                   <span className="pr-8 text-code-gray">{i + 1}</span>
@@ -1387,22 +1301,6 @@ function CoinbaseLogo() {
           <rect width="112" height="36" fill="white" />
         </clipPath>
       </defs>
-    </svg>
-  );
-}
-
-function CodeSnippetDotSvg() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="10"
-      height="10"
-      viewBox="0 0 10 10"
-      fill="none"
-    >
-      <circle cx="5" cy="5" r="5" fill="#434446" />
-      <circle cx="5" cy="5" r="5" fill="#434446" />
-      <circle cx="5" cy="5" r="5" fill="#434446" />
     </svg>
   );
 }
