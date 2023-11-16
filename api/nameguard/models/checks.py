@@ -1,5 +1,5 @@
 from typing import Optional
-from pydantic import BaseModel, computed_field
+from pydantic import BaseModel, computed_field, Field
 from enum import Enum
 
 from nameguard.generic_utils import capitalize_words
@@ -196,8 +196,8 @@ class GenericCheckResult(BaseModel):
     The result of a conducted check.
     '''
 
-    check: Check
-    status: CheckStatus
+    check: Check = Field(examples=[Check.CONFUSABLES])
+    status: CheckStatus = Field(examples=[CheckStatus.WARN])
 
     def __init__(self, **data):
         super().__init__(**data)
