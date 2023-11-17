@@ -273,6 +273,37 @@ async def fake_eth_name_check_get(
     token_id = validate_token_id(token_id)
     return await ng.fake_eth_name_check(network_name=network_name, contract_address=contract_address, token_id=token_id)
 
+class FakeETHNameCheckFieldsRequest(BaseModel):
+    network_name: NetworkName
+    contract_address: str = Path(examples=['0x495f947276749ce646f68ac8c248420045cb7b5e'],
+                                 description='Contract address for the NFT contract (ERC721 and ERC1155 supported).')
+    token_id: str = Path(examples=['61995921128521442959106650131462633744885269624153038309795231243542768648193'],
+                         description='The ID of the token (in hex or decimal format).')
+    fields: dict[str, str] = Field(
+        description='Fields with values which will be investigated (e.g. title, collection name, metadata) whether they look like fake .eth ENS name.')
+
+
+@app.post(
+    '/{api_version}/fake-eth-name-check-fields',
+    tags=['fake-eth-name-check'],
+    summary='Fake .eth ENS name check with fields',
+    responses={
+        **InvalidTokenID.get_responses_spec(),
+        **ProviderUnavailable.get_responses_spec(),
+    },
+)
+async def fake_eth_name_check_fields_post(
+        api_version: ApiVersion, 
+        request: FakeETHNameCheckFieldsRequest
+        ) -> FakeEthNameCheckResult:
+    logger.debug(
+        f"{json.dumps({'endpoint': Endpoints.FAKE_ETH_NAME_CHECK, 'method': 'POST', 'api_version': api_version, 'network_name': network_name, 'contract_address': contract_address, 'token_id': token_id})}")
+    nameguard.context.endpoint_name.set(Endpoints.FAKE_ETH_NAME_CHECK)
+    contract_address = validate_ethereum_address(contract_address)
+    token_id = validate_token_id(token_id)
+    return await ng.fake_eth_name_check_fields(network_name=network_name, contract_address=contract_address, token_id=token_id, investigated_fields=fields)
+
+
 
 # -- inspect-grapheme --
 
