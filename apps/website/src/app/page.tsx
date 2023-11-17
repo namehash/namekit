@@ -10,6 +10,9 @@ import surface_risks_img from "../../public/assets/surface_risks.png";
 import dangerous_name_config_img from "../../public/assets/dangerous_name_configuration.png";
 import autorenew_img from "../../public/assets/autorenew.png";
 import ens_webfont_img from "../../public/assets/ens_webfont.png";
+import ens_completion_score_img from "../../public/assets/completion_score.png";
+import the_unknown_img from "../../public/assets/making_the_unknown.png";
+import explore_ecosystem_img from "../../public/assets/explore_ecosystem.png";
 import { Tooltip, Search } from "@namehash/nameguard-react";
 import cc from "classcat";
 import { CalButton } from "@/app/atoms/CalButton";
@@ -22,7 +25,8 @@ const result = await nameguard.getSecurePrimaryName(address);`;
 const fakeEthNameCheck = `import { nameguard } from "@namehash/nameguard";
 
 const contract = "0x8Ae0e6dd8eACe27045d9e017C8Cf6dAa9D08C776";
-const tokenId = "61995921128521442959106650131462633744885269624153038309795231243542768648193";
+const tokenId = "619959211285214429591066501314626337448852696
+                 24153038309795231243542768648193";
 
 const result = await nameguard.fakeEthNameCheck(contract, tokenId);`;
 
@@ -30,8 +34,8 @@ const bulkInspectNames = `import { nameguard } from "@namehash/nameguard";
 
 const name = "abc123🚀.eth";
 const result = await nameguard.inspectName(name);
-const names = ["abc.eth", "123.eth", "xyz.eth"];
 
+const names = ["abc.eth", "123.eth", "xyz.eth"];
 const results = await nameguard.bulkInspectNames(names);`;
 
 export default function Home() {
@@ -172,8 +176,41 @@ export default function Home() {
             tagHeight: 958,
           }}
         />
+        <MobileSectionDivider />
+        <ComingSoonSection
+          sectionTargetSvg={<WalletIcon />}
+          sectionTargetClientMessage="For wallets and dApps"
+          sectionHeader={<Fragment>ENS profile completion score</Fragment>}
+          sectionDescription="Unlock a new level of online presence with ENS. Elevate your identity, showcase your personal brand, and become a stand out in the community. Embark on an exciting journey to boost your ENS profile completion score and strive to join the exclusive '100% Club.'"
+          sectionBackgroundName="bg-green_background_sm"
+          isTextOnTheLeft={false}
+          badgeText={"Planned"}
+          imageSpecifics={{
+            source: ens_completion_score_img.src,
+            tagWidth: 968,
+            tagHeight: 738,
+          }}
+        />
+        <MobileSectionDivider />
+        <ComingSoonSection
+          sectionTargetSvg={<WalletIcon />}
+          sectionTargetClientMessage="For wallets and dApps"
+          sectionHeader={<Fragment>Making the unknown, known</Fragment>}
+          sectionDescription="Many ENS domains are known to technically exist as a node in ENS, however the actual names for these domains is currently unknown. The ENS Subgraph helps to resolve some of these, but NameGuard goes further to resolve unknown names with a more powerful solution that learns from the community across time."
+          sectionBackgroundName="bg-purple_background_sm"
+          isTextOnTheLeft={true}
+          badgeText={"Planned"}
+          imageSpecifics={{
+            source: the_unknown_img.src,
+            tagWidth: 1228,
+            tagHeight: 814,
+          }}
+        />
+        <MobileSectionDivider />
+        <ChecksSection />
+        <MobileSectionDivider />
       </div>
-      <MobileSectionDivider />
+      <ExploreTheEcosystemSection />
       <RoadMap />
       <NewExitSection />
       <div className="fixed inset-0 z-0 h-full w-[100vw] max-w-[100vw] overflow-x-hidden bg-[radial-gradient(#DDDDDD_1px,transparent_1px)] [background-size:24px_24px] opacity-70"></div>
@@ -875,6 +912,282 @@ function RoadMap() {
           </div>
         ))}
       </div>
+    </section>
+  );
+}
+
+type CheckElement = {
+  header: React.ReactNode;
+  text: React.ReactNode;
+  icon: React.ReactNode;
+};
+
+function ChecksSection() {
+  const checkCircle = (
+    <div className="w-12 h-12 flex justify-center items-center flex-shrink-0 p-[14px] bg-white rounded-[40px] border border-gray-200">
+      <CheckCircle />
+    </div>
+  );
+  const questionmarkCircle = (
+    <div className="w-12 h-12 flex justify-center items-center flex-shrink-0 p-[14px] bg-white rounded-[40px] border border-gray-200 border-dashed">
+      <QuestionmarkCircle />
+    </div>
+  );
+
+  const comingSoonBadge = (
+    <span className="w-[96px] h-[20px] flex justify-center items-center flex-shrink-0 py-[2px] px-[10px] bg-green-100 rounded-[10px] text-center text-green-800 text-xs leading-4 font-medium">
+      Coming soon
+    </span>
+  );
+
+  const headerClassName =
+    "self-stretch not-italic z-10 text-black text-left text-sm leading-6 font-semibold";
+
+  const checkElements: CheckElement[] = [
+    {
+      header: <h3 className={headerClassName}>Potential Impersonation</h3>,
+      text: (
+        <Fragment>
+          Protect from inbound messages that may appear to be from someone you
+          trust.
+        </Fragment>
+      ),
+      icon: checkCircle,
+    },
+    {
+      header: <h3 className={headerClassName}>Confusable Characters</h3>,
+      text: (
+        <Fragment>
+          Identify character with a higher risk for visual confusion with other
+          characters.
+        </Fragment>
+      ),
+      icon: checkCircle,
+    },
+    {
+      header: <h3 className={headerClassName}>Cross-Device Font Support</h3>,
+      text: (
+        <Fragment>
+          Detect if characters have limited support to be viewed on popular
+          operating systems.
+        </Fragment>
+      ),
+      icon: checkCircle,
+    },
+    {
+      header: <h3 className={headerClassName}>Invisible Characters</h3>,
+      text: (
+        <Fragment>
+          Reveal any invisible characters that might otherwise be hiding in a
+          name.
+        </Fragment>
+      ),
+      icon: checkCircle,
+    },
+    {
+      header: <h3 className={headerClassName}>Typing Difficulty</h3>,
+      text: (
+        <Fragment>
+          Offer usability suggestions for users picking a name to register.
+        </Fragment>
+      ),
+      icon: checkCircle,
+    },
+    {
+      header: <h3 className={headerClassName}>Mixed Scripts</h3>,
+      text: (
+        <Fragment>
+          Detect higher risk combinations of multiple scripts in a name.
+        </Fragment>
+      ),
+      icon: checkCircle,
+    },
+    {
+      header: <h3 className={headerClassName}>NameWrapper Compatibility</h3>,
+      text: (
+        <Fragment>
+          Warn if the name being registered cannot be supported by the ENS Name
+          Wrapper.
+        </Fragment>
+      ),
+      icon: checkCircle,
+    },
+    {
+      header: <h3 className={headerClassName}>ENSIP-15 Name Normalization</h3>,
+      text: (
+        <Fragment>
+          Check if the name is normalized according to ENSIP-15.
+        </Fragment>
+      ),
+      icon: checkCircle,
+    },
+    {
+      header: <h3 className={headerClassName}>DNS Punycode Compatibility</h3>,
+      text: (
+        <Fragment>
+          Warn during registration if a name will have DNS compatibility
+          limitations.
+        </Fragment>
+      ),
+      icon: checkCircle,
+    },
+    {
+      header: <h3 className={headerClassName}>Unknown Labels</h3>,
+      text: (
+        <Fragment>
+          Identify if the name contains unknown labels (e.g. [0123abcd...].eth).
+        </Fragment>
+      ),
+      icon: checkCircle,
+    },
+    {
+      header: (
+        <div className="flex flex-row items-center justify-start gap-2">
+          <h3 className={headerClassName}>Name Ruggability</h3>
+          {comingSoonBadge}
+        </div>
+      ),
+      text: (
+        <Fragment>
+          Warn buyers on secondary markets if a name can potentially be taken
+          away.
+        </Fragment>
+      ),
+      icon: checkCircle,
+    },
+    {
+      header: (
+        <div className="flex flex-row items-center justify-start gap-2">
+          <h3 className={headerClassName}>NameWrapper Fuses</h3>
+          {comingSoonBadge}
+        </div>
+      ),
+      text: (
+        <Fragment>
+          Protect buyers on secondary markets from NameWrapper fuse
+          configurations.
+        </Fragment>
+      ),
+      icon: checkCircle,
+    },
+    {
+      header: <h3 className={headerClassName}>Have a check suggestion?</h3>,
+      text: (
+        <Fragment>
+          <a
+            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            href="mailto:hello@namehashlabs.org"
+          >
+            Reach out to us
+          </a>{" "}
+          with your suggestions about which checks you want us to add
+        </Fragment>
+      ),
+      icon: questionmarkCircle,
+    },
+  ];
+
+  return (
+    <section className="relative z-10 w-full h-full box-border flex flex-col py-10 px-5 items-center justify-center self-stretch gap-[32px] md:pt-[100px] md:pb-[48px] md:gap-0">
+      <div className="flex flex-col justify-center items-center gap-5 max-w-[608px]">
+        <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-3xl gap-2 justify-center items-center z-10">
+          <CheckShieldGrayOutline />
+          <span className="text-black text-center text-sm leading-5 not-italic font-medium z-10">
+            Advanced inspections
+          </span>
+        </div>
+        <h1 className="text-black text-center not-italic z-10 text-2xl leading-8 font-bold md:text-4xl md:leading-10">
+          Checks NameGuard Performs
+        </h1>
+        <p className="text-center not-italic text-gray-500 text-lg leading-7 font-normal gt_mobile:font-light">
+          Elevate your security standards. Get next-level protection with a
+          rigorous 12-Point inspection on ENS names, meticulously scrutinizing
+          each label and grapheme for enhanced safety.
+        </p>
+      </div>
+      <div className="md:hidden w-full h-full flex flex-col self-stretch items-center justify-center content-between gap-4">
+        {checkElements.map((elem, idx) => (
+          <div
+            key={`NameGuardCheck#${idx}`}
+            className="w-full h-full max-w-[396px] box-border flex flex-row items-center justify-center bg-white p-5 gap-4 rounded-md border border-gray-200"
+          >
+            {elem.icon}
+            <div>
+              {elem.header}
+              <p className="self-stretch not-italic z-10 text-gray-500 text-left text-sm leading-6 font-normal">
+                {elem.text}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="hidden md:flex flex-col items-center justify-center gap-4 py-10">
+        <div className="w-full h-full max-w-[1440px] flex flex-row flex-shrink-0 items-center content-between justify-center flex-wrap gap-4">
+          {checkElements.map((elem, idx) => {
+            return (
+              idx < checkElements.length - 1 && (
+                <div
+                  key={`NameGuardCheck#${idx}`}
+                  className="w-full h-full max-w-[396px] box-border flex flex-row items-start justify-center bg-white p-5 gap-4 rounded-md border border-gray-200"
+                >
+                  {elem.icon}
+                  <div>
+                    {elem.header}
+                    <p className="self-stretch not-italic z-10 text-gray-500 text-left text-sm leading-6 font-normal">
+                      {elem.text}
+                    </p>
+                  </div>
+                </div>
+              )
+            );
+          })}
+        </div>
+        <div
+          key={`NameGuardCheck#questionmark`}
+          className="w-full h-full max-w-[396px] box-border flex flex-row items-start justify-center bg-white p-5 gap-4 rounded-md border border-gray-200"
+        >
+          {checkElements[checkElements.length - 1].icon}
+          <div>
+            {checkElements[checkElements.length - 1].header}
+            <p className="self-stretch not-italic z-10 text-gray-500 text-left text-sm leading-6 font-normal">
+              {checkElements[checkElements.length - 1].text}
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function DevelopersSection() {
+  return <section>DEVELOPERS</section>;
+}
+
+function ExploreTheEcosystemSection() {
+  return (
+    <section className="relative z-10 hidden search_bar_change:flex flex-col justify-end items-center gap-[60px] pt-[100px] pb-20 bg-gray-50 box-border">
+      <div className="flex flex-col justify-center items-center gap-5 max-w-[608px]">
+        <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-3xl gap-2 justify-center items-center z-10">
+          <IntegrationIcon />
+          <span className="text-black text-center text-sm leading-5 not-italic font-medium z-10">
+            Architecture Overview
+          </span>
+        </div>
+        <h1 className="text-black text-center not-italic z-10 text-2xl leading-8 font-bold md:text-4xl md:leading-10">
+          Explore the NameGuard ecosystem
+        </h1>
+        <p className="text-center not-italic text-gray-500 text-lg leading-7 font-normal gt_mobile:font-light">
+          NameGuard is an ecosystem of libraries and services that work together
+          to help keep the web3 community safe.
+        </p>
+      </div>
+      <Image
+        src={explore_ecosystem_img.src}
+        alt={"ecosystem image"}
+        className="z-10 relative w-full h-full max-w-[1296px]"
+        width={1296}
+        height={807}
+      />
     </section>
   );
 }
@@ -1933,5 +2246,90 @@ const ErrorShieldSmall = (props: ShieldPositionAndAnimation) => (
         <rect width="56" height="56" fill="white" />
       </clipPath>
     </defs>
+  </svg>
+);
+
+//TODO: for all icons make them take props (later refactor, especially when moving them to /atoms/icons)
+const CheckShieldGrayOutline = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+  >
+    <path
+      d="M7.5 10.6248L9.375 12.4998L12.5 8.12483M10 2.26172C8.20792 3.9589 5.78802 4.99984 3.125 4.99984C3.08269 4.99984 3.04043 4.99958 2.99825 4.99906C2.67491 5.98248 2.5 7.03325 2.5 8.12488C2.5 12.7845 5.68693 16.6997 10 17.8098C14.3131 16.6997 17.5 12.7845 17.5 8.12488C17.5 7.03325 17.3251 5.98248 17.0018 4.99906C16.9596 4.99958 16.9173 4.99984 16.875 4.99984C14.212 4.99984 11.7921 3.9589 10 2.26172Z"
+      stroke="#808080"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+const CheckCircle = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18ZM13.8566 8.19113C14.1002 7.85614 14.0261 7.38708 13.6911 7.14345C13.3561 6.89982 12.8871 6.97388 12.6434 7.30887L9.15969 12.099L7.28033 10.2197C6.98744 9.92678 6.51256 9.92678 6.21967 10.2197C5.92678 10.5126 5.92678 10.9874 6.21967 11.2803L8.71967 13.7803C8.87477 13.9354 9.08999 14.0149 9.30867 13.9977C9.52734 13.9805 9.72754 13.8685 9.85655 13.6911L13.8566 8.19113Z"
+      fill="#10B981"
+    />
+  </svg>
+);
+
+const QuestionmarkCircle = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    viewBox="0 0 20 20"
+    fill="none"
+  >
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M18 10C18 14.4183 14.4183 18 10 18C5.58172 18 2 14.4183 2 10C2 5.58172 5.58172 2 10 2C14.4183 2 18 5.58172 18 10ZM8.93934 6.93931C8.64645 7.23221 8.17157 7.23221 7.87868 6.93931C7.58579 6.64642 7.58579 6.17155 7.87868 5.87865C9.05025 4.70708 10.9497 4.70708 12.1213 5.87865C13.2929 7.05023 13.2929 8.94972 12.1213 10.1213C11.7288 10.5138 11.2528 10.7756 10.75 10.9051V11.25C10.75 11.6642 10.4142 12 10 12C9.58579 12 9.25 11.6642 9.25 11.25V10.75C9.25 10.0297 9.81995 9.57826 10.3313 9.46322C10.5982 9.40318 10.8516 9.26969 11.0607 9.06063C11.6464 8.47485 11.6464 7.5251 11.0607 6.93931C10.4749 6.35353 9.52513 6.35353 8.93934 6.93931ZM10 15C10.5523 15 11 14.5523 11 14C11 13.4477 10.5523 13 10 13C9.44771 13 9 13.4477 9 14C9 14.5523 9.44771 15 10 15Z"
+      fill="#AFAFAF"
+    />
+  </svg>
+);
+
+const IntegrationIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="21"
+    height="20"
+    viewBox="0 0 21 20"
+    fill="none"
+  >
+    <path
+      d="M5.70456 15.6018C6.90199 16.7489 8.52651 17.4537 10.3156 17.4537C11.0428 17.4537 11.7429 17.3373 12.398 17.122M8.11899 4.49072C6.33813 5.11197 4.90154 6.46742 4.17188 8.19443M16.9416 11.5278C16.9685 11.2845 16.9823 11.0374 16.9823 10.787C16.9823 9.15121 16.3932 7.653 15.4155 6.49302"
+      stroke="#808080"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+    />
+    <path
+      d="M10.5003 5.41659C11.523 5.41659 12.3521 4.58749 12.3521 3.56474C12.3521 2.54199 11.523 1.71289 10.5003 1.71289C9.47754 1.71289 8.64844 2.54199 8.64844 3.56474C8.64844 4.58749 9.47754 5.41659 10.5003 5.41659Z"
+      stroke="#808080"
+      strokeWidth="1.5"
+    />
+    <path
+      d="M4.01787 15.6019C5.04062 15.6019 5.86972 14.7728 5.86972 13.75C5.86972 12.7273 5.04062 11.8982 4.01787 11.8982C2.99512 11.8982 2.16602 12.7273 2.16602 13.75C2.16602 14.7728 2.99512 15.6019 4.01787 15.6019Z"
+      stroke="#808080"
+      strokeWidth="1.5"
+    />
+    <path
+      d="M16.9808 15.6019C18.0035 15.6019 18.8326 14.7728 18.8326 13.75C18.8326 12.7273 18.0035 11.8982 16.9808 11.8982C15.958 11.8982 15.1289 12.7273 15.1289 13.75C15.1289 14.7728 15.958 15.6019 16.9808 15.6019Z"
+      stroke="#808080"
+      strokeWidth="1.5"
+    />
   </svg>
 );
