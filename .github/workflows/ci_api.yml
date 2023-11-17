@@ -49,5 +49,6 @@ jobs:
         run: poetry run pytest -vv --durations=0
 
       - name: Run tests
+        if: github.event.pull_request.merged
         working-directory: ./api
         run: MONKEYPATCH=0 poetry run pytest -vv --durations=0
