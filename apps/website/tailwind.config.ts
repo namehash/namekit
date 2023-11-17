@@ -48,7 +48,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("@tailwindcss/forms")],
+  plugins: [require("@tailwindcss/forms"), require("@namehash/fonts")],
 };
 
 export default config;

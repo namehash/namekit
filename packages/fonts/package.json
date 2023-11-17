@@ -1,0 +1,45 @@
+{
+  "name": "@namehash/fonts",
+  "version": "0.0.1",
+  "devDependencies": {
+    "autoprefixer": "10.4.16",
+    "postcss": "8.4.31",
+    "tailwindcss": "3.3.5",
+    "tsup": "^7.2.0",
+    "typescript": "5.2.2"
+  },
+  "peerDependencies": {
+    "tailwindcss": "3.3.5"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": {
+        "node": "./dist/index.js",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "node": "./dist/index.cjs",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch --clean=false",
+    "test": "vitest",
+    "prettier-check": "prettier --check ."
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
