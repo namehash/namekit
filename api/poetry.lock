@@ -1723,6 +1723,23 @@ pytest = ">=4.6"
 testing = ["fields", "hunter", "process-tests", "pytest-xdist", "six", "virtualenv"]
 
 [[package]]
+name = "pytest-retry"
+version = "1.5.0"
+description = "Adds the ability to retry flaky tests in CI environments"
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "pytest-retry-1.5.0.tar.gz", hash = "sha256:dd512542ea3e961a313018c743a65efdd763e494cad24c1154541d25c8eaa2fd"},
+    {file = "pytest_retry-1.5.0-py3-none-any.whl", hash = "sha256:51fff0d55c66d63d719984f93d4348f7792dd23f2d1fc23734b4ab601b75a6ad"},
+]
+
+[package.dependencies]
+pytest = ">=7.0.0"
+
+[package.extras]
+dev = ["black", "flake8", "isort", "mypy"]
+
+[[package]]
 name = "python-dotenv"
 version = "1.0.0"
 description = "Read key-value pairs from a .env file and set them as environment variables"
@@ -2534,4 +2551,4 @@ lambda = ["mangum"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "06ad496d3c8e340209e41e71ed97c487043a2bc4f5fd0119d8715579ebd848a1"
+content-hash = "964bac6fda1926212da8a6f2c959f5fdd3b67857c617478feaac7f1f884fed80"
