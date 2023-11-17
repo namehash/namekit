@@ -40,6 +40,7 @@ from nameguard.utils import (
     get_highest_risk,
     label_is_labelhash,
     compute_canonical_from_list,
+    is_labelhash_eth,
 )
 from nameguard.exceptions import ProviderUnavailable, NotAGrapheme
 from nameguard.logging import logger
@@ -350,6 +351,14 @@ class NameGuard:
                                        primary_name_status=status,
                                        nameguard_result=nameguard_result)
 
+    async def fake_eth_name_check_fields(self, network_name, contract_address, token_id, investigated_fields: dict[str,str]) -> FakeEthNameCheckResult:
+        contract_address = contract_address.lower()
+        
+        # title = investigated_fields['title']  # mandatory if ENS contract; ENS name
+        
+        #TODO: return only impersonating fields
+        return await self._fake_eth_name_check(network_name, contract_address, token_id, investigated_fields)
+
     async def fake_eth_name_check(self, network_name, contract_address, token_id) -> FakeEthNameCheckResult:
         """
         Check if the token is a fake ENS name (not valid ENS contract address and title and collection name of NFT look like ENS name).
@@ -381,26 +390,39 @@ class NameGuard:
                 investigated_fields['.'.join(keys)] = name
             except KeyError:
                 pass
+
+        if contract_address in ens_contract_adresses:
+            if ALCHEMY_UNKNOWN_NAME.match(title):
+                unknown_name = f"[{res_json['id']['tokenId'][2:]}].eth"
+                investigated_fields['title'] = unknown_name
+        
+        return await self._fake_eth_name_check(network_name, contract_address, token_id, investigated_fields)
+        
+    async def _fake_eth_name_check(self, network_name, contract_address, token_id, investigated_fields: dict[str,str]) -> FakeEthNameCheckResult:
+        title = investigated_fields['title']
         
         if contract_address in ens_contract_adresses:
             if title == '':  # the name has never been registered
-                return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_fields=None)
+                return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None,
+                                              investigated_fields=None)
             else:
-                if ALCHEMY_UNKNOWN_NAME.match(title):
-                    unknown_name = f"[{res_json['id']['tokenId'][2:]}].eth"
-                    report = await self.inspect_name(network_name, unknown_name, resolve_labelhashes=False)
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_ETH_NAME, nameguard_result=report, investigated_fields=investigated_fields)
+                if is_labelhash_eth(title):
+                    report = await self.inspect_name(network_name, title, resolve_labelhashes=False)
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_ETH_NAME,
+                                                  nameguard_result=report, investigated_fields=investigated_fields)
 
                 report = await self.inspect_name(network_name, title)
                 if is_ens_normalized(title):
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME, nameguard_result=report, investigated_fields=investigated_fields)
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME,
+                                                  nameguard_result=report, investigated_fields=investigated_fields)
                 else:
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.INVALID_ETH_NAME, nameguard_result=report, investigated_fields=investigated_fields)
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.INVALID_ETH_NAME,
+                                                  nameguard_result=report, investigated_fields=investigated_fields)
         else:
-            fields_values=[]
+            fields_values = []
             for name in investigated_fields.values():
                 try:
-                    cured_title = ens_cure(name)  #TODO improve, e.g. remove invisible and then canonicalize
+                    cured_title = ens_cure(name)  # TODO improve, e.g. remove invisible and then canonicalize
                     inspector_result = self.analyse_label(cured_title)
                     if inspector_result.canonical_label is not None:
                         canonical_name = inspector_result.canonical_label
@@ -409,11 +431,14 @@ class NameGuard:
                 except DisallowedSequence:
                     canonical_name = title
                 if canonical_name.endswith('.eth'):
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, nameguard_result=None, investigated_fields=investigated_fields)
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME,
+                                                  nameguard_result=None, investigated_fields=investigated_fields)
                 fields_values.append(canonical_name)
-                
+
             for field_value in fields_values:
                 if '.eth' in field_value:
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME, nameguard_result=None, investigated_fields=investigated_fields)
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME,
+                                                  nameguard_result=None, investigated_fields=investigated_fields)
 
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME, nameguard_result=None, investigated_fields=investigated_fields)
+            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME,
+                                          nameguard_result=None, investigated_fields=investigated_fields)
