@@ -297,11 +297,11 @@ async def fake_eth_name_check_fields_post(
         request: FakeETHNameCheckFieldsRequest
         ) -> FakeEthNameCheckResult:
     logger.debug(
-        f"{json.dumps({'endpoint': Endpoints.FAKE_ETH_NAME_CHECK, 'method': 'POST', 'api_version': api_version, 'network_name': network_name, 'contract_address': contract_address, 'token_id': token_id})}")
+        f"{json.dumps({'endpoint': Endpoints.FAKE_ETH_NAME_CHECK, 'method': 'POST', 'api_version': api_version, 'network_name': request.network_name, 'contract_address': request.contract_address, 'token_id': request.token_id})}")
     nameguard.context.endpoint_name.set(Endpoints.FAKE_ETH_NAME_CHECK)
-    contract_address = validate_ethereum_address(contract_address)
-    token_id = validate_token_id(token_id)
-    return await ng.fake_eth_name_check_fields(network_name=network_name, contract_address=contract_address, token_id=token_id, investigated_fields=fields)
+    contract_address = validate_ethereum_address(request.contract_address)
+    token_id = validate_token_id(request.token_id)
+    return await ng.fake_eth_name_check_fields(network_name=request.network_name, contract_address=request.contract_address, token_id=request.token_id, investigated_fields=request.fields)
 
 
 
