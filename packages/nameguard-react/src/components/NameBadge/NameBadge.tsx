@@ -1,23 +1,22 @@
-import React from "react";
-import { parseName } from "@namehash/nameparser";
+import React, { type MouseEventHandler } from "react";
+import type { ConsolidatedNameGuardReport } from "@namehash/nameguard";
 
-import { Shield } from "../Shield/Shield";
+import { ImpersonationShield } from "../ImpersonationShield";
 
-type NameBadgeProps = {
-  name?: string;
+type NameBadgeProps = ConsolidatedNameGuardReport & {
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
-export const NameBadge = ({ name }: NameBadgeProps) => {
-  if (!name) return null;
-
-  const {
-    outputName: { name: parsedName },
-  } = parseName(name);
+export const NameBadge = ({ onClick, ...data }: NameBadgeProps) => {
+  if (!data) return null;
 
   return (
-    <button className="appearance-none bg-white transition-colors hover:bg-gray-50 border border-gray-200 rounded-md px-2.5 py-1.5 space-x-1.5 inline-flex items-center">
-      <span className="text-black text-sm leading-5">{parsedName}</span>
-      {/* <Shield name={parsedName} /> */}
+    <button
+      className="flex-shrink-0 appearance-none bg-white transition-colors hover:bg-gray-50 border border-gray-200 rounded-md px-2.5 py-1.5 space-x-1.5 inline-flex items-center"
+      onClick={onClick}
+    >
+      <span className="text-black text-sm leading-5">{data.name}</span>
+      <ImpersonationShield data={data} />
     </button>
   );
 };
