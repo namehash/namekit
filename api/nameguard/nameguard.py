@@ -351,13 +351,13 @@ class NameGuard:
                                        primary_name_status=status,
                                        nameguard_result=nameguard_result)
 
-    async def fake_eth_name_check_fields(self, network_name, contract_address, token_id, investigated_fields: dict[str,str]) -> FakeEthNameCheckResult:
+    async def fake_eth_name_check_fields(self, network_name, contract_address, token_id, title: str, investigated_fields: dict[str,str]) -> FakeEthNameCheckResult:
         contract_address = contract_address.lower()
         
-        # title = investigated_fields['title']  # mandatory if ENS contract; ENS name
+        #TODO we don't need token_id
         
         #TODO: return only impersonating fields
-        return await self._fake_eth_name_check(network_name, contract_address, token_id, investigated_fields)
+        return await self._fake_eth_name_check(network_name, contract_address, title, investigated_fields)
 
     async def fake_eth_name_check(self, network_name, contract_address, token_id) -> FakeEthNameCheckResult:
         """
@@ -396,10 +396,13 @@ class NameGuard:
                 unknown_name = f"[{res_json['id']['tokenId'][2:]}].eth"
                 investigated_fields['title'] = unknown_name
         
-        return await self._fake_eth_name_check(network_name, contract_address, token_id, investigated_fields)
-        
-    async def _fake_eth_name_check(self, network_name, contract_address, token_id, investigated_fields: dict[str,str]) -> FakeEthNameCheckResult:
         title = investigated_fields['title']
+        del investigated_fields['title']
+        
+        return await self._fake_eth_name_check(network_name, contract_address, title, investigated_fields)
+        
+    async def _fake_eth_name_check(self, network_name, contract_address, title: str, investigated_fields: dict[str,str]) -> FakeEthNameCheckResult:
+        investigated_fields['title'] = title  # TODO: may override
         
         if contract_address in ens_contract_adresses:
             if title == '':  # the name has never been registered
