@@ -401,8 +401,11 @@ class NameGuard:
         
         return await self._fake_eth_name_check(network_name, contract_address, title, investigated_fields)
         
-    async def _fake_eth_name_check(self, network_name, contract_address, title: str, investigated_fields: dict[str,str]) -> FakeEthNameCheckResult:
-        investigated_fields['title'] = title  # TODO: may override
+    async def _fake_eth_name_check(self, network_name, contract_address, title: str, fields: dict[str,str]) -> FakeEthNameCheckResult:
+        investigated_fields = {'title': title}
+        if 'title' in fields: del fields['title']
+        investigated_fields.update(fields)
+        
         
         if contract_address in ens_contract_adresses:
             if title == '':  # the name has never been registered
@@ -412,18 +415,18 @@ class NameGuard:
                 if is_labelhash_eth(title):
                     report = await self.inspect_name(network_name, title, resolve_labelhashes=False)
                     return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_ETH_NAME,
-                                                  nameguard_result=report, investigated_fields=investigated_fields)
+                                                  nameguard_result=report, investigated_fields=None)
 
                 report = await self.inspect_name(network_name, title)
                 if is_ens_normalized(title):
                     return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME,
-                                                  nameguard_result=report, investigated_fields=investigated_fields)
+                                                  nameguard_result=report, investigated_fields=None)
                 else:
                     return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.INVALID_ETH_NAME,
-                                                  nameguard_result=report, investigated_fields=investigated_fields)
+                                                  nameguard_result=report, investigated_fields=None)
         else:
-            fields_values = []
-            for name in investigated_fields.values():
+            fields_values = {}
+            for key, name in investigated_fields.items():
                 try:
                     cured_title = ens_cure(name)  # TODO improve, e.g. remove invisible and then canonicalize
                     inspector_result = self.analyse_label(cured_title)
@@ -435,13 +438,13 @@ class NameGuard:
                     canonical_name = title
                 if canonical_name.endswith('.eth'):
                     return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME,
-                                                  nameguard_result=None, investigated_fields=investigated_fields)
-                fields_values.append(canonical_name)
+                                                  nameguard_result=None, investigated_fields={key: name})
+                fields_values[key]=canonical_name
 
-            for field_value in fields_values:
+            for key, field_value in fields_values.items():
                 if '.eth' in field_value:
                     return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME,
-                                                  nameguard_result=None, investigated_fields=investigated_fields)
+                                                  nameguard_result=None, investigated_fields={key: field_value})
 
             return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME,
-                                          nameguard_result=None, investigated_fields=investigated_fields)
+                                          nameguard_result=None, investigated_fields=None)
