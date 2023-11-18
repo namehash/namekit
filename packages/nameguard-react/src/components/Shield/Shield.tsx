@@ -40,7 +40,10 @@ export const Shield = ({ name }: ShieldProps) => {
     (n: string) => nameguard.bulkInspectNames([parseName(n).outputName.name])
   );
 
-  const [result] = data.results;
+  console.log({ data });
+
+  // const [result] = data.results;
+  const result = data.results[0];
 
   if (isLoading || !data) {
     return (
