@@ -21,7 +21,7 @@ pip install nameguard
 
 ### Setting API keys
 
-NameGuard uses the Alchemy API for `primary-name/` and `fake-eth-name-check/` endpoints. Alchemy API URLs have to be set by environment variables.
+NameGuard uses the Alchemy API for `secure-primary-name/` and `fake-eth-name-check/` endpoints. Alchemy API URLs have to be set by environment variables.
 
 ```bash
 export PROVIDER_URI_MAINNET=https://eth-mainnet.g.alchemy.com/v2/[YOUR_ALCHEMY_API_KEY]
@@ -46,7 +46,7 @@ uvicorn nameguard.web_api:app
 Make an example request:
 
 ```bash
-curl -d '{"name":"nick.eth", "network_name": "mainnet"}' -H "Content-Type: application/json" -X POST http://localhost:8000/v1-beta/inspect-name
+curl -d '{"name":"nick.eth", "network_name": "mainnet"}' -H "Content-Type: application/json" -X POST http://localhost:8000/v0.8-beta/inspect-name
 # {
 #   "rating": "pass",
 #   "risk_count": 0,
@@ -89,7 +89,7 @@ To enable this, you will need to set an environment variable
 This can be done like this:
 
 ```bash
-LAMBDA_ROOT_URL=<remote-url> pytest api/tests/test_api.py
+LAMBDA_ROOT_URL=https://api.nameguard.io poetry run pytest api/tests/test_api.py
 ```
 
 ### Using the AWS Lambda handler
@@ -97,3 +97,11 @@ LAMBDA_ROOT_URL=<remote-url> pytest api/tests/test_api.py
 NameGuard includes a handler for [Amazon AWS Lambda](https://aws.amazon.com/lambda/). It is available in the `nameguard.lambda` module. You can use it to create a Lambda function that will respond to HTTP requests. It uses the [mangum](https://mangum.io) library.
 
 Check out the included [Dockerfile](./Dockerfile) for an example of how to build a Lambda container image.
+
+### Disable monkeypatch tests
+
+By default, the tests are using mock responses from external APIs. If you want to run tests using real requests to external APIs then set `MONKEYPATCH=0`.
+
+```bash
+MONKEYPATCH=0 poetry run pytest
+```

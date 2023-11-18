@@ -3,14 +3,18 @@ import { useRef, useEffect, type MutableRefObject } from "react";
 type Callback = () => void;
 
 export const useOutsideClick = (
-  callback: Callback
+  callback: Callback,
+  isOpen: boolean
 ): MutableRefObject<null | HTMLDivElement> => {
   const ref = useRef<null | HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!isOpen) return;
+
     const handleClick = (event: MouseEvent) => {
       if (ref.current && !ref.current.contains(event.target as Node)) {
         callback();
+        event.preventDefault();
       }
     };
 
@@ -19,7 +23,7 @@ export const useOutsideClick = (
     return () => {
       document.removeEventListener("click", handleClick, true);
     };
-  }, [callback, ref]);
+  }, [callback, isOpen]);
 
   return ref;
 };

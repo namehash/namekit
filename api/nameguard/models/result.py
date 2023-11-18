@@ -6,6 +6,7 @@ from ens_normalize import ens_beautify
 from nameguard.context import endpoint_name
 from nameguard.models.checks import GenericCheckResult, Rating, Check
 from nameguard.utils import detect_grapheme_link_name
+from nameguard.endpoints import Endpoints
 
 
 class Normalization(str, Enum):
@@ -53,7 +54,7 @@ class ConsolidatedReport(BaseModel):
             if (
                 self.highest_risk is not None and
                 self.highest_risk.check is Check.IMPERSONATION_RISK and
-                endpoint_name.get() == 'primary-name'
+                endpoint_name.get() == Endpoints.SECURE_PRIMARY_NAME
             ):
                 return 'Impersonation Risk'
             else:
@@ -72,7 +73,7 @@ class ConsolidatedReport(BaseModel):
         elif self.rating is Rating.WARN:
             return 'Review risks before proceeding'
         else: # self.rating is Rating.ALERT:
-            return f'Better not to use this {self._string_value}'
+            return f'Better not to use this {self._string_type}'
 
     risk_count: int = Field(
         description='The number of checks that have a status of `alert` or `warn`.')
@@ -270,13 +271,13 @@ class GraphemeGuardReport(ConsolidatedGraphemeGuardReport):
                     '* does not imply that the canonical grapheme/label/name is normalized')
 
 
-class SecureReverseLookupStatus(str, Enum):
+class SecurePrimaryNameStatus(str, Enum):
     '''
-    The reverse lookup status of an Ethereum address.
+    The status of a secure primary ENS name lookup performed by NameGuard.
 
-    * `normalized`: ENS primary name was found and it is normalized.
-    * `no_primary_name`: ENS primary name was not found.
-    * `unnormalized`: ENS primary name was found, but it is not normalized.
+    * `normalized`: The ENS primary name was found and it is normalized.
+    * `no_primary_name`: The ENS primary name was not found.
+    * `unnormalized`: The ENS primary name was found, but it is not normalized.
     '''
 
     NORMALIZED = 'normalized'
@@ -293,15 +294,15 @@ class ImpersonationStatus(str, Enum):
     UNLIKELY = 'unlikely'
     POTENTIAL = 'potential'
 
-class SecureReverseLookupResult(BaseModel):
+class SecurePrimaryNameResult(BaseModel):
     '''
     Reverse lookup result.
     '''
-    primary_name_status: SecureReverseLookupStatus
+    primary_name_status: SecurePrimaryNameStatus
     
     impersonation_status: Optional[ImpersonationStatus] = Field(
         description='Impersonation status of the `primary_name`.\n'
-                    '* `null` if primary name is unknown or primary name is unnormalized',
+                    '* `null` if `primary_name` is `null`',
     )
 
     primary_name: Optional[str] = Field(
@@ -311,7 +312,7 @@ class SecureReverseLookupResult(BaseModel):
 
     display_name: str = Field(
         description='ENS beautified version of `primary_name`.\n'
-                    '* if `primary_name` is `null` then provides a fallback `display_name` of "Unnamed [first four hex digits of Ethereum address]", e.g. "Unnamed C2A6"',
+                    '* if `primary_name` is `null` then provides a fallback `display_name` of "Unnamed [first four hex digits of Ethereum address]", e.g. "Unnamed c2a6"',
     )
 
     nameguard_result: Optional[NameGuardReport] = Field(description='NameGuard report for the `primary_name`.\n'

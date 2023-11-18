@@ -1,0 +1,46 @@
+{
+  "contract": {
+    "address": "0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401"
+  },
+  "id": {
+    "tokenId": "0x37bf77d30d63cbf9ddad6b3c161522c53dcdcd8177b6177c83835c5ea69a7f8f",
+    "tokenMetadata": {
+      "tokenType": "ERC1155"
+    }
+  },
+  "title": "",
+  "description": "",
+  "tokenUri": {
+    "gateway": "https://metadata.ens.domains/mainnet/0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401/0x37bf77d30d63cbf9ddad6b3c161522c53dcdcd8177b6177c83835c5ea69a7f8f",
+    "raw": "https://metadata.ens.domains/mainnet/0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401/0x37bf77d30d63cbf9ddad6b3c161522c53dcdcd8177b6177c83835c5ea69a7f8f"
+  },
+  "media": [
+    {
+      "gateway": "",
+      "raw": ""
+    }
+  ],
+  "metadata": {
+    "metadata": [],
+    "attributes": []
+  },
+  "timeLastUpdated": "2023-11-07T20:23:50.988Z",
+  "error": "Token uri responded with a non 200 response code",
+  "contractMetadata": {
+    "name": "NameWrapper",
+    "tokenType": "ERC1155",
+    "contractDeployer": "0x0904dac3347ea47d208f3fd67402d039a3b99859",
+    "deployedBlockNumber": 16925608,
+    "openSea": {
+      "floorPrice": 0.0003792723,
+      "collectionName": "ENS: Ethereum Name Service",
+      "collectionSlug": "ens",
+      "safelistRequestStatus": "verified",
+      "imageUrl": "https://i.seadn.io/gae/0cOqWoYA7xL9CkUjGlxsjreSYBdrUBE0c6EO1COG4XE8UeP-Z30ckqUNiL872zHQHQU5MUNMNhfDpyXIP17hRSC5HQ?w=500&auto=format",
+      "description": "Ethereum Name Service (ENS) domains are secure domain names for the decentralized world. ENS domains provide a way for users to map human readable names to blockchain and non-blockchain resources, like Ethereum addresses, IPFS hashes, or website URLs. ENS domains can be bought and sold on secondary markets.",
+      "externalUrl": "https://ens.domains",
+      "twitterUsername": "ensdomains",
+      "lastIngestedAt": "2023-10-30T16:48:40.000Z"
+    }
+  }
+}

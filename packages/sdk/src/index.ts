@@ -1,10 +1,5 @@
 import "whatwg-fetch";
-import {
-  countGraphemes,
-  isEthereumAddress,
-  isTokenId,
-  isKeccak256Hash,
-} from "./utils";
+import { isEthereumAddress, isTokenId, isKeccak256Hash } from "./utils";
 
 const ETH_TLD = "eth";
 
@@ -23,14 +18,14 @@ export type Normalization =
 
 /**
  * The ENSIP-15 normalization status of a grapheme.
- * 
+ *
  * This check does not consider the context of the grapheme and is **not** equivalent to `ens_normalize(grapheme)`.
  * A normalized grapheme can be combined with other normalized graphemes to form an unnormalized label.
  * The position of a grapheme in a label can also affect the normalization status of the label.
  */
 export type GraphemeNormalization =
   | "normalized" /** `normalized`: The grapheme is normalized. */
-  | "unnormalized" /** `unnormalized`: The grapheme is not normalized. */
+  | "unnormalized"; /** `unnormalized`: The grapheme is not normalized. */
 
 /**
  * The network that NameGuard will use to inspect a names/labels/graphemes.
@@ -97,17 +92,17 @@ export type Rating =
   | "alert" /** `alert`: At least one check failed with an `ALERT` status. */;
 
 /**
- * The status of a reverse ENS lookup performed by NameGuard.
+ * The status of a secure primary ENS name lookup performed by NameGuard.
  * */
-export type SecureReverseLookupStatus =
+export type SecurePrimaryNameStatus =
   | "normalized" /** The ENS primary name was found and it is normalized. */
   | "no_primary_name" /** The ENS primary name was not found. */
   | "unnormalized" /** The ENS primary name was found, but it is not normalized. */;
 
 export type ImpersonationStatus =
   | "unlikely" /** The name is unlikely to be impersonating. */
-  | "potential" /** The name is potentially impersonating. */
-  
+  | "potential"; /** The name is potentially impersonating. */
+
 export type FakeEthNameCheckStatus =
   | "authentic_eth_name" /** The NFT is associated with authentic ".eth" contracts. */
   | "impersonated_eth_name" /** The NFT appears to impersonate a ".eth" name. It doesn't belong to authentic ENS contracts but contains graphemes that visually resemble ".eth" at the end of relevant NFT metadata fields. Consider automated rejection of this NFT from marketplaces. */
@@ -382,7 +377,8 @@ export interface NameGuardReport extends ConsolidatedNameGuardReport {
    * If a label is represented as `[labelhash]` in `name`,
    * the `canonical_name` will also contain the label represented as `[labelhash]`.
    *
-   * `canonical_name` is guaranteed to be normalized.
+   * `canonical_name` is guaranteed to be normalized with the exception of the case
+   * where `normalization` is `unknown` and one or more labels are represented as `[labelhash]`.
    */
   canonical_name: string | null;
 }
@@ -391,16 +387,19 @@ export interface BulkConsolidatedNameGuardReport {
   results: ConsolidatedNameGuardReport[];
 }
 
-export interface SecureReverseLookupResult {
-  primary_name_status: SecureReverseLookupStatus;
+export interface SecurePrimaryNameResult {
+  /**
+   * Secure primary name status of the Ethereum address.
+   */
+  primary_name_status: SecurePrimaryNameStatus;
 
   /**
    * Impersonation status of the `primary_name`.
    *
-   * `null` if primary name is unknown or primary name is unnormalized.
+   * `null` if `primary_name` is `null`.
    */
   impersonation_status: ImpersonationStatus | null;
-  
+
   /**
    * Primary ENS name for the Ethereum address.
    *
@@ -411,7 +410,7 @@ export interface SecureReverseLookupResult {
   /**
    * ENS beautified version of `primary_name`.
    *
-   * If `primary_name` is `null` then provides a fallback `display_name` of "Unnamed [first four hex digits of Ethereum address]", e.g. "Unnamed C2A6".
+   * If `primary_name` is `null` then provides a fallback `display_name` of "Unnamed [first four hex digits of Ethereum address]", e.g. "Unnamed c2a6".
    */
   display_name: string;
 
@@ -423,7 +422,7 @@ export interface SecureReverseLookupResult {
   nameguard_result: NameGuardReport | null;
 }
 
-// TODO: I think we want to apply more formalization to this error class.
+// TODO: Let's apply more formalization to this error class.
 class NameGuardError extends Error {
   constructor(
     public status: number,
@@ -434,7 +433,7 @@ class NameGuardError extends Error {
 }
 
 const DEFAULT_ENDPOINT = "https://api.nameguard.io";
-export const API_VERSION = "v1-beta";
+export const API_VERSION = "v0.8-beta";
 const DEFAULT_NETWORK: Network = "mainnet";
 const DEFAULT_INSPECT_LABELHASH_PARENT = ETH_TLD;
 const MAX_BULK_INSPECTION_NAMES = 250;
@@ -533,7 +532,7 @@ class NameGuard {
   private async fetchSecurePrimaryName(
     address: string,
     options?: SecurePrimaryNameOptions
-  ): Promise<SecureReverseLookupResult> {
+  ): Promise<SecurePrimaryNameResult> {
     const network_name = options?.network || this.network;
 
     const url = `${this.endpoint}${this.version}/secure-primary-name/${network_name}/${address}`;
@@ -723,19 +722,13 @@ class NameGuard {
    * @returns A promise that resolves with a `GraphemeGuardReport` of the inspected grapheme.
    */
   public inspectGrapheme(grapheme: string): Promise<GraphemeGuardReport> {
-    if (countGraphemes(grapheme) !== 1) {
-      throw new Error(
-        `The provided grapheme: "${grapheme}" is not a single grapheme. (i.e. it is not a single character or a sequence of characters that represent a single grapheme).`
-      );
-    }
-
     return this.fetchGraphemeGuardReport(grapheme);
   }
 
   public getSecurePrimaryName(
     address: string,
     options?: SecurePrimaryNameOptions
-  ): Promise<SecureReverseLookupResult> {
+  ): Promise<SecurePrimaryNameResult> {
     if (!isEthereumAddress(address)) {
       throw new Error(
         `The provided address: "${address}" is not in a valid Ethereum address format.`

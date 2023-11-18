@@ -1,0 +1,132 @@
+{
+  "contract": {
+    "address": "0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401"
+  },
+  "id": {
+    "tokenId": "34762977820481521209114130776556072772965907316729597364642457029530388725237",
+    "tokenMetadata": {
+      "tokenType": "ERC1155"
+    }
+  },
+  "title": "dot.this.averageman.eth",
+  "description": "dot.this.averageman.eth, an ENS name. [ ⚠️ ATTENTION: THE NFT FOR THIS NAME CAN BE REVOKED AT ANY TIME WHILE IT IS IN THE WRAPPED STATE ]",
+  "tokenUri": {
+    "gateway": "https://metadata.ens.domains/mainnet/0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401/0x4cdb25ef7aba44012f271b12470e84f1228795c595b9fdb2938454502bf6fdf5",
+    "raw": "https://metadata.ens.domains/mainnet/0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401/0x4cdb25ef7aba44012f271b12470e84f1228795c595b9fdb2938454502bf6fdf5"
+  },
+  "media": [
+    {
+      "gateway": "https://nft-cdn.alchemy.com/eth-mainnet/21d91778cf09e712db90911acdd80d83",
+      "raw": "https://metadata.ens.domains/mainnet/0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401/0x4cdb25ef7aba44012f271b12470e84f1228795c595b9fdb2938454502bf6fdf5/image",
+      "format": "svg+xml"
+    }
+  ],
+  "metadata": {
+    "background_image": "https://metadata.ens.domains/mainnet/avatar/dot.this.averageman.eth",
+    "image": "https://metadata.ens.domains/mainnet/0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401/0x4cdb25ef7aba44012f271b12470e84f1228795c595b9fdb2938454502bf6fdf5/image",
+    "last_request_date": 1699014039224,
+    "is_normalized": true,
+    "image_url": "https://metadata.ens.domains/mainnet/0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401/0x4cdb25ef7aba44012f271b12470e84f1228795c595b9fdb2938454502bf6fdf5/image",
+    "name": "dot.this.averageman.eth",
+    "description": "dot.this.averageman.eth, an ENS name. [ ⚠️ ATTENTION: THE NFT FOR THIS NAME CAN BE REVOKED AT ANY TIME WHILE IT IS IN THE WRAPPED STATE ]",
+    "attributes": [
+      {
+        "display_type": "date",
+        "value": 1696160735000,
+        "trait_type": "Created Date"
+      },
+      {
+        "display_type": "number",
+        "value": 3,
+        "trait_type": "Length"
+      },
+      {
+        "display_type": "number",
+        "value": 3,
+        "trait_type": "Segment Length"
+      },
+      {
+        "display_type": "string",
+        "value": "letter",
+        "trait_type": "Character Set"
+      },
+      {
+        "display_type": "object",
+        "value": {
+          "parent": {
+            "PARENT_CANNOT_CONTROL": false,
+            "unnamed": {
+              "524288": false,
+              "1048576": false,
+              "2097152": false,
+              "4194304": false,
+              "8388608": false,
+              "16777216": false,
+              "33554432": false,
+              "67108864": false,
+              "134217728": false,
+              "268435456": false,
+              "536870912": false,
+              "1073741824": false,
+              "2147483648": false
+            },
+            "CAN_EXTEND_EXPIRY": false,
+            "IS_DOT_ETH": false
+          },
+          "child": {
+            "CANNOT_APPROVE": false,
+            "CANNOT_SET_RESOLVER": false,
+            "CANNOT_CREATE_SUBDOMAIN": false,
+            "CAN_DO_EVERYTHING": true,
+            "CANNOT_UNWRAP": false,
+            "unnamed": {
+              "128": false,
+              "256": false,
+              "512": false,
+              "1024": false,
+              "2048": false,
+              "4096": false,
+              "8192": false,
+              "16384": false,
+              "32768": false
+            },
+            "CANNOT_BURN_FUSES": false,
+            "CANNOT_TRANSFER": false,
+            "CANNOT_SET_TTL": false
+          }
+        },
+        "trait_type": "Namewrapper Fuse States"
+      },
+      {
+        "display_type": "date",
+        "value": 0,
+        "trait_type": "Namewrapper Expiry Date"
+      },
+      {
+        "display_type": "string",
+        "value": "Wrapped",
+        "trait_type": "Namewrapper State"
+      }
+    ],
+    "version": 2,
+    "url": "https://app.ens.domains/name/dot.this.averageman.eth"
+  },
+  "timeLastUpdated": "2023-11-03T17:02:40.867Z",
+  "contractMetadata": {
+    "name": "NameWrapper",
+    "tokenType": "ERC1155",
+    "contractDeployer": "0x0904dac3347ea47d208f3fd67402d039a3b99859",
+    "deployedBlockNumber": 16925608,
+    "openSea": {
+      "floorPrice": 0.0003792723,
+      "collectionName": "ENS: Ethereum Name Service",
+      "collectionSlug": "ens",
+      "safelistRequestStatus": "verified",
+      "imageUrl": "https://i.seadn.io/gae/0cOqWoYA7xL9CkUjGlxsjreSYBdrUBE0c6EO1COG4XE8UeP-Z30ckqUNiL872zHQHQU5MUNMNhfDpyXIP17hRSC5HQ?w=500&auto=format",
+      "description": "Ethereum Name Service (ENS) domains are secure domain names for the decentralized world. ENS domains provide a way for users to map human readable names to blockchain and non-blockchain resources, like Ethereum addresses, IPFS hashes, or website URLs. ENS domains can be bought and sold on secondary markets.",
+      "externalUrl": "https://ens.domains",
+      "twitterUsername": "ensdomains",
+      "lastIngestedAt": "2023-10-30T16:48:40.000Z"
+    }
+  }
+}

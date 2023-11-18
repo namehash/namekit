@@ -5,6 +5,7 @@ from nameguard.context import endpoint_name
 from nameguard.models import Rating, Check, CheckStatus, Normalization, GenericCheckResult, GraphemeNormalization
 from nameguard.nameguard import NameGuard
 from nameguard.exceptions import NamehashNotFoundInSubgraph, NotAGrapheme
+from nameguard.endpoints import Endpoints
 
 
 @pytest.fixture(scope='module')
@@ -83,6 +84,22 @@ async def test_check_skip(nameguard: NameGuard):
 
 
 @pytest.mark.asyncio
+async def test_check_skip_confusable(nameguard: NameGuard):
+    result = await nameguard.inspect_name('mainnet', 'Ɇa')
+    c = [c for c in result.checks if c.check is Check.CONFUSABLES][0]
+    assert c.rating is Rating.PASS
+    assert c.status is CheckStatus.SKIP
+    assert c.message == 'It has not been checked if this name contains confusable graphemes'
+
+@pytest.mark.asyncio
+async def test_check_skip_font_support(nameguard: NameGuard):
+    result = await nameguard.inspect_name('mainnet', '🏃🏻‍➡a')
+    c = [c for c in result.checks if c.check is Check.FONT_SUPPORT][0]
+    assert c.rating is Rating.PASS
+    assert c.status is CheckStatus.SKIP
+    assert c.message == 'It is unknown if this name is supported by common fonts'
+    
+@pytest.mark.asyncio
 @pytest.mark.parametrize('name,n,l0,l1', [
     ('nick.eth', Normalization.NORMALIZED, Normalization.NORMALIZED, Normalization.NORMALIZED),
     ('[zzz].eth', Normalization.UNNORMALIZED, Normalization.UNNORMALIZED, Normalization.NORMALIZED),
@@ -150,6 +167,7 @@ async def test_unknown_label(nameguard: NameGuard):
     assert r.labels[0].label == '[56d7ba27aed5cd36fc16684baeb86f73d6d0c60b6501487725bcfc9056378075]'
     assert r.rating is Rating.ALERT
     assert r.highest_risk.check is Check.UNKNOWN_LABEL
+    assert r.canonical_name == '[56d7ba27aed5cd36fc16684baeb86f73d6d0c60b6501487725bcfc9056378075].eth'
 
 
 @pytest.mark.asyncio
@@ -223,7 +241,7 @@ async def test_impersonation_risk(nameguard: NameGuard):
     else:
         assert False, 'IMPERSONATION_RISK check not found'
 
-    endpoint_name.set('primary-name')
+    endpoint_name.set(Endpoints.SECURE_PRIMARY_NAME)
     r = await nameguard.inspect_name('mainnet', 'nićk.eth')
     for check in r.checks:
         if check.check is Check.IMPERSONATION_RISK:
@@ -397,3 +415,35 @@ def test_generic_check_result_operators():
 def test_generic_check_result_repr():
     assert repr(GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.PASS, _name_message='')) == \
            'normalized(pass)'
+
+
+@pytest.mark.asyncio
+async def test_dynamic_check_order(nameguard: NameGuard):
+    r = await nameguard.inspect_name('mainnet', 'Ō')
+    assert r.checks[0].check == Check.NORMALIZED
+    assert r.checks[0].status == CheckStatus.ALERT
+    assert r.checks[1].check == Check.TYPING_DIFFICULTY
+    assert r.checks[1].status == CheckStatus.WARN
+
+    # normalized is ALERT but impersonation risk is WARN
+    r = await nameguard.secure_primary_name('0xc9f598bc5bb554b6a15a96d19954b041c9fdbf14', 'mainnet')
+    assert r.nameguard_result.checks[0].check == Check.NORMALIZED
+    assert r.nameguard_result.checks[0].status == CheckStatus.ALERT
+    assert r.nameguard_result.checks[1].check == Check.TYPING_DIFFICULTY
+    assert r.nameguard_result.checks[1].status == CheckStatus.WARN
+
+    r = await nameguard.secure_primary_name('0xd8da6bf26964af9d7eed9e03e53415d37aa96045', 'mainnet')
+    assert r.nameguard_result.checks[0].check == Check.INVISIBLE
+    assert r.nameguard_result.checks[0].status == CheckStatus.PASS
+    assert r.nameguard_result.checks[1].check == Check.NORMALIZED
+    assert r.nameguard_result.checks[1].status == CheckStatus.PASS
+
+    endpoint_name.set(Endpoints.SECURE_PRIMARY_NAME)
+    
+    r = await nameguard.secure_primary_name('0xd8da6bf26964af9d7eed9e03e53415d37aa96045', 'mainnet')
+    assert r.nameguard_result.checks[0].check == Check.IMPERSONATION_RISK
+    assert r.nameguard_result.checks[0].status == CheckStatus.PASS
+    assert r.nameguard_result.checks[1].check == Check.INVISIBLE
+    assert r.nameguard_result.checks[1].status == CheckStatus.PASS
+
+    endpoint_name.set(None)

@@ -11,6 +11,7 @@ import {
 import { FeedbackNotice } from "./FeedbackNotice";
 import { ReportFooter } from "./ReportFooter";
 import { ChatModal } from "../ChatModal/ChatModal";
+import { GraphemeModal } from "../GraphemeModal/GraphemeModal";
 import { useOutsideClick } from "../../hooks/use-outside-click";
 import { SearchEmptyState } from "../Search/SearchEmptyState";
 import { ReportHeader } from "./ReportHeader";
@@ -18,6 +19,9 @@ import { LoadingSkeleton } from "./LoadingSkeleton";
 import { Banner } from "./Banner";
 import { CheckResultCard } from "./CheckResultCard";
 import { LabelList } from "./LabelList";
+import { useGraphemeModalStore } from "../../stores/grapheme";
+import { ReportError } from "./ReportError";
+import { Share } from "../Share/Share";
 
 type ReportProps = {
   name?: string;
@@ -31,8 +35,17 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
     : defaultUseChatModalStore();
 
   const { isChatModalOpen, openChatModal, closeChatModal } = store;
+  const { isGraphemeModalOpen, closeAllGraphemeModals } =
+    useGraphemeModalStore();
 
-  const outsideClickRef = useOutsideClick(store.closeChatModal);
+  const outsideChatClickRef = useOutsideClick(
+    store.closeChatModal,
+    store.isChatModalOpen
+  );
+  const outsideGraphemeClickRef = useOutsideClick(
+    closeAllGraphemeModals,
+    isGraphemeModalOpen
+  );
 
   const parsedName = useMemo(() => {
     return parseName(name, settings);
@@ -48,13 +61,32 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
     (n: string) => nameguard.inspectName(n)
   );
 
+  const shareLinks = [
+    {
+      text: "ENS.domains",
+      href: `https://app.ens.domains/${parsedName.outputName.name}`,
+    },
+    {
+      text: "Adraffy's resolver",
+      href: `https://adraffy.github.io/ens-normalize.js/test/resolver.html#${parsedName.outputName.name}`,
+    },
+    {
+      text: "ENS tools",
+      href: `https://tools.ens.domains/check/${parsedName.outputName.name}`,
+    },
+    {
+      text: "Etherscan",
+      href: `https://etherscan.io/name-lookup-search?id=${parsedName.outputName.name}`,
+    },
+  ];
+
   if (showEmptyState)
     return (
       <Fragment>
         <ChatModal
           open={isChatModalOpen}
           onClose={closeChatModal}
-          ref={outsideClickRef}
+          ref={outsideChatClickRef}
         />
         <SearchEmptyState />
       </Fragment>
@@ -62,21 +94,20 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
 
   return (
     <Fragment>
-      <ChatModal
-        open={isChatModalOpen}
-        onClose={closeChatModal}
-        ref={outsideClickRef}
-      />
-      <div className="space-y-8">
-        <ReportHeader />
+      <div className="space-y-8 w-full">
+        <div className="flex justify-between">
+          <ReportHeader />
+          <Share title="View name in" links={shareLinks} />
+        </div>
 
-        {isLoading && normalizationUnknown && <LoadingSkeleton />}
-        {isLoading && !normalizationUnknown && (
-          <LoadingSkeleton
-            name={parsedName.outputName.name}
-            displayName={parsedName.outputName.displayName}
-          />
+        {isLoading && !error && normalizationUnknown && (
+          <LoadingSkeleton parsedName={parsedName} />
         )}
+        {isLoading && !error && !normalizationUnknown && (
+          <LoadingSkeleton parsedName={parsedName} />
+        )}
+
+        {error && <ReportError />}
 
         {data && (
           <Fragment>
@@ -105,6 +136,13 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
           </Fragment>
         )}
       </div>
+
+      <ChatModal
+        open={isChatModalOpen}
+        onClose={closeChatModal}
+        ref={outsideChatClickRef}
+      />
+      <GraphemeModal ref={outsideGraphemeClickRef} />
     </Fragment>
   );
 };

@@ -2,72 +2,92 @@ import * as React from "react";
 
 export const PassShieldLarge = (props) => (
   <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={68}
-    height={71}
     fill="none"
+    height="71"
+    viewBox="0 0 68 71"
+    width="68"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlnsXlink="http://www.w3.org/1999/xlink"
     {...props}
   >
+    <filter
+      id="a"
+      colorInterpolationFilters="sRGB"
+      filterUnits="userSpaceOnUse"
+      height="74"
+      width="74"
+      x="-3"
+      y="-1"
+    >
+      <feFlood floodOpacity="0" result="BackgroundImageFix" />
+      <feColorMatrix
+        in="SourceAlpha"
+        result="hardAlpha"
+        type="matrix"
+        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+      />
+      <feMorphology
+        in="SourceAlpha"
+        operator="erode"
+        radius="1"
+        result="effect1_dropShadow_1176_4994"
+      />
+      <feOffset dy="2" />
+      <feGaussianBlur stdDeviation="2" />
+      <feColorMatrix
+        type="matrix"
+        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0"
+      />
+      <feBlend
+        in2="BackgroundImageFix"
+        mode="normal"
+        result="effect1_dropShadow_1176_4994"
+      />
+      <feColorMatrix
+        in="SourceAlpha"
+        result="hardAlpha"
+        type="matrix"
+        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+      />
+      <feMorphology
+        in="SourceAlpha"
+        operator="erode"
+        radius="1"
+        result="effect2_dropShadow_1176_4994"
+      />
+      <feOffset dy="4" />
+      <feGaussianBlur stdDeviation="3" />
+      <feColorMatrix
+        type="matrix"
+        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"
+      />
+      <feBlend
+        in2="effect1_dropShadow_1176_4994"
+        mode="normal"
+        result="effect2_dropShadow_1176_4994"
+      />
+      <feBlend
+        in="SourceGraphic"
+        in2="effect2_dropShadow_1176_4994"
+        mode="normal"
+        result="shape"
+      />
+    </filter>
     <g filter="url(#a)">
       <path
+        clipRule="evenodd"
+        d="m35.3752 5.78614c-.7713-.73048-1.9791-.73048-2.7504 0-5.3781 5.09326-12.6348 8.21416-20.6248 8.21416-.1271 0-.254-.0008-.3808-.0024-.873-.0108-1.65208.5458-1.92476 1.3752-1.10011 3.346-1.69444 6.9193-1.69444 10.6273 0 15.8454 10.8375 29.1545 25.5015 32.9287.327.0842.67.0842.997 0 14.664-3.7742 25.5015-17.0833 25.5015-32.9287 0-3.708-.5943-7.2813-1.6944-10.6273-.2727-.8294-1.0518-1.386-1.9248-1.3752-.1267.0016-.2537.0024-.3808.0024-7.99 0-15.2467-3.1209-20.6248-8.21416zm8.2523 21.37636c.642-.8988.4338-2.1479-.465-2.79-.8989-.642-2.148-.4338-2.79.465l-8.6277 12.0789-4.3306-4.3306c-.781-.7811-2.0474-.7811-2.8284 0-.7811.781-.7811 2.0474 0 2.8284l6 6c.4157.4157.9933.6275 1.5792.579s1.1208-.3523 1.4625-.8307z"
         fill="#059669"
-        stroke="#fff"
-        strokeLinejoin="round"
-        strokeWidth={3}
-        d="M30.684 37.977a1.5 1.5 0 0 0 2.281-.189l8.628-12.079a.5.5 0 0 1 .814.582l1.22.872-1.22-.872-10 14a.5.5 0 0 1-.76.063l-6-6a.5.5 0 0 1 .707-.708l4.33 4.331Zm5.723-33.28a3.5 3.5 0 0 0-4.814 0 28.39 28.39 0 0 1-19.955 7.801 3.5 3.5 0 0 0-3.369 2.407A35.471 35.471 0 0 0 6.5 26c0 16.547 11.317 30.441 26.628 34.382a3.5 3.5 0 0 0 1.744 0C50.182 56.442 61.5 42.547 61.5 26c0-3.869-.62-7.6-1.77-11.095a3.5 3.5 0 0 0-3.368-2.407c-.12.002-.241.002-.362.002a28.39 28.39 0 0 1-19.593-7.803Z"
+        fillRule="evenodd"
       />
+      <g fill="#fff">
+        <path
+          clipRule="evenodd"
+          d="m11.6565 10.9981c.1143.0015.2288.0022.3435.0022 7.1926 0 13.7189-2.80581 18.5619-7.39236 1.9283-1.82621 4.9479-1.82621 6.8762 0 4.843 4.58655 11.3693 7.39236 18.5619 7.39236.1147 0 .2292-.0007.3435-.0022l.0373 2.9998c-.1267.0016-.2537.0024-.3808.0024-7.99 0-15.2467-3.1209-20.6248-8.21416-.7713-.73048-1.9791-.73048-2.7504 0-5.3781 5.09326-12.6348 8.21416-20.6248 8.21416-.1271 0-.254-.0008-.3808-.0024-.873-.0108-1.65208.5458-1.92476 1.3752-1.10011 3.346-1.69444 6.9193-1.69444 10.6273 0 15.8454 10.8375 29.1545 25.5015 32.9287.327.0842.67.0842.997 0 14.664-3.7742 25.5015-17.0833 25.5015-32.9287 0-3.708-.5943-7.2813-1.6944-10.6273-.2727-.8294-1.0518-1.386-1.9248-1.3752l-.0373-2.9998c2.1824-.0271 4.1303 1.3646 4.812 3.438 1.1983 3.6447 1.8445 7.534 1.8445 11.5643 0 17.2477-11.7968 31.727-27.7537 35.834-.8175.2105-1.6751.2105-2.4926 0-15.9569-4.107-27.7537-18.5863-27.7537-35.834 0-4.0303.64623-7.9196 1.84452-11.5643.6817-2.0734 2.62954-3.4651 4.81198-3.438zm31.1565 15.5842.0007-.0011zm-1.6277-1.1622c.0003-.0005.0006-.0009.001-.0013zm-9.4405 11.4963 8.6277-12.0789c.642-.8988 1.8911-1.107 2.79-.465.8988.6421 1.107 1.8912.465 2.79l-10 14c-.3417.4784-.8766.7822-1.4625.8307s-1.1635-.1633-1.5792-.579l-6-6c-.7811-.781-.7811-2.0474 0-2.8284.781-.7811 2.0474-.7811 2.8284 0z"
+          fillRule="evenodd"
+        />
+        <path d="m43.6275 27.1625c.642-.8988.4338-2.1479-.465-2.79-.8989-.642-2.148-.4338-2.79.465l-8.6277 12.0789-4.3306-4.3306c-.781-.7811-2.0474-.7811-2.8284 0-.7811.781-.7811 2.0474 0 2.8284l6 6c.4157.4157.9933.6275 1.5792.579s1.1208-.3523 1.4625-.8307z" />
+      </g>
     </g>
-    <defs>
-      <filter
-        id="a"
-        width={74}
-        height={74}
-        x={-3}
-        y={-1}
-        colorInterpolationFilters="sRGB"
-        filterUnits="userSpaceOnUse"
-      >
-        <feFlood floodOpacity={0} result="BackgroundImageFix" />
-        <feColorMatrix
-          in="SourceAlpha"
-          result="hardAlpha"
-          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-        />
-        <feMorphology
-          in="SourceAlpha"
-          radius={1}
-          result="effect1_dropShadow_405_7374"
-        />
-        <feOffset dy={2} />
-        <feGaussianBlur stdDeviation={2} />
-        <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0" />
-        <feBlend
-          in2="BackgroundImageFix"
-          result="effect1_dropShadow_405_7374"
-        />
-        <feColorMatrix
-          in="SourceAlpha"
-          result="hardAlpha"
-          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-        />
-        <feMorphology
-          in="SourceAlpha"
-          radius={1}
-          result="effect2_dropShadow_405_7374"
-        />
-        <feOffset dy={4} />
-        <feGaussianBlur stdDeviation={3} />
-        <feColorMatrix values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0" />
-        <feBlend
-          in2="effect1_dropShadow_405_7374"
-          result="effect2_dropShadow_405_7374"
-        />
-        <feBlend
-          in="SourceGraphic"
-          in2="effect2_dropShadow_405_7374"
-          result="shape"
-        />
-      </filter>
-    </defs>
   </svg>
 );

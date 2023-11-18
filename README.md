@@ -2,22 +2,24 @@
 
 The NameHash team is proud to present NameGuard, a tool for identifying and preventing malicious use of ENS names.
 
-* Offers multiple levels of protection
-  * Impersonated name detection
-  * Confusable grapheme detection
-  * International accessibility checks
-  * Rendering checks for different fonts
-  * ENSIP-15 verification with detailed explanations and auto-suggestions
-  * Punycode and DNS hostname compatibility checks
-  * and more!
-* Provides a unified rating system for entire names, as well as detailed explanations for each check
-  * :green_circle: Pass: no issues found
-  * :yellow_circle: Warn: potential issues found
-  * :red_circle: Fail: serious issues found
-* Supports many use cases
-  * Standalone Python library ([PyPI](https://pypi.org/project/nameguard/))
-  * ASGI web server
-  * [Amazon AWS Lambda](https://aws.amazon.com/lambda/) handler
+- Offers multiple levels of protection
+  - Impersonated name detection
+  - Confusable grapheme detection
+  - International accessibility checks
+  - Rendering checks for different fonts
+  - ENSIP-15 verification with detailed explanations and auto-suggestions
+  - Punycode and DNS hostname compatibility checks
+  - and more!
+- Provides a unified rating system for entire names, as well as detailed explanations for each check
+  - :green_circle: Pass: no issues found
+  - :yellow_circle: Warn: potential issues found
+  - :red_circle: Fail: serious issues found
+- Supports many use cases
+  - Standalone Python library ([PyPI](https://pypi.org/project/nameguard/))
+  - ASGI web server
+  - [Amazon AWS Lambda](https://aws.amazon.com/lambda/) handler
+
+⚠️ **This SDK is BETA. Things will change based on the community feedback.**
 
 ## Getting Started
 
@@ -30,7 +32,7 @@ NameGuard is hosted at <https://api.nameguard.io>
 You can make a basic request to the API like this:
 
 ```bash
-curl https://api.nameguard.io/v1-beta/inspect-name/mainnet/nick.eth
+curl https://api.nameguard.io/v0.8-beta/inspect-name/mainnet/nick.eth
 ```
 
 The API documentation is available at <https://api.nameguard.io/redoc> or <https://api.nameguard.io/docs>.
@@ -93,3 +95,7 @@ See the [NameGuard Python README](./api/README.md) for more details.
 9. **Punycode**: Checks if the name is compatible with Punycode encoding.
 
 10. **Unknown Labels**: Checks if the name contains unknown labels (e.g. `[0123abcd...].eth`).
+
+11. **Decentralized Name**: Checks if the name is decentralized (unruggable).
+
+12. **NameWrapper fuses**: Checks that the NameWrapper configuration of a name is safe.

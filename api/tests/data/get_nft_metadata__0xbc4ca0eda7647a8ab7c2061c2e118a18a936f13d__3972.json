@@ -1,0 +1,77 @@
+{
+  "contract": {
+    "address": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d"
+  },
+  "id": {
+    "tokenId": "3972",
+    "tokenMetadata": {
+      "tokenType": "ERC721"
+    }
+  },
+  "title": "",
+  "description": "",
+  "tokenUri": {
+    "gateway": "https://alchemy.mypinata.cloud/ipfs/QmeSjSinHpPnmXmspMjwiXyN6zS4E9zccariGR3jxcaWtq/3972",
+    "raw": "ipfs://QmeSjSinHpPnmXmspMjwiXyN6zS4E9zccariGR3jxcaWtq/3972"
+  },
+  "media": [
+    {
+      "gateway": "https://nft-cdn.alchemy.com/eth-mainnet/5007fe556f9839d4af085a2657f66ab3",
+      "thumbnail": "https://res.cloudinary.com/alchemyapi/image/upload/thumbnailv2/eth-mainnet/5007fe556f9839d4af085a2657f66ab3",
+      "raw": "ipfs://QmVhKXhWN8SFZRj73Y6mE1dUZDPeqiB6efFdhMcShjBdkD",
+      "format": "png",
+      "bytes": 147305
+    }
+  ],
+  "metadata": {
+    "image": "ipfs://QmVhKXhWN8SFZRj73Y6mE1dUZDPeqiB6efFdhMcShjBdkD",
+    "attributes": [
+      {
+        "value": "Guayabera",
+        "trait_type": "Clothes"
+      },
+      {
+        "value": "Sunglasses",
+        "trait_type": "Eyes"
+      },
+      {
+        "value": "Army Green",
+        "trait_type": "Background"
+      },
+      {
+        "value": "Commie Hat",
+        "trait_type": "Hat"
+      },
+      {
+        "value": "Dumbfounded",
+        "trait_type": "Mouth"
+      },
+      {
+        "value": "Golden Brown",
+        "trait_type": "Fur"
+      }
+    ]
+  },
+  "timeLastUpdated": "2023-11-07T16:42:39.107Z",
+  "contractMetadata": {
+    "name": "BoredApeYachtClub",
+    "symbol": "BAYC",
+    "totalSupply": "10000",
+    "tokenType": "ERC721",
+    "contractDeployer": "0xaba7161a7fb69c88e16ed9f455ce62b791ee4d03",
+    "deployedBlockNumber": 12287507,
+    "openSea": {
+      "floorPrice": 28.89,
+      "collectionName": "Bored Ape Yacht Club",
+      "collectionSlug": "boredapeyachtclub",
+      "safelistRequestStatus": "verified",
+      "imageUrl": "https://i.seadn.io/gae/Ju9CkWtV-1Okvf45wo8UctR-M9He2PjILP0oOvxE89AyiPPGtrR3gysu1Zgy0hjd2xKIgjJJtWIc0ybj4Vd7wv8t3pxDGHoJBzDB?w=500&auto=format",
+      "description": "The Bored Ape Yacht Club is a collection of 10,000 unique Bored Ape NFTs— unique digital collectibles living on the Ethereum blockchain. Your Bored Ape doubles as your Yacht Club membership card, and grants access to members-only benefits, the first of which is access to THE BATHROOM, a collaborative graffiti board. Future areas and perks can be unlocked by the community through roadmap activation. Visit www.BoredApeYachtClub.com for more details.",
+      "externalUrl": "http://www.boredapeyachtclub.com/",
+      "twitterUsername": "BoredApeYC",
+      "discordUrl": "https://discord.gg/3P5K3dzgdB",
+      "bannerImageUrl": "https://i.seadn.io/gae/i5dYZRkVCUK97bfprQ3WXyrT9BnLSZtVKGJlKQ919uaUB0sxbngVCioaiyu9r6snqfi2aaTyIvv6DHm4m2R3y7hMajbsv14pSZK8mhs?w=500&auto=format",
+      "lastIngestedAt": "2023-11-06T15:37:18.000Z"
+    }
+  }
+}

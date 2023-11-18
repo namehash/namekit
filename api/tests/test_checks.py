@@ -1,6 +1,8 @@
 import pytest
 
 from nameguard import checks
+from nameguard.context import endpoint_name
+from nameguard.endpoints import Endpoints
 from nameguard.nameguard import NameGuard
 from nameguard.models import Rating, Check, CheckStatus
 
@@ -15,29 +17,32 @@ def analyse_grapheme(nameguard: NameGuard, grapheme: str):
 
 
 def test_ordering():
-    assert CheckStatus.SKIP < CheckStatus.INFO < CheckStatus.PASS < CheckStatus.WARN < CheckStatus.ALERT
+    assert CheckStatus.INFO < CheckStatus.PASS < CheckStatus.SKIP < CheckStatus.WARN < CheckStatus.ALERT
     assert CheckStatus.WARN > CheckStatus.INFO
     assert CheckStatus.SKIP == CheckStatus.SKIP
     assert CheckStatus.ALERT != CheckStatus.WARN
-    assert CheckStatus.SKIP <= CheckStatus.INFO
+    assert CheckStatus.INFO <= CheckStatus.PASS
     assert CheckStatus.WARN >= CheckStatus.WARN
 
 
 # -- GRAPHEME CHECKS --
 
-
-def test_grapheme_confusable(nameguard: NameGuard):
-    g = analyse_grapheme(nameguard, 'a')
+@pytest.mark.parametrize(
+    "grapheme, rating, message",
+    [
+        ('a', Rating.PASS, 'This grapheme is not confusable'),
+        ('ą', Rating.WARN, 'This grapheme is confusable'),
+        ('ဩ', Rating.WARN, 'This grapheme is confusable'),
+        ('¤', Rating.PASS, 'This grapheme is not confusable'),
+        ('Ɇ', Rating.PASS, 'It has not been checked if this grapheme is confusable'),
+    ]
+)
+def test_grapheme_confusable(nameguard: NameGuard, grapheme, rating, message):
+    g = analyse_grapheme(nameguard, grapheme)
     r = checks.grapheme.confusables.check_grapheme(g)
     assert r.check == Check.CONFUSABLES
-    assert r.rating == Rating.PASS
-    assert r.message == 'This grapheme is not confusable'
-
-    g = analyse_grapheme(nameguard, 'ą')
-    r = checks.grapheme.confusables.check_grapheme(g)
-    assert r.check == Check.CONFUSABLES
-    assert r.rating == Rating.WARN
-    assert r.message == 'This grapheme is confusable'
+    assert r.rating == rating
+    assert r.message == message
 
 
 def test_grapheme_font_support(nameguard: NameGuard):
@@ -174,3 +179,53 @@ def test_name_punycode_name(nameguard: NameGuard):
     assert r.check == Check.PUNYCODE_COMPATIBLE_NAME
     assert r.status == CheckStatus.WARN
     assert r.message == 'This name is not Punycode compatible'
+
+
+@pytest.mark.parametrize(
+    "name, rating, message",
+    [
+        ("", Rating.PASS, 'This name is decentralized'),
+        ("eth", Rating.PASS, 'This name is decentralized'),
+        ("abc.eth", Rating.PASS, 'This name is decentralized'),
+        ("123.abc.eth", Rating.WARN, 'This name may not be decentralized'),
+        ("com", Rating.WARN, 'This name is not decentralized'),
+        ("abc.com", Rating.WARN, 'This name is not decentralized'),
+        ("limo", Rating.WARN, 'This name may not be decentralized'),
+        ("eth.limo", Rating.WARN, 'This name may not be decentralized'),
+        ("[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth", Rating.PASS, 'This name is decentralized'),
+        ("abc.[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770]", Rating.WARN, 'This name may not be decentralized'),
+    ]
+)
+def test_decentralized(nameguard: NameGuard, name, rating, message):
+    ls = [nameguard.analyse_label(l) for l in name.split('.')]
+    r = checks.name.decentralized_name.check_name(ls)
+    assert r.check == Check.DECENTRALIZED_NAME
+    assert r.rating == rating
+    assert r.message == message
+
+    
+def test_name_impersonation(nameguard: NameGuard):
+    n = 'niąck.eth'
+    ls = [nameguard.analyse_label(l) for l in n.split('.')]
+    r = checks.name.impersonation_risk.check_name(ls)
+    assert r.check == Check.IMPERSONATION_RISK
+    assert r.rating == Rating.WARN
+    assert r.message == 'Name may receive potential impersonation warnings'
+
+    endpoint_name.set(Endpoints.SECURE_PRIMARY_NAME)
+    n = 'niąck.eth'
+    ls = [nameguard.analyse_label(l) for l in n.split('.')]
+    r = checks.name.impersonation_risk.check_name(ls)
+    assert r.check == Check.IMPERSONATION_RISK
+    assert r.rating == Rating.WARN
+    assert r.message == 'Name might be an impersonation of `niack.eth`'
+    
+    n = 'a👩🏽‍⚕.eth'
+    ls = [nameguard.analyse_label(l) for l in n.split('.')]
+    r = checks.name.impersonation_risk.check_name(ls)
+    assert r.check == Check.IMPERSONATION_RISK
+    assert r.rating == Rating.WARN
+    assert r.message == 'Emojis used in this name may be visually confused with other similar emojis'
+
+    endpoint_name.set(None)
+

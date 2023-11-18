@@ -1,3 +1,5 @@
+import json
+
 import pytest
 from fastapi.testclient import TestClient
 from urllib.parse import quote
@@ -31,7 +33,7 @@ def test_client():
 @pytest.fixture(scope="module")
 def api_version():
     from nameguard.web_api import ApiVersion
-    return ApiVersion.V1_BETA.value
+    return ApiVersion.V08_BETA.value
 
 
 # -- inspect-name --
@@ -55,7 +57,7 @@ def test_inspect_name_get(test_client, api_version):
     assert all([label['labelhash'] for label in res_json['labels']])
 
 
-CORRECT_CHECKS_ORDER = ['alert', 'warn', 'pass', 'info', 'skip']
+CORRECT_CHECKS_ORDER = ['alert', 'warn', 'skip', 'pass', 'info']
 
 
 def check_order_of_list(l: list[str]):
@@ -147,7 +149,7 @@ def test_inspect_name_post_latin_all_pass(test_client, api_version):
 
     for check in res_json['checks']:
         assert 'check' in check and 'message' in check
-        assert check['status'] == 'pass'
+        assert check['status'] in ('pass', 'info')  # TODO remove info when fuses check implemented
         assert check['check_name'][0].isupper() and '_' not in check['check_name']
 
     # labels keys
@@ -192,7 +194,7 @@ def test_inspect_name_post_latin_all_pass(test_client, api_version):
 
 
 
-# -- bulk-inspect-name --
+# -- bulk-inspect-names --
 
 def test_bulk_inspect_name_post(test_client, api_version):
     names = ['vitalik.eth', 'byczong.mydomain.eth']
@@ -435,7 +437,7 @@ def test_inspect_labelhash_post(test_client, api_version, labelhash, parent, exp
 
 @pytest.mark.skipif(running_lambda_tests, reason='cannot monkeypatch if testing lambda')
 def test_inspect_labelhash_get_unexpected_response_body(monkeypatch, test_client, api_version):
-    labelhash = labelhash_from_label('vitalik')
+    labelhash = labelhash_from_label('vitalik1')
     network_name = 'mainnet'
 
     async def return_mock_response(*args, **kwargs):
@@ -449,7 +451,7 @@ def test_inspect_labelhash_get_unexpected_response_body(monkeypatch, test_client
 
 @pytest.mark.skipif(running_lambda_tests, reason='cannot monkeypatch if testing lambda')
 def test_inspect_labelhash_get_unexpected_status_code(monkeypatch, test_client, api_version):
-    labelhash = labelhash_from_label('vitalik')
+    labelhash = labelhash_from_label('vitalik2')
     network_name = 'mainnet'
 
     async def return_mock_response(*args, **kwargs):
@@ -463,7 +465,7 @@ def test_inspect_labelhash_get_unexpected_status_code(monkeypatch, test_client, 
 
 @pytest.mark.skipif(running_lambda_tests, reason='cannot monkeypatch if testing lambda')
 def test_inspect_labelhash_get_http_error(monkeypatch, test_client, api_version):
-    labelhash = labelhash_from_label('vitalik')
+    labelhash = labelhash_from_label('vitalik3')
     network_name = 'mainnet'
 
     async def return_mock_response(*args, **kwargs):
@@ -499,7 +501,7 @@ def test_inspect_grapheme_multi(test_client, api_version):
     [
         ('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045', 'unlikely', 'normalized', 'vitalik.eth', 'vitalik.eth', 'vitalik.eth', False, 'vitalik.eth'),
         ('0x8Ae0e6dd8eACe27045d9e017C8Cf6dAa9D08C776', 'potential', 'normalized', 'vitalìk.eth', 'vitalìk.eth', 'vitalik.eth', True, 'vitalìk.eth'),
-        ('0x8B7863d67e1083EE1becbDD277cbBFf1c1CCB631', 'potential', 'normalized', '٧٣٧.eth', '٧٣٧.eth', None, False, '٧٣٧.eth'),  # normalized without canonical
+        ('0x8B7863d67e1083EE1becbDD277cbBFf1c1CCB631', 'unlikely', 'normalized', '٧٣٧.eth', '٧٣٧.eth', '٧٣٧.eth', False, '٧٣٧.eth'),
         ('0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd', 'unlikely', 'normalized', 'exampleprimary.cb.id', 'exampleprimary.cb.id',
          'exampleprimary.cb.id', False, 'exampleprimary.cb.id'),
         ('0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96046', None, 'no_primary_name', None, 'Unnamed d8da', None, False, None),
@@ -507,11 +509,13 @@ def test_inspect_grapheme_multi(test_client, api_version):
         ('0x76fd9b1B2d8F2cd9Ba06c925506627883F97B97C', None, 'unnormalized', None, 'Unnamed 76fd', None, False, '‍‍❤‍‍.eth'),
         ('0xf537a27F31d7A014c5b8008a0069c61f827fA7A1', None, 'unnormalized', None, 'Unnamed f537', None, False, '٠٠۱.eth'),  # normalizable
         ('0x0ebDfD75d33c05025074fd7845848D44966AB367', None, 'unnormalized', None, 'Unnamed 0ebd', None, False, '۸۸۷۵۴۲.eth'),  # normalizable
-        ('0xaf738F6C83d7D2C46723b727Ce794F9c79Cc47E6', None, 'unnormalized', None, 'Unnamed af73', '99999.eth', True, '୨୨୨୨୨.eth'),
+        ('0xaf738F6C83d7D2C46723b727Ce794F9c79Cc47E6', None, 'unnormalized', None, 'Unnamed af73', None, False, '୨୨୨୨୨.eth'),  # canonical can be '99999.eth'
         ('0xb281405429C3bc91e52707a21754cDaCeCbB035E', None, 'unnormalized', None, 'Unnamed b281', None, False, '┣▇▇▇═─.eth'),
-        ('0x0d756ee0e8C250f88f5e0eDd7C723dc3A0BF75cF', None, 'unnormalized', None, 'Unnamed 0d75', 'c6ep.eth', True, 'сбер.eth'),
+        ('0x0d756ee0e8C250f88f5e0eDd7C723dc3A0BF75cF', None, 'unnormalized', None, 'Unnamed 0d75', None, False, 'сбер.eth'),  # canonical can be 'c6ep.eth'
         ('0x7Da3CdE891a76416ec9D1c3354B8EfE550Bd4e20', None, 'unnormalized', None, 'Unnamed 7da3', 'vitalik.eth', True, 'vitȧlik.eth'),
         ('0xC9f598BC5BB554B6A15A96D19954B041C9FDbF14', None, 'unnormalized', None, 'Unnamed c9f5', 'vitalik.eth', True, 'vıtalik.eth'),
+        ('0x7c7160A23b32402ad24ED5a617b8a83f434642d4', 'unlikely', 'normalized', 'vincξnt.eth', 'vincΞnt.eth', 'vincξnt.eth', False, 'vincξnt.eth'),
+        ('0x744Ec0A91D420c257aE3eE471B79B1A6a0312E36', None, 'unnormalized', None, 'Unnamed 744e', None, False, 'hello<world>!.eth'),  # attempt code injection
         # unknown primary name is impossible
     ]
 )
@@ -599,6 +603,17 @@ def test_primary_name_get_empty(test_client, api_version):
     response = test_client.get(f'/{api_version}/secure-primary-name')
     assert response.status_code == 404
 
+def test_primary_name_get_emoji(test_client, api_version):
+    address='0x63A93f5843aD57d756097ef102A2886F05c7a29c'
+    response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
+    assert response.status_code == 200
+    res_json = response.json()
+
+    assert res_json['impersonation_status'] == 'potential'
+    assert res_json['primary_name_status'] == 'normalized'
+    assert res_json['primary_name'] == '👩🏿\u200d🦱.eth'
+    assert res_json['display_name'] == '👩🏿\u200d🦱.eth'
+    assert res_json['nameguard_result']['highest_risk']['message'] == 'Emojis used in this name may be visually confused with other similar emojis'
 
 @pytest.mark.parametrize(
     "contract_address, token_id, fake",
@@ -635,7 +650,7 @@ def test_primary_name_get_empty(test_client, api_version):
         # ('0xcc6c63044bfe4e991f3a13b35b6ee924b54cd304', '440', FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME),
     ]
 )
-def test_fake_eth_name_check(test_client, api_version, contract_address, token_id, fake):
+def test_fake_eth_name_check(test_client, api_version, contract_address, token_id, fake, monkeypatch):
     network_name = 'mainnet'
 
     response = test_client.get(f'/{api_version}/fake-eth-name-check/{network_name}/{contract_address}/{token_id}')

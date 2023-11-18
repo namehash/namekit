@@ -3,6 +3,8 @@ from pydantic import BaseModel, computed_field
 from enum import Enum
 
 from nameguard.generic_utils import capitalize_words
+import nameguard.context
+from nameguard.endpoints import Endpoints
 
 
 class CheckStatus(str, Enum):
@@ -16,9 +18,9 @@ class CheckStatus(str, Enum):
     * `alert`: This check failed, this is a major issue.
     '''
 
-    SKIP = 'skip'
     INFO = 'info'
     PASS = 'pass'
+    SKIP = 'skip'
     WARN = 'warn'
     ALERT = 'alert'
 
@@ -26,9 +28,9 @@ class CheckStatus(str, Enum):
     @property
     def order(self):
         return {
-            CheckStatus.SKIP: 0,
-            CheckStatus.INFO: 1,
-            CheckStatus.PASS: 2,
+            CheckStatus.INFO: 0,
+            CheckStatus.PASS: 1,
+            CheckStatus.SKIP: 2,
             CheckStatus.WARN: 3,
             CheckStatus.ALERT: 4,
         }[self]
@@ -125,6 +127,8 @@ class Check(str, Enum):
     Name:
     * `impersonation_risk`: A name might be used for impersonation.
     * `punycode_compatible_name`: A name is compatible with Punycode.
+    * `namewrapper_fuses`: The NameWrapper configuration of a name is safe.
+    * `decentralized_name`: A name is decentralized.
     '''
 
     # Common
@@ -145,27 +149,46 @@ class Check(str, Enum):
     # Name
     IMPERSONATION_RISK = 'impersonation_risk'
     PUNYCODE_COMPATIBLE_NAME = 'punycode_compatible_name'
+    NAMEWRAPPER_FUSES = 'namewrapper_fuses'
+    DECENTRALIZED_NAME = 'decentralized_name'
 
     @property
     def human_readable_name(self):
         return capitalize_words(self.value.replace('_', ' '))
 
 
-SEVERITY_ORDER_DESC = [
+def make_severity_dict_from_order(order):
+    return {check: len(order) - i for i, check in enumerate(order)}
+
+
+SEVERITY_DEFAULT = make_severity_dict_from_order([
     # highest severity first
-    Check.IMPERSONATION_RISK,
-    Check.NORMALIZED,
     Check.INVISIBLE,
+    Check.NORMALIZED,
     Check.CONFUSABLES,
     Check.TYPING_DIFFICULTY,
+    Check.IMPERSONATION_RISK,
     # all other checks get severity 0
-]
+])
 
-SEVERITY = {check: len(SEVERITY_ORDER_DESC) - i for i, check in enumerate(SEVERITY_ORDER_DESC)}
+
+SEVERITY_PER_ENDPOINT = {
+    Endpoints.SECURE_PRIMARY_NAME: make_severity_dict_from_order([
+        Check.IMPERSONATION_RISK,
+        Check.INVISIBLE,
+        Check.NORMALIZED,
+        Check.CONFUSABLES,
+        Check.TYPING_DIFFICULTY,
+    ]),
+}
 
 
 def get_check_severity(check: Check) -> int:
-    return SEVERITY.get(check, 0)
+    endpoint = nameguard.context.endpoint_name.get()
+    if endpoint is None:
+        return SEVERITY_DEFAULT.get(check, 0)
+    else:
+        return SEVERITY_PER_ENDPOINT.get(endpoint, SEVERITY_DEFAULT).get(check, 0)
 
 
 class GenericCheckResult(BaseModel):
