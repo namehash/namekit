@@ -279,8 +279,9 @@ class FakeETHNameCheckFieldsRequest(BaseModel):
                                  description='Contract address for the NFT contract (ERC721 and ERC1155 supported).')
     token_id: str = Path(examples=['61995921128521442959106650131462633744885269624153038309795231243542768648193'],
                          description='The ID of the token (in hex or decimal format).')
+    title: str = Field(description='Title of the NFT. For ENS names it have to be the name.')
     fields: dict[str, str] = Field(
-        description='Fields with values which will be investigated (e.g. title, collection name, metadata) whether they look like fake .eth ENS name.')
+        description='Fields with values which will be investigated (e.g. title, collection name, metadata) whether they look like fake .eth ENS name. Do not use `title` key.')
 
 
 @app.post(
@@ -301,7 +302,7 @@ async def fake_eth_name_check_fields_post(
     nameguard.context.endpoint_name.set(Endpoints.FAKE_ETH_NAME_CHECK)
     contract_address = validate_ethereum_address(request.contract_address)
     token_id = validate_token_id(request.token_id)
-    return await ng.fake_eth_name_check_fields(network_name=request.network_name, contract_address=request.contract_address, token_id=request.token_id, investigated_fields=request.fields)
+    return await ng.fake_eth_name_check_fields(network_name=request.network_name, contract_address=contract_address, token_id=token_id, title=request.title, investigated_fields=request.fields)
 
 
 
