@@ -35,7 +35,7 @@ export function NameShield({ data }: NameShieldProps) {
 
   return (
     <Tooltip trigger={<Shield status={rating} size="tiny" />}>
-      <div className="hidden md:flex items-start space-x-3 py-2.5 min-w-[300px] max-w-[300px]">
+      <div className="flex items-start space-x-3 py-2.5 min-w-[300px] max-w-[300px]">
         <div className="mt-0.5">
           <Shield status={rating} size="tiny" />
         </div>
