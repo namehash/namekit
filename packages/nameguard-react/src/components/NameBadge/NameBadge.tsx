@@ -15,7 +15,9 @@ export const NameBadge = ({ onClick, ...data }: NameBadgeProps) => {
       className="flex-shrink-0 appearance-none bg-white transition-colors hover:bg-gray-50 border border-gray-200 rounded-md px-2.5 py-1.5 space-x-1.5 inline-flex items-center"
       onClick={onClick}
     >
-      <span className="text-black text-sm leading-5">{data.name}</span>
+      <span className="text-black text-sm leading-5">
+        {data.beautiful_name}
+      </span>
       <NameShield data={data} />
     </button>
   );
