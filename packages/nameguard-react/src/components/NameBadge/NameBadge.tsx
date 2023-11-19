@@ -16,7 +16,7 @@ export const NameBadge = ({ onClick, ...data }: NameBadgeProps) => {
       onClick={onClick}
     >
       <span className="text-black text-sm leading-5">
-        {data.beautiful_name}
+        {data.beautiful_name || data.name}
       </span>
       <NameShield data={data} />
     </button>
