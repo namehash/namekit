@@ -22,11 +22,11 @@ function textColor(rating?: Rating) {
   }
 }
 
-type ImpersonationShieldProps = {
+type NameShieldProps = {
   data?: ConsolidatedNameGuardReport;
 };
 
-export function ImpersonationShield({ data }: ImpersonationShieldProps) {
+export function NameShield({ data }: NameShieldProps) {
   if (!data) return null;
 
   const { title, name, rating, risk_count, highest_risk } = data;

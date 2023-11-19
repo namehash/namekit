@@ -1,7 +1,7 @@
 import React, { type MouseEventHandler } from "react";
 import type { ConsolidatedNameGuardReport } from "@namehash/nameguard";
 
-import { ImpersonationShield } from "../ImpersonationShield";
+import { NameShield } from "../NameShield";
 
 type NameBadgeProps = ConsolidatedNameGuardReport & {
   onClick?: MouseEventHandler<HTMLButtonElement>;
@@ -16,7 +16,7 @@ export const NameBadge = ({ onClick, ...data }: NameBadgeProps) => {
       onClick={onClick}
     >
       <span className="text-black text-sm leading-5">{data.name}</span>
-      <ImpersonationShield data={data} />
+      <NameShield data={data} />
     </button>
   );
 };
