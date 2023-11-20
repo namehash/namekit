@@ -351,13 +351,12 @@ class NameGuard:
                                        primary_name_status=status,
                                        nameguard_result=nameguard_result)
 
-    async def fake_eth_name_check_fields(self, network_name, contract_address, token_id, title: str, investigated_fields: dict[str,str]) -> FakeEthNameCheckResult:
+    async def fake_eth_name_check_fields(self, network_name, contract_address, token_id, investigated_fields: dict[str,str]) -> FakeEthNameCheckResult:
         contract_address = contract_address.lower()
         
-        #TODO we don't need token_id
         
         #TODO: return only impersonating fields
-        return await self._fake_eth_name_check(network_name, contract_address, title, investigated_fields)
+        return await self._fake_eth_name_check(network_name, contract_address, investigated_fields)
 
     async def fake_eth_name_check(self, network_name, contract_address, token_id) -> FakeEthNameCheckResult:
         """
@@ -396,18 +395,17 @@ class NameGuard:
                 unknown_name = f"[{res_json['id']['tokenId'][2:]}].eth"
                 investigated_fields['title'] = unknown_name
         
-        title = investigated_fields['title']
-        del investigated_fields['title']
+       
+        return await self._fake_eth_name_check(network_name, contract_address, investigated_fields)
         
-        return await self._fake_eth_name_check(network_name, contract_address, title, investigated_fields)
-        
-    async def _fake_eth_name_check(self, network_name, contract_address, title: str, fields: dict[str,str]) -> FakeEthNameCheckResult:
-        investigated_fields = {'title': title}
-        if 'title' in fields: del fields['title']
-        investigated_fields.update(fields)
-        
-        
+    async def _fake_eth_name_check(self, network_name, contract_address, fields: dict[str,str]) -> FakeEthNameCheckResult:
+
         if contract_address in ens_contract_adresses:
+            if 'title' not in fields:
+                raise Exception('title not in fields') #TODO
+            
+            title = fields['title']
+            
             if title == '':  # the name has never been registered
                 return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None,
                                               investigated_fields=None)
@@ -425,8 +423,11 @@ class NameGuard:
                     return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.INVALID_ETH_NAME,
                                                   nameguard_result=report, investigated_fields=None)
         else:
-            fields_values = {}
-            for key, name in investigated_fields.items():
+            # fields_values = {}
+            impersonating_fields = {}
+            impersonated = False
+            potentially_impersonated = False
+            for key, name in fields.items():
                 try:
                     cured_title = ens_cure(name)  # TODO improve, e.g. remove invisible and then canonicalize
                     inspector_result = self.analyse_label(cured_title)
@@ -435,16 +436,22 @@ class NameGuard:
                     else:
                         canonical_name = cured_title
                 except DisallowedSequence:
-                    canonical_name = title
+                    canonical_name = name
+                # fields_values[key] = canonical_name
+                
                 if canonical_name.endswith('.eth'):
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME,
-                                                  nameguard_result=None, investigated_fields={key: name})
-                fields_values[key]=canonical_name
-
-            for key, field_value in fields_values.items():
-                if '.eth' in field_value:
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME,
-                                                  nameguard_result=None, investigated_fields={key: field_value})
-
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME,
+                    impersonating_fields[key] = name
+                    impersonated = True
+                elif '.eth' in canonical_name:
+                    impersonating_fields[key] = name
+                    potentially_impersonated = True
+                    
+            if impersonated:
+                return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME,
+                                                  nameguard_result=None, investigated_fields=impersonating_fields)
+            elif potentially_impersonated:
+                return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME,
+                                              nameguard_result=None, investigated_fields=impersonating_fields)
+            else:
+                 return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME,
                                           nameguard_result=None, investigated_fields=None)

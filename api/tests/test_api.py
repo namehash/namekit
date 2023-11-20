@@ -744,7 +744,8 @@ def test_fake_eth_name_check(test_client, api_version, contract_address, token_i
     else:
         assert res_json['nameguard_result'] is None
 
-    if res_json['status'] != FakeEthNameCheckStatus.UNKNOWN_NFT:
+    if res_json['status'] in (
+    FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME):
         assert res_json['investigated_fields']
     pprint(res_json)
 
@@ -767,7 +768,9 @@ def test_invalid_unicode(test_client, api_version):
                                                      'Collection',
           'metadata.name': 'nick.eth',
           'title': 'nick.eth'},
-         FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, {'title': 'nick.eth'}),  # fake nick.eth
+         FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, {'metadata.name': 'nick.eth', 'title': 'nick.eth'}),
+        # fake nick.eth
+        
         ('0x2cc8342d7c8bff5a213eb2cde39de9a59b3461a7',
          '45104',
          '  111.eth',
@@ -778,7 +781,8 @@ def test_invalid_unicode(test_client, api_version):
                                                      '(LNR)',
           'metadata.name': '  111.eth',
           'title': '  111.eth'},
-         FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, {'title': '  111.eth'}),
+         FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, {'metadata.name': '  111.eth', 'title': '  111.eth'}),
+        
         ('0x495f947276749ce646f68ac8c248420045cb7b5e',
          '115299889408293060529275095010636973531920388509401805939660647627196198813697',
          'Bob.eth',
@@ -788,7 +792,8 @@ def test_invalid_unicode(test_client, api_version):
                                                      'Collection',
           'metadata.name': 'Bob.eth',
           'title': 'Bob.eth'},
-         FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME,{'title': 'Bob.eth'}),
+         FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, {'metadata.name': 'Bob.eth', 'title': 'Bob.eth'}),
+        
         # pytest.param('0x495f947276749ce646f68ac8c248420045cb7b5e',
         #              '87268313074833894749413679830860625010141738974859681274795075557252109697025',
         #              '',
@@ -796,6 +801,7 @@ def test_invalid_unicode(test_client, api_version):
         #              FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME,
         #              marks=pytest.mark.xfail(reason='wrong collection name returned by Alchemy?')),
         # based on collection name
+        
         ('0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d',
          '3972',
          '',
@@ -805,6 +811,7 @@ def test_invalid_unicode(test_client, api_version):
                                                      'Club',
           'title': ''},
          FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME, None),
+        
         ('0xbd3531da5cf5857e7cfaa92426877b022e612cf8',
          '2028',
          'Pudgy Penguin #2028',
@@ -814,9 +821,11 @@ def test_invalid_unicode(test_client, api_version):
           'metadata.name': 'Pudgy Penguin #2028',
           'title': 'Pudgy Penguin #2028'},
          FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME, None),
+        
         # ('0xbd3531da5cf5857e7cfaa92426877b022e612cf9', 
         #  '2028', 
         #  FakeEthNameCheckStatus.UNKNOWN_NFT),  # NOT_A_CONTRACT
+        
         ('0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85',
          '47192814855232171824620094590612668126513223473283784600320596656451859494352',
          'brantly.eth',
@@ -827,6 +836,7 @@ def test_invalid_unicode(test_client, api_version):
           'metadata.name': 'brantly.eth',
           'title': 'brantly.eth'},
          FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME, None),  # brantly.eth
+        
         ('0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85',
          '0X68562Fc74af4dcfac633a803c2f57c2b826827b47f797b6ab4e468dc8607b5d0',
          'brantly.eth',
@@ -837,6 +847,7 @@ def test_invalid_unicode(test_client, api_version):
           'metadata.name': 'brantly.eth',
           'title': 'brantly.eth'},
          FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME, None),  # brantly.eth uppercase hex
+        
         ('0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85',
          '0x68562fc74af4dcfac633a803c2f57c2b826827b47f797b6ab4e468dc8607b5d0',
          'brantly.eth',
@@ -847,6 +858,7 @@ def test_invalid_unicode(test_client, api_version):
           'metadata.name': 'brantly.eth',
           'title': 'brantly.eth'},
          FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME, None),  # brantly.eth
+        
         ('0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85',
          '0xaf498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770',
          '[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth',
@@ -858,6 +870,7 @@ def test_invalid_unicode(test_client, api_version):
           'title': '[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth'},
          FakeEthNameCheckStatus.UNKNOWN_ETH_NAME, None),
         # unknown but registered #TODO 'title': '[0xaf49...2770].eth'
+        
         ('0X57F1887a8bf19b14fc0df6fd9b2acc9af147ea85',
          '47192814855232171824620094590612668126513223473283784600320596656451859494352',
          'brantly.eth',
@@ -868,10 +881,12 @@ def test_invalid_unicode(test_client, api_version):
           'metadata.name': 'brantly.eth',
           'title': 'brantly.eth'},
          FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME, None),  # brantly.eth uppercase hex
+        
         # ('0X57F1887a8bf19b14fc0df6fd9b2acc9af147ea85',
         #  '0x37bf77d30d63cbf9ddad6b3c161522c53dcdcd8177b6177c83835c5ea69a7f8f', 
         #  FakeEthNameCheckStatus.UNKNOWN_NFT),
         # random ENS name
+        
         ('0xfe4f558a0fee0657bfa044792f5545f5a8f4ecb1',
          '1',
          'ENS EMOJI PUNK - NICK.ETH',
@@ -880,8 +895,10 @@ def test_invalid_unicode(test_client, api_version):
                                                      'wMZyJHiap2',
           'metadata.name': 'ENS EMOJI PUNK - NICK.ETH',
           'title': 'ENS EMOJI PUNK - NICK.ETH'},
-         FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, {'title': 'ENS EMOJI PUNK - NICK.ETH'}),
+         FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME,
+         {'metadata.name': 'ENS EMOJI PUNK - NICK.ETH', 'title': 'ENS EMOJI PUNK - NICK.ETH'}),
         # https://rarible.com/token/0xfe4f558a0fee0657bfa044792f5545f5a8f4ecb1:1
+        
         ('0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401',
          '34762977820481521209114130776556072772965907316729597364642457029530388725237',
          'dot.this.averageman.eth',
@@ -902,14 +919,16 @@ def test_invalid_unicode(test_client, api_version):
         ('0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401',
          '0x37bf77d30d63cbf9ddad6b3c161522c53dcdcd8177b6177c83835c5ea69a7f8f',
          'asd.eth',
-         {},
-         FakeEthNameCheckStatus.UNKNOWN_NFT, None),
+         {'title': 'asd.eth'},
+         FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME, None),
         # NameWrapper random ENS name not matching token_id
+        
         # pytest.param('0x495f947276749Ce646f68AC8c248420045cb7b5e',
         #              '7432975079437310392139769917906933533429658990679450758216769878461532602369',
         #              FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME,
         #              marks=pytest.mark.xfail(reason='why not works? it is on x2y2 but delisted on opensea')),
         # https://x2y2.io/eth/0x495f947276749Ce646f68AC8c248420045cb7b5e/7432975079437310392139769917906933533429658990679450758216769878461532602369
+        
         ('0x47dD5F6335FfEcBE77E982d8a449263d1e501301',
          '79',
          'vitalik.eth',
@@ -917,8 +936,9 @@ def test_invalid_unicode(test_client, api_version):
           'contractMetadata.openSea.collectionName': 'Hashrunes',
           'metadata.name': 'vitalik.eth',
           'title': 'vitalik.eth'},
-         FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, {'title': 'vitalik.eth'}),
+         FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, {'metadata.name': 'vitalik.eth', 'title': 'vitalik.eth'}),
         # https://x2y2.io/eth/0x47dD5F6335FfEcBE77E982d8a449263d1e501301/79
+        
         ('0x2Cc8342d7c8BFf5A213eb2cdE39DE9a59b3461A7',
          '8107',
          'vitalik.eth',
@@ -929,45 +949,49 @@ def test_invalid_unicode(test_client, api_version):
                                                      '(LNR)',
           'metadata.name': 'vitalik.eth',
           'title': 'vitalik.eth'},
-         FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, {'title': 'vitalik.eth'}),
+         FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, {'metadata.name': 'vitalik.eth', 'title': 'vitalik.eth'}),
         # https://x2y2.io/eth/0x2Cc8342d7c8BFf5A213eb2cdE39DE9a59b3461A7/8107
+        
         ('0xd8B287885cAb9E377de8F61f000Ff9B3F50e2F4d',
          '4',
          'Vitalik #4',
          {'contractMetadata.name': 'Vitalik.eth',
-          'contractMetadata.openSea.collectionName': 'Vitalik.eth '
-                                                     'V4',
+          'contractMetadata.openSea.collectionName': 'Vitalik.eth V4',
           'metadata.name': 'Vitalik #4',
           'title': 'Vitalik #4'},
-         FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, {'contractMetadata.name': 'Vitalik.eth'}),
+         FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, {'contractMetadata.name': 'Vitalik.eth', 'contractMetadata.openSea.collectionName': 'Vitalik.eth V4'}),
         # https://foundation.app/@rogerhaus/vitalik/4
+        
         ('0xd8B287885cAb9E377de8F61f000Ff9B3F50e2F4d',
          '0x4',
          'Vitalik #4',
          {'contractMetadata.name': 'Vitalik.eth',
-          'contractMetadata.openSea.collectionName': 'Vitalik.eth '
-                                                     'V4',
+          'contractMetadata.openSea.collectionName': 'Vitalik.eth V4',
           'metadata.name': 'Vitalik #4',
           'title': 'Vitalik #4'},
-         FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, {'contractMetadata.name': 'Vitalik.eth'}),
+         FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, {'contractMetadata.name': 'Vitalik.eth', 'contractMetadata.openSea.collectionName': 'Vitalik.eth V4'}),
         # token id as hex
+        
         ('0x6B175474E89094C44Da98b954EedeAC495271d0F',
          '1',
          '',
          {},
-         FakeEthNameCheckStatus.UNKNOWN_NFT, None),
+         FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME, None),
         # NO_SUPPORTED_NFT_STANDARD
+        
         ('0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
          '1',
          '',
          {},
-         FakeEthNameCheckStatus.UNKNOWN_NFT, None),
+         FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME, None),
         # NO_SUPPORTED_NFT_STANDARD
+        
         ('0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11',
          '1',
          '',
          {},
-         FakeEthNameCheckStatus.UNKNOWN_NFT, None),
+         FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME, None),
+        
         ('0x495f947276749ce646f68ac8c248420045cb7b5e',
          '61995921128521442959106650131462633744885269624153038309795231243542768648193',
          'nick.eth',
@@ -977,8 +1001,14 @@ def test_invalid_unicode(test_client, api_version):
                                                      'Collection',
           'metadata.name': 'ABC',
           'title': 'ABC'},
-         FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, {'title': 'nick.eth'}),  # doubled title
+         FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME, None),  # doubled title
         # NO_SUPPORTED_NFT_STANDARD
+        
+        ('0xA478c2975Ab1Ea89e8196811F51A7B7Ade33eB11',
+         '1',
+         '',
+         {'title': 'asd nick.eth asd'},
+         FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME, {'title': 'asd nick.eth asd'}),
 
         # matic chain is not supported now
         # ('0x2953399124f0cbb46d2cbacd8a89cf0599974963', '1075136997460547214433646341011567219464027878285908866916833491623281164289', FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME),
