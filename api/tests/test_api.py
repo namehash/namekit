@@ -680,3 +680,19 @@ def test_invalid_unicode(test_client, api_version):
     with pytest.raises(UnicodeEncodeError):
         # throws inside httpx
         test_client.get(f'/{api_version}/inspect-grapheme/\uD801\uDC37')
+
+
+def test_fake_eth_name_check_error(test_client, api_version, monkeypatch):
+    contract_address = '0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85'
+    token_id = '0x68562fc74af4dcfac633a803c2f57c2b826827b47f797b6ab4e468dc8607b5d5'  # faked for test purpose
+    network_name = 'mainnet'
+
+    async def return_mock_response(*args, **kwargs):
+        return httpx.Response(200, content=open(f'{pytest.TESTS_DATA_PATH}/get_nft_metadata__ERROR__{contract_address}__{token_id}.json').read())
+
+    monkeypatch.setattr(httpx.AsyncClient, 'get', return_mock_response)
+
+    response = test_client.get(f'/{api_version}/fake-eth-name-check/{network_name}/{contract_address}/{token_id}')
+    assert response.status_code == 503
+    res_json = response.json()
+    pprint(res_json)

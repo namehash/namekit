@@ -1,0 +1,41 @@
+{
+   "contract":{
+      "address":"0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85"
+   },
+   "id":{
+      "tokenId":"0x68562fc74af4dcfac633a803c2f57c2b826827b47f797b6ab4e468dc8607b5d0",
+      "tokenMetadata":{
+         "tokenType":"ERC721"
+      }
+   },
+   "title":"",
+   "description":"",
+   "tokenUri":{
+      "gateway":"https://metadata.ens.domains/mainnet/0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85/0x68562fc74af4dcfac633a803c2f57c2b826827b47f797b6ab4e468dc8607b5d0",
+      "raw":"https://metadata.ens.domains/mainnet/0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85/0x68562fc74af4dcfac633a803c2f57c2b826827b47f797b6ab4e468dc8607b5d0"
+   },
+   "media":[
+      {
+         "gateway":"",
+         "raw":""
+      }
+   ],
+   "metadata":{
+      "metadata":[
+         
+      ],
+      "attributes":[
+         
+      ]
+   },
+   "timeLastUpdated":"2023-11-16T21:22:40.122Z",
+   "error":"Centralized gateway timed out, try again with a higher tokenUri timeout",
+   "contractMetadata":{
+      "tokenType":"UNKNOWN",
+      "contractDeployer":"0x4fe4e666be5752f1fdd210f4ab5de2cc26e3e0e8",
+      "deployedBlockNumber":9380410,
+      "openSea":{
+         
+      }
+   }
+}

@@ -5,20 +5,29 @@ import os
 import pytest
 
 import nameguard
-from nameguard.exceptions import ENSSubgraphUnavailable
+from nameguard.exceptions import ENSSubgraphUnavailable, ProviderUnavailable
+
 
 use_monkeypatch = int(os.environ.get('MONKEYPATCH', 1))
 
 TESTS_DATA_PATH = os.path.join(os.path.dirname(__file__), 'data')
 
+
 def pytest_configure(config):
-   pytest.use_monkeypatch = use_monkeypatch
+    pytest.use_monkeypatch = use_monkeypatch
+    pytest.TESTS_DATA_PATH = TESTS_DATA_PATH
+
 
 @pytest.fixture(autouse=True)
 def set_monkeypatch(monkeypatch):
     if use_monkeypatch:
         original_get_nft_metadata = nameguard.nameguard.get_nft_metadata
         async def mock_get_nft_metadata(contract_address: str, token_id: str) -> dict:
+            mapping = {
+                ('0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85', '0x68562fc74af4dcfac633a803c2f57c2b826827b47f797b6ab4e468dc8607b5d5'): ProviderUnavailable,
+            }
+            if (contract_address, token_id) in mapping:
+                raise mapping[(contract_address, token_id)]()
             try:
                 return json.load(open(f'{TESTS_DATA_PATH}/get_nft_metadata__{contract_address}__{token_id}.json'))
             except FileNotFoundError:
