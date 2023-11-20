@@ -26,6 +26,7 @@ from nameguard.exceptions import (
     ProviderUnavailable,
     InvalidTokenID,
     NotAGrapheme,
+    MissingTitle,
 )
 
 
@@ -290,6 +291,7 @@ class FakeETHNameCheckFieldsRequest(BaseModel):
     responses={
         **InvalidTokenID.get_responses_spec(),
         **ProviderUnavailable.get_responses_spec(),
+        **MissingTitle.get_responses_spec(),
     },
 )
 async def fake_eth_name_check_fields_post(

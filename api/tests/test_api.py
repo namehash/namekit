@@ -12,7 +12,6 @@ from dotenv import load_dotenv
 from nameguard.models import FakeEthNameCheckStatus
 from nameguard.utils import labelhash_from_label
 
-
 load_dotenv()  # run lambda api tests if LAMBDA_ROOT_URL is set
 running_lambda_tests = bool(os.environ.get('LAMBDA_ROOT_URL'))
 
@@ -1010,6 +1009,12 @@ def test_invalid_unicode(test_client, api_version):
          {'title': 'asd nick.eth asd'},
          FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME, {'title': 'asd nick.eth asd'}),
 
+        ('0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85',
+         '1',
+         '',
+         {'title': ''},
+         FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME, None),
+        
         # matic chain is not supported now
         # ('0x2953399124f0cbb46d2cbacd8a89cf0599974963', '1075136997460547214433646341011567219464027878285908866916833491623281164289', FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME),
         # ('0x2953399124f0cbb46d2cbacd8a89cf0599974963', '3741242716829664262552727484824431817099747563526660400091605301110364962817', FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME),
@@ -1043,6 +1048,28 @@ def test_fake_eth_name_check_fields(test_client, api_version, contract_address, 
 
     assert res_json['investigated_fields'] == faking_fields
     pprint(res_json)
+
+@pytest.mark.parametrize(
+    "contract_address, token_id, title, fields",
+    [
+        ('0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85',
+         '1',
+         '',
+         {'collection': 'asd nick.eth asd'}),
+
+])
+def test_fake_eth_name_check_fields_missing_title(test_client, api_version, contract_address, token_id, title, fields, monkeypatch):
+    network_name = 'mainnet'
+
+    json_req = {
+        'network_name': network_name,
+        'contract_address': contract_address,
+        'token_id': token_id,
+        'title': title,
+        'fields': fields,
+    }
+    response = test_client.post(f'/{api_version}/fake-eth-name-check-fields', json=json_req)
+    assert response.status_code == 422
 
 
 def test_fake_eth_name_check_error(test_client, api_version, monkeypatch):

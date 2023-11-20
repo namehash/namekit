@@ -57,3 +57,8 @@ class InvalidEthereumAddress(NameGuardException):
 class ProviderUnavailable(NameGuardException):
     STATUS_CODE = 503
     DESCRIPTION = "Error while making request to provider."
+
+
+class MissingTitle(NameGuardException):
+    STATUS_CODE = 422
+    DESCRIPTION = "A field named 'title' is required within the list of fields"
