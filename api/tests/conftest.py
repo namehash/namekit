@@ -12,7 +12,11 @@ use_monkeypatch = int(os.environ.get('MONKEYPATCH', 1))
 
 TESTS_DATA_PATH = os.path.join(os.path.dirname(__file__), 'data')
 
-pytest.TESTS_DATA_PATH=TESTS_DATA_PATH
+
+def pytest_configure(config):
+    pytest.use_monkeypatch = use_monkeypatch
+    pytest.TESTS_DATA_PATH = TESTS_DATA_PATH
+
 
 @pytest.fixture(autouse=True)
 def set_monkeypatch(monkeypatch):

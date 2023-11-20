@@ -212,6 +212,7 @@ def test_bulk_inspect_name_post(test_client, api_version):
     response = test_client.post(f'/{api_version}/bulk-inspect-names', json={'names': names * 126})
     assert response.status_code == 422
 
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 def test_bulk_inspect_name_post_stress(test_client, api_version):
     names = [f'[{labelhash_from_label(str(i))[2:]}].eth' for i in range(250)]
     print(names)
@@ -223,7 +224,7 @@ def test_bulk_inspect_name_post_stress(test_client, api_version):
     
 
 # -- inspect-namehash --
-
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.parametrize(
     "network_name, namehash, expected_status_code, expected_name",
     [
@@ -248,7 +249,7 @@ def test_inspect_namehash_get(test_client, api_version, network_name: str, nameh
     assert res_json['namehash'] == '0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835'
     assert res_json['name'] == expected_name
 
-
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.parametrize(
     "namehash, normalization, expected_name",
     [
@@ -280,7 +281,7 @@ def test_inspect_namehash_get_unknown_status(test_client, api_version, namehash:
     assert res_json['namehash'] == namehash.lower()
     assert res_json['name'] == expected_name
 
-
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.parametrize(
     "namehash, expected_name",
     [
@@ -315,7 +316,7 @@ def test_inspect_namehash_get_unknown(test_client, api_version, namehash: str, e
             assert re.match(r'^\[[0-9a-f]{64}\]$', label['label'])
         assert re.match('^0x[0-9a-f]{64}$', label['labelhash'])
 
-
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.parametrize(
     "namehash, expected_status_code, expected_name",
     [
@@ -358,7 +359,7 @@ def test_inspect_namehash_invalid_namehash(test_client, api_version, namehash, e
     assert res_json['detail'].startswith('Provided namehash is not valid')
     assert res_json['detail'].endswith(expected_reason)
 
-
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 def test_inspect_namehash_mismatch_error(test_client, api_version):
     network_name = 'mainnet'
     # todo: how to find registered namehash with null bytes inside? (other than the 0s below)
@@ -372,7 +373,7 @@ def test_inspect_namehash_mismatch_error(test_client, api_version):
 
 
 # -- inspect-labelhash --
-
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 def test_inspect_labelhash_get(test_client, api_version):
     labelhash = labelhash_from_label('vitalik')
     network_name = 'mainnet'
@@ -383,7 +384,7 @@ def test_inspect_labelhash_get(test_client, api_version):
 
     assert res_json['name'] == 'vitalik.eth'
 
-
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 def test_inspect_labelhash_get_empty(test_client, api_version):
     labelhash = labelhash_from_label('dcjq92834vhh8teru5903wu9hawtpyhuoidfj09q2yh987euitvhgs')
     response = test_client.get(f'/{api_version}/inspect-labelhash/mainnet/{labelhash}')  # empty parent = ''
@@ -397,7 +398,7 @@ def test_inspect_labelhash_get_empty(test_client, api_version):
     # method not allowed because this is the POST endpoint path
     assert response.status_code == 405
 
-
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.parametrize(
     "labelhash, parent, expected_status_code, expected_name",
     [
@@ -495,7 +496,8 @@ def test_inspect_grapheme(test_client, api_version):
 def test_inspect_grapheme_multi(test_client, api_version):
     response = test_client.get(f'/{api_version}/inspect-grapheme/aś')
     assert response.status_code == 422
-    
+
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.parametrize(
     "address, impersonation_status, primary_name_status, primary_name, display_name, canonical_name, impersonation_risk, name",
     [
@@ -533,6 +535,7 @@ def test_primary_name(test_client, api_version, address, impersonation_status, p
         assert res_json['nameguard_result']['canonical_name'] == canonical_name
         assert any(check['check'] == 'impersonation_risk' and check['status'] == 'warn' for check in res_json['nameguard_result']['checks']) == impersonation_risk
         
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 def test_primary_name_get(test_client, api_version):
     address='0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
     response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
@@ -544,7 +547,7 @@ def test_primary_name_get(test_client, api_version):
     assert res_json['primary_name'] == 'vitalik.eth'
     assert res_json['display_name'] == 'vitalik.eth'
 
-
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 def test_primary_name_get_uppercase(test_client, api_version):
     address='0XD8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
     response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
@@ -556,7 +559,7 @@ def test_primary_name_get_uppercase(test_client, api_version):
     assert res_json['primary_name'] == 'vitalik.eth'
     assert res_json['display_name'] == 'vitalik.eth'
 
-
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 def test_primary_name_get_offchain(test_client, api_version):
     address='0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd'
     response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
@@ -568,7 +571,7 @@ def test_primary_name_get_offchain(test_client, api_version):
     assert res_json['primary_name'] == 'exampleprimary.cb.id'
     assert res_json['display_name'] == 'exampleprimary.cb.id'
 
-
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 def test_primary_name_get_no_primary_name(test_client, api_version):
     address='0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96046'
     response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
@@ -580,6 +583,7 @@ def test_primary_name_get_no_primary_name(test_client, api_version):
     assert res_json['primary_name'] is None
     assert res_json['display_name'] == 'Unnamed d8da'
 
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 def test_primary_name_get_unnormalized(test_client, api_version):
     address = '0xfA9A134f997b3d48e122d043E12d04E909b11073' # 888‍‍.eth
     response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
@@ -591,10 +595,12 @@ def test_primary_name_get_unnormalized(test_client, api_version):
     assert res_json['primary_name'] is None
     assert res_json['display_name'] == 'Unnamed fa9a'
 
+
 def test_primary_name_get_invalid_address(test_client, api_version):
     address = '0xfA9A134f997b3d48e122d043E12d04E909b1107g'
     response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
     assert response.status_code == 422
+
 
 def test_primary_name_get_empty(test_client, api_version):
     response = test_client.get(f'/{api_version}/secure-primary-name/mainnet')
@@ -603,6 +609,7 @@ def test_primary_name_get_empty(test_client, api_version):
     response = test_client.get(f'/{api_version}/secure-primary-name')
     assert response.status_code == 404
 
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 def test_primary_name_get_emoji(test_client, api_version):
     address='0x63A93f5843aD57d756097ef102A2886F05c7a29c'
     response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
@@ -615,6 +622,7 @@ def test_primary_name_get_emoji(test_client, api_version):
     assert res_json['display_name'] == '👩🏿\u200d🦱.eth'
     assert res_json['nameguard_result']['highest_risk']['message'] == 'Emojis used in this name may be visually confused with other similar emojis'
 
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.parametrize(
     "contract_address, token_id, fake",
     [
