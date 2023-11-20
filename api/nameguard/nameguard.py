@@ -42,7 +42,7 @@ from nameguard.utils import (
     compute_canonical_from_list,
     is_labelhash_eth,
 )
-from nameguard.exceptions import ProviderUnavailable, NotAGrapheme
+from nameguard.exceptions import ProviderUnavailable, NotAGrapheme, MissingTitle
 from nameguard.logging import logger
 from nameguard.subgraph import namehash_to_name_lookup, resolve_all_labelhashes_in_name, \
     resolve_all_labelhashes_in_name_querying_labelhashes, resolve_all_labelhashes_in_names_querying_labelhashes
@@ -353,9 +353,7 @@ class NameGuard:
 
     async def fake_eth_name_check_fields(self, network_name, contract_address, token_id, investigated_fields: dict[str,str]) -> FakeEthNameCheckResult:
         contract_address = contract_address.lower()
-        
-        
-        #TODO: return only impersonating fields
+
         return await self._fake_eth_name_check(network_name, contract_address, investigated_fields)
 
     async def fake_eth_name_check(self, network_name, contract_address, token_id) -> FakeEthNameCheckResult:
@@ -394,6 +392,8 @@ class NameGuard:
             if ALCHEMY_UNKNOWN_NAME.match(title):
                 unknown_name = f"[{res_json['id']['tokenId'][2:]}].eth"
                 investigated_fields['title'] = unknown_name
+            elif title == '': # the name has never been registered
+                investigated_fields['title'] = None
         
        
         return await self._fake_eth_name_check(network_name, contract_address, investigated_fields)
@@ -402,11 +402,11 @@ class NameGuard:
 
         if contract_address in ens_contract_adresses:
             if 'title' not in fields:
-                raise Exception('title not in fields') #TODO
+                raise MissingTitle()
             
             title = fields['title']
             
-            if title == '':  # the name has never been registered
+            if title is None:  
                 return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None,
                                               investigated_fields=None)
             else:
@@ -415,6 +415,7 @@ class NameGuard:
                     return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_ETH_NAME,
                                                   nameguard_result=report, investigated_fields=None)
 
+                # TODO: check if token_id matches contract_address and title
                 report = await self.inspect_name(network_name, title)
                 if is_ens_normalized(title):
                     return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME,
@@ -423,7 +424,6 @@ class NameGuard:
                     return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.INVALID_ETH_NAME,
                                                   nameguard_result=report, investigated_fields=None)
         else:
-            # fields_values = {}
             impersonating_fields = {}
             impersonated = False
             potentially_impersonated = False
@@ -437,7 +437,6 @@ class NameGuard:
                         canonical_name = cured_title
                 except DisallowedSequence:
                     canonical_name = name
-                # fields_values[key] = canonical_name
                 
                 if canonical_name.endswith('.eth'):
                     impersonating_fields[key] = name
