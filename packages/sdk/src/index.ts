@@ -340,7 +340,7 @@ export interface LabelGuardReport extends ConsolidatedReport {
  * `NameGuardReport` into a `ConsolidatedReport` without the need to explicitly return all
  * the details of the `NameGuardReport`.
  */
-interface ConsolidatedNameGuardReport extends ConsolidatedReport {
+export interface ConsolidatedNameGuardReport extends ConsolidatedReport {
   /* The name that NameGuard inspected. Some labels in this name may be represented as "[labelhash]"
    * if and only if all of the following is true:
    *

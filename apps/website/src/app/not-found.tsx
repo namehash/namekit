@@ -21,7 +21,7 @@ export default function NotFound() {
               </p>
             </div>
             <button
-              onClick={openModal}
+              onClick={() => openModal()}
               className="flex justify-center items-center px-[17px] py-[9px] bg-white rounded-lg border border-gray-300 shadow-sm pointer-cursor hover:bg-gray-50 transition-colors"
             >
               <p className="text-black text-base leading-6 font-medium gt_mobile:text-sm gt_mobile:leading-5">
