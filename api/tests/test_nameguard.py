@@ -451,3 +451,9 @@ async def test_dynamic_check_order(nameguard: NameGuard):
     assert r.nameguard_result.checks[1].status == CheckStatus.PASS
 
     endpoint_name.set(None)
+
+@pytest.mark.asyncio
+async def test_stress_ens_cure(nameguard: NameGuard):
+    # with omit_cure=False takes 1 minute
+    result = await nameguard.inspect_name('mainnet', '⎛⎝⎞⎠'*1000)
+    assert result.rating is Rating.ALERT
