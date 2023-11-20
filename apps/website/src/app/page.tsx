@@ -12,7 +12,7 @@ import autorenew_img from "../../public/assets/autorenew.png";
 import ens_webfont_img from "../../public/assets/ens_webfont.png";
 import ens_completion_score_img from "../../public/assets/completion_score.png";
 import the_unknown_img from "../../public/assets/making_the_unknown.png";
-import explore_ecosystem_img from "../../public/assets/explore_ecosystem.png";
+import explore_ecosystem_img from "../../public/assets/ecosystem_scheme.png";
 import { Tooltip, Search } from "@namehash/nameguard-react";
 import cc from "classcat";
 import { CalButton } from "@/app/atoms/CalButton";
@@ -1122,7 +1122,7 @@ function ChecksSection() {
         ))}
       </div>
       <div className="hidden md:flex flex-col items-center justify-center gap-4 py-10">
-        <div className="w-full h-full max-w-[1440px] flex flex-row flex-shrink-0 items-center content-between justify-center flex-wrap gap-4">
+        <div className="w-full h-full max-w-[1820px] flex flex-row flex-shrink-0 items-center content-between justify-center flex-wrap gap-4">
           {checkElements.map((elem, idx) => {
             return (
               idx < checkElements.length - 1 && (
@@ -1184,9 +1184,9 @@ function ExploreTheEcosystemSection() {
       <Image
         src={explore_ecosystem_img.src}
         alt={"ecosystem image"}
-        className="z-10 relative w-full h-full max-w-[1296px]"
-        width={1296}
-        height={807}
+        className="z-10 relative w-full h-full max-w-[1820px]"
+        width={2592}
+        height={1614}
       />
     </section>
   );
