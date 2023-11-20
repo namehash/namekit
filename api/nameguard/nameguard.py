@@ -105,7 +105,7 @@ class NameGuard:
             self.ns[network_name] = OurENS(HTTPProvider(os.environ.get(env_var)))
 
     def analyse_label(self, label: str):
-        return self._inspector.analyse_label(label, simple_confusables=True)
+        return self._inspector.analyse_label(label, simple_confusables=True, omit_cure=True)
 
     async def inspect_name(self, network_name: NetworkName, name: str, resolve_labelhashes: bool = True) -> NameGuardReport:
         '''
