@@ -291,11 +291,11 @@ class NameGuard:
             risk_count=count_risks(grapheme_checks),
             highest_risk=get_highest_risk(grapheme_checks),
             checks=sorted(grapheme_checks, reverse=True),
-            confusables=[self._inspect_confusable(c)
+            confusables=([self._inspect_confusable(grapheme_analysis.confusables_canonical)]
+                                 if grapheme_analysis.confusables_canonical else []) + 
+                        ([self._inspect_confusable(c)
                          for c in grapheme_analysis.confusables_other]
-                         if grapheme_analysis.confusables_other else [],
-            canonical_confusable=self._inspect_confusable(grapheme_analysis.confusables_canonical)
-                                 if grapheme_analysis.confusables_canonical else None,
+                         if grapheme_analysis.confusables_other else []),
             canonical_grapheme=label_analysis.canonical_label,
             grapheme_description=grapheme_analysis.description,
         )
