@@ -64,7 +64,7 @@ ng = NameGuard()
 class InspectNameRequest(BaseModel):
     name: str = Field(
         description='Name to inspect.',
-        examples=['iamalice.eth'],
+        examples=['vitalìk.eth'],
     )
     network_name: NetworkName
 
@@ -80,7 +80,7 @@ async def inspect_name_get(
         network_name: NetworkName,
         name: str = Path(default_factory=lambda: '',
                          description='**Name should be url-encoded (except when using the Swagger UI).**',
-                         examples=['iam%2Falice%3F.eth']),
+                         examples=['vitalìk.eth']),
 ) -> NameGuardReport:
     logger.debug(
         f"{json.dumps({'endpoint': Endpoints.INSPECT_NAME, 'method': 'GET', 'api_version': api_version, 'network_name': network_name, 'name': name})}")
@@ -103,7 +103,7 @@ async def inspect_name_post(api_version: ApiVersion, request: InspectNameRequest
 
 
 class BulkInspectNamesRequest(BaseModel):
-    names: list[str] = Field(max_length=250)
+    names: list[str] = Field(max_length=250, examples=[['vitalìk.eth', 'nick.eth']])
     network_name: NetworkName
 
 
@@ -123,7 +123,7 @@ async def bulk_inspect_names(api_version: ApiVersion, request: BulkInspectNamesR
 
 class InspectNamehashRequest(BaseModel):
     namehash: str = Field(description='Namehash should be a decimal or a hex (prefixed with 0x) string.',
-                          examples=['0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835'])
+                          examples=['0xd48fd5598e605861cbd8e45419b41b83739bff52eaef0e283181bbe0a43a5b32'])
     network_name: NetworkName
 
 
@@ -141,7 +141,7 @@ class InspectNamehashRequest(BaseModel):
 async def inspect_namehash_get(
         api_version: ApiVersion,
         network_name: NetworkName,
-        namehash: str = Path(examples=['0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835'],
+        namehash: str = Path(examples=['0xd48fd5598e605861cbd8e45419b41b83739bff52eaef0e283181bbe0a43a5b32'],
                              description='Namehash should be a decimal or a hex (prefixed with 0x) string.')
 ) -> NameGuardReport:
     logger.debug(f"{json.dumps({'endpoint': Endpoints.INSPECT_NAMEHASH, 'method': 'GET', 'api_version': api_version, 'network_name': network_name, 'namehash': namehash})}")
@@ -175,7 +175,7 @@ async def inspect_namehash_post(api_version: ApiVersion, request: InspectNamehas
 
 class InspectLabelhashRequest(BaseModel):
     labelhash: str = Field(description='Labelhash should be a decimal or a hex (prefixed with 0x) string.',
-                           examples=['0xaf2caa1c2ca1d027f1ac823b529d0a67cd144264b2789fa2ea4d63a67c7103cc'])
+                           examples=['0x3276e4878615389906712b876ce1455b8f5d1c5ea3ffcf7a705e0d32fafae9c5'])
     network_name: NetworkName
     parent_name: str = Field('eth')
 
@@ -195,7 +195,7 @@ class InspectLabelhashRequest(BaseModel):
 async def inspect_labelhash_get(
         api_version: ApiVersion,
         network_name: NetworkName,
-        labelhash: str = Path(examples=['0xaf2caa1c2ca1d027f1ac823b529d0a67cd144264b2789fa2ea4d63a67c7103cc'],
+        labelhash: str = Path(examples=['0x3276e4878615389906712b876ce1455b8f5d1c5ea3ffcf7a705e0d32fafae9c5'],
                               description='Labelhash should be a decimal or a hex (prefixed with 0x) string.'),
         parent_name: str = Path(default_factory=lambda: '', examples=['eth'])
 ) -> NameGuardReport:
@@ -322,7 +322,7 @@ async def inspect_grapheme_get(
         api_version: ApiVersion,
         grapheme: str = Path(
             description='Grapheme to inspect. Should be url-encoded (except when using the Swagger UI).',
-            examples=['ń', '%F0%9F%98%B5'])
+            examples=['v', 'ń', '%F0%9F%98%B5'])
 ) -> GraphemeGuardReport:
     logger.debug(
         f"{json.dumps({'endpoint': Endpoints.INSPECT_GRAPHEME, 'method': 'GET', 'api_version': api_version, 'grapheme': grapheme})}")
