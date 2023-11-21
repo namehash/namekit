@@ -99,6 +99,7 @@ async def test_check_skip_font_support(nameguard: NameGuard):
     assert c.status is CheckStatus.SKIP
     assert c.message == 'It is unknown if this name is supported by common fonts'
     
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.asyncio
 @pytest.mark.parametrize('name,n,l0,l1', [
     ('nick.eth', Normalization.NORMALIZED, Normalization.NORMALIZED, Normalization.NORMALIZED),
@@ -127,6 +128,7 @@ async def test_normalization_status(nameguard: NameGuard, name, n, l0, l1):
     assert r.labels[1].normalization is l1
 
 
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.asyncio
 async def test_hashes(nameguard: NameGuard):
     r = await nameguard.inspect_name('mainnet', 'nick.eth')
@@ -160,6 +162,7 @@ async def test_hashes_uppercase(nameguard: NameGuard):
     assert r.labels[1].labelhash == '0x4f5b812789fc606be1b3b16908db13fc7a9adf7ca72641f84d75b47069d3d7f0'
 
 
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.asyncio
 async def test_unknown_label(nameguard: NameGuard):
     r = await nameguard.inspect_name('mainnet',
@@ -170,6 +173,7 @@ async def test_unknown_label(nameguard: NameGuard):
     assert r.canonical_name == '[56d7ba27aed5cd36fc16684baeb86f73d6d0c60b6501487725bcfc9056378075].eth'
 
 
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.asyncio
 async def test_namehash_non_null_name(nameguard: NameGuard):
     network_name = 'mainnet'
@@ -186,7 +190,7 @@ def test_inspect_grapheme_multi(nameguard: NameGuard):
     with pytest.raises(NotAGrapheme):
         nameguard.inspect_grapheme('ab')
 
-
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.asyncio
 async def test_canonicals(nameguard: NameGuard):
     r = await nameguard.inspect_name('mainnet', 'ńićk.ęth')
@@ -230,7 +234,7 @@ async def test_grapheme_description(nameguard: NameGuard):
     r = nameguard.inspect_grapheme('😉')
     assert r.grapheme_description == 'Emoji'
 
-
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.asyncio
 async def test_impersonation_risk(nameguard: NameGuard):
     r = await nameguard.inspect_name('mainnet', 'nick.eth')
@@ -416,7 +420,7 @@ def test_generic_check_result_repr():
     assert repr(GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.PASS, _name_message='')) == \
            'normalized(pass)'
 
-
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.asyncio
 async def test_dynamic_check_order(nameguard: NameGuard):
     r = await nameguard.inspect_name('mainnet', 'Ō')
@@ -447,3 +451,9 @@ async def test_dynamic_check_order(nameguard: NameGuard):
     assert r.nameguard_result.checks[1].status == CheckStatus.PASS
 
     endpoint_name.set(None)
+
+@pytest.mark.asyncio
+async def test_stress_ens_cure(nameguard: NameGuard):
+    # with omit_cure=False takes 1 minute
+    result = await nameguard.inspect_name('mainnet', '⎛⎝⎞⎠'*1000)
+    assert result.rating is Rating.ALERT

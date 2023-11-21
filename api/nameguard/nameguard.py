@@ -40,8 +40,9 @@ from nameguard.utils import (
     get_highest_risk,
     label_is_labelhash,
     compute_canonical_from_list,
+    is_labelhash_eth,
 )
-from nameguard.exceptions import ProviderUnavailable, NotAGrapheme
+from nameguard.exceptions import ProviderUnavailable, NotAGrapheme, MissingTitle
 from nameguard.logging import logger
 from nameguard.subgraph import namehash_to_name_lookup, resolve_all_labelhashes_in_name, \
     resolve_all_labelhashes_in_name_querying_labelhashes, resolve_all_labelhashes_in_names_querying_labelhashes
@@ -105,7 +106,7 @@ class NameGuard:
             self.ns[network_name] = OurENS(HTTPProvider(os.environ.get(env_var)))
 
     def analyse_label(self, label: str):
-        return self._inspector.analyse_label(label, simple_confusables=True)
+        return self._inspector.analyse_label(label, simple_confusables=True, omit_cure=True)
 
     async def inspect_name(self, network_name: NetworkName, name: str, resolve_labelhashes: bool = True) -> NameGuardReport:
         '''
@@ -350,6 +351,11 @@ class NameGuard:
                                        primary_name_status=status,
                                        nameguard_result=nameguard_result)
 
+    async def fake_eth_name_check_fields(self, network_name, contract_address, token_id, investigated_fields: dict[str,str]) -> FakeEthNameCheckResult:
+        contract_address = contract_address.lower()
+
+        return await self._fake_eth_name_check(network_name, contract_address, investigated_fields)
+
     async def fake_eth_name_check(self, network_name, contract_address, token_id) -> FakeEthNameCheckResult:
         """
         Check if the token is a fake ENS name (not valid ENS contract address and title and collection name of NFT look like ENS name).
@@ -381,39 +387,70 @@ class NameGuard:
                 investigated_fields['.'.join(keys)] = name
             except KeyError:
                 pass
-        
-        if contract_address in ens_contract_adresses:
-            if title == '':  # the name has never been registered
-                return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_fields=None)
-            else:
-                if ALCHEMY_UNKNOWN_NAME.match(title):
-                    unknown_name = f"[{res_json['id']['tokenId'][2:]}].eth"
-                    report = await self.inspect_name(network_name, unknown_name, resolve_labelhashes=False)
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_ETH_NAME, nameguard_result=report, investigated_fields=investigated_fields)
 
+        if contract_address in ens_contract_adresses:
+            if ALCHEMY_UNKNOWN_NAME.match(title):
+                unknown_name = f"[{res_json['id']['tokenId'][2:]}].eth"
+                investigated_fields['title'] = unknown_name
+            elif title == '': # the name has never been registered
+                investigated_fields['title'] = None
+        
+       
+        return await self._fake_eth_name_check(network_name, contract_address, investigated_fields)
+        
+    async def _fake_eth_name_check(self, network_name, contract_address, fields: dict[str,str]) -> FakeEthNameCheckResult:
+
+        if contract_address in ens_contract_adresses:
+            if 'title' not in fields:
+                raise MissingTitle()
+            
+            title = fields['title']
+            
+            if title is None:  
+                return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None,
+                                              investigated_fields=None)
+            else:
+                if is_labelhash_eth(title):
+                    report = await self.inspect_name(network_name, title, resolve_labelhashes=False)
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_ETH_NAME,
+                                                  nameguard_result=report, investigated_fields=None)
+
+                # TODO: check if token_id matches contract_address and title
                 report = await self.inspect_name(network_name, title)
                 if is_ens_normalized(title):
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME, nameguard_result=report, investigated_fields=investigated_fields)
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME,
+                                                  nameguard_result=report, investigated_fields=None)
                 else:
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.INVALID_ETH_NAME, nameguard_result=report, investigated_fields=investigated_fields)
+                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.INVALID_ETH_NAME,
+                                                  nameguard_result=report, investigated_fields=None)
         else:
-            fields_values=[]
-            for name in investigated_fields.values():
+            impersonating_fields = {}
+            impersonated = False
+            potentially_impersonated = False
+            for key, name in fields.items():
                 try:
-                    cured_title = ens_cure(name)  #TODO improve, e.g. remove invisible and then canonicalize
+                    cured_title = ens_cure(name)  # TODO improve, e.g. remove invisible and then canonicalize
                     inspector_result = self.analyse_label(cured_title)
                     if inspector_result.canonical_label is not None:
                         canonical_name = inspector_result.canonical_label
                     else:
                         canonical_name = cured_title
                 except DisallowedSequence:
-                    canonical_name = title
-                if canonical_name.endswith('.eth'):
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME, nameguard_result=None, investigated_fields=investigated_fields)
-                fields_values.append(canonical_name)
+                    canonical_name = name
                 
-            for field_value in fields_values:
-                if '.eth' in field_value:
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME, nameguard_result=None, investigated_fields=investigated_fields)
-
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME, nameguard_result=None, investigated_fields=investigated_fields)
+                if canonical_name.endswith('.eth'):
+                    impersonating_fields[key] = name
+                    impersonated = True
+                elif '.eth' in canonical_name:
+                    impersonating_fields[key] = name
+                    potentially_impersonated = True
+                    
+            if impersonated:
+                return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME,
+                                                  nameguard_result=None, investigated_fields=impersonating_fields)
+            elif potentially_impersonated:
+                return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME,
+                                              nameguard_result=None, investigated_fields=impersonating_fields)
+            else:
+                 return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME,
+                                          nameguard_result=None, investigated_fields=None)

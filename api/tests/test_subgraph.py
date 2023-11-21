@@ -8,6 +8,7 @@ from nameguard.subgraph import (
 from nameguard.utils import namehash_from_name
 
 
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.asyncio
 @pytest.mark.parametrize('name, namehash, expected', [
     ('[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth',
@@ -39,7 +40,7 @@ async def test_lookup(name, namehash, expected):
     network_name = 'mainnet'
     assert await resolve_all_labelhashes_in_name_querying_labelhashes(network_name, name) == expected
 
-
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.asyncio
 async def test_long_lookup():
     network_name = 'mainnet'
@@ -49,7 +50,7 @@ async def test_long_lookup():
     name = '[2af8fae91ee5ef94f17f2c2f23532cc2d1ccaee78cae52efed0df04bc2463b13].' * 500 + 'eth'
     assert await resolve_all_labelhashes_in_name_querying_labelhashes(network_name, name) == name
 
-
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.asyncio
 async def test_lookup2():
     network_name = 'mainnet'
