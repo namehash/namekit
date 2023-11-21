@@ -72,7 +72,10 @@ class InspectNameRequest(BaseModel):
 @app.get(
     '/{api_version}/inspect-name/{network_name}/{name:path}',
     tags=['name'],
-    summary='Inspect Name'
+    summary='Inspect Name',
+    responses={
+        **ENSSubgraphUnavailable.get_responses_spec(),
+    },
 )
 @app.get('/{api_version}/inspect-name/{network_name}', include_in_schema=False)
 async def inspect_name_get(
@@ -91,7 +94,10 @@ async def inspect_name_get(
 @app.post(
     '/{api_version}/inspect-name',
     tags=['name'],
-    summary='Inspect Name'
+    summary='Inspect Name',
+    responses={
+        **ENSSubgraphUnavailable.get_responses_spec(),
+    },
 )
 async def inspect_name_post(api_version: ApiVersion, request: InspectNameRequest) -> NameGuardReport:
     logger.debug(f"{json.dumps({'endpoint': Endpoints.INSPECT_NAME, 'method': 'POST', 'api_version': api_version, 'network_name': request.network_name, 'name': request.name})}")
@@ -110,7 +116,10 @@ class BulkInspectNamesRequest(BaseModel):
 @app.post(
     '/{api_version}/bulk-inspect-names',
     tags=['name'],
-    summary='Inspect Multiple Names'
+    summary='Inspect Multiple Names',
+    responses={
+        **ENSSubgraphUnavailable.get_responses_spec(),
+    },
 )
 async def bulk_inspect_names(api_version: ApiVersion, request: BulkInspectNamesRequest) -> BulkNameGuardBulkReport:
     logger.debug(f"{json.dumps({'endpoint': Endpoints.BULK_INSPECT_NAMES, 'method': 'POST', 'api_version': api_version, 'network_name': request.network_name, 'names': request.names})}")
@@ -256,6 +265,7 @@ async def secure_primary_name_get(api_version: ApiVersion, address: str,
     summary='Fake .eth ENS name check GET',
     responses={
         **InvalidTokenID.get_responses_spec(),
+        **InvalidEthereumAddress.get_responses_spec(),
         **ProviderUnavailable.get_responses_spec(),
     },
 )
@@ -290,7 +300,7 @@ class FakeETHNameCheckFieldsRequest(BaseModel):
     summary='Fake .eth ENS name check with fields',
     responses={
         **InvalidTokenID.get_responses_spec(),
-        **ProviderUnavailable.get_responses_spec(),
+        **InvalidEthereumAddress.get_responses_spec(),
         **MissingTitle.get_responses_spec(),
     },
 )
