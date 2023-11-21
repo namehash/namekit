@@ -499,7 +499,7 @@ def test_inspect_grapheme(test_client, api_version):
         assert check['status'] in ('pass', 'warn')
         assert check['check_name'][0].isupper() and '_' not in check['check_name']
 
-
+    assert res_json['canonical_grapheme'] in [confusable['grapheme'] for confusable in res_json['confusables']]
 
 def test_inspect_grapheme_multi(test_client, api_version):
     response = test_client.get(f'/{api_version}/inspect-grapheme/aś')
