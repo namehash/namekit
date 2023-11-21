@@ -29,18 +29,15 @@ def test_client():
     return client
 
 
-@pytest.fixture(scope="module")
-def api_version():
-    from nameguard.web_api import ApiVersion
-    return ApiVersion.V08_BETA.value
+
 
 
 # -- inspect-name --
 
-def test_inspect_name_get(test_client, api_version):
+def test_inspect_name_get(test_client):
     name = 'byczong.eth'
     network_name = 'mainnet'
-    response = test_client.get(f'/{api_version}/inspect-name/{network_name}/{name}')
+    response = test_client.get(f'/inspect-name/{network_name}/{name}')
     assert response.status_code == 200
     res_json = response.json()
     pprint(res_json)
@@ -65,10 +62,10 @@ def check_order_of_list(l: list[str]):
             l[i + 1]), f"Order of checks is not correct: {l[i + 1]} should be before {l[i]}"
 
 
-def test_inspect_name_get_unnormalized(test_client, api_version):
+def test_inspect_name_get_unnormalized(test_client):
     name = 'bycz ong.eth'
     network_name = 'mainnet'
-    response = test_client.get(f'/{api_version}/inspect-name/{network_name}/{name}')
+    response = test_client.get(f'/inspect-name/{network_name}/{name}')
     assert response.status_code == 200
     res_json = response.json()
     pprint(res_json)
@@ -99,13 +96,13 @@ def test_inspect_name_get_unnormalized(test_client, api_version):
         ('%2511%25.%3F.eth', '%11%.?.eth', True),
     ]
 )
-def test_inspect_name_get_special_characters(test_client, api_version, encoded_input_name: str, decoded_name: str,
+def test_inspect_name_get_special_characters(test_client, encoded_input_name: str, decoded_name: str,
                                              do_quote: bool):
     if do_quote:
         encoded_input_name = quote(
             encoded_input_name.encode('utf-8'))  # because TestClient is doing additional unquote before sending request
     network_name = 'mainnet'
-    response = test_client.get(f'/{api_version}/inspect-name/{network_name}/{encoded_input_name}')
+    response = test_client.get(f'/inspect-name/{network_name}/{encoded_input_name}')
     assert response.status_code == 200
     res_json = response.json()
     pprint(res_json)
@@ -113,9 +110,9 @@ def test_inspect_name_get_special_characters(test_client, api_version, encoded_i
     assert res_json['name'] == decoded_name
 
 
-def test_inspect_name_get_empty(test_client, api_version):
+def test_inspect_name_get_empty(test_client):
     network_name = 'mainnet'
-    response = test_client.get(f'/{api_version}/inspect-name/{network_name}')
+    response = test_client.get(f'/inspect-name/{network_name}')
     assert response.status_code == 200
     res_json = response.json()
     assert res_json['name'] == ''
@@ -123,14 +120,14 @@ def test_inspect_name_get_empty(test_client, api_version):
     assert res_json['normalization'] == 'normalized'
     assert res_json['rating'] == 'pass'
 
-    response = test_client.get(f'/{api_version}/inspect-name')
+    response = test_client.get(f'/inspect-name')
     # method not allowed because this is the POST endpoint path
     assert response.status_code == 405
 
 
-def test_inspect_name_post_latin_all_pass(test_client, api_version):
+def test_inspect_name_post_latin_all_pass(test_client):
     name = 'vitalik.eth'
-    response = test_client.post(f'/{api_version}/inspect-name', json={'name': name, 'network_name': 'mainnet'})
+    response = test_client.post(f'/inspect-name', json={'name': name, 'network_name': 'mainnet'})
     assert response.status_code == 200
     res_json = response.json()
     pprint(res_json)
@@ -197,9 +194,9 @@ def test_inspect_name_post_latin_all_pass(test_client, api_version):
 
 # -- bulk-inspect-names --
 
-def test_bulk_inspect_name_post(test_client, api_version):
+def test_bulk_inspect_name_post(test_client):
     names = ['vitalik.eth', 'byczong.mydomain.eth']
-    response = test_client.post(f'/{api_version}/bulk-inspect-names', json={'names': names, 'network_name': 'mainnet'})
+    response = test_client.post(f'/bulk-inspect-names', json={'names': names, 'network_name': 'mainnet'})
     assert response.status_code == 200
     res_json = response.json()
     pprint(res_json)
@@ -211,14 +208,14 @@ def test_bulk_inspect_name_post(test_client, api_version):
     )
 
     # more than 250 names
-    response = test_client.post(f'/{api_version}/bulk-inspect-names', json={'names': names * 126})
+    response = test_client.post(f'/bulk-inspect-names', json={'names': names * 126})
     assert response.status_code == 422
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
-def test_bulk_inspect_name_post_stress(test_client, api_version):
+def test_bulk_inspect_name_post_stress(test_client):
     names = [f'[{labelhash_from_label(str(i))[2:]}].eth' for i in range(250)]
     print(names)
-    response = test_client.post(f'/{api_version}/bulk-inspect-names', json={'names': names, 'network_name': 'mainnet'})
+    response = test_client.post(f'/bulk-inspect-names', json={'names': names, 'network_name': 'mainnet'})
     assert response.status_code == 200
     res_json = response.json()
     pprint(res_json)
@@ -241,9 +238,9 @@ def test_bulk_inspect_name_post_stress(test_client, api_version):
         ('sepolia', '0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835', 200, 'vitalik.eth'),
     ]
 )
-def test_inspect_namehash_get(test_client, api_version, network_name: str, namehash: str, expected_status_code: int,
+def test_inspect_namehash_get(test_client, network_name: str, namehash: str, expected_status_code: int,
                               expected_name: str):
-    response = test_client.get(f'/{api_version}/inspect-namehash/{network_name}/{namehash}')
+    response = test_client.get(f'/inspect-namehash/{network_name}/{namehash}')
     assert response.status_code == expected_status_code
     if expected_status_code != 200:
         return
@@ -275,10 +272,10 @@ def test_inspect_namehash_get(test_client, api_version, network_name: str, nameh
         # uppercase hex
     ]
 )
-def test_inspect_namehash_get_unknown_status(test_client, api_version, namehash: str, normalization: str,
+def test_inspect_namehash_get_unknown_status(test_client, namehash: str, normalization: str,
                                              expected_name: str):
     network_name = 'mainnet'
-    response = test_client.get(f'/{api_version}/inspect-namehash/{network_name}/{namehash}')
+    response = test_client.get(f'/inspect-namehash/{network_name}/{namehash}')
     assert response.status_code == 200
     res_json = response.json()
     pprint(res_json)
@@ -305,9 +302,9 @@ def test_inspect_namehash_get_unknown_status(test_client, api_version, namehash:
          '[7710d5ebf94bcebcf1996bb7a3f5e24a6d24435b314b3cec815da03640c2940c].[2e8eaa68c7e128861299162323c29c29672f5c094aceaf22d9c0935e4bbd3f85].[a64d2b5a93eda272d27734cc2fb8d1c468562e279f1e97e759eea1a5a410f8e3].[462a1d6391f7ea5916874504f3b5fc8cd43626f6bbabc8a22fe4312dc1585362].enspunks.eth'),
     ]
 )
-def test_inspect_namehash_get_unknown(test_client, api_version, namehash: str, expected_name: str):
+def test_inspect_namehash_get_unknown(test_client, namehash: str, expected_name: str):
     network_name = 'mainnet'
-    response = test_client.get(f'/{api_version}/inspect-namehash/{network_name}/{namehash}')
+    response = test_client.get(f'/inspect-namehash/{network_name}/{namehash}')
     assert response.status_code == 200
     res_json = response.json()
     pprint(res_json)
@@ -331,9 +328,9 @@ def test_inspect_namehash_get_unknown(test_client, api_version, namehash: str, e
         ('107841754600925073349285697024366035838042340511934381588201623605284409137205', 200, 'vitalik.eth'),
     ]
 )
-def test_inspect_namehash_post(test_client, api_version, namehash: str, expected_status_code: int, expected_name: str):
+def test_inspect_namehash_post(test_client, namehash: str, expected_status_code: int, expected_name: str):
     network_name = 'mainnet'
-    response = test_client.post(f'/{api_version}/inspect-namehash',
+    response = test_client.post(f'/inspect-namehash',
                                 json={'namehash': namehash, 'network_name': network_name})
     assert response.status_code == 200
     res_json = response.json()
@@ -356,9 +353,9 @@ def test_inspect_namehash_post(test_client, api_version, namehash: str, expected
          "The decimal integer converted to base-16 should have at most 64 digits."),
     ]
 )
-def test_inspect_namehash_invalid_namehash(test_client, api_version, namehash, expected_reason):
+def test_inspect_namehash_invalid_namehash(test_client, namehash, expected_reason):
     network_name = 'mainnet'
-    response = test_client.post(f'/{api_version}/inspect-namehash',
+    response = test_client.post(f'/inspect-namehash',
                                 json={'namehash': namehash, 'network_name': network_name})
     assert response.status_code == 422
     res_json = response.json()
@@ -366,11 +363,11 @@ def test_inspect_namehash_invalid_namehash(test_client, api_version, namehash, e
     assert res_json['detail'].endswith(expected_reason)
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
-def test_inspect_namehash_mismatch_error(test_client, api_version):
+def test_inspect_namehash_mismatch_error(test_client):
     network_name = 'mainnet'
     # todo: how to find registered namehash with null bytes inside? (other than the 0s below)
     namehash = '0x0000000000000000000000000000000000000000000000000000000000000000'
-    response = test_client.post(f'/{api_version}/inspect-namehash',
+    response = test_client.post(f'/inspect-namehash',
                                 json={'namehash': namehash, 'network_name': network_name})
     assert response.status_code == 500
     res_json = response.json()
@@ -380,10 +377,10 @@ def test_inspect_namehash_mismatch_error(test_client, api_version):
 
 # -- inspect-labelhash --
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
-def test_inspect_labelhash_get(test_client, api_version):
+def test_inspect_labelhash_get(test_client):
     labelhash = labelhash_from_label('vitalik')
     network_name = 'mainnet'
-    response = test_client.get(f'/{api_version}/inspect-labelhash/{network_name}/{labelhash}/eth')
+    response = test_client.get(f'/inspect-labelhash/{network_name}/{labelhash}/eth')
     assert response.status_code == 200
     res_json = response.json()
     pprint(res_json)
@@ -391,16 +388,16 @@ def test_inspect_labelhash_get(test_client, api_version):
     assert res_json['name'] == 'vitalik.eth'
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
-def test_inspect_labelhash_get_empty(test_client, api_version):
+def test_inspect_labelhash_get_empty(test_client):
     labelhash = labelhash_from_label('dcjq92834vhh8teru5903wu9hawtpyhuoidfj09q2yh987euitvhgs')
-    response = test_client.get(f'/{api_version}/inspect-labelhash/mainnet/{labelhash}')  # empty parent = ''
+    response = test_client.get(f'/inspect-labelhash/mainnet/{labelhash}')  # empty parent = ''
     assert response.status_code == 404
     assert response.json()['detail'] == 'Provided namehash could not be found in ENS Subgraph.'
 
-    response = test_client.get(f'/{api_version}/inspect-labelhash/mainnet')
+    response = test_client.get(f'/inspect-labelhash/mainnet')
     assert response.status_code == 404
 
-    response = test_client.get(f'/{api_version}/inspect-labelhash')
+    response = test_client.get(f'/inspect-labelhash')
     # method not allowed because this is the POST endpoint path
     assert response.status_code == 405
 
@@ -421,13 +418,13 @@ def test_inspect_labelhash_get_empty(test_client, api_version):
         ('0x3ac225168df54212a25c1c01fd35bebfea408fdac2e31ddd6f80a4bbf9a5f1cb', None, 200, 'a.eth'),
     ]
 )
-def test_inspect_labelhash_post(test_client, api_version, labelhash, parent, expected_status_code, expected_name):
+def test_inspect_labelhash_post(test_client, labelhash, parent, expected_status_code, expected_name):
     network_name = 'mainnet'
     json_req = {'labelhash': labelhash, 'network_name': network_name}
     if parent:
         json_req['parent_name'] = parent
 
-    response = test_client.post(f'/{api_version}/inspect-labelhash', json=json_req)
+    response = test_client.post(f'/inspect-labelhash', json=json_req)
     assert response.status_code == expected_status_code
     res_json = response.json()
     pprint(res_json)
@@ -445,7 +442,7 @@ def test_inspect_labelhash_post(test_client, api_version, labelhash, parent, exp
 
 
 @pytest.mark.skipif(running_lambda_tests, reason='cannot monkeypatch if testing lambda')
-def test_inspect_labelhash_get_unexpected_response_body(monkeypatch, test_client, api_version):
+def test_inspect_labelhash_get_unexpected_response_body(monkeypatch, test_client):
     labelhash = labelhash_from_label('vitalik1')
     network_name = 'mainnet'
 
@@ -454,12 +451,12 @@ def test_inspect_labelhash_get_unexpected_response_body(monkeypatch, test_client
 
     monkeypatch.setattr(httpx.AsyncClient, 'post', return_mock_response)
 
-    response = test_client.get(f'/{api_version}/inspect-labelhash/{network_name}/{labelhash}/eth')
+    response = test_client.get(f'/inspect-labelhash/{network_name}/{labelhash}/eth')
     assert response.status_code == 503
 
 
 @pytest.mark.skipif(running_lambda_tests, reason='cannot monkeypatch if testing lambda')
-def test_inspect_labelhash_get_unexpected_status_code(monkeypatch, test_client, api_version):
+def test_inspect_labelhash_get_unexpected_status_code(monkeypatch, test_client):
     labelhash = labelhash_from_label('vitalik2')
     network_name = 'mainnet'
 
@@ -468,12 +465,12 @@ def test_inspect_labelhash_get_unexpected_status_code(monkeypatch, test_client, 
 
     monkeypatch.setattr(httpx.AsyncClient, 'post', return_mock_response)
 
-    response = test_client.get(f'/{api_version}/inspect-labelhash/{network_name}/{labelhash}/eth')
+    response = test_client.get(f'/inspect-labelhash/{network_name}/{labelhash}/eth')
     assert response.status_code == 503
 
 
 @pytest.mark.skipif(running_lambda_tests, reason='cannot monkeypatch if testing lambda')
-def test_inspect_labelhash_get_http_error(monkeypatch, test_client, api_version):
+def test_inspect_labelhash_get_http_error(monkeypatch, test_client):
     labelhash = labelhash_from_label('vitalik3')
     network_name = 'mainnet'
 
@@ -482,12 +479,12 @@ def test_inspect_labelhash_get_http_error(monkeypatch, test_client, api_version)
 
     monkeypatch.setattr(httpx.AsyncClient, 'post', return_mock_response)
 
-    response = test_client.get(f'/{api_version}/inspect-labelhash/{network_name}/{labelhash}/eth')
+    response = test_client.get(f'/inspect-labelhash/{network_name}/{labelhash}/eth')
     assert response.status_code == 503
 
 
-def test_inspect_grapheme(test_client, api_version):
-    response = test_client.get(f'/{api_version}/inspect-grapheme/ś')
+def test_inspect_grapheme(test_client):
+    response = test_client.get(f'/inspect-grapheme/ś')
     assert response.status_code == 200
     res_json = response.json()
     pprint(res_json)
@@ -501,8 +498,8 @@ def test_inspect_grapheme(test_client, api_version):
 
 
 
-def test_inspect_grapheme_multi(test_client, api_version):
-    response = test_client.get(f'/{api_version}/inspect-grapheme/aś')
+def test_inspect_grapheme_multi(test_client):
+    response = test_client.get(f'/inspect-grapheme/aś')
     assert response.status_code == 422
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
@@ -546,9 +543,9 @@ def test_inspect_grapheme_multi(test_client, api_version):
         # unknown primary name is impossible
     ]
 )
-def test_primary_name(test_client, api_version, address, impersonation_status, primary_name_status, primary_name,
+def test_primary_name(test_client, address, impersonation_status, primary_name_status, primary_name,
                       display_name, canonical_name, impersonation_risk, name):
-    response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
+    response = test_client.get(f'/secure-primary-name/mainnet/{address}')
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
@@ -564,9 +561,9 @@ def test_primary_name(test_client, api_version, address, impersonation_status, p
 
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
-def test_primary_name_get(test_client, api_version):
+def test_primary_name_get(test_client):
     address = '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
-    response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
+    response = test_client.get(f'/secure-primary-name/mainnet/{address}')
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
@@ -576,9 +573,9 @@ def test_primary_name_get(test_client, api_version):
     assert res_json['display_name'] == 'vitalik.eth'
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
-def test_primary_name_get_uppercase(test_client, api_version):
+def test_primary_name_get_uppercase(test_client):
     address = '0XD8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
-    response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
+    response = test_client.get(f'/secure-primary-name/mainnet/{address}')
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
@@ -588,9 +585,9 @@ def test_primary_name_get_uppercase(test_client, api_version):
     assert res_json['display_name'] == 'vitalik.eth'
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
-def test_primary_name_get_offchain(test_client, api_version):
+def test_primary_name_get_offchain(test_client):
     address = '0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd'
-    response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
+    response = test_client.get(f'/secure-primary-name/mainnet/{address}')
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
@@ -600,9 +597,9 @@ def test_primary_name_get_offchain(test_client, api_version):
     assert res_json['display_name'] == 'exampleprimary.cb.id'
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
-def test_primary_name_get_no_primary_name(test_client, api_version):
+def test_primary_name_get_no_primary_name(test_client):
     address = '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96046'
-    response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
+    response = test_client.get(f'/secure-primary-name/mainnet/{address}')
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
@@ -612,9 +609,9 @@ def test_primary_name_get_no_primary_name(test_client, api_version):
     assert res_json['display_name'] == 'Unnamed d8da'
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
-def test_primary_name_get_unnormalized(test_client, api_version):
+def test_primary_name_get_unnormalized(test_client):
     address = '0xfA9A134f997b3d48e122d043E12d04E909b11073'  # 888‍‍.eth
-    response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
+    response = test_client.get(f'/secure-primary-name/mainnet/{address}')
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
@@ -624,23 +621,23 @@ def test_primary_name_get_unnormalized(test_client, api_version):
     assert res_json['display_name'] == 'Unnamed fa9a'
 
 
-def test_primary_name_get_invalid_address(test_client, api_version):
+def test_primary_name_get_invalid_address(test_client):
     address = '0xfA9A134f997b3d48e122d043E12d04E909b1107g'
-    response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
+    response = test_client.get(f'/secure-primary-name/mainnet/{address}')
     assert response.status_code == 422
 
 
-def test_primary_name_get_empty(test_client, api_version):
-    response = test_client.get(f'/{api_version}/secure-primary-name/mainnet')
+def test_primary_name_get_empty(test_client):
+    response = test_client.get(f'/secure-primary-name/mainnet')
     assert response.status_code == 404
 
-    response = test_client.get(f'/{api_version}/secure-primary-name')
+    response = test_client.get(f'/secure-primary-name')
     assert response.status_code == 404
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
-def test_primary_name_get_emoji(test_client, api_version):
+def test_primary_name_get_emoji(test_client):
     address = '0x63A93f5843aD57d756097ef102A2886F05c7a29c'
-    response = test_client.get(f'/{api_version}/secure-primary-name/mainnet/{address}')
+    response = test_client.get(f'/secure-primary-name/mainnet/{address}')
     assert response.status_code == 200
     res_json = response.json()
 
@@ -729,10 +726,10 @@ def test_primary_name_get_emoji(test_client, api_version):
         # ('0xcc6c63044bfe4e991f3a13b35b6ee924b54cd304', '440', FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME),
     ]
 )
-def test_fake_eth_name_check(test_client, api_version, contract_address, token_id, fake, monkeypatch):
+def test_fake_eth_name_check(test_client, contract_address, token_id, fake, monkeypatch):
     network_name = 'mainnet'
 
-    response = test_client.get(f'/{api_version}/fake-eth-name-check/{network_name}/{contract_address}/{token_id}')
+    response = test_client.get(f'/fake-eth-name-check/{network_name}/{contract_address}/{token_id}')
     assert response.status_code == 200
     res_json = response.json()
     assert res_json['status'] == fake
@@ -749,10 +746,10 @@ def test_fake_eth_name_check(test_client, api_version, contract_address, token_i
     pprint(res_json)
 
 
-def test_invalid_unicode(test_client, api_version):
+def test_invalid_unicode(test_client):
     with pytest.raises(UnicodeEncodeError):
         # throws inside httpx
-        test_client.get(f'/{api_version}/inspect-grapheme/\uD801\uDC37')
+        test_client.get(f'/inspect-grapheme/\uD801\uDC37')
 
 
 @pytest.mark.parametrize(
@@ -1021,7 +1018,7 @@ def test_invalid_unicode(test_client, api_version):
         # ('0xcc6c63044bfe4e991f3a13b35b6ee924b54cd304', '440', FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME),
     ]
 )
-def test_fake_eth_name_check_fields(test_client, api_version, contract_address, token_id, title, fields, fake,
+def test_fake_eth_name_check_fields(test_client, contract_address, token_id, title, fields, fake,
                                     faking_fields, monkeypatch):
     network_name = 'mainnet'
 
@@ -1032,7 +1029,7 @@ def test_fake_eth_name_check_fields(test_client, api_version, contract_address, 
         'title': title,
         'fields': fields,
     }
-    response = test_client.post(f'/{api_version}/fake-eth-name-check-fields', json=json_req)
+    response = test_client.post(f'/fake-eth-name-check-fields', json=json_req)
     assert response.status_code == 200
     res_json = response.json()
     assert res_json['status'] == fake
@@ -1058,7 +1055,7 @@ def test_fake_eth_name_check_fields(test_client, api_version, contract_address, 
          {'collection': 'asd nick.eth asd'}),
 
 ])
-def test_fake_eth_name_check_fields_missing_title(test_client, api_version, contract_address, token_id, title, fields, monkeypatch):
+def test_fake_eth_name_check_fields_missing_title(test_client, contract_address, token_id, title, fields, monkeypatch):
     network_name = 'mainnet'
 
     json_req = {
@@ -1068,11 +1065,11 @@ def test_fake_eth_name_check_fields_missing_title(test_client, api_version, cont
         'title': title,
         'fields': fields,
     }
-    response = test_client.post(f'/{api_version}/fake-eth-name-check-fields', json=json_req)
+    response = test_client.post(f'/fake-eth-name-check-fields', json=json_req)
     assert response.status_code == 422
 
 
-def test_fake_eth_name_check_error(test_client, api_version, monkeypatch):
+def test_fake_eth_name_check_error(test_client, monkeypatch):
     contract_address = '0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85'
     token_id = '0x68562fc74af4dcfac633a803c2f57c2b826827b47f797b6ab4e468dc8607b5d5'  # faked for test purpose
     network_name = 'mainnet'
@@ -1082,7 +1079,7 @@ def test_fake_eth_name_check_error(test_client, api_version, monkeypatch):
 
     monkeypatch.setattr(httpx.AsyncClient, 'get', return_mock_response)
 
-    response = test_client.get(f'/{api_version}/fake-eth-name-check/{network_name}/{contract_address}/{token_id}')
+    response = test_client.get(f'/fake-eth-name-check/{network_name}/{contract_address}/{token_id}')
     assert response.status_code == 503
     res_json = response.json()
     pprint(res_json)
