@@ -38,6 +38,11 @@ import { CopyIcon } from "@/app/atoms/icons/CopyIcon";
 import { GithubIconSmall } from "@/app/atoms/icons/GithubIconSmall";
 import { GithubIconDevelopers } from "@/app/atoms/icons/GithubIconDevelopers";
 import { RedirectIcon } from "@/app/atoms/icons/RedirectIcon";
+import { FigmaIcon } from "@/app/atoms/icons/FigmaIcon";
+import { CloudOutlineIcon } from "@/app/atoms/icons/CloudOutlineIcon";
+import { GearWheelIcon } from "@/app/atoms/icons/GearWheelIcon";
+import { FileIcon } from "@/app/atoms/icons/FileIcon";
+import { FontIcon } from "@/app/atoms/icons/FontIcon";
 
 const getSecurePrimaryName = `import { nameguard } from "@namehash/nameguard";
 
@@ -78,8 +83,8 @@ export default function Home() {
           sectionDescription={
             <Fragment>
               Inbound messages from deceptive look-alike names can exploit
-              trusted relationships. NameGuard's homograph and canonical name
-              algorithms help you handle higher-risk messages.
+              trusted relationships. NameGuard&apos;s homograph and canonical
+              name algorithms help you handle higher-risk messages.
             </Fragment>
           }
           sectionBackgroundName="bg-green_background"
@@ -112,8 +117,8 @@ export default function Home() {
           sectionHeader={<Fragment>Filter out fake ENS NFTs</Fragment>}
           sectionDescription={
             <Fragment>
-              Just because an NFT names itself "nick.eth" doesn't mean it's an
-              ENS name. NameGuard makes it easy to stop{" "}
+              Just because an NFT names itself &quot;nick.eth&quot; doesn&apos;t
+              mean it&apos;s an ENS name. NameGuard makes it easy to stop{" "}
               <a
                 className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
                 href="https://opensea.io/assets/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/61995921128521442959106650131462633744885269624153038309795231243542768648193"
@@ -122,8 +127,8 @@ export default function Home() {
               >
                 fake ENS names
               </a>{" "}
-              from being sold on NFT marketplaces. Let's put an end to these
-              scams !
+              from being sold on NFT marketplaces. Let&apos;s put an end to
+              these scams !
             </Fragment>
           }
           sectionBackgroundName={"bg-purple_background"}
@@ -1226,10 +1231,10 @@ function DevelopersSection() {
   const headerWrapperStyle =
     "flex flex-row items-center justify-start gap-x-2 gap-y-1 flex-wrap";
   const redirectStyle =
-    "hidden gt_mobile:group-hover:block relative z-10 right-0";
+    "hidden gt_mobile:group-hover:block absolute z-10 top-[18px] right-[18px]";
   const hoverCellStyle = cc([
     cellStyle,
-    "gt_mobile:hover:cursor-pointer gt_mobile:hover:border-gray-300 gt_mobile:hover:shadow-sm transition",
+    "gt_mobile:hover:cursor-pointer gt_mobile:hover:border-gray-300 gt_mobile:hover:shadow-sm transition relative",
   ]);
 
   const devElements: ListSectionElement[] = [
@@ -1237,10 +1242,9 @@ function DevelopersSection() {
       header: (
         <div className={headerWrapperStyle}>
           <h3 className={headerStyle}>NameGuard library</h3>
-          <RedirectIcon svgStyle={redirectStyle} />
         </div>
       ),
-      text: <Fragment>Security "x-ray" for ENS names.</Fragment>,
+      text: <Fragment>Security &quot;x-ray&quot; for ENS names.</Fragment>,
       icon: (
         <div className={iconWrapperStyle}>
           <GithubIconDevelopers />
@@ -1252,7 +1256,6 @@ function DevelopersSection() {
       header: (
         <div className={headerWrapperStyle}>
           <h3 className={headerStyle}>NameGuard Client SDK</h3>
-          <RedirectIcon svgStyle={redirectStyle} />
         </div>
       ),
       text: (
@@ -1270,7 +1273,6 @@ function DevelopersSection() {
         <div className={headerWrapperStyle}>
           <h3 className={headerStyle}>NameGuard React UI Kit</h3>
           <ListSectionBadge width={53} height={20} text="Alpha" />
-          <RedirectIcon svgStyle={redirectStyle} />
         </div>
       ),
       text: (
@@ -1299,7 +1301,7 @@ function DevelopersSection() {
       ),
       icon: (
         <div className={iconWrapperStyle}>
-          <GithubIconDevelopers />
+          <FigmaIcon />
         </div>
       ),
     },
@@ -1307,7 +1309,6 @@ function DevelopersSection() {
       header: (
         <div className={headerWrapperStyle}>
           <h3 className={headerStyle}>ENS Label Inspector</h3>
-          <RedirectIcon svgStyle={redirectStyle} />
         </div>
       ),
       text: <Fragment>Detailed inspection of labels in ENS names.</Fragment>,
@@ -1322,7 +1323,6 @@ function DevelopersSection() {
       header: (
         <div className={headerWrapperStyle}>
           <h3 className={headerStyle}>ENS Font Data</h3>
-          <RedirectIcon svgStyle={redirectStyle} />
         </div>
       ),
       text: (
@@ -1341,7 +1341,6 @@ function DevelopersSection() {
       header: (
         <div className={headerWrapperStyle}>
           <h3 className={headerStyle}>ENS Normalize Python</h3>
-          <RedirectIcon svgStyle={redirectStyle} />
         </div>
       ),
       text: (
@@ -1361,7 +1360,6 @@ function DevelopersSection() {
         <div className={headerWrapperStyle}>
           <h3 className={headerStyle}>ENS Name Parser</h3>
           <ListSectionBadge width={53} height={20} text="Alpha" />
-          <RedirectIcon svgStyle={redirectStyle} />
         </div>
       ),
       text: (
@@ -1378,7 +1376,6 @@ function DevelopersSection() {
       header: (
         <div className={headerWrapperStyle}>
           <h3 className={headerStyle}>Open public API</h3>
-          <RedirectIcon svgStyle={redirectStyle} />
         </div>
       ),
       text: (
@@ -1388,7 +1385,7 @@ function DevelopersSection() {
       ),
       icon: (
         <div className={iconWrapperStyle}>
-          <GithubIconDevelopers />
+          <CloudOutlineIcon />
         </div>
       ),
       link: "https://api.nameguard.io/docs",
@@ -1397,7 +1394,6 @@ function DevelopersSection() {
       header: (
         <div className={headerWrapperStyle}>
           <h3 className={headerStyle}>NameGuard DevOps Scripts</h3>
-          <RedirectIcon svgStyle={redirectStyle} />
         </div>
       ),
       text: (
@@ -1407,7 +1403,7 @@ function DevelopersSection() {
       ),
       icon: (
         <div className={iconWrapperStyle}>
-          <GithubIconDevelopers />
+          <GearWheelIcon />
         </div>
       ),
       link: "https://github.com/namehash/nameguard/blob/main/api/serverless.yml",
@@ -1426,7 +1422,7 @@ function DevelopersSection() {
       ),
       icon: (
         <div className={iconWrapperStyle}>
-          <GithubIconDevelopers />
+          <FileIcon />
         </div>
       ),
     },
@@ -1444,7 +1440,7 @@ function DevelopersSection() {
       ),
       icon: (
         <div className={iconWrapperStyle}>
-          <GithubIconDevelopers />
+          <FontIcon />
         </div>
       ),
     },
@@ -1485,6 +1481,7 @@ function DevelopersSection() {
               className="group w-full md:w-fit h-fit"
             >
               <div className={hoverCellStyle}>
+                <RedirectIcon svgStyle={redirectStyle} />
                 {elem.icon}
                 <div>
                   {elem.header}
