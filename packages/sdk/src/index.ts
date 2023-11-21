@@ -484,7 +484,7 @@ class NameGuard {
     name: string,
     options?: InspectNameOptions
   ): Promise<NameGuardReport> {
-    const url = `${this.endpoint}${this.version}/inspect-name`;
+    const url = `${this.endpoint}inspect-name`;
 
     const network_name = options?.network || this.network;
 
@@ -507,7 +507,7 @@ class NameGuard {
     names: string[],
     options?: InspectNameOptions
   ): Promise<BulkConsolidatedNameGuardReport> {
-    const url = `${this.endpoint}${this.version}/bulk-inspect-names`;
+    const url = `${this.endpoint}bulk-inspect-names`;
 
     const network_name = options?.network || this.network;
 
@@ -535,7 +535,7 @@ class NameGuard {
   ): Promise<SecurePrimaryNameResult> {
     const network_name = options?.network || this.network;
 
-    const url = `${this.endpoint}${this.version}/secure-primary-name/${network_name}/${address}`;
+    const url = `${this.endpoint}secure-primary-name/${network_name}/${address}`;
 
     const response = await fetch(url);
 
@@ -556,7 +556,7 @@ class NameGuard {
   ): Promise<FakeEthNameCheckResult> {
     const network_name = options?.network || this.network;
 
-    const url = `${this.endpoint}${this.version}/fake-eth-name-check/${network_name}/${contract_address}/${token_id}`;
+    const url = `${this.endpoint}fake-eth-name-check/${network_name}/${contract_address}/${token_id}`;
 
     const response = await fetch(url);
 
@@ -575,7 +575,7 @@ class NameGuard {
   ): Promise<GraphemeGuardReport> {
     const grapheme_encoded = encodeURIComponent(grapheme);
 
-    const url = `${this.endpoint}${this.version}/inspect-grapheme/${grapheme_encoded}`;
+    const url = `${this.endpoint}inspect-grapheme/${grapheme_encoded}`;
 
     const response = await fetch(url);
 
@@ -657,7 +657,7 @@ class NameGuard {
 
     const network = options?.network || this.network;
 
-    const url = `${this.endpoint}/${this.version}/inspect-namehash/${network}/${namehash}`;
+    const url = `${this.endpoint}/inspect-namehash/${network}/${namehash}`;
 
     const response = await fetch(url);
 
