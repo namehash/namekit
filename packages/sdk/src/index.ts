@@ -433,14 +433,12 @@ class NameGuardError extends Error {
 }
 
 const DEFAULT_ENDPOINT = "https://api.nameguard.io";
-export const API_VERSION = "v0.8-beta";
 const DEFAULT_NETWORK: Network = "mainnet";
 const DEFAULT_INSPECT_LABELHASH_PARENT = ETH_TLD;
 const MAX_BULK_INSPECTION_NAMES = 250;
 
 interface NameGuardOptions {
   endpoint?: string;
-  version?: string;
   network?: Network;
 }
 
@@ -467,16 +465,10 @@ interface FakeEthNameOptions {
 
 class NameGuard {
   private endpoint: URL;
-  private version: string;
   private network: Network;
 
-  constructor({
-    endpoint = DEFAULT_ENDPOINT,
-    version = API_VERSION,
-    network = DEFAULT_NETWORK,
-  } = {}) {
+  constructor({ endpoint = DEFAULT_ENDPOINT, network = DEFAULT_NETWORK } = {}) {
     this.endpoint = new URL(endpoint);
-    this.version = version;
     this.network = network;
   }
 
