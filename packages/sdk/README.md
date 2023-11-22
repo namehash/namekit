@@ -104,14 +104,13 @@ These functions allow for a more granular level of inspection, particularly usef
 
 ## Custom client
 
-You may have a different NameGuard API URL, version or network, you can instantiate a different client should you need to by importing `createClient`.
+You may have a different NameGuard API URL or network, you can instantiate a different client should you need to by importing `createClient`.
 
 ```ts
 import { createClient } from "@namehash/nameguard";
 
 const nameguard = createClient({
   url: "...",
-  version: "v2",
   network: "goerli",
 });
 ```
