@@ -163,7 +163,7 @@ export default function Home() {
           }
           sectionDescription={
             <Fragment>
-              NameGuard offers a detailed 10+ point-inspection on any ENS name,
+              NameGuard offers a detailed 12 point-inspection on any ENS name,
               including NameWrapper fuses, offchain names, and DNS
               compatibility. Ensure no shocking disappointments after purchase.
             </Fragment>
@@ -394,7 +394,7 @@ function ReadySection(props: ReadySectionProps) {
               height={props.imageSpecifics.tagHeight}
             />
             {props.integrationsPanel ? (
-              <div className="hidden md:flex flex-col w-full h-full justify-between items-center gap-7 max-w-3xl">
+              <div className="hidden md:flex flex-col w-full h-full justify-between items-start gap-7 max-w-3xl">
                 <CodeSnippet codeSnippet={props.codeSnippet} />
                 {props.integrationsPanel}
               </div>
