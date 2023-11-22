@@ -27,6 +27,7 @@ type Size = "tiny" | "small" | "medium" | "large";
 type Props = {
   size?: Size;
   status: CheckResultCode;
+  className?: string;
 };
 
 const STATUS_TO_BASE_NAME: { [key in CheckResultCode]: string } = {

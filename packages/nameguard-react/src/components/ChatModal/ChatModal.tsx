@@ -51,7 +51,7 @@ export const ChatModal = forwardRef(
                 href={coinbaseWalletUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline text-black"
+                className="underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px] text-black"
               >
                 Coinbase Wallet
               </a>
@@ -60,7 +60,7 @@ export const ChatModal = forwardRef(
                 href={converseUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline text-black"
+                className="underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px] text-black"
               >
                 Converse
               </a>
