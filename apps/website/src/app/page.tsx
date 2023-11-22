@@ -117,7 +117,7 @@ export default function Home() {
           sectionHeader={<Fragment>Filter out fake ENS NFTs</Fragment>}
           sectionDescription={
             <Fragment>
-              Just because an NFT names itself &quot;nick.eth&quot; doesn&apos;t
+              Just because a NFT names itself &quot;nick.eth&quot; doesn&apos;t
               mean it&apos;s an ENS name. NameGuard makes it easy to stop{" "}
               <a
                 className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
@@ -125,7 +125,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                fake ENS names
+                fake ENS NFTs
               </a>{" "}
               from being sold on NFT marketplaces. Let&apos;s put an end to
               these scams !
@@ -163,7 +163,7 @@ export default function Home() {
           }
           sectionDescription={
             <Fragment>
-              NameGuard offers a detailed 10+ point-inspection on any ENS name,
+              NameGuard offers a detailed 12 point-inspection on any ENS name,
               including NameWrapper fuses, offchain names, and DNS
               compatibility. Ensure no shocking disappointments after purchase.
             </Fragment>

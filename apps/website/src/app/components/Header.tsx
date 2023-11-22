@@ -5,7 +5,7 @@ import { Search } from "@namehash/nameguard-react";
 
 export const Header = () => {
   return (
-    <header className="relative top-0 w-full z-10 border-b border-gray-300 box-border inline-flex h-[56px] px-[20px] py-[9px] items-center justify-between gt_mobile:flex gt_mobile:flex-row gt_mobile:h-[70px] md:px-28 gt_mobile:py-4">
+    <header className="relative bg-white top-0 w-full z-10 border-b border-gray-300 box-border inline-flex h-[56px] px-[20px] py-[9px] items-center justify-between gt_mobile:flex gt_mobile:flex-row gt_mobile:h-[70px] md:px-28 gt_mobile:py-4">
       <div className="flex flex-row gap-7 justify-between items-center">
         <div className="flex flex-row justify-between items-center gap-1 cursor-pointer">
           <a href={"https://nameguard.io"}>
