@@ -92,7 +92,7 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
                   Could be confused with
                 </p>
                 <p className="text-gray-500 text-sm leading-6">
-                  Some people could visually confuse this charracter for a
+                  Some people could visually confuse this character for a
                   different character.
                 </p>
               </div>

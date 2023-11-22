@@ -34,7 +34,11 @@ export function NameShield({ data }: NameShieldProps) {
   const textClass = cc(["font-semibold", textColor(rating)]);
 
   return (
-    <Tooltip trigger={<Shield status={rating} size="tiny" />}>
+    <Tooltip
+      trigger={
+        <Shield status={rating} size="tiny" className="cursor-pointer" />
+      }
+    >
       <div className="flex items-start space-x-3 py-2.5 min-w-[300px] max-w-[300px]">
         <div className="mt-0.5">
           <Shield status={rating} size="tiny" />
@@ -45,12 +49,12 @@ export function NameShield({ data }: NameShieldProps) {
             <span className={textClass}>{title}</span>
             <span className="text-sm font-normal text-gray-400">
               {risk_count} risk
-              {(risk_count || 0) >= 0 && "s"} detected
+              {(risk_count || 0) > 1 && "s"} detected
             </span>
           </div>
           <div className="space-y-0.5">
             <div className="text-sm text-white">{highest_risk?.message}</div>
-            <div className="text-sm text-white">
+            {/* <div className="text-sm text-white">
               <a
                 href={`https://nameguard.io/inspect/${name}`}
                 className="underline"
@@ -59,7 +63,7 @@ export function NameShield({ data }: NameShieldProps) {
               >
                 Inspect name for details
               </a>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

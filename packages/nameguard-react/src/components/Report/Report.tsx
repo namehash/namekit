@@ -67,7 +67,7 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
       href: `https://app.ens.domains/${parsedName.outputName.name}`,
     },
     {
-      text: "Adraffy's resolver",
+      text: "raffy.eth's resolver",
       href: `https://adraffy.github.io/ens-normalize.js/test/resolver.html#${parsedName.outputName.name}`,
     },
     {

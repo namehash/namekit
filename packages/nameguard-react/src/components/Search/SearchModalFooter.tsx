@@ -24,13 +24,13 @@ export const SearchModalFooter = ({
       <div className="bg-gray-100 flex flex-col md:flex-row items-center justify-between px-5 py-4 border-t border-gray-300 space-y-3 md:space-y-0">
         <div className="flex items-center space-x-3">
           <button
-            className="text-xs text-black underline leading-5 appearance-none hover:text-gray-600 transition-colors"
+            className="text-xs text-black leading-5 appearance-none underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
             onClick={openChatModal}
           >
             Chat with us
           </button>
           <button
-            className="text-xs text-black underline leading-5 appearance-none hover:text-gray-600 transition-colors"
+            className="text-xs text-black leading-5 appearance-none underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
             onClick={openSettingsModal}
           >
             Search settings
@@ -40,7 +40,7 @@ export const SearchModalFooter = ({
           Made with ❤️ by{" "}
           <a
             href="https://namehashlabs.org"
-            className="text-black underline hover:text-gray-600 transition-colors"
+            className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
             target="_blank"
             rel="noreferrer noopener"
           >
