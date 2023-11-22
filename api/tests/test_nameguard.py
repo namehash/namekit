@@ -185,6 +185,15 @@ async def test_namehash_non_null_name(nameguard: NameGuard):
         await nameguard.inspect_namehash(network_name,
                                          '0xe0fe380f4d877f643e88ceabbed4e5ee0efb66f079aabba23e8902336f7948da')
 
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
+@pytest.mark.asyncio
+@pytest.mark.xfail
+async def test_namehash_lablehash(nameguard: NameGuard):
+    network_name = 'mainnet'
+    r = await nameguard.inspect_namehash(network_name,
+                                         '0xdffa165b6d6cfb2fa47e0d50e429380c60e7be170ba21301c22628b66653a951')
+    # this is real name that looks like unknown
+    assert r.name == '[1220bab8d21e1619549d0e92f7f9100059d1a8717877ba82348bf61c06bacb46].eth'
 
 def test_inspect_grapheme_multi(nameguard: NameGuard):
     with pytest.raises(NotAGrapheme):
