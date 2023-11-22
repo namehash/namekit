@@ -17,6 +17,8 @@ def compute_canonical_from_list(canonicals: list[Optional[str]], sep='') -> Opti
         return None
     return sep.join(canonicals)
 
+def is_labelhash_eth(x: str) -> bool:
+    return bool(re.match(r'^\[[0-9a-f]{64}\]\.eth$', x))
 
 def label_is_labelhash(x: str) -> bool:
     return bool(re.match(r'^\[[0-9a-f]{64}\]$', x))

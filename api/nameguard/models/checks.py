@@ -1,5 +1,5 @@
 from typing import Optional
-from pydantic import BaseModel, computed_field
+from pydantic import BaseModel, computed_field, Field
 from enum import Enum
 
 from nameguard.generic_utils import capitalize_words
@@ -163,11 +163,11 @@ def make_severity_dict_from_order(order):
 
 SEVERITY_DEFAULT = make_severity_dict_from_order([
     # highest severity first
-    Check.NORMALIZED,
-    Check.IMPERSONATION_RISK,
     Check.INVISIBLE,
+    Check.NORMALIZED,
     Check.CONFUSABLES,
     Check.TYPING_DIFFICULTY,
+    Check.IMPERSONATION_RISK,
     # all other checks get severity 0
 ])
 
@@ -175,8 +175,8 @@ SEVERITY_DEFAULT = make_severity_dict_from_order([
 SEVERITY_PER_ENDPOINT = {
     Endpoints.SECURE_PRIMARY_NAME: make_severity_dict_from_order([
         Check.IMPERSONATION_RISK,
-        Check.NORMALIZED,
         Check.INVISIBLE,
+        Check.NORMALIZED,
         Check.CONFUSABLES,
         Check.TYPING_DIFFICULTY,
     ]),
@@ -196,8 +196,8 @@ class GenericCheckResult(BaseModel):
     The result of a conducted check.
     '''
 
-    check: Check
-    status: CheckStatus
+    check: Check = Field(examples=[Check.CONFUSABLES])
+    status: CheckStatus = Field(examples=[CheckStatus.WARN])
 
     def __init__(self, **data):
         super().__init__(**data)

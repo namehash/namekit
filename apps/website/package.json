@@ -29,6 +29,7 @@
     "eslint": "latest",
     "eslint-config-next": "latest",
     "postcss": "latest",
+    "tailwind-scrollbar-hide": "1.1.7",
     "tailwindcss": "latest",
     "typescript": "latest"
   }
