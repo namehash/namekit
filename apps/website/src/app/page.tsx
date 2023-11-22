@@ -69,7 +69,7 @@ export default function Home() {
   return (
     <>
       <HeroSection />
-      <div className="md:px-32 relative">
+      <div className="relative">
         <ReadySection
           sectionTargetSvg={<MessageIcon />}
           sectionTargetClientMessage="For Web3 messengers"
@@ -117,7 +117,7 @@ export default function Home() {
           sectionHeader={<Fragment>Filter out fake ENS NFTs</Fragment>}
           sectionDescription={
             <Fragment>
-              Just because an NFT names itself &quot;nick.eth&quot; doesn&apos;t
+              Just because a NFT names itself &quot;nick.eth&quot; doesn&apos;t
               mean it&apos;s an ENS name. NameGuard makes it easy to stop{" "}
               <a
                 className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
@@ -125,7 +125,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                fake ENS names
+                fake ENS NFTs
               </a>{" "}
               from being sold on NFT marketplaces. Let&apos;s put an end to
               these scams !
@@ -239,7 +239,7 @@ export default function Home() {
           sectionTargetSvg={<WalletIcon />}
           sectionTargetClientMessage="For wallets and dApps"
           sectionHeader={<Fragment>ENS profile completion score</Fragment>}
-          sectionDescription="Unlock a new level of online presence with ENS. Elevate your identity, showcase your personal brand, and become a stand out. Embark on an exciting journey to boost your ENS profile completion score and join the '100% Club’ with the rest of your community. "
+          sectionDescription="Boost social engagement and retention by encouraging your community to make the most of their ENS identity. Build gamified user journeys tailored to your app that incentivize users to boost their ENS profile completion score and join the ‘100% Club’."
           sectionBackgroundName="bg-green_background_sm"
           isTextOnTheLeft={false}
           badgeText={"Planned"}
@@ -394,7 +394,7 @@ function ReadySection(props: ReadySectionProps) {
               height={props.imageSpecifics.tagHeight}
             />
             {props.integrationsPanel ? (
-              <div className="hidden md:flex flex-col w-full h-full justify-between items-start gap-7 max-w-3xl">
+              <div className="hidden md:flex flex-col w-full h-full justify-between lg:items-start items-center gap-7 max-w-3xl">
                 <CodeSnippet codeSnippet={props.codeSnippet} />
                 {props.integrationsPanel}
               </div>
@@ -607,7 +607,7 @@ function HeroSection() {
           <p className="text-center not-italic font-normal text-gray-500 text-lg leading-7 gt_mobile:text-base gt_mobile:leading-6 gt_mobile:font-light">
             Guard your users from heartbreak and keep ENS usage safe across web3
           </p>
-          <div className="hidden flex search_bar_change:flex items-center gap-2 py-[9px] pl-4 pr-[14px] rounded-lg bg-black bg-opacity-5 border border-gray-300 gt_mobile:gap-3 gt_mobile:py-[13px] gt_mobile:pl-[20px] gt_mobile:pr-[16px]">
+          <div className="flex search_bar_change:flex items-center gap-2 py-[9px] pl-4 pr-[14px] rounded-lg bg-black bg-opacity-5 border border-gray-300 gt_mobile:gap-3 gt_mobile:py-[13px] gt_mobile:pl-[20px] gt_mobile:pr-[16px]">
             <p className="text-black leading-6 font-normal text-sm gt_mobile:text-base">
               {npmCommand}
             </p>
@@ -617,7 +617,7 @@ function HeroSection() {
           </div>
           <a
             href={"https://api.nameguard.io/docs"}
-            className="hidden flex search_bar_change:block"
+            className="flex search_bar_change:block"
           >
             <button className="flex justify-center items-center px-[25px] py-[13px] rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-800 cursor-pointer">
               <p className="text-white not-italic font-medium text-base leading-6">
@@ -672,36 +672,38 @@ function ExitSection() {
 function NewExitSection() {
   return (
     <section className="relative w-full h-full flex flex-col items-center justify-center py-5 px-5 gap-5 z-10 bg-white md:bg-transparent md:px-[112px] lg:pt-10 lg:pb-[45px] lg:flex-row lg:gap-10">
-      <div className="flex flex-col justify-center items-center h-full max-h-[334px] md:max-h-[315px] w-full max-w-3xl rounded-xl border border-gray-200 bg-generate_raport_background bg-no-repeat bg-top bg-[length:180%_200%] lg:bg-[length:100%_250%]">
-        <div className="w-full h-full flex flex-col justify-center items-center gap-6 py-[63px] px-5 box-border lg:py-[60px] lg:max-w-[508px] lg:w-full lg:px-10">
-          <div className="flex flex-col gap-4 items-center">
-            <h1 className="text-center text-black not-italic text-3xl leading-9 font-bold ">
-              Generate a report
-            </h1>
-            <p className="text-center text-gray-500 not-italic text-lg leading-7 font-normal gt_mobile:font-light lg:leading-8">
-              Search for any ENS name to generate a report. Share NameGuard
-              reports with frENS.{" "}
-            </p>
-          </div>
-          <Search />
-        </div>
-      </div>
-      <div className="flex flex-col justify-center items-center h-full max-h-[334px] md:max-h-[315px] w-full max-w-3xl rounded-xl border border-gray-200 bg-in_touch_background bg-no-repeat bg-top bg-[length:180%_200%] lg:bg-[length:100%_250%]">
-        <div className="h-full w-full box-border inline-flex flex-col justify-center items-center gap-10 py-10 px-5 box-border flex-shrink-0 lg:max-w-[508px] lg:w-full lg:px-10">
-          <div className="flex flex-col h-fit w-full max-w-[295px] gt_mobile:max-w-full items-center justify-center gap-6">
+      <div className="m-auto flex items-center justify-center flex-col lg:flex-row w-full max-w-[1216px] gap-10">
+        <div className="flex flex-col justify-center items-center h-full max-h-[334px] md:max-h-[315px] w-full max-w-3xl rounded-xl border border-gray-200 bg-generate_raport_background bg-no-repeat bg-top bg-[length:180%_200%] lg:bg-[length:100%_250%]">
+          <div className="w-full h-full flex flex-col justify-center items-center gap-6 py-[63px] px-5 box-border lg:py-[60px] lg:max-w-[508px] lg:w-full lg:px-10">
             <div className="flex flex-col gap-4 items-center">
               <h1 className="text-center text-black not-italic text-3xl leading-9 font-bold ">
-                Get in touch
+                Generate a report
               </h1>
               <p className="text-center text-gray-500 not-italic text-lg leading-7 font-normal gt_mobile:font-light lg:leading-8">
-                Keep your users safe with NameGuard, the choice of leading web3
-                teams. Ready for seamless integration into your web3 app? Our
-                team is here to assist you.
+                Search for any ENS name to generate a report. Share NameGuard
+                reports with frENS.{" "}
               </p>
             </div>
-            <CalButton className="max-h-12 flex justify-center items-center px-[25px] py-[13px] rounded-lg border border-gray-300 bg-white z-10 shadow-sm transition hover:bg-gray-100 cursor-pointer text-black not-italic font-medium text-base leading-6">
-              Schedule a call
-            </CalButton>
+            <Search />
+          </div>
+        </div>
+        <div className="flex flex-col justify-center items-center h-full max-h-[334px] md:max-h-[315px] w-full max-w-3xl rounded-xl border border-gray-200 bg-in_touch_background bg-no-repeat bg-top bg-[length:180%_200%] lg:bg-[length:100%_250%]">
+          <div className="h-full w-full box-border inline-flex flex-col justify-center items-center gap-10 py-10 px-5 box-border flex-shrink-0 lg:max-w-[508px] lg:w-full lg:px-10">
+            <div className="flex flex-col h-fit w-full max-w-[295px] gt_mobile:max-w-full items-center justify-center gap-6">
+              <div className="flex flex-col gap-4 items-center">
+                <h1 className="text-center text-black not-italic text-3xl leading-9 font-bold ">
+                  Get in touch
+                </h1>
+                <p className="text-center text-gray-500 not-italic text-lg leading-7 font-normal gt_mobile:font-light lg:leading-8">
+                  Keep your users safe with NameGuard, the choice of leading
+                  web3 teams. Ready for seamless integration into your web3 app?
+                  Our team is here to assist you.
+                </p>
+              </div>
+              <CalButton className="max-h-12 flex justify-center items-center px-[25px] py-[13px] rounded-lg border border-gray-300 bg-white z-10 shadow-sm transition hover:bg-gray-100 cursor-pointer text-black not-italic font-medium text-base leading-6">
+                Schedule a call
+              </CalButton>
+            </div>
           </div>
         </div>
       </div>
@@ -1156,7 +1158,7 @@ function ChecksSection() {
   ];
 
   const cellStyle =
-    "w-full h-full max-w-[396px] box-border flex flex-row items-center justify-center bg-white p-5 gap-4 rounded-md border border-gray-200";
+    "w-full h-full z-20 sm:w-[394px] box-border flex flex-row items-center justify-start bg-white p-5 gap-4 rounded-md border border-gray-200";
   const cellTextStyle =
     "self-stretch not-italic z-10 text-gray-500 text-left text-sm leading-6 font-normal";
 
@@ -1178,19 +1180,16 @@ function ChecksSection() {
           each label and grapheme for enhanced safety.
         </p>
       </div>
-      <div className="md:hidden w-full h-full flex flex-col self-stretch items-center justify-center content-between gap-4">
-        {checkElements.map((elem, idx) => (
-          <div key={`NameGuardCheck#${idx}`} className={cellStyle}>
-            {elem.icon}
-            <div>
-              {elem.header}
-              <p className={cellTextStyle}>{elem.text}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="hidden md:flex flex-col items-center justify-center gap-4 py-10">
-        <div className="w-full h-full max-w-[1820px] flex flex-row flex-shrink-0 items-center content-between justify-center flex-wrap gap-4">
+      <div className="relative flex flex-col items-center justify-center gap-4 py-10 w-full">
+        <div
+          className="w-full h-full absolute top-0 left-0"
+          style={{
+            background:
+              "radial-gradient(44.37% 50% at 50% 50%, rgba(255, 255, 255, 0.00) 0%, #FFF 100%), linear-gradient(180deg, #FDC46A 0%, #2ED3C6 32.29%, #6DFFB7 70.83%, #6DFFB7 95.83%)",
+            opacity: "0.1",
+          }}
+        />
+        <div className="max-w-[1820px] grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-4">
           {checkElements.map((elem, idx) => {
             return (
               idx < checkElements.length - 1 && (
@@ -1499,28 +1498,31 @@ function DevelopersSection() {
 function ExploreTheEcosystemSection() {
   return (
     <section className="relative z-10 hidden search_bar_change:flex flex-col justify-end items-center gap-[60px] pt-[100px] pb-20 bg-gray-50 box-border">
-      <div className="flex flex-col justify-center items-center gap-5 max-w-[608px]">
-        <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-3xl gap-2 justify-center items-center z-10">
-          <IntegrationIcon />
-          <span className="text-black text-center text-sm leading-5 not-italic font-medium z-10">
-            Architecture Overview
-          </span>
+      <div className="flex flex-col items-center max-w-[1216px] gap-[60px]">
+        <div className="flex flex-col justify-center items-center gap-5 max-w-[608px]">
+          <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-3xl gap-2 justify-center items-center z-10">
+            <IntegrationIcon />
+            <span className="text-black text-center text-sm leading-5 not-italic font-medium z-10">
+              Architecture Overview
+            </span>
+          </div>
+          <h1 className="text-black text-center not-italic z-10 text-2xl leading-8 font-bold md:text-4xl md:leading-10">
+            Explore the NameGuard ecosystem
+          </h1>
+          <p className="text-center not-italic text-gray-500 text-lg leading-7 font-normal gt_mobile:font-light">
+            NameGuard is an ecosystem of libraries and services that work
+            together to help keep the web3 community safe.
+          </p>
         </div>
-        <h1 className="text-black text-center not-italic z-10 text-2xl leading-8 font-bold md:text-4xl md:leading-10">
-          Explore the NameGuard ecosystem
-        </h1>
-        <p className="text-center not-italic text-gray-500 text-lg leading-7 font-normal gt_mobile:font-light">
-          NameGuard is an ecosystem of libraries and services that work together
-          to help keep the web3 community safe.
-        </p>
+        <Image
+          src={explore_ecosystem_img.src}
+          alt={"ecosystem image"}
+          className="z-10 relative w-full h-full max-w-[1820px]"
+          width={2592}
+          height={1614}
+          quality={100}
+        />
       </div>
-      <Image
-        src={explore_ecosystem_img.src}
-        alt={"ecosystem image"}
-        className="z-10 relative w-full h-full max-w-[1820px]"
-        width={2592}
-        height={1614}
-      />
     </section>
   );
 }
