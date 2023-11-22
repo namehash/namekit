@@ -476,7 +476,7 @@ class NameGuard {
     name: string,
     options?: InspectNameOptions
   ): Promise<NameGuardReport> {
-    const url = `${this.endpoint}inspect-name`;
+    const url = new URL("inspect-name", this.endpoint);
 
     const network_name = options?.network || this.network;
 
@@ -499,7 +499,7 @@ class NameGuard {
     names: string[],
     options?: InspectNameOptions
   ): Promise<BulkConsolidatedNameGuardReport> {
-    const url = `${this.endpoint}bulk-inspect-names`;
+    const url = new URL("bulk-inspect-names", this.endpoint);
 
     const network_name = options?.network || this.network;
 
@@ -527,7 +527,7 @@ class NameGuard {
   ): Promise<SecurePrimaryNameResult> {
     const network_name = options?.network || this.network;
 
-    const url = `${this.endpoint}secure-primary-name/${network_name}/${address}`;
+    const url = new URL(`secure-primary-name/${network_name}/${address}`, this.endpoint);
 
     const response = await fetch(url);
 
@@ -548,7 +548,7 @@ class NameGuard {
   ): Promise<FakeEthNameCheckResult> {
     const network_name = options?.network || this.network;
 
-    const url = `${this.endpoint}fake-eth-name-check/${network_name}/${contract_address}/${token_id}`;
+    const url = new URL(`fake-eth-name-check/${network_name}/${contract_address}/${token_id}`, this.endpoint);
 
     const response = await fetch(url);
 
@@ -567,7 +567,7 @@ class NameGuard {
   ): Promise<GraphemeGuardReport> {
     const grapheme_encoded = encodeURIComponent(grapheme);
 
-    const url = `${this.endpoint}inspect-grapheme/${grapheme_encoded}`;
+    const url = new URL(`inspect-grapheme/${grapheme_encoded}`, this.endpoint);
 
     const response = await fetch(url);
 
@@ -649,7 +649,7 @@ class NameGuard {
 
     const network = options?.network || this.network;
 
-    const url = `${this.endpoint}/inspect-namehash/${network}/${namehash}`;
+    const url = new URL(`inspect-namehash/${network}/${namehash}`, this.endpoint);
 
     const response = await fetch(url);
 
