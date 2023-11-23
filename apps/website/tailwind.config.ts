@@ -36,8 +36,10 @@ const config: Config = {
           "radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.8) 0%, #FFF 100%), linear-gradient(0deg, #FFAF00 0%, #F112D9 32.29%, #4C3FA0 70.83%, #2ED3C6 95.83%)",
         in_touch_background:
           "radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.6) 0%, #FFF 100%), linear-gradient(0deg, #4C3FA0 0%, #F112D9 32.29%, #2ED3C6 58.85%, #FFAF00 100%)",
-        error404_background:
-          "radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.7) 0%, #FFF 100%), linear-gradient(90deg, #FFAF00 0%, #F112D9 32.29%, #4C3FA0 70.83%, #2ED3C6 95.83%)",
+        error404_background_mobile:
+          "radial-gradient(50% 25% at 50% 40%, rgba(255, 255, 255, 0.7) 0%, #FFF 100%), linear-gradient(90deg, #FFAF00 0%, #F112D9 32.29%, #4C3FA0 70.83%, #2ED3C6 95.83%)",
+        error404_background_desktop:
+          "radial-gradient(50% 35% at 50% 40%, rgba(255, 255, 255, 0.7) 0%, #FFF 100%), linear-gradient(90deg, #FFAF00 0%, #F112D9 32.29%, #4C3FA0 70.83%, #2ED3C6 95.83%)",
       },
       screens: {
         gt_mobile: "435px",
