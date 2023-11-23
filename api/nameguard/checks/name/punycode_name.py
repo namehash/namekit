@@ -5,9 +5,9 @@ from label_inspector.models import InspectorResult
 
 
 STATUS = CheckStatus.WARN
-MESSAGE_PASS =  'Compatible for use with DNS'
-MESSAGE_FAIL =  'Incompatible for use with DNS'
-MESSAGE_SKIP =  'This name contains unknown labels'
+MESSAGE_PASS = 'Compatible for use with DNS'
+MESSAGE_FAIL = 'Incompatible for use with DNS'
+MESSAGE_SKIP = 'This name contains unknown labels'
 
 
 def check_name(labels: list[Optional[InspectorResult]]) -> GenericCheckResult:

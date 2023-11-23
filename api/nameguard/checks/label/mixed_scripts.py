@@ -8,14 +8,14 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, LabelCheckR
 
 STATUS = CheckStatus.WARN
 
-L_MESSAGE_PASS =  'Written in a single script'
-N_MESSAGE_PASS =  'No labels in this name contain mixed scripts'
+L_MESSAGE_PASS = 'Written in a single script'
+N_MESSAGE_PASS = 'Written in a single script'
 
-L_MESSAGE_FAIL =  'Written in multiple scripts'
-N_MESSAGE_FAIL =  'This name contains labels that have mixed scripts'
+L_MESSAGE_FAIL = 'Written in multiple scripts'
+N_MESSAGE_FAIL = 'Written in multiple scripts'
 
-L_MESSAGE_SKIP =  'This label is unknown'
-N_MESSAGE_SKIP =  'This name contains unknown labels'
+L_MESSAGE_SKIP = 'This label is unknown'
+N_MESSAGE_SKIP = 'This name contains unknown labels'
 
 
 def check_label(label: Optional[InspectorResult]) -> GenericCheckResult:
