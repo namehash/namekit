@@ -1290,7 +1290,6 @@ function DevelopersSection() {
       header: (
         <div className={headerWrapperStyle}>
           <h3 className={headerStyle}>Figma UI kit</h3>
-          <ListSectionBadge width={96} height={20} text="Coming soon" />
         </div>
       ),
       text: (
@@ -1303,6 +1302,7 @@ function DevelopersSection() {
           <FigmaIcon />
         </div>
       ),
+      link: "https://www.figma.com/file/aVlWccl7J2MyP8IE56lDMb/NameGuard-UI-Kit---23-11-2023",
     },
     {
       header: (
@@ -1429,7 +1429,7 @@ function DevelopersSection() {
       header: (
         <div className={headerWrapperStyle}>
           <h3 className={headerStyle}>ENS Webfont</h3>
-          <ListSectionBadge width={96} height={20} text="Coming soon" />
+          <ListSectionBadge width={96} height={20} text="Alpha" />
         </div>
       ),
       text: (
@@ -1442,6 +1442,7 @@ function DevelopersSection() {
           <FontIcon />
         </div>
       ),
+      link: "https://github.com/namehash/nameguard/pull/139",
     },
   ];
 
