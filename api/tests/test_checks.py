@@ -30,11 +30,11 @@ def test_ordering():
 @pytest.mark.parametrize(
     "grapheme, rating, message",
     [
-        ('a', Rating.PASS, 'This grapheme is not confusable'),
-        ('ą', Rating.WARN, 'This grapheme is confusable'),
-        ('ဩ', Rating.WARN, 'This grapheme is confusable'),
-        ('¤', Rating.PASS, 'This grapheme is not confusable'),
-        ('Ɇ', Rating.PASS, 'It has not been checked if this grapheme is confusable'),
+        ('a', Rating.PASS, 'Unlikely to be confused'),
+        ('ą', Rating.WARN, 'May be confusable'),
+        ('ဩ', Rating.WARN, 'May be confusable'),
+        ('¤', Rating.PASS, 'Unlikely to be confused'),
+        ('Ɇ', Rating.PASS, 'Confusable checks were skipped'),
     ]
 )
 def test_grapheme_confusable(nameguard: NameGuard, grapheme, rating, message):
@@ -50,13 +50,13 @@ def test_grapheme_font_support(nameguard: NameGuard):
     r = checks.grapheme.font_support.check_grapheme(g)
     assert r.check == Check.FONT_SUPPORT
     assert r.rating == Rating.PASS
-    assert r.message == 'This grapheme is supported by common fonts'
+    assert r.message == 'Probably supported by common fonts'
 
     g = analyse_grapheme(nameguard, '👊🏿')
     r = checks.grapheme.font_support.check_grapheme(g)
     assert r.check == Check.FONT_SUPPORT
     assert r.rating == Rating.WARN
-    assert r.message == 'This grapheme is not supported by common fonts'
+    assert r.message == 'May not be supported by common fonts'
 
 
 def test_grapheme_invisible(nameguard: NameGuard):
@@ -69,13 +69,13 @@ def test_grapheme_typing_difficulty(nameguard: NameGuard):
     r = checks.grapheme.typing_difficulty.check_grapheme(g)
     assert r.check == Check.TYPING_DIFFICULTY
     assert r.rating == Rating.PASS
-    assert r.message == 'This grapheme is broadly accessible to type'
+    assert r.message == 'Broadly accessible to type'
 
     g = analyse_grapheme(nameguard, 'ą')
     r = checks.grapheme.typing_difficulty.check_grapheme(g)
     assert r.check == Check.TYPING_DIFFICULTY
     assert r.rating == Rating.WARN
-    assert r.message == 'This grapheme may be difficult to type on some devices'
+    assert r.message == 'May be difficult to type on some devices'
 
 
 # -- LABEL CHECKS --
@@ -126,13 +126,13 @@ def test_label_normalized(nameguard: NameGuard):
     r = checks.dna.normalized.check_label(l)
     assert r.check == Check.NORMALIZED
     assert r.rating == Rating.PASS
-    assert r.message == 'This label is normalized according to ENSIP-15'
+    assert r.message == 'Normalized according to ENSIP-15'
 
     l = nameguard.analyse_label('a_a')
     r = checks.dna.normalized.check_label(l)
     assert r.check == Check.NORMALIZED
     assert r.rating == Rating.ALERT
-    assert r.message == 'This label is not normalized according to ENSIP-15'
+    assert r.message == 'Not normalized according to ENSIP-15'
 
 
 def test_label_punycode(nameguard: NameGuard):
@@ -184,16 +184,16 @@ def test_name_punycode_name(nameguard: NameGuard):
 @pytest.mark.parametrize(
     "name, rating, message",
     [
-        ("", Rating.PASS, 'This name is decentralized'),
-        ("eth", Rating.PASS, 'This name is decentralized'),
-        ("abc.eth", Rating.PASS, 'This name is decentralized'),
-        ("123.abc.eth", Rating.WARN, 'This name may not be decentralized'),
-        ("com", Rating.WARN, 'This name is not decentralized'),
-        ("abc.com", Rating.WARN, 'This name is not decentralized'),
-        ("limo", Rating.WARN, 'This name may not be decentralized'),
-        ("eth.limo", Rating.WARN, 'This name may not be decentralized'),
-        ("[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth", Rating.PASS, 'This name is decentralized'),
-        ("abc.[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770]", Rating.WARN, 'This name may not be decentralized'),
+        ("", Rating.PASS, 'Ownership is decentralized'),
+        ("eth", Rating.PASS, 'Ownership is decentralized'),
+        ("abc.eth", Rating.PASS, 'Ownership is decentralized'),
+        ("123.abc.eth", Rating.WARN, 'Ownership may not be decentralized'),
+        ("com", Rating.WARN, 'Ownership is not decentralized'),
+        ("abc.com", Rating.WARN, 'Ownership is not decentralized'),
+        ("limo", Rating.WARN, 'Ownership may not be decentralized'),
+        ("eth.limo", Rating.WARN, 'Ownership may not be decentralized'),
+        ("[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth", Rating.PASS, 'Ownership is decentralized'),
+        ("abc.[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770]", Rating.WARN, 'Ownership may not be decentralized'),
     ]
 )
 def test_decentralized(nameguard: NameGuard, name, rating, message):
@@ -210,7 +210,7 @@ def test_name_impersonation(nameguard: NameGuard):
     r = checks.name.impersonation_risk.check_name(ls)
     assert r.check == Check.IMPERSONATION_RISK
     assert r.rating == Rating.WARN
-    assert r.message == 'Name may receive potential impersonation warnings'
+    assert r.message == 'May receive potential impersonation warnings'
 
     endpoint_name.set(Endpoints.SECURE_PRIMARY_NAME)
     n = 'niąck.eth'
@@ -218,7 +218,7 @@ def test_name_impersonation(nameguard: NameGuard):
     r = checks.name.impersonation_risk.check_name(ls)
     assert r.check == Check.IMPERSONATION_RISK
     assert r.rating == Rating.WARN
-    assert r.message == 'Name might be an impersonation of `niack.eth`'
+    assert r.message == 'May be an impersonation of `niack.eth`'
     
     n = 'a👩🏽‍⚕.eth'
     ls = [nameguard.analyse_label(l) for l in n.split('.')]

@@ -55,5 +55,5 @@ def check_name(name: list[Optional[Label]]) -> NameCheckResult:
     return NameCheckResult(
         check=Check.NORMALIZED,
         status=CheckStatus.PASS if passed else STATUS,
-        _name_message=N_MESSAGE_PASS if passed else N_MESSAGE_FAIL,
+        _name_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
     )

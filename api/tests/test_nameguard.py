@@ -89,7 +89,7 @@ async def test_check_skip_confusable(nameguard: NameGuard):
     c = [c for c in result.checks if c.check is Check.CONFUSABLES][0]
     assert c.rating is Rating.PASS
     assert c.status is CheckStatus.SKIP
-    assert c.message == 'It has not been checked if this name contains confusable graphemes'
+    assert c.message == 'Confusable checks were skipped'
 
 @pytest.mark.asyncio
 async def test_check_skip_font_support(nameguard: NameGuard):
@@ -97,7 +97,7 @@ async def test_check_skip_font_support(nameguard: NameGuard):
     c = [c for c in result.checks if c.check is Check.FONT_SUPPORT][0]
     assert c.rating is Rating.PASS
     assert c.status is CheckStatus.SKIP
-    assert c.message == 'It is unknown if this name is supported by common fonts'
+    assert c.message == 'Unknown if supported by common fonts'
     
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.asyncio
@@ -259,7 +259,7 @@ async def test_impersonation_risk(nameguard: NameGuard):
     for check in r.checks:
         if check.check is Check.IMPERSONATION_RISK:
             assert check.rating is Rating.WARN
-            assert check.message == 'Name might be an impersonation of `nick.eth`'
+            assert check.message == 'May be an impersonation of `nick.eth`'
             break
     else:
         assert False, 'IMPERSONATION_RISK check not found'
@@ -269,7 +269,7 @@ async def test_impersonation_risk(nameguard: NameGuard):
     for check in r.checks:
         if check.check is Check.IMPERSONATION_RISK:
             assert check.rating is Rating.WARN
-            assert check.message == 'Name may receive potential impersonation warnings'
+            assert check.message == 'May receive potential impersonation warnings'
             break
     else:
         assert False, 'IMPERSONATION_RISK check not found'
@@ -308,14 +308,14 @@ async def test_contextual_messages(nameguard: NameGuard):
 
     for check in r.checks:
         if check.check is Check.CONFUSABLES:
-            assert check.message == 'This name contains confusable graphemes'
+            assert check.message == 'May be confusable'
             break
     else:
         assert False, 'CONFUSABLES check not found'
 
     for check in r.labels[0].checks:
         if check.check is Check.CONFUSABLES:
-            assert check.message == 'This label contains confusable graphemes'
+            assert check.message == 'May be confusable'
             break
     else:
         assert False, 'CONFUSABLES check not found'
@@ -324,7 +324,7 @@ async def test_contextual_messages(nameguard: NameGuard):
 
     for check in r.checks:
         if check.check is Check.CONFUSABLES:
-            assert check.message == 'This grapheme is confusable'
+            assert check.message == 'May be confusable'
             break
     else:
         assert False, 'CONFUSABLES check not found'
