@@ -4,17 +4,11 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, GraphemeChe
 
 STATUS = CheckStatus.WARN
 
-G_MESSAGE_PASS = 'This grapheme is supported by common fonts'
-L_MESSAGE_PASS = 'This label is supported by common fonts'
-N_MESSAGE_PASS = 'This name is supported by common fonts'
+MESSAGE_PASS = 'Probably supported by common fonts'
 
-G_MESSAGE_FAIL = 'This grapheme is not supported by common fonts'
-L_MESSAGE_FAIL = 'This label is not supported by common fonts'
-N_MESSAGE_FAIL = 'This name is not supported by common fonts'
+MESSAGE_FAIL = 'May not be supported by common fonts'
 
-G_MESSAGE_SKIP = 'It is unknown if this grapheme is supported by common fonts'
-L_MESSAGE_SKIP = 'It is unknown if this label is supported by common fonts'
-N_MESSAGE_SKIP = 'It is unknown if this name is supported by common fonts'
+MESSAGE_SKIP = 'Unknown if supported by common fonts'
 
 
 def check_grapheme(grapheme: Grapheme) -> GenericCheckResult:
@@ -23,15 +17,15 @@ def check_grapheme(grapheme: Grapheme) -> GenericCheckResult:
         return GraphemeCheckResult(
             check=Check.FONT_SUPPORT,
             status=CheckStatus.SKIP,
-            _grapheme_message=G_MESSAGE_SKIP,
-            _label_message=L_MESSAGE_SKIP,
-            _name_message=N_MESSAGE_SKIP,
+            _grapheme_message=MESSAGE_SKIP,
+            _label_message=MESSAGE_SKIP,
+            _name_message=MESSAGE_SKIP,
         )
     else:
         return GraphemeCheckResult(
             check=Check.FONT_SUPPORT,
             status=CheckStatus.PASS if passed else STATUS,
-            _grapheme_message=G_MESSAGE_PASS if passed else G_MESSAGE_FAIL,
-            _label_message=L_MESSAGE_PASS if passed else L_MESSAGE_FAIL,
-            _name_message=N_MESSAGE_PASS if passed else N_MESSAGE_FAIL,
+            _grapheme_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
+            _label_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
+            _name_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
         )
