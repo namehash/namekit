@@ -4,9 +4,9 @@ from label_inspector.models import InspectorResult
 
 STATUS = CheckStatus.WARN
 
-MESSAGE_PASS = 'This name is decentralized'
-MESSAGE_FAIL = 'This name is not decentralized'
-MESSAGE_FAIL_UNKNOWN = 'This name may not be decentralized'
+MESSAGE_PASS =  'This name is decentralized'
+MESSAGE_FAIL =  'This name is not decentralized'
+MESSAGE_FAIL_UNKNOWN =  'This name may not be decentralized'
 
 ETH_TLD = 'eth'
 DNS_TLD_WHITELIST = {"com", "net", "org", "id", "io"}

@@ -6,34 +6,27 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, GraphemeChe
 
 STATUS = CheckStatus.WARN
 
-G_MESSAGE_PASS = 'This grapheme is not confusable'
-L_MESSAGE_PASS = 'This label does not contain confusable graphemes'
-N_MESSAGE_PASS = 'This name does not contain confusable graphemes'
+MESSAGE_PASS = 'Unlikely to be confused'
 
-G_MESSAGE_FAIL = 'This grapheme is confusable'
-L_MESSAGE_FAIL = 'This label contains confusable graphemes'
-N_MESSAGE_FAIL = 'This name contains confusable graphemes'
+MESSAGE_FAIL = 'May be confusable'
 
-G_MESSAGE_SKIP = 'It has not been checked if this grapheme is confusable'
-L_MESSAGE_SKIP = 'It has not been checked if this label contains confusable graphemes'
-N_MESSAGE_SKIP = 'It has not been checked if this name contains confusable graphemes'
-
+MESSAGE_SKIP = 'Confusable checks were skipped'
 
 def check_grapheme(grapheme: Grapheme) -> GenericCheckResult:
     if not isinstance(grapheme, Grapheme) or not grapheme_is_normalized(grapheme.value):
         return GraphemeCheckResult(
             check=Check.CONFUSABLES,
             status=CheckStatus.SKIP,
-            _grapheme_message=G_MESSAGE_SKIP,
-            _label_message=L_MESSAGE_SKIP,
-            _name_message=N_MESSAGE_SKIP,
+            _grapheme_message=MESSAGE_SKIP,
+            _label_message=MESSAGE_SKIP,
+            _name_message=MESSAGE_SKIP,
         )
 
     passed = len(grapheme.confusables_other) == 0 and (grapheme.confusables_canonical is None or grapheme.confusables_canonical == grapheme.value)
     return GraphemeCheckResult(
         check=Check.CONFUSABLES,
         status=CheckStatus.PASS if passed else STATUS,
-        _grapheme_message=G_MESSAGE_PASS if passed else G_MESSAGE_FAIL,
-        _label_message=L_MESSAGE_PASS if passed else L_MESSAGE_FAIL,
-        _name_message=N_MESSAGE_PASS if passed else N_MESSAGE_FAIL,
+        _grapheme_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
+        _label_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
+        _name_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
     )

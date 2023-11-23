@@ -7,14 +7,14 @@ from label_inspector.models import InspectorResult
 
 STATUS = CheckStatus.WARN
 
-MESSAGE_PASS = 'Name shows no signs of impersonation'
+MESSAGE_PASS = 'No signs of impersonation'
 
-MESSAGE_FAIL = 'Name might be an impersonation of `{}`'
+MESSAGE_FAIL = 'May be an impersonation of `{}`'
 MESSAGE_FAIL_EMOJI = 'Emojis used in this name may be visually confused with other similar emojis'
-MESSAGE_FAIL_OTHER = 'Name may receive potential impersonation warnings'
+MESSAGE_FAIL_OTHER = 'May receive potential impersonation warnings'
 
-MESSAGE_SKIP_UNK = 'Name contains unknown labels and cannot be checked for impersonation risk'
-MESSAGE_SKIP_CANON = 'Name contains labels with unknown canonical forms and cannot be checked for impersonation risk'
+MESSAGE_SKIP_UNK = 'Contains unknown labels and cannot be checked for impersonation risk'
+MESSAGE_SKIP_CANON = 'Contains labels with unknown canonical forms and cannot be checked for impersonation risk'
 
 
 def check_name(labels: list[Optional[InspectorResult]]) -> GenericCheckResult:

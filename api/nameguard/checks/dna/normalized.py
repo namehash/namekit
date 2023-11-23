@@ -6,13 +6,9 @@ from nameguard.models import CheckStatus, Check, GraphemeCheckResult, LabelCheck
 
 STATUS = CheckStatus.ALERT
 
-G_MESSAGE_PASS = 'This grapheme is normalized according to ENSIP-15'
-L_MESSAGE_PASS = 'This label is normalized according to ENSIP-15'
-N_MESSAGE_PASS = 'This name is normalized according to ENSIP-15'
+MESSAGE_PASS = 'Normalized according to ENSIP-15'
 
-G_MESSAGE_FAIL = 'This grapheme is not normalized according to ENSIP-15'
-L_MESSAGE_FAIL = 'This label is not normalized according to ENSIP-15'
-N_MESSAGE_FAIL = 'This name is not normalized according to ENSIP-15'
+MESSAGE_FAIL = 'Not normalized according to ENSIP-15'
 
 L_MESSAGE_SKIP = 'This label is unknown'
 N_MESSAGE_SKIP = 'This name contains unknown labels'
@@ -23,9 +19,9 @@ def check_grapheme(grapheme: Grapheme) -> GraphemeCheckResult:
     return GraphemeCheckResult(
         check=Check.NORMALIZED,
         status=CheckStatus.PASS if passed else STATUS,
-        _grapheme_message=G_MESSAGE_PASS if passed else G_MESSAGE_FAIL,
-        _label_message=L_MESSAGE_PASS if passed else L_MESSAGE_FAIL,
-        _name_message=N_MESSAGE_PASS if passed else N_MESSAGE_FAIL,
+        _grapheme_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
+        _label_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
+        _name_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
     )
 
 
@@ -42,8 +38,8 @@ def check_label(label: Optional[Label]) -> LabelCheckResult:
     return LabelCheckResult(
         check=Check.NORMALIZED,
         status=CheckStatus.PASS if passed else STATUS,
-        _label_message=L_MESSAGE_PASS if passed else L_MESSAGE_FAIL,
-        _name_message=N_MESSAGE_PASS if passed else N_MESSAGE_FAIL,
+        _label_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
+        _name_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
     )
 
 
