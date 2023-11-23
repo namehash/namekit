@@ -141,6 +141,7 @@ def test_label_punycode(nameguard: NameGuard):
     assert r.check == Check.PUNYCODE_COMPATIBLE_LABEL
     assert r.rating == Rating.PASS
     assert r.message == 'Compatible for use with DNS'
+    assert r.check_name == 'DNS Compatible Label'
 
     l = nameguard.analyse_label('あ' * 200)
     r = checks.label.punycode.check_label(l)
