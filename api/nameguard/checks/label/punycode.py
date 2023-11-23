@@ -5,11 +5,11 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, LabelCheckR
 
 STATUS = CheckStatus.WARN
 
-L_MESSAGE_PASS = 'This label is Punycode compatible'
-N_MESSAGE_PASS = 'All labels in this name are Punycode compatible'
+L_MESSAGE_PASS = 'Compatible for use with DNS'
+N_MESSAGE_PASS = 'Compatible for use with DNS'
 
-L_MESSAGE_FAIL = 'This label is not Punycode compatible'
-N_MESSAGE_FAIL = 'This name contains labels that are not Punycode compatible'
+L_MESSAGE_FAIL = 'Incompatible for use with DNS'
+N_MESSAGE_FAIL = 'Incompatible for use with DNS'
 
 L_MESSAGE_SKIP = 'This label is unknown'
 N_MESSAGE_SKIP = 'This name contains unknown labels'
