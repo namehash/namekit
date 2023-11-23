@@ -154,7 +154,25 @@ class Check(str, Enum):
 
     @property
     def human_readable_name(self):
-        return capitalize_words(self.value.replace('_', ' '))
+        mapping = {
+            self.NORMALIZED: 'Normalized',
+            self.CONFUSABLES: 'Confusable',
+            self.INVISIBLE: 'No Hidden Characters',
+            self.TYPING_DIFFICULTY: 'Typing Difficulty',
+            self.FONT_SUPPORT: 'Font Support',
+            self.MIXED_SCRIPTS: 'Mixed Scripts',
+            self.NAMEWRAPPER_COMPATIBLE: 'NameWrapper Compatible',
+            self.PUNYCODE_COMPATIBLE_LABEL: 'DNS Compatible Label',
+            self.UNKNOWN_LABEL: 'Unknown Labels',
+            self.IMPERSONATION_RISK: 'Impersonation Risk',
+            self.PUNYCODE_COMPATIBLE_NAME: 'DNS Compatible Name',
+            self.NAMEWRAPPER_FUSES: 'NameWrapper Fuses',
+            self.DECENTRALIZED_NAME: 'Decentralized Name',
+        }
+        if self in mapping:
+            return mapping[self]
+        else:
+            return capitalize_words(self.value.replace('_', ' '))
 
 
 def make_severity_dict_from_order(order):
