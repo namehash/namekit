@@ -5,8 +5,8 @@ from label_inspector.models import InspectorResult
 
 
 STATUS = CheckStatus.WARN
-MESSAGE_PASS =  'This name is Punycode compatible'
-MESSAGE_FAIL =  'This name is not Punycode compatible'
+MESSAGE_PASS =  'Compatible for use with DNS'
+MESSAGE_FAIL =  'Incompatible for use with DNS'
 MESSAGE_SKIP =  'This name contains unknown labels'
 
 

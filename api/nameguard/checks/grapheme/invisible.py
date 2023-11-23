@@ -5,12 +5,12 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, GraphemeChe
 STATUS = CheckStatus.ALERT
 
 G_MESSAGE_PASS = 'Visible'
-L_MESSAGE_PASS = 'Does not contain invisible graphemes'
-N_MESSAGE_PASS = 'Does not contain invisible graphemes'
+L_MESSAGE_PASS = 'All characters are visible'
+N_MESSAGE_PASS = 'All characters are visible'
 
 G_MESSAGE_FAIL = 'Invisible'
-L_MESSAGE_FAIL = 'Contains invisible graphemes'
-N_MESSAGE_FAIL = 'Contains invisible graphemes'
+L_MESSAGE_FAIL = 'Contains invisible characters'
+N_MESSAGE_FAIL = 'Contains invisible characters'
 
 
 def check_grapheme(grapheme: Grapheme) -> GenericCheckResult:
