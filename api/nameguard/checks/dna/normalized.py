@@ -6,9 +6,9 @@ from nameguard.models import CheckStatus, Check, GraphemeCheckResult, LabelCheck
 
 STATUS = CheckStatus.ALERT
 
-MESSAGE_PASS = 'Normalized according to ENSIP-15'
+MESSAGE_PASS = 'Valid for use with ENS'
 
-MESSAGE_FAIL = 'Not normalized according to ENSIP-15'
+MESSAGE_FAIL = 'Invalid for use with ENS'
 
 L_MESSAGE_SKIP = 'This label is unknown'
 N_MESSAGE_SKIP = 'This name contains unknown labels'

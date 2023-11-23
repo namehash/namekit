@@ -5,8 +5,8 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, LabelCheckR
 
 STATUS = CheckStatus.ALERT
 
-L_MESSAGE_PASS =  'This label is not unknown'
-N_MESSAGE_PASS =  'This name does not contain unknown labels'
+L_MESSAGE_PASS =  'This label is known'
+N_MESSAGE_PASS =  'All labels are known'
 
 L_MESSAGE_FAIL =  'This label is unknown'
 N_MESSAGE_FAIL =  'This name contains unknown labels'

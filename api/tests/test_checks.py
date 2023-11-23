@@ -86,25 +86,25 @@ def test_label_mixed_scripts(nameguard: NameGuard):
     r = checks.label.mixed_scripts.check_label(l)
     assert r.check == Check.MIXED_SCRIPTS
     assert r.rating == Rating.PASS
-    assert r.message == 'This label is in a single script'
+    assert r.message == 'Written in a single script'
 
     l = nameguard.analyse_label('')
     r = checks.label.mixed_scripts.check_label(l)
     assert r.check == Check.MIXED_SCRIPTS
     assert r.rating == Rating.PASS
-    assert r.message == 'This label is in a single script'
+    assert r.message == 'Written in a single script'
 
     l = nameguard.analyse_label('あa')
     r = checks.label.mixed_scripts.check_label(l)
     assert r.check == Check.MIXED_SCRIPTS
     assert r.rating == Rating.WARN
-    assert r.message == 'This label contains multiple scripts'
+    assert r.message == 'Written in multiple scripts'
 
     l = nameguard.analyse_label('あ_a')
     r = checks.label.mixed_scripts.check_label(l)
     assert r.check == Check.MIXED_SCRIPTS
     assert r.status == CheckStatus.WARN
-    assert r.message == 'This label contains multiple scripts'
+    assert r.message == 'Written in multiple scripts'
 
 
 def test_label_namewrapper(nameguard: NameGuard):
@@ -112,13 +112,13 @@ def test_label_namewrapper(nameguard: NameGuard):
     r = checks.label.namewrapper.check_label(l)
     assert r.check == Check.NAMEWRAPPER_COMPATIBLE
     assert r.rating == Rating.PASS
-    assert r.message == 'This label is NameWrapper compatible'
+    assert r.message == 'Compatible for use with the ENS NameWrapper'
 
     l = nameguard.analyse_label('あ' * 200)
     r = checks.label.namewrapper.check_label(l)
     assert r.check == Check.NAMEWRAPPER_COMPATIBLE
     assert r.rating == Rating.WARN
-    assert r.message == 'This label is not NameWrapper compatible'
+    assert r.message == 'Incompatible with the ENS NameWrapper'
 
 
 def test_label_normalized(nameguard: NameGuard):
@@ -126,13 +126,13 @@ def test_label_normalized(nameguard: NameGuard):
     r = checks.dna.normalized.check_label(l)
     assert r.check == Check.NORMALIZED
     assert r.rating == Rating.PASS
-    assert r.message == 'Normalized according to ENSIP-15'
+    assert r.message == 'Valid for use with ENS'
 
     l = nameguard.analyse_label('a_a')
     r = checks.dna.normalized.check_label(l)
     assert r.check == Check.NORMALIZED
     assert r.rating == Rating.ALERT
-    assert r.message == 'Not normalized according to ENSIP-15'
+    assert r.message == 'Invalid for use with ENS'
 
 
 def test_label_punycode(nameguard: NameGuard):
@@ -140,19 +140,19 @@ def test_label_punycode(nameguard: NameGuard):
     r = checks.label.punycode.check_label(l)
     assert r.check == Check.PUNYCODE_COMPATIBLE_LABEL
     assert r.rating == Rating.PASS
-    assert r.message == 'This label is Punycode compatible'
+    assert r.message == 'Compatible for use with DNS'
 
     l = nameguard.analyse_label('あ' * 200)
     r = checks.label.punycode.check_label(l)
     assert r.check == Check.PUNYCODE_COMPATIBLE_LABEL
     assert r.rating == Rating.WARN
-    assert r.message == 'This label is not Punycode compatible'
+    assert r.message == 'Incompatible for use with DNS'
 
     l = nameguard.analyse_label('あ_a')
     r = checks.label.punycode.check_label(l)
     assert r.check == Check.PUNYCODE_COMPATIBLE_LABEL
     assert r.status == CheckStatus.WARN
-    assert r.message == 'This label is not Punycode compatible'
+    assert r.message == 'Incompatible for use with DNS'
 
 
 # -- NAME CHECKS --
@@ -164,21 +164,21 @@ def test_name_punycode_name(nameguard: NameGuard):
     r = checks.name.punycode_name.check_name(ls)
     assert r.check == Check.PUNYCODE_COMPATIBLE_NAME
     assert r.rating == Rating.PASS
-    assert r.message == 'This name is Punycode compatible'
+    assert r.message == 'Compatible for use with DNS'
 
     n = 'あ.' * 60 + 'eth'
     ls = [nameguard.analyse_label(l) for l in n.split('.')]
     r = checks.name.punycode_name.check_name(ls)
     assert r.check == Check.PUNYCODE_COMPATIBLE_NAME
     assert r.rating == Rating.WARN
-    assert r.message == 'This name is not Punycode compatible'
+    assert r.message == 'Incompatible for use with DNS'
 
     n = 'あ.' * 60 + 'a_a'
     ls = [nameguard.analyse_label(l) for l in n.split('.')]
     r = checks.name.punycode_name.check_name(ls)
     assert r.check == Check.PUNYCODE_COMPATIBLE_NAME
     assert r.status == CheckStatus.WARN
-    assert r.message == 'This name is not Punycode compatible'
+    assert r.message == 'Incompatible for use with DNS'
 
 
 @pytest.mark.parametrize(
