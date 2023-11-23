@@ -938,8 +938,26 @@ function RoadMap() {
     <RoadmapWarningShield key="leftShieldSVG6" />,
     <RoadmapPositiveShield key="leftShieldSVG7" />,
     <RoadmapNegativeShield key="leftShieldSVG8" />,
+    <RoadmapPositiveShield key="leftShieldSVG0" />,
+    <RoadmapNegativeShield key="leftShieldSVG1" />,
+    <RoadmapWarningShield key="leftShieldSVG2" />,
+    <RoadmapPositiveShield key="leftShieldSVG3" />,
+    <RoadmapWarningShield key="leftShieldSVG4" />,
+    <RoadmapNegativeShield key="leftShieldSVG5" />,
+    <RoadmapWarningShield key="leftShieldSVG6" />,
+    <RoadmapPositiveShield key="leftShieldSVG7" />,
+    <RoadmapNegativeShield key="leftShieldSVG8" />,
   ];
   const rightSideShields = [
+    <RoadmapNegativeShield key="rightShieldSVG0" />,
+    <RoadmapPositiveShield key="rightShieldSVG1" />,
+    <RoadmapWarningShield key="rightShieldSVG2" />,
+    <RoadmapNegativeShield key="rightShieldSVG3" />,
+    <RoadmapPositiveShield key="rightShieldSVG4" />,
+    <RoadmapWarningShield key="rightShieldSVG5" />,
+    <RoadmapNegativeShield key="rightShieldSVG6" />,
+    <RoadmapPositiveShield key="rightShieldSVG7" />,
+    <RoadmapWarningShield key="rightShieldSVG8" />,
     <RoadmapNegativeShield key="rightShieldSVG0" />,
     <RoadmapPositiveShield key="rightShieldSVG1" />,
     <RoadmapWarningShield key="rightShieldSVG2" />,
@@ -1118,7 +1136,7 @@ function ChecksSection() {
       header: <h3 className={headerStyle}>Confusable Characters</h3>,
       text: (
         <Fragment>
-          Identify character with a higher risk for visual confusion with other
+          Identify characters with a higher risk for visual confusion with other
           characters.
         </Fragment>
       ),
