@@ -752,7 +752,8 @@ function RoadMap() {
       headerText: "ENS Normalize Python",
       commentSentences: [
         <span key={"ENSFontDataFragment"}>
-          Supported the ENS DAO&apos;s approval of ENS Name Normalization (ENSIP-15) through the creation of{" "}
+          Supported the ENS DAO&apos;s approval of ENS Name Normalization
+          (ENSIP-15) through the creation of{" "}
           <a
             className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
             href={"https://github.com/namehash/ens-normalize-python"}
@@ -774,86 +775,116 @@ function RoadMap() {
             href={"https://github.com/namehash/ens-font-data"}
           >
             cross-platform font rendering metadata analysis
-          </a>
-          {" "}of graphemes that may appear in normalized ENS names.
+          </a>{" "}
+          of graphemes that may appear in normalized ENS names.
         </span>,
       ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "ENS Label Inspector",
-      commentSentences: ["Developed an extensible framework for detailed inspections of the labels in ENS names."],
+      commentSentences: [
+        "Developed an extensible framework for detailed inspections of the labels in ENS names.",
+      ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "NameGuard Library",
-      commentSentences: ["Built framework for combining and summarizing the inspection results across all graphemes and labels in an ENS name."],
+      commentSentences: [
+        "Built framework for combining and summarizing the inspection results across all graphemes and labels in an ENS name.",
+      ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "NameGuard APIs",
-      commentSentences: ["Provided a HTTP / REST API to the NameGuard Library."],
+      commentSentences: [
+        "Provided a HTTP / REST API to the NameGuard Library.",
+      ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "NameGuard DevOps",
-      commentSentences: ["Made it easy for anyone to deploy their own NameGuard API instance to the cloud or their own infrastructure."],
+      commentSentences: [
+        "Made it easy for anyone to deploy their own NameGuard API instance to the cloud or their own infrastructure.",
+      ],
     },
 
     {
       stageOfCompletion: "launched",
       headerText: "NameGuard Client SDK",
-      commentSentences: ["Offered a more convenient method for interacting with NameGuard APIs."],
+      commentSentences: [
+        "Offered a more convenient method for interacting with NameGuard APIs.",
+      ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "NameGuard Figma UI Kit",
-      commentSentences: ["Designed example user interfaces for interacting with NameGuard data."],
+      commentSentences: [
+        "Designed example user interfaces for interacting with NameGuard data.",
+      ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "NameGuard React UI Kit",
-      commentSentences: ["Implemented reusable UI components for integrators to easily build user experiences using NameGuard data."],
+      commentSentences: [
+        "Implemented reusable UI components for integrators to easily build user experiences using NameGuard data.",
+      ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "ENS Name Parser",
-      commentSentences: ["Created a toolkit for parsing ENS names from user input."],
+      commentSentences: [
+        "Created a toolkit for parsing ENS names from user input.",
+      ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "Impersonation Attack Protections",
-      commentSentences: ["Identified the risk of impersonation attacks. Built protections in the form of a new “Secure Primary Name” lookup."],
+      commentSentences: [
+        "Identified the risk of impersonation attacks. Built protections in the form of a new “Secure Primary Name” lookup.",
+      ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "Example App for Impersonation Attack Protections",
-      commentSentences: ["Built and released an example app showing how “Secure Primary Name” lookups through NameGuard can help protect the community."],
+      commentSentences: [
+        "Built and released an example app showing how “Secure Primary Name” lookups through NameGuard can help protect the community.",
+      ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "NameGuard Website",
-      commentSentences: ["Created an interactive website for the community that provides an example UI for inspecting ENS names."],
+      commentSentences: [
+        "Created an interactive website for the community that provides an example UI for inspecting ENS names.",
+      ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "Fake ENS NFT Checks",
-      commentSentences: ["Implemented methods for generic NFT marketplaces such as LooksRare or OpenSea to flag and filter NFTs that are pretending to be ENS names."],
+      commentSentences: [
+        "Implemented methods for generic NFT marketplaces such as LooksRare or OpenSea to flag and filter NFTs that are pretending to be ENS names.",
+      ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "Confusable Grapheme Detection & Mapping",
-      commentSentences: ["Proposed a refined approach for identifying confusables for a grapheme."],
+      commentSentences: [
+        "Proposed a refined approach for identifying confusables for a grapheme.",
+      ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "Canonicalization Algorithm",
-      commentSentences: ["Defined a method for approximating the “canonical” form of a grapheme / label / name which is useful for cases included potential impersonation attacks."],
+      commentSentences: [
+        "Defined a method for approximating the “canonical” form of a grapheme / label / name which is useful for cases included potential impersonation attacks.",
+      ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "ens_cure Algorithm",
-      commentSentences: ["Implemented a method for further improving the UX for user input of ENS names."],
+      commentSentences: [
+        "Implemented a method for further improving the UX for user input of ENS names.",
+      ],
     },
     {
       stageOfCompletion: "launched",
@@ -863,7 +894,9 @@ function RoadMap() {
     {
       stageOfCompletion: "launched",
       headerText: "ENS Webfont Alpha",
-      commentSentences: ["Released an initial teaser that increases grapheme disambiguation and supports rendering of a wider array of graphemes."],
+      commentSentences: [
+        "Released an initial teaser that increases grapheme disambiguation and supports rendering of a wider array of graphemes.",
+      ],
     },
     {
       stageOfCompletion: "in progress",
@@ -873,7 +906,7 @@ function RoadMap() {
         "Namewrapper Fuses.",
         "Improve handling of more ENS edge cases.",
         "Multi-grapheme confusables.",
-        "Separate checks into two subcategories: risks vs limitations."
+        "Separate checks into two subcategories: risks vs limitations.",
       ],
     },
     {
@@ -881,7 +914,7 @@ function RoadMap() {
       headerText: "ENS Name Healthchecks",
       commentSentences: [
         "Identify serious risks such as the need to update deposit addresses after purchasing a name on the secondary market.",
-        "Identify maintenance opportunities such as improperly formatted resolver records."
+        "Identify maintenance opportunities such as improperly formatted resolver records.",
       ],
     },
     {
@@ -889,20 +922,22 @@ function RoadMap() {
       headerText: "User Education",
       commentSentences: [
         "User-friendly (non-technical) help content for each check and check result.",
-        "Improved storytelling for DNS compatible versions of ENS names."
+        "Improved storytelling for DNS compatible versions of ENS names.",
       ],
     },
     {
       stageOfCompletion: "planned",
       headerText: "ENS Profile Completion Score",
-      commentSentences: ["Boost social engagement and retention by encouraging your community to make the most of their ENS identity."],
+      commentSentences: [
+        "Boost social engagement and retention by encouraging your community to make the most of their ENS identity.",
+      ],
     },
     {
       stageOfCompletion: "planned",
       headerText: "ENS Name Auto-Renewal",
       commentSentences: [
         "Enable automated renewals of ENS names with credit cards.",
-        "Provide additional revenue generation incentives for wallets and dApps that deeply integrate ENS onboarding & retention user journeys."
+        "Provide additional revenue generation incentives for wallets and dApps that deeply integrate ENS onboarding & retention user journeys.",
       ],
     },
     {
@@ -910,22 +945,24 @@ function RoadMap() {
       headerText: "ENS Webfont v1",
       commentSentences: [
         "Add a configurable range of “base” fonts to align with the needs of more brands.",
-        "Optimize rendering of normalized graphemes."
+        "Optimize rendering of normalized graphemes.",
       ],
     },
     {
       stageOfCompletion: "planned",
       headerText: "Internationalization",
-      commentSentences: ["Support multiple languages in all NameGuard messages and UIs."],
+      commentSentences: [
+        "Support multiple languages in all NameGuard messages and UIs.",
+      ],
     },
     {
       stageOfCompletion: "planned",
       headerText: "Enhanced unknown label resolution",
       commentSentences: [
         "Create universal pool of label preimages across networks.",
-        "Build systems to dynamically discover more labels from community feedback."
+        "Build systems to dynamically discover more labels from community feedback.",
       ],
-    }
+    },
   ];
 
   const leftSideShields = [
@@ -1266,7 +1303,7 @@ function ChecksSection() {
   ];
 
   const cellStyle =
-    "w-full h-full z-20 sm:w-[394px] box-border flex flex-row items-center justify-start bg-white p-5 gap-4 rounded-md border border-gray-200";
+    "z-20 sm:w-[394px] box-border flex flex-row items-center justify-start bg-white p-5 gap-4 rounded-md border border-gray-200";
   const cellTextStyle =
     "self-stretch not-italic z-10 text-gray-500 text-left text-sm leading-6 font-normal";
 
