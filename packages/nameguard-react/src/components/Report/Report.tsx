@@ -21,6 +21,7 @@ import { CheckResultCard } from "./CheckResultCard";
 import { LabelList } from "./LabelList";
 import { useGraphemeModalStore } from "../../stores/grapheme";
 import { ReportError } from "./ReportError";
+import { ExternalLinks } from "../ExternalLinks/ExternalLinks";
 import { Share } from "../Share/Share";
 
 type ReportProps = {
@@ -61,7 +62,7 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
     (n: string) => nameguard.inspectName(n)
   );
 
-  const shareLinks = [
+  const externalLinks = [
     {
       text: "ENS.domains",
       href: `https://app.ens.domains/${parsedName.outputName.name}`,
@@ -97,7 +98,8 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
       <div className="space-y-8 w-full z-30">
         <div className="flex justify-between">
           <ReportHeader />
-          <Share title="View name in" links={shareLinks} />
+          <ExternalLinks title="View name in" links={externalLinks} />
+          <Share name={data?.name} />
         </div>
 
         {isLoading && !error && normalizationUnknown && (
