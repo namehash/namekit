@@ -61,6 +61,18 @@ async def test_bulk_stress(nameguard: NameGuard):
     result = await nameguard.bulk_inspect_names('mainnet', names)
     assert len(result.results) == 100
 
+@pytest.mark.parametrize('label_length', [3,10,62,63,64,200,240,252,253,254,255,256,300])
+@pytest.mark.asyncio
+async def test_bulk_simple_name(nameguard: NameGuard, label_length):
+    result = await nameguard.inspect_name('mainnet', ('a'*label_length)+'.eth')
+    result_bulk = await nameguard.inspect_name('mainnet', ('a'*label_length)+'.eth', bulk_mode=True)
+
+    assert result.namehash == result_bulk.namehash
+    assert result.normalization == result_bulk.normalization
+    assert result.rating == result_bulk.rating
+    assert result.risk_count == result_bulk.risk_count
+    assert result.highest_risk == result_bulk.highest_risk
+
 
 @pytest.mark.asyncio
 async def test_highest_risk(nameguard: NameGuard):
