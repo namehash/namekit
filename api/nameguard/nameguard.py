@@ -1,5 +1,6 @@
 import os
 import re
+from typing import Union
 
 from nameguard.our_ens import OurENS
 from ens_normalize import ens_process, is_ens_normalized, ens_cure, DisallowedSequence
@@ -27,8 +28,9 @@ from nameguard.models import (
     SecurePrimaryNameStatus,
     FakeEthNameCheckStatus,
     FakeEthNameCheckResult,
-    CheckStatus,
     ImpersonationStatus,
+    ConsolidatedNameGuardReport, 
+    Rating
 )
 from nameguard.provider import get_nft_metadata
 from nameguard.utils import (
@@ -92,6 +94,23 @@ def nested_get(dic, keys):
     return dic
 
 
+SIMPLE_NAME_REGEX = re.compile(r'^[a-z0-9]+\.eth$')
+
+
+def simple_name(name: str) -> bool:
+    return SIMPLE_NAME_REGEX.match(name) is not None
+
+
+def consolidated_report_from_simple_name(name: str) -> ConsolidatedNameGuardReport:
+    return ConsolidatedNameGuardReport(
+        name=name,
+        namehash=namehash_from_name(name),
+        normalization=Normalization.NORMALIZED,
+        rating=Rating.PASS,
+        risk_count=0,
+        highest_risk=None,
+    )
+
 class NameGuard:
     def __init__(self):
         self._inspector = init_inspector()
@@ -108,7 +127,7 @@ class NameGuard:
     def analyse_label(self, label: str):
         return self._inspector.analyse_label(label, simple_confusables=True, omit_cure=True)
 
-    async def inspect_name(self, network_name: NetworkName, name: str, resolve_labelhashes: bool = True) -> NameGuardReport:
+    async def inspect_name(self, network_name: NetworkName, name: str, resolve_labelhashes: bool = True, bulk_mode: bool = False) -> Union[NameGuardReport,ConsolidatedNameGuardReport]:
         '''
         Inspect a name. A name is a sequence of labels separated by dots.
         A label can be a labelhash or a string.
@@ -119,6 +138,9 @@ class NameGuard:
         
         if resolve_labelhashes:
             name = await resolve_all_labelhashes_in_name_querying_labelhashes(network_name, name)
+
+        if bulk_mode and simple_name(name):
+            return consolidated_report_from_simple_name(name)
 
         labels = [] if len(name) == 0 else name.split('.')
         logger.debug(f'[inspect_name] labels: {labels}')
@@ -244,7 +266,7 @@ class NameGuard:
     async def bulk_inspect_names(self, network_name: NetworkName, names: list[str]) -> BulkNameGuardBulkReport:
         names = await resolve_all_labelhashes_in_names_querying_labelhashes(network_name, names)
         return BulkNameGuardBulkReport(
-            results=[await self.inspect_name(network_name, name, resolve_labelhashes=False) for name in names],
+            results=[await self.inspect_name(network_name, name, resolve_labelhashes=False, bulk_mode=True) for name in names],
         )
 
     async def inspect_namehash(self, network_name: NetworkName, namehash: str) -> NameGuardReport:
