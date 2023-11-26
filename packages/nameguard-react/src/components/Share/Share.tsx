@@ -1,13 +1,48 @@
 import React, { useState, Fragment } from "react";
 import { Transition, Dialog } from "@headlessui/react";
-import { XMarkIcon, ShareIcon } from "@heroicons/react/24/solid";
+import { XMarkIcon, ArrowUpTrayIcon } from "@heroicons/react/24/solid";
+import { Toaster, toast } from "sonner";
 
 type ShareProps = {
   name?: string;
 };
 
+function createTwitterLink(text) {
+  const tweetText = encodeURIComponent(text);
+
+  return `https://twitter.com/intent/tweet?text=${tweetText}`;
+}
+
+function createTelegramLink(url: string) {
+  const urlEncoded = encodeURIComponent(url);
+
+  return `https://t.me/share/url?url=${urlEncoded}`;
+}
+
+function createMailToLink(subject, body) {
+  const subjectEncoded = encodeURIComponent(subject);
+  const bodyEncoded = encodeURIComponent(body);
+
+  return `mailto:?subject=${subjectEncoded}&body=${bodyEncoded}`;
+}
+
 export function Share({ name }: ShareProps) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const twitterLink = createTwitterLink(
+    `Check out the NameGuard Report for ${name}:\n\nhttps://nameguard.io/inspect/${name}`
+  );
+  const telegramLink = createTelegramLink(
+    `https://nameguard.io/inspect/${name}`
+  );
+  const emailLink = createMailToLink(
+    `NameGuard Report for ${name}`,
+    `Check this out!\n\nhttps://nameguard.io/inspect/${name}`
+  );
+  const copyLinkToClipboard = () => {
+    navigator.clipboard.writeText(`https://nameguard.io/inspect/${name}`);
+    toast("Link copied to clipboard");
+  };
 
   return (
     <Fragment>
@@ -15,7 +50,7 @@ export function Share({ name }: ShareProps) {
         className="flex items-center justify-between p-2 appearance-none bg-transparent hover:bg-black/5 transition rounded-md focus:bg-black/5"
         onClick={() => setIsOpen(true)}
       >
-        <ShareIcon className="text-black fill-current w-6 h-6" />
+        <ArrowUpTrayIcon className="text-black fill-current w-6 h-6" />
       </button>
 
       <Transition.Root show={isOpen} as={Fragment}>
@@ -62,12 +97,18 @@ export function Share({ name }: ShareProps) {
                   </div>
 
                   <div className="min-h-[200px] flex items-center justify-center">
-                    {name && <p>{name}</p>}
+                    {name && (
+                      <p className="font-extrabold text-black text-xl">
+                        {name}
+                      </p>
+                    )}
                   </div>
 
                   <div className="bg-white px-6 py-6 flex flex-wrap justify-between">
                     <a
-                      href="https://twitter.com"
+                      href={twitterLink}
+                      target="_blank"
+                      rel="noreferrer noopener"
                       className="flex flex-col space-y-3 items-center group"
                     >
                       <div className="rounded-full bg-gray-100 h-10 w-10 flex items-center justify-center">
@@ -83,7 +124,7 @@ export function Share({ name }: ShareProps) {
                       </div>
                       <span className="text-black text-xs">Twitter</span>
                     </a>
-                    <a
+                    {/* <a
                       href="https://twitter.com"
                       className="flex flex-col space-y-3 items-center group"
                     >
@@ -99,9 +140,11 @@ export function Share({ name }: ShareProps) {
                         </svg>
                       </div>
                       <span className="text-black text-xs">Discord</span>
-                    </a>
+                    </a> */}
                     <a
-                      href="https://twitter.com"
+                      href={telegramLink}
+                      target="_blank"
+                      rel="noreferrer noopener"
                       className="flex flex-col space-y-3 items-center group"
                     >
                       <div className="rounded-full bg-gray-100 h-10 w-10 flex items-center justify-center">
@@ -119,7 +162,9 @@ export function Share({ name }: ShareProps) {
                       <span className="text-black text-xs">Telegram</span>
                     </a>
                     <a
-                      href="https://twitter.com"
+                      href={emailLink}
+                      target="_blank"
+                      rel="noreferrer noopener"
                       className="flex flex-col space-y-3 items-center group"
                     >
                       <div className="rounded-full bg-gray-100 h-10 w-10 flex items-center justify-center">
@@ -138,7 +183,7 @@ export function Share({ name }: ShareProps) {
                       <span className="text-black text-xs">Email</span>
                     </a>
                     <button
-                      onClick={() => alert("Copied to clipboard")}
+                      onClick={copyLinkToClipboard}
                       className="flex flex-col space-y-3 items-center group"
                     >
                       <div className="rounded-full bg-gray-100 h-10 w-10 flex items-center justify-center">
@@ -167,6 +212,14 @@ export function Share({ name }: ShareProps) {
           </div>
         </Dialog>
       </Transition.Root>
+      <Toaster
+        position="bottom-center"
+        toastOptions={{
+          classNames: {
+            toast: "!bg-black !text-white !border-black",
+          },
+        }}
+      />
     </Fragment>
   );
 }

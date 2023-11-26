@@ -98,8 +98,10 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
       <div className="space-y-8 w-full z-30">
         <div className="flex justify-between">
           <ReportHeader />
-          <ExternalLinks title="View name in" links={externalLinks} />
-          <Share name={data?.name} />
+          <div className="flex-shrink-0 flex items-start space-x-1">
+            <Share name={data?.name} />
+            <ExternalLinks title="View name in" links={externalLinks} />
+          </div>
         </div>
 
         {isLoading && !error && normalizationUnknown && (
