@@ -94,7 +94,7 @@ def nested_get(dic, keys):
     return dic
 
 
-SIMPLE_NAME_REGEX = re.compile(r'^[a-z0-9]{1,63}\.eth$')
+SIMPLE_NAME_REGEX = re.compile(r'^[a-z0-9]{1,63}\.eth$')  # 63 label length limit comes from Punycode
 
 
 def simple_name(name: str) -> bool:
