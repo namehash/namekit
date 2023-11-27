@@ -71,8 +71,11 @@ async def namehash_to_name_lookup(network_name: NetworkName, namehash_hexstr: st
     elif data['domain'] is None:
         raise NamehashNotFoundInSubgraph()
     elif 'name' in data['domain']:
-        # TODO: could name be None?
-        name = str(data['domain']['name'])
+        if data['domain']['name'] is None:
+            logger.error(f"Name by namehash is None: {data} {variables}")
+            name = ''
+        else:
+            name = str(data['domain']['name'])
         calculated_namehash = namehash_from_name(name)
         if calculated_namehash != namehash_hexstr:
             logger.error(
