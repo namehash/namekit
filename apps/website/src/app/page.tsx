@@ -8,7 +8,7 @@ import impersonation_attack_img from "../../public/assets/vitalik_impersonation_
 import fake_NFT_filter_img from "../../public/assets/fake_NFT_filter.png";
 import surface_risks_img from "../../public/assets/surface_risks.png";
 import dangerous_name_config_img from "../../public/assets/dangerous_name_configuration.png";
-import autorenew_img from "../../public/assets/autorenew.png";
+import autorenew_img from "../../public/assets/ens_autorenew.png";
 import ens_webfont_img from "../../public/assets/ens_webfont.png";
 import ens_completion_score_img from "../../public/assets/completion_score.png";
 import the_unknown_img from "../../public/assets/making_the_unknown.png";
@@ -757,6 +757,8 @@ function RoadMap() {
           <a
             className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
             href={"https://github.com/namehash/ens-normalize-python"}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             ENS Normalize Python
           </a>
@@ -768,11 +770,13 @@ function RoadMap() {
       stageOfCompletion: "launched",
       headerText: "ENS Font Data",
       commentSentences: [
-        <span key={"ENSFontDataFragment"}>
+        <span key="ENSFontDataFragment">
           Created{" "}
           <a
             className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
-            href={"https://github.com/namehash/ens-font-data"}
+            href="https://github.com/namehash/ens-font-data"
+            target="_blank"
+            rel="noopener noreferrer"
           >
             cross-platform font rendering metadata analysis
           </a>{" "}
@@ -784,28 +788,72 @@ function RoadMap() {
       stageOfCompletion: "launched",
       headerText: "ENS Label Inspector",
       commentSentences: [
-        "Developed an extensible framework for detailed inspections of the labels in ENS names.",
+        <span key="ENSLabelInspectorFragment">
+          Developed an extensible framework for{" "}
+          <a
+            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            href="https://github.com/namehash/ens-label-inspector"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            detailed inspections of the labels in ENS names.
+          </a>
+        </span>,
       ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "NameGuard Library",
       commentSentences: [
-        "Built framework for combining and summarizing the inspection results across all graphemes and labels in an ENS name.",
+        <span key="NGLibraryFragment">
+          Build{" "}
+          <a
+            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            href="https://github.com/namehash/nameguard/tree/main/api"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            framework
+          </a>{" "}
+          for combining and summarizing the inspection results across all
+          graphemes and labels in an ENS name.
+        </span>,
       ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "NameGuard APIs",
       commentSentences: [
-        "Provided a HTTP / REST API to the NameGuard Library.",
+        <span key="NGAPIsFragment">
+          Provided a{" "}
+          <a
+            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            href="https://api.nameguard.io/docs"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            HTTP / REST API
+          </a>{" "}
+          to the NameGuard Library.
+        </span>,
       ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "NameGuard DevOps",
       commentSentences: [
-        "Made it easy for anyone to deploy their own NameGuard API instance to the cloud or their own infrastructure.",
+        <span key="NGDevOpsFragment">
+          Made it easy for anyone to{" "}
+          <a
+            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            href="https://github.com/namehash/nameguard/blob/main/api/serverless.yml"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            deploy their own NameGuard API
+          </a>{" "}
+          instance to the cloud or their own infrastructure.
+        </span>,
       ],
     },
 
@@ -813,56 +861,145 @@ function RoadMap() {
       stageOfCompletion: "launched",
       headerText: "NameGuard Client SDK",
       commentSentences: [
-        "Offered a more convenient method for interacting with NameGuard APIs.",
+        <span key="NGClientSDKFragment">
+          Offered a more convenient method for{" "}
+          <a
+            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            href="https://github.com/namehash/nameguard/tree/main/packages/sdk"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            interacting with NameGuard APIs.
+          </a>
+        </span>,
       ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "NameGuard Figma UI Kit",
       commentSentences: [
-        "Designed example user interfaces for interacting with NameGuard data.",
+        <span key="NGFigmaUIKitFragment">
+          Designed{" "}
+          <a
+            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            href="https://www.figma.com/file/aVlWccl7J2MyP8IE56lDMb/NameGuard-UI-Kit---23-11-2023"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            example user interfaces
+          </a>{" "}
+          for interacting with NameGuard data.
+        </span>,
       ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "NameGuard React UI Kit",
       commentSentences: [
-        "Implemented reusable UI components for integrators to easily build user experiences using NameGuard data.",
+        <span key="NGReactUIKitFragment">
+          Implemented{" "}
+          <a
+            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            href="https://github.com/namehash/nameguard/tree/main/packages/nameguard-react"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            reusable UI components
+          </a>{" "}
+          for integrators to easily build user experiences using NameGuard data.
+        </span>,
       ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "ENS Name Parser",
       commentSentences: [
-        "Created a toolkit for parsing ENS names from user input.",
+        <span key="ENSNameParserFragment">
+          Created a{" "}
+          <a
+            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            href="https://github.com/namehash/nameguard/tree/main/packages/nameparser"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            toolkit for parsing ENS names from user input.
+          </a>
+        </span>,
       ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "Impersonation Attack Protections",
       commentSentences: [
-        "Identified the risk of impersonation attacks. Built protections in the form of a new “Secure Primary Name” lookup.",
+        <span key="IAPFragment">
+          Identified the risk of impersonation attacks. Built protections in the
+          form of a new{" "}
+          <a
+            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            href="https://api.nameguard.io/docs#/secure_primary_name"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            “Secure &quot;Primary Name&quot; lookup.
+          </a>
+        </span>,
       ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "Example App for Impersonation Attack Protections",
       commentSentences: [
-        "Built and released an example app showing how “Secure Primary Name” lookups through NameGuard can help protect the community.",
+        <span key="ExampleAppFragment">
+          Built and released an{" "}
+          <a
+            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            href="https://nameguard-examples-nextjs.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            example app
+          </a>{" "}
+          showing how “Secure Primary Name” lookups through NameGuard can help
+          protect the community.
+        </span>,
       ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "NameGuard Website",
       commentSentences: [
-        "Created an interactive website for the community that provides an example UI for inspecting ENS names.",
+        <span key="NGWebsiteFragment">
+          Created an{" "}
+          <a
+            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            href="https://nameguard.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            interactive website
+          </a>{" "}
+          for the community that provides an example UI for inspecting ENS
+          names.
+        </span>,
       ],
     },
     {
       stageOfCompletion: "launched",
       headerText: "Fake ENS NFT Checks",
       commentSentences: [
-        "Implemented methods for generic NFT marketplaces such as LooksRare or OpenSea to flag and filter NFTs that are pretending to be ENS names.",
+        <span key="FakeENSNFTFragment">
+          Implemented methods for generic NFT marketplaces such as LooksRare or
+          OpenSea to{" "}
+          <a
+            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            href="https://api.nameguard.io/docs#/fake-eth-name-check"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            flag and filter NFTs
+          </a>{" "}
+          that are pretending to be ENS names.
+        </span>,
       ],
     },
     {
@@ -883,7 +1020,17 @@ function RoadMap() {
       stageOfCompletion: "launched",
       headerText: "ens_cure Algorithm",
       commentSentences: [
-        "Implemented a method for further improving the UX for user input of ENS names.",
+        <span key="ENSCureAlgFragment">
+          Implemented a method for further{" "}
+          <a
+            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            href="https://github.com/namehash/ens-normalize-python/blob/main/README.md#ens_cure"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            improving the UX for user input of ENS names.
+          </a>
+        </span>,
       ],
     },
     {
@@ -895,7 +1042,19 @@ function RoadMap() {
       stageOfCompletion: "launched",
       headerText: "ENS Webfont Alpha",
       commentSentences: [
-        "Released an initial teaser that increases grapheme disambiguation and supports rendering of a wider array of graphemes.",
+        <span key="ENSWebfontFragment">
+          Released an{" "}
+          <a
+            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            href="https://github.com/namehash/nameguard/pull/139"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            initial teaser
+          </a>{" "}
+          that increases grapheme disambiguation and supports rendering of a
+          wider array of graphemes.
+        </span>,
       ],
     },
     {
