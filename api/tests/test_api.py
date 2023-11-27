@@ -285,6 +285,20 @@ def test_inspect_namehash_get_unknown_status(test_client, namehash: str, normali
     assert res_json['name'] == expected_name
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
+def test_inspect_namehash_get_root(test_client):
+    namehash='0x0000000000000000000000000000000000000000000000000000000000000000'
+    network_name = 'mainnet'
+    response = test_client.get(f'/inspect-namehash/{network_name}/{namehash}')
+    assert response.status_code == 200
+    res_json = response.json()
+    pprint(res_json)
+
+    assert res_json['normalization'] == 'normalized'
+    assert res_json['namehash'] == namehash.lower()
+    assert res_json['name'] == ''
+
+
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.parametrize(
     "namehash, expected_name",
     [
@@ -365,8 +379,8 @@ def test_inspect_namehash_invalid_namehash(test_client, namehash, expected_reaso
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 def test_inspect_namehash_mismatch_error(test_client):
     network_name = 'mainnet'
-    # todo: how to find registered namehash with null bytes inside? (other than the 0s below)
-    namehash = '0x0000000000000000000000000000000000000000000000000000000000000000'
+    # todo: how to find registered namehash with null bytes inside?
+    namehash = '0xdffa165b6d6cfb2fa47e0d50e429380c60e7be170ba21301c22628b66653a951'  # the name looks like unknown
     response = test_client.post(f'/inspect-namehash',
                                 json={'namehash': namehash, 'network_name': network_name})
     assert response.status_code == 500
