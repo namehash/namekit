@@ -1,3 +1,5 @@
+import asyncio
+
 import pytest
 from web3 import Web3
 
@@ -52,6 +54,24 @@ async def test_bulk(nameguard: NameGuard):
     assert result.results[0].rating is Rating.PASS
     assert result.results[1].rating is Rating.WARN
     assert result.results[2].rating is Rating.ALERT
+
+@pytest.mark.asyncio
+async def test_bulk_stress(nameguard: NameGuard):
+    names=["abaddon.eth","alchemist.eth","ancientapparition.eth","antimage.eth","arcwarden.eth","axe.eth","bane.eth","batrider.eth","beastmaster.eth","bloodseeker.eth","spiderman.eth","ironman.eth","thanos.eth","hulk.eth","wolverine.eth","doctordoom.eth","venom.eth","galactus.eth","janefoster.eth","titania.eth","rihanna.eth","willsmith.eth","kanyewest.eth","eminem.eth","miakhalifa.eth","beyonce.eth","snoopdogg.eth","johncena.eth","badbunny.eth","coolio.eth","aaba.eth","aal.eth","aame.eth","aaoi.eth","aaon.eth","aapl.eth","aaww.eth","aaxj.eth","aaxn.eth","abac.eth","cthulhu.eth","vecna.eth","azathoth.eth","aslan.eth","raiden.eth","beerus.eth","ares.eth","tiamat.eth","bahamut.eth","nyarlathotep.eth","aphrodite.eth","apollo.eth","artemis.eth","tauropolia.eth","prometheus.eth","athena.eth","hermes.eth","dionysus.eth","gaia.eth","hephaestus.eth","hera.eth","hades.eth","poseidon.eth","cronus.eth","heracles.eth","odin.eth","persephone.eth","thor.eth","asgard.eth","darth.eth","🆉🅴🆄🆂.eth","🏴‍☠zeus.eth","zeus💎.eth","₿zeus.eth","zeus💰.eth","zeus1⃣.eth","zeus🍆.eth","notzeus.eth","azeus.eth","zeusor.eth","zeusliving.eth","sonofzeus.eth","yourzeus.eth","hazeus.eth","vipzeus.eth","nftzeus.eth","bitcoinzeus.eth","thezeus.eth","zeuser.eth","_zeus.eth","$zeus.eth","zeusseuss.eth","ξzeus.eth","0xzeus.eth","zeusperseus.eth","mrzeus.eth","cryptozeus.eth","23v5.eth","2ev5.eth","suez.eth"]
+    result = await nameguard.bulk_inspect_names('mainnet', names)
+    assert len(result.results) == 100
+
+@pytest.mark.parametrize('label_length', [3,10,62,63,64,200,240,252,253,254,255,256,300])
+@pytest.mark.asyncio
+async def test_bulk_simple_name(nameguard: NameGuard, label_length):
+    result = await nameguard.inspect_name('mainnet', ('a'*label_length)+'.eth')
+    result_bulk = await nameguard.inspect_name('mainnet', ('a'*label_length)+'.eth', bulk_mode=True)
+
+    assert result.namehash == result_bulk.namehash
+    assert result.normalization == result_bulk.normalization
+    assert result.rating == result_bulk.rating
+    assert result.risk_count == result_bulk.risk_count
+    assert result.highest_risk == result_bulk.highest_risk
 
 
 @pytest.mark.asyncio

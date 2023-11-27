@@ -17,12 +17,17 @@ def compute_canonical_from_list(canonicals: list[Optional[str]], sep='') -> Opti
         return None
     return sep.join(canonicals)
 
+
+LABELHASH_REGEX = re.compile(r'^\[[0-9a-f]{64}\]$')
+LABELHASH_ETH_REGEX = re.compile(r'^\[[0-9a-f]{64}\]\.eth$')
+
+
 def is_labelhash_eth(x: str) -> bool:
-    return bool(re.match(r'^\[[0-9a-f]{64}\]\.eth$', x))
+    return bool(LABELHASH_ETH_REGEX.match(x))
+
 
 def label_is_labelhash(x: str) -> bool:
-    return bool(re.match(r'^\[[0-9a-f]{64}\]$', x))
-
+    return bool(LABELHASH_REGEX.match(x))
 
 def hexbytes_to_int(hb: HexBytes) -> int:
     return int(hb.hex(), base=16)
