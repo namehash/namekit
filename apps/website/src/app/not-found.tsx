@@ -7,8 +7,8 @@ export default function NotFound() {
 
   return (
     <>
-      <div className="w-full h-[calc(100vh-185px)] gt_mobile:h-[calc(100vh-144px)] flex flex-col justify-center items-center px-5 pt-[108px] pb-[85px] gt_mobile:p-0 bg-error404_background_mobile gt_mobile:bg-error404_background_desktop bg-contain bg-no-repeat ">
-        <div className="z-10 relative w-full h-fit max-w-[500px] inline-flex flex-col items-center justify-center gap-10 md:gap-[60px]">
+      <div className="relative w-full h-[calc(100vh-185px)] gt_mobile:h-[calc(100vh-144px)] flex flex-col justify-center items-center px-5 pt-[108px] pb-[85px] gt_mobile:p-0 bg-error404_background_mobile gt_mobile:bg-error404_background_desktop bg-contain bg-no-repeat ">
+        <div className="relative z-10 w-full h-fit max-w-[500px] inline-flex flex-col items-center justify-center gap-10 md:gap-[60px]">
           <Error404IconSmall />
           <Error404IconLarge />
           <div className="w-full h-full flex flex-col items-center justify-center gap-5">
@@ -30,6 +30,7 @@ export default function NotFound() {
             </button>
           </div>
         </div>
+        <div className="fixed inset-0 z-0 h-full w-[100vw] max-w-[100vw] overflow-x-hidden bg-[radial-gradient(#DDDDDD_1px,transparent_1px)] [background-size:24px_24px] opacity-70"></div>
       </div>
     </>
   );
