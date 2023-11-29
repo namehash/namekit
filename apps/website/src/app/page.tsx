@@ -189,7 +189,7 @@ export default function Home() {
             </Fragment>
           }
           sectionDescription="Safeguard your community from improperly configured resolver records with ENS HealthChecks. These checks shield against major issues, spanning significant irreversible losses to web3 profiles that are incorrectly formatted and may not load properly."
-          sectionBackgroundName={"bg-purple_background_sm"}
+          sectionBackgroundName={"bg-purple_background"}
           isTextOnTheLeft={true}
           badgeText="Coming soon"
           imageSpecifics={{
@@ -210,7 +210,7 @@ export default function Home() {
             </Fragment>
           }
           sectionDescription="In the hustle and bustle of life, ENS name renewals can slip through the cracks. Give your community peace of mind (and earn recurring revenue!) with ENS AutoRenew. What’s more, it also helps everyone save on gas fees, intelligently initiating renewal transactions at the most cost-effective moments. "
-          sectionBackgroundName="bg-green_background_sm"
+          sectionBackgroundName="bg-green_background"
           isTextOnTheLeft={false}
           badgeText="Planned"
           imageSpecifics={{
@@ -225,7 +225,7 @@ export default function Home() {
           sectionTargetClientMessage="For wallets and dApps"
           sectionHeader={<Fragment>ENS webfont</Fragment>}
           sectionDescription="Unicode is a complex beast. Are you certain you are prepared to handle the display of all possible ENS names in your UI? ENS Webfont not only enhances security against homograph attacks but also expands rendering support for emojis and other unique graphemes."
-          sectionBackgroundName="bg-purple_background_sm"
+          sectionBackgroundName="bg-purple_background"
           isTextOnTheLeft={true}
           badgeText={"Planned"}
           imageSpecifics={{
@@ -240,7 +240,7 @@ export default function Home() {
           sectionTargetClientMessage="For wallets and dApps"
           sectionHeader={<Fragment>ENS profile completion score</Fragment>}
           sectionDescription="Boost social engagement and retention by encouraging your community to make the most of their ENS identity. Build gamified user journeys tailored to your app that incentivize users to boost their ENS profile completion score and join the ‘100% Club’."
-          sectionBackgroundName="bg-green_background_sm"
+          sectionBackgroundName="bg-green_background"
           isTextOnTheLeft={false}
           badgeText={"Planned"}
           imageSpecifics={{
@@ -255,7 +255,7 @@ export default function Home() {
           sectionTargetClientMessage="For wallets and dApps"
           sectionHeader={<Fragment>Making the unknown, known</Fragment>}
           sectionDescription="Many ENS domains are known to technically exist as a node in ENS, however the actual names for these domains is currently unknown. The ENS Subgraph helps to resolve some of these, but NameGuard goes further to resolve unknown names with a more powerful solution that learns from the community across time."
-          sectionBackgroundName="bg-purple_background_sm"
+          sectionBackgroundName="bg-purple_background"
           isTextOnTheLeft={true}
           badgeText={"Planned"}
           imageSpecifics={{
@@ -273,7 +273,6 @@ export default function Home() {
       <ExploreTheEcosystemSection />
       <RoadMap />
       <NewExitSection />
-      <div className="fixed inset-0 z-0 h-full w-[100vw] max-w-[100vw] overflow-x-hidden bg-[radial-gradient(#DDDDDD_1px,transparent_1px)] [background-size:24px_24px] opacity-70"></div>
     </>
   );
 }
@@ -339,12 +338,15 @@ type ReadySectionProps = {
 };
 
 function ReadySection(props: ReadySectionProps) {
-  const mediaDiv = cc([
-    "flex sm:flex-col xl:flex-row justify-center border-0 rounded-none items-center gap-12 w-full h-full xl:h-3/4 py-16 px-10 bg-center bg-no-repeat bg-cover flex-shrink-0 gt_mobile:gap-10",
+  const mediaDiv =
+    "flex sm:flex-col xl:flex-row justify-center border-0 rounded-none items-center gap-12 w-full h-full xl:h-3/4 py-16 px-10 flex-shrink-0 gt_mobile:gap-10";
+  const backgroundDiv = cc([
+    "absolute z-0 top-[40%] gt_mobile:top-[30%] left-[10%] h-[60%] w-[80%] bg-center bg-no-repeat bg-cover [opacity:0.4]",
     props.sectionBackgroundName,
   ]);
+
   return (
-    <section className="z-10 relative w-full h-full py-10 px-5 flex flex-col items-center justify-center bg-white gt_mobile:bg-transparent md:py-24 gt_mobile:px-0">
+    <section className="relative w-full h-full py-10 px-5 flex flex-col items-center justify-center bg-white gt_mobile:bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] gt_mobile:[background-size:24px_24px] md:py-24 gt_mobile:px-0">
       <div className="max-w-full flex flex-col items-center gt_mobile:mx-auto gt_mobile:px-6 gt_mobile:gap-3">
         <div className="w-full flex flex-col gap-5 items-center xl:w-1/2">
           <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-[20px] gap-2 justify-center items-center z-10">
@@ -364,6 +366,7 @@ function ReadySection(props: ReadySectionProps) {
         </div>
         {props.isCodeOnTheLeft ? (
           <div className={mediaDiv}>
+            <div className={backgroundDiv} />
             {props.integrationsPanel ? (
               <div className="hidden md:flex flex-col w-full h-full justify-between items-center gap-7 max-w-3xl">
                 <CodeSnippet codeSnippet={props.codeSnippet} />
@@ -387,6 +390,7 @@ function ReadySection(props: ReadySectionProps) {
           </div>
         ) : (
           <div className={mediaDiv}>
+            <div className={backgroundDiv} />
             <Image
               className="z-10 w-full h-full max-w-[34rem] xl:w-1/3 xl:h-auto"
               src={props.imageSpecifics.source}
@@ -424,24 +428,40 @@ type ComingSoonSectionProps = {
 };
 
 function ComingSoonSection(props: ComingSoonSectionProps) {
+  const get_mobile_bg = () => {
+    if (props.sectionBackgroundName.includes("purple")) {
+      return "bg-purple_background_mobile";
+    }
+    return "bg-green_background_mobile";
+  };
+
   const rightImageDiv = cc([
-    "hidden gt_mobile:flex flex-row justify-center items-center w-full max-w-2xl xl:w-1/2 rounded-none bg-origin-border bg-center bg-no-repeat bg-cover flex-shrink-0 xl:relative xl:right-[70px]",
-    props.sectionBackgroundName,
+    "relative hidden gt_mobile:flex flex-row justify-center items-center w-full max-w-2xl xl:w-1/2 rounded-none bg-origin-border flex-shrink-0 xl:right-[50px]",
   ]);
   const mobileImageDiv = cc([
     "flex gt_mobile:hidden flex-row justify-center items-center w-full h-full rounded-none py-5 bg-origin-border bg-center bg-no-repeat bg-contain flex-shrink-0",
-    props.sectionBackgroundName,
+    get_mobile_bg(),
   ]);
 
   const leftImageDiv = cc([
-    "hidden xl:flex flex-row justify-center items-center w-full max-w-2xl xl:w-1/2 rounded-none bg-origin-border bg-center bg-no-repeat bg-cover flex-shrink-0 box-border pr-20",
+    "relative hidden xl:flex flex-row justify-center items-center w-full max-w-2xl xl:w-1/2 rounded-none bg-origin-border flex-shrink-0 box-border pr-20",
+  ]);
+
+  const rightBackgroundDiv = cc([
+    "absolute z-0 top-0 left-0 h-[105%] w-[115%] bg-center bg-no-repeat bg-cover [opacity:0.3]",
+    props.sectionBackgroundName,
+  ]);
+
+  const leftBackgroundDiv = cc([
+    "absolute z-0 h-[195%] w-[115%] bg-center bg-no-repeat bg-cover [opacity:0.3]",
     props.sectionBackgroundName,
   ]);
 
   return (
-    <section className="z-10 relative w-full flex flex-col xl:flex-row items-center justify-center h-full py-10 px-5 bg-white gt_mobile:bg-transparent gt_mobile:h-1/2 md:py-20 gt_mobile:px-10">
+    <section className="w-full flex flex-col xl:flex-row items-center justify-center h-full py-10 px-5 bg-white gt_mobile:bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] gt_mobile:[background-size:24px_24px] gt_mobile:h-1/2 md:py-20 gt_mobile:px-10">
       {!props.isTextOnTheLeft && (
         <div className={leftImageDiv}>
+          <div className={leftBackgroundDiv} />
           <Image
             className="relative z-10 w-full h-full"
             src={props.imageSpecifics.source}
@@ -479,6 +499,7 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
       </div>
       {props.isTextOnTheLeft ? (
         <div className={rightImageDiv}>
+          <div className={rightBackgroundDiv} />
           <Image
             className="relative z-10 w-full h-full"
             src={props.imageSpecifics.source}
@@ -490,6 +511,7 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
         </div>
       ) : (
         <div className={cc([rightImageDiv, "xl:hidden pt-8"])}>
+          <div className={rightBackgroundDiv} />
           <Image
             className="relative z-10 w-full h-full"
             src={props.imageSpecifics.source}
@@ -516,6 +538,9 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
 
 function HeroSection() {
   const npmCommand = "npm install @namehash/nameguard";
+
+  const backgroundDiv =
+    "absolute z-0 top-0 left-0 h-full w-full box-border bg-center bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] [background-size:24px_24px]";
 
   const copyDiv = (
     <div
@@ -544,7 +569,8 @@ function HeroSection() {
 
   return (
     <section className="box-border relative z-10 w-full h-fit xl:h-screen py-[61px] gt_mobile:pb-24 gt_mobile:pt-8 px-5 flex flex-col items-center justify-center bg-hero_background bg-no-repeat bg-center bg-contain md:px-10 md:pt-10 md:pb-32">
-      <div className="flex flex-col items-center justify-center w-full h-full">
+      <div className={backgroundDiv} />
+      <div className="box-border flex flex-col items-center justify-center w-full h-full">
         <WarningShieldOrangeOutline
           className={"absolute z-10 hidden lg:block top-[5%] left-[20%]"}
         />
@@ -613,7 +639,7 @@ function HeroSection() {
           <p className="text-center not-italic font-normal text-gray-500 text-lg leading-7 gt_mobile:text-base gt_mobile:leading-6 gt_mobile:font-light">
             Guard your users from heartbreak and keep ENS usage safe across web3
           </p>
-          <div className="hidden search_bar_change:flex items-center gap-2 py-[9px] pl-4 pr-[14px] rounded-lg bg-black bg-opacity-5 border border-gray-300 gt_mobile:gap-3 gt_mobile:py-[13px] gt_mobile:pl-[20px] gt_mobile:pr-[16px]">
+          <div className="hidden relative z-10 search_bar_change:flex items-center gap-2 py-[9px] pl-4 pr-[14px] rounded-lg bg-black bg-opacity-5 border border-gray-300 gt_mobile:gap-3 gt_mobile:py-[13px] gt_mobile:pl-[20px] gt_mobile:pr-[16px]">
             <p className="text-black leading-6 font-normal text-sm gt_mobile:text-base">
               {npmCommand}
             </p>
@@ -623,7 +649,7 @@ function HeroSection() {
           </div>
           <a
             href={"https://api.nameguard.io/docs"}
-            className="hidden search_bar_change:block"
+            className="hidden search_bar_change:block relative z-10"
           >
             <button className="flex justify-center items-center px-[25px] py-[13px] rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-800 cursor-pointer">
               <p className="text-white not-italic font-medium text-base leading-6">
@@ -638,7 +664,7 @@ function HeroSection() {
             </p>
             <a
               href={"https://api.nameguard.io/docs"}
-              className="w-full h-fit max-w-xs"
+              className="relative z-10 w-full h-fit max-w-xs"
             >
               <button className="w-full h-fit box-border flex justify-center items-center self-stretch px-[17px] py-[9px] rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-800 cursor-pointer">
                 <p className="text-white not-italic font-medium text-base leading-6">
@@ -677,7 +703,7 @@ function ExitSection() {
 
 function NewExitSection() {
   return (
-    <section className="relative w-full h-full flex flex-col items-center justify-center py-5 px-5 gap-5 z-10 bg-white md:bg-transparent md:px-[112px] lg:pt-10 lg:pb-[45px] lg:flex-row lg:gap-10">
+    <section className="relative w-full h-full flex flex-col items-center justify-center py-5 px-5 gap-5 z-10 bg-white md:bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] md:[background-size:24px_24px] md:px-[112px] lg:pt-10 lg:pb-[45px] lg:flex-row lg:gap-10">
       <div className="m-auto flex items-center justify-center flex-col lg:flex-row w-full max-w-[1216px] gap-10">
         <div className="flex flex-col justify-center items-center h-full max-h-[334px] md:max-h-[315px] w-full max-w-3xl rounded-xl border border-gray-200 bg-generate_raport_background bg-no-repeat bg-top bg-[length:180%_200%] lg:bg-[length:100%_250%]">
           <div className="w-full h-full flex flex-col justify-center items-center gap-6 py-[63px] px-5 box-border lg:py-[60px] lg:max-w-[508px] lg:w-full lg:px-10">
@@ -1473,7 +1499,7 @@ function ChecksSection() {
     "self-stretch not-italic z-10 text-gray-500 text-left text-sm leading-6 font-normal";
 
   return (
-    <section className="relative z-10 w-full h-full box-border flex flex-col py-10 px-5 items-center justify-center self-stretch gap-[32px] md:pt-[100px] md:pb-[48px] md:gap-0">
+    <section className="relative z-10 w-full h-full box-border flex flex-col py-10 px-5 items-center justify-center self-stretch gap-[32px] md:pt-[100px] md:pb-[48px] md:gap-0 bg-white gt_mobile:bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] gt_mobile:[background-size:24px_24px]">
       <div className="flex flex-col justify-center items-center gap-5 max-w-[608px]">
         <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-3xl gap-2 justify-center items-center z-10">
           <CheckShieldGrayOutline />
@@ -1757,7 +1783,7 @@ function DevelopersSection() {
   ];
 
   return (
-    <section className="relative z-10 w-full h-full box-border flex flex-col py-10 px-5 items-center justify-center self-stretch gap-[32px]">
+    <section className="relative z-10 w-full h-full box-border flex flex-col py-10 px-5 items-center justify-center self-stretch gap-[32px] bg-white gt_mobile:bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] gt_mobile:[background-size:24px_24px]">
       <div className="flex flex-col justify-center items-center gap-5 max-w-[608px]">
         <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-3xl gap-2 justify-center items-center z-10">
           <GithubIconSmall />
