@@ -511,6 +511,8 @@ def test_inspect_grapheme(test_client):
         assert check['check_name'][0].isupper() and '_' not in check['check_name']
 
     assert res_json['canonical_grapheme'] in [confusable['grapheme'] for confusable in res_json['confusables']]
+    assert res_json['confusables'][0]['is_canonical']
+    assert not res_json['confusables'][1]['is_canonical']
 
 def test_inspect_grapheme_multi(test_client):
     response = test_client.get(f'/inspect-grapheme/aś')
