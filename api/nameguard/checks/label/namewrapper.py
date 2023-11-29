@@ -8,7 +8,7 @@ STATUS = CheckStatus.WARN
 #title: NameWrapper Compatible
 TITLE_PASS = 'NameWrapper Compatible'
 TITLE_FAIL = 'NameWrapper Incompatible'
-TITL_SKIP = 'Unknown NameWrapper Compatibility'
+TITLE_SKIP = 'Unknown NameWrapper Compatibility'
 
 L_MESSAGE_PASS = 'Compatible for use with the ENS NameWrapper'
 N_MESSAGE_PASS = 'Compatible for use with the ENS NameWrapper'
@@ -29,6 +29,7 @@ def check_label(label: Optional[InspectorResult]) -> GenericCheckResult:
             status=CheckStatus.SKIP,
             _label_message=L_MESSAGE_SKIP,
             _name_message=N_MESSAGE_SKIP,
+            _title=TITLE_SKIP,
         )
     try:
         wrapped = label.label.encode('utf-8')
@@ -40,4 +41,5 @@ def check_label(label: Optional[InspectorResult]) -> GenericCheckResult:
         status=CheckStatus.PASS if passed else STATUS,
         _label_message=L_MESSAGE_PASS if passed else L_MESSAGE_FAIL,
         _name_message=N_MESSAGE_PASS if passed else N_MESSAGE_FAIL,
+        _title=TITLE_PASS if passed else TITLE_FAIL,
     )

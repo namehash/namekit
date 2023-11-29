@@ -25,6 +25,7 @@ def check_grapheme(grapheme: Grapheme) -> GenericCheckResult:
             _grapheme_message=MESSAGE_SKIP,
             _label_message=MESSAGE_SKIP,
             _name_message=MESSAGE_SKIP,
+            _title=TITLE_SKIP,
         )
     else:
         return GraphemeCheckResult(
@@ -33,4 +34,5 @@ def check_grapheme(grapheme: Grapheme) -> GenericCheckResult:
             _grapheme_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
             _label_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
             _name_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
+            _title=TITLE_PASS if passed else TITLE_FAIL,
         )

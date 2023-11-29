@@ -8,7 +8,7 @@ STATUS = CheckStatus.WARN
 #title: DNS Compatible Label
 TITLE_PASS = 'DNS Compatible Label'
 TITLE_FAIL = 'DNS Incompatible Label'
-TITL_SKIP = 'Unknown DNS Label Compatibility'
+TITLE_SKIP = 'Unknown DNS Label Compatibility'
 
 L_MESSAGE_PASS = 'Compatible for use with DNS'
 N_MESSAGE_PASS = 'Compatible for use with DNS'
@@ -27,6 +27,7 @@ def check_label(label: Optional[InspectorResult]) -> GenericCheckResult:
             status=CheckStatus.SKIP,
             _label_message=L_MESSAGE_SKIP,
             _name_message=N_MESSAGE_SKIP,
+            _title=TITLE_SKIP,
         )
     passed = label.punycode_compatibility == 'COMPATIBLE'
     return LabelCheckResult(
@@ -34,4 +35,5 @@ def check_label(label: Optional[InspectorResult]) -> GenericCheckResult:
         status=CheckStatus.PASS if passed else STATUS,
         _label_message=L_MESSAGE_PASS if passed else L_MESSAGE_FAIL,
         _name_message=N_MESSAGE_PASS if passed else N_MESSAGE_FAIL,
+        _title=TITLE_PASS if passed else TITLE_FAIL,
     )

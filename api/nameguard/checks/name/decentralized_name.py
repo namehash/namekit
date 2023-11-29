@@ -7,7 +7,7 @@ STATUS = CheckStatus.WARN
 #title: Decentralized Name
 TITLE_PASS = 'Decentralized Name'
 TITLE_FAIL = 'Non-Decentralized Name'
-TITLE_SKIP = 'Unknown Decentralization Status'
+TITLE_FAIL_UNKNOWN = 'Unknown Decentralization Status'
 
 MESSAGE_PASS = 'Ownership is decentralized'
 MESSAGE_FAIL = 'Ownership is not decentralized'
@@ -84,16 +84,19 @@ def check_name(labels: list[Optional[InspectorResult]]) -> GenericCheckResult:
             check=Check.DECENTRALIZED_NAME,
             status=CheckStatus.PASS,
             _name_message=MESSAGE_PASS,
+            _title=TITLE_PASS,
         )
     elif ds == 'icann':
         return NameCheckResult(
             check=Check.DECENTRALIZED_NAME,
             status=CheckStatus.WARN,
             _name_message=MESSAGE_FAIL,
+            _title=TITLE_FAIL,
         )
     else:
         return NameCheckResult(
             check=Check.DECENTRALIZED_NAME,
             status=CheckStatus.WARN,
             _name_message=MESSAGE_FAIL_UNKNOWN,
+            _title=TITLE_FAIL_UNKNOWN,
         )

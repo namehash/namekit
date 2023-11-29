@@ -22,6 +22,7 @@ def check_name(labels: list[Optional[InspectorResult]]) -> GenericCheckResult:
             check=Check.PUNYCODE_COMPATIBLE_NAME,
             status=CheckStatus.SKIP,
             _name_message=MESSAGE_SKIP,
+            _title=TITLE_SKIP,
         )
     result = puny_analysis('.'.join(label.label for label in labels))
     passed = result.compatibility == PunycodeCompatibility.COMPATIBLE
@@ -29,4 +30,5 @@ def check_name(labels: list[Optional[InspectorResult]]) -> GenericCheckResult:
         check=Check.PUNYCODE_COMPATIBLE_NAME,
         status=CheckStatus.PASS if passed else STATUS,
         _name_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
+        _title=TITLE_PASS if passed else TITLE_FAIL,
     )

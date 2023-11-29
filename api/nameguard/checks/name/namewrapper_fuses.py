@@ -13,4 +13,5 @@ def check_name(labels: list[Optional[InspectorResult]]) -> GenericCheckResult:
         check=Check.NAMEWRAPPER_FUSES,
         status=CheckStatus.INFO,
         _name_message=MESSAGE_INFO,
+        _title=TITLE_INFO,
     )

@@ -91,16 +91,19 @@ async def test_check_skip(nameguard: NameGuard):
     c = [c for c in result.checks if c.check is Check.FONT_SUPPORT][0]
     assert c.rating is Rating.PASS
     assert c.status is CheckStatus.PASS
+    assert c.check_name == 'Font Support'
 
     result = await nameguard.inspect_name('mainnet', unsup)
     c = [c for c in result.checks if c.check is Check.FONT_SUPPORT][0]
     assert c.rating is Rating.WARN
     assert c.status is CheckStatus.WARN
+    assert c.check_name == 'Font Non-Support'
 
     result = await nameguard.inspect_name('mainnet', unk)
     c = [c for c in result.checks if c.check is Check.FONT_SUPPORT][0]
     assert c.rating is Rating.PASS
     assert c.status is CheckStatus.SKIP
+    assert c.check_name == 'Unknown Font Support'
 
 
 @pytest.mark.asyncio
@@ -110,6 +113,8 @@ async def test_check_skip_confusable(nameguard: NameGuard):
     assert c.rating is Rating.PASS
     assert c.status is CheckStatus.SKIP
     assert c.message == 'Confusable checks were skipped'
+    assert c.check_name == 'Unknown Character Status'
+
 
 @pytest.mark.asyncio
 async def test_check_skip_font_support(nameguard: NameGuard):
@@ -118,6 +123,8 @@ async def test_check_skip_font_support(nameguard: NameGuard):
     assert c.rating is Rating.PASS
     assert c.status is CheckStatus.SKIP
     assert c.message == 'Unknown if supported by common fonts'
+    assert c.check_name == 'Unknown Font Support'
+
     
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.asyncio
@@ -431,22 +438,22 @@ async def test_all_normalization(nameguard: NameGuard):
 
     
 def test_generic_check_result_operators():
-    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.INFO, _name_message='') == \
-           GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.INFO, _name_message='')
-    assert GenericCheckResult(check=Check.CONFUSABLES, status=CheckStatus.WARN, _name_message='') != \
-           GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.WARN, _name_message='')
-    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.INFO, _name_message='') < \
-           GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.PASS, _name_message='')
-    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.WARN, _name_message='') <= \
-           GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.ALERT, _name_message='')
-    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.PASS, _name_message='') > \
-           GenericCheckResult(check=Check.CONFUSABLES, status=CheckStatus.PASS, _name_message='')
-    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.ALERT, _name_message='') >= \
-           GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.ALERT, _name_message='')
+    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.INFO, _name_message='', _title='') == \
+           GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.INFO, _name_message='', _title='')
+    assert GenericCheckResult(check=Check.CONFUSABLES, status=CheckStatus.WARN, _name_message='', _title='') != \
+           GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.WARN, _name_message='', _title='')
+    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.INFO, _name_message='', _title='') < \
+           GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.PASS, _name_message='', _title='')
+    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.WARN, _name_message='', _title='') <= \
+           GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.ALERT, _name_message='', _title='')
+    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.PASS, _name_message='', _title='') > \
+           GenericCheckResult(check=Check.CONFUSABLES, status=CheckStatus.PASS, _name_message='', _title='')
+    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.ALERT, _name_message='', _title='') >= \
+           GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.ALERT, _name_message='', _title='')
 
 
 def test_generic_check_result_repr():
-    assert repr(GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.PASS, _name_message='')) == \
+    assert repr(GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.PASS, _name_message='', _title='')) == \
            'normalized(pass)'
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
