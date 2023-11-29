@@ -4,6 +4,11 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, GraphemeChe
 
 STATUS = CheckStatus.WARN
 
+#title: Font Support
+TITLE_PASS = 'Font Support'
+TITLE_FAIL = 'Font Non-Support'  # Potential?
+TITLE_SKIP = 'Unknown Font Support' # the same as TILE_PASS?
+
 MESSAGE_PASS = 'Probably supported by common fonts'
 
 MESSAGE_FAIL = 'May not be supported by common fonts'

@@ -7,6 +7,11 @@ from label_inspector.models import InspectorResult
 
 STATUS = CheckStatus.WARN
 
+#title: Canonical Characters
+TITLE_PASS = 'Canonical Characters'
+TITLE_FAIL = 'Non-Canonical Characters'
+TITLE_SKIP = 'Unknown Canonical Status'
+
 MESSAGE_PASS = 'No signs of impersonation'
 
 MESSAGE_FAIL = 'May be an impersonation of `{}`'

@@ -5,6 +5,12 @@ from label_inspector.models import InspectorResult
 
 
 STATUS = CheckStatus.WARN
+
+#title: DNS Compatible Name
+TITLE_PASS = 'DNS Compatible Name'
+TITLE_FAIL = 'DNS Incompatible Name'
+TITLE_SKIP = 'Unknown DNS Name Compatibility'
+
 MESSAGE_PASS = 'Compatible for use with DNS'
 MESSAGE_FAIL = 'Incompatible for use with DNS'
 MESSAGE_SKIP = 'This name contains unknown labels'

@@ -8,6 +8,11 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, LabelCheckR
 
 STATUS = CheckStatus.WARN
 
+#title: Single Script
+TITLE_PASS = 'Single Script'
+TITLE_FAIL = 'Mixed Scripts'
+TITL_SKIP = 'Unknown Script Status'  # Scripts?
+
 L_MESSAGE_PASS = 'Written in a single script'
 N_MESSAGE_PASS = 'Written in a single script'
 

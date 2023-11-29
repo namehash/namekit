@@ -6,6 +6,11 @@ from nameguard.models import CheckStatus, Check, GraphemeCheckResult, LabelCheck
 
 STATUS = CheckStatus.ALERT
 
+# title: Normalized
+TITLE_PASS = 'Normalized'
+TITLE_FAIL = 'Unnormalized'
+TITLE_SKIP = 'Unknown normalization status'
+
 MESSAGE_PASS = 'Valid for use with ENS'
 
 MESSAGE_FAIL = 'Invalid for use with ENS'
