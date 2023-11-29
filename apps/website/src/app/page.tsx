@@ -1,6 +1,5 @@
 "use client";
 
-import { Highlight, themes } from "prism-react-renderer";
 import React, { Fragment, useEffect, useState } from "react";
 import Image from "next/image";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
@@ -15,6 +14,7 @@ import the_unknown_img from "../../public/assets/making_the_unknown.svg";
 import explore_ecosystem_img from "../../public/assets/ecosystem_scheme.png";
 import { Tooltip, Search } from "@namehash/nameguard-react";
 import cc from "classcat";
+import { highlight } from "sugar-high";
 import { CalButton } from "@/app/atoms/CalButton";
 import { PushLogo } from "@/app/atoms/icons/PushLogo";
 import { WalletConnectLogo } from "@/app/atoms/icons/WalletConnectLogo";
@@ -282,6 +282,32 @@ type CodeSnippetProps = {
 };
 
 function CodeSnippet(props: CodeSnippetProps) {
+  const nameGuardMethods = [
+    "getSecurePrimaryName",
+    "fakeEthNameCheck",
+    "inspectName",
+    "bulkInspectNames",
+  ];
+
+  const findMethods = () => {
+    const spans = highlight(props.codeSnippet).split("><");
+    const toReplace = /var\(--sh-identifier\)/gi;
+    const methodColor = "#2596be";
+
+    return spans
+      .map((elem: string) => {
+        for (const method of nameGuardMethods) {
+          if (elem.includes(method)) {
+            return elem.replace(toReplace, methodColor);
+          }
+        }
+        return elem;
+      })
+      .join("><");
+  };
+
+  const code = findMethods();
+
   return (
     <div className="hidden gt_mobile:block bg-black rounded-xl pb-4 max-w-full h-fit bg-gradient-to-b from-figma-black to-black z-10">
       <div className="flex flex-col gap-2.5 px-2.5 py-3">
@@ -293,27 +319,12 @@ function CodeSnippet(props: CodeSnippetProps) {
       </div>
       <hr className="border-code-gray" />
       <div className="py-4 px-5 max-w-full">
-        <Highlight
-          theme={themes.oneDark}
-          code={`${props.codeSnippet}`}
-          language="typescript"
-        >
-          {({ className, style, tokens, getLineProps, getTokenProps }) => (
-            <pre
-              className={`${className} w-full overflow-x-auto pb-4`}
-              // style={style}
-            >
-              {tokens.map((line, i) => (
-                <div key={i} {...getLineProps({ line })}>
-                  <span className="pr-8 text-code-gray">{i + 1}</span>
-                  {line.map((token, key) => (
-                    <span key={key} {...getTokenProps({ token })} />
-                  ))}
-                </div>
-              ))}
-            </pre>
-          )}
-        </Highlight>
+        <pre className="w-full overflow-x-auto pb-4">
+          <code
+            dangerouslySetInnerHTML={{ __html: code }}
+            className="inline-block [overflow-wrap:break-word]"
+          />
+        </pre>
       </div>
     </div>
   );

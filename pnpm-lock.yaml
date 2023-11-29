@@ -38,15 +38,15 @@ importers:
       next:
         specifier: latest
         version: 13.5.6(react-dom@18.2.0)(react@18.2.0)
-      prism-react-renderer:
-        specifier: 2.1.0
-        version: 2.1.0(react@18.2.0)
       react:
         specifier: latest
         version: 18.2.0
       react-dom:
         specifier: latest
         version: 18.2.0(react@18.2.0)
+      sugar-high:
+        specifier: 0.5.5
+        version: 0.5.5
     devDependencies:
       '@types/node':
         specifier: latest
@@ -92,7 +92,7 @@ importers:
         version: 2.0.18(react@18.2.0)
       '@namehash/nameguard':
         specifier: latest
-        version: link:../sdk
+        version: 0.0.13
       '@namehash/nameparser':
         specifier: latest
         version: link:../nameparser
@@ -976,6 +976,12 @@ packages:
       globby: 11.1.0
       read-yaml-file: 1.1.0
     dev: true
+
+  /@namehash/nameguard@0.0.13:
+    resolution: {integrity: sha512-fO050VK+ynL2Iivaz1upnZpL5AjdYTIvDL4mQuqzK+VW5LZ7sPV+WiIP4bMmY99WYceUd2zhA9XuI6uMrKKJ6w==}
+    dependencies:
+      whatwg-fetch: 3.6.19
+    dev: false
 
   /@next/env@13.5.6:
     resolution: {integrity: sha512-Yac/bV5sBGkkEXmAX5FWPS9Mmo2rthrOPRQQNfycJPkjUAUclomCPH7QFVCDQ4Mp2k2K1SSM6m0zrxYrOwtFQw==}
@@ -4232,6 +4238,10 @@ packages:
       mz: 2.7.0
       pirates: 4.0.6
       ts-interface-checker: 0.1.13
+
+  /sugar-high@0.5.5:
+    resolution: {integrity: sha512-XSLoBuGEfKk3PbN94+3aZefhoSH5n+qXTxcfFs+Ip0EdaY/fdohyyfugW0sJPrgdUfTk4DIxpPsUCq492aLOrw==}
+    dev: false
 
   /supports-color@5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
