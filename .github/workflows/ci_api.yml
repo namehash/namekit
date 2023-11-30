@@ -58,10 +58,12 @@ jobs:
         run: MONKEYPATCH=0 poetry run pytest -vv --durations=0
 
       - name: Generate coverage badge
+        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11'
         working-directory: ./api
         run: poetry run coverage-badge -fo ../coverage_badge.svg
 
       - name: Commit changes
+        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11'
         uses: EndBug/add-and-commit@v9
         with:
           author_name: github-actions
