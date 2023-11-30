@@ -50,13 +50,13 @@ def test_grapheme_font_support(nameguard: NameGuard):
     r = checks.grapheme.font_support.check_grapheme(g)
     assert r.check == Check.FONT_SUPPORT
     assert r.rating == Rating.PASS
-    assert r.message == 'Probably supported by common fonts'
+    assert r.message == 'Commonly supported'
 
     g = analyse_grapheme(nameguard, '👊🏿')
     r = checks.grapheme.font_support.check_grapheme(g)
     assert r.check == Check.FONT_SUPPORT
     assert r.rating == Rating.WARN
-    assert r.message == 'May not be supported by common fonts'
+    assert r.message == 'Less common support'
 
 
 def test_grapheme_invisible(nameguard: NameGuard):
@@ -141,7 +141,7 @@ def test_label_punycode(nameguard: NameGuard):
     assert r.check == Check.PUNYCODE_COMPATIBLE_LABEL
     assert r.rating == Rating.PASS
     assert r.message == 'Compatible for use with DNS'
-    assert r.check_name == 'DNS Compatible Label'
+    assert r.check_name == 'DNS Compatibility'
 
     l = nameguard.analyse_label('あ' * 200)
     r = checks.label.punycode.check_label(l)

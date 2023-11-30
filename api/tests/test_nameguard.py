@@ -97,13 +97,13 @@ async def test_check_skip(nameguard: NameGuard):
     c = [c for c in result.checks if c.check is Check.FONT_SUPPORT][0]
     assert c.rating is Rating.WARN
     assert c.status is CheckStatus.WARN
-    assert c.check_name == 'Font Non-Support'
+    assert c.check_name == 'Font Support'
 
     result = await nameguard.inspect_name('mainnet', unk)
     c = [c for c in result.checks if c.check is Check.FONT_SUPPORT][0]
     assert c.rating is Rating.PASS
     assert c.status is CheckStatus.SKIP
-    assert c.check_name == 'Unknown Font Support'
+    assert c.check_name == 'Font Support'
 
 
 @pytest.mark.asyncio
@@ -113,7 +113,7 @@ async def test_check_skip_confusable(nameguard: NameGuard):
     assert c.rating is Rating.PASS
     assert c.status is CheckStatus.SKIP
     assert c.message == 'Confusable checks were skipped'
-    assert c.check_name == 'Unknown Character Status'
+    assert c.check_name == 'Character Recognition'
 
 
 @pytest.mark.asyncio
@@ -122,8 +122,8 @@ async def test_check_skip_font_support(nameguard: NameGuard):
     c = [c for c in result.checks if c.check is Check.FONT_SUPPORT][0]
     assert c.rating is Rating.PASS
     assert c.status is CheckStatus.SKIP
-    assert c.message == 'Unknown if supported by common fonts'
-    assert c.check_name == 'Unknown Font Support'
+    assert c.message == 'Unknown font support'
+    assert c.check_name == 'Font Support'
 
     
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
