@@ -1,4 +1,4 @@
-import React from "react";
+import React, { type ReactNode } from "react";
 import type { ConsolidatedNameGuardReport, Rating } from "@namehash/nameguard";
 import cc from "classcat";
 
@@ -24,14 +24,20 @@ function textColor(rating?: Rating) {
 
 type NameShieldProps = {
   data?: ConsolidatedNameGuardReport;
+  children?: ReactNode;
+  disableHover?: boolean;
 };
 
-export function NameShield({ data }: NameShieldProps) {
+export function NameShield({ data, children, disableHover }: NameShieldProps) {
   if (!data) return null;
 
-  const { title, name, rating, risk_count, highest_risk } = data;
+  const { title, rating, risk_count, highest_risk } = data;
 
   const textClass = cc(["font-semibold", textColor(rating)]);
+
+  if (disableHover) {
+    return <Shield status={rating} size="tiny" className="cursor-pointer" />;
+  }
 
   return (
     <Tooltip
@@ -52,18 +58,9 @@ export function NameShield({ data }: NameShieldProps) {
               {(risk_count || 0) > 1 && "s"} detected
             </span>
           </div>
-          <div className="space-y-0.5">
+          <div className="space-y-2.5">
             <div className="text-sm text-white">{highest_risk?.message}</div>
-            {/* <div className="text-sm text-white">
-              <a
-                href={`https://nameguard.io/inspect/${name}`}
-                className="underline"
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Inspect name for details
-              </a>
-            </div> */}
+            {children}
           </div>
         </div>
       </div>

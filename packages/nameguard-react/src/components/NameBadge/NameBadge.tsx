@@ -31,7 +31,13 @@ export const NameBadge = ({ placeholder, onClick, data }: NameBadgeProps) => {
       <span className="text-black text-sm leading-5">
         {data.beautiful_name || data.name}
       </span>
-      <NameShield data={data} />
+      <NameShield data={data}>
+        <div className="text-sm text-white">
+          <button className="appearance-none underline" onClick={onClick}>
+            Inspect name for details
+          </button>
+        </div>
+      </NameShield>
     </button>
   );
 };
