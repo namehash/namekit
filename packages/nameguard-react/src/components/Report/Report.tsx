@@ -2,6 +2,7 @@ import React, { Fragment, useMemo } from "react";
 import useSWR from "swr";
 import { type NameGuardReport, nameguard } from "@namehash/nameguard";
 import { parseName } from "@namehash/nameparser";
+import { Toaster } from "sonner";
 
 import { type Settings } from "../../stores/settings";
 import {
@@ -147,6 +148,14 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
         ref={outsideChatClickRef}
       />
       <GraphemeModal ref={outsideGraphemeClickRef} />
+      <Toaster
+        position="bottom-center"
+        toastOptions={{
+          classNames: {
+            toast: "!bg-black !text-white !border-black",
+          },
+        }}
+      />
     </Fragment>
   );
 };

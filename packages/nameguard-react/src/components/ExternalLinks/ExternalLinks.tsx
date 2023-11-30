@@ -19,7 +19,7 @@ type ExternalLinksProps = {
 export function ExternalLinks({ title, links }: ExternalLinksProps) {
   return (
     <Menu as="div" className="relative inline-block text-left group">
-      <Menu.Button className="flex items-center justify-between p-2 appearance-none bg-transparent hover:bg-black/5 transition rounded-md focus:bg-black/5">
+      <Menu.Button className="flex items-center justify-between p-2 appearance-none bg-transparent hover:bg-black/5 transition rounded-md focus:outline-none">
         <EllipsisVerticalIcon className="text-black fill-current w-6 h-6" />
       </Menu.Button>
 
