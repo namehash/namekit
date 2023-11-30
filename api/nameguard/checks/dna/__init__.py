@@ -3,4 +3,5 @@
 
 from . import (
     normalized,
+    punycode,
 )

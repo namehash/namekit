@@ -52,6 +52,7 @@ from nameguard.generic_utils import capitalize_words
 
 DNA_CHECKS = [
     (checks.dna.normalized.check_grapheme, checks.dna.normalized.check_label, checks.dna.normalized.check_name),
+    (None, checks.dna.punycode.check_label, checks.dna.punycode.check_name),
 ]
 
 GRAPHEME_CHECKS = [
@@ -64,13 +65,11 @@ GRAPHEME_CHECKS = [
 LABEL_CHECKS = [
     checks.label.mixed_scripts.check_label,
     checks.label.namewrapper.check_label,
-    checks.label.punycode.check_label,
     checks.label.unknown.check_label,
 ]
 
 NAME_CHECKS = [
     checks.name.impersonation_risk.check_name,
-    checks.name.punycode_name.check_name,
     checks.name.namewrapper_fuses.check_name,
     checks.name.decentralized_name.check_name,
 ]
@@ -192,8 +191,9 @@ class NameGuard:
         for check_g, check_l, check_n in DNA_CHECKS:
             for label_i, label_analysis in enumerate(labels_analysis):
                 if label_analysis is not None:
-                    for grapheme_i, grapheme in enumerate(label_analysis.graphemes):
-                        labels_graphemes_checks[label_i][grapheme_i].append(check_g(grapheme))
+                    if check_g:
+                        for grapheme_i, grapheme in enumerate(label_analysis.graphemes):
+                            labels_graphemes_checks[label_i][grapheme_i].append(check_g(grapheme))
                 labels_checks[label_i].append(check_l(label_analysis))
             name_checks.append(check_n(labels_analysis))
 
@@ -297,7 +297,7 @@ class NameGuard:
             raise NotAGrapheme(f'The input contains {label_analysis.grapheme_length} graphemes.')
 
         grapheme_analysis = label_analysis.graphemes[0]
-        grapheme_checks = [check(grapheme_analysis) for check in GRAPHEME_CHECKS + [c[0] for c in DNA_CHECKS]]
+        grapheme_checks = [check(grapheme_analysis) for check in GRAPHEME_CHECKS + [c[0] for c in DNA_CHECKS if c[0]]]
 
         return GraphemeGuardReport(
             normalization=GraphemeNormalization.NORMALIZED
@@ -323,7 +323,7 @@ class NameGuard:
         )
 
     def _inspect_confusable(self, grapheme: InspectorConfusableGraphemeResult) -> ConsolidatedGraphemeGuardReport:
-        grapheme_checks = [check(grapheme) for check in GRAPHEME_CHECKS + [c[0] for c in DNA_CHECKS]]
+        grapheme_checks = [check(grapheme) for check in GRAPHEME_CHECKS + [c[0] for c in DNA_CHECKS if c[0]]]
         return ConsolidatedGraphemeGuardReport(
             normalization=GraphemeNormalization.NORMALIZED
             if any(check.status == CheckStatus.PASS and check.check is Check.NORMALIZED
