@@ -23,6 +23,7 @@ from .result import (
     FakeEthNameCheckStatus,
     FakeEthNameCheckResult,
     ImpersonationStatus,
+    ConfusableGuardReport,
 )
 
 from .request import (

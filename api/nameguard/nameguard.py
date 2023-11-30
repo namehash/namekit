@@ -30,7 +30,8 @@ from nameguard.models import (
     FakeEthNameCheckResult,
     ImpersonationStatus,
     ConsolidatedNameGuardReport, 
-    Rating
+    Rating,
+    ConfusableGuardReport,
 )
 from nameguard.provider import get_nft_metadata
 from nameguard.utils import (
@@ -299,6 +300,12 @@ class NameGuard:
         grapheme_analysis = label_analysis.graphemes[0]
         grapheme_checks = [check(grapheme_analysis) for check in GRAPHEME_CHECKS + [c[0] for c in DNA_CHECKS if c[0]]]
 
+        if grapheme_analysis.confusables_canonical:
+            canonical = self._inspect_confusable(grapheme_analysis.confusables_canonical)
+            canonical.is_canonical = True
+        else:
+            canonical = None
+
         return GraphemeGuardReport(
             normalization=GraphemeNormalization.NORMALIZED
             if any(check.status == CheckStatus.PASS and check.check is Check.NORMALIZED
@@ -313,8 +320,7 @@ class NameGuard:
             risk_count=count_risks(grapheme_checks),
             highest_risk=get_highest_risk(grapheme_checks),
             checks=sorted(grapheme_checks, reverse=True),
-            confusables=([self._inspect_confusable(grapheme_analysis.confusables_canonical)]
-                                 if grapheme_analysis.confusables_canonical else []) + 
+            confusables=([canonical] if canonical else []) + 
                         ([self._inspect_confusable(c)
                          for c in grapheme_analysis.confusables_other]
                          if grapheme_analysis.confusables_other else []),
@@ -322,9 +328,10 @@ class NameGuard:
             grapheme_description=grapheme_analysis.description,
         )
 
-    def _inspect_confusable(self, grapheme: InspectorConfusableGraphemeResult) -> ConsolidatedGraphemeGuardReport:
+
+    def _inspect_confusable(self, grapheme: InspectorConfusableGraphemeResult) -> ConfusableGuardReport:
         grapheme_checks = [check(grapheme) for check in GRAPHEME_CHECKS + [c[0] for c in DNA_CHECKS if c[0]]]
-        return ConsolidatedGraphemeGuardReport(
+        return ConfusableGuardReport(
             normalization=GraphemeNormalization.NORMALIZED
             if any(check.status == CheckStatus.PASS and check.check is Check.NORMALIZED
                    for check in grapheme_checks)
@@ -338,6 +345,7 @@ class NameGuard:
             risk_count=count_risks(grapheme_checks),
             highest_risk=get_highest_risk(grapheme_checks),
             grapheme_description=grapheme.description,
+            is_canonical=False,
         )
 
     async def secure_primary_name(self, address: str, network_name: str) -> SecurePrimaryNameResult:

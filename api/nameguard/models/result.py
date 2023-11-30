@@ -251,6 +251,10 @@ class BulkNameGuardBulkReport(BaseModel):
     results: list[ConsolidatedNameGuardReport]
 
 
+class ConfusableGuardReport(ConsolidatedGraphemeGuardReport):
+    is_canonical: bool = Field(description='Whether this confusable is canonical for the grapheme.')
+
+
 class GraphemeGuardReport(ConsolidatedGraphemeGuardReport):
     checks: list[GenericCheckResult] = Field(
         description='A list of checks that were performed on the grapheme.')
@@ -276,7 +280,7 @@ class GraphemeGuardReport(ConsolidatedGraphemeGuardReport):
     def codepoints(self) -> list[str]:
         return [f'U+{ord(c):04X}' for c in self.grapheme]
 
-    confusables: list[ConsolidatedGraphemeGuardReport] = Field(
+    confusables: list[ConfusableGuardReport] = Field(
         description='A list graphemes that can be confused with the analyzed grapheme. '
                     'The list does not contain the analyzed grapheme. '
                     'A canonical form of the grapheme is the first element of the list, if it is known. '

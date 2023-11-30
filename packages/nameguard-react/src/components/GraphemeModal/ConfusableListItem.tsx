@@ -25,6 +25,11 @@ export const ConfusableListItem = ({ item }: ConfusableListItemProps) => {
       </div>
       <div className="md:grid md:grid-cols-7 md:gap-4 col-span-7 md:col-span-11">
         <div className="md:col-span-3">
+          {item.is_canonical && (
+            <div className="mb-1.5 -mt-4 relative text-green-800 text-xs font-medium rounded-full px-2 py-0.5 bg-green-100 inline-block">
+              Canonical
+            </div>
+          )}
           <p className="text-black text-sm font-medium">{item.grapheme_name}</p>
           <p className="hidden md:inline-block text-gray-500 text-sm font-normal">
             {item.grapheme_description}
