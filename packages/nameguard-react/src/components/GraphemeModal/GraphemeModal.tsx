@@ -97,10 +97,7 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
                 </p>
               </div>
 
-              <ConfusableList
-                items={data?.confusables}
-                canonicalGrapheme={data?.canonical_grapheme}
-              />
+              <ConfusableList items={data?.confusables} />
             </div>
           )}
         </div>

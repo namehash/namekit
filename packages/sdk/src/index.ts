@@ -222,6 +222,11 @@ export interface ConsolidatedGraphemeGuardReport extends ConsolidatedReport {
    * A user-friendly description of the grapheme type.
    * */
   grapheme_description: string;
+
+  /**
+   * The canonical status for the current grapheme.
+   * */
+  is_canonical: boolean;
 }
 
 /**
@@ -527,7 +532,10 @@ class NameGuard {
   ): Promise<SecurePrimaryNameResult> {
     const network_name = options?.network || this.network;
 
-    const url = new URL(`secure-primary-name/${network_name}/${address}`, this.endpoint);
+    const url = new URL(
+      `secure-primary-name/${network_name}/${address}`,
+      this.endpoint
+    );
 
     const response = await fetch(url);
 
@@ -548,7 +556,10 @@ class NameGuard {
   ): Promise<FakeEthNameCheckResult> {
     const network_name = options?.network || this.network;
 
-    const url = new URL(`fake-eth-name-check/${network_name}/${contract_address}/${token_id}`, this.endpoint);
+    const url = new URL(
+      `fake-eth-name-check/${network_name}/${contract_address}/${token_id}`,
+      this.endpoint
+    );
 
     const response = await fetch(url);
 
@@ -649,7 +660,10 @@ class NameGuard {
 
     const network = options?.network || this.network;
 
-    const url = new URL(`inspect-namehash/${network}/${namehash}`, this.endpoint);
+    const url = new URL(
+      `inspect-namehash/${network}/${namehash}`,
+      this.endpoint
+    );
 
     const response = await fetch(url);
 
