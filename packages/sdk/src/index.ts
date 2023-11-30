@@ -222,7 +222,9 @@ export interface ConsolidatedGraphemeGuardReport extends ConsolidatedReport {
    * A user-friendly description of the grapheme type.
    * */
   grapheme_description: string;
+}
 
+export interface ConfusableGuardReport extends ConsolidatedGraphemeGuardReport {
   /**
    * The canonical status for the current grapheme.
    * */
@@ -259,7 +261,7 @@ export interface GraphemeGuardReport extends ConsolidatedGraphemeGuardReport {
   codepoints: string[];
 
   /**
-   * A list of `ConsolidatedGraphemeGuardReport` values that might be confused with the analyzed `grapheme`.
+   * A list of `ConfusableGuardReport` values that might be confused with the analyzed `grapheme`.
    *
    * To be considered a confusable, a grapheme must meet all of the following criteria:
    * 1. They might be considered visually confusable with `grapheme`.
@@ -270,7 +272,7 @@ export interface GraphemeGuardReport extends ConsolidatedGraphemeGuardReport {
    *
    * If a canonical confusable is found, it will be the first element in the list.
    */
-  confusables: ConsolidatedGraphemeGuardReport[];
+  confusables: ConfusableGuardReport[];
 
   /**
    * The grapheme considered to be the canonical form of the analyzed `grapheme`.
