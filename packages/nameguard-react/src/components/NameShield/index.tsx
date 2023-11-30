@@ -31,7 +31,7 @@ type NameShieldProps = {
 export function NameShield({ data, children, disableHover }: NameShieldProps) {
   if (!data) return null;
 
-  const { title, rating, risk_count, highest_risk } = data;
+  const { title, subtitle, rating, risk_count, highest_risk } = data;
 
   const textClass = cc(["font-semibold", textColor(rating)]);
 
@@ -59,7 +59,9 @@ export function NameShield({ data, children, disableHover }: NameShieldProps) {
             </span>
           </div>
           <div className="space-y-2.5">
-            <div className="text-sm text-white">{highest_risk?.message}</div>
+            <div className="text-sm text-white">
+              {highest_risk?.message || subtitle}
+            </div>
             {children}
           </div>
         </div>
