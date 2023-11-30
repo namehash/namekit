@@ -1,8 +1,13 @@
+name: Tests
+
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+
+permissions:
+  contents: write
 
 jobs:
   test:
@@ -46,8 +51,19 @@ jobs:
 
       - name: Run tests mocked
         working-directory: ./api
-        run: poetry run pytest -vv --durations=0
+        run: poetry run pytest -vv --durations=0 --cov-report term-missing --cov=./
 
       - name: Run tests
         working-directory: ./api
         run: MONKEYPATCH=0 poetry run pytest -vv --durations=0
+
+      - name: Generate coverage badge
+        run: coverage-badge -fo coverage_badge.svg
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: github-actions
+          author_email: actions@github.com
+          message: 'Update coverage badge'
+          add: 'coverage_badge.svg'
