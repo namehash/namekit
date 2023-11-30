@@ -58,7 +58,8 @@ jobs:
         run: MONKEYPATCH=0 poetry run pytest -vv --durations=0
 
       - name: Generate coverage badge
-        run: poetry run coverage-badge -fo coverage_badge.svg
+        working-directory: ./api
+        run: poetry run coverage-badge -fo ../coverage_badge.svg
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
