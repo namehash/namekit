@@ -1,3 +1,5 @@
+import asyncio
+
 import pytest
 from web3 import Web3
 
@@ -53,6 +55,24 @@ async def test_bulk(nameguard: NameGuard):
     assert result.results[1].rating is Rating.WARN
     assert result.results[2].rating is Rating.ALERT
 
+@pytest.mark.asyncio
+async def test_bulk_stress(nameguard: NameGuard):
+    names=["abaddon.eth","alchemist.eth","ancientapparition.eth","antimage.eth","arcwarden.eth","axe.eth","bane.eth","batrider.eth","beastmaster.eth","bloodseeker.eth","spiderman.eth","ironman.eth","thanos.eth","hulk.eth","wolverine.eth","doctordoom.eth","venom.eth","galactus.eth","janefoster.eth","titania.eth","rihanna.eth","willsmith.eth","kanyewest.eth","eminem.eth","miakhalifa.eth","beyonce.eth","snoopdogg.eth","johncena.eth","badbunny.eth","coolio.eth","aaba.eth","aal.eth","aame.eth","aaoi.eth","aaon.eth","aapl.eth","aaww.eth","aaxj.eth","aaxn.eth","abac.eth","cthulhu.eth","vecna.eth","azathoth.eth","aslan.eth","raiden.eth","beerus.eth","ares.eth","tiamat.eth","bahamut.eth","nyarlathotep.eth","aphrodite.eth","apollo.eth","artemis.eth","tauropolia.eth","prometheus.eth","athena.eth","hermes.eth","dionysus.eth","gaia.eth","hephaestus.eth","hera.eth","hades.eth","poseidon.eth","cronus.eth","heracles.eth","odin.eth","persephone.eth","thor.eth","asgard.eth","darth.eth","🆉🅴🆄🆂.eth","🏴‍☠zeus.eth","zeus💎.eth","₿zeus.eth","zeus💰.eth","zeus1⃣.eth","zeus🍆.eth","notzeus.eth","azeus.eth","zeusor.eth","zeusliving.eth","sonofzeus.eth","yourzeus.eth","hazeus.eth","vipzeus.eth","nftzeus.eth","bitcoinzeus.eth","thezeus.eth","zeuser.eth","_zeus.eth","$zeus.eth","zeusseuss.eth","ξzeus.eth","0xzeus.eth","zeusperseus.eth","mrzeus.eth","cryptozeus.eth","23v5.eth","2ev5.eth","suez.eth"]
+    result = await nameguard.bulk_inspect_names('mainnet', names)
+    assert len(result.results) == 100
+
+@pytest.mark.parametrize('label_length', [3,10,62,63,64,200,240,252,253,254,255,256,300])
+@pytest.mark.asyncio
+async def test_bulk_simple_name(nameguard: NameGuard, label_length):
+    result = await nameguard.inspect_name('mainnet', ('a'*label_length)+'.eth')
+    result_bulk = await nameguard.inspect_name('mainnet', ('a'*label_length)+'.eth', bulk_mode=True)
+
+    assert result.namehash == result_bulk.namehash
+    assert result.normalization == result_bulk.normalization
+    assert result.rating == result_bulk.rating
+    assert result.risk_count == result_bulk.risk_count
+    assert result.highest_risk == result_bulk.highest_risk
+
 
 @pytest.mark.asyncio
 async def test_highest_risk(nameguard: NameGuard):
@@ -89,7 +109,7 @@ async def test_check_skip_confusable(nameguard: NameGuard):
     c = [c for c in result.checks if c.check is Check.CONFUSABLES][0]
     assert c.rating is Rating.PASS
     assert c.status is CheckStatus.SKIP
-    assert c.message == 'It has not been checked if this name contains confusable graphemes'
+    assert c.message == 'Confusable checks were skipped'
 
 @pytest.mark.asyncio
 async def test_check_skip_font_support(nameguard: NameGuard):
@@ -97,7 +117,7 @@ async def test_check_skip_font_support(nameguard: NameGuard):
     c = [c for c in result.checks if c.check is Check.FONT_SUPPORT][0]
     assert c.rating is Rating.PASS
     assert c.status is CheckStatus.SKIP
-    assert c.message == 'It is unknown if this name is supported by common fonts'
+    assert c.message == 'Unknown if supported by common fonts'
     
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.asyncio
@@ -259,7 +279,7 @@ async def test_impersonation_risk(nameguard: NameGuard):
     for check in r.checks:
         if check.check is Check.IMPERSONATION_RISK:
             assert check.rating is Rating.WARN
-            assert check.message == 'Name might be an impersonation of `nick.eth`'
+            assert check.message == 'May be an impersonation of `nick.eth`'
             break
     else:
         assert False, 'IMPERSONATION_RISK check not found'
@@ -269,7 +289,7 @@ async def test_impersonation_risk(nameguard: NameGuard):
     for check in r.checks:
         if check.check is Check.IMPERSONATION_RISK:
             assert check.rating is Rating.WARN
-            assert check.message == 'Name may receive potential impersonation warnings'
+            assert check.message == 'May receive potential impersonation warnings'
             break
     else:
         assert False, 'IMPERSONATION_RISK check not found'
@@ -308,14 +328,14 @@ async def test_contextual_messages(nameguard: NameGuard):
 
     for check in r.checks:
         if check.check is Check.CONFUSABLES:
-            assert check.message == 'This name contains confusable graphemes'
+            assert check.message == 'May be confusable'
             break
     else:
         assert False, 'CONFUSABLES check not found'
 
     for check in r.labels[0].checks:
         if check.check is Check.CONFUSABLES:
-            assert check.message == 'This label contains confusable graphemes'
+            assert check.message == 'May be confusable'
             break
     else:
         assert False, 'CONFUSABLES check not found'
@@ -324,7 +344,7 @@ async def test_contextual_messages(nameguard: NameGuard):
 
     for check in r.checks:
         if check.check is Check.CONFUSABLES:
-            assert check.message == 'This grapheme is confusable'
+            assert check.message == 'May be confusable'
             break
     else:
         assert False, 'CONFUSABLES check not found'

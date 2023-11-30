@@ -121,7 +121,6 @@ export const SearchEmptyState = () => {
           ))}
         </div>
       </div>
-      <div className="fixed inset-0 z-[5] h-full w-full bg-gradient-to-t from-transparent via-transparent to-white"></div>
       <div className="fixed inset-0 z-[5] h-full w-full bg-[radial-gradient(#DDDDDD_1px,transparent_1px)] [background-size:24px_24px] opacity-70"></div>
     </div>
   );

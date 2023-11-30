@@ -224,6 +224,13 @@ export interface ConsolidatedGraphemeGuardReport extends ConsolidatedReport {
   grapheme_description: string;
 }
 
+export interface ConfusableGuardReport extends ConsolidatedGraphemeGuardReport {
+  /**
+   * The canonical status for the current grapheme.
+   * */
+  is_canonical: boolean;
+}
+
 /**
  * The result of a NameGuard inspection on a grapheme.
  */
@@ -254,7 +261,7 @@ export interface GraphemeGuardReport extends ConsolidatedGraphemeGuardReport {
   codepoints: string[];
 
   /**
-   * A list of `ConsolidatedGraphemeGuardReport` values that might be confused with the analyzed `grapheme`.
+   * A list of `ConfusableGuardReport` values that might be confused with the analyzed `grapheme`.
    *
    * To be considered a confusable, a grapheme must meet all of the following criteria:
    * 1. They might be considered visually confusable with `grapheme`.
@@ -265,7 +272,7 @@ export interface GraphemeGuardReport extends ConsolidatedGraphemeGuardReport {
    *
    * If a canonical confusable is found, it will be the first element in the list.
    */
-  confusables: ConsolidatedGraphemeGuardReport[];
+  confusables: ConfusableGuardReport[];
 
   /**
    * The grapheme considered to be the canonical form of the analyzed `grapheme`.
@@ -527,7 +534,10 @@ class NameGuard {
   ): Promise<SecurePrimaryNameResult> {
     const network_name = options?.network || this.network;
 
-    const url = new URL(`secure-primary-name/${network_name}/${address}`, this.endpoint);
+    const url = new URL(
+      `secure-primary-name/${network_name}/${address}`,
+      this.endpoint
+    );
 
     const response = await fetch(url);
 
@@ -548,7 +558,10 @@ class NameGuard {
   ): Promise<FakeEthNameCheckResult> {
     const network_name = options?.network || this.network;
 
-    const url = new URL(`fake-eth-name-check/${network_name}/${contract_address}/${token_id}`, this.endpoint);
+    const url = new URL(
+      `fake-eth-name-check/${network_name}/${contract_address}/${token_id}`,
+      this.endpoint
+    );
 
     const response = await fetch(url);
 
@@ -649,7 +662,10 @@ class NameGuard {
 
     const network = options?.network || this.network;
 
-    const url = new URL(`inspect-namehash/${network}/${namehash}`, this.endpoint);
+    const url = new URL(
+      `inspect-namehash/${network}/${namehash}`,
+      this.endpoint
+    );
 
     const response = await fetch(url);
 
