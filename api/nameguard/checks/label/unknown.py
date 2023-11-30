@@ -5,6 +5,10 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, LabelCheckR
 
 STATUS = CheckStatus.ALERT
 
+#title: Known Name
+TITLE_PASS = 'Label Inspectability'
+TITLE_FAIL = 'Label Inspectability'
+
 L_MESSAGE_PASS =  'This label is known'
 N_MESSAGE_PASS =  'This name is known'
 
@@ -19,4 +23,5 @@ def check_label(label: Optional[InspectorResult]) -> GenericCheckResult:
         status=CheckStatus.PASS if passed else STATUS,
         _label_message=L_MESSAGE_PASS if passed else L_MESSAGE_FAIL,
         _name_message=N_MESSAGE_PASS if passed else N_MESSAGE_FAIL,
+        _title=TITLE_PASS if passed else TITLE_FAIL,
     )
