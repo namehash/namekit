@@ -6,9 +6,9 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, GraphemeChe
 
 STATUS = CheckStatus.WARN
 #title: Recognizable Characters
-TITLE_PASS = 'Recognizable Characters'
-TITLE_FAIL = 'Confusable Characters' # Potentially Confusable Characters?
-TITLE_SKIP = 'Unknown Character Status' # # the same as TILE_PASS?
+TITLE_PASS = 'Character Recognition'
+TITLE_FAIL = 'Character Recognition'
+TITLE_SKIP = 'Character Recognition'
 
 MESSAGE_PASS = 'Unlikely to be confused'
 

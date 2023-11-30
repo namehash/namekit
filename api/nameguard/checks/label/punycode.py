@@ -6,9 +6,9 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, LabelCheckR
 STATUS = CheckStatus.WARN
 
 #title: DNS Compatible Label
-TITLE_PASS = 'DNS Compatible Label'
-TITLE_FAIL = 'DNS Incompatible Label'
-TITLE_SKIP = 'Unknown DNS Label Compatibility'
+TITLE_PASS = 'DNS Compatibility'
+TITLE_FAIL = 'DNS Compatibility'
+TITLE_SKIP = 'DNS Compatibility'
 
 L_MESSAGE_PASS = 'Compatible for use with DNS'
 N_MESSAGE_PASS = 'Compatible for use with DNS'

@@ -6,15 +6,14 @@ STATUS = CheckStatus.WARN
 
 #title: Font Support
 TITLE_PASS = 'Font Support'
-TITLE_FAIL = 'Font Non-Support'  # Potential?
-TITLE_SKIP = 'Unknown Font Support' # the same as TILE_PASS?
+TITLE_FAIL = 'Font Support'
+TITLE_SKIP = 'Font Support'
 
-MESSAGE_PASS = 'Probably supported by common fonts'
+MESSAGE_PASS = 'Commonly supported'
 
-MESSAGE_FAIL = 'May not be supported by common fonts'
+MESSAGE_FAIL = 'Less common support'
 
-MESSAGE_SKIP = 'Unknown if supported by common fonts'
-
+MESSAGE_SKIP = 'Unknown font support'
 
 def check_grapheme(grapheme: Grapheme) -> GenericCheckResult:
     passed = grapheme.font_support_all_os

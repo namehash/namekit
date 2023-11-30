@@ -6,9 +6,9 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, LabelCheckR
 STATUS = CheckStatus.WARN
 
 #title: NameWrapper Compatible
-TITLE_PASS = 'NameWrapper Compatible'
-TITLE_FAIL = 'NameWrapper Incompatible'
-TITLE_SKIP = 'Unknown NameWrapper Compatibility'
+TITLE_PASS = 'NameWrapper Compatibility'
+TITLE_FAIL = 'NameWrapper Compatibility'
+TITLE_SKIP = 'NameWrapper Compatibility'
 
 L_MESSAGE_PASS = 'Compatible for use with the ENS NameWrapper'
 N_MESSAGE_PASS = 'Compatible for use with the ENS NameWrapper'

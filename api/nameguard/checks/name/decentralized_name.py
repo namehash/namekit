@@ -5,9 +5,9 @@ from label_inspector.models import InspectorResult
 STATUS = CheckStatus.WARN
 
 #title: Decentralized Name
-TITLE_PASS = 'Decentralized Name'
-TITLE_FAIL = 'Non-Decentralized Name'
-TITLE_FAIL_UNKNOWN = 'Unknown Decentralization Status'
+TITLE_PASS = 'Decentralization'
+TITLE_FAIL = 'Decentralization'
+TITLE_FAIL_UNKNOWN = 'Decentralization'
 
 MESSAGE_PASS = 'Ownership is decentralized'
 MESSAGE_FAIL = 'Ownership is not decentralized'

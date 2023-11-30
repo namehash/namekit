@@ -7,9 +7,9 @@ from nameguard.models import CheckStatus, Check, GraphemeCheckResult, LabelCheck
 STATUS = CheckStatus.ALERT
 
 # title: Normalized
-TITLE_PASS = 'Normalized'
-TITLE_FAIL = 'Unnormalized'
-TITLE_SKIP = 'Unknown normalization status'
+TITLE_PASS = 'Normalization'
+TITLE_FAIL = 'Normalization'
+TITLE_SKIP = 'Normalization'
 
 MESSAGE_PASS = 'Valid for use with ENS'
 

@@ -6,7 +6,7 @@ STATUS = CheckStatus.WARN
 
 #title: Typing Accessibility
 TITLE_PASS = 'Typing Accessibility'
-TITLE_FAIL = 'Typing Difficulty' # Potential?
+TITLE_FAIL = 'Typing Accessibility'
 
 MESSAGE_PASS = 'Broadly accessible to type'
 

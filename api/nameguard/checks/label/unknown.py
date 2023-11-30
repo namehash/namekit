@@ -6,8 +6,8 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, LabelCheckR
 STATUS = CheckStatus.ALERT
 
 #title: Known Name
-TITLE_PASS = 'Known Name'
-TITLE_FAIL = 'Unknown Name'
+TITLE_PASS = 'Label Inspectability'
+TITLE_FAIL = 'Label Inspectability'
 
 L_MESSAGE_PASS =  'This label is known'
 N_MESSAGE_PASS =  'This name is known'
