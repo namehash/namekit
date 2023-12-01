@@ -91,11 +91,11 @@ export default function Home() {
           isCodeOnTheLeft={false}
           codeSnippet={getSecurePrimaryName}
           integrationsPanel={
-            <div className="hidden gt_mobile:inline-flex flex-col items-start justify-center gap-4 z-10">
+            <div className="hidden gt_mobile:inline-flex flex-col items-center search_bar_change:items-start justify-center gap-4 z-10">
               <p className="text-gray-500 text-lg leading-6 font-normal not-italic whitespace-nowrap">
                 Composable integrations include
               </p>
-              <div className="w-full h-fit flex flex-row justify-start items-center gap-6">
+              <div className="w-full h-fit flex flex-row justify-around search_bar_change:justify-start items-center gap-6 flex-wrap search_bar_change:flex-nowrap">
                 <XMTPLogo />
                 <LensProtocolLogo />
                 <FarcasterLogo />
@@ -356,6 +356,31 @@ function ReadySection(props: ReadySectionProps) {
     props.sectionBackgroundName,
   ]);
 
+  const baseCodeSnippetClass =
+    "hidden flex-col w-full h-full justify-between items-center gap-7 max-w-3xl";
+
+  const horizontalLayoutCodeSnippet = cc([baseCodeSnippetClass, "xl:flex"]);
+  const verticalLayoutCodeSnippet = cc([
+    baseCodeSnippetClass,
+    "md:flex xl:hidden",
+  ]);
+  const rightBasedCodeSnippet = cc([baseCodeSnippetClass, "md:flex"]);
+
+  const getCodeSnippet = (layoutClass: string) => {
+    return props.integrationsPanel ? (
+      <div className={layoutClass}>
+        <CodeSnippet codeSnippet={props.codeSnippet} />
+        <div className="inline-flex items-center gap-6">
+          {props.integrationsPanel}
+        </div>
+      </div>
+    ) : (
+      <div className={layoutClass}>
+        <CodeSnippet codeSnippet={props.codeSnippet} />
+      </div>
+    );
+  };
+
   return (
     <section className="relative w-full h-full py-10 px-5 flex flex-col items-center justify-center bg-white gt_mobile:bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] gt_mobile:[background-size:24px_24px] md:py-24 gt_mobile:px-0">
       <div className="max-w-full flex flex-col items-center gt_mobile:mx-auto gt_mobile:px-6 gt_mobile:gap-3">
@@ -378,18 +403,7 @@ function ReadySection(props: ReadySectionProps) {
         {props.isCodeOnTheLeft ? (
           <div className={mediaDiv}>
             <div className={backgroundDiv} />
-            {props.integrationsPanel ? (
-              <div className="hidden md:flex flex-col w-full h-full justify-between items-center gap-7 max-w-3xl">
-                <CodeSnippet codeSnippet={props.codeSnippet} />
-                <div className="inline-flex items-center gap-6">
-                  {props.integrationsPanel}
-                </div>
-              </div>
-            ) : (
-              <div className="hidden md:flex flex-col w-full h-full justify-between items-center gap-7 max-w-3xl">
-                <CodeSnippet codeSnippet={props.codeSnippet} />
-              </div>
-            )}
+            {getCodeSnippet(horizontalLayoutCodeSnippet)}
             <Image
               className="z-10 w-full h-full max-w-[34rem] xl:w-1/3 xl:h-auto"
               src={props.imageSpecifics.source}
@@ -398,6 +412,7 @@ function ReadySection(props: ReadySectionProps) {
               height={props.imageSpecifics.tagHeight}
               quality={100}
             />
+            {getCodeSnippet(verticalLayoutCodeSnippet)}
           </div>
         ) : (
           <div className={mediaDiv}>
@@ -410,16 +425,7 @@ function ReadySection(props: ReadySectionProps) {
               height={props.imageSpecifics.tagHeight}
               quality={100}
             />
-            {props.integrationsPanel ? (
-              <div className="hidden md:flex flex-col w-full h-full justify-between items-center gap-7 max-w-3xl">
-                <CodeSnippet codeSnippet={props.codeSnippet} />
-                {props.integrationsPanel}
-              </div>
-            ) : (
-              <div className="hidden md:flex flex-col w-full h-full justify-between items-center gap-7 max-w-3xl">
-                <CodeSnippet codeSnippet={props.codeSnippet} />
-              </div>
-            )}
+            {getCodeSnippet(rightBasedCodeSnippet)}
           </div>
         )}
       </div>
@@ -459,12 +465,12 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
   ]);
 
   const rightBackgroundDiv = cc([
-    "absolute z-0 top-0 left-0 h-[105%] w-[115%] bg-center bg-no-repeat bg-cover [opacity:0.3]",
+    "absolute z-0 top-0 left-0 h-[105%] w-full search_bar_change:w-[115%] bg-center bg-no-repeat bg-cover [opacity:0.3]",
     props.sectionBackgroundName,
   ]);
 
   const leftBackgroundDiv = cc([
-    "absolute z-0 h-[195%] w-[115%] bg-center bg-no-repeat bg-cover [opacity:0.3]",
+    "absolute z-0 h-[195%] w-full search_bar_change:w-[115%] bg-center bg-no-repeat bg-cover [opacity:0.3]",
     props.sectionBackgroundName,
   ]);
 
