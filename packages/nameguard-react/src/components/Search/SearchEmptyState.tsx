@@ -11,7 +11,6 @@ import { useSearchStore } from "../../stores/search";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 
 const examples = [
-  "notrab.eth",
   "culturecafé.eth",
   "моёт.eth",
   "batman十robin.eth",
