@@ -54,8 +54,7 @@ export function NameShield({ data, children, disableHover }: NameShieldProps) {
           <div className="flex items-center justify-between">
             <span className={textClass}>{title}</span>
             <span className="text-sm font-normal text-gray-400">
-              {risk_count} risk
-              {(risk_count || 0) > 1 && "s"} detected
+              {risk_count} risk{risk_count !== 1 && "s"} detected
             </span>
           </div>
           <div className="space-y-2.5">
