@@ -222,10 +222,12 @@ class GenericCheckResult(BaseModel):
         self._grapheme_message = data.get('_grapheme_message')
         self._label_message = data.get('_label_message')
         self._name_message = data['_name_message']
+        self._title = data['_title']
 
     _grapheme_message: Optional[str] = None
     _label_message: Optional[str] = None
     _name_message: str
+    _title: str
 
     @property
     def _context(self) -> str:
@@ -248,7 +250,7 @@ class GenericCheckResult(BaseModel):
     @computed_field(description='The human-readable name of the check.')
     @property
     def check_name(self) -> str:
-        return self.check.human_readable_name
+        return self._title
 
     @property
     def rating(self):
@@ -305,6 +307,7 @@ class GraphemeCheckResult(GenericCheckResult):
             _grapheme_message=self._grapheme_message,
             _label_message=self._label_message,
             _name_message=self._name_message,
+            _title=self._title,
         )
     
 
@@ -320,6 +323,7 @@ class LabelCheckResult(GenericCheckResult):
             _grapheme_message=self._grapheme_message,
             _label_message=self._label_message,
             _name_message=self._name_message,
+            _title=self._title,
         )
     
 

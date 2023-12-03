@@ -8,6 +8,11 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, LabelCheckR
 
 STATUS = CheckStatus.WARN
 
+#title: Single Script
+TITLE_PASS = 'Script Consistency'
+TITLE_FAIL = 'Script Consistency'
+TITLE_SKIP = 'Script Consistency'
+
 L_MESSAGE_PASS = 'Written in a single script'
 N_MESSAGE_PASS = 'Written in a single script'
 
@@ -25,6 +30,7 @@ def check_label(label: Optional[InspectorResult]) -> GenericCheckResult:
             status=CheckStatus.SKIP,
             _label_message=L_MESSAGE_SKIP,
             _name_message=N_MESSAGE_SKIP,
+            _title=TITLE_SKIP,
         )
     passed = label.all_script is not None or label.label == ''
     return LabelCheckResult(
@@ -32,4 +38,5 @@ def check_label(label: Optional[InspectorResult]) -> GenericCheckResult:
         status=CheckStatus.PASS if passed else STATUS,
         _label_message=L_MESSAGE_PASS if passed else L_MESSAGE_FAIL,
         _name_message=N_MESSAGE_PASS if passed else N_MESSAGE_FAIL,
+        _title=TITLE_PASS if passed else TITLE_FAIL,
     )
