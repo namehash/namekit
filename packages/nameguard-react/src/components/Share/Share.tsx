@@ -8,11 +8,12 @@ type ShareProps = {
 };
 
 function createTwitterLink(name: string) {
-  const tweetText = `Check out the NameGuard Report for ${name}:\n\nhttps://nameguard.io/inspect/${encodeURIComponent(
-    name
-  )}`;
+  const tweetText = `Check out the NameGuard Report for ${name}`;
+  const url = `https://nameguard.io/inspect/${encodeURIComponent(name)}`;
 
-  return `https://twitter.com/intent/tweet?text=${tweetText}`;
+  return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+    tweetText
+  )}&url=${encodeURIComponent(url)}`;
 }
 
 function createTelegramLink(url: string) {
