@@ -39,6 +39,7 @@ coverage-badge = "^1.1.0"
 
 
 [tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"] # imported but unused
 "tests/*.py" = ["E741"] # ambiguous variable name
 
 
