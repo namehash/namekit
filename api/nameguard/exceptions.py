@@ -4,30 +4,39 @@ from pydantic import BaseModel, Field
 
 class ExceptionResponse(BaseModel):
     detail: str = Field(
-        description='Human-readable description of the error.',
-        examples=['This is a human-readable description of the error.'],
+        description="Human-readable description of the error.",
+        examples=["This is a human-readable description of the error."],
     )
 
 
 class NameGuardException(HTTPException):
     STATUS_CODE = None
     DESCRIPTION = None
-    
-    def __init__(self, detail: str = ''):
-        super().__init__(self.STATUS_CODE, detail=f'{self.DESCRIPTION} {detail}'.strip())
+
+    def __init__(self, detail: str = ""):
+        super().__init__(
+            self.STATUS_CODE, detail=f"{self.DESCRIPTION} {detail}".strip()
+        )
 
     @classmethod
     def get_responses_spec(cls):
-        return {cls.STATUS_CODE: {'description': cls.DESCRIPTION, 'model': ExceptionResponse}}
+        return {
+            cls.STATUS_CODE: {
+                "description": cls.DESCRIPTION,
+                "model": ExceptionResponse,
+            }
+        }
 
 
 class InvalidNameHash(NameGuardException):
     STATUS_CODE = 422
     DESCRIPTION = "Provided namehash is not valid."
 
+
 class InvalidTokenID(NameGuardException):
     STATUS_CODE = 422
     DESCRIPTION = "Provided token id is not valid."
+
 
 class ENSSubgraphUnavailable(NameGuardException):
     STATUS_CODE = 503
@@ -46,7 +55,7 @@ class NamehashNotFoundInSubgraph(NameGuardException):
 
 class NotAGrapheme(NameGuardException):
     STATUS_CODE = 422
-    DESCRIPTION = 'The provided string is not a single grapheme.'
+    DESCRIPTION = "The provided string is not a single grapheme."
 
 
 class InvalidEthereumAddress(NameGuardException):

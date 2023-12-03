@@ -29,7 +29,7 @@ from nameguard.models import (
     FakeEthNameCheckStatus,
     FakeEthNameCheckResult,
     ImpersonationStatus,
-    ConsolidatedNameGuardReport, 
+    ConsolidatedNameGuardReport,
     Rating,
     ConfusableGuardReport,
 )
@@ -47,12 +47,19 @@ from nameguard.utils import (
 )
 from nameguard.exceptions import ProviderUnavailable, NotAGrapheme, MissingTitle
 from nameguard.logging import logger
-from nameguard.subgraph import namehash_to_name_lookup, resolve_all_labelhashes_in_name, \
-    resolve_all_labelhashes_in_name_querying_labelhashes, resolve_all_labelhashes_in_names_querying_labelhashes
+from nameguard.subgraph import (
+    namehash_to_name_lookup,
+    resolve_all_labelhashes_in_name_querying_labelhashes,
+    resolve_all_labelhashes_in_names_querying_labelhashes,
+)
 from nameguard.generic_utils import capitalize_words
 
 DNA_CHECKS = [
-    (checks.dna.normalized.check_grapheme, checks.dna.normalized.check_label, checks.dna.normalized.check_name),
+    (
+        checks.dna.normalized.check_grapheme,
+        checks.dna.normalized.check_label,
+        checks.dna.normalized.check_name,
+    ),
     (None, checks.dna.punycode.check_label, checks.dna.punycode.check_name),
 ]
 
@@ -77,16 +84,17 @@ NAME_CHECKS = [
 
 
 def init_inspector():
-    with initialize_inspector_config('prod_config') as config:
+    with initialize_inspector_config("prod_config") as config:
         return Inspector(config)
 
 
 ens_contract_adresses = {
-    '0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85',  # Base Registrar
-    '0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401',  # Name Wrapper
+    "0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85",  # Base Registrar
+    "0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401",  # Name Wrapper
 }
 
-ALCHEMY_UNKNOWN_NAME = re.compile('^\[0x[0-9a-f]{4}\.\.\.[0-9a-f]{4}\]\.eth$')
+ALCHEMY_UNKNOWN_NAME = re.compile("^\[0x[0-9a-f]{4}\.\.\.[0-9a-f]{4}\]\.eth$")
+
 
 def nested_get(dic, keys):
     for key in keys:
@@ -94,7 +102,9 @@ def nested_get(dic, keys):
     return dic
 
 
-SIMPLE_NAME_REGEX = re.compile(r'^[a-z0-9]{1,63}\.eth$')  # 63 label length limit comes from Punycode
+SIMPLE_NAME_REGEX = re.compile(
+    r"^[a-z0-9]{1,63}\.eth$"
+)  # 63 label length limit comes from Punycode
 
 
 def simple_name(name: str) -> bool:
@@ -111,46 +121,61 @@ def consolidated_report_from_simple_name(name: str) -> ConsolidatedNameGuardRepo
         highest_risk=None,
     )
 
+
 class NameGuard:
     def __init__(self):
         self._inspector = init_inspector()
         load_dotenv()
         # TODO use web sockets and async
         self.ns = {}
-        for network_name, env_var in ((NetworkName.MAINNET, 'PROVIDER_URI_MAINNET'),
-                                      (NetworkName.GOERLI, 'PROVIDER_URI_GOERLI'),
-                                      (NetworkName.SEPOLIA, 'PROVIDER_URI_SEPOLIA')):
+        for network_name, env_var in (
+            (NetworkName.MAINNET, "PROVIDER_URI_MAINNET"),
+            (NetworkName.GOERLI, "PROVIDER_URI_GOERLI"),
+            (NetworkName.SEPOLIA, "PROVIDER_URI_SEPOLIA"),
+        ):
             if os.environ.get(env_var) is None:
-                logger.warning(f'Environment variable {env_var} is not set')
+                logger.warning(f"Environment variable {env_var} is not set")
             self.ns[network_name] = OurENS(HTTPProvider(os.environ.get(env_var)))
 
     def analyse_label(self, label: str):
-        return self._inspector.analyse_label(label, simple_confusables=True, omit_cure=True)
+        return self._inspector.analyse_label(
+            label, simple_confusables=True, omit_cure=True
+        )
 
-    async def inspect_name(self, network_name: NetworkName, name: str, resolve_labelhashes: bool = True, bulk_mode: bool = False) -> Union[NameGuardReport,ConsolidatedNameGuardReport]:
-        '''
+    async def inspect_name(
+        self,
+        network_name: NetworkName,
+        name: str,
+        resolve_labelhashes: bool = True,
+        bulk_mode: bool = False,
+    ) -> Union[NameGuardReport, ConsolidatedNameGuardReport]:
+        """
         Inspect a name. A name is a sequence of labels separated by dots.
         A label can be a labelhash or a string.
         If a labelhash is encountered, it will be treated as an unknown label.
-        '''
+        """
 
-        logger.debug(f'[inspect_name] name: \'{name}\'')
-        
+        logger.debug(f"[inspect_name] name: '{name}'")
+
         if resolve_labelhashes:
-            name = await resolve_all_labelhashes_in_name_querying_labelhashes(network_name, name)
+            name = await resolve_all_labelhashes_in_name_querying_labelhashes(
+                network_name, name
+            )
 
         if bulk_mode and simple_name(name):
             return consolidated_report_from_simple_name(name)
 
-        labels = [] if len(name) == 0 else name.split('.')
-        logger.debug(f'[inspect_name] labels: {labels}')
+        labels = [] if len(name) == 0 else name.split(".")
+        logger.debug(f"[inspect_name] labels: {labels}")
 
         # labelhashes have `None` as their analysis
-        labels_analysis = [self.analyse_label(label)
-                           # do not analyze labelhashes
-                           if not label_is_labelhash(label)
-                           else None
-                           for label in labels]
+        labels_analysis = [
+            self.analyse_label(label)
+            # do not analyze labelhashes
+            if not label_is_labelhash(label)
+            else None
+            for label in labels
+        ]
 
         # -- check individual entities --
 
@@ -159,7 +184,9 @@ class NameGuard:
             [
                 [check(grapheme) for check in GRAPHEME_CHECKS]
                 for grapheme in label_analysis.graphemes
-            ] if label_analysis is not None else []
+            ]
+            if label_analysis is not None
+            else []
             # label has [] graphemes if it's a labelhash
             for label_analysis in labels_analysis
         ]
@@ -179,7 +206,9 @@ class NameGuard:
         # merge grapheme checks into label checks
         for label_i, label_graphemes_checks in enumerate(labels_graphemes_checks):
             for grapheme_checks in label_graphemes_checks:
-                labels_checks[label_i].extend([c.raise_context() for c in grapheme_checks])
+                labels_checks[label_i].extend(
+                    [c.raise_context() for c in grapheme_checks]
+                )
             labels_checks[label_i] = agg_checks(labels_checks[label_i])
 
         # merge label checks into name checks
@@ -194,7 +223,9 @@ class NameGuard:
                 if label_analysis is not None:
                     if check_g:
                         for grapheme_i, grapheme in enumerate(label_analysis.graphemes):
-                            labels_graphemes_checks[label_i][grapheme_i].append(check_g(grapheme))
+                            labels_graphemes_checks[label_i][grapheme_i].append(
+                                check_g(grapheme)
+                            )
                 labels_checks[label_i].append(check_l(label_analysis))
             name_checks.append(check_n(labels_analysis))
 
@@ -206,41 +237,52 @@ class NameGuard:
             normalization=Normalization.UNKNOWN
             if any(label_analysis is None for label_analysis in labels_analysis)
             else Normalization.NORMALIZED
-            if all(label_analysis.status == 'normalized' and len(label_analysis.label) > 0
-                   for label_analysis in labels_analysis)
+            if all(
+                label_analysis.status == "normalized" and len(label_analysis.label) > 0
+                for label_analysis in labels_analysis
+            )
             else Normalization.UNNORMALIZED,
             rating=calculate_nameguard_rating(name_checks),
             risk_count=count_risks(name_checks),
             highest_risk=get_highest_risk(name_checks),
             checks=sorted(name_checks, reverse=True),
             canonical_name=compute_canonical_from_list(
-                [label_analysis.normalized_canonical_label
-                 if label_analysis is not None
-                 else labels[i] # labelhash
-                 for i, label_analysis in enumerate(labels_analysis)],
-                 sep='.',
+                [
+                    label_analysis.normalized_canonical_label
+                    if label_analysis is not None
+                    else labels[i]  # labelhash
+                    for i, label_analysis in enumerate(labels_analysis)
+                ],
+                sep=".",
             ),
             labels=[
                 LabelGuardReport(
                     # actual label or [labelhash]
                     label=label,
-                    labelhash=labelhash_from_label(
-                        label_analysis.label) if label_analysis is not None else '0x' + label[1:-1],
+                    labelhash=labelhash_from_label(label_analysis.label)
+                    if label_analysis is not None
+                    else "0x" + label[1:-1],
                     normalization=Normalization.UNKNOWN
                     if label_analysis is None
                     else Normalization.NORMALIZED
-                    if label_analysis.status == 'normalized' and len(label_analysis.label) > 0
+                    if label_analysis.status == "normalized"
+                    and len(label_analysis.label) > 0
                     else Normalization.UNNORMALIZED,
                     rating=calculate_nameguard_rating(label_checks),
                     risk_count=count_risks(label_checks),
                     highest_risk=get_highest_risk(label_checks),
                     checks=sorted(label_checks, reverse=True),
-                    canonical_label=label_analysis.normalized_canonical_label if label_analysis is not None else label, # labelhash
+                    canonical_label=label_analysis.normalized_canonical_label
+                    if label_analysis is not None
+                    else label,  # labelhash
                     graphemes=[
                         ConsolidatedGraphemeGuardReport(
                             normalization=GraphemeNormalization.NORMALIZED
-                            if any(check.status == CheckStatus.PASS and check.check is Check.NORMALIZED
-                                   for check in grapheme_checks)
+                            if any(
+                                check.status == CheckStatus.PASS
+                                and check.check is Check.NORMALIZED
+                                for check in grapheme_checks
+                            )
                             else GraphemeNormalization.UNNORMALIZED,
                             grapheme=grapheme.value,
                             grapheme_name=capitalize_words(grapheme.name),
@@ -252,8 +294,12 @@ class NameGuard:
                             highest_risk=get_highest_risk(grapheme_checks),
                             grapheme_description=grapheme.description,
                         )
-                        for grapheme, grapheme_checks in zip(label_analysis.graphemes, label_graphemes_checks)
-                    ] if label_analysis is not None else None,
+                        for grapheme, grapheme_checks in zip(
+                            label_analysis.graphemes, label_graphemes_checks
+                        )
+                    ]
+                    if label_analysis is not None
+                    else None,
                 )
                 for label, label_analysis, label_checks, label_graphemes_checks in zip(
                     labels,
@@ -264,52 +310,74 @@ class NameGuard:
             ],
         )
 
-    async def bulk_inspect_names(self, network_name: NetworkName, names: list[str]) -> BulkNameGuardBulkReport:
-        names = await resolve_all_labelhashes_in_names_querying_labelhashes(network_name, names)
+    async def bulk_inspect_names(
+        self, network_name: NetworkName, names: list[str]
+    ) -> BulkNameGuardBulkReport:
+        names = await resolve_all_labelhashes_in_names_querying_labelhashes(
+            network_name, names
+        )
         return BulkNameGuardBulkReport(
-            results=[await self.inspect_name(network_name, name, resolve_labelhashes=False, bulk_mode=True) for name in names],
+            results=[
+                await self.inspect_name(
+                    network_name, name, resolve_labelhashes=False, bulk_mode=True
+                )
+                for name in names
+            ],
         )
 
-    async def inspect_namehash(self, network_name: NetworkName, namehash: str) -> NameGuardReport:
-        logger.debug(f'[inspect_namehash] namehash: \'{namehash}\'')
+    async def inspect_namehash(
+        self, network_name: NetworkName, namehash: str
+    ) -> NameGuardReport:
+        logger.debug(f"[inspect_namehash] namehash: '{namehash}'")
         name = await namehash_to_name_lookup(network_name, namehash)
         return await self.inspect_name(network_name, name)
 
-    async def inspect_name_with_labelhash_lookup(self, network_name: NetworkName, name: str) -> NameGuardReport:
-        '''
+    async def inspect_name_with_labelhash_lookup(
+        self, network_name: NetworkName, name: str
+    ) -> NameGuardReport:
+        """
         Inspect a name. A name is a sequence of labels separated by dots.
         A label can be a labelhash or a string.
         If a labelhash is encountered, the entire name will be looked up by its namehash.
         If the namehash is not found, all labelhashes will be treated as unknown labels.
-        '''
+        """
 
-        logger.debug(f'[inspect_name_with_labelhash_lookup] name: \'{name}\'')
+        logger.debug(f"[inspect_name_with_labelhash_lookup] name: '{name}'")
 
         return await self.inspect_name(network_name, name)
 
     def inspect_grapheme(self, grapheme: str) -> GraphemeGuardReport:
-        '''
+        """
         Inspect a single grapheme.
         Throws `NotAGrapheme` if the input is not a single grapheme.
-        '''
+        """
 
         label_analysis = self.analyse_label(grapheme)
         if label_analysis.grapheme_length != 1:
-            raise NotAGrapheme(f'The input contains {label_analysis.grapheme_length} graphemes.')
+            raise NotAGrapheme(
+                f"The input contains {label_analysis.grapheme_length} graphemes."
+            )
 
         grapheme_analysis = label_analysis.graphemes[0]
-        grapheme_checks = [check(grapheme_analysis) for check in GRAPHEME_CHECKS + [c[0] for c in DNA_CHECKS if c[0]]]
+        grapheme_checks = [
+            check(grapheme_analysis)
+            for check in GRAPHEME_CHECKS + [c[0] for c in DNA_CHECKS if c[0]]
+        ]
 
         if grapheme_analysis.confusables_canonical:
-            canonical = self._inspect_confusable(grapheme_analysis.confusables_canonical)
+            canonical = self._inspect_confusable(
+                grapheme_analysis.confusables_canonical
+            )
             canonical.is_canonical = True
         else:
             canonical = None
 
         return GraphemeGuardReport(
             normalization=GraphemeNormalization.NORMALIZED
-            if any(check.status == CheckStatus.PASS and check.check is Check.NORMALIZED
-                   for check in grapheme_checks)
+            if any(
+                check.status == CheckStatus.PASS and check.check is Check.NORMALIZED
+                for check in grapheme_checks
+            )
             else GraphemeNormalization.UNNORMALIZED,
             grapheme=grapheme_analysis.value,
             grapheme_name=capitalize_words(grapheme_analysis.name),
@@ -320,21 +388,32 @@ class NameGuard:
             risk_count=count_risks(grapheme_checks),
             highest_risk=get_highest_risk(grapheme_checks),
             checks=sorted(grapheme_checks, reverse=True),
-            confusables=([canonical] if canonical else []) + 
-                        ([self._inspect_confusable(c)
-                         for c in grapheme_analysis.confusables_other]
-                         if grapheme_analysis.confusables_other else []),
+            confusables=([canonical] if canonical else [])
+            + (
+                [
+                    self._inspect_confusable(c)
+                    for c in grapheme_analysis.confusables_other
+                ]
+                if grapheme_analysis.confusables_other
+                else []
+            ),
             canonical_grapheme=label_analysis.canonical_label,
             grapheme_description=grapheme_analysis.description,
         )
 
-
-    def _inspect_confusable(self, grapheme: InspectorConfusableGraphemeResult) -> ConfusableGuardReport:
-        grapheme_checks = [check(grapheme) for check in GRAPHEME_CHECKS + [c[0] for c in DNA_CHECKS if c[0]]]
+    def _inspect_confusable(
+        self, grapheme: InspectorConfusableGraphemeResult
+    ) -> ConfusableGuardReport:
+        grapheme_checks = [
+            check(grapheme)
+            for check in GRAPHEME_CHECKS + [c[0] for c in DNA_CHECKS if c[0]]
+        ]
         return ConfusableGuardReport(
             normalization=GraphemeNormalization.NORMALIZED
-            if any(check.status == CheckStatus.PASS and check.check is Check.NORMALIZED
-                   for check in grapheme_checks)
+            if any(
+                check.status == CheckStatus.PASS and check.check is Check.NORMALIZED
+                for check in grapheme_checks
+            )
             else GraphemeNormalization.UNNORMALIZED,
             grapheme=grapheme.value,
             grapheme_name=capitalize_words(grapheme.name),
@@ -348,12 +427,16 @@ class NameGuard:
             is_canonical=False,
         )
 
-    async def secure_primary_name(self, address: str, network_name: str) -> SecurePrimaryNameResult:
+    async def secure_primary_name(
+        self, address: str, network_name: str
+    ) -> SecurePrimaryNameResult:
         try:
             domain = self.ns[network_name].name(address)
         except requests.exceptions.ConnectionError as ex:
-            raise ProviderUnavailable(f"Communication error with provider occurred: {ex}")
-        display_name = f'Unnamed {address[2:6].lower()}'
+            raise ProviderUnavailable(
+                f"Communication error with provider occurred: {ex}"
+            )
+        display_name = f"Unnamed {address[2:6].lower()}"
         primary_name = None
         nameguard_result = None
         if domain is None:
@@ -361,7 +444,7 @@ class NameGuard:
             impersonation_status = None
         else:
             nameguard_result = await self.inspect_name(network_name, domain)
-            
+
             result = ens_process(domain, do_normalize=True, do_beautify=True)
             if result.normalized != domain:
                 status = SecurePrimaryNameStatus.UNNORMALIZED
@@ -371,95 +454,154 @@ class NameGuard:
                 status = SecurePrimaryNameStatus.NORMALIZED
                 primary_name = domain
 
-                impersonation_status = ImpersonationStatus.UNLIKELY if any(check.check == 'impersonation_risk' and check.status == CheckStatus.PASS for check in
-                    nameguard_result.checks) else ImpersonationStatus.POTENTIAL
+                impersonation_status = (
+                    ImpersonationStatus.UNLIKELY
+                    if any(
+                        check.check == "impersonation_risk"
+                        and check.status == CheckStatus.PASS
+                        for check in nameguard_result.checks
+                    )
+                    else ImpersonationStatus.POTENTIAL
+                )
 
+        return SecurePrimaryNameResult(
+            primary_name=primary_name,
+            impersonation_status=impersonation_status,
+            display_name=display_name,
+            primary_name_status=status,
+            nameguard_result=nameguard_result,
+        )
 
-        return SecurePrimaryNameResult(primary_name=primary_name,
-                                       impersonation_status=impersonation_status,
-                                       display_name=display_name,
-                                       primary_name_status=status,
-                                       nameguard_result=nameguard_result)
-
-    async def fake_eth_name_check_fields(self, network_name, contract_address, token_id, investigated_fields: dict[str,str]) -> FakeEthNameCheckResult:
+    async def fake_eth_name_check_fields(
+        self,
+        network_name,
+        contract_address,
+        token_id,
+        investigated_fields: dict[str, str],
+    ) -> FakeEthNameCheckResult:
         contract_address = contract_address.lower()
 
-        return await self._fake_eth_name_check(network_name, contract_address, investigated_fields)
+        return await self._fake_eth_name_check(
+            network_name, contract_address, investigated_fields
+        )
 
-    async def fake_eth_name_check(self, network_name, contract_address, token_id) -> FakeEthNameCheckResult:
+    async def fake_eth_name_check(
+        self, network_name, contract_address, token_id
+    ) -> FakeEthNameCheckResult:
         """
         Check if the token is a fake ENS name (not valid ENS contract address and title and collection name of NFT look like ENS name).
         """
         contract_address = contract_address.lower()
 
-        
         res_json = await get_nft_metadata(contract_address, token_id)
 
-        token_type = res_json['id']['tokenMetadata']['tokenType']
-        
-        if token_type not in ['ERC721', 'ERC1155'] and contract_address in ens_contract_adresses:
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_fields=None)
-        if token_type == 'NOT_A_CONTRACT':
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_fields=None)
-        elif token_type == 'NO_SUPPORTED_NFT_STANDARD':
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_fields=None)
-        elif token_type not in ['ERC721', 'ERC1155']:  # Alchemy does not support other types
-            return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_fields=None)
+        token_type = res_json["id"]["tokenMetadata"]["tokenType"]
 
-        title = res_json['title']
+        if (
+            token_type not in ["ERC721", "ERC1155"]
+            and contract_address in ens_contract_adresses
+        ):
+            return FakeEthNameCheckResult(
+                status=FakeEthNameCheckStatus.UNKNOWN_NFT,
+                nameguard_result=None,
+                investigated_fields=None,
+            )
+        if token_type == "NOT_A_CONTRACT":
+            return FakeEthNameCheckResult(
+                status=FakeEthNameCheckStatus.UNKNOWN_NFT,
+                nameguard_result=None,
+                investigated_fields=None,
+            )
+        elif token_type == "NO_SUPPORTED_NFT_STANDARD":
+            return FakeEthNameCheckResult(
+                status=FakeEthNameCheckStatus.UNKNOWN_NFT,
+                nameguard_result=None,
+                investigated_fields=None,
+            )
+        elif token_type not in [
+            "ERC721",
+            "ERC1155",
+        ]:  # Alchemy does not support other types
+            return FakeEthNameCheckResult(
+                status=FakeEthNameCheckStatus.UNKNOWN_NFT,
+                nameguard_result=None,
+                investigated_fields=None,
+            )
+
+        title = res_json["title"]
         investigated_fields = {}
-        for keys in [['title'],
-                     ['metadata', 'name'],
-                     ['contractMetadata', 'openSea', 'collectionName'],
-                     ['contractMetadata', 'name']]:
+        for keys in [
+            ["title"],
+            ["metadata", "name"],
+            ["contractMetadata", "openSea", "collectionName"],
+            ["contractMetadata", "name"],
+        ]:
             try:
                 name = nested_get(res_json, keys)
-                investigated_fields['.'.join(keys)] = name
+                investigated_fields[".".join(keys)] = name
             except KeyError:
                 pass
 
         if contract_address in ens_contract_adresses:
             if ALCHEMY_UNKNOWN_NAME.match(title):
                 unknown_name = f"[{res_json['id']['tokenId'][2:]}].eth"
-                investigated_fields['title'] = unknown_name
-            elif title == '': # the name has never been registered
-                investigated_fields['title'] = None
-        
-       
-        return await self._fake_eth_name_check(network_name, contract_address, investigated_fields)
-        
-    async def _fake_eth_name_check(self, network_name, contract_address, fields: dict[str,str]) -> FakeEthNameCheckResult:
+                investigated_fields["title"] = unknown_name
+            elif title == "":  # the name has never been registered
+                investigated_fields["title"] = None
 
+        return await self._fake_eth_name_check(
+            network_name, contract_address, investigated_fields
+        )
+
+    async def _fake_eth_name_check(
+        self, network_name, contract_address, fields: dict[str, str]
+    ) -> FakeEthNameCheckResult:
         if contract_address in ens_contract_adresses:
-            if 'title' not in fields:
+            if "title" not in fields:
                 raise MissingTitle()
-            
-            title = fields['title']
-            
-            if title is None:  
-                return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None,
-                                              investigated_fields=None)
+
+            title = fields["title"]
+
+            if title is None:
+                return FakeEthNameCheckResult(
+                    status=FakeEthNameCheckStatus.UNKNOWN_NFT,
+                    nameguard_result=None,
+                    investigated_fields=None,
+                )
             else:
                 if is_labelhash_eth(title):
-                    report = await self.inspect_name(network_name, title, resolve_labelhashes=False)
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.UNKNOWN_ETH_NAME,
-                                                  nameguard_result=report, investigated_fields=None)
+                    report = await self.inspect_name(
+                        network_name, title, resolve_labelhashes=False
+                    )
+                    return FakeEthNameCheckResult(
+                        status=FakeEthNameCheckStatus.UNKNOWN_ETH_NAME,
+                        nameguard_result=report,
+                        investigated_fields=None,
+                    )
 
                 # TODO: check if token_id matches contract_address and title
                 report = await self.inspect_name(network_name, title)
                 if is_ens_normalized(title):
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME,
-                                                  nameguard_result=report, investigated_fields=None)
+                    return FakeEthNameCheckResult(
+                        status=FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME,
+                        nameguard_result=report,
+                        investigated_fields=None,
+                    )
                 else:
-                    return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.INVALID_ETH_NAME,
-                                                  nameguard_result=report, investigated_fields=None)
+                    return FakeEthNameCheckResult(
+                        status=FakeEthNameCheckStatus.INVALID_ETH_NAME,
+                        nameguard_result=report,
+                        investigated_fields=None,
+                    )
         else:
             impersonating_fields = {}
             impersonated = False
             potentially_impersonated = False
             for key, name in fields.items():
                 try:
-                    cured_title = ens_cure(name)  # TODO improve, e.g. remove invisible and then canonicalize
+                    cured_title = ens_cure(
+                        name
+                    )  # TODO improve, e.g. remove invisible and then canonicalize
                     inspector_result = self.analyse_label(cured_title)
                     if inspector_result.canonical_label is not None:
                         canonical_name = inspector_result.canonical_label
@@ -467,20 +609,29 @@ class NameGuard:
                         canonical_name = cured_title
                 except DisallowedSequence:
                     canonical_name = name
-                
-                if canonical_name.endswith('.eth'):
+
+                if canonical_name.endswith(".eth"):
                     impersonating_fields[key] = name
                     impersonated = True
-                elif '.eth' in canonical_name:
+                elif ".eth" in canonical_name:
                     impersonating_fields[key] = name
                     potentially_impersonated = True
-                    
+
             if impersonated:
-                return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME,
-                                                  nameguard_result=None, investigated_fields=impersonating_fields)
+                return FakeEthNameCheckResult(
+                    status=FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME,
+                    nameguard_result=None,
+                    investigated_fields=impersonating_fields,
+                )
             elif potentially_impersonated:
-                return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME,
-                                              nameguard_result=None, investigated_fields=impersonating_fields)
+                return FakeEthNameCheckResult(
+                    status=FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME,
+                    nameguard_result=None,
+                    investigated_fields=impersonating_fields,
+                )
             else:
-                 return FakeEthNameCheckResult(status=FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME,
-                                          nameguard_result=None, investigated_fields=None)
+                return FakeEthNameCheckResult(
+                    status=FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME,
+                    nameguard_result=None,
+                    investigated_fields=None,
+                )
