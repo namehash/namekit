@@ -8,7 +8,7 @@ type ShareProps = {
 };
 
 function createTwitterLink(name: string) {
-  const tweetText = `Check out the NameGuard Report for ${name}`;
+  const tweetText = `Check out the NameGuard Report for ${name}\n`;
   const url = `https://nameguard.io/inspect/${encodeURIComponent(name)}`;
 
   return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
@@ -38,7 +38,7 @@ export function Share({ name }: ShareProps) {
   );
   const emailLink = createMailToLink(
     `NameGuard Report for ${name}`,
-    `Check this out!\n\nhttps://nameguard.io/inspect/${name}`
+    `Check this out!\nhttps://nameguard.io/inspect/${name}`
   );
   const copyLinkToClipboard = () => {
     navigator.clipboard.writeText(`https://nameguard.io/inspect/${name}`);
@@ -77,14 +77,14 @@ export function Share({ name }: ShareProps) {
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
-              enterFrom="opacity-0 translate-y-12"
+              enterFrom="opacity-0 translate-y-3"
               enterTo="opacity-100 scale-100"
               leave="ease-in duration-200"
               leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 translate-y-12"
+              leaveTo="opacity-0 translate-y-3"
             >
-              <div className="relative z-50 flex items-end md:items-center justify-center min-h-screen">
-                <Dialog.Panel className="w-full md:max-w-sm mx-auto relative transform overflow-scroll rounded-t-xl md:rounded-xl bg-white md:bg-gray-100 md:shadow-2xl transition-all flex flex-col">
+              <div className="relative z-50 flex items-center justify-center min-h-screen p-6 md:p-0">
+                <Dialog.Panel className="w-full md:max-w-sm mx-auto relative transform overflow-scroll rounded-xl bg-white md:bg-gray-100 md:shadow-2xl transition-all flex flex-col">
                   <div className="h-[56px] md:h-[68px] flex items-center md:justify-start px-6 pb-3 md:pb-0 pt-3 md:pt-2 text-center relative">
                     <Dialog.Title className="font-medium text-lg">
                       Share NameGuard report
@@ -99,9 +99,9 @@ export function Share({ name }: ShareProps) {
                     </div>
                   </div>
 
-                  <div className="min-h-[200px] flex items-center justify-center line-clamp-1 px-6 md:px-10">
+                  <div className="min-h-[200px] flex items-center justify-center px-6 md:px-10">
                     {name && (
-                      <p className="font-extrabold text-black text-xl text-ellipsis overflow-hidden">
+                      <p className="font-extrabold text-black text-xl text-ellipsis overflow-hidden line-clamp-1">
                         {name}
                       </p>
                     )}
