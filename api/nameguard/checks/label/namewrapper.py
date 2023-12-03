@@ -5,19 +5,19 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, LabelCheckR
 
 STATUS = CheckStatus.WARN
 
-#title: NameWrapper Compatible
-TITLE_PASS = 'NameWrapper Compatibility'
-TITLE_FAIL = 'NameWrapper Compatibility'
-TITLE_SKIP = 'NameWrapper Compatibility'
+# title: NameWrapper Compatible
+TITLE_PASS = "NameWrapper Compatibility"
+TITLE_FAIL = "NameWrapper Compatibility"
+TITLE_SKIP = "NameWrapper Compatibility"
 
-L_MESSAGE_PASS = 'Compatible for use with the ENS NameWrapper'
-N_MESSAGE_PASS = 'Compatible for use with the ENS NameWrapper'
+L_MESSAGE_PASS = "Compatible for use with the ENS NameWrapper"
+N_MESSAGE_PASS = "Compatible for use with the ENS NameWrapper"
 
-L_MESSAGE_FAIL = 'Incompatible with the ENS NameWrapper'
-N_MESSAGE_FAIL = 'Incompatible with the ENS NameWrapper'
+L_MESSAGE_FAIL = "Incompatible with the ENS NameWrapper"
+N_MESSAGE_FAIL = "Incompatible with the ENS NameWrapper"
 
-L_MESSAGE_SKIP = 'This label is unknown'
-N_MESSAGE_SKIP = 'This name contains unknown labels'
+L_MESSAGE_SKIP = "This label is unknown"
+N_MESSAGE_SKIP = "This name contains unknown labels"
 
 WRAPPED_MAX_BYTES = 255
 
@@ -32,7 +32,7 @@ def check_label(label: Optional[InspectorResult]) -> GenericCheckResult:
             _title=TITLE_SKIP,
         )
     try:
-        wrapped = label.label.encode('utf-8')
+        wrapped = label.label.encode("utf-8")
         passed = len(wrapped) <= WRAPPED_MAX_BYTES
     except UnicodeEncodeError:
         passed = False

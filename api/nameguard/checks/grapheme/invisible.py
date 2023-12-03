@@ -4,21 +4,21 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, GraphemeChe
 
 STATUS = CheckStatus.ALERT
 
-#title: No Hidden Characters
-TITLE_PASS = 'Character Visibility'
-TITLE_FAIL = 'Character Visibility'
+# title: No Hidden Characters
+TITLE_PASS = "Character Visibility"
+TITLE_FAIL = "Character Visibility"
 
-G_MESSAGE_PASS = 'Visible'
-L_MESSAGE_PASS = 'All characters are visible'
-N_MESSAGE_PASS = 'All characters are visible'
+G_MESSAGE_PASS = "Visible"
+L_MESSAGE_PASS = "All characters are visible"
+N_MESSAGE_PASS = "All characters are visible"
 
-G_MESSAGE_FAIL = 'Invisible'
-L_MESSAGE_FAIL = 'Contains invisible characters'
-N_MESSAGE_FAIL = 'Contains invisible characters'
+G_MESSAGE_FAIL = "Invisible"
+L_MESSAGE_FAIL = "Contains invisible characters"
+N_MESSAGE_FAIL = "Contains invisible characters"
 
 
 def check_grapheme(grapheme: Grapheme) -> GenericCheckResult:
-    passed = grapheme.type != 'invisible'
+    passed = grapheme.type != "invisible"
     return GraphemeCheckResult(
         check=Check.INVISIBLE,
         status=CheckStatus.PASS if passed else STATUS,
