@@ -1,5 +1,5 @@
 {
-  "name": "@namehash/fonts",
+  "name": "@namehash/tailwind-ens-webfont",
   "version": "0.0.1",
   "devDependencies": {
     "autoprefixer": "10.4.16",

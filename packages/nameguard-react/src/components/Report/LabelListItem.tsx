@@ -22,7 +22,7 @@ export const LabelListItem = ({
   return (
     <div className="border border-gray-200 rounded-md divide-y divide-gray-200">
       <div className="py-[10px] px-6 md:flex md:items-center md:justify-between space-y-1 md:space-y-0">
-        <div className="text-sm font-normal break-all font-maxEmojisAndCharsSupport font-ss02">
+        <div className="text-sm font-normal break-all font-maxEmojisAndCharsSupport ens-name">
           {rawLabels.map((l, labelIndex) => (
             <Fragment key={labelIndex}>
               <span

@@ -22,7 +22,7 @@ export function GraphemeListItem({ item }: GraphemeListItemProps) {
       onClick={handleClick}
     >
       <div className="flex md:items-center justify-center">
-        <p className="text-4xl text-black font-bold font-maxEmojisAndCharsSupport font-ss02">
+        <p className="text-4xl text-black font-bold ens-name">
           {item.grapheme}
         </p>
       </div>

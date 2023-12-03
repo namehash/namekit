@@ -13,9 +13,6 @@ const config: Config = {
         "figma-black": "#201F1F",
         "code-gray": "#434446",
       },
-      padding: {
-        "7.5": "30px",
-      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -48,7 +45,11 @@ const config: Config = {
       },
     },
   },
-  plugins: [require("@tailwindcss/forms"), require("tailwind-scrollbar-hide"), require("@namehash/fonts")],
+  plugins: [
+    require("@tailwindcss/forms"),
+    require("tailwind-scrollbar-hide"),
+    require("@namehash/tailwind-ens-webfont"),
+  ],
 };
 
 export default config;
