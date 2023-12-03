@@ -1,22 +1,31 @@
 from typing import Optional
-from label_inspector.models import InspectorGraphemeWithConfusablesResult as Grapheme, InspectorResult as Label
+from label_inspector.models import (
+    InspectorGraphemeWithConfusablesResult as Grapheme,
+    InspectorResult as Label,
+)
 from nameguard.grapheme_normalization import grapheme_is_normalized
-from nameguard.models import CheckStatus, Check, GraphemeCheckResult, LabelCheckResult, NameCheckResult
+from nameguard.models import (
+    CheckStatus,
+    Check,
+    GraphemeCheckResult,
+    LabelCheckResult,
+    NameCheckResult,
+)
 
 
 STATUS = CheckStatus.ALERT
 
 # title: Normalized
-TITLE_PASS = 'Normalization'
-TITLE_FAIL = 'Normalization'
-TITLE_SKIP = 'Normalization'
+TITLE_PASS = "Normalization"
+TITLE_FAIL = "Normalization"
+TITLE_SKIP = "Normalization"
 
-MESSAGE_PASS = 'Valid for use with ENS'
+MESSAGE_PASS = "Valid for use with ENS"
 
-MESSAGE_FAIL = 'Invalid for use with ENS'
+MESSAGE_FAIL = "Invalid for use with ENS"
 
-L_MESSAGE_SKIP = 'This label is unknown'
-N_MESSAGE_SKIP = 'This name contains unknown labels'
+L_MESSAGE_SKIP = "This label is unknown"
+N_MESSAGE_SKIP = "This name contains unknown labels"
 
 
 def check_grapheme(grapheme: Grapheme) -> GraphemeCheckResult:
@@ -41,7 +50,7 @@ def check_label(label: Optional[Label]) -> LabelCheckResult:
             _name_message=N_MESSAGE_SKIP,
             _title=TITLE_SKIP,
         )
-    passed = label.status == 'normalized' and len(label.label) > 0
+    passed = label.status == "normalized" and len(label.label) > 0
     return LabelCheckResult(
         check=Check.NORMALIZED,
         status=CheckStatus.PASS if passed else STATUS,
@@ -60,7 +69,9 @@ def check_name(name: list[Optional[Label]]) -> NameCheckResult:
             _name_message=N_MESSAGE_SKIP,
             _title=TITLE_SKIP,
         )
-    passed = all(label.status == 'normalized' and len(label.label) > 0 for label in name)
+    passed = all(
+        label.status == "normalized" and len(label.label) > 0 for label in name
+    )
     return NameCheckResult(
         check=Check.NORMALIZED,
         status=CheckStatus.PASS if passed else STATUS,

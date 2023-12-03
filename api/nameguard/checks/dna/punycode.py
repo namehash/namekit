@@ -5,18 +5,18 @@ from label_inspector.common.punycode import puny_analysis, PunycodeCompatibility
 
 STATUS = CheckStatus.WARN
 
-TITLE_PASS = 'DNS Compatibility'
-TITLE_FAIL = 'DNS Compatibility'
-TITLE_SKIP = 'DNS Compatibility'
+TITLE_PASS = "DNS Compatibility"
+TITLE_FAIL = "DNS Compatibility"
+TITLE_SKIP = "DNS Compatibility"
 
-L_MESSAGE_PASS = 'Compatible for use with DNS'
-N_MESSAGE_PASS = 'Compatible for use with DNS'
+L_MESSAGE_PASS = "Compatible for use with DNS"
+N_MESSAGE_PASS = "Compatible for use with DNS"
 
-L_MESSAGE_FAIL = 'Incompatible for use with DNS'
-N_MESSAGE_FAIL = 'Incompatible for use with DNS'
+L_MESSAGE_FAIL = "Incompatible for use with DNS"
+N_MESSAGE_FAIL = "Incompatible for use with DNS"
 
-L_MESSAGE_SKIP = 'This label is unknown'
-N_MESSAGE_SKIP = 'This name contains unknown labels'
+L_MESSAGE_SKIP = "This label is unknown"
+N_MESSAGE_SKIP = "This name contains unknown labels"
 
 
 def check_label(label: Optional[Label]) -> LabelCheckResult:
@@ -28,7 +28,7 @@ def check_label(label: Optional[Label]) -> LabelCheckResult:
             _name_message=N_MESSAGE_SKIP,
             _title=TITLE_SKIP,
         )
-    passed = label.punycode_compatibility == 'COMPATIBLE'
+    passed = label.punycode_compatibility == "COMPATIBLE"
     return LabelCheckResult(
         check=Check.PUNYCODE_COMPATIBLE_LABEL,
         status=CheckStatus.PASS if passed else STATUS,
@@ -46,8 +46,13 @@ def check_name(labels: list[Optional[Label]]) -> NameCheckResult:
             _name_message=N_MESSAGE_SKIP,
             _title=TITLE_SKIP,
         )
-    labels_passed = all([label.punycode_compatibility == 'COMPATIBLE' for label in labels])
-    passed = labels_passed and (puny_analysis('.'.join(label.label for label in labels)).compatibility == PunycodeCompatibility.COMPATIBLE)
+    labels_passed = all(
+        [label.punycode_compatibility == "COMPATIBLE" for label in labels]
+    )
+    passed = labels_passed and (
+        puny_analysis(".".join(label.label for label in labels)).compatibility
+        == PunycodeCompatibility.COMPATIBLE
+    )
     return NameCheckResult(
         check=Check.PUNYCODE_COMPATIBLE_NAME,
         status=CheckStatus.PASS if passed else STATUS,
