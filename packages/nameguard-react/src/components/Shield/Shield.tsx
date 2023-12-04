@@ -64,7 +64,8 @@ export const Shield = ({ name }: ShieldProps) => {
           <div className="flex items-center justify-between">
             <span className={textClass}>{result.title}</span>
             <span className="text-sm font-normal text-gray-400">
-              {result.risk_count} risk{result.risk_count >= 0 && "s"} detected
+              {result.risk_count} risk{result.risk_count === 1 ? "" : "s"}{" "}
+              detected
             </span>
           </div>
           <div className="text-sm text-white">{result.subtitle}</div>
