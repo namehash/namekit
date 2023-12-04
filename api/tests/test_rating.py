@@ -2,6 +2,7 @@ from nameguard.models import Rating
 
 
 def test_ordering():
+
     assert Rating.PASS == Rating.PASS
     assert Rating.PASS < Rating.WARN
     assert Rating.PASS < Rating.ALERT

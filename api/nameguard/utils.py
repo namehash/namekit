@@ -8,20 +8,18 @@ from nameguard.exceptions import InvalidNameHash, InvalidTokenID, InvalidEthereu
 from nameguard.models import Rating, GenericCheckResult, Check
 
 
-def compute_canonical_from_list(
-    canonicals: list[Optional[str]], sep=""
-) -> Optional[str]:
-    """
+def compute_canonical_from_list(canonicals: list[Optional[str]], sep='') -> Optional[str]:
+    '''
     Compute a canonical string from a list of canonical strings.
     If any canonical `None`, the result is `None`.
-    """
+    '''
     if any(canonical is None for canonical in canonicals):
         return None
     return sep.join(canonicals)
 
 
-LABELHASH_REGEX = re.compile(r"^\[[0-9a-f]{64}\]$")
-LABELHASH_ETH_REGEX = re.compile(r"^\[[0-9a-f]{64}\]\.eth$")
+LABELHASH_REGEX = re.compile(r'^\[[0-9a-f]{64}\]$')
+LABELHASH_ETH_REGEX = re.compile(r'^\[[0-9a-f]{64}\]\.eth$')
 
 
 def is_labelhash_eth(x: str) -> bool:
@@ -30,7 +28,6 @@ def is_labelhash_eth(x: str) -> bool:
 
 def label_is_labelhash(x: str) -> bool:
     return bool(LABELHASH_REGEX.match(x))
-
 
 def hexbytes_to_int(hb: HexBytes) -> int:
     return int(hb.hex(), base=16)
@@ -56,9 +53,7 @@ def int_to_hexstr(n: int, hex_len=64) -> str:
     """
     res = f"{n:#0{hex_len + 2}x}"
     if len(res) > hex_len + 2:
-        raise ValueError(
-            f"Resulting hex number has more digits ({len(res) - 2}) than specified ({hex_len})."
-        )
+        raise ValueError(f'Resulting hex number has more digits ({len(res) - 2}) than specified ({hex_len}).')
     return res
 
 
@@ -67,10 +62,10 @@ def labelhash_from_label(label: str) -> str:
 
 
 def namehash_from_name(name: str) -> str:
-    """
+    '''
     Calculate the namehash of a name.
     Detects labelhashes in the name.
-    """
+    '''
     node = EMPTY_SHA3_BYTES
     if name:
         labels = name.split(".")
@@ -83,7 +78,7 @@ def namehash_from_name(name: str) -> str:
     return node.hex()
 
 
-def namehash_from_labelhash(labelhash_hexstr: str, parent_name="eth") -> str:
+def namehash_from_labelhash(labelhash_hexstr: str, parent_name='eth') -> str:
     parent_namehash_hexstr = namehash_from_name(parent_name)
     node = Web3().keccak(HexBytes(parent_namehash_hexstr) + HexBytes(labelhash_hexstr))
     return node.hex()
@@ -108,7 +103,7 @@ def validate_token_id(token_id: str) -> str:
     InvalidTokenID
     """
     token_id = token_id.lower()
-    if token_id.startswith("0x"):
+    if token_id.startswith('0x'):
         if not validate_hex(token_id, require_prefix=True, required_length=None):
             raise InvalidTokenID("Invalid hex number.")
         return token_id
@@ -137,25 +132,19 @@ def validate_namehash(namehash: str) -> str:
     InvalidNameHash
     """
     namehash = namehash.lower()
-    if namehash.startswith("0x"):
+    if namehash.startswith('0x'):
         if not validate_hex(namehash, require_prefix=True, required_length=66):
-            raise InvalidNameHash(
-                "Hex number must be 64 digits long and prefixed with '0x'."
-            )
+            raise InvalidNameHash("Hex number must be 64 digits long and prefixed with '0x'.")
         return namehash
     else:
         try:
             int_namehash = int(namehash)
         except ValueError:
-            raise InvalidNameHash(
-                "Must be a valid, decimal integer or a hex number with 64 digits, prefixed with '0x'."
-            )
+            raise InvalidNameHash("Must be a valid, decimal integer or a hex number with 64 digits, prefixed with '0x'.")
         try:
             hex_namehash = int_to_hexstr(int_namehash)
         except ValueError:
-            raise InvalidNameHash(
-                "The decimal integer converted to base-16 should have at most 64 digits."
-            )
+            raise InvalidNameHash("The decimal integer converted to base-16 should have at most 64 digits.")
         return hex_namehash
 
 
@@ -177,26 +166,22 @@ def validate_ethereum_address(address: str) -> str:
     """
     address = address.lower()
     if not validate_hex(address, require_prefix=True, required_length=42):
-        raise InvalidEthereumAddress(
-            "Hex number must be 40 digits long and prefixed with '0x'."
-        )
+        raise InvalidEthereumAddress("Hex number must be 40 digits long and prefixed with '0x'.")
     return address
 
 
-def validate_hex(
-    hex: str, *, require_prefix: bool = True, required_length: int = None
-) -> bool:
+def validate_hex(hex: str, *, require_prefix: bool = True, required_length: int = None) -> bool:
     """
     Hex string must be lowercased.
     """
     if required_length is not None and len(hex) != required_length:
         return False
     if require_prefix:
-        if not hex.startswith("0x"):
+        if not hex.startswith('0x'):
             return False
-        return all(c in "0123456789abcdef" for c in hex[2:])
+        return all(c in '0123456789abcdef' for c in hex[2:])
     else:
-        return all(c in "0123456789abcdef" for c in hex)
+        return all(c in '0123456789abcdef' for c in hex)
 
 
 def calculate_nameguard_rating(check_results: list[GenericCheckResult]) -> Rating:
@@ -214,29 +199,25 @@ def agg_checks(check_results: list[GenericCheckResult]) -> list[GenericCheckResu
     return list(out.values())
 
 
-def get_highest_risk(
-    check_results: list[GenericCheckResult]
-) -> Optional[GenericCheckResult]:
-    return max(
-        (check for check in check_results if check.rating > Rating.PASS), default=None
-    )
+def get_highest_risk(check_results: list[GenericCheckResult]) -> Optional[GenericCheckResult]:
+    return max((check for check in check_results if check.rating > Rating.PASS), default=None)
 
 
 def detect_grapheme_link_name(link: str) -> str:
-    """
+    '''
     Possible link formats:
 
     * https://unicodeplus.com/U+{...}
     * https://unicode.link/inspect/utf8:{...}
     * http://📙.la/{...}
-    """
+    '''
 
-    if link.startswith("https://unicodeplus.com"):
-        return "UnicodePlus"
-    elif link.startswith("https://unicode.link"):
+    if link.startswith('https://unicodeplus.com'):
+        return 'UnicodePlus'
+    elif link.startswith('https://unicode.link'):
         # title of th epage
-        return "Unicode Visualizer"
-    elif link.startswith("http://📙.la"):
-        return "Emojipedia"
+        return 'Unicode Visualizer'
+    elif link.startswith('http://📙.la'):
+        return 'Emojipedia'
     else:
-        return "Unknown External Page"
+        return 'Unknown External Page'
