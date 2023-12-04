@@ -47,7 +47,9 @@ def check_name(labels: list[Optional[Label]]) -> NameCheckResult:
             _title=TITLE_SKIP,
         )
     labels_passed = all([label.punycode_compatibility == 'COMPATIBLE' for label in labels])
-    passed = labels_passed and (puny_analysis('.'.join(label.label for label in labels)).compatibility == PunycodeCompatibility.COMPATIBLE)
+    passed = labels_passed and (
+        puny_analysis('.'.join(label.label for label in labels)).compatibility == PunycodeCompatibility.COMPATIBLE
+    )
     return NameCheckResult(
         check=Check.PUNYCODE_COMPATIBLE_NAME,
         status=CheckStatus.PASS if passed else STATUS,

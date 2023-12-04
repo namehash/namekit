@@ -4,7 +4,7 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, GraphemeChe
 
 STATUS = CheckStatus.ALERT
 
-#title: No Hidden Characters
+# title: No Hidden Characters
 TITLE_PASS = 'Character Visibility'
 TITLE_FAIL = 'Character Visibility'
 

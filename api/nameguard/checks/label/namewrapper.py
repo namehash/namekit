@@ -5,7 +5,7 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, LabelCheckR
 
 STATUS = CheckStatus.WARN
 
-#title: NameWrapper Compatible
+# title: NameWrapper Compatible
 TITLE_PASS = 'NameWrapper Compatibility'
 TITLE_FAIL = 'NameWrapper Compatibility'
 TITLE_SKIP = 'NameWrapper Compatibility'

@@ -8,7 +8,7 @@ from nameguard.endpoints import Endpoints
 
 
 class CheckStatus(str, Enum):
-    '''
+    """
     The status of a conducted check.
 
     * `skip`: This check was skipped because it was not applicable.
@@ -16,14 +16,13 @@ class CheckStatus(str, Enum):
     * `pass`: This check passed.
     * `warn`: This check failed, this is a minor issue.
     * `alert`: This check failed, this is a major issue.
-    '''
+    """
 
     INFO = 'info'
     PASS = 'pass'
     SKIP = 'skip'
     WARN = 'warn'
     ALERT = 'alert'
-
 
     @property
     def order(self):
@@ -60,18 +59,17 @@ class CheckStatus(str, Enum):
 
 
 class Rating(str, Enum):
-    '''
+    """
     The rating of a name/label/grapheme based on multiple conducted checks.
 
     * `pass`: All checks passed.
     * `warn`: At least one check failed with a `WARN` status but no check failed with an `ALERT` status.
     * `alert`: At least one check failed with an `ALERT` status.
-    '''
+    """
 
     PASS = 'pass'
     WARN = 'warn'
     ALERT = 'alert'
-    
 
     @property
     def order(self):
@@ -106,7 +104,7 @@ class Rating(str, Enum):
 
 
 class Check(str, Enum):
-    '''
+    """
     The type of a check.
 
     Common:
@@ -129,7 +127,7 @@ class Check(str, Enum):
     * `punycode_compatible_name`: A name is compatible with Punycode.
     * `namewrapper_fuses`: The NameWrapper configuration of a name is safe.
     * `decentralized_name`: A name is decentralized.
-    '''
+    """
 
     # Common
     NORMALIZED = 'normalized'
@@ -179,25 +177,29 @@ def make_severity_dict_from_order(order):
     return {check: len(order) - i for i, check in enumerate(order)}
 
 
-SEVERITY_DEFAULT = make_severity_dict_from_order([
-    # highest severity first
-    Check.INVISIBLE,
-    Check.NORMALIZED,
-    Check.CONFUSABLES,
-    Check.TYPING_DIFFICULTY,
-    Check.IMPERSONATION_RISK,
-    # all other checks get severity 0
-])
-
-
-SEVERITY_PER_ENDPOINT = {
-    Endpoints.SECURE_PRIMARY_NAME: make_severity_dict_from_order([
-        Check.IMPERSONATION_RISK,
+SEVERITY_DEFAULT = make_severity_dict_from_order(
+    [
+        # highest severity first
         Check.INVISIBLE,
         Check.NORMALIZED,
         Check.CONFUSABLES,
         Check.TYPING_DIFFICULTY,
-    ]),
+        Check.IMPERSONATION_RISK,
+        # all other checks get severity 0
+    ]
+)
+
+
+SEVERITY_PER_ENDPOINT = {
+    Endpoints.SECURE_PRIMARY_NAME: make_severity_dict_from_order(
+        [
+            Check.IMPERSONATION_RISK,
+            Check.INVISIBLE,
+            Check.NORMALIZED,
+            Check.CONFUSABLES,
+            Check.TYPING_DIFFICULTY,
+        ]
+    ),
 }
 
 
@@ -210,9 +212,9 @@ def get_check_severity(check: Check) -> int:
 
 
 class GenericCheckResult(BaseModel):
-    '''
+    """
     The result of a conducted check.
-    '''
+    """
 
     check: Check = Field(examples=[Check.CONFUSABLES])
     status: CheckStatus = Field(examples=[CheckStatus.WARN])
@@ -232,7 +234,7 @@ class GenericCheckResult(BaseModel):
     @property
     def _context(self) -> str:
         raise NotImplementedError
-    
+
     def raise_context(self) -> 'GenericCheckResult':
         raise NotImplementedError
 
@@ -299,7 +301,7 @@ class GraphemeCheckResult(GenericCheckResult):
     @property
     def _context(self):
         return 'grapheme'
-    
+
     def raise_context(self):
         return LabelCheckResult(
             check=self.check,
@@ -309,13 +311,13 @@ class GraphemeCheckResult(GenericCheckResult):
             _name_message=self._name_message,
             _title=self._title,
         )
-    
+
 
 class LabelCheckResult(GenericCheckResult):
     @property
     def _context(self):
         return 'label'
-    
+
     def raise_context(self):
         return NameCheckResult(
             check=self.check,
@@ -325,7 +327,7 @@ class LabelCheckResult(GenericCheckResult):
             _name_message=self._name_message,
             _title=self._title,
         )
-    
+
 
 class NameCheckResult(GenericCheckResult):
     @property

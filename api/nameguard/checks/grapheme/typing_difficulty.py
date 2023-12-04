@@ -4,13 +4,14 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, GraphemeChe
 
 STATUS = CheckStatus.WARN
 
-#title: Typing Accessibility
+# title: Typing Accessibility
 TITLE_PASS = 'Typing Accessibility'
 TITLE_FAIL = 'Typing Accessibility'
 
 MESSAGE_PASS = 'Broadly accessible to type'
 
 MESSAGE_FAIL = 'May be difficult to type on some devices'
+
 
 def check_grapheme(grapheme: Grapheme) -> GenericCheckResult:
     passed = grapheme.type in (
