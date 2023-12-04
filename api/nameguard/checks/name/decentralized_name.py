@@ -4,16 +4,16 @@ from label_inspector.models import InspectorResult
 
 STATUS = CheckStatus.WARN
 
-# title: Decentralized Name
-TITLE_PASS = "Decentralization"
-TITLE_FAIL = "Decentralization"
-TITLE_FAIL_UNKNOWN = "Decentralization"
+#title: Decentralized Name
+TITLE_PASS = 'Decentralization'
+TITLE_FAIL = 'Decentralization'
+TITLE_FAIL_UNKNOWN = 'Decentralization'
 
-MESSAGE_PASS = "Ownership is decentralized"
-MESSAGE_FAIL = "Ownership is not decentralized"
-MESSAGE_FAIL_UNKNOWN = "Ownership may not be decentralized"
+MESSAGE_PASS = 'Ownership is decentralized'
+MESSAGE_FAIL = 'Ownership is not decentralized'
+MESSAGE_FAIL_UNKNOWN = 'Ownership may not be decentralized'
 
-ETH_TLD = "eth"
+ETH_TLD = 'eth'
 DNS_TLD_WHITELIST = {"com", "net", "org", "id", "io"}
 
 
@@ -44,17 +44,17 @@ def namespace_root(labels: list[Optional[str]]) -> str:
            `unknown` if the namespace root is unknown.
     """
     if not labels:
-        return "ens"
-    elif len(labels) == 1 and labels[0] == "":
-        return "ens"
+        return 'ens'
+    elif len(labels) == 1 and labels[0] == '':
+        return 'ens'
     else:
         tld = labels[-1]
         if tld == ETH_TLD:
-            return "ens"
+            return 'ens'
         elif valid_DNS_tld(tld):
-            return "dns"
+            return 'dns'
         else:
-            return "unknown"
+            return 'unknown'
 
 
 def decentralization_status(labels: list[Optional[str]]):
@@ -66,29 +66,27 @@ def decentralization_status(labels: list[Optional[str]]):
             `unknown` if the decentralization status of the name is unknown.
     """
     root = namespace_root(labels)
-    if root == "ens":
+    if root == 'ens':
         if len(labels) > 2:
-            return "unknown"
+            return 'unknown'
         else:
-            return "unruggable"
-    elif root == "dns":
-        return "icann"
-    elif root == "unknown":
-        return "unknown"
+            return 'unruggable'
+    elif root == 'dns':
+        return 'icann'
+    elif root == 'unknown':
+        return 'unknown'
 
 
 def check_name(labels: list[Optional[InspectorResult]]) -> GenericCheckResult:
-    ds = decentralization_status(
-        [label.label if label is not None else None for label in labels]
-    )
-    if ds == "unruggable":
+    ds = decentralization_status([label.label if label is not None else None for label in labels])
+    if ds == 'unruggable':
         return NameCheckResult(
             check=Check.DECENTRALIZED_NAME,
             status=CheckStatus.PASS,
             _name_message=MESSAGE_PASS,
             _title=TITLE_PASS,
         )
-    elif ds == "icann":
+    elif ds == 'icann':
         return NameCheckResult(
             check=Check.DECENTRALIZED_NAME,
             status=CheckStatus.WARN,
