@@ -39,56 +39,58 @@ async def call_subgraph(network_name: NetworkName, query: str, variables: dict) 
 
         if response.status_code == 200:
             response_json = response.json()
-            logger.debug(f"Subgraph query:\n{query} {variables}")
-            logger.debug(f"Subgraph response json:\n{response_json}")
+            logger.debug(f'Subgraph query:\n{query} {variables}')
+            logger.debug(f'Subgraph response json:\n{response_json}')
         else:
             raise ENSSubgraphUnavailable(
-                f"Received unexpected status code from ENS Subgraph {response.status_code}: {response.text}")
+                f'Received unexpected status code from ENS Subgraph {response.status_code}: {response.text}'
+            )
     except Exception as ex:
         logger.exception('Communication error with subgraph occurred')
         if not str(ex):
-            raise ENSSubgraphUnavailable("Communication error with subgraph occurred.")
-        raise ENSSubgraphUnavailable(f"Communication error with subgraph occurred: {ex}")
+            raise ENSSubgraphUnavailable('Communication error with subgraph occurred.')
+        raise ENSSubgraphUnavailable(f'Communication error with subgraph occurred: {ex}')
 
     if 'data' not in response_json:
-        logger.error(f"Unexpected response body: {response_json}")
-        raise ENSSubgraphUnavailable(f"Unexpected response body: {response_json}")
+        logger.error(f'Unexpected response body: {response_json}')
+        raise ENSSubgraphUnavailable(f'Unexpected response body: {response_json}')
     else:
         return response_json['data']
 
 
 async def namehash_to_name_lookup(network_name: NetworkName, namehash_hexstr: str) -> str:
-    logger.debug(f"Trying namehash lookup for: {namehash_hexstr}")
+    logger.debug(f'Trying namehash lookup for: {namehash_hexstr}')
     namehash_hexstr = namehash_hexstr.lower()
-    
+
     variables = {'nameHash': namehash_hexstr}
 
     data = await call_subgraph(network_name, RESOLVE_NAMEHASH_QUERY, variables)
 
     if 'domain' not in data:
-        logger.error(f"Unexpected response data: {data}")
-        raise ENSSubgraphUnavailable(f"Unexpected response data: {data}")
+        logger.error(f'Unexpected response data: {data}')
+        raise ENSSubgraphUnavailable(f'Unexpected response data: {data}')
     elif data['domain'] is None:
         raise NamehashNotFoundInSubgraph()
     elif 'name' in data['domain']:
         if data['domain']['name'] is None:
-            logger.error(f"Name by namehash is None: {data} {variables}")
+            logger.error(f'Name by namehash is None: {data} {variables}')
             name = ''
         else:
             name = str(data['domain']['name'])
         calculated_namehash = namehash_from_name(name)
         if calculated_namehash != namehash_hexstr:
             logger.error(
-                f"NamehashMismatchError occurred:\ninput: {namehash_hexstr}\tcalculated: {calculated_namehash}")
+                f'NamehashMismatchError occurred:\ninput: {namehash_hexstr}\tcalculated: {calculated_namehash}'
+            )
             raise NamehashMismatchError()
         return name
     else:
-        logger.error(f"Unexpected response data: {data}")
-        raise ENSSubgraphUnavailable(f"Unexpected response data: {data}")
+        logger.error(f'Unexpected response data: {data}')
+        raise ENSSubgraphUnavailable(f'Unexpected response data: {data}')
 
 
 def build_multi_label_query(labels: list[str]) -> tuple[str, dict]:
-    '''
+    """
     Builds a query that resolves all labelhashes in a name.
 
     ```
@@ -101,7 +103,7 @@ def build_multi_label_query(labels: list[str]) -> tuple[str, dict]:
         }
     }
     ```
-    '''
+    """
     labelhash_idx = [i for i, label in enumerate(labels) if label_is_labelhash(label)]
     args = ' '.join(f'$l{i}:String' for i in labelhash_idx)
     query = f'query resolveLabelhashes({args}){{'
@@ -116,13 +118,13 @@ def build_multi_label_query(labels: list[str]) -> tuple[str, dict]:
 
 
 async def resolve_all_labelhashes_in_name(network_name: NetworkName, name: str) -> str:
-    logger.debug(f"Trying to resolve full name: {name}")
+    logger.debug(f'Trying to resolve full name: {name}')
 
     namehash = namehash_from_name(name)
     labels = name.split('.')
 
     if len(labels) < MAX_MULTI_LABEL_LOOKUP:
-        logger.debug(f"Trying multi-label lookup for: {name}")
+        logger.debug(f'Trying multi-label lookup for: {name}')
         query, variables = build_multi_label_query(labels)
         data = await call_subgraph(network_name, query, variables)
         resolved_labels = []
@@ -135,22 +137,22 @@ async def resolve_all_labelhashes_in_name(network_name: NetworkName, name: str) 
         resolved_name = '.'.join(resolved_labels)
         resolved_namehash = namehash_from_name(resolved_name)
         if resolved_namehash != namehash:
-            logger.error(
-                f"NamehashMismatchError occurred:\ninput: {name}\tcalculated: {resolved_name}")
+            logger.error(f'NamehashMismatchError occurred:\ninput: {name}\tcalculated: {resolved_name}')
             raise NamehashMismatchError()
     else:
-        logger.debug(f"Trying namehash lookup for: {name}")
+        logger.debug(f'Trying namehash lookup for: {name}')
         try:
             resolved_name = await namehash_to_name_lookup(network_name, namehash)
         except NamehashNotFoundInSubgraph:
             resolved_name = name
 
-    logger.debug(f"Resolved name: {resolved_name}")
+    logger.debug(f'Resolved name: {resolved_name}')
 
     return resolved_name
 
+
 def build_multi_label_query_querying_labelhashes(labelhashes: list[str]) -> tuple[str, dict]:
-    '''
+    """
     Builds a query that resolves all labelhashes in a name.
     Labelhash in format 0x1234...1234.
     ```
@@ -163,7 +165,7 @@ def build_multi_label_query_querying_labelhashes(labelhashes: list[str]) -> tupl
         }
     }
     ```
-    '''
+    """
     args = ' '.join(f'$l{i}:String' for i in range(len(labelhashes)))
     query = f'query resolveLabelhashes({args}){{'
     variables = {}
@@ -174,7 +176,7 @@ def build_multi_label_query_querying_labelhashes(labelhashes: list[str]) -> tupl
     return query, variables
 
 
-async def resolve_labelhashes_querying_labelhashes(network_name: NetworkName, labelhashes: list[str]) -> dict[str,str]:
+async def resolve_labelhashes_querying_labelhashes(network_name: NetworkName, labelhashes: list[str]) -> dict[str, str]:
     """
     Resolve labelhashes to label names.
     Labelhash in format [1234...1234].
@@ -183,20 +185,21 @@ async def resolve_labelhashes_querying_labelhashes(network_name: NetworkName, la
         return {}
     labelhashes = [f'0x{labelhash[1:-1]}' for labelhash in labelhashes]
     query, variables = build_multi_label_query_querying_labelhashes(labelhashes)
-    
+
     data = await call_subgraph(network_name, query, variables)
-    
-    result={}
+
+    result = {}
     for var, labelhash in variables.items():
-        labelhash=f"[{labelhash[2:]}]"
+        labelhash = f'[{labelhash[2:]}]'
         if data[var]:
             result[labelhash] = data[var][0]['labelName']
         else:
             result[labelhash] = labelhash
     return result
 
+
 async def resolve_all_labelhashes_in_name_querying_labelhashes(network_name: NetworkName, name: str) -> str:
-    logger.debug(f"Trying to resolve full name: {name}")
+    logger.debug(f'Trying to resolve full name: {name}')
 
     labels = name.split('.')
 
@@ -205,18 +208,23 @@ async def resolve_all_labelhashes_in_name_querying_labelhashes(network_name: Net
     if not labelhash_idx:
         return name
 
-    resolved_labelhashes = await resolve_labelhashes_querying_labelhashes(network_name, [labels[i] for i in labelhash_idx])
+    resolved_labelhashes = await resolve_labelhashes_querying_labelhashes(
+        network_name, [labels[i] for i in labelhash_idx]
+    )
 
     for i in labelhash_idx:
         labels[i] = resolved_labelhashes[labels[i]]
-    
+
     resolved_name = '.'.join(labels)
 
-    logger.debug(f"Resolved name: {resolved_name}")
-    
+    logger.debug(f'Resolved name: {resolved_name}')
+
     return resolved_name
-    
-async def resolve_all_labelhashes_in_names_querying_labelhashes(network_name: NetworkName, names: list[str]) -> list[str]:
+
+
+async def resolve_all_labelhashes_in_names_querying_labelhashes(
+    network_name: NetworkName, names: list[str]
+) -> list[str]:
     segmented_names = []
     labelhashes = set()
     labelhashes_list = []
@@ -227,10 +235,10 @@ async def resolve_all_labelhashes_in_names_querying_labelhashes(network_name: Ne
             if label_is_labelhash(label):
                 if label not in labelhashes:
                     labelhashes.add(label)
-                    labelhashes_list.append(label) 
-    
+                    labelhashes_list.append(label)
+
     resolved_labelhashes = await resolve_labelhashes_querying_labelhashes(network_name, labelhashes_list)
-    
+
     resolved_names = []
     for labels in segmented_names:
         for i, label in enumerate(labels):

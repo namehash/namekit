@@ -4,7 +4,7 @@ from label_inspector.models import InspectorResult
 
 STATUS = CheckStatus.WARN
 
-#title: Decentralized Name
+# title: Decentralized Name
 TITLE_PASS = 'Decentralization'
 TITLE_FAIL = 'Decentralization'
 TITLE_FAIL_UNKNOWN = 'Decentralization'
@@ -14,7 +14,7 @@ MESSAGE_FAIL = 'Ownership is not decentralized'
 MESSAGE_FAIL_UNKNOWN = 'Ownership may not be decentralized'
 
 ETH_TLD = 'eth'
-DNS_TLD_WHITELIST = {"com", "net", "org", "id", "io"}
+DNS_TLD_WHITELIST = {'com', 'net', 'org', 'id', 'io'}
 
 
 def valid_DNS_tld(label: Optional[str]) -> Optional[bool]:
@@ -27,7 +27,7 @@ def valid_DNS_tld(label: Optional[str]) -> Optional[bool]:
     """
     if label == ETH_TLD:
         return False
-    elif label == "":
+    elif label == '':
         return True  # DNS root
     elif label in DNS_TLD_WHITELIST:
         return True

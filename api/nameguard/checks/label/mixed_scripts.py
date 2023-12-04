@@ -8,7 +8,7 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, LabelCheckR
 
 STATUS = CheckStatus.WARN
 
-#title: Single Script
+# title: Single Script
 TITLE_PASS = 'Script Consistency'
 TITLE_FAIL = 'Script Consistency'
 TITLE_SKIP = 'Script Consistency'

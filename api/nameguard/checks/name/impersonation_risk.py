@@ -7,7 +7,7 @@ from label_inspector.models import InspectorResult
 
 STATUS = CheckStatus.WARN
 
-#title: Canonical Characters
+# title: Canonical Characters
 TITLE_PASS = 'Canonicalization'
 TITLE_FAIL = 'Canonicalization'
 TITLE_SKIP = 'Canonicalization'
@@ -45,7 +45,7 @@ def check_name(labels: list[Optional[InspectorResult]]) -> GenericCheckResult:
     if passed:
         message = MESSAGE_PASS
     elif endpoint_name.get() == Endpoints.SECURE_PRIMARY_NAME:
-        CHANGED_EMOJI=False
+        CHANGED_EMOJI = False
         for label in labels:
             for grapheme in label.graphemes:
                 if grapheme.type == 'emoji' and grapheme.confusables_canonical != grapheme.value:
