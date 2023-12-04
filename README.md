@@ -1,5 +1,8 @@
 # NameHash NameGuard
 
+![Tests](https://github.com/namehash/nameguard/actions/workflows/ci_api.yml/badge.svg?branch=main)
+![Coverage](https://raw.githubusercontent.com/namehash/nameguard/main/coverage_badge.svg)
+
 The NameHash team is proud to present NameGuard, a tool for identifying and preventing malicious use of ENS names.
 
 - Offers multiple levels of protection
