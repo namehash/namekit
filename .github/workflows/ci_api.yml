@@ -19,10 +19,6 @@ jobs:
       PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}
 
     steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-
       - name: Install poetry
         run: pipx install poetry
 
