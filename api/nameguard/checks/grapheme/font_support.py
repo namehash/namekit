@@ -4,7 +4,7 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, GraphemeChe
 
 STATUS = CheckStatus.WARN
 
-#title: Font Support
+# title: Font Support
 TITLE_PASS = 'Font Support'
 TITLE_FAIL = 'Font Support'
 TITLE_SKIP = 'Font Support'
@@ -14,6 +14,7 @@ MESSAGE_PASS = 'Commonly supported'
 MESSAGE_FAIL = 'Less common support'
 
 MESSAGE_SKIP = 'Unknown font support'
+
 
 def check_grapheme(grapheme: Grapheme) -> GenericCheckResult:
     passed = grapheme.font_support_all_os

@@ -12,7 +12,7 @@ class ExceptionResponse(BaseModel):
 class NameGuardException(HTTPException):
     STATUS_CODE = None
     DESCRIPTION = None
-    
+
     def __init__(self, detail: str = ''):
         super().__init__(self.STATUS_CODE, detail=f'{self.DESCRIPTION} {detail}'.strip())
 
@@ -23,25 +23,27 @@ class NameGuardException(HTTPException):
 
 class InvalidNameHash(NameGuardException):
     STATUS_CODE = 422
-    DESCRIPTION = "Provided namehash is not valid."
+    DESCRIPTION = 'Provided namehash is not valid.'
+
 
 class InvalidTokenID(NameGuardException):
     STATUS_CODE = 422
-    DESCRIPTION = "Provided token id is not valid."
+    DESCRIPTION = 'Provided token id is not valid.'
+
 
 class ENSSubgraphUnavailable(NameGuardException):
     STATUS_CODE = 503
-    DESCRIPTION = "Error while making request to ENS Subgraph."
+    DESCRIPTION = 'Error while making request to ENS Subgraph.'
 
 
 class NamehashMismatchError(NameGuardException):
     STATUS_CODE = 500
-    DESCRIPTION = "Namehash calculated on the name returned from ENS Subgraph does not equal the input namehash."
+    DESCRIPTION = 'Namehash calculated on the name returned from ENS Subgraph does not equal the input namehash.'
 
 
 class NamehashNotFoundInSubgraph(NameGuardException):
     STATUS_CODE = 404
-    DESCRIPTION = "Provided namehash could not be found in ENS Subgraph."
+    DESCRIPTION = 'Provided namehash could not be found in ENS Subgraph.'
 
 
 class NotAGrapheme(NameGuardException):
@@ -51,12 +53,12 @@ class NotAGrapheme(NameGuardException):
 
 class InvalidEthereumAddress(NameGuardException):
     STATUS_CODE = 422
-    DESCRIPTION = "Provided Ethereum address is not valid."
+    DESCRIPTION = 'Provided Ethereum address is not valid.'
 
 
 class ProviderUnavailable(NameGuardException):
     STATUS_CODE = 503
-    DESCRIPTION = "Error while making request to provider."
+    DESCRIPTION = 'Error while making request to provider.'
 
 
 class MissingTitle(NameGuardException):
