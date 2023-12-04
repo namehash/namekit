@@ -8,19 +8,19 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, LabelCheckR
 
 STATUS = CheckStatus.WARN
 
-# title: Single Script
-TITLE_PASS = "Script Consistency"
-TITLE_FAIL = "Script Consistency"
-TITLE_SKIP = "Script Consistency"
+#title: Single Script
+TITLE_PASS = 'Script Consistency'
+TITLE_FAIL = 'Script Consistency'
+TITLE_SKIP = 'Script Consistency'
 
-L_MESSAGE_PASS = "Written in a single script"
-N_MESSAGE_PASS = "Written in a single script"
+L_MESSAGE_PASS = 'Written in a single script'
+N_MESSAGE_PASS = 'Written in a single script'
 
-L_MESSAGE_FAIL = "Written in multiple scripts"
-N_MESSAGE_FAIL = "Written in multiple scripts"
+L_MESSAGE_FAIL = 'Written in multiple scripts'
+N_MESSAGE_FAIL = 'Written in multiple scripts'
 
-L_MESSAGE_SKIP = "This label is unknown"
-N_MESSAGE_SKIP = "This name contains unknown labels"
+L_MESSAGE_SKIP = 'This label is unknown'
+N_MESSAGE_SKIP = 'This name contains unknown labels'
 
 
 def check_label(label: Optional[InspectorResult]) -> GenericCheckResult:
@@ -32,7 +32,7 @@ def check_label(label: Optional[InspectorResult]) -> GenericCheckResult:
             _name_message=N_MESSAGE_SKIP,
             _title=TITLE_SKIP,
         )
-    passed = label.all_script is not None or label.label == ""
+    passed = label.all_script is not None or label.label == ''
     return LabelCheckResult(
         check=Check.MIXED_SCRIPTS,
         status=CheckStatus.PASS if passed else STATUS,
