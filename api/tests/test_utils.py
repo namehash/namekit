@@ -83,7 +83,7 @@ def test_validate_namehash():
 
 def test_mangum_lambda():
     try:
-        import mangum
+        import mangum  # noqa: F401
     except ImportError:
         pass
     else:
