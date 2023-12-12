@@ -79,21 +79,21 @@ See the [NameGuard Python README](./api/README.md) for more details.
 
 ### Checks
 
-1. **Impersonation**: Detects names that could be trying to impersonate a different name by using similar characters.
+1. **Impersonation**: Detects names that could be trying to impersonate a different name by using similar characters. Example: [`vitalìk.eth`](https://nameguard.io/inspect/vitalìk.eth)
 
 2. **Confusables**: Detects characters that can be confused with other characters.
 
-3. **Font Support**: Checks if the characters in the name are supported by commonly used fonts.
+3. **Font Support**: Checks if the characters in the name are supported by commonly used fonts. Example: [`🛈.eth`](https://nameguard.io/inspect/🛈.eth)
 
-4. **Invisibles**: Detects invisible characters.
+4. **Invisibles**: Detects invisible characters. Example: [`888‍‍.eth`](https://nameguard.io/inspect/888‍‍.eth)
 
-5. **Typing Difficulty**: Detects names that are difficult to type on some keyboards.
+5. **Typing Difficulty**: Detects names that are difficult to type on some keyboards. Example: [`żółć.eth`](https://nameguard.io/inspect/żółć.eth)
 
 6. **Mixed Scripts**: Detects names that contain characters from multiple scripts or alphabets.
 
 7. **Name Wrapper**: Checks if the name is supported by the new ENS Name Wrapper.
 
-8. **ENSIP-15**: Checks if the name is normalized according to ENSIP-15.
+8. **ENSIP-15**: Checks if the name is normalized according to ENSIP-15. Example: [`bitсoin.eth`](https://nameguard.io/inspect/bitсoin.eth)
 
 9. **Punycode**: Checks if the name is compatible with Punycode encoding.
 
