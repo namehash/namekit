@@ -1,9 +1,11 @@
-# NameHash NameGuard
+# NameGuard by NameHash
 
 ![Tests](https://github.com/namehash/nameguard/actions/workflows/ci_api.yml/badge.svg?branch=main)
 ![Coverage](https://raw.githubusercontent.com/namehash/nameguard/main/coverage_badge.svg)
 
 The NameHash team is proud to present NameGuard, a tool for identifying and preventing malicious use of ENS names.
+It is unfortunate that as the ENS ecosystem grows, so does the number of malicious actors trying to exploit it.
+NameGuard is a tool that can help you protect yourself and your users from malicious ENS names.
 
 - Offers multiple levels of protection
   - Impersonated name detection
@@ -35,7 +37,7 @@ NameGuard is hosted at <https://api.nameguard.io>
 You can make a basic request to the API like this:
 
 ```bash
-curl https://api.nameguard.io/inspect-name/mainnet/nick.eth
+curl https://api.nameguard.io/inspect-name/mainnet/nick.eth | python -m json.tool
 ```
 
 The API documentation is available at <https://api.nameguard.io/redoc> or <https://api.nameguard.io/docs>.

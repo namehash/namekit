@@ -46,7 +46,7 @@ uvicorn nameguard.web_api:app
 Make an example request:
 
 ```bash
-curl -d '{"name":"nick.eth", "network_name": "mainnet"}' -H "Content-Type: application/json" -X POST http://localhost:8000/inspect-name
+curl -d '{"name":"nick.eth", "network_name": "mainnet"}' -H "Content-Type: application/json" -X POST http://localhost:8000/inspect-name | python -m json.tool
 # {
 #   "rating": "pass",
 #   "risk_count": 0,
