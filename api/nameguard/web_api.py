@@ -44,6 +44,10 @@ app = FastAPI(
 
 ## Documentation
 These documentation pages focus specifically on the NameGuard API. For information on the NameGuard Library, SDK, and UI Kit, please refer to the [NameGuard GitHub repository](https://github.com/namehash/nameguard).""",
+    servers=[
+        {'url': '/', 'description': 'Default, relative server'},
+        {'url': 'https://api.nameguard.io', 'description': 'Production server'},
+    ],
 )
 
 app.add_middleware(
@@ -76,12 +80,10 @@ class InspectNameRequest(BaseModel):
         **ENSSubgraphUnavailable.get_responses_spec(),
     },
 )
-@app.get('/inspect-name/{network_name}', include_in_schema=False)
 async def inspect_name_get(
     network_name: NetworkName,
     name: str = Path(
-        default_factory=lambda: '',
-        description='**Name should be url-encoded (except when using the Swagger UI).**',
+        description='**Name should be url-encoded (except when using the Swagger UI). Name can be empty.**',
         examples=['vitalìk.eth'],
     ),
 ) -> NameGuardReport:
@@ -90,6 +92,23 @@ async def inspect_name_get(
     )
     nameguard.context.endpoint_name.set(Endpoints.INSPECT_NAME)
     return await ng.inspect_name(network_name, name)
+
+
+@app.get(
+    '/inspect-name/{network_name}',
+    include_in_schema=False,
+    tags=['name'],
+    summary='Inspect Empty Name',
+    responses={
+        **ENSSubgraphUnavailable.get_responses_spec(),
+    },
+)
+async def inspect_empty_name_get(network_name: NetworkName) -> NameGuardReport:
+    logger.debug(
+        f"{json.dumps({'endpoint': Endpoints.INSPECT_NAME, 'method': 'GET', 'network_name': network_name, 'name': ''})}"
+    )
+    nameguard.context.endpoint_name.set(Endpoints.INSPECT_NAME)
+    return await ng.inspect_name(network_name, '')
 
 
 @app.post(
@@ -216,14 +235,16 @@ class InspectLabelhashRequest(BaseModel):
         **NamehashNotFoundInSubgraph.get_responses_spec(),
     },
 )
-@app.get('/inspect-labelhash/{network_name}/{labelhash}', include_in_schema=False)
 async def inspect_labelhash_get(
     network_name: NetworkName,
     labelhash: str = Path(
         examples=['0x3276e4878615389906712b876ce1455b8f5d1c5ea3ffcf7a705e0d32fafae9c5'],
         description='Labelhash should be a decimal or a hex (prefixed with 0x) string.',
     ),
-    parent_name: str = Path(default_factory=lambda: '', examples=['eth']),
+    parent_name: str = Path(
+        description='Parent name of the labelhash (default `eth`).',
+        examples=['eth'],
+    ),
 ) -> NameGuardReport:
     logger.debug(
         f"{json.dumps({'endpoint': Endpoints.INSPECT_LABELHASH, 'method': 'GET', 'network_name': network_name, 'labelhash': labelhash, 'parent_name': parent_name})}"
@@ -231,6 +252,34 @@ async def inspect_labelhash_get(
     nameguard.context.endpoint_name.set(Endpoints.INSPECT_LABELHASH)
     valid_labelhash = validate_namehash(namehash=labelhash)
     namehash = namehash_from_labelhash(valid_labelhash, parent_name=parent_name)
+    return await ng.inspect_namehash(network_name=network_name, namehash=namehash)
+
+
+@app.get(
+    '/inspect-labelhash/{network_name}/{labelhash}',
+    include_in_schema=False,
+    tags=['labelhash'],
+    summary='Inspect Labelhash GET',
+    responses={
+        **InvalidNameHash.get_responses_spec(),
+        **ENSSubgraphUnavailable.get_responses_spec(),
+        **NamehashMismatchError.get_responses_spec(),
+        **NamehashNotFoundInSubgraph.get_responses_spec(),
+    },
+)
+async def inspect_eth_labelhash_get(
+    network_name: NetworkName,
+    labelhash: str = Path(
+        examples=['0x3276e4878615389906712b876ce1455b8f5d1c5ea3ffcf7a705e0d32fafae9c5'],
+        description='Labelhash should be a decimal or a hex (prefixed with 0x) string.',
+    ),
+) -> NameGuardReport:
+    logger.debug(
+        f"{json.dumps({'endpoint': Endpoints.INSPECT_LABELHASH, 'method': 'GET', 'network_name': network_name, 'labelhash': labelhash, 'parent_name': ''})}"
+    )
+    nameguard.context.endpoint_name.set(Endpoints.INSPECT_LABELHASH)
+    valid_labelhash = validate_namehash(namehash=labelhash)
+    namehash = namehash_from_labelhash(valid_labelhash, parent_name='')
     return await ng.inspect_namehash(network_name=network_name, namehash=namehash)
 
 
