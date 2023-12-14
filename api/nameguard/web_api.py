@@ -242,7 +242,7 @@ async def inspect_labelhash_get(
         description='Labelhash should be a decimal or a hex (prefixed with 0x) string.',
     ),
     parent_name: str = Path(
-        description='Parent name of the labelhash (default `eth`).',
+        description='Parent name of the labelhash (default empty).',
         examples=['eth'],
     ),
 ) -> NameGuardReport:
