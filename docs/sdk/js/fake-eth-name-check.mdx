@@ -1,0 +1,25 @@
+---
+title: fakeEthNameCheck()
+---
+
+## Usage
+
+```ts
+const contractAddress = "";
+const tokenId = "";
+
+const report = await nameguard.fakeEthNameCheck(contractAddress, tokenId);
+```
+
+## Options
+
+You can override the network used for `fakeEthNameCheck` using the second argument:
+
+```ts
+const contractAddress = "";
+const tokenId = "";
+
+const report = await nameguard.fakeEthNameCheck(contractAddress, tokenId, {
+  network: "...",
+});
+```

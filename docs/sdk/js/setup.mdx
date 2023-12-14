@@ -1,0 +1,63 @@
+---
+title: Setup
+description:
+---
+
+The NameGuard SDK is open source and can be installed using your dependency manager.
+
+## Install
+
+<CodeGroup>
+
+```bash npm
+npm install @namehash/nameguard
+```
+
+```bash pnpm
+pnpm install @namehash/nameguard
+```
+
+```bash Bun
+bun add @namehash/nameguard
+```
+
+```bash yarn
+yarn add @namehash/nameguard
+```
+
+</CodeGroup>
+
+## Instantiate
+
+NameGuard exports a singleton that can be imported that has the defaults instantiated already, these defaults are:
+
+- URL: `https://api.nameguard.io`
+- Network: `mainnet`
+
+```ts
+import { nameguard } from "@namehash/nameguard";
+```
+
+## Configure Chain
+
+You can customize the chain used by using the `createClient` method, and passing your desired `network` &mdash; [See supported chains](/chains).
+
+```ts
+import { createClient } from "@namehash/nameguard";
+
+const nameguard = createClient({
+  network: "sepolia",
+});
+```
+
+## Custom Client
+
+If you're working locally with or have [self-hosted](/self-hosting) the NameGuard API, you'll need to update the `url` for the API by creating a custom client.
+
+```ts
+import { createClient } from "@namehash/nameguard";
+
+const nameguard = createClient({
+  url: "http://localhost:5000",
+});
+```
