@@ -104,11 +104,7 @@ async def inspect_name_get(
     },
 )
 async def inspect_empty_name_get(network_name: NetworkName) -> NameGuardReport:
-    logger.debug(
-        f"{json.dumps({'endpoint': Endpoints.INSPECT_NAME, 'method': 'GET', 'network_name': network_name, 'name': ''})}"
-    )
-    nameguard.context.endpoint_name.set(Endpoints.INSPECT_NAME)
-    return await ng.inspect_name(network_name, '')
+    return await inspect_name_get(network_name, '')
 
 
 @app.post(
@@ -267,20 +263,14 @@ async def inspect_labelhash_get(
         **NamehashNotFoundInSubgraph.get_responses_spec(),
     },
 )
-async def inspect_eth_labelhash_get(
+async def inspect_labelhash_get_empty_parent(
     network_name: NetworkName,
     labelhash: str = Path(
         examples=['0x3276e4878615389906712b876ce1455b8f5d1c5ea3ffcf7a705e0d32fafae9c5'],
         description='Labelhash should be a decimal or a hex (prefixed with 0x) string.',
     ),
 ) -> NameGuardReport:
-    logger.debug(
-        f"{json.dumps({'endpoint': Endpoints.INSPECT_LABELHASH, 'method': 'GET', 'network_name': network_name, 'labelhash': labelhash, 'parent_name': ''})}"
-    )
-    nameguard.context.endpoint_name.set(Endpoints.INSPECT_LABELHASH)
-    valid_labelhash = validate_namehash(namehash=labelhash)
-    namehash = namehash_from_labelhash(valid_labelhash, parent_name='')
-    return await ng.inspect_namehash(network_name=network_name, namehash=namehash)
+    return await inspect_labelhash_get(network_name, labelhash, '')
 
 
 @app.post(
