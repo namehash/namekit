@@ -1,0 +1,19 @@
+---
+title: getSecurePrimaryName()
+---
+
+## Usage
+
+```ts
+const report = await nameguard.getSecurePrimaryName("0x...");
+```
+
+## Options
+
+You can override the network used for `getSecurePrimaryName` using the second argument:
+
+```ts
+const report = await nameguard.getSecurePrimaryName("0x...", {
+  network: "...",
+});
+```

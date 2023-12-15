@@ -28,7 +28,8 @@ export const Header = () => {
       <div className="flex flex-row items-center justify-end gap-0 gt_mobile:justify-between gt_mobile:gap-1 md:gap-5">
         <a
           className="px-[10px] py-[9px] not-italic text-black font-medium text-sm leading-5 rounded-md gt_mobile:hover:bg-gray-100"
-          href={"https://api.nameguard.io/docs"}
+          href="https://api.nameguard.io/docs"
+          target="_blank"
         >
           Docs
         </a>

@@ -1,0 +1,20 @@
+---
+title: inspectName()
+description: Returns the full results of all `checks` on all `labels` in a name.
+---
+
+## Usage
+
+```ts
+const report = await nameguard.inspectName("nick.eth");
+```
+
+## Options
+
+You can override the network used for `inspectName` using the second argument:
+
+```ts
+const report = await nameguard.inspectName("nick.eth", {
+  network: "...",
+});
+```

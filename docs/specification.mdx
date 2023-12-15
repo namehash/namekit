@@ -1,0 +1,19 @@
+---
+title: Specification
+description: NameGuard is a tool for identifying and preventing malicious use of ENS names.
+---
+
+Each name searched goes through the following checks to ensure safety across the ENS network:
+
+- **Impersonation**: Detects names that could be trying to impersonate a different name by using similar characters.
+- **Confusables**: Detects characters that can be confused with other characters.
+- **Font Support**: Checks if the characters in the name are supported by commonly used fonts.
+- **Invisibles**: Detects invisible characters.
+- **Typing Difficulty**: Detects names that are difficult to type on some keyboards.
+- **Mixed Scripts**: Detects names that contain characters from multiple scripts or alphabets.
+- **Name Wrapper**: Checks if the name is supported by the new ENS Name Wrapper.
+- **ENSIP-15**: Checks if the name is normalized according to ENSIP-15.
+- **Punycode**: Checks if the name is compatible with Punycode encoding.
+- **Unknown Labels**: Checks if the name contains unknown labels (e.g. `[0123abcd...].eth`).
+- **Decentralized Name**: Checks if the name is decentralized (unruggable).
+- **NameWrapper Fuses**: Checks that the NameWrapper configuration of a name is safe.

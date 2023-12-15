@@ -1,0 +1,21 @@
+---
+title: inspectLabelhash()
+description: Inspects the name `"[{labelhash}].{parent}"`.
+---
+
+## Usage
+
+```ts
+const report = await nameguard.inspectLabelhash("0x...");
+```
+
+## Options
+
+You can override the network used for `inspectLabelhash` using the second argument:
+
+```ts
+const report = await nameguard.inspectLabelhash("0x...", {
+  network: "...",
+  parent: "...",
+});
+```
