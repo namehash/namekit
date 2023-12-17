@@ -1,0 +1,16 @@
+---
+openapi: "GET /inspect-labelhash/{network_name}/{labelhash}/{parent_name}"
+---
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url https://api.nameguard.io/inspect-labelhash/{network_name}/{labelhash}/{parent_name}
+```
+
+```ts SDK
+const report = await nameguard.inspectLabelhash("0x...");
+```
+
+</RequestExample>
