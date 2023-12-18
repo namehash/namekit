@@ -490,41 +490,6 @@ async def secure_primary_name_get(address: str, network_name: NetworkName) -> Se
 # -- fake-ens-name-check --
 
 
-@app.get(
-    '/fake-eth-name-check/{network_name}/{contract_address}/{token_id}',
-    tags=['fake-eth-name-check'],
-    summary='Fake .eth ENS name check GET',
-    responses={
-        **InvalidTokenID.get_responses_spec(),
-        **InvalidEthereumAddress.get_responses_spec(),
-        **ProviderUnavailable.get_responses_spec(),
-    },
-)
-async def fake_eth_name_check_get(
-    network_name: NetworkName,
-    contract_address: str = Path(
-        examples=['0x495f947276749ce646f68ac8c248420045cb7b5e'],
-        description='Contract address for the NFT contract (ERC721 and ERC1155 supported).',
-    ),
-    token_id: str = Path(
-        examples=['61995921128521442959106650131462633744885269624153038309795231243542768648193'],
-        description='The ID of the token (in hex or decimal format).',
-    ),
-) -> FakeEthNameCheckResult:
-    """
-    ## Performs a fake .eth ENS name check based on given NFT metadata.
-
-    This endpoint checks if the metadata of an NFT looks like a fake .eth ENS name.
-    """
-    logger.debug(
-        f"{json.dumps({'endpoint': Endpoints.FAKE_ETH_NAME_CHECK, 'method': 'GET', 'network_name': network_name, 'contract_address': contract_address, 'token_id': token_id})}"
-    )
-    nameguard.context.endpoint_name.set(Endpoints.FAKE_ETH_NAME_CHECK)
-    contract_address = validate_ethereum_address(contract_address)
-    token_id = validate_token_id(token_id)
-    return await ng.fake_eth_name_check(network_name=network_name, contract_address=contract_address, token_id=token_id)
-
-
 class FakeETHNameCheckFieldsRequest(BaseModel):
     network_name: NetworkName
     contract_address: str = Path(
@@ -541,7 +506,7 @@ class FakeETHNameCheckFieldsRequest(BaseModel):
 
 
 @app.post(
-    '/fake-eth-name-check-fields',
+    '/fake-eth-name-check',
     tags=['fake-eth-name-check'],
     summary='Fake .eth ENS name check with fields',
     responses={
