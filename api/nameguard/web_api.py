@@ -45,8 +45,8 @@ app = FastAPI(
 ## Documentation
 These documentation pages focus specifically on the NameGuard API. For information on the NameGuard Library, SDK, and UI Kit, please refer to the [NameGuard GitHub repository](https://github.com/namehash/nameguard).""",
     servers=[
-        {'url': '/', 'description': 'Default, relative server'},
         {'url': 'https://api.nameguard.io', 'description': 'Production server'},
+        {'url': '/', 'description': 'Default, relative server'},
     ],
 )
 
