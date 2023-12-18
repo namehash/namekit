@@ -26,7 +26,7 @@
     "name": "Website",
     "url": "https://nameguard.io"
   },
-  "openapi": "openapi.json",
+  "openapi": "https://api.nameguard.io/openapi.json",
   "navigation": [
     {
       "group": "NameGuard",
@@ -53,6 +53,23 @@
             "sdk/js/secure-primary-name",
             "sdk/js/fake-eth-name-check",
             "sdk/js/inspect-grapheme"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "API",
+      "pages": [
+        {
+          "group": "Endpoints",
+          "pages": [
+            "api-reference/inspect-name",
+            "api-reference/bulk-inspect-names",
+            "api-reference/inspect-namehash",
+            "api-reference/inspect-labelhash",
+            "api-reference/secure-primary-name",
+            "api-reference/fake-eth-name-check",
+            "api-reference/inspect-grapheme"
           ]
         }
       ]

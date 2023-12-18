@@ -1,0 +1,19 @@
+---
+openapi: "GET /fake-eth-name-check/{network_name}/{contract_address}/{token_id}"
+---
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url https://api.nameguard.io/fake-eth-name-check/{network_name}/{contract_address}/{token_id}
+```
+
+```ts SDK
+const contractAddress = "";
+const tokenId = "";
+
+const report = await nameguard.fakeEthNameCheck(contractAddress, tokenId);
+```
+
+</RequestExample>

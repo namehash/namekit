@@ -1,0 +1,16 @@
+---
+openapi: "GET /secure-primary-name/{network_name}/{address}"
+---
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url https://api.nameguard.io/secure-primary-name/{network_name}/{address}
+```
+
+```ts SDK
+const report = await nameguard.getSecurePrimaryName("0x...");
+```
+
+</RequestExample>

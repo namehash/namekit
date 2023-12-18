@@ -1,0 +1,28 @@
+---
+openapi: "POST /bulk-inspect-names"
+---
+
+<RequestExample>
+
+```bash cURL
+curl --request POST \
+  --url https://api.nameguard.io/bulk-inspect-names \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "names": [
+    "vitalìk.eth",
+    "nick.eth"
+  ],
+  "network_name": "mainnet"
+}'
+```
+
+```ts SDK
+const report = await nameguard.bulkInspectNames([
+  "nick.eth",
+  "notrab.eth",
+  "lightwalker.eth",
+]);
+```
+
+</RequestExample>

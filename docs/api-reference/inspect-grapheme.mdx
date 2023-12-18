@@ -1,0 +1,16 @@
+---
+openapi: "GET /inspect-grapheme/{grapheme}"
+---
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url https://api.nameguard.io/inspect-grapheme/{grapheme}
+```
+
+```ts SDK
+const report = await nameguard.inspectGrapheme("𝒶");
+```
+
+</RequestExample>
