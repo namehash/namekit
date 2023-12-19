@@ -1,4 +1,5 @@
 import json
+import time
 from enum import Enum
 from fastapi import FastAPI, Path
 from fastapi.middleware.cors import CORSMiddleware
@@ -87,11 +88,13 @@ async def inspect_name_get(
         examples=['vitalìk.eth'],
     ),
 ) -> NameGuardReport:
-    logger.debug(
-        f"{json.dumps({'endpoint': Endpoints.INSPECT_NAME, 'method': 'GET', 'network_name': network_name, 'name': name})}"
-    )
+    start_time = time.time()
     nameguard.context.endpoint_name.set(Endpoints.INSPECT_NAME)
-    return await ng.inspect_name(network_name, name)
+    result = await ng.inspect_name(network_name, name)
+    logger.debug(
+        f"{json.dumps({'endpoint': Endpoints.INSPECT_NAME, 'method': 'GET', 'network_name': network_name, 'name': name, 'processing_time': time.time()-start_time})}"
+    )
+    return result
 
 
 @app.get(
@@ -116,11 +119,13 @@ async def inspect_empty_name_get(network_name: NetworkName) -> NameGuardReport:
     },
 )
 async def inspect_name_post(request: InspectNameRequest) -> NameGuardReport:
-    logger.debug(
-        f"{json.dumps({'endpoint': Endpoints.INSPECT_NAME, 'method': 'POST', 'network_name': request.network_name, 'name': request.name})}"
-    )
+    start_time = time.time()
     nameguard.context.endpoint_name.set(Endpoints.INSPECT_NAME)
-    return await ng.inspect_name(request.network_name, request.name)
+    result = await ng.inspect_name(request.network_name, request.name)
+    logger.debug(
+        f"{json.dumps({'endpoint': Endpoints.INSPECT_NAME, 'method': 'POST', 'network_name': request.network_name, 'name': request.name, 'processing_time': time.time()-start_time})}"
+    )
+    return result
 
 
 # -- bulk-inspect-names --
@@ -140,11 +145,13 @@ class BulkInspectNamesRequest(BaseModel):
     },
 )
 async def bulk_inspect_names(request: BulkInspectNamesRequest) -> BulkNameGuardBulkReport:
-    logger.debug(
-        f"{json.dumps({'endpoint': Endpoints.BULK_INSPECT_NAMES, 'method': 'POST', 'network_name': request.network_name, 'names': request.names})}"
-    )
+    start_time = time.time()
     nameguard.context.endpoint_name.set(Endpoints.BULK_INSPECT_NAMES)
-    return await ng.bulk_inspect_names(request.network_name, request.names)
+    result = await ng.bulk_inspect_names(request.network_name, request.names)
+    logger.debug(
+        f"{json.dumps({'endpoint': Endpoints.BULK_INSPECT_NAMES, 'method': 'POST', 'network_name': request.network_name, 'names': request.names, 'processing_time': time.time()-start_time})}"
+    )
+    return result
 
 
 # -- inspect-namehash --
