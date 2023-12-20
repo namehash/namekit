@@ -674,13 +674,13 @@ dev = ["coverage", "coveralls", "pytest"]
 
 [[package]]
 name = "ens-label-inspector"
-version = "0.2.7"
+version = "0.2.8"
 description = ""
 optional = false
 python-versions = ">=3.9,<3.12"
 files = [
-    {file = "ens_label_inspector-0.2.7-py3-none-any.whl", hash = "sha256:445e0dd275ab4f95b0848b3a19d83016b56e63c063cf4e965d4c4ddf7dfbbf2f"},
-    {file = "ens_label_inspector-0.2.7.tar.gz", hash = "sha256:875b96d0c3fcec2e2a83d97753cc7dbcc8aac7fcd84c4a147d780b8b03fae775"},
+    {file = "ens_label_inspector-0.2.8-py3-none-any.whl", hash = "sha256:ddef5cb8dac369c1b2a16d00ba5adeb0f98b7701543bf324b01123fbce30a4bb"},
+    {file = "ens_label_inspector-0.2.8.tar.gz", hash = "sha256:b941e22aeb497471ef0b858177a026015eab84cd19bf87f313ca8cd3a4285544"},
 ]
 
 [package.dependencies]
