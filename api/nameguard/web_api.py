@@ -1,5 +1,10 @@
 import json
+import os
 import time
+
+# ruff: noqa: E402
+init_time = time.time()
+
 from enum import Enum
 from fastapi import FastAPI, Path
 from fastapi.middleware.cors import CORSMiddleware
@@ -30,6 +35,8 @@ from nameguard.exceptions import (
     MissingTitle,
 )
 
+logger.debug('NameGuard starting.')
+
 
 class ApiVersion(str, Enum):
     V08_BETA = 'v0.8-beta'
@@ -59,7 +66,29 @@ app.add_middleware(
     allow_headers=['*'],
 )
 
+init_call = True
+
+
+class LogEntry:
+    def __init__(self):
+        self.start_time = time.time()
+
+    def log(self, data: dict):
+        global init_call
+        data['processing_time'] = time.time() - self.start_time
+        data['init_call'] = init_call
+        init_call = False
+        data['time_since_init'] = time.time() - init_time
+
+        logger.debug(f'{json.dumps(data)}')
+
+
 ng = NameGuard()
+logger.debug('NameGuard inited.')
+
+if os.getenv('AWS_LAMBDA_INITIALIZATION_TYPE', None) == 'provisioned-concurrency':
+    ng.analyse_label('ni ck.eth')
+    logger.debug('NameGuard warmup.')
 
 
 # -- inspect-name --
@@ -88,12 +117,19 @@ async def inspect_name_get(
         examples=['vitalìk.eth'],
     ),
 ) -> NameGuardReport:
-    start_time = time.time()
+    log_entry = LogEntry()
     nameguard.context.endpoint_name.set(Endpoints.INSPECT_NAME)
     result = await ng.inspect_name(network_name, name)
-    logger.debug(
-        f"{json.dumps({'endpoint': Endpoints.INSPECT_NAME, 'method': 'GET', 'network_name': network_name, 'name': name, 'processing_time': time.time()-start_time})}"
+
+    log_entry.log(
+        {
+            'endpoint': Endpoints.INSPECT_NAME,
+            'method': 'GET',
+            'network_name': network_name,
+            'name': name,
+        }
     )
+
     return result
 
 
@@ -119,12 +155,19 @@ async def inspect_empty_name_get(network_name: NetworkName) -> NameGuardReport:
     },
 )
 async def inspect_name_post(request: InspectNameRequest) -> NameGuardReport:
-    start_time = time.time()
+    log_entry = LogEntry()
     nameguard.context.endpoint_name.set(Endpoints.INSPECT_NAME)
     result = await ng.inspect_name(request.network_name, request.name)
-    logger.debug(
-        f"{json.dumps({'endpoint': Endpoints.INSPECT_NAME, 'method': 'POST', 'network_name': request.network_name, 'name': request.name, 'processing_time': time.time()-start_time})}"
+
+    log_entry.log(
+        {
+            'endpoint': Endpoints.INSPECT_NAME,
+            'method': 'POST',
+            'network_name': request.network_name,
+            'name': request.name,
+        }
     )
+
     return result
 
 
@@ -145,12 +188,20 @@ class BulkInspectNamesRequest(BaseModel):
     },
 )
 async def bulk_inspect_names(request: BulkInspectNamesRequest) -> BulkNameGuardBulkReport:
-    start_time = time.time()
+    log_entry = LogEntry()
     nameguard.context.endpoint_name.set(Endpoints.BULK_INSPECT_NAMES)
     result = await ng.bulk_inspect_names(request.network_name, request.names)
-    logger.debug(
-        f"{json.dumps({'endpoint': Endpoints.BULK_INSPECT_NAMES, 'method': 'POST', 'network_name': request.network_name, 'names': request.names, 'processing_time': time.time()-start_time})}"
+
+    log_entry.log(
+        {
+            'endpoint': Endpoints.BULK_INSPECT_NAMES,
+            'method': 'POST',
+            'network_name': request.network_name,
+            'names': request.names,
+            'names_count': len(request.names),
+        }
     )
+
     return result
 
 
@@ -420,4 +471,4 @@ async def inspect_grapheme_get(
 if __name__ == '__main__':
     import asyncio
 
-    asyncio.run(ng.inspect_name('mainnet', 'nick.eth'))
+    asyncio.run(ng.inspect_name('mainnet', 'ni ck.eth'))
