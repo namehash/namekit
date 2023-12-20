@@ -1,4 +1,5 @@
 import json
+import os
 import time
 
 # ruff: noqa: E402
@@ -33,6 +34,8 @@ from nameguard.exceptions import (
     NotAGrapheme,
     MissingTitle,
 )
+
+logger.debug('NameGuard starting.')
 
 
 class ApiVersion(str, Enum):
@@ -81,6 +84,11 @@ class LogEntry:
 
 
 ng = NameGuard()
+logger.debug('NameGuard inited.')
+
+if os.getenv('AWS_LAMBDA_INITIALIZATION_TYPE', None) == 'provisioned-concurrency':
+    ng.analyse_label('ni ck.eth')
+    logger.debug('NameGuard warmup.')
 
 
 # -- inspect-name --
@@ -463,4 +471,4 @@ async def inspect_grapheme_get(
 if __name__ == '__main__':
     import asyncio
 
-    asyncio.run(ng.inspect_name('mainnet', 'nick.eth'))
+    asyncio.run(ng.inspect_name('mainnet', 'ni ck.eth'))
