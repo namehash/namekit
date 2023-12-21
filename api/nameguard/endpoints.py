@@ -1,7 +1,7 @@
-from enum import StrEnum
+from enum import Enum
 
 
-class Endpoints(StrEnum):
+class Endpoints(str, Enum):
     INSPECT_NAME = 'inspect-name'
     INSPECT_NAMEHASH = 'inspect-namehash'
     INSPECT_LABELHASH = 'inspect-labelhash'

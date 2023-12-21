@@ -1,7 +1,7 @@
-from enum import StrEnum
+from enum import Enum
 
 
-class NetworkName(StrEnum):
+class NetworkName(str, Enum):
     MAINNET = 'mainnet'
     SEPOLIA = 'sepolia'
     GOERLI = 'goerli'
