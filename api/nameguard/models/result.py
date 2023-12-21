@@ -1,5 +1,5 @@
 from typing import Optional
-from pydantic import BaseModel, Field, computed_field
+from pydantic import BaseModel, Field, computed_field, field_serializer
 from enum import Enum
 from ens_normalize import ens_beautify
 
@@ -44,6 +44,10 @@ class ConsolidatedReport(BaseModel):
     """
 
     rating: Rating = Field(examples=[Rating.WARN])
+
+    @field_serializer('rating')
+    def serialize_rating(self, rating: Rating, _info):
+        return str(rating)
 
     @computed_field(description='A human-readable title based on the `rating`.')
     @property
