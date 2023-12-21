@@ -1,13 +1,13 @@
 from typing import Optional
 from pydantic import BaseModel, computed_field, Field, field_serializer
-from enum import Enum, IntEnum
+from enum import Enum
 
 from nameguard.generic_utils import capitalize_words
 import nameguard.context
 from nameguard.endpoints import Endpoints
 
 
-class CheckStatus(IntEnum):
+class CheckStatus(int, Enum):
     """
     The status of a conducted check.
 
@@ -35,7 +35,7 @@ class CheckStatus(IntEnum):
         return self.name.lower()
 
 
-class Rating(IntEnum):
+class Rating(int, Enum):
     """
     The rating of a name/label/grapheme based on multiple conducted checks.
 
