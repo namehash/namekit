@@ -1,4 +1,5 @@
 import json
+import os
 import time
 
 # ruff: noqa: E402
@@ -33,6 +34,8 @@ from nameguard.exceptions import (
     NotAGrapheme,
     MissingTitle,
 )
+
+logger.debug('NameGuard starting.')
 
 
 class ApiVersion(str, Enum):
@@ -69,6 +72,7 @@ init_call = True
 class LogEntry:
     def __init__(self):
         self.start_time = time.time()
+        self.lambda_type = os.getenv('AWS_LAMBDA_INITIALIZATION_TYPE', None)
 
     def log(self, data: dict):
         global init_call
@@ -76,11 +80,17 @@ class LogEntry:
         data['init_call'] = init_call
         init_call = False
         data['time_since_init'] = time.time() - init_time
+        data['lambda_type'] = self.lambda_type
 
         logger.debug(f'{json.dumps(data)}')
 
 
 ng = NameGuard()
+logger.debug('NameGuard inited.')
+
+if os.getenv('AWS_LAMBDA_INITIALIZATION_TYPE', None) == 'provisioned-concurrency':
+    ng.analyse_label('ni ck.eth')
+    logger.debug('NameGuard warmup.')
 
 
 # -- inspect-name --
@@ -463,4 +473,4 @@ async def inspect_grapheme_get(
 if __name__ == '__main__':
     import asyncio
 
-    asyncio.run(ng.inspect_name('mainnet', 'nick.eth'))
+    asyncio.run(ng.inspect_name('mainnet', 'ni ck.eth'))

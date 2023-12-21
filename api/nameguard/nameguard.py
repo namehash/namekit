@@ -81,6 +81,8 @@ NAME_CHECKS = [
 
 def init_inspector():
     with initialize_inspector_config('prod_config') as config:
+        if os.getenv('AWS_LAMBDA_INITIALIZATION_TYPE', None) == 'provisioned-concurrency':
+            config.inspector.lazy_loading = False
         return Inspector(config)
 
 
