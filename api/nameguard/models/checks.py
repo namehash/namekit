@@ -1,13 +1,13 @@
 from typing import Optional
-from pydantic import BaseModel, computed_field, Field
-from enum import Enum
+from pydantic import BaseModel, computed_field, Field, field_serializer
+from enum import Enum, IntEnum
 
 from nameguard.generic_utils import capitalize_words
 import nameguard.context
 from nameguard.endpoints import Endpoints
 
 
-class CheckStatus(str, Enum):
+class CheckStatus(IntEnum):
     """
     The status of a conducted check.
 
@@ -18,47 +18,24 @@ class CheckStatus(str, Enum):
     * `alert`: This check failed, this is a major issue.
     """
 
-    INFO = 'info'
-    PASS = 'pass'
-    SKIP = 'skip'
-    WARN = 'warn'
-    ALERT = 'alert'
+    INFO = 0
+    PASS = 1
+    SKIP = 2
+    WARN = 3
+    ALERT = 4
 
     @property
     def order(self):
-        return {
-            CheckStatus.INFO: 0,
-            CheckStatus.PASS: 1,
-            CheckStatus.SKIP: 2,
-            CheckStatus.WARN: 3,
-            CheckStatus.ALERT: 4,
-        }[self]
+        return self.value
 
     def __hash__(self) -> int:
-        return hash(self.value)
+        return self.value
 
-    # Implementing all ops speeds up comparisons
-
-    def __lt__(self, other):
-        return self.order < other.order
-
-    def __gt__(self, other):
-        return self.order > other.order
-
-    def __eq__(self, other):
-        return self.order == other.order
-
-    def __le__(self, other):
-        return self.order <= other.order
-
-    def __ge__(self, other):
-        return self.order >= other.order
-
-    def __ne__(self, other):
-        return self.order != other.order
+    def __str__(self):
+        return self.name.lower()
 
 
-class Rating(str, Enum):
+class Rating(IntEnum):
     """
     The rating of a name/label/grapheme based on multiple conducted checks.
 
@@ -67,40 +44,19 @@ class Rating(str, Enum):
     * `alert`: At least one check failed with an `ALERT` status.
     """
 
-    PASS = 'pass'
-    WARN = 'warn'
-    ALERT = 'alert'
+    PASS = 2
+    WARN = 3
+    ALERT = 4
 
     @property
     def order(self):
-        return {
-            Rating.PASS: 2,
-            Rating.WARN: 3,
-            Rating.ALERT: 4,
-        }[self]
+        return self.value
 
     def __hash__(self) -> int:
-        return hash(self.value)
+        return self.value
 
-    # Implementing all ops speeds up comparisons
-
-    def __lt__(self, other):
-        return self.order < other.order
-
-    def __gt__(self, other):
-        return self.order > other.order
-
-    def __eq__(self, other):
-        return self.order == other.order
-
-    def __le__(self, other):
-        return self.order <= other.order
-
-    def __ge__(self, other):
-        return self.order >= other.order
-
-    def __ne__(self, other):
-        return self.order != other.order
+    def __str__(self):
+        return self.name.lower()
 
 
 class Check(str, Enum):
@@ -211,6 +167,18 @@ def get_check_severity(check: Check) -> int:
         return SEVERITY_PER_ENDPOINT.get(endpoint, SEVERITY_DEFAULT).get(check, 0)
 
 
+# TODO
+# {
+#     CheckStatus.SKIP: Rating.PASS,
+#     CheckStatus.INFO: Rating.PASS,
+#     CheckStatus.PASS: Rating.PASS,
+#     CheckStatus.WARN: Rating.WARN,
+#     CheckStatus.ALERT: Rating.ALERT,
+# }
+
+status_rating = [Rating.PASS, Rating.PASS, Rating.PASS, Rating.WARN, Rating.ALERT]
+
+
 class GenericCheckResult(BaseModel):
     """
     The result of a conducted check.
@@ -218,6 +186,10 @@ class GenericCheckResult(BaseModel):
 
     check: Check = Field(examples=[Check.CONFUSABLES])
     status: CheckStatus = Field(examples=[CheckStatus.WARN])
+
+    @field_serializer('status')
+    def serialize_status(self, status: CheckStatus, _info):
+        return str(status)
 
     def __init__(self, **data):
         super().__init__(**data)
@@ -256,16 +228,10 @@ class GenericCheckResult(BaseModel):
 
     @property
     def rating(self):
-        return {
-            CheckStatus.SKIP: Rating.PASS,
-            CheckStatus.INFO: Rating.PASS,
-            CheckStatus.PASS: Rating.PASS,
-            CheckStatus.WARN: Rating.WARN,
-            CheckStatus.ALERT: Rating.ALERT,
-        }[self.status]
+        return status_rating[self.status]
 
     def __repr__(self):
-        return f'{self.check.value}({self.rating.value})'
+        return f'{self.check.value}({self.rating})'
 
     @property
     def order(self):
