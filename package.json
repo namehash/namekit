@@ -13,7 +13,6 @@
   "devDependencies": {
     "eslint": "8.51.0",
     "prettier": "^3.0.3",
-    "serverless-prune-plugin": "2.0.2",
     "turbo": "1.10.16"
   }
 }
