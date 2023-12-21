@@ -2,14 +2,13 @@ service: oss-nameguard
 
 custom:
   stage: ${opt:stage}
-  region: ${opt:region}
-  apiDomain: ${opt:apiDomain}
-  hostedZoneName: ${opt:hostedZoneName}
-  hostedZoneId: ${opt:hostedZoneId}
+  apiDomain: api.nameguard.io
+  hostedZoneName: nameguard.io.  
+  hostedZoneId: Z00825691ZLCWE2VKJQW0
   prune:
     automatic: true
     number: 5
-  
+  region: us-east-1   
 
 
 provider:
@@ -25,22 +24,24 @@ provider:
 
 plugins:
   - serverless-prune-plugin
+
 functions:
   oss-nameguard:
     image:
       name: oss-nameguard
     name: oss-nameguard-${self:custom.stage}
     memorySize: 512
-    timeout: 10 
+    timeout: 10
+    versionFunctions: true
     url: true
     role: DefaultNameGuardRole
     provisionedConcurrency: 1
     tags:
       Stage: ${self:custom.stage}
     environment:
-      PROVIDER_URI_GOERLI: ${env:PROVIDER_URI_GOERLI}
-      PROVIDER_URI_MAINNET: ${env:PROVIDER_URI_MAINNET}
-      PROVIDER_URI_SEPOLIA: ${env:PROVIDER_URI_SEPOLIA}
+      PROVIDER_URI_GOERLI: ${param:PROVIDER_URI_GOERLI}
+      PROVIDER_URI_MAINNET: ${param:PROVIDER_URI_MAINNET}
+      PROVIDER_URI_SEPOLIA: ${param:PROVIDER_URI_SEPOLIA}
 
 
 resources:
@@ -49,7 +50,7 @@ resources:
       Type: AWS::IAM::Role
       Properties:
         Path: /my/default/path/
-        RoleName: DefaultNameGuardRole-${self:custom.stage}
+        RoleName: DefaultNameGuardRole # required if you want to use 'serverless deploy --function' later on
         AssumeRolePolicyDocument:
           Version: '2012-10-17'
           Statement:
@@ -63,7 +64,7 @@ resources:
             PolicyDocument:
               Version: '2012-10-17'
               Statement:
-                - Effect: Allow
+                - Effect: Allow # note that these rights are given in the default policy and are required if you want logs out of your lambda(s)
                   Action:
                     - logs:CreateLogGroup
                     - logs:CreateLogStream
@@ -160,5 +161,5 @@ resources:
           - Name: ${self:custom.apiDomain}
             Type: A
             AliasTarget:
-              HostedZoneId: Z2FDTNDATAQYW2 # Constant for Cloudfront - https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-route53-recordset-aliastarget.html
-              DNSName: { 'Fn::GetAtt': [ApiCloudFrontDistribution, DomainName] }
+              HostedZoneId: Z2FDTNDATAQYW2 #default for cloudfront
+              DNSName: { 'Fn::GetAtt': [ApiCloudFrontDistribution, DomainName] } # set the domain of your cloudfront distribution
