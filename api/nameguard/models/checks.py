@@ -167,16 +167,17 @@ def get_check_severity(check: Check) -> int:
         return SEVERITY_PER_ENDPOINT.get(endpoint, SEVERITY_DEFAULT).get(check, 0)
 
 
-# TODO
-# {
-#     CheckStatus.SKIP: Rating.PASS,
-#     CheckStatus.INFO: Rating.PASS,
-#     CheckStatus.PASS: Rating.PASS,
-#     CheckStatus.WARN: Rating.WARN,
-#     CheckStatus.ALERT: Rating.ALERT,
-# }
+status_rating_mapping = {
+    CheckStatus.SKIP: Rating.PASS,
+    CheckStatus.INFO: Rating.PASS,
+    CheckStatus.PASS: Rating.PASS,
+    CheckStatus.WARN: Rating.WARN,
+    CheckStatus.ALERT: Rating.ALERT,
+}
 
-status_rating = [Rating.PASS, Rating.PASS, Rating.PASS, Rating.WARN, Rating.ALERT]
+status_rating = [None] * len(status_rating_mapping)
+for status, rating in status_rating_mapping.items():
+    status_rating[status] = rating
 
 
 class GenericCheckResult(BaseModel):
