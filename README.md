@@ -10,7 +10,7 @@ The NameHash team is proud to present NameGuard, a tool for identifying and prev
   - Confusable grapheme detection
   - International accessibility checks
   - Rendering checks for different fonts
-  - ENSIP-15 verification with detailed explanations and auto-suggestions
+  - ENSIP-15 verification with detailed explanations and auto-suggestions (provided by [ens-normalize-python](https://github.com/namehash/ens-normalize-python))
   - Punycode and DNS hostname compatibility checks
   - and more!
 - Provides a unified rating system for entire names, as well as detailed explanations for each check
