@@ -133,7 +133,12 @@ class NameGuard:
                 logger.warning(f'Environment variable {env_var} is not set')
             self.ns[network_name] = OurENS(HTTPProvider(os.environ.get(env_var)))
 
+        # optimization
+        self.eth_label = self._inspector.analyse_label('eth', simple_confusables=True, omit_cure=True)
+
     def analyse_label(self, label: str):
+        if label == 'eth':
+            return self.eth_label
         return self._inspector.analyse_label(label, simple_confusables=True, omit_cure=True)
 
     async def inspect_name(

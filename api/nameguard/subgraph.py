@@ -199,8 +199,6 @@ async def resolve_labelhashes_querying_labelhashes(network_name: NetworkName, la
 
 
 async def resolve_all_labelhashes_in_name_querying_labelhashes(network_name: NetworkName, name: str) -> str:
-    logger.debug(f'Trying to resolve full name: {name}')
-
     labels = name.split('.')
 
     labelhash_idx = [i for i, label in enumerate(labels) if label_is_labelhash(label)]
@@ -208,6 +206,7 @@ async def resolve_all_labelhashes_in_name_querying_labelhashes(network_name: Net
     if not labelhash_idx:
         return name
 
+    logger.debug(f'Trying to resolve full name: {name}')
     resolved_labelhashes = await resolve_labelhashes_querying_labelhashes(
         network_name, [labels[i] for i in labelhash_idx]
     )
