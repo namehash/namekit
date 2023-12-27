@@ -1,6 +1,7 @@
 import React, { forwardRef, type Ref } from "react";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";
 
+import { AvatarIcons } from "./Avatars";
 import { Slideover } from "../Slideover/Slideover";
 
 const xmtpChatUrl =
@@ -21,12 +22,7 @@ export const ChatModal = forwardRef(
       <Slideover title="Chat with us" isOpen={open} onClose={onClose} ref={ref}>
         <div className="flex items-center justify-center h-full py-12">
           <div className="space-y-5 text-center">
-            {/* <Image
-                    src={Avatars}
-                    role="presentation"
-                    alt="Avatars"
-                    className="h-10 w-auto mx-auto"
-                  /> */}
+            <AvatarIcons className="h-[49px] w-[80px] w-auto mx-auto" />
             <div className="space-y-2">
               <p className="text-black font-semibold text-lg leading-6">
                 Contact nameguard.eth using XMTP
