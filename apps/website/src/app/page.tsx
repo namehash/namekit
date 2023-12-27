@@ -247,6 +247,7 @@ export default function Home() {
             source: ens_completion_score_img.src,
             tagWidth: 968,
             tagHeight: 738,
+            styles: "pl-8",
           }}
         />
         <MobileSectionDivider />
@@ -334,6 +335,7 @@ type ImageCharacteristics = {
   source: string;
   tagWidth: number;
   tagHeight: number;
+  styles?: string;
 };
 
 type ReadySectionProps = {
@@ -384,7 +386,7 @@ function ReadySection(props: ReadySectionProps) {
   return (
     <section className="relative w-full h-full py-10 px-5 flex flex-col items-center justify-center bg-white gt_mobile:bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] gt_mobile:[background-size:24px_24px] md:py-24 gt_mobile:px-0">
       <div className="max-w-full flex flex-col items-center gt_mobile:mx-auto gt_mobile:px-6 gt_mobile:gap-3">
-        <div className="w-full flex flex-col gap-5 items-center xl:w-1/2">
+        <div className="w-full flex flex-col gap-5 items-center md:px-28 xl:px-0 xl:w-1/2">
           <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-[20px] gap-2 justify-center items-center z-10">
             {props.sectionTargetSvg}
             <span className="text-black text-center text-sm not-italic font-medium z-10 leading-5">
@@ -465,7 +467,7 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
   ]);
 
   const rightBackgroundDiv = cc([
-    "absolute z-0 top-0 left-0 h-[105%] w-full search_bar_change:w-[115%] bg-center bg-no-repeat bg-cover [opacity:0.3]",
+    "absolute z-0 top-0 left-0 h-[105%] w-full search_bar_change:w-[110%] bg-center bg-no-repeat bg-cover [opacity:0.3]",
     props.sectionBackgroundName,
   ]);
 
@@ -474,13 +476,22 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
     props.sectionBackgroundName,
   ]);
 
+  const baseTextDiv =
+    "flex flex-col gap-5 h-full w-full max-w-3xl items-center xl:items-start xl:w-1/2 md:px-[72px] xl:px-0";
+
+  const baseImageStyles = "relative z-10 w-full h-full";
+
   return (
     <section className="w-full flex flex-col xl:flex-row items-center justify-center h-full py-10 px-5 bg-white gt_mobile:bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] gt_mobile:[background-size:24px_24px] gt_mobile:h-1/2 md:py-20 gt_mobile:px-10">
       {!props.isTextOnTheLeft && (
         <div className={leftImageDiv}>
           <div className={leftBackgroundDiv} />
           <Image
-            className="relative z-10 w-full h-full"
+            className={
+              props.imageSpecifics.styles !== undefined
+                ? cc([baseImageStyles, props.imageSpecifics.styles])
+                : baseImageStyles
+            }
             src={props.imageSpecifics.source}
             alt={"chat image"}
             width={props.imageSpecifics.tagWidth}
@@ -489,7 +500,12 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
           />
         </div>
       )}
-      <div className="flex flex-col gap-5 h-full w-full max-w-3xl items-center xl:items-start xl:w-1/2">
+      <div
+        className={cc([
+          baseTextDiv,
+          props.isTextOnTheLeft ? "xl:pl-[72px]" : "xl:pr-[72px]",
+        ])}
+      >
         <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-3xl gap-2 justify-center items-center z-10">
           {props.sectionTargetSvg}
           <span className="text-black text-center text-sm leading-5 not-italic font-medium z-10">
@@ -518,7 +534,11 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
         <div className={rightImageDiv}>
           <div className={rightBackgroundDiv} />
           <Image
-            className="relative z-10 w-full h-full"
+            className={
+              props.imageSpecifics.styles !== undefined
+                ? cc([baseImageStyles, props.imageSpecifics.styles])
+                : baseImageStyles
+            }
             src={props.imageSpecifics.source}
             alt="chat image"
             width={props.imageSpecifics.tagWidth}
@@ -530,7 +550,11 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
         <div className={cc([rightImageDiv, "xl:hidden pt-8"])}>
           <div className={rightBackgroundDiv} />
           <Image
-            className="relative z-10 w-full h-full"
+            className={
+              props.imageSpecifics.styles !== undefined
+                ? cc([baseImageStyles, props.imageSpecifics.styles])
+                : baseImageStyles
+            }
             src={props.imageSpecifics.source}
             alt="chat image"
             width={props.imageSpecifics.tagWidth}
@@ -541,7 +565,11 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
       )}
       <div className={mobileImageDiv}>
         <Image
-          className="relative z-10 w-full h-full"
+          className={
+            props.imageSpecifics.styles !== undefined
+              ? cc([baseImageStyles, props.imageSpecifics.styles])
+              : baseImageStyles
+          }
           src={props.imageSpecifics.source}
           alt="chat image"
           width={props.imageSpecifics.tagWidth}
@@ -1516,7 +1544,7 @@ function ChecksSection() {
     "self-stretch not-italic z-10 text-gray-500 text-left text-sm leading-6 font-normal";
 
   return (
-    <section className="relative z-10 w-full h-full box-border flex flex-col py-10 px-5 items-center justify-center self-stretch gap-[32px] md:pt-[100px] md:pb-[48px] md:gap-0 bg-white gt_mobile:bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] gt_mobile:[background-size:24px_24px]">
+    <section className="relative z-10 w-full h-full box-border flex flex-col py-10 px-5 items-center justify-center self-stretch gap-[32px] md:pt-[100px] md:pb-[48px] md:gap-0 bg-white gt_mobile:bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] gt_mobile:[background-size:24px_24px] search_bar_change:px-28">
       <div className="flex flex-col justify-center items-center gap-5 max-w-[608px]">
         <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-3xl gap-2 justify-center items-center z-10">
           <CheckShieldGrayOutline />
@@ -1542,7 +1570,7 @@ function ChecksSection() {
             opacity: "0.1",
           }}
         />
-        <div className="max-w-[1820px] grid xl:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-4">
+        <div className="max-w-[1820px] grid min-[1420px]:grid-cols-3 lg:grid-cols-2 grid-cols-1 gap-4">
           {checkElements.map((elem, idx) => {
             return (
               idx < checkElements.length - 1 && (
@@ -1575,7 +1603,7 @@ function DevelopersSection() {
   const iconWrapperStyle =
     "w-11 h-11 p-[10px] flex justify-center items-center flex-shrink-0 bg-black rounded-lg";
   const cellStyle =
-    "group w-full md:w-[602px] h-full max-w-[602px] box-border flex flex-row items-start justify-start bg-white p-5 gap-4 rounded-xl border border-gray-200";
+    "group w-full md:w-[602px] h-full sm:min-w-[602px] max-w-[602px] box-border flex flex-row items-start justify-start bg-white p-5 gap-4 rounded-xl border border-gray-200";
   const cellTextStyle =
     "self-stretch not-italic z-10 text-gray-500 text-left text-sm leading-6 font-normal";
   const headerStyle =
@@ -1800,7 +1828,7 @@ function DevelopersSection() {
   ];
 
   return (
-    <section className="relative z-10 w-full h-full box-border flex flex-col py-10 px-5 items-center justify-center self-stretch gap-[32px] bg-white gt_mobile:bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] gt_mobile:[background-size:24px_24px]">
+    <section className="relative z-10 w-full h-full box-border flex flex-col py-10 px-5 items-center justify-center self-stretch gap-[32px] bg-white gt_mobile:bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] gt_mobile:[background-size:24px_24px] md:px-[100px]">
       <div className="flex flex-col justify-center items-center gap-5 max-w-[608px]">
         <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-3xl gap-2 justify-center items-center z-10">
           <GithubIconSmall />
@@ -1831,7 +1859,7 @@ function DevelopersSection() {
               href={elem.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group w-full md:w-fit h-fit"
+              className="group w-full sm:w-fit h-fit"
             >
               <div className={hoverCellStyle}>
                 <RedirectIcon svgStyle={redirectStyle} />
