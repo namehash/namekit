@@ -157,6 +157,15 @@ async def inspect_empty_name_get(network_name: NetworkName) -> NameGuardReport:
     },
 )
 async def inspect_name_post(request: InspectNameRequest) -> NameGuardReport:
+    """
+    Inspects a single name with NameGuard. Provides a `NameGuardReport` including:
+    1. The details of all checks performed on `request.name` that consolidates all checks performed on labels and graphemes in `request.name`.
+    2. The details of all labels in `request.name`.
+    3. A consolidated inspection result of all graphemes in `request.name`.
+
+    This endpoint will attempt automated labelhash resolution through the ENS Subgraph, using network specified in `request.network_name`.
+    """
+
     log_entry = LogEntry()
     nameguard.context.endpoint_name.set(Endpoints.INSPECT_NAME)
     result = await ng.inspect_name(request.network_name, request.name)
@@ -190,6 +199,17 @@ class BulkInspectNamesRequest(BaseModel):
     },
 )
 async def bulk_inspect_names(request: BulkInspectNamesRequest) -> BulkNameGuardBulkReport:
+    """
+    Inspects up to 250 names at a time with NameGuard. Provides a `ConsolidatedNameGuardReport` for each name provided in `request.names`, including:
+    1. The details of all checks performed on a name that consolidates all checks performed on labels and graphemes in this name.
+
+    Each `ConsolidatedNameGuardReport` returned represents an equivalent set of checks as a `NameGuardReport`. However:
+    1. A `NameGuardReport` contains a lot of additional data that isn't always needed / desired when a `ConsolidatedNameGuardReport` will do.
+    2. When NameGuard only needs to return a `ConsolidatedNameGuardReport`, some special performance optimizations are possible (and completely safe) that help to accelate responses in many cases.
+
+    This endpoint will attempt automated labelhash resolution through the ENS Subgraph, using network specified in `request.network_name`.
+    """
+
     log_entry = LogEntry()
     nameguard.context.endpoint_name.set(Endpoints.BULK_INSPECT_NAMES)
     result = await ng.bulk_inspect_names(request.network_name, request.names)
@@ -258,6 +278,14 @@ async def inspect_namehash_get(
     },
 )
 async def inspect_namehash_post(request: InspectNamehashRequest) -> NameGuardReport:
+    """
+    Inspects the name associated with a `request.namehash`.
+
+    NameGuard will attempt to resolve the name associated with the `request.namehash` through the ENS Subgraph, using network specified in `request.network_name`.
+    If this resolution succeeds then NameGuard will generate and return a `NameGuardReport` for the name.
+    If this resolution fails then NameGuard will return an error.
+    """
+
     logger.debug(
         f"{json.dumps({'endpoint': Endpoints.INSPECT_NAMEHASH, 'method': 'POST', 'network_name': request.network_name, 'namehash': request.namehash})}"
     )
