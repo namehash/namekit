@@ -119,6 +119,18 @@ async def inspect_name_get(
         examples=['vitalìk.eth'],
     ),
 ) -> NameGuardReport:
+    """
+    ## Inspects a single name with NameGuard.
+
+    Provides a `NameGuardReport` including:
+    1. The details of all checks performed on `name` that consolidates all checks performed on labels and graphemes in `name`.
+    2. The details of all labels in `name`.
+    3. A consolidated inspection result of all graphemes in `name`.
+
+    This endpoint will attempt automated labelhash resolution through the ENS Subgraph,
+    using network specified in `network_name`.
+    """
+
     log_entry = LogEntry()
     nameguard.context.endpoint_name.set(Endpoints.INSPECT_NAME)
     result = await ng.inspect_name(network_name, name)
@@ -158,12 +170,15 @@ async def inspect_empty_name_get(network_name: NetworkName) -> NameGuardReport:
 )
 async def inspect_name_post(request: InspectNameRequest) -> NameGuardReport:
     """
-    Inspects a single name with NameGuard. Provides a `NameGuardReport` including:
+    ## Inspects a single name with NameGuard.
+
+    Provides a `NameGuardReport` including:
     1. The details of all checks performed on `request.name` that consolidates all checks performed on labels and graphemes in `request.name`.
     2. The details of all labels in `request.name`.
     3. A consolidated inspection result of all graphemes in `request.name`.
 
-    This endpoint will attempt automated labelhash resolution through the ENS Subgraph, using network specified in `request.network_name`.
+    This endpoint will attempt automated labelhash resolution through the ENS Subgraph,
+    using network specified in `request.network_name`.
     """
 
     log_entry = LogEntry()
@@ -200,14 +215,17 @@ class BulkInspectNamesRequest(BaseModel):
 )
 async def bulk_inspect_names(request: BulkInspectNamesRequest) -> BulkNameGuardBulkReport:
     """
-    Inspects up to 250 names at a time with NameGuard. Provides a `ConsolidatedNameGuardReport` for each name provided in `request.names`, including:
+    ## Inspects up to 250 names at a time with NameGuard.
+
+    Provides a `ConsolidatedNameGuardReport` for each name provided in `request.names`, including:
     1. The details of all checks performed on a name that consolidates all checks performed on labels and graphemes in this name.
 
     Each `ConsolidatedNameGuardReport` returned represents an equivalent set of checks as a `NameGuardReport`. However:
     1. A `NameGuardReport` contains a lot of additional data that isn't always needed / desired when a `ConsolidatedNameGuardReport` will do.
     2. When NameGuard only needs to return a `ConsolidatedNameGuardReport`, some special performance optimizations are possible (and completely safe) that help to accelate responses in many cases.
 
-    This endpoint will attempt automated labelhash resolution through the ENS Subgraph, using network specified in `request.network_name`.
+    This endpoint will attempt automated labelhash resolution through the ENS Subgraph,
+    using network specified in `request.network_name`.
     """
 
     log_entry = LogEntry()
@@ -256,6 +274,17 @@ async def inspect_namehash_get(
         description='Namehash should be a decimal or a hex (prefixed with 0x) string.',
     ),
 ) -> NameGuardReport:
+    """
+    ## Inspects the name associated with a namehash.
+
+    NameGuard will attempt to resolve the name associated with the `namehash` through the ENS Subgraph,
+    using network specified in `network_name`.
+
+    If this resolution succeeds then NameGuard will generate and return a `NameGuardReport` for the name.
+
+    If this resolution fails then NameGuard will return an error.
+    """
+
     logger.debug(
         f"{json.dumps({'endpoint': Endpoints.INSPECT_NAMEHASH, 'method': 'GET', 'network_name': network_name, 'namehash': namehash})}"
     )
@@ -279,10 +308,13 @@ async def inspect_namehash_get(
 )
 async def inspect_namehash_post(request: InspectNamehashRequest) -> NameGuardReport:
     """
-    Inspects the name associated with a `request.namehash`.
+    ## Inspects the name associated with a namehash.
 
-    NameGuard will attempt to resolve the name associated with the `request.namehash` through the ENS Subgraph, using network specified in `request.network_name`.
+    NameGuard will attempt to resolve the name associated with the `request.namehash` through the ENS Subgraph,
+    using network specified in `request.network_name`.
+
     If this resolution succeeds then NameGuard will generate and return a `NameGuardReport` for the name.
+
     If this resolution fails then NameGuard will return an error.
     """
 
@@ -330,6 +362,27 @@ async def inspect_labelhash_get(
         examples=['eth'],
     ),
 ) -> NameGuardReport:
+    """
+    ## Inspects the name `[{labelhash}].{parent_name}`.
+
+    Parent may be a name with any number of labels. The default parent is "eth".
+
+    This is a convenience function to generate a `NameGuardReport` in cases when you only have:
+    1. The labelhash of the "childmost" label of a name.
+    2. The complete parent name of the "childmost" label.
+
+    NameGuard always inspects names, rather than labelhashes. So this function will first attempt
+    to resolve the "childmost" label associated with the provided labelhash through the ENS Subgraph,
+    using network specified in `network_name`.
+
+    If this label resolution fails the resulting `NameGuardReport` will be equivalent to requesting
+    a `NameGuardReport` for the name `[{labelhash}].{parent_name}` which will contain (at least)
+    one label with an `unknown` `Normalization`.
+
+    If this label resolution succeeds the resulting `NameGuardReport` will be equivalent to requesting
+    a `NameGuardReport` for the name `{label}.{parent_name}`.
+    """
+
     logger.debug(
         f"{json.dumps({'endpoint': Endpoints.INSPECT_LABELHASH, 'method': 'GET', 'network_name': network_name, 'labelhash': labelhash, 'parent_name': parent_name})}"
     )
@@ -373,6 +426,27 @@ async def inspect_labelhash_get_empty_parent(
     },
 )
 async def inspect_labelhash_post(request: InspectLabelhashRequest) -> NameGuardReport:
+    """
+    ## Inspects the name `[{request.labelhash}].{request.parent_name}`.
+
+    Parent may be a name with any number of labels. The default parent is "eth".
+
+    This is a convenience function to generate a `NameGuardReport` in cases when you only have:
+    1. The labelhash of the "childmost" label of a name.
+    2. The complete parent name of the "childmost" label.
+
+    NameGuard always inspects names, rather than labelhashes. So this function will first attempt
+    to resolve the "childmost" label associated with the provided labelhash through the ENS Subgraph,
+    using network specified in `request.network_name`.
+
+    If this label resolution fails the resulting `NameGuardReport` will be equivalent to requesting
+    a `NameGuardReport` for the name `[{request.labelhash}].{request.parent_name}` which will contain (at least)
+    one label with an `unknown` `Normalization`.
+
+    If this label resolution succeeds the resulting `NameGuardReport` will be equivalent to requesting
+    a `NameGuardReport` for the name `{label}.{request.parent_name}`.
+    """
+
     logger.debug(
         f"{json.dumps({'endpoint': Endpoints.INSPECT_LABELHASH, 'method': 'POST', 'network_name': request.network_name, 'labelhash': request.labelhash, 'parent_name': request.parent_name})}"
     )
@@ -493,6 +567,7 @@ async def inspect_grapheme_get(
         examples=['v', 'ń', '%F0%9F%98%B5'],
     ),
 ) -> GraphemeGuardReport:
+    """## Inspects a single grapheme."""
     logger.debug(f"{json.dumps({'endpoint': Endpoints.INSPECT_GRAPHEME, 'method': 'GET', 'grapheme': grapheme})}")
     nameguard.context.endpoint_name.set(Endpoints.INSPECT_GRAPHEME)
     return ng.inspect_grapheme(grapheme)
