@@ -19,9 +19,9 @@ NameGuard is available as a Python library on [PyPI](https://pypi.org/project/na
 pip install nameguard
 ```
 
-### Setting API keys
+### Setting Provider URIs
 
-NameGuard uses the Provider API (e.g. Alchemy) for `secure-primary-name/` endpoint. Provider API URLs have to be set by environment variables, e.g.:
+NameGuard uses the specified Provider endpoint (e.g. Alchemy, Infura, your own Ethereum node, etc...) for `secure-primary-name/`. Provider endpoints have to be set by environment variables, e.g.:
 
 ```bash
 export PROVIDER_URI_MAINNET=https://eth-mainnet.g.alchemy.com/v2/[YOUR_ALCHEMY_API_KEY]
