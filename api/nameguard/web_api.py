@@ -367,11 +367,11 @@ async def inspect_labelhash_get(
 
     Parent may be a name with any number of labels. The default parent is "eth".
 
-    This is a convenience function to generate a `NameGuardReport` in cases when you only have:
+    This is a convenience endpoint to generate a `NameGuardReport` in cases when you only have:
     1. The labelhash of the "childmost" label of a name.
     2. The complete parent name of the "childmost" label.
 
-    NameGuard always inspects names, rather than labelhashes. So this function will first attempt
+    NameGuard always inspects names, rather than labelhashes. So this endpoint will first attempt
     to resolve the "childmost" label associated with the provided labelhash through the ENS Subgraph,
     using network specified in `network_name`.
 
@@ -431,11 +431,11 @@ async def inspect_labelhash_post(request: InspectLabelhashRequest) -> NameGuardR
 
     Parent may be a name with any number of labels. The default parent is "eth".
 
-    This is a convenience function to generate a `NameGuardReport` in cases when you only have:
+    This is a convenience endpoint to generate a `NameGuardReport` in cases when you only have:
     1. The labelhash of the "childmost" label of a name.
     2. The complete parent name of the "childmost" label.
 
-    NameGuard always inspects names, rather than labelhashes. So this function will first attempt
+    NameGuard always inspects names, rather than labelhashes. So this endpoint will first attempt
     to resolve the "childmost" label associated with the provided labelhash through the ENS Subgraph,
     using network specified in `request.network_name`.
 
