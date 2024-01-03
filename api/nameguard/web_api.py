@@ -469,11 +469,19 @@ async def inspect_labelhash_post(request: InspectLabelhashRequest) -> NameGuardR
     },
 )
 async def secure_primary_name_get(address: str, network_name: NetworkName) -> SecurePrimaryNameResult:
+    """
+    ## Reverse lookup of Ethereum `address` to primary name.
+
+    This endpoint checks primary name using Provider API.
+
+    Returns `display_name` to be shown to users and estimates `impersonation_status`.
+    """
     logger.debug(
         f"{json.dumps({'endpoint': Endpoints.SECURE_PRIMARY_NAME, 'method': 'GET', 'network_name': network_name, 'address': address})}"
     )
     nameguard.context.endpoint_name.set(Endpoints.SECURE_PRIMARY_NAME)
     address = validate_ethereum_address(address)
+
     return await ng.secure_primary_name(address, network_name)
 
 
@@ -536,6 +544,11 @@ class FakeETHNameCheckFieldsRequest(BaseModel):
     },
 )
 async def fake_eth_name_check_fields_post(request: FakeETHNameCheckFieldsRequest) -> FakeEthNameCheckResult:
+    """
+    ## Fake .eth ENS name check based on given metadata.
+
+    This endpoint checks whether given metadata looks like fake .eth ENS name.
+    """
     logger.debug(
         f"{json.dumps({'endpoint': Endpoints.FAKE_ETH_NAME_CHECK, 'method': 'POST', 'network_name': request.network_name, 'contract_address': request.contract_address, 'token_id': request.token_id})}"
     )
