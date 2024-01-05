@@ -28,7 +28,7 @@ export function ExternalLinks({ title, links }: ExternalLinksProps) {
           </Menu.Button>
         }
       >
-        View name in
+        More actions
       </Tooltip>
 
       <Transition
