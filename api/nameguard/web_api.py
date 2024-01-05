@@ -545,9 +545,9 @@ class FakeETHNameCheckFieldsRequest(BaseModel):
 )
 async def fake_eth_name_check_fields_post(request: FakeETHNameCheckFieldsRequest) -> FakeEthNameCheckResult:
     """
-    ## Fake .eth ENS name check based on given metadata.
+    ## Fake .eth ENS name check based on given NFT metadata.
 
-    This endpoint checks whether given metadata looks like fake .eth ENS name.
+    This endpoint checks if the metadata of an NFT looks like a fake .eth ENS name.
     """
     logger.debug(
         f"{json.dumps({'endpoint': Endpoints.FAKE_ETH_NAME_CHECK, 'method': 'POST', 'network_name': request.network_name, 'contract_address': request.contract_address, 'token_id': request.token_id})}"
