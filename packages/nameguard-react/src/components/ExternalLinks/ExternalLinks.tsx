@@ -5,6 +5,8 @@ import {
   ArrowUpRightIcon,
 } from "@heroicons/react/24/solid";
 
+import { Tooltip } from "../Tooltip/Tooltip";
+
 type LinkItem = {
   href: string;
   text: string;
@@ -19,9 +21,15 @@ type ExternalLinksProps = {
 export function ExternalLinks({ title, links }: ExternalLinksProps) {
   return (
     <Menu as="div" className="relative inline-block text-left group">
-      <Menu.Button className="flex items-center justify-between p-2 appearance-none bg-transparent hover:bg-black/5 transition rounded-md focus:outline-none">
-        <EllipsisVerticalIcon className="text-black fill-current w-6 h-6" />
-      </Menu.Button>
+      <Tooltip
+        trigger={
+          <Menu.Button className="flex items-center justify-between p-2 appearance-none bg-transparent hover:bg-black/5 transition rounded-md focus:outline-none">
+            <EllipsisVerticalIcon className="text-black fill-current w-6 h-6" />
+          </Menu.Button>
+        }
+      >
+        More actions
+      </Tooltip>
 
       <Transition
         as={Fragment}
