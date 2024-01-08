@@ -488,7 +488,7 @@ class NameGuard {
    *   3. A consolidated inspection result of all graphemes in `name`.
    *
    * This function will attempt automated labelhash resolution through the ENS Subgraph,
-   * using network specified in `options.network_name`.
+   * using the network specified in `options.network_name`.
    *
    * @param {string} name The name for NameGuard to inspect.
    * @param {InspectNameOptions} options The options for the inspection.
@@ -516,7 +516,7 @@ class NameGuard {
    *      are possible (and completely safe) that help to accelerate responses in many cases.
    *
    * This function will attempt automated labelhash resolution through the ENS Subgraph,
-   * using network specified in `options.network_name`.
+   * using the network specified in `options.network_name`.
    *
    * @param {string[]} names The list of names for NameGuard to inspect.
    * @param {InspectNameOptions} options The options for the inspection.
@@ -595,7 +595,7 @@ class NameGuard {
    *
    * NameGuard always inspects names, rather than labelhashes. So this function will first attempt
    * to resolve the "childmost" label associated with the provided labelhash through the ENS Subgraph,
-   * using network specified in `options.network_name`.
+   * using the network specified in `options.network_name`.
    *
    * If this label resolution fails the resulting `NameGuardReport` will be equivalent to requesting
    * a `NameGuardReport` for the name "[{labelhash}].{parent}" which will contain (at least) one label
@@ -638,9 +638,11 @@ class NameGuard {
   }
 
   /**
-   * Performs a reverse lookup of Ethereum `address` to primary name.
+   * Performs a reverse lookup of an Ethereum `address` to a primary name.
    *
-   * This function checks primary name using Provider API.
+   * Data sources for the primary name lookup include:
+   * 1. The Ethereum Provider configured in the NameGuard instance.
+   * 2. For ENS names using CCIP-Read: requests to externally defined gateway servers.
    *
    * Returns `display_name` to be shown to users and estimates `impersonation_status`
    *
