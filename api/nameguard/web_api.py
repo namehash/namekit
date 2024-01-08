@@ -128,7 +128,7 @@ async def inspect_name_get(
     3. A consolidated inspection result of all graphemes in `name`.
 
     This endpoint will attempt automated labelhash resolution through the ENS Subgraph,
-    using network specified in `network_name`.
+    using the network specified in `network_name`.
     """
 
     log_entry = LogEntry()
@@ -178,7 +178,7 @@ async def inspect_name_post(request: InspectNameRequest) -> NameGuardReport:
     3. A consolidated inspection result of all graphemes in `request.name`.
 
     This endpoint will attempt automated labelhash resolution through the ENS Subgraph,
-    using network specified in `request.network_name`.
+    using the network specified in `request.network_name`.
     """
 
     log_entry = LogEntry()
@@ -225,7 +225,7 @@ async def bulk_inspect_names(request: BulkInspectNamesRequest) -> BulkNameGuardB
     2. When NameGuard only needs to return a `ConsolidatedNameGuardReport`, some special performance optimizations are possible (and completely safe) that help to accelerate responses in many cases.
 
     This endpoint will attempt automated labelhash resolution through the ENS Subgraph,
-    using network specified in `request.network_name`.
+    using the network specified in `request.network_name`.
     """
 
     log_entry = LogEntry()
@@ -278,7 +278,7 @@ async def inspect_namehash_get(
     ## Inspects the name associated with a namehash.
 
     NameGuard will attempt to resolve the name associated with the `namehash` through the ENS Subgraph,
-    using network specified in `network_name`.
+    using the network specified in `network_name`.
 
     If this resolution succeeds then NameGuard will generate and return a `NameGuardReport` for the name.
 
@@ -311,7 +311,7 @@ async def inspect_namehash_post(request: InspectNamehashRequest) -> NameGuardRep
     ## Inspects the name associated with a namehash.
 
     NameGuard will attempt to resolve the name associated with the `request.namehash` through the ENS Subgraph,
-    using network specified in `request.network_name`.
+    using the network specified in `request.network_name`.
 
     If this resolution succeeds then NameGuard will generate and return a `NameGuardReport` for the name.
 
@@ -373,7 +373,7 @@ async def inspect_labelhash_get(
 
     NameGuard always inspects names, rather than labelhashes. So this endpoint will first attempt
     to resolve the "childmost" label associated with the provided labelhash through the ENS Subgraph,
-    using network specified in `network_name`.
+    using the network specified in `network_name`.
 
     If this label resolution fails the resulting `NameGuardReport` will be equivalent to requesting
     a `NameGuardReport` for the name `[{labelhash}].{parent_name}` which will contain (at least)
@@ -437,7 +437,7 @@ async def inspect_labelhash_post(request: InspectLabelhashRequest) -> NameGuardR
 
     NameGuard always inspects names, rather than labelhashes. So this endpoint will first attempt
     to resolve the "childmost" label associated with the provided labelhash through the ENS Subgraph,
-    using network specified in `request.network_name`.
+    using the network specified in `request.network_name`.
 
     If this label resolution fails the resulting `NameGuardReport` will be equivalent to requesting
     a `NameGuardReport` for the name `[{request.labelhash}].{request.parent_name}` which will contain (at least)
@@ -462,7 +462,7 @@ async def inspect_labelhash_post(request: InspectLabelhashRequest) -> NameGuardR
 @app.get(
     '/secure-primary-name/{network_name}/{address}',
     tags=['secure_primary_name'],
-    summary='Reverse lookup of Ethereum address to primary name',
+    summary='Reverse lookup of an Ethereum address to a primary name',
     responses={
         **InvalidEthereumAddress.get_responses_spec(),
         **ProviderUnavailable.get_responses_spec(),
@@ -470,7 +470,7 @@ async def inspect_labelhash_post(request: InspectLabelhashRequest) -> NameGuardR
 )
 async def secure_primary_name_get(address: str, network_name: NetworkName) -> SecurePrimaryNameResult:
     """
-    ## Performs a reverse lookup of Ethereum `address` to primary name.
+    ## Performs a reverse lookup of an Ethereum `address` to a primary name.
 
     Data sources for the primary name lookup include:
     1. The Ethereum Provider configured in the NameGuard instance.
