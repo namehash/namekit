@@ -472,7 +472,9 @@ async def secure_primary_name_get(address: str, network_name: NetworkName) -> Se
     """
     ## Performs a reverse lookup of Ethereum `address` to primary name.
 
-    This endpoint checks primary name using Provider API.
+    Data sources for the primary name lookup include:
+    1. The Ethereum Provider configured in the NameGuard instance.
+    2. For ENS names using CCIP-Read: requests to externally defined gateway servers.
 
     Returns `display_name` to be shown to users and estimates `impersonation_status`.
     """
