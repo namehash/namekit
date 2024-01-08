@@ -222,7 +222,7 @@ async def bulk_inspect_names(request: BulkInspectNamesRequest) -> BulkNameGuardB
 
     Each `ConsolidatedNameGuardReport` returned represents an equivalent set of checks as a `NameGuardReport`. However:
     1. A `NameGuardReport` contains a lot of additional data that isn't always needed / desired when a `ConsolidatedNameGuardReport` will do.
-    2. When NameGuard only needs to return a `ConsolidatedNameGuardReport`, some special performance optimizations are possible (and completely safe) that help to accelate responses in many cases.
+    2. When NameGuard only needs to return a `ConsolidatedNameGuardReport`, some special performance optimizations are possible (and completely safe) that help to accelerate responses in many cases.
 
     This endpoint will attempt automated labelhash resolution through the ENS Subgraph,
     using network specified in `request.network_name`.
@@ -470,7 +470,7 @@ async def inspect_labelhash_post(request: InspectLabelhashRequest) -> NameGuardR
 )
 async def secure_primary_name_get(address: str, network_name: NetworkName) -> SecurePrimaryNameResult:
     """
-    ## Reverse lookup of Ethereum `address` to primary name.
+    ## Performs a reverse lookup of Ethereum `address` to primary name.
 
     This endpoint checks primary name using Provider API.
 
@@ -509,6 +509,11 @@ async def fake_eth_name_check_get(
         description='The ID of the token (in hex or decimal format).',
     ),
 ) -> FakeEthNameCheckResult:
+    """
+    ## Performs a fake .eth ENS name check based on given NFT metadata.
+
+    This endpoint checks if the metadata of an NFT looks like a fake .eth ENS name.
+    """
     logger.debug(
         f"{json.dumps({'endpoint': Endpoints.FAKE_ETH_NAME_CHECK, 'method': 'GET', 'network_name': network_name, 'contract_address': contract_address, 'token_id': token_id})}"
     )
@@ -545,7 +550,7 @@ class FakeETHNameCheckFieldsRequest(BaseModel):
 )
 async def fake_eth_name_check_fields_post(request: FakeETHNameCheckFieldsRequest) -> FakeEthNameCheckResult:
     """
-    ## Fake .eth ENS name check based on given NFT metadata.
+    ## Performs a fake .eth ENS name check based on given NFT metadata.
 
     This endpoint checks if the metadata of an NFT looks like a fake .eth ENS name.
     """
