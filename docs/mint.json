@@ -44,7 +44,7 @@
         "sdk/js/setup",
         "sdk/js/typescript",
         {
-          "group": "Actions",
+          "group": "Checks",
           "pages": [
             "sdk/js/inspect-name",
             "sdk/js/bulk-inspect-names",
@@ -60,6 +60,7 @@
     {
       "group": "API",
       "pages": [
+        "api-reference/introduction",
         {
           "group": "Endpoints",
           "pages": [
@@ -77,7 +78,6 @@
   ],
   "footerSocials": {
     "twitter": "https://twitter.com/namehashlabs",
-    "github": "https://github.com/namehash",
-    "linkedin": "https://www.linkedin.com/company/namehash"
+    "github": "https://github.com/namehash"
   }
 }

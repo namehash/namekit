@@ -1,7 +1,9 @@
 import React, { useState, Fragment } from "react";
 import { Transition, Dialog } from "@headlessui/react";
-import { XMarkIcon, ArrowUpTrayIcon } from "@heroicons/react/24/solid";
+import { XMarkIcon, ShareIcon } from "@heroicons/react/24/solid";
 import { toast } from "sonner";
+
+import { Tooltip } from "../Tooltip/Tooltip";
 
 type ShareProps = {
   name?: string;
@@ -38,24 +40,32 @@ export function Share({ name }: ShareProps) {
   );
   const emailLink = createMailToLink(
     `NameGuard Report for ${name}`,
-    `Check this out!\nhttps://nameguard.io/inspect/${name}`
+    `Check this out!\nhttps://nameguard.io/inspect/${encodeURIComponent(name)}`
   );
   const copyLinkToClipboard = () => {
-    navigator.clipboard.writeText(`https://nameguard.io/inspect/${name}`);
+    navigator.clipboard.writeText(
+      `https://nameguard.io/inspect/${encodeURIComponent(name)}`
+    );
     toast("Link copied to clipboard");
     closeModal();
   };
+
   const closeModal = () => setIsOpen(false);
 
   return (
     <Fragment>
-      <button
-        className="flex items-center justify-between p-2 appearance-none bg-transparent hover:bg-black/5 transition rounded-md focus:outline-none"
-        onClick={() => setIsOpen(true)}
+      <Tooltip
+        trigger={
+          <button
+            className="flex items-center justify-between p-2 appearance-none bg-transparent hover:bg-black/5 transition rounded-md focus:outline-none"
+            onClick={() => setIsOpen(true)}
+          >
+            <ShareIcon className="text-black fill-current w-6 h-6" />
+          </button>
+        }
       >
-        <ArrowUpTrayIcon className="text-black fill-current w-6 h-6" />
-      </button>
-
+        Share report
+      </Tooltip>
       <Transition.Root show={isOpen} as={Fragment}>
         <Dialog
           as="div"
