@@ -473,125 +473,12 @@ interface FakeEthNameOptions {
 class NameGuard {
   private endpoint: URL;
   private network: Network;
+  private abortController: AbortController;
 
   constructor({ endpoint = DEFAULT_ENDPOINT, network = DEFAULT_NETWORK } = {}) {
     this.endpoint = new URL(endpoint);
     this.network = network;
-  }
-
-  private async fetchNameGuardReport(
-    name: string,
-    options?: InspectNameOptions
-  ): Promise<NameGuardReport> {
-    const url = new URL("inspect-name", this.endpoint);
-
-    const network_name = options?.network || this.network;
-
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name, network_name }),
-    });
-
-    if (!response.ok) {
-      throw new NameGuardError(response.status, `Failed to fetch name.`);
-    }
-
-    return await response.json();
-  }
-
-  private async fetchConsolidatedNameGuardReports(
-    names: string[],
-    options?: InspectNameOptions
-  ): Promise<BulkConsolidatedNameGuardReport> {
-    const url = new URL("bulk-inspect-names", this.endpoint);
-
-    const network_name = options?.network || this.network;
-
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ names, network_name }),
-    });
-
-    if (!response.ok) {
-      throw new NameGuardError(
-        response.status,
-        `Failed to fetch names in batch.`
-      );
-    }
-
-    return await response.json();
-  }
-
-  private async fetchSecurePrimaryName(
-    address: string,
-    options?: SecurePrimaryNameOptions
-  ): Promise<SecurePrimaryNameResult> {
-    const network_name = options?.network || this.network;
-
-    const url = new URL(
-      `secure-primary-name/${network_name}/${address}`,
-      this.endpoint
-    );
-
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new NameGuardError(
-        response.status,
-        "Error looking up secure primary name."
-      );
-    }
-
-    return await response.json();
-  }
-
-  private async fetchFakeEthName(
-    contract_address: string,
-    token_id: string,
-    options?: FakeEthNameOptions
-  ): Promise<FakeEthNameCheckResult> {
-    const network_name = options?.network || this.network;
-
-    const url = new URL(
-      `fake-eth-name-check/${network_name}/${contract_address}/${token_id}`,
-      this.endpoint
-    );
-
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new NameGuardError(
-        response.status,
-        "Error looking up .eth name impersonation status of NFT."
-      );
-    }
-
-    return await response.json();
-  }
-
-  private async fetchGraphemeGuardReport(
-    grapheme: string
-  ): Promise<GraphemeGuardReport> {
-    const grapheme_encoded = encodeURIComponent(grapheme);
-
-    const url = new URL(`inspect-grapheme/${grapheme_encoded}`, this.endpoint);
-
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new NameGuardError(
-        response.status,
-        `Error looking up GraphemeGuardReport.`
-      );
-    }
-
-    return await response.json();
+    this.abortController = new AbortController();
   }
 
   // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
@@ -610,7 +497,9 @@ class NameGuard {
     name: string,
     options?: InspectNameOptions
   ): Promise<NameGuardReport> {
-    return this.fetchNameGuardReport(name, options);
+    const network_name = options?.network || this.network;
+
+    return this.rawRequest("inspect-name", "POST", { name, network_name });
   }
 
   // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
@@ -636,7 +525,13 @@ class NameGuard {
         `Bulk inspection of more than ${MAX_BULK_INSPECTION_NAMES} names at a time is not supported.`
       );
     }
-    return this.fetchConsolidatedNameGuardReports(names, options);
+
+    const network_name = options?.network || this.network;
+
+    return this.rawRequest("bulk-inspect-names", "POST", {
+      names,
+      network_name,
+    });
   }
 
   // TODO: We need to have more specialized error handling here for cases such as the lookup in the ENS Subgraph failing.
@@ -730,7 +625,9 @@ class NameGuard {
    * @returns A promise that resolves with a `GraphemeGuardReport` of the inspected grapheme.
    */
   public inspectGrapheme(grapheme: string): Promise<GraphemeGuardReport> {
-    return this.fetchGraphemeGuardReport(grapheme);
+    const grapheme_encoded = encodeURIComponent(grapheme);
+
+    return this.rawRequest(`inspect-grapheme/${grapheme_encoded}`);
   }
 
   public getSecurePrimaryName(
@@ -743,7 +640,9 @@ class NameGuard {
       );
     }
 
-    return this.fetchSecurePrimaryName(address, options);
+    const network_name = options?.network || this.network;
+
+    return this.rawRequest(`secure-primary-name/${network_name}/${address}`);
   }
 
   public fakeEthNameCheck(
@@ -763,7 +662,58 @@ class NameGuard {
       );
     }
 
-    return this.fetchFakeEthName(contract_address, token_id, options);
+    const network_name = options?.network || this.network;
+
+    return this.rawRequest(
+      `fake-eth-name-check/${network_name}/${contract_address}/${token_id}`
+    );
+  }
+
+  /**
+   * Performs a raw HTTP request to the NameGuard API.
+   * @param {string} path The API endpoint path.
+   * @param {string} method The HTTP method (e.g., 'GET', 'POST').
+   * @param {object} body The request body for POST requests.
+   * @param {object} headers Additional headers for the request.
+   * @returns {Promise<any>} The response from the API.
+   */
+  async rawRequest(
+    path: string,
+    method: string = "GET",
+    body: object = {},
+    headers: object = {}
+  ): Promise<any> {
+    const url = new URL(path, this.endpoint);
+
+    const options: RequestInit = {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+        ...headers,
+      },
+      signal: this.abortController.signal,
+    };
+
+    if (method !== "GET") {
+      options.body = JSON.stringify(body);
+    }
+
+    const response = await fetch(url, options);
+
+    if (!response.ok) {
+      throw new NameGuardError(
+        response.status,
+        `Failed to perform request to ${path}.`
+      );
+    }
+
+    return await response.json();
+  }
+
+  public abortAllRequests(): void {
+    this.abortController.abort();
+
+    this.abortController = new AbortController();
   }
 }
 

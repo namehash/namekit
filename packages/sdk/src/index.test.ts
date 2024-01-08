@@ -165,7 +165,7 @@ describe("NameGuard", () => {
 
     expect(data.primary_name_status).toBe("normalized");
     expect(data.impersonation_status).toBe("unlikely");
-    expect(data.primary_name).toBe("vincξnt.eth")
+    expect(data.primary_name).toBe("vincξnt.eth");
     expect(data.display_name).toBe("vincΞnt.eth");
     expect(data.nameguard_result).not.toBeNull();
     expect(data.nameguard_result?.name).toBe("vincξnt.eth");
@@ -185,7 +185,4 @@ describe("NameGuard", () => {
     expect(data.nameguard_result?.name).toBe("hello<world>!.eth");
     expect(data.nameguard_result?.canonical_name).toBeNull();
   });
-  
-  // 
-
 });
