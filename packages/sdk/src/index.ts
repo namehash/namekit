@@ -594,14 +594,17 @@ class NameGuard {
     return await response.json();
   }
 
-  // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
   /**
    * Inspects a single name with NameGuard. Provides a `NameGuardReport` including:
    *   1. The details of all checks performed on `name` that consolidates all checks performed on labels and graphemes in `name`.
    *   2. The details of all labels in `name`.
    *   3. A consolidated inspection result of all graphemes in `name`.
    *
+   * This function will attempt automated labelhash resolution through the ENS Subgraph,
+   * using network specified in `options.network_name`.
+   *
    * @param {string} name The name for NameGuard to inspect.
+   * @param {InspectNameOptions} options The options for the inspection.
    * @returns {Promise<NameGuardReport>} A promise that resolves with the `NameGuardReport` of the name.
    * @example
    * const nameGuardReport = await nameguard.inspectName('vitalik.eth');
@@ -615,16 +618,19 @@ class NameGuard {
 
   // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
   /**
-   * Inspects up to 250 names at a time with NameGuard. Provides a `ConsolidatedNameGuardReport` for each provided name, including:
-   *   1. The details of all checks performed on `name` that consolidates all checks performed on labels and graphemes in `name`.
+   * Inspects up to 250 names at a time with NameGuard. Provides a `ConsolidatedNameGuardReport` for each name provided in `names`, including:
+   *   1. The details of all checks performed on a name that consolidates all checks performed on labels and graphemes in this name.
    *
-   * Each `ConsolidatedNameGuardReport` returned represents an equivalant set of checks as a `NameGuardReport`. However:
+   * Each `ConsolidatedNameGuardReport` returned represents an equivalent set of checks as a `NameGuardReport`. However:
    *   1. A `NameGuardReport` contains a lot of additional data that isn't always needed / desired when a `ConsolidatedNameGuardReport` will do.
    *   2. When NameGuard only needs to return a `ConsolidatedNameGuardReport`, some special performance optimizations
-   *      are possible (and completely safe) that help to accelate responses in many cases.
+   *      are possible (and completely safe) that help to accelerate responses in many cases.
    *
+   * This function will attempt automated labelhash resolution through the ENS Subgraph,
+   * using network specified in `options.network_name`.
    *
    * @param {string[]} names The list of names for NameGuard to inspect.
+   * @param {InspectNameOptions} options The options for the inspection.
    * @returns {Promise<BulkConsolidatedNameGuardReport>} A promise that resolves with a list of `ConsolidatedNameGuardReport` values for each name queried in the bulk inspection.
    */
   public bulkInspectNames(
@@ -649,8 +655,8 @@ class NameGuard {
    * If this resolution fails then NameGuard will return an error.
    *
    * @param {string} namehash A namehash should be a decimal or a hex (prefixed with 0x) string.
-   * @param {string} network The network name (defaults to "mainnet").
-   * @returns A promise that resolves with the details of the namehash.
+   * @param {InspectNamehashOptions} options The options for the inspection.
+   * @returns {Promise<NameGuardReport>}  A promise that resolves with a `NameGuardReport` of the resolved name.
    */
   public async inspectNamehash(
     namehash: string,
@@ -686,14 +692,15 @@ class NameGuard {
   /**
    * Inspects the name "[{labelhash}].{parent}".
    *
-   * Parent may be a name with any number of labels. The default parent is "eth".
+   * Parent (`options.parent`) may be a name with any number of labels. The default parent is "eth".
    *
    * This is a convenience function to generate a `NameGuardReport` in cases when you only have:
    * 1. The labelhash of the "childmost" label of a name.
    * 2. The complete parent name of the "childmost" label.
    *
    * NameGuard always inspects names, rather than labelhashes. So this function will first attempt
-   * to resolve the "childmost" label associated with the provided labelhash through the ENS Subgraph.
+   * to resolve the "childmost" label associated with the provided labelhash through the ENS Subgraph,
+   * using network specified in `options.network_name`.
    *
    * If this label resolution fails the resulting `NameGuardReport` will be equivalent to requesting
    * a `NameGuardReport` for the name "[{labelhash}].{parent}" which will contain (at least) one label
@@ -704,7 +711,7 @@ class NameGuard {
    *
    * @param {string} labelhash A labelhash should be a decimal or a hex (prefixed with 0x) string.
    * @param {InspectLabelhashOptions} options The options for the inspection.
-   * @returns A promise that resolves with a `NameGuardReport` of the resolved name.
+   * @returns {Promise<NameGuardReport>}  A promise that resolves with a `NameGuardReport` of the resolved name.
    */
   public async inspectLabelhash(
     labelhash: string,
@@ -724,15 +731,26 @@ class NameGuard {
   }
 
   /**
-   * Inspect a single grapheme.
+   * Inspects a single grapheme.
    *
    * @param {string} grapheme The grapheme to inspect. Must be a single grapheme (i.e. a single character or a sequence of characters that represent a single grapheme).
-   * @returns A promise that resolves with a `GraphemeGuardReport` of the inspected grapheme.
+   * @returns {Promise<GraphemeGuardReport>} A promise that resolves with a `GraphemeGuardReport` of the inspected grapheme.
    */
   public inspectGrapheme(grapheme: string): Promise<GraphemeGuardReport> {
     return this.fetchGraphemeGuardReport(grapheme);
   }
 
+  /**
+   * Performs a reverse lookup of Ethereum `address` to primary name.
+   *
+   * This function checks primary name using Provider API.
+   *
+   * Returns `display_name` to be shown to users and estimates `impersonation_status`
+   *
+   * @param {string} address An Ethereum address.
+   * @param {SecurePrimaryNameOptions} options The options for the secure primary name.
+   * @returns {Promise<SecurePrimaryNameResult>} A promise that resolves with a `SecurePrimaryNameResult`.
+   */
   public getSecurePrimaryName(
     address: string,
     options?: SecurePrimaryNameOptions
@@ -746,6 +764,16 @@ class NameGuard {
     return this.fetchSecurePrimaryName(address, options);
   }
 
+  /**
+   * Performs a fake .eth ENS name check based on given NFT metadata.
+   *
+   * This function checks if the metadata of an NFT looks like a fake .eth ENS name.
+   *
+   * @param {string} contract_address Contract address for the NFT contract (ERC721 and ERC1155 supported).
+   * @param {string} token_id The ID of the token (in hex or decimal format).
+   * @param {FakeEthNameOptions} options The options for the fake .eth ens name check.
+   * @returns {Promise<FakeEthNameCheckResult>}  A promise that resolves with a `FakeEthNameCheckResult`.
+   */
   public fakeEthNameCheck(
     contract_address: string,
     token_id: string,
