@@ -48,6 +48,15 @@ const config: Config = {
       fontSize: {
         footer_text: ["12px", "20px"],
       },
+      keyframes: {
+        carousel: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-100%)" },
+        },
+      },
+      animation: {
+        carousel: "carousel 30s linear infinite",
+      },
     },
   },
   plugins: [require("@tailwindcss/forms"), require("tailwind-scrollbar-hide")],
