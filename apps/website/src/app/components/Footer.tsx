@@ -2,6 +2,7 @@ import React from "react";
 import { TwitterIcon } from "@/app/atoms/icons/TwitterIcon";
 import { GithubHoverableLogo } from "@/app/atoms/icons/GithubHoverableLogo";
 import { EmailIcon } from "@/app/atoms/icons/EmailIcon";
+import { PaperPlaneIcon } from "@/app/atoms/icons/PaperPlaneIcon";
 
 export const Footer = () => {
   return (
@@ -10,11 +11,26 @@ export const Footer = () => {
         &copy; NameHash Labs. All Rights Reserved
       </p>
       <div className="flex flex-row justify-between gap-3">
-        <a href={"https://twitter.com/NamehashLabs"}>
+        <a
+          href="https://twitter.com/NamehashLabs"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <TwitterIcon />
         </a>
-        <a href={"https://github.com/namehash/nameguard"}>
+        <a
+          href="https://github.com/namehash/nameguard"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <GithubHoverableLogo />
+        </a>
+        <a
+          href="https://t.me/namehash"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <PaperPlaneIcon />
         </a>
         <a href="mailto:hello@namehashlabs.org">
           <EmailIcon />
@@ -24,7 +40,9 @@ export const Footer = () => {
         Made with ❤ by{" "}
         <a
           className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
-          href={"https://namehashlabs.org"}
+          href="https://namehashlabs.org"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           NameHash Labs
         </a>
