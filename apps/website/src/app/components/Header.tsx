@@ -1,7 +1,6 @@
 "use client";
 
 import { GithubLogo } from "@/app/atoms/icons/GithubLogo";
-import { MagnifyingGlassIcon } from "@/app/atoms/icons/MagnifyingGlassIcon";
 import { Search } from "@namehash/nameguard-react";
 
 export const Header = () => {
@@ -45,9 +44,6 @@ export const Header = () => {
             </p>
           </div>
         </a>
-        <div className="flex gt_mobile:hidden flex-col justify-center align-center gap-2 p-[7px]">
-          <MagnifyingGlassIcon />
-        </div>
       </div>
     </header>
   );
