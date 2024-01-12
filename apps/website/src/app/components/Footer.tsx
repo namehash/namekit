@@ -2,7 +2,7 @@ import React from "react";
 import { TwitterIcon } from "@/app/atoms/icons/TwitterIcon";
 import { GithubHoverableLogo } from "@/app/atoms/icons/GithubHoverableLogo";
 import { EmailIcon } from "@/app/atoms/icons/EmailIcon";
-import { PaperPlaneIcon } from "@/app/atoms/icons/PaperPlaneIcon";
+import { TelegramIcon } from "@/app/atoms/icons/TelegramIcon";
 
 export const Footer = () => {
   return (
@@ -30,7 +30,7 @@ export const Footer = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <PaperPlaneIcon />
+          <TelegramIcon />
         </a>
         <a href="mailto:hello@namehashlabs.org">
           <EmailIcon />
