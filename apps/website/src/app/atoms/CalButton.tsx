@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+"use client";
 
+import { useEffect } from "react";
 // @ts-ignore
 import { getCalApi } from "@calcom/embed-react";
 
