@@ -1,9 +1,7 @@
 ---
-title: Self-Hosting
+title: Self Hosting
 description: Run NameGuard yourself and protect against malicious ENS names.
 ---
-
-## Quickstart
 
 <Steps>
 
@@ -42,24 +40,3 @@ uvicorn nameguard.web_api:app
 </Step>
 
 </Steps>
-
-## Local Development
-
-To run NameGuard locally, make sure to clone the repo:
-
-```bash
-git clone https://github.com/namehash/nameguard
-```
-
-Then install the dependencies using `poetry`:
-
-```bash
-cd nameguard
-poetry install
-```
-
-You can now run the tests for all checks outlined in the [specification](/specification). From the root of the project, run the following command:
-
-```bash
-pytest ./api/tests/
-```

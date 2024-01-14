@@ -30,13 +30,7 @@
   "navigation": [
     {
       "group": "NameGuard",
-      "pages": [
-        "introduction",
-        "quickstart",
-        "specification",
-        "chains",
-        "self-hosting"
-      ]
+      "pages": ["introduction", "quickstart", "specification", "chains"]
     },
     {
       "group": "SDK",
@@ -58,9 +52,10 @@
       ]
     },
     {
-      "group": "API",
+      "group": "API Reference",
       "pages": [
         "api-reference/introduction",
+        "api-reference/local-development",
         {
           "group": "Endpoints",
           "pages": [
