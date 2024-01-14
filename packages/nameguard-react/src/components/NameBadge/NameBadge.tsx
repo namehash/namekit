@@ -33,7 +33,10 @@ export const NameBadge = ({ placeholder, onClick, data }: NameBadgeProps) => {
       </span>
       <NameShield data={data}>
         <div className="text-sm text-white">
-          <button className="appearance-none underline" onClick={onClick}>
+          <button
+            className="appearance-none underline font-medium"
+            onClick={onClick}
+          >
             Inspect name for details
           </button>
         </div>
