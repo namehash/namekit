@@ -120,9 +120,8 @@ async def inspect_name_get(
     ),
 ) -> NameGuardReport:
     """
-    ## Inspects a single name with NameGuard.
-
     Provides a `NameGuardReport` including:
+
     1. The details of all checks performed on `name` that consolidates all checks performed on labels and graphemes in `name`.
     2. The details of all labels in `name`.
     3. A consolidated inspection result of all graphemes in `name`.
@@ -170,9 +169,8 @@ async def inspect_empty_name_get(network_name: NetworkName) -> NameGuardReport:
 )
 async def inspect_name_post(request: InspectNameRequest) -> NameGuardReport:
     """
-    ## Inspects a single name with NameGuard.
-
     Provides a `NameGuardReport` including:
+
     1. The details of all checks performed on `request.name` that consolidates all checks performed on labels and graphemes in `request.name`.
     2. The details of all labels in `request.name`.
     3. A consolidated inspection result of all graphemes in `request.name`.
@@ -215,7 +213,7 @@ class BulkInspectNamesRequest(BaseModel):
 )
 async def bulk_inspect_names(request: BulkInspectNamesRequest) -> BulkNameGuardBulkReport:
     """
-    ## Inspects up to 250 names at a time with NameGuard.
+    Inspect up to 250 names at a time with NameGuard.
 
     Provides a `ConsolidatedNameGuardReport` for each name provided in `request.names`, including:
     1. The details of all checks performed on a name that consolidates all checks performed on labels and graphemes in this name.
@@ -275,8 +273,6 @@ async def inspect_namehash_get(
     ),
 ) -> NameGuardReport:
     """
-    ## Inspects the name associated with a namehash.
-
     NameGuard will attempt to resolve the name associated with the `namehash` through the ENS Subgraph,
     using the network specified in `network_name`.
 
@@ -308,8 +304,6 @@ async def inspect_namehash_get(
 )
 async def inspect_namehash_post(request: InspectNamehashRequest) -> NameGuardReport:
     """
-    ## Inspects the name associated with a namehash.
-
     NameGuard will attempt to resolve the name associated with the `request.namehash` through the ENS Subgraph,
     using the network specified in `request.network_name`.
 
@@ -363,8 +357,6 @@ async def inspect_labelhash_get(
     ),
 ) -> NameGuardReport:
     """
-    ## Inspects the name `[{labelhash}].{parent_name}`.
-
     Parent may be a name with any number of labels. The default parent is "eth".
 
     This is a convenience endpoint to generate a `NameGuardReport` in cases when you only have:
@@ -427,8 +419,6 @@ async def inspect_labelhash_get_empty_parent(
 )
 async def inspect_labelhash_post(request: InspectLabelhashRequest) -> NameGuardReport:
     """
-    ## Inspects the name `[{request.labelhash}].{request.parent_name}`.
-
     Parent may be a name with any number of labels. The default parent is "eth".
 
     This is a convenience endpoint to generate a `NameGuardReport` in cases when you only have:
@@ -470,9 +460,10 @@ async def inspect_labelhash_post(request: InspectLabelhashRequest) -> NameGuardR
 )
 async def secure_primary_name_get(address: str, network_name: NetworkName) -> SecurePrimaryNameResult:
     """
-    ## Performs a reverse lookup of an Ethereum `address` to a primary name.
+    Performs a reverse lookup of an Ethereum `address` to a primary name.
 
     Data sources for the primary name lookup include:
+
     1. The Ethereum Provider configured in the NameGuard instance.
     2. For ENS names using CCIP-Read: requests to externally defined gateway servers.
 
@@ -512,7 +503,7 @@ async def fake_eth_name_check_get(
     ),
 ) -> FakeEthNameCheckResult:
     """
-    ## Performs a fake .eth ENS name check based on given NFT metadata.
+    Performs a fake .eth ENS name check based on given NFT metadata.
 
     This endpoint checks if the metadata of an NFT looks like a fake .eth ENS name.
     """
@@ -552,7 +543,7 @@ class FakeETHNameCheckFieldsRequest(BaseModel):
 )
 async def fake_eth_name_check_fields_post(request: FakeETHNameCheckFieldsRequest) -> FakeEthNameCheckResult:
     """
-    ## Performs a fake .eth ENS name check based on given NFT metadata.
+    Performs a fake .eth ENS name check based on given NFT metadata.
 
     This endpoint checks if the metadata of an NFT looks like a fake .eth ENS name.
     """
@@ -587,7 +578,7 @@ async def inspect_grapheme_get(
         examples=['v', 'ń', '%F0%9F%98%B5'],
     ),
 ) -> GraphemeGuardReport:
-    """## Inspects a single grapheme."""
+    """Inspects a single grapheme."""
     logger.debug(f"{json.dumps({'endpoint': Endpoints.INSPECT_GRAPHEME, 'method': 'GET', 'grapheme': grapheme})}")
     nameguard.context.endpoint_name.set(Endpoints.INSPECT_GRAPHEME)
     return ng.inspect_grapheme(grapheme)
