@@ -38,7 +38,13 @@ export const SearchEmptyState = () => {
 
   const { data, isLoading } = useSWR<BulkConsolidatedNameGuardReport>(
     examples.join(),
-    (_) => nameguard.bulkInspectNames(parsedNames.map((n) => n.outputName.name))
+    (_) =>
+      nameguard.bulkInspectNames(parsedNames.map((n) => n.outputName.name)),
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
   );
 
   useEffect(() => {
