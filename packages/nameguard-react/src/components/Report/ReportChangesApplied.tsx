@@ -37,7 +37,7 @@ export function ReportChangesApplied({ transformations = [] }: Props) {
         </div>
         <div className="md:flex-shrink-0 hidden md:flex md:items-center md:justify-end">
           <button
-            className="text-xs text-black leading-5 appearance-none underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
+            className="text-sm text-black leading-5 appearance-none underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
             onClick={openSettingsModal}
           >
             Manage settings
