@@ -19,9 +19,10 @@ curl --request POST \
 ```ts SDK
 const contractAddress = "";
 const tokenId = "";
-const fields = "";
 
-const report = await nameguard.fakeEthNameCheck(contractAddress, tokenId, fields);
+const report = await nameguard.fakeEthNameCheck(contractAddress, tokenId, {
+  title: "..."
+});
 ```
 
 </RequestExample>
