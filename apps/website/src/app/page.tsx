@@ -56,7 +56,7 @@ const tokenId = "619959211285214429591066501314626337448852696
                  24153038309795231243542768648193";
 
 const result = await nameguard.fakeEthNameCheck(contract, tokenId, {
-  title: "nick.eth"
+  "title": "nick.eth"
 });
 
 const bulkInspectNames = `import { nameguard } from "@namehash/nameguard";
