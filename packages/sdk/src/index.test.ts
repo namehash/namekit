@@ -56,7 +56,8 @@ describe("NameGuard", () => {
   it("should check a fake ENS name", async () => {
     const data = await nameguard.fakeEthNameCheck(
       "0x495f947276749ce646f68ac8c248420045cb7b5e",
-      "61995921128521442959106650131462633744885269624153038309795231243542768648193"
+      "61995921128521442959106650131462633744885269624153038309795231243542768648193",
+      {"title": "nick.eth"}
     );
 
     expect(data.status).toBe("impersonated_eth_name");

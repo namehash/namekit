@@ -678,6 +678,7 @@ class NameGuard {
   public fakeEthNameCheck(
     contract_address: string,
     token_id: string,
+    fields: object,
     options?: FakeEthNameOptions
   ): Promise<FakeEthNameCheckResult> {
     if (!isEthereumAddress(contract_address)) {
@@ -694,9 +695,12 @@ class NameGuard {
 
     const network_name = options?.network || this.network;
 
-    return this.rawRequest(
-      `fake-eth-name-check/${network_name}/${contract_address}/${token_id}`
-    );
+    return this.rawRequest("fake-eth-name-check", "POST", {
+      network_name,
+      contract_address,
+      token_id,
+      fields
+    });
   }
 
   /**
