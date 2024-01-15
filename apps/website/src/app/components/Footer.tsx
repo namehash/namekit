@@ -16,14 +16,22 @@ export const Footer = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <TwitterIcon />
+          <TwitterIcon
+            className={
+              "gt_mobile:transition gt_mobile:hover:fill-black text-[#AFAFAF] fill-current transition-all duration-200"
+            }
+          />
         </a>
         <a
           href="https://github.com/namehash/nameguard"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <GithubHoverableLogo />
+          <GithubHoverableLogo
+            className={
+              "gt_mobile:hover:fill-black text-[#AFAFAF] fill-current transition-all duration-200"
+            }
+          />
         </a>
         <a
           href="https://t.me/namehash"
@@ -31,14 +39,17 @@ export const Footer = () => {
           rel="noopener noreferrer"
         >
           <TelegramIcon
-            svgClass={"group"}
-            pathClass={
-              "gt_mobile:group-hover:fill-black transition-all duration-200"
+            className={
+              "gt_mobile:hover:fill-black text-[#AFAFAF] fill-current transition-all duration-200"
             }
           />
         </a>
         <a href="mailto:hello@namehashlabs.org">
-          <EmailIcon />
+          <EmailIcon
+            className={
+              "gt_mobile:hover:fill-black text-[#AFAFAF] fill-current transition-all duration-200"
+            }
+          />
         </a>
       </div>
       <p className="not-italic font-normal text-gray-500 text-sm gt_mobile:text-footer_text gt_mobile:font-light">
