@@ -54,8 +54,9 @@ const fakeEthNameCheck = `import { nameguard } from "@namehash/nameguard";
 const contract = "0x8Ae0e6dd8eACe27045d9e017C8Cf6dAa9D08C776";
 const tokenId = "619959211285214429591066501314626337448852696
                  24153038309795231243542768648193";
+const fields = {"title": "nick.eth"}
 
-const result = await nameguard.fakeEthNameCheck(contract, tokenId);`;
+const result = await nameguard.fakeEthNameCheck(contract, tokenId, fields);`;
 
 const bulkInspectNames = `import { nameguard } from "@namehash/nameguard";
 
