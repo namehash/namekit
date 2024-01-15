@@ -131,7 +131,7 @@ export interface FakeEthNameCheckResult {
    *
    * `null` if `status` is `unknown_nft`
    */
-  investigated_fields: object | null; // TODO: dict[str,str] | null
+  investigated_fields: Record<string, string> | null;
 }
 
 /**
@@ -470,6 +470,10 @@ interface FakeEthNameOptions {
   network?: Network;
 }
 
+interface FieldsWithRequiredTitle extends Record<string, string> {
+    title: string;
+}
+
 class NameGuard {
   private endpoint: URL;
   private network: Network;
@@ -679,7 +683,7 @@ class NameGuard {
   public fakeEthNameCheck(
     contract_address: string,
     token_id: string,
-    fields: Record<string, string>,
+    fields: FieldsWithRequiredTitle,
     options?: FakeEthNameOptions
   ): Promise<FakeEthNameCheckResult> {
     if (!isEthereumAddress(contract_address)) {
@@ -692,6 +696,10 @@ class NameGuard {
       throw new Error(
         `The provided token_id: "${token_id}" is not in a valid token id format.`
       );
+    }
+
+    if (!fields.title || typeof fields.title !== 'string') {
+      throw new Error("The 'fields' object must contain a 'title' key with a string value.");
     }
 
     const network_name = options?.network || this.network;
