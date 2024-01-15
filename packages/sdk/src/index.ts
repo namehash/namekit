@@ -679,7 +679,7 @@ class NameGuard {
   public fakeEthNameCheck(
     contract_address: string,
     token_id: string,
-    fields: object,
+    fields: Record<string, string>,
     options?: FakeEthNameOptions
   ): Promise<FakeEthNameCheckResult> {
     if (!isEthereumAddress(contract_address)) {
