@@ -28,7 +28,7 @@ export const metadata: Metadata = {
       "Guard your users from heartbreak and encourage best practice usage of ENS.",
     url: "https://nameguard.io",
     images: {
-      url: "/openGraph/og-image.png",
+      url: "https://nameguard.io/openGraph/og-image.png",
       alt: "NameGuard - Protect your community with NameGuard for ENS",
     },
   },
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     description:
       "Guard your users from heartbreak and encourage best practice usage of ENS.",
     images: {
-      url: "/openGraph/og-image-twitter.png",
+      url: "https://nameguard.io/openGraph/og-image-twitter.png",
       alt: "NameGuard - Protect your community with NameGuard for ENS",
     },
   },
