@@ -672,6 +672,7 @@ class NameGuard {
    *
    * @param {string} contract_address Contract address for the NFT contract (ERC721 and ERC1155 supported).
    * @param {string} token_id The ID of the token (in hex or decimal format).
+   * @param {string} fields Fields with values which will be investigated (e.g. title, collection name, metadata) whether they look like fake .eth ENS name. `title` key is mandatory, for ENS contracts it should be the ENS name.
    * @param {FakeEthNameOptions} options The options for the fake .eth ens name check.
    * @returns {Promise<FakeEthNameCheckResult>}  A promise that resolves with a `FakeEthNameCheckResult`.
    */
