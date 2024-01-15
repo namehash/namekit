@@ -57,7 +57,7 @@ export function NameShield({
     >
       <div className="flex items-start space-x-3 py-2.5 min-w-[300px] max-w-[300px]">
         <div className="mt-0.5">
-          <Shield status={rating} size={size} />
+          <Shield status={rating} size="small" />
         </div>
 
         <div className="flex-1">
