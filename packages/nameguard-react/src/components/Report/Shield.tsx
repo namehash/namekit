@@ -16,13 +16,13 @@ import { WarnShieldSmall } from "../icons/WarnShieldSmall";
 import { AlertShieldSmall } from "../icons/AlertShieldSmall";
 import { LoadingShieldSmall } from "../icons/LoadingShieldSmall";
 import { ErrorShieldSmall } from "../icons/ErrorShieldSmall";
-import { AlertIcon as AlertShieldTiny } from "../icons/Alert";
-import { WarnIcon as WarnShieldTiny } from "../icons/Warn";
-import { PassIcon as PassShieldTiny } from "../icons/Pass";
-import { LoadingIcon as LoadingShieldTiny } from "../icons/Loading";
-import { ErrorIcon as ErrorShieldTiny } from "../icons/Error";
+import { AlertIcon as AlertShieldMicro } from "../icons/Alert";
+import { WarnIcon as WarnShieldMicro } from "../icons/Warn";
+import { PassIcon as PassShieldMicro } from "../icons/Pass";
+import { LoadingIcon as LoadingShieldMicro } from "../icons/Loading";
+import { ErrorIcon as ErrorShieldMicro } from "../icons/Error";
 
-type Size = "tiny" | "small" | "medium" | "large";
+type Size = "small" | "medium" | "large" | "micro";
 
 type Props = {
   size?: Size;
@@ -46,23 +46,23 @@ const getComponent = (status: CheckResultCode, size: Size) => {
     PassShieldLarge,
     PassShieldMedium,
     PassShieldSmall,
-    PassShieldTiny,
+    PassShieldMicro,
     WarnShieldLarge,
     WarnShieldMedium,
     WarnShieldSmall,
-    WarnShieldTiny,
+    WarnShieldMicro,
     AlertShieldLarge,
     AlertShieldMedium,
     AlertShieldSmall,
-    AlertShieldTiny,
+    AlertShieldMicro,
     LoadingShieldLarge,
     LoadingShieldMedium,
     LoadingShieldSmall,
-    LoadingShieldTiny,
+    LoadingShieldMicro,
     ErrorShieldLarge,
     ErrorShieldMedium,
     ErrorShieldSmall,
-    ErrorShieldTiny,
+    ErrorShieldMicro,
   };
 
   return components[componentName] || null;
@@ -72,7 +72,7 @@ function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export const Shield = ({ status, size = "medium", ...props }: Props) => {
+export const Shield = ({ status, size = "small", ...props }: Props) => {
   const Component = getComponent(status, size);
 
   return Component ? <Component {...props} /> : null;
