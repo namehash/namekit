@@ -26,28 +26,38 @@ type NameShieldProps = {
   data?: ConsolidatedNameGuardReport;
   children?: ReactNode;
   disableHover?: boolean;
+  size?: "small" | "medium" | "large" | "micro";
 };
 
-export function NameShield({ data, children, disableHover }: NameShieldProps) {
+export function NameShield({
+  data,
+  children,
+  disableHover,
+  size = "small",
+}: NameShieldProps) {
   if (!data) return null;
 
   const { title, subtitle, rating, risk_count, highest_risk } = data;
 
   const textClass = cc(["font-semibold", textColor(rating)]);
 
+  if (!rating) {
+    return <Shield status="info" size={size} className="cursor-pointer" />;
+  }
+
   if (disableHover) {
-    return <Shield status={rating} size="tiny" className="cursor-pointer" />;
+    return <Shield status={rating} size={size} className="cursor-pointer" />;
   }
 
   return (
     <Tooltip
       trigger={
-        <Shield status={rating} size="tiny" className="cursor-pointer" />
+        <Shield status={rating} size={size} className="cursor-pointer" />
       }
     >
       <div className="flex items-start space-x-3 py-2.5 min-w-[300px] max-w-[300px]">
         <div className="mt-0.5">
-          <Shield status={rating} size="tiny" />
+          <Shield status={rating} size={size} />
         </div>
 
         <div className="space-y-1.5 flex-1">
