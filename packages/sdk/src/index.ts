@@ -698,8 +698,8 @@ class NameGuard {
       );
     }
 
-    if (!fields.title || typeof fields.title !== 'string') {
-      throw new Error("The 'fields' object must contain a 'title' key with a string value.");
+    if (!fields || !fields.title || typeof fields.title !== 'string') {
+      throw new Error("The 'fields' object must be provided and contain a 'title' key with a string value.");
     }
 
     const network_name = options?.network || this.network;
