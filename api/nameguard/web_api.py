@@ -1,3 +1,4 @@
+import gc
 import json
 import os
 import time
@@ -562,3 +563,6 @@ if __name__ == '__main__':
     import asyncio
 
     asyncio.run(ng.inspect_name('mainnet', 'ni ck.eth'))
+
+
+gc.freeze()
