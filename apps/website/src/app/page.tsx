@@ -1862,7 +1862,7 @@ function DevelopersSection() {
               className="group w-full sm:w-fit h-fit"
             >
               <div className={hoverCellStyle}>
-                <RedirectIcon svgStyle={redirectStyle} />
+                <RedirectIcon svgClass={redirectStyle} />
                 {elem.icon}
                 <div>
                   {elem.header}

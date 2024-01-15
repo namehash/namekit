@@ -30,7 +30,12 @@ export const Footer = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <TelegramIcon />
+          <TelegramIcon
+            svgClass={"group"}
+            pathClass={
+              "gt_mobile:group-hover:fill-black transition-all duration-200"
+            }
+          />
         </a>
         <a href="mailto:hello@namehashlabs.org">
           <EmailIcon />

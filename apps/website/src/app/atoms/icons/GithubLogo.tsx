@@ -1,9 +1,9 @@
-export type IconProps = {
+export type GithubLogoProps = {
   svgStyle: string;
   fillColor?: string;
 };
 
-export const GithubLogo = (props: IconProps) => {
+export const GithubLogo = (props: GithubLogoProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
