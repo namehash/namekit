@@ -2427,5 +2427,3 @@ const ErrorShieldSmall = (props: ShieldPositionAndAnimation) => (
     </defs>
   </svg>
 );
-
-//TODO: for all icons make them take props (later refactor, especially when moving them to /atoms/icons)
