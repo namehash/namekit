@@ -1,8 +1,8 @@
 import React from "react";
 import { TwitterIcon } from "@/app/atoms/icons/TwitterIcon";
-import { GithubHoverableLogo } from "@/app/atoms/icons/GithubHoverableLogo";
 import { EmailIcon } from "@/app/atoms/icons/EmailIcon";
 import { TelegramIcon } from "@/app/atoms/icons/TelegramIcon";
+import { GithubLogo } from "@/app/atoms/icons/GithubLogo";
 
 export const Footer = () => {
   return (
@@ -27,7 +27,7 @@ export const Footer = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <GithubHoverableLogo
+          <GithubLogo
             className={
               "gt_mobile:hover:fill-black text-[#AFAFAF] fill-current transition-all duration-200"
             }

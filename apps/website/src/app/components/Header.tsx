@@ -38,7 +38,9 @@ export const Header = () => {
           href={"https://github.com/namehash/nameguard"}
         >
           <div className="flex flex-row justify-between items-center gap-2 py-[7px] px-[10px]">
-            <GithubLogo svgStyle="hidden gt_mobile:block" fillColor="#0F172A" />
+            <GithubLogo
+              className={"hidden gt_mobile:block text-[#0F172A] fill-current"}
+            />
             <p className="not-italic text-black font-medium text-sm leading-5">
               Github
             </p>
