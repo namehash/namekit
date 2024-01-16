@@ -1750,5 +1750,3 @@ function MobileSectionDivider() {
     </div>
   );
 }
-
-//TODO: for all icons make them take props (later refactor, especially when moving them to /atoms/icons)
