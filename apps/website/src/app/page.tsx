@@ -618,60 +618,24 @@ function HeroSection() {
     <section className="box-border relative z-10 w-full h-fit xl:h-screen py-[61px] gt_mobile:pb-24 gt_mobile:pt-8 px-5 flex flex-col items-center justify-center bg-hero_background bg-no-repeat bg-center bg-contain md:px-10 md:pt-10 md:pb-32">
       <div className={backgroundDiv} />
       <div className="box-border flex flex-col items-center justify-center w-full h-full">
-        <WarningShieldOrangeOutline
-          className={"absolute z-10 hidden lg:block top-[5%] left-[20%]"}
-        />
-        <WarningShieldOrangeOutline
-          className={"absolute z-10 hidden lg:block top-[6%] right-[22%]"}
-        />
-        <CheckShieldLarge
-          className={"absolute z-10 hidden xl:block top-[7%] left-[60%]"}
-        />
-        <WarningShieldSmall
-          className={"absolute z-10 hidden lg:block top-[7%] right-[5%]"}
-        />
-        <ErrorShieldSmall
-          className={"absolute z-10 hidden xl:block top-[11%] left-[42%]"}
-        />
-        <CheckShieldLarge
-          className={"absolute z-10 hidden lg:block top-[12%] left-[7%]"}
-        />
-        <ErrorShieldLarge
-          className={"absolute z-10 hidden lg:block top-[18%] right-[12%]"}
-        />
-        <WarningShieldSmall
-          className={"absolute z-10 hidden xl:block top-[37%] left-[20%]"}
-        />
-        <WarningShieldRedOutline
-          className={"absolute z-10 hidden lg:block top-[45%] right-[5%]"}
-        />
-        <CheckShieldOutline
-          className={"absolute z-10 hidden lg:block top-[50%] left-[6%]"}
-        />
-        <WarningShieldSmall
-          className={"absolute z-10 hidden lg:block bottom-[47%] right-[20%]"}
-        />
-        <ErrorShieldSmall
-          className={"absolute z-10 hidden lg:block bottom-[40%] left-[25%]"}
-        />
-        <WarningShieldLarge
-          className={"absolute z-10 hidden lg:block bottom-[22%] left-[6%]"}
-        />
-        <CheckShieldLarge
-          className={"absolute z-10 hidden xl:block bottom-[25%] right-[30%]"}
-        />
-        <ErrorShieldSmall
-          className={"absolute z-10 hidden xl:block bottom-[19%] left-[43%]"}
-        />
-        <WarningShieldLarge
-          className={"absolute z-10 hidden lg:block bottom-[15%] right-[6%]"}
-        />
-        <WarningShieldRedOutline
-          className={"absolute z-10 hidden lg:block bottom-[15%] left-[30%]"}
-        />
-        <WarningShieldOrangeOutline
-          className={"absolute z-10 hidden lg:block bottom-[12%] right-[41%]"}
-        />
+        <WarningShieldOrangeOutline className="absolute z-10 hidden lg:block top-[5%] left-[20%]" />
+        <WarningShieldOrangeOutline className="absolute z-10 hidden lg:block top-[6%] right-[22%]" />
+        <CheckShieldLarge className="absolute z-10 hidden xl:block top-[7%] left-[60%]" />
+        <WarningShieldSmall className="absolute z-10 hidden lg:block top-[7%] right-[5%]" />
+        <ErrorShieldSmall className="absolute z-10 hidden xl:block top-[11%] left-[42%]" />
+        <CheckShieldLarge className="absolute z-10 hidden lg:block top-[12%] left-[7%]" />
+        <ErrorShieldLarge className="absolute z-10 hidden lg:block top-[18%] right-[12%]" />
+        <WarningShieldSmall className="absolute z-10 hidden xl:block top-[37%] left-[20%]" />
+        <WarningShieldRedOutline className="absolute z-10 hidden lg:block top-[45%] right-[5%]" />
+        <CheckShieldOutline className="absolute z-10 hidden lg:block top-[50%] left-[6%]" />
+        <WarningShieldSmall className="absolute z-10 hidden lg:block bottom-[47%] right-[20%]" />
+        <ErrorShieldSmall className="absolute z-10 hidden lg:block bottom-[40%] left-[25%]" />
+        <WarningShieldLarge className="absolute z-10 hidden lg:block bottom-[22%] left-[6%]" />
+        <CheckShieldLarge className="absolute z-10 hidden xl:block bottom-[25%] right-[30%]" />
+        <ErrorShieldSmall className="absolute z-10 hidden xl:block bottom-[19%] left-[43%]" />
+        <WarningShieldLarge className="absolute z-10 hidden lg:block bottom-[15%] right-[6%]" />
+        <WarningShieldRedOutline className="absolute z-10 hidden lg:block bottom-[15%] left-[30%]" />
+        <WarningShieldOrangeOutline className="absolute z-10 hidden lg:block bottom-[12%] right-[41%]" />
         <div className="inline-flex flex-col items-center gap-5 w-full h-fit">
           <div className="flex flex-col gap-2 w-fit h-fit z-10">
             <p className="text-center not-italic uppercase text-gray-500 text-xs tracking-[0.3px] font-medium">
@@ -695,7 +659,7 @@ function HeroSection() {
             </Tooltip>
           </div>
           <a
-            href={"https://api.nameguard.io/docs"}
+            href="https://api.nameguard.io/docs"
             className="hidden search_bar_change:block relative z-10"
           >
             <button className="flex justify-center items-center px-[25px] py-[13px] rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-800 cursor-pointer">
@@ -710,7 +674,7 @@ function HeroSection() {
               or
             </p>
             <a
-              href={"https://api.nameguard.io/docs"}
+              href="https://api.nameguard.io/docs"
               className="relative z-10 w-full h-fit max-w-xs"
             >
               <button className="w-full h-fit box-border flex justify-center items-center self-stretch px-[17px] py-[9px] rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-800 cursor-pointer">
@@ -835,7 +799,7 @@ function RoadMap() {
           (ENSIP-15) through the creation of{" "}
           <a
             className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
-            href={"https://github.com/namehash/ens-normalize-python"}
+            href="https://github.com/namehash/ens-normalize-python"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -1587,7 +1551,7 @@ function ChecksSection() {
             );
           })}
         </div>
-        <div key={`NameGuardCheck#questionmark`} className={cellStyle}>
+        <div key="NameGuardCheck#questionmark" className={cellStyle}>
           {checkElements[checkElements.length - 1].icon}
           <div>
             {checkElements[checkElements.length - 1].header}

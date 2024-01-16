@@ -16,40 +16,24 @@ export const Footer = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <TwitterIcon
-            className={
-              "gt_mobile:transition gt_mobile:hover:fill-black text-[#AFAFAF] fill-current transition-all duration-200"
-            }
-          />
+          <TwitterIcon className="gt_mobile:transition gt_mobile:hover:fill-black text-[#AFAFAF] fill-current transition-all duration-200" />
         </a>
         <a
           href="https://github.com/namehash/nameguard"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <GithubLogo
-            className={
-              "gt_mobile:hover:fill-black text-[#AFAFAF] fill-current transition-all duration-200"
-            }
-          />
+          <GithubLogo className="gt_mobile:hover:fill-black text-[#AFAFAF] fill-current transition-all duration-200" />
         </a>
         <a
           href="https://t.me/namehash"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <TelegramIcon
-            className={
-              "gt_mobile:hover:fill-black text-[#AFAFAF] fill-current transition-all duration-200"
-            }
-          />
+          <TelegramIcon className="gt_mobile:hover:fill-black text-[#AFAFAF] fill-current transition-all duration-200" />
         </a>
         <a href="mailto:hello@namehashlabs.org">
-          <EmailIcon
-            className={
-              "gt_mobile:hover:fill-black text-[#AFAFAF] fill-current transition-all duration-200"
-            }
-          />
+          <EmailIcon className="gt_mobile:hover:fill-black text-[#AFAFAF] fill-current transition-all duration-200" />
         </a>
       </div>
       <p className="not-italic font-normal text-gray-500 text-sm gt_mobile:text-footer_text gt_mobile:font-light">
