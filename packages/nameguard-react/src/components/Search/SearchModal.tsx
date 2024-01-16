@@ -21,7 +21,11 @@ export const SearchModal = () => {
 
   return (
     <Transition.Root show={modalOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-20" onClose={handleClose}>
+      <Dialog
+        as="div"
+        className="font-ss02 font-maxEmojisAndCharsSupport relative z-20"
+        onClose={handleClose}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
