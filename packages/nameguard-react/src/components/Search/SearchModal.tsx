@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useRef, useEffect } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 
 import { useSettingsStore } from "../../stores/settings";
@@ -13,11 +13,19 @@ export const SearchModal = () => {
   const { name, modalOpen, closeModal } = useSearchStore();
   const { settings, modalOpen: settingsModalOpen } = useSettingsStore();
 
+  const ref = useRef<HTMLDivElement>(null);
+
   const handleClose = () => {
     if (settingsModalOpen) return;
 
     closeModal();
   };
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.scrollTop = 0;
+    }
+  }, [name]);
 
   return (
     <Transition.Root show={modalOpen} as={Fragment}>
@@ -47,7 +55,10 @@ export const SearchModal = () => {
             >
               <Dialog.Panel className="mx-auto w-full relative transform overflow-hidden md:rounded-xl bg-white shadow-2xl transition-all flex flex-col h-full md:h-auto max-h-full pt-[56px] md:pt-[68px]">
                 <SearchModalHeader />
-                <div className="overflow-y-scroll relative px-6 py-6 md:py-10 h-full">
+                <div
+                  className="overflow-y-scroll relative px-6 py-6 md:py-10 h-full"
+                  ref={ref}
+                >
                   <Report
                     name={name}
                     settings={settings}

@@ -3,7 +3,7 @@ import re
 from typing import Union
 
 from nameguard.our_ens import OurENS
-from ens_normalize import ens_process, is_ens_normalized, ens_cure, DisallowedSequence
+from ens_normalize import is_ens_normalized, ens_cure, DisallowedSequence
 
 import requests
 from label_inspector.inspector import Inspector
@@ -389,12 +389,11 @@ class NameGuard:
         else:
             nameguard_result = await self.inspect_name(network_name, domain)
 
-            result = ens_process(domain, do_normalize=True, do_beautify=True)
-            if result.normalized != domain:
+            if nameguard_result.normalization == Normalization.UNNORMALIZED:
                 status = SecurePrimaryNameStatus.UNNORMALIZED
                 impersonation_status = None
             else:
-                display_name = result.beautified
+                display_name = nameguard_result.beautiful_name
                 status = SecurePrimaryNameStatus.NORMALIZED
                 primary_name = domain
 

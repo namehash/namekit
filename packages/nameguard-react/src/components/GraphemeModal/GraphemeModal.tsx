@@ -19,6 +19,9 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
     (g: string) => nameguard.inspectGrapheme(g)
   );
 
+  const totalCodepoints = data?.codepoints?.length ?? 0;
+  const [firstCodepoint] = data?.codepoints ?? [];
+
   const handleClose = () => {
     closeGraphemeModal(currentGrapheme);
   };
@@ -59,8 +62,11 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
               <div className="flex items-start justify-center space-x-10 border-t border-gray-200 mt-10 pt-10">
                 <div className="space-y-1">
                   <p className="text-gray-500 text-sm">Codepoints</p>
-                  <p className="text-black text-sm font-semibold">
-                    {data?.codepoints}
+                  <p className="text-sm font-semibold">
+                    <span className="text-black">{firstCodepoint}</span>
+                    <span className="text-gray-500">
+                      {totalCodepoints > 1 && ` + ${totalCodepoints - 1} more`}
+                    </span>
                   </p>
                 </div>
                 <div className="space-y-1">
