@@ -8,6 +8,7 @@ import { useChatModalStore } from "../../stores/chat";
 import { Report } from "../Report/Report";
 import { SearchModalHeader } from "./SearchModalHeader";
 import { SearchModalFooter } from "./SearchModalFooter";
+import { ensNameFontConfig } from "../../utils";
 
 export const SearchModal = () => {
   const { name, modalOpen, closeModal } = useSearchStore();
@@ -31,7 +32,7 @@ export const SearchModal = () => {
     <Transition.Root show={modalOpen} as={Fragment}>
       <Dialog
         as="div"
-        className="font-ss02 font-maxEmojisAndCharsSupport relative z-20"
+        className={"relative z-20 " + ensNameFontConfig}
         onClose={handleClose}
       >
         <Transition.Child
