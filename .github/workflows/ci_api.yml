@@ -51,8 +51,6 @@ jobs:
     permissions:
       contents: write
 
-    if: github.ref == 'refs/heads/main'  # run this job only on a push to main
-
     steps:
       - uses: actions/checkout@v3
 

@@ -54,7 +54,9 @@ const contract = "0x8Ae0e6dd8eACe27045d9e017C8Cf6dAa9D08C776";
 const tokenId = "619959211285214429591066501314626337448852696
                  24153038309795231243542768648193";
 
-const result = await nameguard.fakeEthNameCheck(contract, tokenId);`;
+const result = await nameguard.fakeEthNameCheck(contract, tokenId, {
+  "title": "nick.eth"
+})`;
 
 const bulkInspectNames = `import { nameguard } from "@namehash/nameguard";
 
@@ -1750,3 +1752,5 @@ function MobileSectionDivider() {
     </div>
   );
 }
+
+//TODO: for all icons make them take props (later refactor, especially when moving them to /atoms/icons)

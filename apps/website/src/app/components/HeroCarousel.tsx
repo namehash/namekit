@@ -19,6 +19,21 @@ const examples = [
   "unknоwn.eth",
   "john🇺🇸",
   "7️⃣7️⃣7️⃣.eth",
+  "culturecafé.eth",
+  "моёт.eth",
+  "batman十robin.eth",
+  "‍420.eth",
+  "0x🥷🏼.eth",
+  "metaverse‌.eth",
+  "🪼jellyfish.eth",
+  "español.eth",
+  "‍‍‍‍‍‍😎.eth",
+  "gm‍.eth",
+  "vitalik‍‍‍.eth",
+  "♪♪♪.eth",
+  "unknоwn.eth",
+  "john🇺🇸",
+  "7️⃣7️⃣7️⃣.eth",
 ];
 
 export async function HeroCarousel() {
@@ -28,7 +43,7 @@ export async function HeroCarousel() {
   );
 
   return (
-    <div className="w-[200%] flex flex-nowrap justify-center items-center space-x-1 animate-carousel group-hover:pause-on-hover">
+    <div className="w-[200%] group flex flex-nowrap justify-center items-center space-x-1 animate-carousel group-hover:pause-on-hover">
       {data?.results?.map((report, index) => (
         <HeroNameBadge key={`carousel-item-${index}`} data={report} />
       ))}
