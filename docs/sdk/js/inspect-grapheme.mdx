@@ -1,0 +1,19 @@
+---
+title: inspectGrapheme()
+---
+
+## Usage
+
+```ts
+const report = await nameguard.inspectGrapheme("𝒶");
+```
+
+## Options
+
+You can override the network used for `inspectGrapheme` using the second argument:
+
+```ts
+const report = await nameguard.inspectGrapheme("𝒶", {
+  network: "...",
+});
+```

@@ -4,12 +4,17 @@ from label_inspector.models import InspectorResult
 
 STATUS = CheckStatus.WARN
 
+# title: Decentralized Name
+TITLE_PASS = 'Decentralization'
+TITLE_FAIL = 'Decentralization'
+TITLE_FAIL_UNKNOWN = 'Decentralization'
+
 MESSAGE_PASS = 'Ownership is decentralized'
 MESSAGE_FAIL = 'Ownership is not decentralized'
 MESSAGE_FAIL_UNKNOWN = 'Ownership may not be decentralized'
 
 ETH_TLD = 'eth'
-DNS_TLD_WHITELIST = {"com", "net", "org", "id", "io"}
+DNS_TLD_WHITELIST = {'com', 'net', 'org', 'id', 'io'}
 
 
 def valid_DNS_tld(label: Optional[str]) -> Optional[bool]:
@@ -22,7 +27,7 @@ def valid_DNS_tld(label: Optional[str]) -> Optional[bool]:
     """
     if label == ETH_TLD:
         return False
-    elif label == "":
+    elif label == '':
         return True  # DNS root
     elif label in DNS_TLD_WHITELIST:
         return True
@@ -79,16 +84,19 @@ def check_name(labels: list[Optional[InspectorResult]]) -> GenericCheckResult:
             check=Check.DECENTRALIZED_NAME,
             status=CheckStatus.PASS,
             _name_message=MESSAGE_PASS,
+            _title=TITLE_PASS,
         )
     elif ds == 'icann':
         return NameCheckResult(
             check=Check.DECENTRALIZED_NAME,
             status=CheckStatus.WARN,
             _name_message=MESSAGE_FAIL,
+            _title=TITLE_FAIL,
         )
     else:
         return NameCheckResult(
             check=Check.DECENTRALIZED_NAME,
             status=CheckStatus.WARN,
             _name_message=MESSAGE_FAIL_UNKNOWN,
+            _title=TITLE_FAIL_UNKNOWN,
         )

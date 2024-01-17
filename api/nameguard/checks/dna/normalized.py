@@ -6,6 +6,11 @@ from nameguard.models import CheckStatus, Check, GraphemeCheckResult, LabelCheck
 
 STATUS = CheckStatus.ALERT
 
+# title: Normalized
+TITLE_PASS = 'Normalization'
+TITLE_FAIL = 'Normalization'
+TITLE_SKIP = 'Normalization'
+
 MESSAGE_PASS = 'Valid for use with ENS'
 
 MESSAGE_FAIL = 'Invalid for use with ENS'
@@ -22,6 +27,7 @@ def check_grapheme(grapheme: Grapheme) -> GraphemeCheckResult:
         _grapheme_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
         _label_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
         _name_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
+        _title=TITLE_PASS if passed else TITLE_FAIL,
     )
 
 
@@ -33,6 +39,7 @@ def check_label(label: Optional[Label]) -> LabelCheckResult:
             status=CheckStatus.SKIP,
             _label_message=L_MESSAGE_SKIP,
             _name_message=N_MESSAGE_SKIP,
+            _title=TITLE_SKIP,
         )
     passed = label.status == 'normalized' and len(label.label) > 0
     return LabelCheckResult(
@@ -40,6 +47,7 @@ def check_label(label: Optional[Label]) -> LabelCheckResult:
         status=CheckStatus.PASS if passed else STATUS,
         _label_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
         _name_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
+        _title=TITLE_PASS if passed else TITLE_FAIL,
     )
 
 
@@ -50,10 +58,12 @@ def check_name(name: list[Optional[Label]]) -> NameCheckResult:
             check=Check.NORMALIZED,
             status=CheckStatus.SKIP,
             _name_message=N_MESSAGE_SKIP,
+            _title=TITLE_SKIP,
         )
     passed = all(label.status == 'normalized' and len(label.label) > 0 for label in name)
     return NameCheckResult(
         check=Check.NORMALIZED,
         status=CheckStatus.PASS if passed else STATUS,
         _name_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
+        _title=TITLE_PASS if passed else TITLE_FAIL,
     )

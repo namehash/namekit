@@ -22,9 +22,13 @@ def pytest_configure(config):
 def set_monkeypatch(monkeypatch):
     if use_monkeypatch:
         original_get_nft_metadata = nameguard.nameguard.get_nft_metadata
+
         async def mock_get_nft_metadata(contract_address: str, token_id: str) -> dict:
             mapping = {
-                ('0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85', '0x68562fc74af4dcfac633a803c2f57c2b826827b47f797b6ab4e468dc8607b5d5'): ProviderUnavailable,
+                (
+                    '0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85',
+                    '0x68562fc74af4dcfac633a803c2f57c2b826827b47f797b6ab4e468dc8607b5d5',
+                ): ProviderUnavailable,
             }
             if (contract_address, token_id) in mapping:
                 raise mapping[(contract_address, token_id)]()
@@ -32,13 +36,18 @@ def set_monkeypatch(monkeypatch):
                 return json.load(open(f'{TESTS_DATA_PATH}/get_nft_metadata__{contract_address}__{token_id}.json'))
             except FileNotFoundError:
                 result = await original_get_nft_metadata(contract_address, token_id)
-                json.dump(result, open(f'data/NEW-get_nft_metadata__{contract_address}__{token_id}.json', 'w'), indent=2, ensure_ascii=False)
+                json.dump(
+                    result,
+                    open(f'data/NEW-get_nft_metadata__{contract_address}__{token_id}.json', 'w'),
+                    indent=2,
+                    ensure_ascii=False,
+                )
                 raise
-        
-        monkeypatch.setattr("nameguard.nameguard.get_nft_metadata", mock_get_nft_metadata)
 
+        monkeypatch.setattr('nameguard.nameguard.get_nft_metadata', mock_get_nft_metadata)
 
         original_name = nameguard.nameguard.OurENS.name
+
         def mock_name(self, address):
             try:
                 return json.load(open(f'{TESTS_DATA_PATH}/name__{address}.json'))
@@ -46,12 +55,12 @@ def set_monkeypatch(monkeypatch):
                 result = original_name(self, address)
                 json.dump(result, open(f'data/NEW-name__{address}.json', 'w'), indent=2, ensure_ascii=False)
                 raise
-        
+
         # monkeypatch.setattr('nameguard.our_ens.OurENS.name', mock_name)
         monkeypatch.setattr('nameguard.nameguard.OurENS.name', mock_name)
 
-
         original_call_subgraph = nameguard.subgraph.call_subgraph
+
         async def mock_call_subgraph(network_name, query: str, variables: dict):
             h = hashlib.md5(json.dumps((network_name, query, variables), sort_keys=True).encode('utf-8')).hexdigest()
             mapping = {
@@ -65,8 +74,10 @@ def set_monkeypatch(monkeypatch):
                 return json.load(open(f'{TESTS_DATA_PATH}/call_subgraph__{h}.json'))
             except FileNotFoundError:
                 result = await original_call_subgraph(network_name, query, variables)
-                h = hashlib.md5(json.dumps((network_name, query, variables), sort_keys=True).encode('utf-8')).hexdigest()
+                h = hashlib.md5(
+                    json.dumps((network_name, query, variables), sort_keys=True).encode('utf-8')
+                ).hexdigest()
                 json.dump(result, open(f'data/NEW-call_subgraph__{h}.json', 'w'), indent=2, ensure_ascii=False)
                 raise
-            
+
         monkeypatch.setattr('nameguard.subgraph.call_subgraph', mock_call_subgraph)

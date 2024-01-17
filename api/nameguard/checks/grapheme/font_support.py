@@ -4,11 +4,16 @@ from nameguard.models import CheckStatus, Check, GenericCheckResult, GraphemeChe
 
 STATUS = CheckStatus.WARN
 
-MESSAGE_PASS = 'Probably supported by common fonts'
+# title: Font Support
+TITLE_PASS = 'Font Support'
+TITLE_FAIL = 'Font Support'
+TITLE_SKIP = 'Font Support'
 
-MESSAGE_FAIL = 'May not be supported by common fonts'
+MESSAGE_PASS = 'Commonly supported'
 
-MESSAGE_SKIP = 'Unknown if supported by common fonts'
+MESSAGE_FAIL = 'Less common support'
+
+MESSAGE_SKIP = 'Unknown font support'
 
 
 def check_grapheme(grapheme: Grapheme) -> GenericCheckResult:
@@ -20,6 +25,7 @@ def check_grapheme(grapheme: Grapheme) -> GenericCheckResult:
             _grapheme_message=MESSAGE_SKIP,
             _label_message=MESSAGE_SKIP,
             _name_message=MESSAGE_SKIP,
+            _title=TITLE_SKIP,
         )
     else:
         return GraphemeCheckResult(
@@ -28,4 +34,5 @@ def check_grapheme(grapheme: Grapheme) -> GenericCheckResult:
             _grapheme_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
             _label_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
             _name_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
+            _title=TITLE_PASS if passed else TITLE_FAIL,
         )

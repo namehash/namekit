@@ -1,0 +1,16 @@
+---
+openapi: "GET /inspect-name/{network_name}/{name}"
+---
+
+<RequestExample>
+
+```bash cURL
+curl --request GET \
+  --url https://api.nameguard.io/inspect-name/{network_name}/{name}
+```
+
+```ts SDK
+const report = await nameguard.inspectName("nick.eth");
+```
+
+</RequestExample>

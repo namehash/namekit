@@ -131,7 +131,7 @@ export interface FakeEthNameCheckResult {
    *
    * `null` if `status` is `unknown_nft`
    */
-  investigated_fields: object | null; // TODO: dict[str,str] | null
+  investigated_fields: Record<string, string> | null;
 }
 
 /**
@@ -224,6 +224,13 @@ export interface ConsolidatedGraphemeGuardReport extends ConsolidatedReport {
   grapheme_description: string;
 }
 
+export interface ConfusableGuardReport extends ConsolidatedGraphemeGuardReport {
+  /**
+   * The canonical status for the current grapheme.
+   * */
+  is_canonical: boolean;
+}
+
 /**
  * The result of a NameGuard inspection on a grapheme.
  */
@@ -254,7 +261,7 @@ export interface GraphemeGuardReport extends ConsolidatedGraphemeGuardReport {
   codepoints: string[];
 
   /**
-   * A list of `ConsolidatedGraphemeGuardReport` values that might be confused with the analyzed `grapheme`.
+   * A list of `ConfusableGuardReport` values that might be confused with the analyzed `grapheme`.
    *
    * To be considered a confusable, a grapheme must meet all of the following criteria:
    * 1. They might be considered visually confusable with `grapheme`.
@@ -265,7 +272,7 @@ export interface GraphemeGuardReport extends ConsolidatedGraphemeGuardReport {
    *
    * If a canonical confusable is found, it will be the first element in the list.
    */
-  confusables: ConsolidatedGraphemeGuardReport[];
+  confusables: ConfusableGuardReport[];
 
   /**
    * The grapheme considered to be the canonical form of the analyzed `grapheme`.
@@ -463,132 +470,32 @@ interface FakeEthNameOptions {
   network?: Network;
 }
 
+interface FieldsWithRequiredTitle extends Record<string, string> {
+    title: string;
+}
+
 class NameGuard {
   private endpoint: URL;
   private network: Network;
+  private abortController: AbortController;
 
   constructor({ endpoint = DEFAULT_ENDPOINT, network = DEFAULT_NETWORK } = {}) {
     this.endpoint = new URL(endpoint);
     this.network = network;
+    this.abortController = new AbortController();
   }
 
-  private async fetchNameGuardReport(
-    name: string,
-    options?: InspectNameOptions
-  ): Promise<NameGuardReport> {
-    const url = new URL("inspect-name", this.endpoint);
-
-    const network_name = options?.network || this.network;
-
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name, network_name }),
-    });
-
-    if (!response.ok) {
-      throw new NameGuardError(response.status, `Failed to fetch name.`);
-    }
-
-    return await response.json();
-  }
-
-  private async fetchConsolidatedNameGuardReports(
-    names: string[],
-    options?: InspectNameOptions
-  ): Promise<BulkConsolidatedNameGuardReport> {
-    const url = new URL("bulk-inspect-names", this.endpoint);
-
-    const network_name = options?.network || this.network;
-
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ names, network_name }),
-    });
-
-    if (!response.ok) {
-      throw new NameGuardError(
-        response.status,
-        `Failed to fetch names in batch.`
-      );
-    }
-
-    return await response.json();
-  }
-
-  private async fetchSecurePrimaryName(
-    address: string,
-    options?: SecurePrimaryNameOptions
-  ): Promise<SecurePrimaryNameResult> {
-    const network_name = options?.network || this.network;
-
-    const url = new URL(`secure-primary-name/${network_name}/${address}`, this.endpoint);
-
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new NameGuardError(
-        response.status,
-        "Error looking up secure primary name."
-      );
-    }
-
-    return await response.json();
-  }
-
-  private async fetchFakeEthName(
-    contract_address: string,
-    token_id: string,
-    options?: FakeEthNameOptions
-  ): Promise<FakeEthNameCheckResult> {
-    const network_name = options?.network || this.network;
-
-    const url = new URL(`fake-eth-name-check/${network_name}/${contract_address}/${token_id}`, this.endpoint);
-
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new NameGuardError(
-        response.status,
-        "Error looking up .eth name impersonation status of NFT."
-      );
-    }
-
-    return await response.json();
-  }
-
-  private async fetchGraphemeGuardReport(
-    grapheme: string
-  ): Promise<GraphemeGuardReport> {
-    const grapheme_encoded = encodeURIComponent(grapheme);
-
-    const url = new URL(`inspect-grapheme/${grapheme_encoded}`, this.endpoint);
-
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new NameGuardError(
-        response.status,
-        `Error looking up GraphemeGuardReport.`
-      );
-    }
-
-    return await response.json();
-  }
-
-  // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
   /**
    * Inspects a single name with NameGuard. Provides a `NameGuardReport` including:
    *   1. The details of all checks performed on `name` that consolidates all checks performed on labels and graphemes in `name`.
    *   2. The details of all labels in `name`.
    *   3. A consolidated inspection result of all graphemes in `name`.
    *
+   * This function will attempt automated labelhash resolution through the ENS Subgraph,
+   * using the network specified in `options.network_name`.
+   *
    * @param {string} name The name for NameGuard to inspect.
+   * @param {InspectNameOptions} options The options for the inspection.
    * @returns {Promise<NameGuardReport>} A promise that resolves with the `NameGuardReport` of the name.
    * @example
    * const nameGuardReport = await nameguard.inspectName('vitalik.eth');
@@ -597,21 +504,26 @@ class NameGuard {
     name: string,
     options?: InspectNameOptions
   ): Promise<NameGuardReport> {
-    return this.fetchNameGuardReport(name, options);
+    const network_name = options?.network || this.network;
+
+    return this.rawRequest("inspect-name", "POST", { name, network_name });
   }
 
   // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
   /**
-   * Inspects up to 250 names at a time with NameGuard. Provides a `ConsolidatedNameGuardReport` for each provided name, including:
-   *   1. The details of all checks performed on `name` that consolidates all checks performed on labels and graphemes in `name`.
+   * Inspects up to 250 names at a time with NameGuard. Provides a `ConsolidatedNameGuardReport` for each name provided in `names`, including:
+   *   1. The details of all checks performed on a name that consolidates all checks performed on labels and graphemes in this name.
    *
-   * Each `ConsolidatedNameGuardReport` returned represents an equivalant set of checks as a `NameGuardReport`. However:
+   * Each `ConsolidatedNameGuardReport` returned represents an equivalent set of checks as a `NameGuardReport`. However:
    *   1. A `NameGuardReport` contains a lot of additional data that isn't always needed / desired when a `ConsolidatedNameGuardReport` will do.
    *   2. When NameGuard only needs to return a `ConsolidatedNameGuardReport`, some special performance optimizations
-   *      are possible (and completely safe) that help to accelate responses in many cases.
+   *      are possible (and completely safe) that help to accelerate responses in many cases.
    *
+   * This function will attempt automated labelhash resolution through the ENS Subgraph,
+   * using the network specified in `options.network_name`.
    *
    * @param {string[]} names The list of names for NameGuard to inspect.
+   * @param {InspectNameOptions} options The options for the inspection.
    * @returns {Promise<BulkConsolidatedNameGuardReport>} A promise that resolves with a list of `ConsolidatedNameGuardReport` values for each name queried in the bulk inspection.
    */
   public bulkInspectNames(
@@ -623,7 +535,13 @@ class NameGuard {
         `Bulk inspection of more than ${MAX_BULK_INSPECTION_NAMES} names at a time is not supported.`
       );
     }
-    return this.fetchConsolidatedNameGuardReports(names, options);
+
+    const network_name = options?.network || this.network;
+
+    return this.rawRequest("bulk-inspect-names", "POST", {
+      names,
+      network_name,
+    });
   }
 
   // TODO: We need to have more specialized error handling here for cases such as the lookup in the ENS Subgraph failing.
@@ -636,8 +554,8 @@ class NameGuard {
    * If this resolution fails then NameGuard will return an error.
    *
    * @param {string} namehash A namehash should be a decimal or a hex (prefixed with 0x) string.
-   * @param {string} network The network name (defaults to "mainnet").
-   * @returns A promise that resolves with the details of the namehash.
+   * @param {InspectNamehashOptions} options The options for the inspection.
+   * @returns {Promise<NameGuardReport>}  A promise that resolves with a `NameGuardReport` of the resolved name.
    */
   public async inspectNamehash(
     namehash: string,
@@ -649,7 +567,10 @@ class NameGuard {
 
     const network = options?.network || this.network;
 
-    const url = new URL(`inspect-namehash/${network}/${namehash}`, this.endpoint);
+    const url = new URL(
+      `inspect-namehash/${network}/${namehash}`,
+      this.endpoint
+    );
 
     const response = await fetch(url);
 
@@ -670,14 +591,15 @@ class NameGuard {
   /**
    * Inspects the name "[{labelhash}].{parent}".
    *
-   * Parent may be a name with any number of labels. The default parent is "eth".
+   * Parent (`options.parent`) may be a name with any number of labels. The default parent is "eth".
    *
    * This is a convenience function to generate a `NameGuardReport` in cases when you only have:
-   * 1. The labelhash of the "childmost" label of a name.
-   * 2. The complete parent name of the "childmost" label.
+   *   1. The labelhash of the "childmost" label of a name.
+   *   2. The complete parent name of the "childmost" label.
    *
    * NameGuard always inspects names, rather than labelhashes. So this function will first attempt
-   * to resolve the "childmost" label associated with the provided labelhash through the ENS Subgraph.
+   * to resolve the "childmost" label associated with the provided labelhash through the ENS Subgraph,
+   * using the network specified in `options.network_name`.
    *
    * If this label resolution fails the resulting `NameGuardReport` will be equivalent to requesting
    * a `NameGuardReport` for the name "[{labelhash}].{parent}" which will contain (at least) one label
@@ -688,7 +610,7 @@ class NameGuard {
    *
    * @param {string} labelhash A labelhash should be a decimal or a hex (prefixed with 0x) string.
    * @param {InspectLabelhashOptions} options The options for the inspection.
-   * @returns A promise that resolves with a `NameGuardReport` of the resolved name.
+   * @returns {Promise<NameGuardReport>}  A promise that resolves with a `NameGuardReport` of the resolved name.
    */
   public async inspectLabelhash(
     labelhash: string,
@@ -708,15 +630,30 @@ class NameGuard {
   }
 
   /**
-   * Inspect a single grapheme.
+   * Inspects a single grapheme.
    *
    * @param {string} grapheme The grapheme to inspect. Must be a single grapheme (i.e. a single character or a sequence of characters that represent a single grapheme).
-   * @returns A promise that resolves with a `GraphemeGuardReport` of the inspected grapheme.
+   * @returns {Promise<GraphemeGuardReport>} A promise that resolves with a `GraphemeGuardReport` of the inspected grapheme.
    */
   public inspectGrapheme(grapheme: string): Promise<GraphemeGuardReport> {
-    return this.fetchGraphemeGuardReport(grapheme);
+    const grapheme_encoded = encodeURIComponent(grapheme);
+
+    return this.rawRequest(`inspect-grapheme/${grapheme_encoded}`);
   }
 
+  /**
+   * Performs a reverse lookup of an Ethereum `address` to a primary name.
+   *
+   * Data sources for the primary name lookup include:
+   * 1. The Ethereum Provider configured in the NameGuard instance.
+   * 2. For ENS names using CCIP-Read: requests to externally defined gateway servers.
+   *
+   * Returns `display_name` to be shown to users and estimates `impersonation_status`
+   *
+   * @param {string} address An Ethereum address.
+   * @param {SecurePrimaryNameOptions} options The options for the secure primary name.
+   * @returns {Promise<SecurePrimaryNameResult>} A promise that resolves with a `SecurePrimaryNameResult`.
+   */
   public getSecurePrimaryName(
     address: string,
     options?: SecurePrimaryNameOptions
@@ -727,12 +664,26 @@ class NameGuard {
       );
     }
 
-    return this.fetchSecurePrimaryName(address, options);
+    const network_name = options?.network || this.network;
+
+    return this.rawRequest(`secure-primary-name/${network_name}/${address}`);
   }
 
+  /**
+   * Performs a fake .eth ENS name check based on given NFT metadata.
+   *
+   * This function checks if the metadata of an NFT looks like a fake .eth ENS name.
+   *
+   * @param {string} contract_address Contract address for the NFT contract (ERC721 and ERC1155 supported).
+   * @param {string} token_id The ID of the token (in hex or decimal format).
+   * @param {string} fields Fields with values which will be investigated (e.g. title, collection name, metadata) whether they look like fake .eth ENS name. `title` key is mandatory, for ENS contracts it should be the ENS name.
+   * @param {FakeEthNameOptions} options The options for the fake .eth ens name check.
+   * @returns {Promise<FakeEthNameCheckResult>}  A promise that resolves with a `FakeEthNameCheckResult`.
+   */
   public fakeEthNameCheck(
     contract_address: string,
     token_id: string,
+    fields: FieldsWithRequiredTitle,
     options?: FakeEthNameOptions
   ): Promise<FakeEthNameCheckResult> {
     if (!isEthereumAddress(contract_address)) {
@@ -747,7 +698,65 @@ class NameGuard {
       );
     }
 
-    return this.fetchFakeEthName(contract_address, token_id, options);
+    if (!fields || !fields.title || typeof fields.title !== 'string') {
+      throw new Error("The 'fields' object must be provided and contain a 'title' key with a string value.");
+    }
+
+    const network_name = options?.network || this.network;
+
+    return this.rawRequest("fake-eth-name-check", "POST", {
+      network_name,
+      contract_address,
+      token_id,
+      fields
+    });
+  }
+
+  /**
+   * Performs a raw HTTP request to the NameGuard API.
+   * @param {string} path The API endpoint path.
+   * @param {string} method The HTTP method (e.g., 'GET', 'POST').
+   * @param {object} body The request body for POST requests.
+   * @param {object} headers Additional headers for the request.
+   * @returns {Promise<any>} The response from the API.
+   */
+  async rawRequest(
+    path: string,
+    method: string = "GET",
+    body: object = {},
+    headers: object = {}
+  ): Promise<any> {
+    const url = new URL(path, this.endpoint);
+
+    const options: RequestInit = {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+        ...headers,
+      },
+      signal: this.abortController.signal,
+    };
+
+    if (method !== "GET") {
+      options.body = JSON.stringify(body);
+    }
+
+    const response = await fetch(url, options);
+
+    if (!response.ok) {
+      throw new NameGuardError(
+        response.status,
+        `Failed to perform request to ${path}.`
+      );
+    }
+
+    return await response.json();
+  }
+
+  public abortAllRequests(): void {
+    this.abortController.abort();
+
+    this.abortController = new AbortController();
   }
 }
 

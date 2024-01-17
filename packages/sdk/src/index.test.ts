@@ -56,7 +56,8 @@ describe("NameGuard", () => {
   it("should check a fake ENS name", async () => {
     const data = await nameguard.fakeEthNameCheck(
       "0x495f947276749ce646f68ac8c248420045cb7b5e",
-      "61995921128521442959106650131462633744885269624153038309795231243542768648193"
+      "61995921128521442959106650131462633744885269624153038309795231243542768648193",
+      {"title": "nick.eth"}
     );
 
     expect(data.status).toBe("impersonated_eth_name");
@@ -165,7 +166,7 @@ describe("NameGuard", () => {
 
     expect(data.primary_name_status).toBe("normalized");
     expect(data.impersonation_status).toBe("unlikely");
-    expect(data.primary_name).toBe("vincξnt.eth")
+    expect(data.primary_name).toBe("vincξnt.eth");
     expect(data.display_name).toBe("vincΞnt.eth");
     expect(data.nameguard_result).not.toBeNull();
     expect(data.nameguard_result?.name).toBe("vincξnt.eth");
@@ -185,7 +186,4 @@ describe("NameGuard", () => {
     expect(data.nameguard_result?.name).toBe("hello<world>!.eth");
     expect(data.nameguard_result?.canonical_name).toBeNull();
   });
-  
-  // 
-
 });

@@ -19,7 +19,7 @@ export const NameBadge = ({ placeholder, onClick, data }: NameBadgeProps) => {
         ) : (
           <span className="rounded-full h-2 w-16 bg-gray-200 animate-pulse"></span>
         )}
-        <Shield status="info" size="tiny" />
+        <Shield status="info" size="micro" />
       </button>
     );
 
@@ -31,7 +31,16 @@ export const NameBadge = ({ placeholder, onClick, data }: NameBadgeProps) => {
       <span className="text-black text-sm leading-5">
         {data.beautiful_name || data.name}
       </span>
-      <NameShield data={data} />
+      <NameShield data={data} size="micro">
+        <div className="text-sm text-white">
+          <button
+            className="appearance-none underline font-medium"
+            onClick={onClick}
+          >
+            Inspect name for details
+          </button>
+        </div>
+      </NameShield>
     </button>
   );
 };

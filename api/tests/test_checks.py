@@ -27,15 +27,16 @@ def test_ordering():
 
 # -- GRAPHEME CHECKS --
 
+
 @pytest.mark.parametrize(
-    "grapheme, rating, message",
+    'grapheme, rating, message',
     [
         ('a', Rating.PASS, 'Unlikely to be confused'),
         ('ą', Rating.WARN, 'May be confusable'),
         ('ဩ', Rating.WARN, 'May be confusable'),
         ('¤', Rating.PASS, 'Unlikely to be confused'),
         ('Ɇ', Rating.PASS, 'Confusable checks were skipped'),
-    ]
+    ],
 )
 def test_grapheme_confusable(nameguard: NameGuard, grapheme, rating, message):
     g = analyse_grapheme(nameguard, grapheme)
@@ -50,13 +51,13 @@ def test_grapheme_font_support(nameguard: NameGuard):
     r = checks.grapheme.font_support.check_grapheme(g)
     assert r.check == Check.FONT_SUPPORT
     assert r.rating == Rating.PASS
-    assert r.message == 'Probably supported by common fonts'
+    assert r.message == 'Commonly supported'
 
     g = analyse_grapheme(nameguard, '👊🏿')
     r = checks.grapheme.font_support.check_grapheme(g)
     assert r.check == Check.FONT_SUPPORT
     assert r.rating == Rating.WARN
-    assert r.message == 'May not be supported by common fonts'
+    assert r.message == 'Less common support'
 
 
 def test_grapheme_invisible(nameguard: NameGuard):
@@ -137,20 +138,20 @@ def test_label_normalized(nameguard: NameGuard):
 
 def test_label_punycode(nameguard: NameGuard):
     l = nameguard.analyse_label('ab')
-    r = checks.label.punycode.check_label(l)
+    r = checks.dna.punycode.check_label(l)
     assert r.check == Check.PUNYCODE_COMPATIBLE_LABEL
     assert r.rating == Rating.PASS
     assert r.message == 'Compatible for use with DNS'
-    assert r.check_name == 'DNS Compatible Label'
+    assert r.check_name == 'DNS Compatibility'
 
     l = nameguard.analyse_label('あ' * 200)
-    r = checks.label.punycode.check_label(l)
+    r = checks.dna.punycode.check_label(l)
     assert r.check == Check.PUNYCODE_COMPATIBLE_LABEL
     assert r.rating == Rating.WARN
     assert r.message == 'Incompatible for use with DNS'
 
     l = nameguard.analyse_label('あ_a')
-    r = checks.label.punycode.check_label(l)
+    r = checks.dna.punycode.check_label(l)
     assert r.check == Check.PUNYCODE_COMPATIBLE_LABEL
     assert r.status == CheckStatus.WARN
     assert r.message == 'Incompatible for use with DNS'
@@ -162,40 +163,48 @@ def test_label_punycode(nameguard: NameGuard):
 def test_name_punycode_name(nameguard: NameGuard):
     n = 'nick.eth'
     ls = [nameguard.analyse_label(l) for l in n.split('.')]
-    r = checks.name.punycode_name.check_name(ls)
+    r = checks.dna.punycode.check_name(ls)
     assert r.check == Check.PUNYCODE_COMPATIBLE_NAME
     assert r.rating == Rating.PASS
     assert r.message == 'Compatible for use with DNS'
 
     n = 'あ.' * 60 + 'eth'
     ls = [nameguard.analyse_label(l) for l in n.split('.')]
-    r = checks.name.punycode_name.check_name(ls)
+    r = checks.dna.punycode.check_name(ls)
     assert r.check == Check.PUNYCODE_COMPATIBLE_NAME
     assert r.rating == Rating.WARN
     assert r.message == 'Incompatible for use with DNS'
 
     n = 'あ.' * 60 + 'a_a'
     ls = [nameguard.analyse_label(l) for l in n.split('.')]
-    r = checks.name.punycode_name.check_name(ls)
+    r = checks.dna.punycode.check_name(ls)
     assert r.check == Check.PUNYCODE_COMPATIBLE_NAME
     assert r.status == CheckStatus.WARN
     assert r.message == 'Incompatible for use with DNS'
 
 
 @pytest.mark.parametrize(
-    "name, rating, message",
+    'name, rating, message',
     [
-        ("", Rating.PASS, 'Ownership is decentralized'),
-        ("eth", Rating.PASS, 'Ownership is decentralized'),
-        ("abc.eth", Rating.PASS, 'Ownership is decentralized'),
-        ("123.abc.eth", Rating.WARN, 'Ownership may not be decentralized'),
-        ("com", Rating.WARN, 'Ownership is not decentralized'),
-        ("abc.com", Rating.WARN, 'Ownership is not decentralized'),
-        ("limo", Rating.WARN, 'Ownership may not be decentralized'),
-        ("eth.limo", Rating.WARN, 'Ownership may not be decentralized'),
-        ("[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth", Rating.PASS, 'Ownership is decentralized'),
-        ("abc.[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770]", Rating.WARN, 'Ownership may not be decentralized'),
-    ]
+        ('', Rating.PASS, 'Ownership is decentralized'),
+        ('eth', Rating.PASS, 'Ownership is decentralized'),
+        ('abc.eth', Rating.PASS, 'Ownership is decentralized'),
+        ('123.abc.eth', Rating.WARN, 'Ownership may not be decentralized'),
+        ('com', Rating.WARN, 'Ownership is not decentralized'),
+        ('abc.com', Rating.WARN, 'Ownership is not decentralized'),
+        ('limo', Rating.WARN, 'Ownership may not be decentralized'),
+        ('eth.limo', Rating.WARN, 'Ownership may not be decentralized'),
+        (
+            '[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth',
+            Rating.PASS,
+            'Ownership is decentralized',
+        ),
+        (
+            'abc.[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770]',
+            Rating.WARN,
+            'Ownership may not be decentralized',
+        ),
+    ],
 )
 def test_decentralized(nameguard: NameGuard, name, rating, message):
     ls = [nameguard.analyse_label(l) for l in name.split('.')]
@@ -204,7 +213,7 @@ def test_decentralized(nameguard: NameGuard, name, rating, message):
     assert r.rating == rating
     assert r.message == message
 
-    
+
 def test_name_impersonation(nameguard: NameGuard):
     n = 'niąck.eth'
     ls = [nameguard.analyse_label(l) for l in n.split('.')]
@@ -220,7 +229,7 @@ def test_name_impersonation(nameguard: NameGuard):
     assert r.check == Check.IMPERSONATION_RISK
     assert r.rating == Rating.WARN
     assert r.message == 'May be an impersonation of `niack.eth`'
-    
+
     n = 'a👩🏽‍⚕.eth'
     ls = [nameguard.analyse_label(l) for l in n.split('.')]
     r = checks.name.impersonation_risk.check_name(ls)
@@ -229,4 +238,3 @@ def test_name_impersonation(nameguard: NameGuard):
     assert r.message == 'Emojis used in this name may be visually confused with other similar emojis'
 
     endpoint_name.set(None)
-

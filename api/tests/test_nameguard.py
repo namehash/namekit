@@ -1,5 +1,3 @@
-import asyncio
-
 import pytest
 from web3 import Web3
 
@@ -19,8 +17,7 @@ def nameguard():
 async def test_basic_green(nameguard: NameGuard):
     result = await nameguard.inspect_name('mainnet', 'nick.eth')
     assert result.rating is Rating.PASS
-    assert all(check.rating is Rating.PASS
-               for check in result.checks)
+    assert all(check.rating is Rating.PASS for check in result.checks)
 
 
 @pytest.mark.asyncio
@@ -55,17 +52,120 @@ async def test_bulk(nameguard: NameGuard):
     assert result.results[1].rating is Rating.WARN
     assert result.results[2].rating is Rating.ALERT
 
+
 @pytest.mark.asyncio
 async def test_bulk_stress(nameguard: NameGuard):
-    names=["abaddon.eth","alchemist.eth","ancientapparition.eth","antimage.eth","arcwarden.eth","axe.eth","bane.eth","batrider.eth","beastmaster.eth","bloodseeker.eth","spiderman.eth","ironman.eth","thanos.eth","hulk.eth","wolverine.eth","doctordoom.eth","venom.eth","galactus.eth","janefoster.eth","titania.eth","rihanna.eth","willsmith.eth","kanyewest.eth","eminem.eth","miakhalifa.eth","beyonce.eth","snoopdogg.eth","johncena.eth","badbunny.eth","coolio.eth","aaba.eth","aal.eth","aame.eth","aaoi.eth","aaon.eth","aapl.eth","aaww.eth","aaxj.eth","aaxn.eth","abac.eth","cthulhu.eth","vecna.eth","azathoth.eth","aslan.eth","raiden.eth","beerus.eth","ares.eth","tiamat.eth","bahamut.eth","nyarlathotep.eth","aphrodite.eth","apollo.eth","artemis.eth","tauropolia.eth","prometheus.eth","athena.eth","hermes.eth","dionysus.eth","gaia.eth","hephaestus.eth","hera.eth","hades.eth","poseidon.eth","cronus.eth","heracles.eth","odin.eth","persephone.eth","thor.eth","asgard.eth","darth.eth","🆉🅴🆄🆂.eth","🏴‍☠zeus.eth","zeus💎.eth","₿zeus.eth","zeus💰.eth","zeus1⃣.eth","zeus🍆.eth","notzeus.eth","azeus.eth","zeusor.eth","zeusliving.eth","sonofzeus.eth","yourzeus.eth","hazeus.eth","vipzeus.eth","nftzeus.eth","bitcoinzeus.eth","thezeus.eth","zeuser.eth","_zeus.eth","$zeus.eth","zeusseuss.eth","ξzeus.eth","0xzeus.eth","zeusperseus.eth","mrzeus.eth","cryptozeus.eth","23v5.eth","2ev5.eth","suez.eth"]
+    names = [
+        'abaddon.eth',
+        'alchemist.eth',
+        'ancientapparition.eth',
+        'antimage.eth',
+        'arcwarden.eth',
+        'axe.eth',
+        'bane.eth',
+        'batrider.eth',
+        'beastmaster.eth',
+        'bloodseeker.eth',
+        'spiderman.eth',
+        'ironman.eth',
+        'thanos.eth',
+        'hulk.eth',
+        'wolverine.eth',
+        'doctordoom.eth',
+        'venom.eth',
+        'galactus.eth',
+        'janefoster.eth',
+        'titania.eth',
+        'rihanna.eth',
+        'willsmith.eth',
+        'kanyewest.eth',
+        'eminem.eth',
+        'miakhalifa.eth',
+        'beyonce.eth',
+        'snoopdogg.eth',
+        'johncena.eth',
+        'badbunny.eth',
+        'coolio.eth',
+        'aaba.eth',
+        'aal.eth',
+        'aame.eth',
+        'aaoi.eth',
+        'aaon.eth',
+        'aapl.eth',
+        'aaww.eth',
+        'aaxj.eth',
+        'aaxn.eth',
+        'abac.eth',
+        'cthulhu.eth',
+        'vecna.eth',
+        'azathoth.eth',
+        'aslan.eth',
+        'raiden.eth',
+        'beerus.eth',
+        'ares.eth',
+        'tiamat.eth',
+        'bahamut.eth',
+        'nyarlathotep.eth',
+        'aphrodite.eth',
+        'apollo.eth',
+        'artemis.eth',
+        'tauropolia.eth',
+        'prometheus.eth',
+        'athena.eth',
+        'hermes.eth',
+        'dionysus.eth',
+        'gaia.eth',
+        'hephaestus.eth',
+        'hera.eth',
+        'hades.eth',
+        'poseidon.eth',
+        'cronus.eth',
+        'heracles.eth',
+        'odin.eth',
+        'persephone.eth',
+        'thor.eth',
+        'asgard.eth',
+        'darth.eth',
+        '🆉🅴🆄🆂.eth',
+        '🏴‍☠zeus.eth',
+        'zeus💎.eth',
+        '₿zeus.eth',
+        'zeus💰.eth',
+        'zeus1⃣.eth',
+        'zeus🍆.eth',
+        'notzeus.eth',
+        'azeus.eth',
+        'zeusor.eth',
+        'zeusliving.eth',
+        'sonofzeus.eth',
+        'yourzeus.eth',
+        'hazeus.eth',
+        'vipzeus.eth',
+        'nftzeus.eth',
+        'bitcoinzeus.eth',
+        'thezeus.eth',
+        'zeuser.eth',
+        '_zeus.eth',
+        '$zeus.eth',
+        'zeusseuss.eth',
+        'ξzeus.eth',
+        '0xzeus.eth',
+        'zeusperseus.eth',
+        'mrzeus.eth',
+        'cryptozeus.eth',
+        '23v5.eth',
+        '2ev5.eth',
+        'suez.eth',
+    ]
     result = await nameguard.bulk_inspect_names('mainnet', names)
     assert len(result.results) == 100
 
-@pytest.mark.parametrize('label_length', [3,10,62,63,64,200,240,252,253,254,255,256,300])
+
+@pytest.mark.parametrize('label_length', [3, 10, 62, 63, 64, 200, 240, 252, 253, 254, 255, 256, 300])
 @pytest.mark.asyncio
 async def test_bulk_simple_name(nameguard: NameGuard, label_length):
-    result = await nameguard.inspect_name('mainnet', ('a'*label_length)+'.eth')
-    result_bulk = await nameguard.inspect_name('mainnet', ('a'*label_length)+'.eth', bulk_mode=True)
+    result = await nameguard.inspect_name('mainnet', ('a' * label_length) + '.eth')
+    result_bulk = await nameguard.inspect_name('mainnet', ('a' * label_length) + '.eth', bulk_mode=True)
 
     assert result.namehash == result_bulk.namehash
     assert result.normalization == result_bulk.normalization
@@ -91,16 +191,19 @@ async def test_check_skip(nameguard: NameGuard):
     c = [c for c in result.checks if c.check is Check.FONT_SUPPORT][0]
     assert c.rating is Rating.PASS
     assert c.status is CheckStatus.PASS
+    assert c.check_name == 'Font Support'
 
     result = await nameguard.inspect_name('mainnet', unsup)
     c = [c for c in result.checks if c.check is Check.FONT_SUPPORT][0]
     assert c.rating is Rating.WARN
     assert c.status is CheckStatus.WARN
+    assert c.check_name == 'Font Support'
 
     result = await nameguard.inspect_name('mainnet', unk)
     c = [c for c in result.checks if c.check is Check.FONT_SUPPORT][0]
     assert c.rating is Rating.PASS
     assert c.status is CheckStatus.SKIP
+    assert c.check_name == 'Font Support'
 
 
 @pytest.mark.asyncio
@@ -110,6 +213,8 @@ async def test_check_skip_confusable(nameguard: NameGuard):
     assert c.rating is Rating.PASS
     assert c.status is CheckStatus.SKIP
     assert c.message == 'Confusable checks were skipped'
+    assert c.check_name == 'Character Recognition'
+
 
 @pytest.mark.asyncio
 async def test_check_skip_font_support(nameguard: NameGuard):
@@ -117,29 +222,56 @@ async def test_check_skip_font_support(nameguard: NameGuard):
     c = [c for c in result.checks if c.check is Check.FONT_SUPPORT][0]
     assert c.rating is Rating.PASS
     assert c.status is CheckStatus.SKIP
-    assert c.message == 'Unknown if supported by common fonts'
-    
+    assert c.message == 'Unknown font support'
+    assert c.check_name == 'Font Support'
+
+
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.asyncio
-@pytest.mark.parametrize('name,n,l0,l1', [
-    ('nick.eth', Normalization.NORMALIZED, Normalization.NORMALIZED, Normalization.NORMALIZED),
-    ('[zzz].eth', Normalization.UNNORMALIZED, Normalization.UNNORMALIZED, Normalization.NORMALIZED),
-
-    ('[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth', Normalization.NORMALIZED,
-     Normalization.NORMALIZED, Normalization.NORMALIZED),  # nick.eth
-    ('[5D5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth', Normalization.UNNORMALIZED,
-     Normalization.UNNORMALIZED, Normalization.NORMALIZED),  # nick.eth  uppercase hex
-    ('[291aa4f6b79b45c2da078242837f39c773527f1bdb269cc37f1aba8f72e308a8].eth', Normalization.UNNORMALIZED,
-     Normalization.UNNORMALIZED, Normalization.NORMALIZED),  # [zzz].eth
-
-    ('[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth', Normalization.UNKNOWN,
-     Normalization.UNKNOWN, Normalization.NORMALIZED),  # unkown label
-    # [f3e579667f05ae575146e5f418b0e8c0de3527a84c92e839c722a97901cd4b67].loopring.eth is unknown for Graph, but it is jkestel.loopring.eth
-    ('[f3e579667f05ae575146e5f418b0e8c0de3527a84c92e839c722a97901cd4b67].loopring.eth', Normalization.NORMALIZED,
-     Normalization.NORMALIZED, Normalization.NORMALIZED),  # jkestel.loopring.eth
-    ('jkestel.[ab5e71b02a15ad804e7f48ba6b9ce9444eefb3797e3e347e98af3ee29adfbbf0].eth', Normalization.NORMALIZED,
-     Normalization.NORMALIZED, Normalization.NORMALIZED),  # jkestel.loopring.eth
-])
+@pytest.mark.parametrize(
+    'name,n,l0,l1',
+    [
+        ('nick.eth', Normalization.NORMALIZED, Normalization.NORMALIZED, Normalization.NORMALIZED),
+        ('[zzz].eth', Normalization.UNNORMALIZED, Normalization.UNNORMALIZED, Normalization.NORMALIZED),
+        (
+            '[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth',
+            Normalization.NORMALIZED,
+            Normalization.NORMALIZED,
+            Normalization.NORMALIZED,
+        ),  # nick.eth
+        (
+            '[5D5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth',
+            Normalization.UNNORMALIZED,
+            Normalization.UNNORMALIZED,
+            Normalization.NORMALIZED,
+        ),  # nick.eth  uppercase hex
+        (
+            '[291aa4f6b79b45c2da078242837f39c773527f1bdb269cc37f1aba8f72e308a8].eth',
+            Normalization.UNNORMALIZED,
+            Normalization.UNNORMALIZED,
+            Normalization.NORMALIZED,
+        ),  # [zzz].eth
+        (
+            '[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth',
+            Normalization.UNKNOWN,
+            Normalization.UNKNOWN,
+            Normalization.NORMALIZED,
+        ),  # unkown label
+        # [f3e579667f05ae575146e5f418b0e8c0de3527a84c92e839c722a97901cd4b67].loopring.eth is unknown for Graph, but it is jkestel.loopring.eth
+        (
+            '[f3e579667f05ae575146e5f418b0e8c0de3527a84c92e839c722a97901cd4b67].loopring.eth',
+            Normalization.NORMALIZED,
+            Normalization.NORMALIZED,
+            Normalization.NORMALIZED,
+        ),  # jkestel.loopring.eth
+        (
+            'jkestel.[ab5e71b02a15ad804e7f48ba6b9ce9444eefb3797e3e347e98af3ee29adfbbf0].eth',
+            Normalization.NORMALIZED,
+            Normalization.NORMALIZED,
+            Normalization.NORMALIZED,
+        ),  # jkestel.loopring.eth
+    ],
+)
 async def test_normalization_status(nameguard: NameGuard, name, n, l0, l1):
     network_name = 'mainnet'
     r = await nameguard.inspect_name_with_labelhash_lookup(network_name, name)
@@ -159,8 +291,9 @@ async def test_hashes(nameguard: NameGuard):
     assert r.labels[1].label == 'eth'
     assert r.labels[1].labelhash == '0x4f5b812789fc606be1b3b16908db13fc7a9adf7ca72641f84d75b47069d3d7f0'
 
-    r = await nameguard.inspect_name('mainnet',
-                                     '[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth')
+    r = await nameguard.inspect_name(
+        'mainnet', '[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth'
+    )
     assert r.name == 'nick.eth'
     assert r.namehash == '0x05a67c0ee82964c4f7394cdd47fee7f4d9503a23c09c38341779ea012afe6e00'
     assert r.labels[0].label == 'nick'
@@ -172,8 +305,9 @@ async def test_hashes(nameguard: NameGuard):
 @pytest.mark.asyncio
 async def test_hashes_uppercase(nameguard: NameGuard):
     # this should be treated not as labelhash but normal string
-    r = await nameguard.inspect_name('mainnet',
-                                     '[5D5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth')
+    r = await nameguard.inspect_name(
+        'mainnet', '[5D5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth'
+    )
     assert r.name == '[5D5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth'
     assert r.namehash != '0x05a67c0ee82964c4f7394cdd47fee7f4d9503a23c09c38341779ea012afe6e00'
     assert r.labels[0].label == '[5D5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f]'
@@ -185,8 +319,9 @@ async def test_hashes_uppercase(nameguard: NameGuard):
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.asyncio
 async def test_unknown_label(nameguard: NameGuard):
-    r = await nameguard.inspect_name('mainnet',
-                                     '[56d7ba27aed5cd36fc16684baeb86f73d6d0c60b6501487725bcfc9056378075].eth')
+    r = await nameguard.inspect_name(
+        'mainnet', '[56d7ba27aed5cd36fc16684baeb86f73d6d0c60b6501487725bcfc9056378075].eth'
+    )
     assert r.labels[0].label == '[56d7ba27aed5cd36fc16684baeb86f73d6d0c60b6501487725bcfc9056378075]'
     assert r.rating is Rating.ALERT
     assert r.highest_risk.check is Check.UNKNOWN_LABEL
@@ -197,27 +332,33 @@ async def test_unknown_label(nameguard: NameGuard):
 @pytest.mark.asyncio
 async def test_namehash_non_null_name(nameguard: NameGuard):
     network_name = 'mainnet'
-    r = await nameguard.inspect_namehash(network_name,
-                                         '0xe0fe380f4d877f643e88ceabbed4e5ee0efe66f079aabba23e8902336f7948da')
+    r = await nameguard.inspect_namehash(
+        network_name, '0xe0fe380f4d877f643e88ceabbed4e5ee0efe66f079aabba23e8902336f7948da'
+    )
     assert r.name == '[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth'
 
     with pytest.raises(NamehashNotFoundInSubgraph):
-        await nameguard.inspect_namehash(network_name,
-                                         '0xe0fe380f4d877f643e88ceabbed4e5ee0efb66f079aabba23e8902336f7948da')
+        await nameguard.inspect_namehash(
+            network_name, '0xe0fe380f4d877f643e88ceabbed4e5ee0efb66f079aabba23e8902336f7948da'
+        )
+
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.asyncio
 @pytest.mark.xfail
 async def test_namehash_lablehash(nameguard: NameGuard):
     network_name = 'mainnet'
-    r = await nameguard.inspect_namehash(network_name,
-                                         '0xdffa165b6d6cfb2fa47e0d50e429380c60e7be170ba21301c22628b66653a951')
+    r = await nameguard.inspect_namehash(
+        network_name, '0xdffa165b6d6cfb2fa47e0d50e429380c60e7be170ba21301c22628b66653a951'
+    )
     # this is real name that looks like unknown
     assert r.name == '[1220bab8d21e1619549d0e92f7f9100059d1a8717877ba82348bf61c06bacb46].eth'
+
 
 def test_inspect_grapheme_multi(nameguard: NameGuard):
     with pytest.raises(NotAGrapheme):
         nameguard.inspect_grapheme('ab')
+
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.asyncio
@@ -237,22 +378,26 @@ async def test_canonicals(nameguard: NameGuard):
     r = nameguard.inspect_grapheme('Ĳ')
     assert r.canonical_grapheme is None
 
-    r = await nameguard.inspect_name('mainnet',
-                                     'ńićk.[56d7ba27aed5cd36fc16684baeb86f73d6d0c60b6501487725bcfc9056378075].eth')
+    r = await nameguard.inspect_name(
+        'mainnet', 'ńićk.[56d7ba27aed5cd36fc16684baeb86f73d6d0c60b6501487725bcfc9056378075].eth'
+    )
     assert r.canonical_name == 'nick.[56d7ba27aed5cd36fc16684baeb86f73d6d0c60b6501487725bcfc9056378075].eth'
     assert r.labels[0].canonical_label == 'nick'
     assert r.labels[1].canonical_label == '[56d7ba27aed5cd36fc16684baeb86f73d6d0c60b6501487725bcfc9056378075]'
 
+
 @pytest.mark.asyncio
-@pytest.mark.parametrize('name,canonical', [
-    ('Blockchain.eth', None), # canonical is Blockchain and is unnormalized
-    ('ΐάΰό', None), # ιαυο is unnormalized
-    ('n’diaye', 'n’diaye'),
-])
+@pytest.mark.parametrize(
+    'name,canonical',
+    [
+        ('Blockchain.eth', None),  # canonical is Blockchain and is unnormalized
+        ('ΐάΰό', None),  # ιαυο is unnormalized
+        ('n’diaye', 'n’diaye'),
+    ],
+)
 async def test_canonicals2(nameguard: NameGuard, name, canonical):
     r = await nameguard.inspect_name('mainnet', name)
     assert r.canonical_name == canonical
-
 
 
 @pytest.mark.asyncio
@@ -262,6 +407,7 @@ async def test_grapheme_description(nameguard: NameGuard):
 
     r = nameguard.inspect_grapheme('😉')
     assert r.grapheme_description == 'Emoji'
+
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.asyncio
@@ -294,8 +440,9 @@ async def test_impersonation_risk(nameguard: NameGuard):
     else:
         assert False, 'IMPERSONATION_RISK check not found'
 
-    r = await nameguard.inspect_name('mainnet',
-                                     'nick.[d941683d8cbb29d555b64e348d39171ee55ae8234118165add0175a8d4636c13].eth')
+    r = await nameguard.inspect_name(
+        'mainnet', 'nick.[d941683d8cbb29d555b64e348d39171ee55ae8234118165add0175a8d4636c13].eth'
+    )
     for check in r.checks:
         if check.check is Check.IMPERSONATION_RISK:
             assert check.rating is Rating.PASS
@@ -429,25 +576,34 @@ async def test_all_normalization(nameguard: NameGuard):
     assert r.highest_risk.check is Check.CONFUSABLES
     assert r.normalization is GraphemeNormalization.NORMALIZED
 
-    
+
 def test_generic_check_result_operators():
-    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.INFO, _name_message='') == \
-           GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.INFO, _name_message='')
-    assert GenericCheckResult(check=Check.CONFUSABLES, status=CheckStatus.WARN, _name_message='') != \
-           GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.WARN, _name_message='')
-    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.INFO, _name_message='') < \
-           GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.PASS, _name_message='')
-    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.WARN, _name_message='') <= \
-           GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.ALERT, _name_message='')
-    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.PASS, _name_message='') > \
-           GenericCheckResult(check=Check.CONFUSABLES, status=CheckStatus.PASS, _name_message='')
-    assert GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.ALERT, _name_message='') >= \
-           GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.ALERT, _name_message='')
+    assert GenericCheckResult(
+        check=Check.NORMALIZED, status=CheckStatus.INFO, _name_message='', _title=''
+    ) == GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.INFO, _name_message='', _title='')
+    assert GenericCheckResult(
+        check=Check.CONFUSABLES, status=CheckStatus.WARN, _name_message='', _title=''
+    ) != GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.WARN, _name_message='', _title='')
+    assert GenericCheckResult(
+        check=Check.NORMALIZED, status=CheckStatus.INFO, _name_message='', _title=''
+    ) < GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.PASS, _name_message='', _title='')
+    assert GenericCheckResult(
+        check=Check.NORMALIZED, status=CheckStatus.WARN, _name_message='', _title=''
+    ) <= GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.ALERT, _name_message='', _title='')
+    assert GenericCheckResult(
+        check=Check.NORMALIZED, status=CheckStatus.PASS, _name_message='', _title=''
+    ) > GenericCheckResult(check=Check.CONFUSABLES, status=CheckStatus.PASS, _name_message='', _title='')
+    assert GenericCheckResult(
+        check=Check.NORMALIZED, status=CheckStatus.ALERT, _name_message='', _title=''
+    ) >= GenericCheckResult(check=Check.FONT_SUPPORT, status=CheckStatus.ALERT, _name_message='', _title='')
 
 
 def test_generic_check_result_repr():
-    assert repr(GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.PASS, _name_message='')) == \
-           'normalized(pass)'
+    assert (
+        repr(GenericCheckResult(check=Check.NORMALIZED, status=CheckStatus.PASS, _name_message='', _title=''))
+        == 'normalized(pass)'
+    )
+
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.asyncio
@@ -472,7 +628,7 @@ async def test_dynamic_check_order(nameguard: NameGuard):
     assert r.nameguard_result.checks[1].status == CheckStatus.PASS
 
     endpoint_name.set(Endpoints.SECURE_PRIMARY_NAME)
-    
+
     r = await nameguard.secure_primary_name('0xd8da6bf26964af9d7eed9e03e53415d37aa96045', 'mainnet')
     assert r.nameguard_result.checks[0].check == Check.IMPERSONATION_RISK
     assert r.nameguard_result.checks[0].status == CheckStatus.PASS
@@ -481,8 +637,9 @@ async def test_dynamic_check_order(nameguard: NameGuard):
 
     endpoint_name.set(None)
 
+
 @pytest.mark.asyncio
 async def test_stress_ens_cure(nameguard: NameGuard):
     # with omit_cure=False takes 1 minute
-    result = await nameguard.inspect_name('mainnet', '⎛⎝⎞⎠'*1000)
+    result = await nameguard.inspect_name('mainnet', '⎛⎝⎞⎠' * 1000)
     assert result.rating is Rating.ALERT

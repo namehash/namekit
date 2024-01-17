@@ -2,6 +2,7 @@ import React, { Fragment, useMemo } from "react";
 import useSWR from "swr";
 import { type NameGuardReport, nameguard } from "@namehash/nameguard";
 import { parseName } from "@namehash/nameparser";
+import { Toaster } from "sonner";
 
 import { type Settings } from "../../stores/settings";
 import {
@@ -21,6 +22,7 @@ import { CheckResultCard } from "./CheckResultCard";
 import { LabelList } from "./LabelList";
 import { useGraphemeModalStore } from "../../stores/grapheme";
 import { ReportError } from "./ReportError";
+import { ExternalLinks } from "../ExternalLinks/ExternalLinks";
 import { Share } from "../Share/Share";
 
 type ReportProps = {
@@ -61,7 +63,7 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
     (n: string) => nameguard.inspectName(n)
   );
 
-  const shareLinks = [
+  const externalLinks = [
     {
       text: "ENS.domains",
       href: `https://app.ens.domains/${parsedName.outputName.name}`,
@@ -97,7 +99,10 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
       <div className="space-y-8 w-full z-30">
         <div className="flex justify-between">
           <ReportHeader />
-          <Share title="View name in" links={shareLinks} />
+          <div className="flex-shrink-0 flex items-start space-x-1">
+            <Share name={data?.name} />
+            <ExternalLinks title="View name in" links={externalLinks} />
+          </div>
         </div>
 
         {isLoading && !error && normalizationUnknown && (
@@ -143,6 +148,14 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
         ref={outsideChatClickRef}
       />
       <GraphemeModal ref={outsideGraphemeClickRef} />
+      <Toaster
+        position="bottom-center"
+        toastOptions={{
+          classNames: {
+            toast: "!bg-black !text-white !border-black",
+          },
+        }}
+      />
     </Fragment>
   );
 };
