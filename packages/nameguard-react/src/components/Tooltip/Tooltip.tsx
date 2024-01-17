@@ -42,9 +42,9 @@ export function Tooltip({ trigger, children }: Props) {
         <Popover.Panel
           onMouseEnter={handleOpen}
           onMouseLeave={handleClose}
-          className="rounded-md bg-gray-900 focus:outline-none"
+          className="rounded-md bg-black focus:outline-none"
         >
-          <Float.Arrow className="absolute h-5 w-5 rotate-45 bg-gray-900 rounded-b" />
+          <Float.Arrow className="absolute h-5 w-5 rotate-45 bg-black rounded-b" />
           <div className="relative h-full rounded-md text-sm font-medium text-white py-2 px-4">
             {children}
           </div>

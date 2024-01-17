@@ -14,13 +14,13 @@ import { Tooltip } from "../Tooltip/Tooltip";
 function textColor(rating: Rating) {
   switch (rating) {
     case "alert": {
-      return "text-red-700";
+      return "text-red-600";
     }
     case "pass": {
-      return "text-green-700";
+      return "text-green-500";
     }
     case "warn": {
-      return "text-yellow-600";
+      return "text-yellow-500";
     }
     default: {
       return "text-gray-500";
@@ -49,7 +49,7 @@ export const Shield = ({ name }: ShieldProps) => {
     );
   }
 
-  const textClass = cc(["font-semibold", textColor(result.rating)]);
+  const textClass = cc(["font-normal", textColor(result.rating)]);
 
   return (
     <Tooltip
@@ -60,13 +60,15 @@ export const Shield = ({ name }: ShieldProps) => {
       <div className="hidden md:flex items-start space-x-3 py-2.5 min-w-[300px]">
         <ShieldIcon status={isLoading ? "info" : result.rating} size="small" />
 
-        <div className="space-y-1.5 flex-1">
+        <div className="flex-1">
           <div className="flex items-center justify-between">
             <span className={textClass}>{result.title}</span>
-            <span className="text-sm font-normal text-gray-400">
-              {result.risk_count} risk{result.risk_count === 1 ? "" : "s"}{" "}
-              detected
-            </span>
+            {result.risk_count >= 1 && (
+              <span className="text-sm font-normal text-gray-400">
+                {result.risk_count} risk{result.risk_count === 1 ? "" : "s"}{" "}
+                detected
+              </span>
+            )}
           </div>
           <div className="text-sm text-white">{result.subtitle}</div>
         </div>
