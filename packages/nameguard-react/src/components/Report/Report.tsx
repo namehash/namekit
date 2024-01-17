@@ -26,12 +26,18 @@ import { ExternalLinks } from "../ExternalLinks/ExternalLinks";
 import { Share } from "../Share/Share";
 
 type ReportProps = {
+  data?: NameGuardReport;
   name?: string;
   settings?: Settings;
   useChatModalStore?: () => ChatModalState;
 };
 
-export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
+export const Report = ({
+  data: fallbackData,
+  name,
+  settings,
+  useChatModalStore,
+}: ReportProps) => {
   const store = useChatModalStore
     ? useChatModalStore()
     : defaultUseChatModalStore();
@@ -59,8 +65,14 @@ export const Report = ({ name, settings, useChatModalStore }: ReportProps) => {
   const showEmptyState = parsedName.outputName.name.length === 0 ?? true;
 
   const { data, error, isLoading } = useSWR<NameGuardReport>(
-    parsedName.outputName.name,
-    (n: string) => nameguard.inspectName(n)
+    fallbackData ? null : parsedName.outputName.name,
+    (n: string) => nameguard.inspectName(n),
+    {
+      fallbackData,
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    }
   );
 
   const externalLinks = [
