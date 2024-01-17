@@ -1,4 +1,4 @@
-export const GithubLogo = (props: React.SVGProps<SVGSVGElement>) => {
+export const GithubIcon = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
