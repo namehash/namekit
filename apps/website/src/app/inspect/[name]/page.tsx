@@ -1,18 +1,24 @@
-"use client";
-
 import { notFound } from "next/navigation";
-import { Report, useChatModalStore } from "@namehash/nameguard-react";
+import { nameguard } from "@namehash/nameguard";
 
-export default function Namekit({ params }: { params: { name: string } }) {
+import { NGReport } from "@/app/components/NGReport";
+
+export default async function Namekit({
+  params,
+}: {
+  params: { name: string };
+}) {
   const { name } = params;
 
   if (!name) return notFound();
 
   const decodedName = decodeURIComponent(name);
 
+  const report = await nameguard.inspectName(decodedName);
+
   return (
     <div className="max-w-6xl mx-auto p-6">
-      <Report name={decodedName} useChatModalStore={useChatModalStore} />
+      <NGReport name={name} data={report} />
     </div>
   );
 }
