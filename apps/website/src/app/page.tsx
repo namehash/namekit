@@ -14,8 +14,8 @@ import the_unknown_img from "../../public/assets/making_the_unknown.svg";
 import explore_ecosystem_img from "../../public/assets/ecosystem_scheme.png";
 import { highlight } from "sugar-high";
 import { CalButton } from "@/app/atoms/CalButton";
-import { PushLogo } from "@/app/atoms/icons/PushLogo";
-import { WalletConnectLogo } from "@/app/atoms/icons/WalletConnectLogo";
+import { PushIcon } from "@/app/atoms/icons/PushIcon";
+import { WalletConnectIcon } from "@/app/atoms/icons/WalletConnectIcon";
 import { IntegrationIcon } from "@/app/atoms/icons/IntegrationIcon";
 import { QuestionmarkCircle } from "@/app/atoms/icons/QuestionmarkCircle";
 import { CheckShieldGrayOutline } from "@/app/atoms/icons/CheckShieldGrayOutline";
@@ -24,13 +24,13 @@ import { RoadmapPositiveShield } from "@/app/atoms/icons/RoadmapPositiveShield";
 import { RoadmapWarningShield } from "@/app/atoms/icons/RoadmapWarningShield";
 import { RoadmapNegativeShield } from "@/app/atoms/icons/RoadmapNegativeShield";
 import { MessageIcon } from "@/app/atoms/icons/MessageIcon";
-import { XMTPLogo } from "@/app/atoms/icons/XMTPLogo";
-import { LensProtocolLogo } from "@/app/atoms/icons/LensProtocolLogo";
+import { XMTPIcon } from "@/app/atoms/icons/XMTPIcon";
+import { LensProtocolIcon } from "@/app/atoms/icons/LensProtocolIcon";
 import { ShoppingCartIcon } from "@/app/atoms/icons/ShoppingCartIcon";
 import { FarcasterLogo } from "@/app/atoms/icons/FarcasterLogo";
-import { OpenSeaLogo } from "@/app/atoms/icons/OpenSeaLogo";
-import { RaribleLogo } from "@/app/atoms/icons/RaribleLogo";
-import { CoinbaseLogo } from "@/app/atoms/icons/CoinbaseLogo";
+import { OpenSeaIcon } from "@/app/atoms/icons/OpenSeaIcon";
+import { RaribleIcon } from "@/app/atoms/icons/RaribleIcon";
+import { CoinbaseIcon } from "@/app/atoms/icons/CoinbaseIcon";
 import { WalletIcon } from "@/app/atoms/icons/WalletIcon";
 import { GithubIconSmall } from "@/app/atoms/icons/GithubIconSmall";
 import { GithubIconDevelopers } from "@/app/atoms/icons/GithubIconDevelopers";
@@ -97,11 +97,11 @@ export default function Home() {
                 Composable integrations include
               </p>
               <div className="w-full h-fit flex flex-row justify-around search_bar_change:justify-start items-center gap-6 flex-wrap search_bar_change:flex-nowrap">
-                <XMTPLogo />
-                <LensProtocolLogo />
+                <XMTPIcon />
+                <LensProtocolIcon />
                 <FarcasterLogo />
-                <PushLogo />
-                <WalletConnectLogo />
+                <PushIcon />
+                <WalletConnectIcon />
               </div>
             </div>
           }
@@ -140,9 +140,9 @@ export default function Home() {
               <p className="text-gray-500 text-lg leading-6 font-normal not-italic whitespace-nowrap">
                 Composable integrations include
               </p>
-              <OpenSeaLogo />
-              <RaribleLogo />
-              <CoinbaseLogo />
+              <OpenSeaIcon />
+              <RaribleIcon />
+              <CoinbaseIcon />
             </div>
           }
           imageSpecifics={{
@@ -1421,7 +1421,7 @@ function ChecksSection() {
             );
           })}
         </div>
-        <div key={`NameGuardCheck#questionmark`} className={cellStyle}>
+        <div key="NameGuardCheck#questionmark" className={cellStyle}>
           {checkElements[checkElements.length - 1].icon}
           <div>
             {checkElements[checkElements.length - 1].header}
@@ -1698,7 +1698,7 @@ function DevelopersSection() {
               className="group w-full sm:w-fit h-fit"
             >
               <div className={hoverCellStyle}>
-                <RedirectIcon svgStyle={redirectStyle} />
+                <RedirectIcon className={redirectStyle} />
                 {elem.icon}
                 <div>
                   {elem.header}
