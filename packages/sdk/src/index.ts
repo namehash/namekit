@@ -390,8 +390,8 @@ export interface NameGuardReport extends ConsolidatedNameGuardReport {
   canonical_name: string | null;
 }
 
-export interface BulkConsolidatedNameGuardReport {
-  results: ConsolidatedNameGuardReport[];
+export interface BulkNameGuardReport {
+  results: NameGuardReport[];
 }
 
 export interface SecurePrimaryNameResult {
@@ -471,7 +471,7 @@ interface FakeEthNameOptions {
 }
 
 interface FieldsWithRequiredTitle extends Record<string, string> {
-    title: string;
+  title: string;
 }
 
 class NameGuard {
@@ -524,12 +524,12 @@ class NameGuard {
    *
    * @param {string[]} names The list of names for NameGuard to inspect.
    * @param {InspectNameOptions} options The options for the inspection.
-   * @returns {Promise<BulkConsolidatedNameGuardReport>} A promise that resolves with a list of `ConsolidatedNameGuardReport` values for each name queried in the bulk inspection.
+   * @returns {Promise<BulkNameGuardReport>} A promise that resolves with a list of `ConsolidatedNameGuardReport` values for each name queried in the bulk inspection.
    */
   public bulkInspectNames(
     names: string[],
     options?: InspectNameOptions
-  ): Promise<BulkConsolidatedNameGuardReport> {
+  ): Promise<BulkNameGuardReport> {
     if (names.length > MAX_BULK_INSPECTION_NAMES) {
       throw new Error(
         `Bulk inspection of more than ${MAX_BULK_INSPECTION_NAMES} names at a time is not supported.`
@@ -698,8 +698,10 @@ class NameGuard {
       );
     }
 
-    if (!fields || !fields.title || typeof fields.title !== 'string') {
-      throw new Error("The 'fields' object must be provided and contain a 'title' key with a string value.");
+    if (!fields || !fields.title || typeof fields.title !== "string") {
+      throw new Error(
+        "The 'fields' object must be provided and contain a 'title' key with a string value."
+      );
     }
 
     const network_name = options?.network || this.network;
@@ -708,7 +710,7 @@ class NameGuard {
       network_name,
       contract_address,
       token_id,
-      fields
+      fields,
     });
   }
 
