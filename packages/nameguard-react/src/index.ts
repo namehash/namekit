@@ -10,3 +10,4 @@ export { NameBadge } from "./components/NameBadge/NameBadge";
 export { NameShield } from "./components/NameShield";
 export { Shield } from "./components/Shield/Shield";
 export { Shield as ShieldIcon } from "./components/Report/Shield";
+export { LoadingIcon as LoadingShield } from "./components/icons/Loading";
