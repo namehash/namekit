@@ -1,4 +1,6 @@
 {
+  "name": "@namehash/fonts",
+  "version": "0.0.1",
   "files": [
     "index.ts",
     "Unifont.otf",
