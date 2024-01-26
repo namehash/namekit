@@ -1,9 +1,44 @@
 {
-  "name": "@namehash/fonts",
+  "name": "@namehash/ens-webfont",
   "version": "0.0.1",
+  "type": "module",
   "files": [
     "index.ts",
     "Unifont.otf",
     "styles/font-config.css"
-  ]
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": {
+        "node": "./dist/index.js",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "node": "./dist/index.cjs",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch --clean=false",
+    "prettier-check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@changesets/cli": "2.26.2",
+    "@types/node": "^20.6.2",
+    "prettier": "^3.0.3",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "whatwg-fetch": "3.6.19"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
 }
