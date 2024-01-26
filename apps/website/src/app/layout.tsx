@@ -10,6 +10,7 @@ import { NameGuardWrapper } from "./components/NameGuardWrapper";
 import { Footer } from "@/app/components/Footer";
 import { Header } from "@/app/components/Header";
 import React from "react";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 
@@ -57,6 +58,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
+        <Analytics />
         <NameGuardWrapper />
       </body>
     </html>
