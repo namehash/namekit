@@ -18,6 +18,16 @@
         "node": "./dist/index.cjs",
         "default": "./dist/index.cjs"
       }
+    },
+    "./styles.css": {
+      "import": {
+        "node": "./dist/styles/font-config.css",
+        "default": "./dist/styles/font-config.css"
+      },
+      "require": {
+        "node": "./dist/styles/font-config.css",
+        "default": "./dist/styles/font-config.css"
+      }
     }
   },
   "main": "./dist/index.cjs",

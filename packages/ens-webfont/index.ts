@@ -1,4 +1,3 @@
-import ensWebfontStyles from "./styles/font-config.css";
 import Unifont from "./fonts/Unifont.otf";
 
 const fallbackSystemEmojiFonts = [
@@ -46,7 +45,6 @@ const ensNameFontClassName = `font-ss02 font-${ensNamesFontName}`;
 
 export default {
   Unifont,
-  ensWebfontStyles,
   ensNamesFontName,
   ensNameFontStack,
   ensNameFontClassName,
