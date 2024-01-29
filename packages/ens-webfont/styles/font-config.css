@@ -451,5 +451,5 @@ When using this, you will likely need to set font-variation-settings explicitly,
 @font-face {
   font-family: "Unifont";
   font-display: block;
-  src: url("./fonts/Unifont.otf");
+  src: url("../fonts/Unifont.otf");
 }

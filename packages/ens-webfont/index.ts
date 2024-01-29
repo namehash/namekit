@@ -1,5 +1,5 @@
-import "styles/font-config.css";
-import "Unifont.otf";
+import ensWebfontStyles from "./styles/font-config.css";
+import Unifont from "./fonts/Unifont.otf";
 
 const fallbackSystemEmojiFonts = [
   "Noto Color Emoji",
@@ -33,8 +33,8 @@ const fallbackSystemCharacterFonts = [
   "system-ui",
 ];
 
-export const ensNamesFontName = "ens-name";
-export const ensNameFontStack = [
+const ensNamesFontName = "ens-web-font";
+const ensNameFontStack = [
   "Inter",
   ...fallbackSystemEmojiFonts,
   "Noto Emoji",
@@ -42,4 +42,12 @@ export const ensNameFontStack = [
   "Unifont",
 ];
 
-export const ensNameFontClassName = `font-ss02 font-${ensNamesFontName}`;
+const ensNameFontClassName = `font-ss02 font-${ensNamesFontName}`;
+
+export default {
+  Unifont,
+  ensWebfontStyles,
+  ensNamesFontName,
+  ensNameFontStack,
+  ensNameFontClassName,
+};
