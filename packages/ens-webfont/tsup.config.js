@@ -1,7 +1,7 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: ["index.ts", "styles/font-config.css"],
+  entry: ["styles/font-config.css", "fonts/Unifont.otf"],
   format: ["esm", "cjs"],
   splitting: true,
   sourcemap: true,

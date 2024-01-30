@@ -1,4 +1,4 @@
-.font-ss02 {
+.ens-webfont {
   -webkit-font-feature-settings:
     "ss02" 1,
     "calt" 0;
@@ -11,12 +11,13 @@
   font-feature-settings:
     "ss02" 1,
     "calt" 0;
-}
-
-@layer components {
-  .font-ens-name {
-    @apply font-ss02 font-maxEmojisAndCharsSupport;
-  }
+  font-family: "Inter", "Noto Color Emoji", "Apple Color Emoji",
+    "Segoe UI Emoji", "Android Emoji", "EmojiSymbols", "EmojiOne Mozilla",
+    "Twemoji Mozilla", "Segoe UI Symbol", "emoji", "Noto Emoji", "Tahoma",
+    "Ubuntu", "Lucida Grande", "Microsoft Sans Serif", "San Francisco",
+    "Helvetica", "DejaVu Sans", "ui-sans-serif", "-apple-system",
+    "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica Neue", "Arial",
+    "Noto Sans", "sans-serif", "system-ui", "Unifont";
 }
 
 /* Primary Characters Font: https://rsms.me/inter/ */

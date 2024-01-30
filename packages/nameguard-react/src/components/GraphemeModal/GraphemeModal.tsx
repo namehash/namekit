@@ -51,7 +51,7 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
               </div>
 
               <div className="flex flex-col justify-center items-center space-y-8">
-                <h2 className="text-[82px] text-black font-extrabold leading-[60px] font-ens-name">
+                <h2 className="text-[82px] text-black font-extrabold leading-[60px] ens-webfont">
                   {data?.grapheme}
                 </h2>
                 <p className="text-black text-lg leading-7 font-semibold">

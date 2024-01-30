@@ -111,7 +111,7 @@ export function Share({ name }: ShareProps) {
 
                   <div className="min-h-[200px] flex items-center justify-center px-6 md:px-10">
                     {name && (
-                      <p className="font-extrabold text-black text-xl text-ellipsis overflow-hidden line-clamp-1 font-ens-name">
+                      <p className="font-extrabold text-black text-xl text-ellipsis overflow-hidden line-clamp-1 ens-webfont">
                         {name}
                       </p>
                     )}
