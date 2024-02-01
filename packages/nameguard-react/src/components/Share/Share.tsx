@@ -14,7 +14,7 @@ function createTwitterLink(name: string) {
   const url = `https://nameguard.io/inspect/${encodeURIComponent(name)}`;
 
   return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-    tweetText
+    tweetText,
   )}&url=${encodeURIComponent(url)}`;
 }
 
@@ -36,15 +36,15 @@ export function Share({ name }: ShareProps) {
 
   const twitterLink = createTwitterLink(name);
   const telegramLink = createTelegramLink(
-    `https://nameguard.io/inspect/${encodeURIComponent(name)}`
+    `https://nameguard.io/inspect/${encodeURIComponent(name)}`,
   );
   const emailLink = createMailToLink(
     `NameGuard Report for ${name}`,
-    `Check this out!\nhttps://nameguard.io/inspect/${encodeURIComponent(name)}`
+    `Check this out!\nhttps://nameguard.io/inspect/${encodeURIComponent(name)}`,
   );
   const copyLinkToClipboard = () => {
     navigator.clipboard.writeText(
-      `https://nameguard.io/inspect/${encodeURIComponent(name)}`
+      `https://nameguard.io/inspect/${encodeURIComponent(name)}`,
     );
     toast("Link copied to clipboard");
     closeModal();
@@ -127,16 +127,20 @@ export function Share({ name }: ShareProps) {
                     >
                       <div className="rounded-full bg-gray-100 h-10 w-10 flex items-center justify-center">
                         <svg
+                          width="18"
+                          height="14"
+                          viewBox="0 0 18 14"
+                          fill="none"
                           xmlns="http://www.w3.org/2000/svg"
-                          width="20"
-                          height="20"
-                          viewBox="0 0 24 24"
                           className="fill-current text-gray-400 group-hover:text-gray-900"
                         >
-                          <path d="M13.5222 10.7749L19.4785 4H18.0671L12.8952 9.88256L8.76437 4H4L10.2466 12.8955L4 20H5.41155L10.8732 13.7878L15.2356 20H20L13.5218 10.7749H13.5222ZM11.5889 12.9738L10.956 12.0881L5.92015 5.03974H8.0882L12.1522 10.728L12.7851 11.6137L18.0677 19.0075H15.8997L11.5889 12.9742V12.9738Z" />
+                          <path
+                            d="M5.90832 13.8756C12.1975 13.8756 15.6375 8.66472 15.6375 4.14639C15.6375 3.99805 15.6375 3.85055 15.6275 3.70472C16.2968 3.22016 16.8744 2.62023 17.3333 1.93305C16.7092 2.20972 16.0471 2.39119 15.3692 2.47139C16.083 2.04394 16.6173 1.37168 16.8725 0.57972C16.2014 0.977959 15.4672 1.25866 14.7017 1.40972C14.1861 0.861191 13.5042 0.497915 12.7613 0.376141C12.0185 0.254366 11.2563 0.380886 10.5926 0.736111C9.92893 1.09134 9.40089 1.65545 9.09023 2.3411C8.77958 3.02676 8.70363 3.79571 8.87416 4.52889C7.51465 4.46075 6.18466 4.10749 4.97053 3.49203C3.7564 2.87656 2.68526 2.01266 1.82666 0.956386C1.38942 1.70906 1.25548 2.60007 1.4521 3.44802C1.64873 4.29598 2.16113 5.03712 2.88499 5.52055C2.34104 5.50477 1.80886 5.35844 1.33332 5.09389V5.13722C1.33365 5.92663 1.60699 6.69164 2.10699 7.30252C2.60699 7.91339 3.30288 8.33254 4.07666 8.48889C3.57317 8.62615 3.0449 8.6461 2.53249 8.54722C2.75096 9.22678 3.17639 9.82105 3.74926 10.2469C4.32214 10.6727 5.0138 10.9089 5.72749 10.9222C5.01842 11.4794 4.20648 11.8912 3.3381 12.1343C2.46971 12.3774 1.56193 12.4469 0.666656 12.3389C2.23049 13.3425 4.05015 13.8748 5.90832 13.8722"
+                            fill="#AFAFAF"
+                          />
                         </svg>
                       </div>
-                      <span className="text-black text-xs">X / Twitter</span>
+                      <span className="text-black text-xs">Twitter</span>
                     </a>
                     {/* <a
                       href="https://twitter.com"
