@@ -61,7 +61,9 @@ export function Share({ name }: ShareProps) {
             onClick={() => setIsOpen(true)}
           >
             <ArrowUpTrayIcon className="text-black fill-current w-6 h-6" />
-            <span className="font-medium ml-1.5 text-sm">Share</span>
+            <span className="font-medium ml-1.5 text-sm hidden md:inline-block">
+              Share
+            </span>
           </button>
         }
       >
