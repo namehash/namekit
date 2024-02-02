@@ -48,11 +48,11 @@ export const Report = ({
 
   const outsideChatClickRef = useOutsideClick(
     store.closeChatModal,
-    store.isChatModalOpen
+    store.isChatModalOpen,
   );
   const outsideGraphemeClickRef = useOutsideClick(
     closeAllGraphemeModals,
-    isGraphemeModalOpen
+    isGraphemeModalOpen,
   );
 
   const parsedName = useMemo(() => {
@@ -72,7 +72,7 @@ export const Report = ({
       revalidateIfStale: false,
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
-    }
+    },
   );
 
   const externalLinks = [
@@ -109,9 +109,9 @@ export const Report = ({
   return (
     <Fragment>
       <div className="space-y-8 w-full z-30">
-        <div className="flex justify-between">
+        <div className="md:flex md:justify-between relative">
           <ReportHeader />
-          <div className="flex-shrink-0 flex items-start space-x-1">
+          <div className="flex-shrink-0 flex items-start space-x-1 absolute md:relative right-0 md:right-auto -top-1 md:top-auto">
             <Share name={data?.name} />
             <ExternalLinks title="View name in" links={externalLinks} />
           </div>

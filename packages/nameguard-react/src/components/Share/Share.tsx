@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from "react";
 import { Transition, Dialog } from "@headlessui/react";
-import { XMarkIcon, ShareIcon } from "@heroicons/react/24/solid";
+import { XMarkIcon, ArrowUpTrayIcon } from "@heroicons/react/24/solid";
 import { toast } from "sonner";
 
 import { Tooltip } from "../Tooltip/Tooltip";
@@ -14,7 +14,7 @@ function createTwitterLink(name: string) {
   const url = `https://nameguard.io/inspect/${encodeURIComponent(name)}`;
 
   return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-    tweetText
+    tweetText,
   )}&url=${encodeURIComponent(url)}`;
 }
 
@@ -36,15 +36,15 @@ export function Share({ name }: ShareProps) {
 
   const twitterLink = createTwitterLink(name);
   const telegramLink = createTelegramLink(
-    `https://nameguard.io/inspect/${encodeURIComponent(name)}`
+    `https://nameguard.io/inspect/${encodeURIComponent(name)}`,
   );
   const emailLink = createMailToLink(
     `NameGuard Report for ${name}`,
-    `Check this out!\nhttps://nameguard.io/inspect/${encodeURIComponent(name)}`
+    `Check this out!\nhttps://nameguard.io/inspect/${encodeURIComponent(name)}`,
   );
   const copyLinkToClipboard = () => {
     navigator.clipboard.writeText(
-      `https://nameguard.io/inspect/${encodeURIComponent(name)}`
+      `https://nameguard.io/inspect/${encodeURIComponent(name)}`,
     );
     toast("Link copied to clipboard");
     closeModal();
@@ -60,7 +60,10 @@ export function Share({ name }: ShareProps) {
             className="flex items-center justify-between p-2 appearance-none bg-transparent hover:bg-black/5 transition rounded-md focus:outline-none"
             onClick={() => setIsOpen(true)}
           >
-            <ShareIcon className="text-black fill-current w-6 h-6" />
+            <ArrowUpTrayIcon className="text-black fill-current w-6 h-6" />
+            <span className="font-medium ml-1.5 text-sm hidden md:inline-block">
+              Share
+            </span>
           </button>
         }
       >
