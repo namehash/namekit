@@ -2,6 +2,7 @@
 
 import { GithubIcon } from "@/app/atoms/icons/GithubIcon";
 import { Search } from "@namehash/nameguard-react";
+import { NGSearchIcon } from "@/app/atoms/NGSearchIcon";
 
 export const Header = () => {
   return (
@@ -30,12 +31,15 @@ export const Header = () => {
           className="px-[10px] py-[9px] not-italic text-black font-medium text-sm leading-5 rounded-md gt_mobile:hover:bg-gray-100"
           href="https://api.nameguard.io/docs"
           target="_blank"
+          rel="noopener noreferrer"
         >
           Docs
         </a>
         <a
           className="rounded-md gt_mobile:hover:bg-gray-100"
           href="https://github.com/namehash/nameguard"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           <div className="flex flex-row justify-between items-center gap-2 py-[7px] px-[10px]">
             <GithubIcon className="hidden gt_mobile:block text-[#0F172A] fill-current" />
@@ -44,6 +48,9 @@ export const Header = () => {
             </p>
           </div>
         </a>
+        <div className="flex gt_mobile:hidden flex-col justify-center align-center gap-2 p-[7px]">
+          <NGSearchIcon />
+        </div>
       </div>
     </header>
   );

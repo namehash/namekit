@@ -20,7 +20,7 @@ function textColor(rating: Rating) {
       return "text-green-500";
     }
     case "warn": {
-      return "text-yellow-500";
+      return "text-amber-500";
     }
     default: {
       return "text-gray-500";
@@ -37,7 +37,7 @@ export const Shield = ({ name }: ShieldProps) => {
 
   const { data, error, isLoading } = useSWR<BulkConsolidatedNameGuardReport>(
     name,
-    (n: string) => nameguard.bulkInspectNames([parseName(n).outputName.name])
+    (n: string) => nameguard.bulkInspectNames([parseName(n).outputName.name]),
   );
 
   // const [result] = data.results;
