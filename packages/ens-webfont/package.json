@@ -7,7 +7,7 @@
     "dist/styles"
   ],
   "exports": {
-    "./styles.css": {
+    ".": {
       "import": {
         "node": "./dist/styles/font-config.css",
         "default": "./dist/styles/font-config.css"
@@ -15,16 +15,6 @@
       "require": {
         "node": "./dist/styles/font-config.css",
         "default": "./dist/styles/font-config.css"
-      }
-    },
-    "./Unifont.otf": {
-      "import": {
-        "node": "./dist/fonts/Unifont.js",
-        "default": "./dist/fonts/Unifont.cjs"
-      },
-      "require": {
-        "node": "./dist/fonts/Unifont.cjs",
-        "default": "./dist/fonts/Unifont.cjs"
       }
     }
   },

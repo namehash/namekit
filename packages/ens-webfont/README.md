@@ -4,15 +4,14 @@
 
 run `npm i @namehash/ens-webfont`.
 
-## Modules importing:
+## Font configuration importing:
 
-Import styles.css and Unifont.otf with:
+Add the following import statement to your app:
 
 ```
-import "@namehash/ens-webfont/Unifont.otf";
-import "@namehash/ens-webfont/styles.css";
+import "@namehash/ens-webfont";
 ```
 
 ## Usage:
 
-Simply add `ens-webfont` class to the HTML element where a perfectly aligned ENS font configuration should be applied.
+Simply add the `ens-webfont` class to each HTML element where an ENS name might be displayed or input. It is not recommended to apply `ens-webfont` across your entire UI. It should only be used specifically where ENS names might be displayed or input.

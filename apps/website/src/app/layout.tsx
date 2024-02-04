@@ -7,9 +7,6 @@ import og_img from "../../public/openGraph/og-image.png";
 import og_image_twitter from "../../public/openGraph/og-image-twitter.png";
 import { NameGuardWrapper } from "./components/NameGuardWrapper";
 
-import "@namehash/ens-webfont/Unifont.otf";
-import "@namehash/ens-webfont/styles.css";
-
 import { Footer } from "@/app/components/Footer";
 import { Header } from "@/app/components/Header";
 import React from "react";
@@ -55,7 +52,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="ens-webfont">
+    <html lang="en">
       <body className={inter.variable}>
         <Header />
         {children}
