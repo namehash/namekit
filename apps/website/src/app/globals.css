@@ -1,5 +1,6 @@
 @tailwind base;
 @tailwind utilities;
+@tailwind components;
 
 /* Checkout tailwind.config.js to see project fonts being used */
 :root {
