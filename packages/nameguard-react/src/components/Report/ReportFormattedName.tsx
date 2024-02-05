@@ -18,7 +18,7 @@ export function ReportFormattedDisplayName({
     return (
       <p className="text-sm text-gray-500 mt-4">
         <span className="mr-2.5">Generally displays as:</span>
-        <span className="text-black overflow-hidden overflow-ellipsis whitespace-nowrap font-ens-name">
+        <span className="text-black overflow-hidden overflow-ellipsis whitespace-nowrap ens-webfont">
           {displayName}
         </span>
       </p>
