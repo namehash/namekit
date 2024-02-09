@@ -1,8 +1,8 @@
 "use client";
 
 import { GithubIcon } from "@/app/atoms/icons/GithubIcon";
-import { Search } from "@namehash/nameguard-react";
 import { NGSearchIcon } from "@/app/atoms/NGSearchIcon";
+import { NGSearch } from "@/app/components/NGSearch";
 
 export const Header = () => {
   return (
@@ -23,7 +23,7 @@ export const Header = () => {
           </a>
         </div>
         <div className="hidden flex search_bar_change:block gt_mobile:w-full gt_mobile:h-full gt_mobile:p-0 gt_mobile:m-0">
-          <Search />
+          <NGSearch />
         </div>
       </div>
       <div className="flex flex-row items-center justify-end gap-0 gt_mobile:justify-between gt_mobile:gap-1 md:gap-5">
@@ -48,7 +48,7 @@ export const Header = () => {
             </p>
           </div>
         </a>
-        <div className="flex gt_mobile:hidden flex-col justify-center align-center gap-2 p-[7px]">
+        <div className="flex search_bar_change:hidden flex-col justify-center align-center gap-2 p-[7px]">
           <NGSearchIcon />
         </div>
       </div>
