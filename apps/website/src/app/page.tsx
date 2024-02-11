@@ -1659,7 +1659,7 @@ function DevelopersSection() {
           <FontIcon />
         </div>
       ),
-      link: "https://github.com/namehash/nameguard/pull/139",
+      link: "https://github.com/namehash/nameguard/tree/main/packages/ens-webfont",
     },
   ];
 
