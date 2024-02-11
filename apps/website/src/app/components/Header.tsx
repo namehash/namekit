@@ -7,14 +7,15 @@ import { NGSearch } from "@/app/components/NGSearch";
 
 export const Header = () => {
   return (
-    <header className="sticky bg-white top-0 w-full z-20 border-b border-gray-300 box-border h-[56px] px-[20px] py-[9px] gt_mobile:h-[70px] md:px-28 gt_mobile:py-4">
-      <div className="max-w-7xl mx-auto items-center justify-between gt_mobile:flex gt_mobile:flex-row inline-flex md:px-6">
+    <header className="sticky bg-white top-0 w-full z-20 border-b border-gray-300 h-[56px] py-[9px] gt_mobile:h-[70px] gt_mobile:py-4 select-none">
+      <div className="max-w-7xl mx-auto items-center justify-between gt_mobile:flex gt_mobile:flex-row inline-flex px-6">
         <div className="flex flex-row gap-7 justify-between items-center">
           <div className="flex flex-row justify-between items-center gap-1 cursor-pointer">
-            <Link href="/">
-              <p className="text-black not-italic font-bold text-[22.683px] leading-[22.683px] tracking-[-0.907px] gt_mobile:text-[27.816px] gt_mobile:leading-[27.816px] gt_mobile:tracking-[-1.113px]">
-                NameGuard
-              </p>
+            <Link
+              href="/"
+              className="text-black not-italic font-bold text-[22.683px] leading-[22.683px] tracking-[-0.907px] gt_mobile:text-[27.816px] gt_mobile:leading-[27.816px] gt_mobile:tracking-[-1.113px]"
+            >
+              NameGuard
             </Link>
             <Link href="/">
               <div className="relative -top-1.5 bg-black w-fit h-fit p-[2.8px] rounded-[2.8px] flex-shrink-0">
@@ -44,7 +45,7 @@ export const Header = () => {
             rel="noopener noreferrer"
           >
             <div className="flex flex-row justify-between items-center gap-2 py-[7px] px-[10px]">
-              <GithubIcon className="hidden gt_mobile:block text-[#0F172A] fill-current" />
+              <GithubIcon className="hidden md:block text-[#0F172A] fill-current" />
               <p className="not-italic text-black font-medium text-sm leading-5">
                 Github
               </p>
