@@ -24,8 +24,8 @@ export const LoadingIcon = (props: any) => (
         y2="14"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor="#D9DDE5" />
-        <stop offset="1" stopColor="#F0F4FB" stopOpacity="0" />
+        <stop stopColor="#000000" stopOpacity="0.2" />
+        <stop offset="1" stopColor="#000000" stopOpacity="0" />
       </linearGradient>
     </defs>
   </svg>
