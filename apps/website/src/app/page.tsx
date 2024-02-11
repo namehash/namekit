@@ -76,8 +76,7 @@ export default function Home() {
           sectionTargetClientMessage="For Web3 messengers"
           sectionHeader={
             <Fragment>
-              Alert from deceptive
-              <br />
+              Alert from deceptive <br className="hidden md:block" />
               impersonation attacks
             </Fragment>
           }
@@ -157,8 +156,8 @@ export default function Home() {
           sectionTargetClientMessage="For ENS Registrars & Marketplaces"
           sectionHeader={
             <Fragment>
-              Surface hidden risks or limitations
-              <br />
+              Surface hidden risks or limitations{" "}
+              <br className="hidden md:block" />
               before final checkout
             </Fragment>
           }
@@ -184,8 +183,7 @@ export default function Home() {
           sectionTargetClientMessage="For wallets and dApps"
           sectionHeader={
             <Fragment>
-              Identify dangerous name
-              <br />
+              Identify dangerous name <br className="hidden md:block" />
               configurations
             </Fragment>
           }
@@ -205,8 +203,7 @@ export default function Home() {
           sectionTargetClientMessage="For wallets and dApps"
           sectionHeader={
             <Fragment>
-              Never lose a name you love with
-              <br />
+              Never lose a name you love with <br className="hidden md:block" />
               ENS AutoRenew
             </Fragment>
           }
@@ -248,7 +245,7 @@ export default function Home() {
             source: ens_completion_score_img.src,
             tagWidth: 968,
             tagHeight: 738,
-            styles: "pl-8",
+            styles: "md:pl-8",
           }}
         />
         <MobileSectionDivider />
@@ -387,7 +384,7 @@ function ReadySection(props: ReadySectionProps) {
   return (
     <section className="relative w-full h-full py-10 px-5 flex flex-col items-center justify-center bg-white gt_mobile:bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] gt_mobile:[background-size:24px_24px] md:py-24 gt_mobile:px-0">
       <div className="max-w-full flex flex-col items-center gt_mobile:mx-auto gt_mobile:px-6 gt_mobile:gap-3">
-        <div className="w-full flex flex-col gap-5 items-center md:px-28 xl:px-0 xl:w-1/2">
+        <div className="w-full flex flex-col gap-5 items-center max-w-2xl mx-auto">
           <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-[20px] gap-2 justify-center items-center z-10">
             {props.sectionTargetSvg}
             <span className="text-black text-center text-sm not-italic font-medium z-10 leading-5">
@@ -483,7 +480,7 @@ function ComingSoonSection(props: ComingSoonSectionProps) {
   const baseImageStyles = "relative z-10 w-full h-full";
 
   return (
-    <section className="w-full flex flex-col xl:flex-row items-center justify-center h-full py-10 px-5 bg-white gt_mobile:bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] gt_mobile:[background-size:24px_24px] gt_mobile:h-1/2 md:py-20 gt_mobile:px-10">
+    <section className="w-full flex flex-col xl:flex-row items-center justify-center h-full py-10 px-5 bg-white gt_mobile:bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] gt_mobile:[background-size:24px_24px] gt_mobile:h-1/2 md:py-20">
       {!props.isTextOnTheLeft && (
         <div className={leftImageDiv}>
           <div className={leftBackgroundDiv} />
