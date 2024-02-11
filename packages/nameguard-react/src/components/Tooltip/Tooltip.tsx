@@ -1,13 +1,19 @@
 import React, { useState } from "react";
-import { Float } from "@headlessui-float/react";
+import { Float, type FloatProps } from "@headlessui-float/react";
 import { Popover } from "@headlessui/react";
 
 type Props = {
   trigger: React.ReactNode;
   children: React.ReactNode;
+  placement?: FloatProps["placement"];
 };
 
-export function Tooltip({ trigger, children }: Props) {
+export function Tooltip({
+  trigger,
+  children,
+  placement = "top",
+  ...props
+}: Props) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -17,7 +23,7 @@ export function Tooltip({ trigger, children }: Props) {
     <Popover className="flex items-center justify-center">
       <Float
         show={open}
-        placement="top"
+        placement={placement}
         offset={15}
         shift={6}
         flip={10}
@@ -29,6 +35,7 @@ export function Tooltip({ trigger, children }: Props) {
         leave="transition duration-150 ease-in"
         leaveFrom="opacity-100 translate-y-0"
         leaveTo="opacity-0 -translate-y-1"
+        {...props}
       >
         <Popover.Group
           onClick={handleOpen}
