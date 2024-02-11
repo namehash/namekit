@@ -5,6 +5,7 @@ const config: Config = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@namehash/nameguard-react/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
@@ -47,6 +48,15 @@ const config: Config = {
       },
       fontSize: {
         footer_text: ["12px", "20px"],
+      },
+      keyframes: {
+        carousel: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(-100%)" },
+        },
+      },
+      animation: {
+        carousel: "carousel 30s linear infinite",
       },
     },
   },

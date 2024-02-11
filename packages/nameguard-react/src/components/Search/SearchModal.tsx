@@ -29,7 +29,7 @@ export const SearchModal = () => {
 
   return (
     <Transition.Root show={modalOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-40" onClose={handleClose}>
+      <Dialog as="div" onClose={handleClose} className="relative z-20">
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"

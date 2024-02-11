@@ -1,7 +1,8 @@
 import React from "react";
 import { TwitterIcon } from "@/app/atoms/icons/TwitterIcon";
-import { GithubHoverableLogo } from "@/app/atoms/icons/GithubHoverableLogo";
 import { EmailIcon } from "@/app/atoms/icons/EmailIcon";
+import { TelegramIcon } from "@/app/atoms/icons/TelegramIcon";
+import { GithubIcon } from "@/app/atoms/icons/GithubIcon";
 
 export const Footer = () => {
   return (
@@ -10,21 +11,38 @@ export const Footer = () => {
         &copy; NameHash Labs. All Rights Reserved
       </p>
       <div className="flex flex-row justify-between gap-3">
-        <a href={"https://twitter.com/NamehashLabs"}>
-          <TwitterIcon />
+        <a
+          href="https://twitter.com/NamehashLabs"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <TwitterIcon className="gt_mobile:transition gt_mobile:hover:fill-black text-[#AFAFAF] fill-current transition-all duration-200" />
         </a>
-        <a href={"https://github.com/namehash/nameguard"}>
-          <GithubHoverableLogo />
+        <a
+          href="https://github.com/namehash/nameguard"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <GithubIcon className="gt_mobile:hover:fill-black text-[#AFAFAF] fill-current transition-all duration-200" />
+        </a>
+        <a
+          href="https://t.me/namehash"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <TelegramIcon className="gt_mobile:hover:fill-black text-[#AFAFAF] fill-current transition-all duration-200" />
         </a>
         <a href="mailto:hello@namehashlabs.org">
-          <EmailIcon />
+          <EmailIcon className="gt_mobile:hover:fill-black text-[#AFAFAF] fill-current transition-all duration-200" />
         </a>
       </div>
       <p className="not-italic font-normal text-gray-500 text-sm gt_mobile:text-footer_text gt_mobile:font-light">
         Made with ❤ by{" "}
         <a
           className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
-          href={"https://namehashlabs.org"}
+          href="https://namehashlabs.org"
+          target="_blank"
+          rel="noopener noreferrer"
         >
           NameHash Labs
         </a>

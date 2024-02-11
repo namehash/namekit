@@ -1,6 +1,7 @@
 import React from "react";
 import cc from "classcat";
 import type { NameGuardReport, Rating } from "@namehash/nameguard";
+import type { ParsedName } from "@namehash/nameparser";
 
 import { Shield } from "./Shield";
 import { RatedBox } from "../RatedBox/RatedBox";
@@ -26,13 +27,12 @@ function textColor(rating: Rating) {
 
 type Props = {
   report?: NameGuardReport;
-  parsedName: any;
+  parsedName?: ParsedName;
 };
 
 export function Banner({ report, parsedName }: Props) {
   const { name, title, subtitle, rating, beautiful_name, normalization } =
     report;
-  const { transformations } = parsedName;
 
   const text = cc(["font-semibold text-sm md:text-2xl", textColor(rating)]);
 
@@ -43,7 +43,7 @@ export function Banner({ report, parsedName }: Props) {
           <p className="uppercase text-[12px] text-gray-500 font-medium">
             Rating for
           </p>
-          <h1 className="mt-1 text-2xl md:text-4xl text-black font-semibold md:font-bold overflow-hidden overflow-ellipsis whitespace-nowrap">
+          <h1 className="mt-1 text-2xl md:text-4xl text-black font-semibold md:font-bold overflow-hidden overflow-ellipsis whitespace-nowrap ens-webfont">
             {name}
           </h1>
           <ReportFormattedDisplayName
@@ -64,7 +64,9 @@ export function Banner({ report, parsedName }: Props) {
           </div>
         </div>
       </div>
-      <ReportChangesApplied transformations={transformations} />
+      {parsedName?.transformations && (
+        <ReportChangesApplied transformations={parsedName.transformations} />
+      )}
     </RatedBox>
   );
 }

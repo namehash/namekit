@@ -131,7 +131,7 @@ export interface FakeEthNameCheckResult {
    *
    * `null` if `status` is `unknown_nft`
    */
-  investigated_fields: object | null; // TODO: dict[str,str] | null
+  investigated_fields: Record<string, string> | null;
 }
 
 /**
@@ -470,6 +470,10 @@ interface FakeEthNameOptions {
   network?: Network;
 }
 
+interface FieldsWithRequiredTitle extends Record<string, string> {
+    title: string;
+}
+
 class NameGuard {
   private endpoint: URL;
   private network: Network;
@@ -672,12 +676,14 @@ class NameGuard {
    *
    * @param {string} contract_address Contract address for the NFT contract (ERC721 and ERC1155 supported).
    * @param {string} token_id The ID of the token (in hex or decimal format).
+   * @param {string} fields Fields with values which will be investigated (e.g. title, collection name, metadata) whether they look like fake .eth ENS name. `title` key is mandatory, for ENS contracts it should be the ENS name.
    * @param {FakeEthNameOptions} options The options for the fake .eth ens name check.
    * @returns {Promise<FakeEthNameCheckResult>}  A promise that resolves with a `FakeEthNameCheckResult`.
    */
   public fakeEthNameCheck(
     contract_address: string,
     token_id: string,
+    fields: FieldsWithRequiredTitle,
     options?: FakeEthNameOptions
   ): Promise<FakeEthNameCheckResult> {
     if (!isEthereumAddress(contract_address)) {
@@ -692,11 +698,18 @@ class NameGuard {
       );
     }
 
+    if (!fields || !fields.title || typeof fields.title !== 'string') {
+      throw new Error("The 'fields' object must be provided and contain a 'title' key with a string value.");
+    }
+
     const network_name = options?.network || this.network;
 
-    return this.rawRequest(
-      `fake-eth-name-check/${network_name}/${contract_address}/${token_id}`
-    );
+    return this.rawRequest("fake-eth-name-check", "POST", {
+      network_name,
+      contract_address,
+      token_id,
+      fields
+    });
   }
 
   /**

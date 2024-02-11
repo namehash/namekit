@@ -3,17 +3,18 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Favicon from "../../public/favicon/favicon_package_v0-2/favicon.ico";
 import AppleTouchIcon from "../../public/favicon/favicon_package_v0-2/apple-touch-icon.png";
-import og_img from "../../public/openGraph/og-image.png";
-import og_image_twitter from "../../public/openGraph/og-image-twitter.png";
 import { NameGuardWrapper } from "./components/NameGuardWrapper";
 
 import { Footer } from "@/app/components/Footer";
 import { Header } from "@/app/components/Header";
 import React from "react";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://nameguard.io"),
   title: "NameGuard - Protect your community with NameGuard for ENS",
   description:
     "Guard your users from heartbreak and encourage best practice usage of ENS.",
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
       "Guard your users from heartbreak and encourage best practice usage of ENS.",
     url: "https://nameguard.io",
     images: {
-      url: og_img.src,
+      url: "https://nameguard.io/openGraph/og-image.png",
       alt: "NameGuard - Protect your community with NameGuard for ENS",
     },
   },
@@ -40,7 +41,7 @@ export const metadata: Metadata = {
     description:
       "Guard your users from heartbreak and encourage best practice usage of ENS.",
     images: {
-      url: og_image_twitter.src,
+      url: "https://nameguard.io/openGraph/og-image-twitter.png",
       alt: "NameGuard - Protect your community with NameGuard for ENS",
     },
   },
@@ -57,6 +58,8 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
+        <Analytics />
+        <SpeedInsights />
         <NameGuardWrapper />
       </body>
     </html>
