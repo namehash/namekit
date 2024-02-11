@@ -43,7 +43,7 @@ export function Banner({ report, parsedName }: Props) {
           <p className="uppercase text-[12px] text-gray-500 font-medium">
             Rating for
           </p>
-          <h1 className="mt-1 text-2xl md:text-4xl text-black font-semibold md:font-bold overflow-hidden overflow-ellipsis whitespace-nowrap ens-webfont">
+          <h1 className="text-2xl md:text-4xl md:leading-loose text-black font-semibold md:font-bold overflow-hidden overflow-ellipsis whitespace-nowrap ens-webfont">
             {name}
           </h1>
           <ReportFormattedDisplayName

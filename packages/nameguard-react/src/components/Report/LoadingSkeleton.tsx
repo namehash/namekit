@@ -22,7 +22,7 @@ export const LoadingSkeleton = ({ parsedName }: LoadingSkeletonProps) => {
           </p>
           {name ? (
             <>
-              <h1 className="mt-1 text-2xl md:text-4xl text-black font-semibold md:font-bold overflow-hidden overflow-ellipsis ens-webfont">
+              <h1 className="text-2xl md:text-4xl md:leading-loose text-black font-semibold md:font-bold overflow-hidden overflow-ellipsis ens-webfont">
                 {name}
               </h1>
               <ReportFormattedDisplayName
