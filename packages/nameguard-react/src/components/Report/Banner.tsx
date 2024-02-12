@@ -56,7 +56,7 @@ export function Banner({ report, parsedName }: Props) {
           <div className="flex-shrink-0">
             <Shield status={rating} size="large" />
           </div>
-          <div className="space-y-1">
+          <div className="space-y-1 flex-shrink-0">
             <p className={text}>{title}</p>
             <p className="text-black text-sm font-normal leading-6 break-all">
               {subtitle}

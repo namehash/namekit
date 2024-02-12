@@ -27,7 +27,7 @@ export const ReportError = () => {
             <ExclamationTriangleIcon className="text-red-600 stroke-current w-5 h-5" />
           </div>
         </div>
-        <div className="space-y-1">
+        <div className="space-y-1 flex-shrink-0">
           <p className="text-black font-semibold text-lg">
             {isOnline ? "Unexpected server error" : "Connection lost"}
           </p>
