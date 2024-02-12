@@ -10,6 +10,7 @@ import cc from "classcat";
 
 import { Shield as ShieldIcon } from "../Report/Shield";
 import { Tooltip } from "../Tooltip/Tooltip";
+import { NameShield } from "../NameShield";
 
 function textColor(rating: Rating) {
   switch (rating) {
@@ -40,8 +41,7 @@ export const Shield = ({ name }: ShieldProps) => {
     (n: string) => nameguard.bulkInspectNames([parseName(n).outputName.name])
   );
 
-  // const [result] = data.results;
-  const result = data.results[0];
+  const result = data?.results[0];
 
   if (isLoading || !data) {
     return (
@@ -49,7 +49,7 @@ export const Shield = ({ name }: ShieldProps) => {
     );
   }
 
-  const textClass = cc(["font-normal", textColor(result.rating)]);
+  const textClass = cc(["font-semibold mb-1", textColor(result.rating)]);
 
   return (
     <Tooltip
