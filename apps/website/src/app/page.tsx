@@ -1,6 +1,9 @@
 import { Fragment } from "react";
 import Image from "next/image";
-import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import {
+  CheckCircleIcon,
+  QuestionMarkCircleIcon,
+} from "@heroicons/react/24/solid";
 import cc from "classcat";
 
 import impersonation_attack_img from "../../public/assets/impersonation_attack.svg";
@@ -17,9 +20,7 @@ import { CalButton } from "@/app/atoms/CalButton";
 import { PushIcon } from "@/app/atoms/icons/PushIcon";
 import { WalletConnectIcon } from "@/app/atoms/icons/WalletConnectIcon";
 import { IntegrationIcon } from "@/app/atoms/icons/IntegrationIcon";
-import { QuestionmarkCircle } from "@/app/atoms/icons/QuestionmarkCircle";
 import { CheckShieldGrayOutline } from "@/app/atoms/icons/CheckShieldGrayOutline";
-import { CheckCircleGreen } from "@/app/atoms/icons/CheckCircleGreen";
 import { RoadmapPositiveShield } from "@/app/atoms/icons/RoadmapPositiveShield";
 import { RoadmapWarningShield } from "@/app/atoms/icons/RoadmapWarningShield";
 import { RoadmapNegativeShield } from "@/app/atoms/icons/RoadmapNegativeShield";
@@ -1213,12 +1214,12 @@ function ListSectionBadge(props: ListBadgeProps) {
 function ChecksSection() {
   const checkCircle = (
     <div className="w-12 h-12 flex justify-center items-center flex-shrink-0 p-[14px] bg-white rounded-[40px] border border-gray-200">
-      <CheckCircleGreen />
+      <CheckCircleIcon className="text-emerald-500 w-5 h-5" />
     </div>
   );
   const questionmarkCircle = (
     <div className="w-12 h-12 flex justify-center items-center flex-shrink-0 p-[14px] bg-white rounded-[40px] border border-gray-200 border-dashed">
-      <QuestionmarkCircle />
+      <QuestionMarkCircleIcon className="text-gray-400 w-5 h-5" />
     </div>
   );
 
