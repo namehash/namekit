@@ -15,7 +15,9 @@ export const NameBadge = ({ placeholder, onClick, data }: NameBadgeProps) => {
     return (
       <button className="flex-shrink-0 appearance-none bg-white transition-colors hover:bg-gray-50 border border-gray-200 rounded-md px-2.5 py-1.5 space-x-1.5 inline-flex items-center">
         {placeholder ? (
-          <span className="text-black text-sm leading-5">{placeholder}</span>
+          <span className="text-black text-sm leading-5 ens-webfont">
+            {placeholder}
+          </span>
         ) : (
           <span className="rounded-full h-2 w-16 bg-gray-200 animate-pulse"></span>
         )}
