@@ -89,8 +89,8 @@ export const LoadingShieldMedium = (props) => (
         y2="8.80222"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor="#D9DDE6" />
-        <stop offset="1" stopColor="#F0F4FB" />
+        <stop stopColor="#000000" stopOpacity="0.2" />
+        <stop offset="1" stopColor="#000000" stopOpacity="0" />
       </linearGradient>
     </defs>
   </svg>

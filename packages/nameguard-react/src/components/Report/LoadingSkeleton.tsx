@@ -22,7 +22,7 @@ export const LoadingSkeleton = ({ parsedName }: LoadingSkeletonProps) => {
           </p>
           {name ? (
             <>
-              <h1 className="mt-1 text-2xl md:text-4xl text-black font-semibold md:font-bold overflow-hidden overflow-ellipsis ens-webfont">
+              <h1 className="pt-1 text-2xl md:text-4xl text-black font-semibold md:font-bold overflow-hidden overflow-ellipsis whitespace-nowrap ens-webfont">
                 {name}
               </h1>
               <ReportFormattedDisplayName
@@ -37,7 +37,7 @@ export const LoadingSkeleton = ({ parsedName }: LoadingSkeletonProps) => {
         </div>
         <div className="flex items-start space-x-4 pt-5 md:pt-0 md:w-2/6">
           <Shield status="info" size="large" />
-          <div className="space-y-1">
+          <div className="space-y-1 flex-shrink-0">
             <p className="font-semibold text-sm md:text-2xl text-gray-500">
               Inspecting...
             </p>

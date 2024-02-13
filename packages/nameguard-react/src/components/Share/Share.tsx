@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 import { XMarkIcon, ArrowUpTrayIcon } from "@heroicons/react/24/solid";
+
 import { toast } from "sonner";
 
 import { Tooltip } from "../Tooltip/Tooltip";
@@ -14,7 +15,7 @@ function createTwitterLink(name: string) {
   const url = `https://nameguard.io/inspect/${encodeURIComponent(name)}`;
 
   return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-    tweetText,
+    tweetText
   )}&url=${encodeURIComponent(url)}`;
 }
 
@@ -36,17 +37,34 @@ export function Share({ name }: ShareProps) {
 
   const twitterLink = createTwitterLink(name);
   const telegramLink = createTelegramLink(
-    `https://nameguard.io/inspect/${encodeURIComponent(name)}`,
+    `https://nameguard.io/inspect/${encodeURIComponent(name)}`
   );
   const emailLink = createMailToLink(
     `NameGuard Report for ${name}`,
-    `Check this out!\nhttps://nameguard.io/inspect/${encodeURIComponent(name)}`,
+    `Check this out!\nhttps://nameguard.io/inspect/${encodeURIComponent(name)}`
   );
   const copyLinkToClipboard = () => {
     navigator.clipboard.writeText(
-      `https://nameguard.io/inspect/${encodeURIComponent(name)}`,
+      `https://nameguard.io/inspect/${encodeURIComponent(name)}`
     );
-    toast("Link copied to clipboard");
+    toast.success("Link copied to clipboard", {
+      icon: (
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 16 16"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM11.7071 6.70711C12.0976 6.31658 12.0976 5.68342 11.7071 5.29289C11.3166 4.90237 10.6834 4.90237 10.2929 5.29289L7 8.58579L5.70711 7.29289C5.31658 6.90237 4.68342 6.90237 4.29289 7.29289C3.90237 7.68342 3.90237 8.31658 4.29289 8.70711L6.29289 10.7071C6.68342 11.0976 7.31658 11.0976 7.70711 10.7071L11.7071 6.70711Z"
+            fill="#34D399"
+          />
+        </svg>
+      ),
+    });
     closeModal();
   };
 
@@ -139,25 +157,8 @@ export function Share({ name }: ShareProps) {
                           <path d="M13.5222 10.7749L19.4785 4H18.0671L12.8952 9.88256L8.76437 4H4L10.2466 12.8955L4 20H5.41155L10.8732 13.7878L15.2356 20H20L13.5218 10.7749H13.5222ZM11.5889 12.9738L10.956 12.0881L5.92015 5.03974H8.0882L12.1522 10.728L12.7851 11.6137L18.0677 19.0075H15.8997L11.5889 12.9742V12.9738Z" />
                         </svg>
                       </div>
-                      <span className="text-black text-xs">X / Twitter</span>
+                      <span className="text-black text-xs">X.com</span>
                     </a>
-                    {/* <a
-                      href="https://twitter.com"
-                      className="flex flex-col space-y-3 items-center group"
-                    >
-                      <div className="rounded-full bg-gray-100 h-10 w-10 flex items-center justify-center">
-                        <svg
-                          width="18"
-                          height="14"
-                          viewBox="0 0 18 14"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="fill-current text-gray-400"
-                        >
-                          <path d="M14.9536 1.44554C13.8433 0.926032 12.656 0.548479 11.4148 0.333496C11.2624 0.609096 11.0843 0.979784 10.9615 1.27466C9.64203 1.07624 8.33471 1.07624 7.03953 1.27466C6.91676 0.979784 6.73463 0.609096 6.58083 0.333496C5.33826 0.548479 4.14966 0.92742 3.03932 1.44829C0.799737 4.83259 0.192623 8.13283 0.496181 11.3862C1.98159 12.4955 3.42113 13.1693 4.83637 13.6103C5.1858 13.1293 5.49745 12.6181 5.76592 12.0793C5.2546 11.885 4.76487 11.6453 4.30212 11.3669C4.42489 11.276 4.54497 11.1809 4.66099 11.083C7.48339 12.4032 10.55 12.4032 13.3387 11.083C13.4561 11.1809 13.5761 11.276 13.6975 11.3669C13.2334 11.6466 12.7424 11.8864 12.231 12.0807C12.4995 12.6181 12.8098 13.1307 13.1606 13.6116C14.5772 13.1707 16.0181 12.4969 17.5035 11.3862C17.8597 7.61471 16.895 4.34478 14.9536 1.44554ZM6.15044 9.38541C5.30318 9.38541 4.60836 8.59444 4.60836 7.63124C4.60836 6.66804 5.28835 5.87571 6.15044 5.87571C7.01256 5.87571 7.70735 6.66665 7.69251 7.63124C7.69385 8.59444 7.01256 9.38541 6.15044 9.38541ZM11.8492 9.38541C11.002 9.38541 10.3072 8.59444 10.3072 7.63124C10.3072 6.66804 10.9871 5.87571 11.8492 5.87571C12.7113 5.87571 13.4061 6.66665 13.3913 7.63124C13.3913 8.59444 12.7113 9.38541 11.8492 9.38541Z" />
-                        </svg>
-                      </div>
-                      <span className="text-black text-xs">Discord</span>
-                    </a> */}
                     <a
                       href={telegramLink}
                       target="_blank"

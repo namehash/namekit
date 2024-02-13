@@ -12,8 +12,7 @@ export function Hero() {
               An open source public good
             </p>
             <h1 className="text-black text-center not-italic font-bold text-4xl leading-10 gt_mobile:text-5xl gt_mobile:leading-[52px]">
-              Protect your community
-              <br />
+              Protect your community <br className="hidden md:block" />
               with NameGuard for ENS
             </h1>
           </div>

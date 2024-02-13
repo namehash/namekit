@@ -10,6 +10,7 @@ import cc from "classcat";
 
 import { Shield as ShieldIcon } from "../Report/Shield";
 import { Tooltip } from "../Tooltip/Tooltip";
+import { NameShield } from "../NameShield";
 
 function textColor(rating: Rating) {
   switch (rating) {
@@ -17,7 +18,7 @@ function textColor(rating: Rating) {
       return "text-red-600";
     }
     case "pass": {
-      return "text-green-500";
+      return "text-emerald-500";
     }
     case "warn": {
       return "text-amber-500";
@@ -37,11 +38,10 @@ export const Shield = ({ name }: ShieldProps) => {
 
   const { data, error, isLoading } = useSWR<BulkConsolidatedNameGuardReport>(
     name,
-    (n: string) => nameguard.bulkInspectNames([parseName(n).outputName.name]),
+    (n: string) => nameguard.bulkInspectNames([parseName(n).outputName.name])
   );
 
-  // const [result] = data.results;
-  const result = data.results[0];
+  const result = data?.results[0];
 
   if (isLoading || !data) {
     return (
@@ -49,7 +49,7 @@ export const Shield = ({ name }: ShieldProps) => {
     );
   }
 
-  const textClass = cc(["font-normal", textColor(result.rating)]);
+  const textClass = cc(["font-semibold mb-1", textColor(result.rating)]);
 
   return (
     <Tooltip

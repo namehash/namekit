@@ -48,11 +48,11 @@ export const Report = ({
 
   const outsideChatClickRef = useOutsideClick(
     store.closeChatModal,
-    store.isChatModalOpen,
+    store.isChatModalOpen
   );
   const outsideGraphemeClickRef = useOutsideClick(
     closeAllGraphemeModals,
-    isGraphemeModalOpen,
+    isGraphemeModalOpen
   );
 
   const parsedName = useMemo(() => {
@@ -72,7 +72,7 @@ export const Report = ({
       revalidateIfStale: false,
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
-    },
+    }
   );
 
   const externalLinks = [
@@ -161,10 +161,15 @@ export const Report = ({
       />
       <GraphemeModal ref={outsideGraphemeClickRef} />
       <Toaster
+        closeButton
         position="bottom-center"
         toastOptions={{
           classNames: {
-            toast: "!bg-black !text-white !border-black",
+            toast:
+              "!bg-black !border-black !relative !text-sm !leading-5 !font-medium !px-5",
+            title: "!text-white",
+            success: "!fill-current !text-green-400",
+            closeButton: "!hidden",
           },
         }}
       />

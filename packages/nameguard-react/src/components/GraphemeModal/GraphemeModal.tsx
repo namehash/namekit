@@ -9,6 +9,7 @@ import { Shield } from "../Report/Shield";
 import { RatedBox } from "../RatedBox/RatedBox";
 import { ConfusableList } from "./ConfusableList";
 import { LoadingSkeleton } from "./LoadingSkeleton";
+import { Tooltip } from "../Tooltip/Tooltip";
 
 export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
   const { isGraphemeModalOpen, closeGraphemeModal, currentGrapheme } =
@@ -93,14 +94,34 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
 
           {data?.confusables?.length > 0 && (
             <div className="space-y-4 md:space-y-5">
-              <div className="space-y-1">
-                <p className="text-black font-semibold text-lg leading-6">
-                  Could be confused with
-                </p>
-                <p className="text-gray-500 text-sm leading-6">
-                  Some people could visually confuse this character for a
-                  different character.
-                </p>
+              <div className="flex items-center justify-between">
+                <div className="space-y-1">
+                  <p className="text-black font-semibold text-lg leading-6">
+                    Could be confused with
+                  </p>
+                  <p className="text-gray-500 text-sm leading-6">
+                    Some people could visually confuse this character for a
+                    different character.
+                  </p>
+                </div>
+                <div className="hidden md:block">
+                  <Tooltip
+                    placement="left"
+                    trigger={
+                      <p className="text-black underline text-sm leading-6 cursor-default">
+                        Why it matters?
+                      </p>
+                    }
+                  >
+                    <div className="max-w-[480px]">
+                      <p>
+                        If someone types the wrong character when writing a name
+                        it can send crypto, NFTs, messages, or other valuables
+                        to the wrong person.
+                      </p>
+                    </div>
+                  </Tooltip>
+                </div>
               </div>
 
               <ConfusableList items={data?.confusables} />
