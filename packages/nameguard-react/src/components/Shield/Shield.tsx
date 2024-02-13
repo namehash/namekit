@@ -10,7 +10,6 @@ import cc from "classcat";
 
 import { Shield as ShieldIcon } from "../Report/Shield";
 import { Tooltip } from "../Tooltip/Tooltip";
-import { NameShield } from "../NameShield";
 
 function textColor(rating: Rating) {
   switch (rating) {
@@ -45,7 +44,11 @@ export const Shield = ({ name }: ShieldProps) => {
 
   if (isLoading || !data) {
     return (
-      <ShieldIcon status={isLoading ? "info" : result.rating} size="small" />
+      <ShieldIcon
+        status={isLoading ? "info" : result.rating}
+        className={isLoading && "animate-pulse"}
+        size="small"
+      />
     );
   }
 
