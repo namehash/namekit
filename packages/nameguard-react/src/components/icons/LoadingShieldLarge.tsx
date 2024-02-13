@@ -7,6 +7,7 @@ export const LoadingShieldLarge = (props) => (
     viewBox="0 0 68 71"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
+    className="animate-pulse"
     {...props}
   >
     <g filter="url(#filter0_dd_405_7380)">
