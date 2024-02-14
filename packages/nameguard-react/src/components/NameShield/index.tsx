@@ -11,7 +11,7 @@ function textColor(rating?: Rating) {
       return "text-red-600";
     }
     case "pass": {
-      return "text-emerald-500";
+      return "text-green-500";
     }
     case "warn": {
       return "text-amber-500";
