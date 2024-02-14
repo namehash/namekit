@@ -1,4 +1,5 @@
 import "./globals.css";
+import "@namehash/ens-webfont";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Favicon from "../../public/favicon/favicon_package_v0-2/favicon.ico";

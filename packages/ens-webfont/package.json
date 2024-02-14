@@ -1,33 +1,16 @@
 {
   "name": "@namehash/ens-webfont",
-  "version": "0.0.2",
-  "type": "module",
-  "exports": {
-    ".": {
-      "import": {
-        "node": "./dist/styles/font-config.css",
-        "default": "./dist/styles/font-config.css"
-      },
-      "require": {
-        "node": "./dist/styles/font-config.css",
-        "default": "./dist/styles/font-config.css"
-      }
-    }
-  },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "sideEffects": false,
+  "version": "0.0.3",
+  "main": "index.css",
+  "files": [
+    "index.css",
+    "Unifont.otf"
+  ],
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch --clean=false",
     "prettier-check": "prettier --check ."
   },
   "devDependencies": {
-    "@changesets/cli": "2.26.2",
-    "@types/node": "^20.6.2",
-    "prettier": "^3.0.3",
-    "tsup": "^7.2.0",
-    "typescript": "^5.2.2"
+    "prettier": "^3.0.3"
   },
   "publishConfig": {
     "access": "public"
