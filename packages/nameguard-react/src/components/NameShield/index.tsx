@@ -27,13 +27,14 @@ type NameShieldProps = {
   children?: ReactNode;
   disableHover?: boolean;
   size?: "small" | "medium" | "large" | "micro";
-};
+} & React.ComponentProps<typeof Shield>;
 
 export function NameShield({
   data,
   children,
   disableHover,
   size = "small",
+  ...props
 }: NameShieldProps) {
   if (!data) return null;
 
@@ -42,19 +43,15 @@ export function NameShield({
   const textClass = cc(["font-semibold mb-1", textColor(rating)]);
 
   if (!rating) {
-    return <Shield status="info" size={size} className="cursor-pointer" />;
+    return <Shield status="info" size={size} {...props} />;
   }
 
   if (disableHover) {
-    return <Shield status={rating} size={size} className="cursor-pointer" />;
+    return <Shield status={rating} size={size} {...props} />;
   }
 
   return (
-    <Tooltip
-      trigger={
-        <Shield status={rating} size={size} className="cursor-pointer" />
-      }
-    >
+    <Tooltip trigger={<Shield status={rating} size={size} {...props} />}>
       <div className="flex items-start space-x-3 py-2.5 min-w-[300px] max-w-[300px]">
         <div className="mt-0.5">
           <Shield status={rating} size="small" />
