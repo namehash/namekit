@@ -1214,7 +1214,7 @@ function ListSectionBadge(props: ListBadgeProps) {
 function ChecksSection() {
   const checkCircle = (
     <div className="w-12 h-12 flex justify-center items-center flex-shrink-0 p-[14px] bg-white rounded-[40px] border border-gray-200">
-      <CheckCircleIcon className="text-emerald-500 w-5 h-5" />
+      <CheckCircleIcon className="text-emerald-600 w-5 h-5" />
     </div>
   );
   const questionmarkCircle = (
