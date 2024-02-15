@@ -34,10 +34,9 @@ type ShieldProps = {
   name?: string;
   children?: ReactNode;
   size?: "small" | "medium" | "large" | "micro";
-  forceError?: boolean;
 };
 
-export const Shield = ({ name, children, size, forceError }: ShieldProps) => {
+export const Shield = ({ name, children, size }: ShieldProps) => {
   if (!name) return null;
 
   const { data, error, isLoading } = useSWR<BulkConsolidatedNameGuardReport>(
@@ -57,7 +56,7 @@ export const Shield = ({ name, children, size, forceError }: ShieldProps) => {
     );
   }
 
-  if (forceError || error) {
+  if (error) {
     return <ShieldError size={size}>{children}</ShieldError>;
   }
 

@@ -30,9 +30,7 @@ export default function RatingShieldsPage() {
           <div className="flex items-center justify-center">
             <Shield name="‍420.eth" />
           </div>
-          <div className="flex items-center justify-center">
-            <Shield name="test.eth" forceError />
-          </div>
+          <div className="flex items-center justify-center"></div>
           <div className="flex items-center justify-center">
             <ShieldIcon status="info" />
           </div>
@@ -55,9 +53,7 @@ export default function RatingShieldsPage() {
             <Shield name="‍420.eth">Hello world</Shield>
           </div>
           <div className="flex items-center justify-center">
-            <Shield name="test.eth" forceError>
-              Hello world
-            </Shield>
+            <Shield name="test.eth">Hello world</Shield>
           </div>
           <div className="flex items-center justify-center">
             <ShieldIcon status="info" />
@@ -130,10 +126,10 @@ export default function RatingShieldsPage() {
             />
           </div>
           <div className="flex items-center justify-center">
-            <NameBadge placeholder="notrab.eth" forceError />
+            <NameBadge name="notrab.eth" />
           </div>
           <div className="flex items-center justify-center">
-            <NameBadge placeholder="notrab.eth" />
+            <NameBadge name="notrab.eth" />
           </div>
         </div>
         <div className="grid grid-cols-6 gap-x-6 py-5">
@@ -203,17 +199,10 @@ export default function RatingShieldsPage() {
             />
           </div>
           <div className="flex items-center justify-center">
-            <NameBadge
-              placeholder="notrab.eth"
-              forceError
-              onClick={() => alert("Clicked")}
-            />
+            <NameBadge name="notrab.eth" onClick={() => alert("Clicked")} />
           </div>
           <div className="flex items-center justify-center">
-            <NameBadge
-              placeholder="notrab.eth"
-              onClick={() => alert("Clicked")}
-            />
+            <NameBadge name="notrab.eth" onClick={() => alert("Clicked")} />
           </div>
         </div>
       </div>

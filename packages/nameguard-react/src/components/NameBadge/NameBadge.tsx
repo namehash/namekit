@@ -7,18 +7,13 @@ import { Shield } from "../Report/Shield";
 import { ShieldError } from "../Shield/Error";
 
 type NameBadgeProps = {
-  placeholder?: string;
+  name?: string;
   data?: ConsolidatedNameGuardReport;
   onClick?: MouseEventHandler<HTMLButtonElement>;
-  forceError?: boolean;
+  error?: string;
 };
 
-export const NameBadge = ({
-  placeholder,
-  onClick,
-  data,
-  forceError,
-}: NameBadgeProps) => {
+export const NameBadge = ({ name, onClick, data, error }: NameBadgeProps) => {
   const buttonClass =
     "flex-shrink-0 appearance-none bg-white transition-colors hover:bg-gray-50 border border-gray-200 rounded-md px-2.5 py-1.5 space-x-1.5 inline-flex items-center";
   const cursorClass = cc([
@@ -29,12 +24,12 @@ export const NameBadge = ({
   ]);
   const buttonAndCursorClass = cc([buttonClass, cursorClass]);
 
-  if (forceError)
+  if (error)
     return (
-      <button className={buttonAndCursorClass}>
-        {placeholder ? (
+      <button className={buttonAndCursorClass} onClick={onClick}>
+        {name ? (
           <span className="text-black text-sm leading-5 ens-webfont">
-            {placeholder}
+            {name}
           </span>
         ) : (
           <span className="rounded-full h-2 w-16 bg-gray-200 animate-pulse"></span>
@@ -56,10 +51,10 @@ export const NameBadge = ({
 
   if (!data)
     return (
-      <button className={buttonAndCursorClass}>
-        {placeholder ? (
+      <button className={buttonAndCursorClass} onClick={onClick}>
+        {name ? (
           <span className="text-black text-sm leading-5 ens-webfont">
-            {placeholder}
+            {name}
           </span>
         ) : (
           <span className="rounded-full h-2 w-16 bg-gray-200 animate-pulse"></span>
@@ -69,7 +64,7 @@ export const NameBadge = ({
     );
 
   return (
-    <button className={buttonAndCursorClass}>
+    <button className={buttonAndCursorClass} onClick={onClick}>
       <span className="text-black text-sm leading-5 ens-webfont">
         {data.beautiful_name || data.name}
       </span>
