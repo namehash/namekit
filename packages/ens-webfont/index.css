@@ -34,8 +34,7 @@ Font families defined by this CSS:
   font-style: normal;
   font-weight: 100;
   font-display: block;
-  src: url("https://rsms.me/inter/font-files/Inter-Thin.woff2?v=3.19")
-    format("woff2");
+  src: url("https://rsms.me/inter/font-files/Inter-Thin.woff2?v=3.19") format("woff2");
   unicode-range: U+0-a8, U+aa-ad, U+af-2193, U+219a-21a8, U+21ab-2319,
     U+231c-2327, U+2329-23ce, U+23d0-23e8, U+23f4-23f7, U+23fb-25a9, U+25ac-25b5,
     U+25b7-25bf, U+25c1-25fa, U+25ff, U+2605-260d, U+260f-2610, U+2612-2613,
@@ -68,8 +67,7 @@ Font families defined by this CSS:
   font-style: normal;
   font-weight: 200;
   font-display: block;
-  src: url("https://rsms.me/inter/font-files/Inter-ExtraLight.woff2?v=3.19")
-    format("woff2");
+  src: url("https://rsms.me/inter/font-files/Inter-ExtraLight.woff2?v=3.19") format("woff2");
   unicode-range: U+0-a8, U+aa-ad, U+af-2193, U+219a-21a8, U+21ab-2319,
     U+231c-2327, U+2329-23ce, U+23d0-23e8, U+23f4-23f7, U+23fb-25a9, U+25ac-25b5,
     U+25b7-25bf, U+25c1-25fa, U+25ff, U+2605-260d, U+260f-2610, U+2612-2613,
@@ -96,13 +94,13 @@ Font families defined by this CSS:
     U+1f93b, U+1f946, U+1fa00-1fa6f, U+1fa7d-1fa7f, U+1fa89-1fa8f, U+1fabe,
     U+1fac6-1facd, U+1fadc-1fadf, U+1fae9-1faef, U+1faf9-10ffff, U+00a9-00ae;
 }
+
 @font-face {
   font-family: "Inter";
   font-style: normal;
   font-weight: 300;
   font-display: block;
-  src: url("https://rsms.me/inter/font-files/Inter-Light.woff2?v=3.19")
-    format("woff2");
+  src: url("https://rsms.me/inter/font-files/Inter-Light.woff2?v=3.19") format("woff2");
   unicode-range: U+0-a8, U+aa-ad, U+af-2193, U+219a-21a8, U+21ab-2319,
     U+231c-2327, U+2329-23ce, U+23d0-23e8, U+23f4-23f7, U+23fb-25a9, U+25ac-25b5,
     U+25b7-25bf, U+25c1-25fa, U+25ff, U+2605-260d, U+260f-2610, U+2612-2613,
@@ -129,13 +127,13 @@ Font families defined by this CSS:
     U+1f93b, U+1f946, U+1fa00-1fa6f, U+1fa7d-1fa7f, U+1fa89-1fa8f, U+1fabe,
     U+1fac6-1facd, U+1fadc-1fadf, U+1fae9-1faef, U+1faf9-10ffff, U+00a9-00ae;
 }
+
 @font-face {
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   font-display: block;
-  src: url("https://rsms.me/inter/font-files/Inter-Regular.woff2?v=3.19")
-    format("woff2");
+  src: url("https://rsms.me/inter/font-files/Inter-Regular.woff2?v=3.19") format("woff2");
   unicode-range: U+0-a8, U+aa-ad, U+af-2193, U+219a-21a8, U+21ab-2319,
     U+231c-2327, U+2329-23ce, U+23d0-23e8, U+23f4-23f7, U+23fb-25a9, U+25ac-25b5,
     U+25b7-25bf, U+25c1-25fa, U+25ff, U+2605-260d, U+260f-2610, U+2612-2613,
@@ -162,13 +160,13 @@ Font families defined by this CSS:
     U+1f93b, U+1f946, U+1fa00-1fa6f, U+1fa7d-1fa7f, U+1fa89-1fa8f, U+1fabe,
     U+1fac6-1facd, U+1fadc-1fadf, U+1fae9-1faef, U+1faf9-10ffff, U+00a9-00ae;
 }
+
 @font-face {
   font-family: "Inter";
   font-style: normal;
   font-weight: 500;
   font-display: block;
-  src: url("https://rsms.me/inter/font-files/Inter-Medium.woff2?v=3.19")
-    format("woff2");
+  src: url("https://rsms.me/inter/font-files/Inter-Medium.woff2?v=3.19") format("woff2");
   unicode-range: U+0-a8, U+aa-ad, U+af-2193, U+219a-21a8, U+21ab-2319,
     U+231c-2327, U+2329-23ce, U+23d0-23e8, U+23f4-23f7, U+23fb-25a9, U+25ac-25b5,
     U+25b7-25bf, U+25c1-25fa, U+25ff, U+2605-260d, U+260f-2610, U+2612-2613,
@@ -195,13 +193,13 @@ Font families defined by this CSS:
     U+1f93b, U+1f946, U+1fa00-1fa6f, U+1fa7d-1fa7f, U+1fa89-1fa8f, U+1fabe,
     U+1fac6-1facd, U+1fadc-1fadf, U+1fae9-1faef, U+1faf9-10ffff, U+00a9-00ae;
 }
+
 @font-face {
   font-family: "Inter";
   font-style: normal;
   font-weight: 600;
   font-display: block;
-  src: url("https://rsms.me/inter/font-files/Inter-SemiBold.woff2?v=3.19")
-    format("woff2");
+  src: url("https://rsms.me/inter/font-files/Inter-SemiBold.woff2?v=3.19") format("woff2");
   unicode-range: U+0-a8, U+aa-ad, U+af-2193, U+219a-21a8, U+21ab-2319,
     U+231c-2327, U+2329-23ce, U+23d0-23e8, U+23f4-23f7, U+23fb-25a9, U+25ac-25b5,
     U+25b7-25bf, U+25c1-25fa, U+25ff, U+2605-260d, U+260f-2610, U+2612-2613,
@@ -228,13 +226,13 @@ Font families defined by this CSS:
     U+1f93b, U+1f946, U+1fa00-1fa6f, U+1fa7d-1fa7f, U+1fa89-1fa8f, U+1fabe,
     U+1fac6-1facd, U+1fadc-1fadf, U+1fae9-1faef, U+1faf9-10ffff, U+00a9-00ae;
 }
+
 @font-face {
   font-family: "Inter";
   font-style: normal;
   font-weight: 700;
   font-display: block;
-  src: url("https://rsms.me/inter/font-files/Inter-Bold.woff2?v=3.19")
-    format("woff2");
+  src: url("https://rsms.me/inter/font-files/Inter-Bold.woff2?v=3.19") format("woff2");
   unicode-range: U+0-a8, U+aa-ad, U+af-2193, U+219a-21a8, U+21ab-2319,
     U+231c-2327, U+2329-23ce, U+23d0-23e8, U+23f4-23f7, U+23fb-25a9, U+25ac-25b5,
     U+25b7-25bf, U+25c1-25fa, U+25ff, U+2605-260d, U+260f-2610, U+2612-2613,
@@ -261,13 +259,13 @@ Font families defined by this CSS:
     U+1f93b, U+1f946, U+1fa00-1fa6f, U+1fa7d-1fa7f, U+1fa89-1fa8f, U+1fabe,
     U+1fac6-1facd, U+1fadc-1fadf, U+1fae9-1faef, U+1faf9-10ffff, U+00a9-00ae;
 }
+
 @font-face {
   font-family: "Inter";
   font-style: normal;
   font-weight: 800;
   font-display: block;
-  src: url("https://rsms.me/inter/font-files/Inter-ExtraBold.woff2?v=3.19")
-    format("woff2");
+  src: url("https://rsms.me/inter/font-files/Inter-ExtraBold.woff2?v=3.19") format("woff2");
   unicode-range: U+0-a8, U+aa-ad, U+af-2193, U+219a-21a8, U+21ab-2319,
     U+231c-2327, U+2329-23ce, U+23d0-23e8, U+23f4-23f7, U+23fb-25a9, U+25ac-25b5,
     U+25b7-25bf, U+25c1-25fa, U+25ff, U+2605-260d, U+260f-2610, U+2612-2613,
@@ -294,13 +292,13 @@ Font families defined by this CSS:
     U+1f93b, U+1f946, U+1fa00-1fa6f, U+1fa7d-1fa7f, U+1fa89-1fa8f, U+1fabe,
     U+1fac6-1facd, U+1fadc-1fadf, U+1fae9-1faef, U+1faf9-10ffff, U+00a9-00ae;
 }
+
 @font-face {
   font-family: "Inter";
   font-style: normal;
   font-weight: 900;
   font-display: block;
-  src: url("https://rsms.me/inter/font-files/Inter-Black.woff2?v=3.19")
-    format("woff2");
+  src: url("https://rsms.me/inter/font-files/Inter-Black.woff2?v=3.19") format("woff2");
   unicode-range: U+0-a8, U+aa-ad, U+af-2193, U+219a-21a8, U+21ab-2319,
     U+231c-2327, U+2329-23ce, U+23d0-23e8, U+23f4-23f7, U+23fb-25a9, U+25ac-25b5,
     U+25b7-25bf, U+25c1-25fa, U+25ff, U+2605-260d, U+260f-2610, U+2612-2613,
@@ -327,6 +325,7 @@ Font families defined by this CSS:
     U+1f93b, U+1f946, U+1fa00-1fa6f, U+1fa7d-1fa7f, U+1fa89-1fa8f, U+1fabe,
     U+1fac6-1facd, U+1fadc-1fadf, U+1fae9-1faef, U+1faf9-10ffff, U+00a9-00ae;
 }
+
 /* ----------------------- variable ----------------------- */
 
 @font-face {
@@ -334,8 +333,7 @@ Font families defined by this CSS:
   font-style: normal;
   font-weight: 100 900;
   font-display: block;
-  src: url("https://rsms.me/inter/font-files/Inter-roman.var.woff2?v=3.19")
-    format("woff2");
+  src: url("https://rsms.me/inter/font-files/Inter-roman.var.woff2?v=3.19") format("woff2");
   unicode-range: U+0-a8, U+aa-ad, U+af-2193, U+219a-21a8, U+21ab-2319,
     U+231c-2327, U+2329-23ce, U+23d0-23e8, U+23f4-23f7, U+23fb-25a9, U+25ac-25b5,
     U+25b7-25bf, U+25c1-25fa, U+25ff, U+2605-260d, U+260f-2610, U+2612-2613,
@@ -378,8 +376,7 @@ When using this, you will likely need to set font-variation-settings explicitly,
   font-style: oblique 0deg 10deg;
   font-weight: 100 900;
   font-display: block;
-  src: url("https://rsms.me/inter/font-files/Inter.var.woff2?v=3.19")
-    format("woff2");
+  src: url("https://rsms.me/inter/font-files/Inter.var.woff2?v=3.19") format("woff2");
   unicode-range: U+0-a8, U+aa-ad, U+af-2193, U+219a-21a8, U+21ab-2319,
     U+231c-2327, U+2329-23ce, U+23d0-23e8, U+23f4-23f7, U+23fb-25a9, U+25ac-25b5,
     U+25b7-25bf, U+25c1-25fa, U+25ff, U+2605-260d, U+260f-2610, U+2612-2613,
@@ -414,8 +411,7 @@ When using this, you will likely need to set font-variation-settings explicitly,
   font-style: normal;
   font-named-instance: "Regular";
   font-display: block;
-  src: url("https://rsms.me/inter/font-files/Inter-roman.var.woff2?v=3.19")
-    format("woff2");
+  src: url("https://rsms.me/inter/font-files/Inter-roman.var.woff2?v=3.19") format("woff2");
   unicode-range: U+0-a8, U+aa-ad, U+af-2193, U+219a-21a8, U+21ab-2319,
     U+231c-2327, U+2329-23ce, U+23d0-23e8, U+23f4-23f7, U+23fb-25a9, U+25ac-25b5,
     U+25b7-25bf, U+25c1-25fa, U+25ff, U+2605-260d, U+260f-2610, U+2612-2613,
@@ -442,6 +438,7 @@ When using this, you will likely need to set font-variation-settings explicitly,
     U+1f93b, U+1f946, U+1fa00-1fa6f, U+1fa7d-1fa7f, U+1fa89-1fa8f, U+1fabe,
     U+1fac6-1facd, U+1fadc-1fadf, U+1fae9-1faef, U+1faf9-10ffff, U+00a9-00ae;
 }
+
 /* Noto Black font will be used if system defaults didn't covered yet: https://fonts.adobe.com/fonts/noto-sans */
 @font-face {
   font-family: "Noto Sans";
@@ -452,5 +449,5 @@ When using this, you will likely need to set font-variation-settings explicitly,
 @font-face {
   font-family: "Unifont";
   font-display: block;
-  src: url("../fonts/Unifont.otf");
+  src: url("./Unifont.otf");
 }
