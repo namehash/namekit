@@ -52,7 +52,7 @@ export function Share({ name }: ShareProps) {
       `https://nameguard.io/inspect/${encodeURIComponent(name)}`
     );
     toast.success("Link copied to clipboard", {
-      icon: <CheckCircleIcon className="text-emerald-500 w-5 h-5" />,
+      icon: <CheckCircleIcon className="text-emerald-600 w-5 h-5" />,
     });
     closeModal();
   };
