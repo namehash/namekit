@@ -52,9 +52,7 @@ export default function RatingShieldsPage() {
           <div className="flex items-center justify-center">
             <Shield name="‍420.eth">Hello world</Shield>
           </div>
-          <div className="flex items-center justify-center">
-            <Shield name="test.eth">Hello world</Shield>
-          </div>
+          <div className="flex items-center justify-center"></div>
           <div className="flex items-center justify-center">
             <ShieldIcon status="info" />
           </div>
