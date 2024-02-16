@@ -124,7 +124,7 @@ export default function RatingShieldsPage() {
             />
           </div>
           <div className="flex items-center justify-center">
-            <NameBadge name="notrab.eth" />
+            <NameBadge name="notrab.eth" error="Something went wrong" />
           </div>
           <div className="flex items-center justify-center">
             <NameBadge name="notrab.eth" />
@@ -197,7 +197,11 @@ export default function RatingShieldsPage() {
             />
           </div>
           <div className="flex items-center justify-center">
-            <NameBadge name="notrab.eth" onClick={() => alert("Clicked")} />
+            <NameBadge
+              name="notrab.eth"
+              error="Something went wrong"
+              onClick={() => alert("Clicked")}
+            />
           </div>
           <div className="flex items-center justify-center">
             <NameBadge name="notrab.eth" onClick={() => alert("Clicked")} />
