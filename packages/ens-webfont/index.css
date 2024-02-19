@@ -11,7 +11,7 @@
   font-feature-settings:
     "ss02" 1,
     "calt" 0;
-  font-family: "Inter", "Noto Color Emoji", "Apple Color Emoji",
+  font-family: "ENSWebFontInter", "Noto Color Emoji", "Apple Color Emoji",
     "Segoe UI Emoji", "Android Emoji", "EmojiSymbols", "EmojiOne Mozilla",
     "Twemoji Mozilla", "Segoe UI Symbol", "emoji", "Noto Emoji", "Tahoma",
     "Ubuntu", "Lucida Grande", "Microsoft Sans Serif", "San Francisco",
@@ -30,7 +30,7 @@ Font families defined by this CSS:
 
 ------------------------- static ------------------------- */
 @font-face {
-  font-family: "Inter";
+  font-family: "ENSWebFontInter";
   font-style: normal;
   font-weight: 100;
   font-display: block;
@@ -63,7 +63,7 @@ Font families defined by this CSS:
 }
 
 @font-face {
-  font-family: "Inter";
+  font-family: "ENSWebFontInter";
   font-style: normal;
   font-weight: 200;
   font-display: block;
@@ -96,7 +96,7 @@ Font families defined by this CSS:
 }
 
 @font-face {
-  font-family: "Inter";
+  font-family: "ENSWebFontInter";
   font-style: normal;
   font-weight: 300;
   font-display: block;
@@ -129,7 +129,7 @@ Font families defined by this CSS:
 }
 
 @font-face {
-  font-family: "Inter";
+  font-family: "ENSWebFontInter";
   font-style: normal;
   font-weight: 400;
   font-display: block;
@@ -162,7 +162,7 @@ Font families defined by this CSS:
 }
 
 @font-face {
-  font-family: "Inter";
+  font-family: "ENSWebFontInter";
   font-style: normal;
   font-weight: 500;
   font-display: block;
@@ -195,7 +195,7 @@ Font families defined by this CSS:
 }
 
 @font-face {
-  font-family: "Inter";
+  font-family: "ENSWebFontInter";
   font-style: normal;
   font-weight: 600;
   font-display: block;
@@ -228,7 +228,7 @@ Font families defined by this CSS:
 }
 
 @font-face {
-  font-family: "Inter";
+  font-family: "ENSWebFontInter";
   font-style: normal;
   font-weight: 700;
   font-display: block;
@@ -261,7 +261,7 @@ Font families defined by this CSS:
 }
 
 @font-face {
-  font-family: "Inter";
+  font-family: "ENSWebFontInter";
   font-style: normal;
   font-weight: 800;
   font-display: block;
@@ -294,7 +294,7 @@ Font families defined by this CSS:
 }
 
 @font-face {
-  font-family: "Inter";
+  font-family: "ENSWebFontInter";
   font-style: normal;
   font-weight: 900;
   font-display: block;
@@ -326,118 +326,6 @@ Font families defined by this CSS:
     U+1fac6-1facd, U+1fadc-1fadf, U+1fae9-1faef, U+1faf9-10ffff, U+00a9-00ae;
 }
 
-/* ----------------------- variable ----------------------- */
-
-@font-face {
-  font-family: "Inter var";
-  font-style: normal;
-  font-weight: 100 900;
-  font-display: block;
-  src: url("https://rsms.me/inter/font-files/Inter-roman.var.woff2?v=3.19") format("woff2");
-  unicode-range: U+0-a8, U+aa-ad, U+af-2193, U+219a-21a8, U+21ab-2319,
-    U+231c-2327, U+2329-23ce, U+23d0-23e8, U+23f4-23f7, U+23fb-25a9, U+25ac-25b5,
-    U+25b7-25bf, U+25c1-25fa, U+25ff, U+2605-260d, U+260f-2610, U+2612-2613,
-    U+2616-2617, U+2619-261c, U+261e-261f, U+2621, U+2624-2625, U+2627-2629,
-    U+262b-262d, U+2630-2637, U+263b-263f, U+2641, U+2643-2647, U+2654-265e,
-    U+2661-2662, U+2664, U+2667, U+2669-267a, U+267c-267d, U+2680-2691, U+2698,
-    U+269a, U+269d-269f, U+26a2-26a6, U+26a8-26a9, U+26ac-26af, U+26b2-26bc,
-    U+26bf-26c3, U+26c6-26c7, U+26c9-26cd, U+26d0, U+26d2, U+26d5-26e8,
-    U+26eb-26ef, U+26f6, U+26fb-26fc, U+26fe-2701, U+2703-2704, U+2706-2707,
-    U+270e, U+2710-2711, U+2713, U+2715, U+2717-271c, U+271e-2720, U+2722-2727,
-    U+2729-2732, U+2735-2743, U+2745-2746, U+2748-274b, U+274d, U+274f-2752,
-    U+2756, U+2758-2762, U+2765-2794, U+2798-27a0, U+27a2-27af, U+27b1-27be,
-    U+27c0-2933, U+2936-2b04, U+2b08-2b1a, U+2b1d-2b4f, U+2b51-2b54, U+2b56-302f,
-    U+3031-303c, U+303e-fe0e, U+fe10-1f003, U+1f005-1f0ce, U+1f0d0-1f16f,
-    U+1f172-1f17d, U+1f180-1f18d, U+1f18f-1f190, U+1f19b-1f1e5, U+1f1f6, U+1f1fb,
-    U+1f1fd, U+1f200-1f2ff, U+1f322-1f323, U+1f394-1f395, U+1f398, U+1f39c-1f39d,
-    U+1f3f1-1f3f2, U+1f3f6, U+1f3fb-1f3ff, U+1f4fe, U+1f53e-1f548, U+1f54f,
-    U+1f568-1f56e, U+1f571-1f572, U+1f57b-1f586, U+1f588-1f589, U+1f58e-1f58f,
-    U+1f591-1f594, U+1f597-1f5a3, U+1f5a6-1f5a7, U+1f5a9-1f5b0, U+1f5b3-1f5bb,
-    U+1f5bd-1f5c1, U+1f5c5-1f5d0, U+1f5d4-1f5db, U+1f5df-1f5e0, U+1f5e2,
-    U+1f5e4-1f5e7, U+1f5e9-1f5ee, U+1f5f0-1f5f2, U+1f5f4-1f5f9, U+1f650-1f67f,
-    U+1f6c6-1f6ca, U+1f6d3-1f6d4, U+1f6d8-1f6db, U+1f6e6-1f6e8, U+1f6ea,
-    U+1f6ed-1f6ef, U+1f6f1-1f6f2, U+1f6fd-1f7df, U+1f7ec-1f7ef, U+1f7f1-1f90b,
-    U+1f93b, U+1f946, U+1fa00-1fa6f, U+1fa7d-1fa7f, U+1fa89-1fa8f, U+1fabe,
-    U+1fac6-1facd, U+1fadc-1fadf, U+1fae9-1faef, U+1faf9-10ffff, U+00a9-00ae;
-  font-named-instance: "Regular";
-}
-
-/* ----------- experimental multi-axis variable -----------
-
-Slant axis is not yet widely supported (as of February 2019) and thus this
-multi-axis single-file variable font is opt-in rather than the default.
-When using this, you will likely need to set font-variation-settings explicitly, e.g:
-  * { font-variation-settings: "slnt" 0deg }
-  .italic { font-variation-settings: "slnt" 10deg }
-*/
-
-@font-face {
-  font-family: "Inter var experimental";
-  font-style: oblique 0deg 10deg;
-  font-weight: 100 900;
-  font-display: block;
-  src: url("https://rsms.me/inter/font-files/Inter.var.woff2?v=3.19") format("woff2");
-  unicode-range: U+0-a8, U+aa-ad, U+af-2193, U+219a-21a8, U+21ab-2319,
-    U+231c-2327, U+2329-23ce, U+23d0-23e8, U+23f4-23f7, U+23fb-25a9, U+25ac-25b5,
-    U+25b7-25bf, U+25c1-25fa, U+25ff, U+2605-260d, U+260f-2610, U+2612-2613,
-    U+2616-2617, U+2619-261c, U+261e-261f, U+2621, U+2624-2625, U+2627-2629,
-    U+262b-262d, U+2630-2637, U+263b-263f, U+2641, U+2643-2647, U+2654-265e,
-    U+2661-2662, U+2664, U+2667, U+2669-267a, U+267c-267d, U+2680-2691, U+2698,
-    U+269a, U+269d-269f, U+26a2-26a6, U+26a8-26a9, U+26ac-26af, U+26b2-26bc,
-    U+26bf-26c3, U+26c6-26c7, U+26c9-26cd, U+26d0, U+26d2, U+26d5-26e8,
-    U+26eb-26ef, U+26f6, U+26fb-26fc, U+26fe-2701, U+2703-2704, U+2706-2707,
-    U+270e, U+2710-2711, U+2713, U+2715, U+2717-271c, U+271e-2720, U+2722-2727,
-    U+2729-2732, U+2735-2743, U+2745-2746, U+2748-274b, U+274d, U+274f-2752,
-    U+2756, U+2758-2762, U+2765-2794, U+2798-27a0, U+27a2-27af, U+27b1-27be,
-    U+27c0-2933, U+2936-2b04, U+2b08-2b1a, U+2b1d-2b4f, U+2b51-2b54, U+2b56-302f,
-    U+3031-303c, U+303e-fe0e, U+fe10-1f003, U+1f005-1f0ce, U+1f0d0-1f16f,
-    U+1f172-1f17d, U+1f180-1f18d, U+1f18f-1f190, U+1f19b-1f1e5, U+1f1f6, U+1f1fb,
-    U+1f1fd, U+1f200-1f2ff, U+1f322-1f323, U+1f394-1f395, U+1f398, U+1f39c-1f39d,
-    U+1f3f1-1f3f2, U+1f3f6, U+1f3fb-1f3ff, U+1f4fe, U+1f53e-1f548, U+1f54f,
-    U+1f568-1f56e, U+1f571-1f572, U+1f57b-1f586, U+1f588-1f589, U+1f58e-1f58f,
-    U+1f591-1f594, U+1f597-1f5a3, U+1f5a6-1f5a7, U+1f5a9-1f5b0, U+1f5b3-1f5bb,
-    U+1f5bd-1f5c1, U+1f5c5-1f5d0, U+1f5d4-1f5db, U+1f5df-1f5e0, U+1f5e2,
-    U+1f5e4-1f5e7, U+1f5e9-1f5ee, U+1f5f0-1f5f2, U+1f5f4-1f5f9, U+1f650-1f67f,
-    U+1f6c6-1f6ca, U+1f6d3-1f6d4, U+1f6d8-1f6db, U+1f6e6-1f6e8, U+1f6ea,
-    U+1f6ed-1f6ef, U+1f6f1-1f6f2, U+1f6fd-1f7df, U+1f7ec-1f7ef, U+1f7f1-1f90b,
-    U+1f93b, U+1f946, U+1fa00-1fa6f, U+1fa7d-1fa7f, U+1fa89-1fa8f, U+1fabe,
-    U+1fac6-1facd, U+1fadc-1fadf, U+1fae9-1faef, U+1faf9-10ffff, U+00a9-00ae;
-}
-
-/* Legacy name (became legacy on Feb 2, 2019) */
-@font-face {
-  font-family: "Inter var alt";
-  font-weight: 100 900;
-  font-style: normal;
-  font-named-instance: "Regular";
-  font-display: block;
-  src: url("https://rsms.me/inter/font-files/Inter-roman.var.woff2?v=3.19") format("woff2");
-  unicode-range: U+0-a8, U+aa-ad, U+af-2193, U+219a-21a8, U+21ab-2319,
-    U+231c-2327, U+2329-23ce, U+23d0-23e8, U+23f4-23f7, U+23fb-25a9, U+25ac-25b5,
-    U+25b7-25bf, U+25c1-25fa, U+25ff, U+2605-260d, U+260f-2610, U+2612-2613,
-    U+2616-2617, U+2619-261c, U+261e-261f, U+2621, U+2624-2625, U+2627-2629,
-    U+262b-262d, U+2630-2637, U+263b-263f, U+2641, U+2643-2647, U+2654-265e,
-    U+2661-2662, U+2664, U+2667, U+2669-267a, U+267c-267d, U+2680-2691, U+2698,
-    U+269a, U+269d-269f, U+26a2-26a6, U+26a8-26a9, U+26ac-26af, U+26b2-26bc,
-    U+26bf-26c3, U+26c6-26c7, U+26c9-26cd, U+26d0, U+26d2, U+26d5-26e8,
-    U+26eb-26ef, U+26f6, U+26fb-26fc, U+26fe-2701, U+2703-2704, U+2706-2707,
-    U+270e, U+2710-2711, U+2713, U+2715, U+2717-271c, U+271e-2720, U+2722-2727,
-    U+2729-2732, U+2735-2743, U+2745-2746, U+2748-274b, U+274d, U+274f-2752,
-    U+2756, U+2758-2762, U+2765-2794, U+2798-27a0, U+27a2-27af, U+27b1-27be,
-    U+27c0-2933, U+2936-2b04, U+2b08-2b1a, U+2b1d-2b4f, U+2b51-2b54, U+2b56-302f,
-    U+3031-303c, U+303e-fe0e, U+fe10-1f003, U+1f005-1f0ce, U+1f0d0-1f16f,
-    U+1f172-1f17d, U+1f180-1f18d, U+1f18f-1f190, U+1f19b-1f1e5, U+1f1f6, U+1f1fb,
-    U+1f1fd, U+1f200-1f2ff, U+1f322-1f323, U+1f394-1f395, U+1f398, U+1f39c-1f39d,
-    U+1f3f1-1f3f2, U+1f3f6, U+1f3fb-1f3ff, U+1f4fe, U+1f53e-1f548, U+1f54f,
-    U+1f568-1f56e, U+1f571-1f572, U+1f57b-1f586, U+1f588-1f589, U+1f58e-1f58f,
-    U+1f591-1f594, U+1f597-1f5a3, U+1f5a6-1f5a7, U+1f5a9-1f5b0, U+1f5b3-1f5bb,
-    U+1f5bd-1f5c1, U+1f5c5-1f5d0, U+1f5d4-1f5db, U+1f5df-1f5e0, U+1f5e2,
-    U+1f5e4-1f5e7, U+1f5e9-1f5ee, U+1f5f0-1f5f2, U+1f5f4-1f5f9, U+1f650-1f67f,
-    U+1f6c6-1f6ca, U+1f6d3-1f6d4, U+1f6d8-1f6db, U+1f6e6-1f6e8, U+1f6ea,
-    U+1f6ed-1f6ef, U+1f6f1-1f6f2, U+1f6fd-1f7df, U+1f7ec-1f7ef, U+1f7f1-1f90b,
-    U+1f93b, U+1f946, U+1fa00-1fa6f, U+1fa7d-1fa7f, U+1fa89-1fa8f, U+1fabe,
-    U+1fac6-1facd, U+1fadc-1fadf, U+1fae9-1faef, U+1faf9-10ffff, U+00a9-00ae;
-}
 
 /* Noto Black font will be used if system defaults didn't covered yet: https://fonts.adobe.com/fonts/noto-sans */
 @font-face {
