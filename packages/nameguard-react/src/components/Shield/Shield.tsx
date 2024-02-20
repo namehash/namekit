@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import React from "react";
 import useSWR from "swr";
 import {
@@ -10,6 +11,7 @@ import cc from "classcat";
 
 import { Shield as ShieldIcon } from "../Report/Shield";
 import { Tooltip } from "../Tooltip/Tooltip";
+import { ShieldError } from "./Error";
 
 function textColor(rating: Rating) {
   switch (rating) {
@@ -30,9 +32,11 @@ function textColor(rating: Rating) {
 
 type ShieldProps = {
   name?: string;
+  children?: ReactNode;
+  size?: "small" | "medium" | "large" | "micro";
 };
 
-export const Shield = ({ name }: ShieldProps) => {
+export const Shield = ({ name, children, size }: ShieldProps) => {
   if (!name) return null;
 
   const { data, error, isLoading } = useSWR<BulkConsolidatedNameGuardReport>(
@@ -47,9 +51,13 @@ export const Shield = ({ name }: ShieldProps) => {
       <ShieldIcon
         status={isLoading ? "info" : result.rating}
         className={isLoading && "animate-pulse"}
-        size="small"
+        size={size}
       />
     );
+  }
+
+  if (error) {
+    return <ShieldError size={size}>{children}</ShieldError>;
   }
 
   const textClass = cc(["font-semibold mb-1", textColor(result.rating)]);
@@ -57,11 +65,11 @@ export const Shield = ({ name }: ShieldProps) => {
   return (
     <Tooltip
       trigger={
-        <ShieldIcon status={isLoading ? "info" : result.rating} size="small" />
+        <ShieldIcon status={isLoading ? "info" : result.rating} size={size} />
       }
     >
       <div className="hidden md:flex items-start space-x-3 py-2.5 min-w-[300px]">
-        <ShieldIcon status={isLoading ? "info" : result.rating} size="small" />
+        <ShieldIcon status={isLoading ? "info" : result.rating} size={size} />
 
         <div className="flex-1">
           <div className="flex items-center justify-between">
@@ -74,6 +82,7 @@ export const Shield = ({ name }: ShieldProps) => {
             )}
           </div>
           <div className="text-sm text-white">{result.subtitle}</div>
+          {children}
         </div>
       </div>
     </Tooltip>

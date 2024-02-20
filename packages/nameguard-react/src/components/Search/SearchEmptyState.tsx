@@ -117,9 +117,7 @@ export const SearchEmptyState = () => {
               </div>
             )}
             {isLoading &&
-              examples.map((e, index) => (
-                <NameBadge placeholder={e} key={index} />
-              ))}
+              examples.map((e, index) => <NameBadge name={e} key={index} />)}
             {data?.results?.map((report, index) => (
               <NameBadge
                 key={index}
