@@ -89,16 +89,16 @@ See the [NameGuard Python README](./api/README.md) for more details.
 
 5. **Typing Difficulty**: Detects names that are difficult to type on some keyboards. Example: [`żółć.eth`](https://nameguard.io/inspect/żółć.eth)
 
-6. **Mixed Scripts**: Detects names that contain characters from multiple scripts or alphabets.
+6. **Mixed Scripts**: Detects names that contain characters from multiple scripts or alphabets. Example: [`あア.eth`](https://www.nameguard.io/inspect/あア.eth)
 
 7. **Name Wrapper**: Checks if the name is supported by the new ENS Name Wrapper. Example: [`abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd.eth`](https://nameguard.io/inspect/abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd.eth)
 
 8. **ENSIP-15**: Checks if the name is normalized according to ENSIP-15. Example: [`bitсoin.eth`](https://nameguard.io/inspect/bitсoin.eth)
 
-9. **Punycode**: Checks if the name is compatible with Punycode encoding.
+9. **Punycode**: Checks if the name is compatible with Punycode encoding. Example: [`ab--abc.eth`](https://www.nameguard.io/inspect/ab--abc.eth)
 
 10. **Unknown Labels**: Checks if the name contains unknown labels. Example: [`[5bc926fc40cc7c49e0df6dddf26e4dc7b9d6d32f4a55d4f0670320dbf414afd2].byongdok.eth`](https://nameguard.io/inspect/[5bc926fc40cc7c49e0df6dddf26e4dc7b9d6d32f4a55d4f0670320dbf414afd2].byongdok.eth)
 
-11. **Decentralized Name**: Checks if the name is decentralized (unruggable).
+11. **Decentralized Name**: Checks if the name is decentralized (unruggable). Example: [`example.com`](https://www.nameguard.io/inspect/example.com)
 
-12. **NameWrapper fuses**: Checks that the NameWrapper configuration of a name is safe.
+13. **NameWrapper fuses**: Checks that the NameWrapper configuration of a name is safe.
