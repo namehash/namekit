@@ -13,3 +13,5 @@ export { Shield as ShieldIcon } from "./components/Report/Shield";
 export { LoadingIcon as LoadingShield } from "./components/icons/Loading";
 
 import "@namehash/ens-webfont";
+
+import "./styles.css";
