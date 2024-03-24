@@ -1,5 +1,17 @@
 # @namehash/nameguard-react
 
+## Install
+
+```bash
+npm i @namehash/nameguard-react
+```
+
+Now add the following to your existing css file:
+
+```css
+@import "@namehash/nameguard-react";
+```
+
 ## Usage
 
 These components can be used to interface with NameGuard with React.
