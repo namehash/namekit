@@ -102,3 +102,9 @@ See the [NameGuard Python README](./api/README.md) for more details.
 11. **Decentralized Name**: Checks if the name is decentralized (unruggable). Example: [`example.com`](https://www.nameguard.io/inspect/example.com)
 
 13. **NameWrapper fuses**: Checks that the NameWrapper configuration of a name is safe.
+
+## License
+
+Licensed under the MIT License, Copyright © 2023-present [NameHash Labs](https://namehashlabs.org).
+
+See [LICENSE](./LICENSE) for more information.
