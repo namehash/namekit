@@ -315,8 +315,18 @@ def test_inspect_namehash_get(
             'unknown',
             '🥛.[2e8eaa68c7e128861299162323c29c29672f5c094aceaf22d9c0935e4bbd3f85].[a64d2b5a93eda272d27734cc2fb8d1c468562e279f1e97e759eea1a5a410f8e3].👽.enspunks.eth',
         ),
-        ('0x1bc53f6413409d078ec18a29b17f981eafab341598a4e970ac9efab7d29258af', 'unnormalized', '[zzz].eth'),
-        ('0X1Bc53f6413409d078ec18a29b17f981eafab341598a4e970ac9efab7d29258af', 'unnormalized', '[zzz].eth'),
+        pytest.param(
+            '0x1bc53f6413409d078ec18a29b17f981eafab341598a4e970ac9efab7d29258af',
+            'unnormalized',
+            '[zzz].eth',
+            marks=pytest.mark.xfail(not pytest.use_monkeypatch, reason='Subgraph stopped resolving this namehash'),
+        ),
+        pytest.param(
+            '0X1Bc53f6413409d078ec18a29b17f981eafab341598a4e970ac9efab7d29258af',
+            'unnormalized',
+            '[zzz].eth',
+            marks=pytest.mark.xfail(not pytest.use_monkeypatch, reason='Subgraph stopped resolving this namehash'),
+        ),
         # uppercase hex
     ],
 )
@@ -439,6 +449,7 @@ def test_inspect_namehash_invalid_namehash(test_client, namehash, expected_reaso
 
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
+@pytest.mark.xfail(not pytest.use_monkeypatch, reason='Subgraph stopped resolving this namehash')
 def test_inspect_namehash_mismatch_error(test_client):
     network_name = 'mainnet'
     # todo: how to find registered namehash with null bytes inside?
