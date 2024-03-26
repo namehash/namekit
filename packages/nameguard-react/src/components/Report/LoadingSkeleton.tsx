@@ -3,7 +3,7 @@ import React from "react";
 import { Shield } from "./Shield";
 import { ReportFormattedDisplayName } from "./ReportFormattedName";
 import { ReportChangesApplied } from "./ReportChangesApplied";
-import { ParsedName } from "@namehash/nameparser";
+import { ParsedName } from "@namehash/ens-utils";
 
 type LoadingSkeletonProps = {
   parsedName: ParsedName;

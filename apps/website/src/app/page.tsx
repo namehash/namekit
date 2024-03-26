@@ -829,7 +829,7 @@ function RoadMap() {
           Created a{" "}
           <a
             className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
-            href="https://github.com/namehash/nameguard/tree/main/packages/nameparser"
+            href="https://github.com/namehash/ens-utils/blob/main/README.md"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -1584,7 +1584,7 @@ function DevelopersSection() {
           <GithubIconDevelopers />
         </div>
       ),
-      link: "https://github.com/namehash/nameguard/tree/main/packages/nameparser",
+      link: "https://github.com/namehash/ens-utils/blob/main/README.md",
     },
     {
       header: (

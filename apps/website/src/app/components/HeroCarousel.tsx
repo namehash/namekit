@@ -1,5 +1,5 @@
 import { nameguard } from "@namehash/nameguard";
-import { parseName } from "@namehash/nameparser";
+import { parseName } from "@namehash/ens-utils";
 
 import { HeroNameBadge } from "./HeroNameBadge";
 

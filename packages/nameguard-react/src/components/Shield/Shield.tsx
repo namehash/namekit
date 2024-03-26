@@ -6,7 +6,7 @@ import {
   type Rating,
   type BulkConsolidatedNameGuardReport,
 } from "@namehash/nameguard";
-import { parseName } from "@namehash/nameparser";
+import { parseName } from "@namehash/ens-utils";
 import cc from "classcat";
 
 import { Shield as ShieldIcon } from "../Report/Shield";

@@ -1,7 +1,7 @@
 import React, { Fragment, useMemo } from "react";
 import useSWR from "swr";
 import { type NameGuardReport, nameguard } from "@namehash/nameguard";
-import { parseName } from "@namehash/nameparser";
+import { parseName } from "@namehash/ens-utils";
 import { Toaster } from "sonner";
 
 import { type Settings } from "../../stores/settings";

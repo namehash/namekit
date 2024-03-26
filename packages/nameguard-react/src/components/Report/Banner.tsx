@@ -1,7 +1,7 @@
 import React from "react";
 import cc from "classcat";
 import type { NameGuardReport, Rating } from "@namehash/nameguard";
-import type { ParsedName } from "@namehash/nameparser";
+import type { ParsedName } from "@namehash/ens-utils";
 
 import { Shield } from "./Shield";
 import { RatedBox } from "../RatedBox/RatedBox";
