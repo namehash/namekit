@@ -947,7 +947,7 @@ function RoadMap() {
     {
       stageOfCompletion: "launched",
       headerText: "Cross-chain Support",
-      commentSentences: ["Integrated mainnet, goerli, and sepolia."],
+      commentSentences: ["Integrated mainnet, and sepolia."],
     },
     {
       stageOfCompletion: "launched",
