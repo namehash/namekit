@@ -126,7 +126,6 @@ class NameGuard:
         self.ns = {}
         for network_name, env_var in (
             (NetworkName.MAINNET, 'PROVIDER_URI_MAINNET'),
-            (NetworkName.GOERLI, 'PROVIDER_URI_GOERLI'),
             (NetworkName.SEPOLIA, 'PROVIDER_URI_SEPOLIA'),
         ):
             if os.environ.get(env_var) is None:

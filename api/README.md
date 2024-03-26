@@ -25,7 +25,6 @@ NameGuard uses the specified Provider endpoint (e.g. Alchemy, Infura, your own E
 
 ```bash
 export PROVIDER_URI_MAINNET=https://eth-mainnet.g.alchemy.com/v2/[YOUR_ALCHEMY_API_KEY]
-export PROVIDER_URI_GOERLI=https://eth-goerli.g.alchemy.com/v2/[YOUR_ALCHEMY_API_KEY]
 export PROVIDER_URI_SEPOLIA=https://eth-sepolia.g.alchemy.com/v2/[YOUR_ALCHEMY_API_KEY]
 ```
 

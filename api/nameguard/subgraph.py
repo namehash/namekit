@@ -15,7 +15,6 @@ MAX_MULTI_LABEL_LOOKUP = 256
 
 ENS_SUBGRAPH_URL = {
     NetworkName.MAINNET: 'https://api.thegraph.com/subgraphs/name/ensdomains/ens',
-    NetworkName.GOERLI: 'https://api.thegraph.com/subgraphs/name/ensdomains/ensgoerli',
     NetworkName.SEPOLIA: 'https://api.studio.thegraph.com/proxy/49574/enssepolia/version/latest',
 }
 
