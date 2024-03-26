@@ -1,5 +1,5 @@
 import { nameguard } from "@namehash/nameguard";
-import { parseName } from "@namehash/nameparser";
+import { parseName } from "@namehash/ens-utils";
 
 import { HeroNameBadge } from "./HeroNameBadge";
 
@@ -39,7 +39,7 @@ const examples = [
 export async function HeroCarousel() {
   const parsedNames = examples.map((n) => parseName(n));
   const data = await nameguard.bulkInspectNames(
-    parsedNames.map((n) => n.outputName.name)
+    parsedNames.map((n) => n.outputName.name),
   );
 
   return (

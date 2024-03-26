@@ -4,7 +4,7 @@ import {
   nameguard,
   type BulkConsolidatedNameGuardReport,
 } from "@namehash/nameguard";
-import { parseName } from "@namehash/nameparser";
+import { parseName } from "@namehash/ens-utils";
 
 import { NameBadge } from "../NameBadge/NameBadge";
 import { useSearchStore } from "../../stores/search";
@@ -44,7 +44,7 @@ export const SearchEmptyState = () => {
       revalidateIfStale: false,
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
-    }
+    },
   );
 
   useEffect(() => {

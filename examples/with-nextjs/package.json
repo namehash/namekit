@@ -12,7 +12,6 @@
     "@headlessui-float/react": "0.11.4",
     "@headlessui/react": "1.7.17",
     "@namehash/nameguard": "^0.0.12",
-    "@namehash/nameparser": "latest",
     "classcat": "5.0.4",
     "next": "14.0.2",
     "react": "^18",

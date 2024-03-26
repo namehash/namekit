@@ -67,7 +67,7 @@ Check if an NFT is associated with an authentic ".eth" name:
 ```ts
 const fakeNameCheckResult = await nameguard.fakeEthNameCheck(
   contractAddress,
-  tokenId
+  tokenId,
 );
 ```
 

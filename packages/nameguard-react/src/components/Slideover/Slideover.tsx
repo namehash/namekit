@@ -61,7 +61,7 @@ export const Slideover = forwardRef(
         </div>
       </Transition.Root>
     );
-  }
+  },
 );
 
 Slideover.displayName = "Slideover";

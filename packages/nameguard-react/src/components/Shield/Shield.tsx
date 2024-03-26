@@ -6,7 +6,7 @@ import {
   type Rating,
   type BulkConsolidatedNameGuardReport,
 } from "@namehash/nameguard";
-import { parseName } from "@namehash/nameparser";
+import { parseName } from "@namehash/ens-utils";
 import cc from "classcat";
 
 import { Shield as ShieldIcon } from "../Report/Shield";
@@ -41,7 +41,7 @@ export const Shield = ({ name, children, size }: ShieldProps) => {
 
   const { data, error, isLoading } = useSWR<BulkConsolidatedNameGuardReport>(
     name,
-    (n: string) => nameguard.bulkInspectNames([parseName(n).outputName.name])
+    (n: string) => nameguard.bulkInspectNames([parseName(n).outputName.name]),
   );
 
   const result = data?.results[0];

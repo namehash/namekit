@@ -1,7 +1,7 @@
 import React, { Fragment, useMemo } from "react";
 import useSWR from "swr";
 import { type NameGuardReport, nameguard } from "@namehash/nameguard";
-import { parseName } from "@namehash/nameparser";
+import { parseName } from "@namehash/ens-utils";
 import { Toaster } from "sonner";
 
 import { type Settings } from "../../stores/settings";
@@ -48,11 +48,11 @@ export const Report = ({
 
   const outsideChatClickRef = useOutsideClick(
     store.closeChatModal,
-    store.isChatModalOpen
+    store.isChatModalOpen,
   );
   const outsideGraphemeClickRef = useOutsideClick(
     closeAllGraphemeModals,
-    isGraphemeModalOpen
+    isGraphemeModalOpen,
   );
 
   const parsedName = useMemo(() => {
@@ -72,7 +72,7 @@ export const Report = ({
       revalidateIfStale: false,
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
-    }
+    },
   );
 
   const externalLinks = [
