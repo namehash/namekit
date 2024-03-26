@@ -49,7 +49,7 @@ jobs:
           cp ../LICENSE .
           npm install -g serverless
           npm install serverless-prune-plugin
-          serverless deploy --stage prod --param="PROVIDER_URI_GOERLI=${{secrets.PROVIDER_URI_GOERLI}}" --param="PROVIDER_URI_MAINNET=${{secrets.PROVIDER_URI_MAINNET}}" --param="PROVIDER_URI_SEPOLIA=${{secrets.PROVIDER_URI_SEPOLIA}}"
+          serverless deploy --stage prod --param="PROVIDER_URI_MAINNET=${{secrets.PROVIDER_URI_MAINNET}}" --param="PROVIDER_URI_SEPOLIA=${{secrets.PROVIDER_URI_SEPOLIA}}"
         working-directory: api
 
       - name: Delete old images from ECR

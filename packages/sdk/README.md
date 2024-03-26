@@ -111,6 +111,6 @@ import { createClient } from "@namehash/nameguard";
 
 const nameguard = createClient({
   url: "...",
-  network: "goerli",
+  network: "sepolia",
 });
 ```

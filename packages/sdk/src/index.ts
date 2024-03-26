@@ -44,7 +44,7 @@ export type GraphemeNormalization =
  * when inspecting a namehash for a name with labels that are not known to the ENS Subgraph on a
  * particular network.
  */
-export type Network = "mainnet" | "goerli" | "sepolia";
+export type Network = "mainnet" | "sepolia";
 
 /** The type of a check that NameGuard performed. */
 export type CheckType =

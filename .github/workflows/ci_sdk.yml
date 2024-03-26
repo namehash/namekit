@@ -39,7 +39,6 @@ jobs:
         working-directory: ./api
         env:
           PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
-          PROVIDER_URI_GOERLI: ${{ secrets.PROVIDER_URI_GOERLI }}
           PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}
         run: |
           # "&" to run server in the background 
