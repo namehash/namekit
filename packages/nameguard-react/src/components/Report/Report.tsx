@@ -48,11 +48,11 @@ export const Report = ({
 
   const outsideChatClickRef = useOutsideClick(
     store.closeChatModal,
-    store.isChatModalOpen
+    store.isChatModalOpen,
   );
   const outsideGraphemeClickRef = useOutsideClick(
     closeAllGraphemeModals,
-    isGraphemeModalOpen
+    isGraphemeModalOpen,
   );
 
   const parsedName = useMemo(() => {
@@ -72,7 +72,7 @@ export const Report = ({
       revalidateIfStale: false,
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
-    }
+    },
   );
 
   const externalLinks = [

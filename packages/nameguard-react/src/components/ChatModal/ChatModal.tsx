@@ -65,5 +65,5 @@ export const ChatModal = forwardRef(
         </div>
       </Slideover>
     );
-  }
+  },
 );

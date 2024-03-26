@@ -17,7 +17,7 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
 
   const { data, isLoading } = useSWR<GraphemeGuardReport>(
     currentGrapheme,
-    (g: string) => nameguard.inspectGrapheme(g)
+    (g: string) => nameguard.inspectGrapheme(g),
   );
 
   const totalCodepoints = data?.codepoints?.length ?? 0;

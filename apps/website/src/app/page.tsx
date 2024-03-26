@@ -1111,7 +1111,7 @@ function RoadMap() {
                   className={classNames(
                     idx === roadMapElements.length - 1 ? "h-4/5" : "h-full",
                     "-bottom-6",
-                    "absolute left-0 top-0 flex w-6 justify-center mt-2"
+                    "absolute left-0 top-0 flex w-6 justify-center mt-2",
                   )}
                 >
                   <div
@@ -1160,7 +1160,7 @@ function RoadMap() {
                           >
                             {sentence}
                           </li>
-                        )
+                        ),
                       )}
                     </ul>
                   </div>
