@@ -11,9 +11,12 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Ruff Check
+        with:
+          version: 0.1.8
         uses: chartboost/ruff-action@v1
 
       - name: Ruff Format
         uses: chartboost/ruff-action@v1
         with:
+          version: 0.1.8
           args: "format --check"
