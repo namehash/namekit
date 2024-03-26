@@ -245,11 +245,12 @@ async def test_check_skip_font_support(nameguard: NameGuard):
             Normalization.UNNORMALIZED,
             Normalization.NORMALIZED,
         ),  # nick.eth  uppercase hex
-        (
+        pytest.param(
             '[291aa4f6b79b45c2da078242837f39c773527f1bdb269cc37f1aba8f72e308a8].eth',
             Normalization.UNNORMALIZED,
             Normalization.UNNORMALIZED,
             Normalization.NORMALIZED,
+            marks=pytest.mark.xfail(not pytest.use_monkeypatch, reason='Subgraph stopped resolving this labelhash'),
         ),  # [zzz].eth
         (
             '[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth',
