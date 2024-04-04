@@ -69,12 +69,13 @@ export type CheckType =
   | "punycode_compatible_name" /** A name is compatible with Punycode. */;
 
 /** The resulting status code of a check that NameGuard performed. */
-export type CheckResultCode =
-  | "skip" /** `skip`: This check was skipped because it was not applicable. */
-  | "info" /** `info`: This check is informational only. */
-  | "pass" /** `pass`: This check passed. */
-  | "warn" /** `warn`: This check failed, this is a minor issue. */
-  | "alert" /** `alert`: This check failed, this is a major issue. */;
+export enum CheckResultCode {
+  "skip" /** `skip`: This check was skipped because it was not applicable. */,
+  "info" /** `info`: This check is informational only. */,
+  "pass" /** `pass`: This check passed. */,
+  "warn" /** `warn`: This check failed, this is a minor issue. */,
+  "alert" /** `alert`: This check failed, this is a major issue. */,
+}
 
 /**
  * The consolidated rating that NameGuard places on a name/label/grapheme.
