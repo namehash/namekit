@@ -38,6 +38,9 @@ importers:
       '@namehash/nameguard-react':
         specifier: workspace:*
         version: link:../../packages/nameguard-react
+      '@namehash/utils':
+        specifier: 0.0.1
+        version: 0.0.1
       '@tailwindcss/forms':
         specifier: 0.5.6
         version: 0.5.6(tailwindcss@3.4.1)
@@ -786,6 +789,10 @@ packages:
       '@ethersproject/hash': 5.7.0
       date-fns: 3.3.1
       decimal.js: 10.4.3
+    dev: false
+
+  /@namehash/utils@0.0.1:
+    resolution: {integrity: sha512-7ZJhx2ZVaLnHTdSxxw/PlyYjQiP0yvaFaLTPKjm1+nHzAlqbeMWhYUSGdLlZvRCCaiywuw2PzAuzTEwgzPHOZw==}
     dev: false
 
   /@next/env@14.1.4:
