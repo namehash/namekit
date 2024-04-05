@@ -15,14 +15,17 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 
-const title = "NameGuard - Protect your community with NameGuard for ENS";
+const title = "Protect your community with NameGuard for ENS";
 const description =
   "Guard your users from heartbreak and encourage best practice usage of ENS.";
 
 export const metadata: Metadata = {
   ...NamehashMetadata.defaultMetdata,
   metadataBase: new URL("https://nameguard.io"),
-  title,
+  title: {
+    template: "NameGuard - %s",
+    default: title,
+  },
   description,
   keywords: ["nameguard", "normalization", "ens", "web3", "eth"],
   icons: [

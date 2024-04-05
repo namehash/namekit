@@ -16,12 +16,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const decodedName = decodeURIComponent(name);
 
   return {
-    title: `${decodedName} - NameGuard Report`,
+    title: `Report for ${decodedName}`,
     twitter: {
-      title: `${decodedName} - NameGuard Report`,
+      title: `Report for ${decodedName}`,
     },
     openGraph: {
-      title: `${decodedName} - NameGuard Report`,
+      title: `Report for ${decodedName}`,
     },
   };
 }
