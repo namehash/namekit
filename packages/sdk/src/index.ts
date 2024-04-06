@@ -12,9 +12,9 @@ const ETH_TLD = "eth";
  * A name is `normalized` if and only if all of its labels are `normalized`.
  */
 export enum Normalization {
-  normalized /** `normalized`: The name or label is normalized. */,
-  unnormalized /** `unnormalized`: The name or label is not normalized. */,
-  unknown /** `unknown`: The name or label is unknown because it cannot be looked up from its hash. */,
+  normalized = "normalized" /** `normalized`: The name or label is normalized. */,
+  unnormalized = "unnormalized" /** `unnormalized`: The name or label is not normalized. */,
+  unknown = "unknown" /** `unknown`: The name or label is unknown because it cannot be looked up from its hash. */,
 }
 
 /**
@@ -70,11 +70,11 @@ export type CheckType =
 
 /** The resulting status code of a check that NameGuard performed. */
 export enum CheckResultCode {
-  "skip" /** `skip`: This check was skipped because it was not applicable. */,
-  "info" /** `info`: This check is informational only. */,
-  "pass" /** `pass`: This check passed. */,
-  "warn" /** `warn`: This check failed, this is a minor issue. */,
-  "alert" /** `alert`: This check failed, this is a major issue. */,
+  skip = "skip" /** `skip`: This check was skipped because it was not applicable. */,
+  info = "info" /** `info`: This check is informational only. */,
+  pass = "pass" /** `pass`: This check passed. */,
+  warn = "warn" /** `warn`: This check failed, this is a minor issue. */,
+  alert = "alert" /** `alert`: This check failed, this is a major issue. */,
 }
 
 /**
@@ -89,9 +89,9 @@ export enum CheckResultCode {
  * The `Rating` of a name considers all `CheckResult` values for the name and all of its labels and graphemes.
  */
 export enum Rating {
-  "pass" /** `pass`: All checks passed. */,
-  "warn" /** `warn`: At least one check failed with a `WARN` status but no check failed with an `ALERT` status. */,
-  "alert" /** `alert`: At least one check failed with an `ALERT` status. */,
+  pass = "pass" /** `pass`: All checks passed. */,
+  warn = "warn" /** `warn`: At least one check failed with a `WARN` status but no check failed with an `ALERT` status. */,
+  alert = "alert" /** `alert`: At least one check failed with an `ALERT` status. */,
 }
 
 /**
