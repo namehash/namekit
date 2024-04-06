@@ -2,6 +2,7 @@ import React from "react";
 import { ShieldExclamationIcon } from "@heroicons/react/20/solid";
 
 import { Check } from "./Check";
+import { CheckResultCode } from "@namehash/nameguard";
 
 type Props = {
   title: string;
@@ -25,7 +26,7 @@ export function NoGraphemesWarning({ title, description }: Props) {
 
         <div className="md:col-span-4 flex justify-between space-x-3 w-full">
           <div className="flex flex-row-reverse md:flex-row items-center justify-between md:justify-start space-y-1 md:space-y-0 md:space-x-2 flex-1 pr-6 md:pr-12">
-            <Check code="alert" />
+            <Check code={CheckResultCode.alert} />
             <p className="md:font-medium text-gray-500 md:text-black text-sm w-full">
               {description}
             </p>

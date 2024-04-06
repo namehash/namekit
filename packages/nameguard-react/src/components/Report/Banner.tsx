@@ -1,6 +1,6 @@
 import React from "react";
 import cc from "classcat";
-import type { NameGuardReport, Rating } from "@namehash/nameguard";
+import { type NameGuardReport, Rating } from "@namehash/nameguard";
 import type { ParsedName } from "@namehash/ens-utils";
 
 import { Shield } from "./Shield";
@@ -10,13 +10,13 @@ import { ReportFormattedDisplayName } from "./ReportFormattedName";
 
 function textColor(rating: Rating) {
   switch (rating) {
-    case "alert": {
+    case Rating.alert: {
       return "text-red-700";
     }
-    case "pass": {
+    case Rating.pass: {
       return "text-emerald-600";
     }
-    case "warn": {
+    case Rating.warn: {
       return "text-yellow-600";
     }
     default: {

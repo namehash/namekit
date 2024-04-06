@@ -31,11 +31,11 @@ type Props = {
 };
 
 const STATUS_TO_BASE_NAME: { [key in CheckResultCode]: string } = {
-  alert: "AlertShield",
-  pass: "PassShield",
-  warn: "WarnShield",
-  info: "LoadingShield",
-  skip: "ErrorShield",
+  [CheckResultCode.alert]: "AlertShield",
+  [CheckResultCode.pass]: "PassShield",
+  [CheckResultCode.warn]: "WarnShield",
+  [CheckResultCode.info]: "LoadingShield",
+  [CheckResultCode.skip]: "ErrorShield",
 };
 
 const getComponent = (status: CheckResultCode, size: Size) => {

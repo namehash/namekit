@@ -33,7 +33,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/ens-webfont
       '@namehash/nameguard':
-        specifier: workspace:*
+        specifier: latest
         version: link:../../packages/sdk
       '@namehash/nameguard-react':
         specifier: workspace:*
@@ -947,6 +947,12 @@ packages:
       undici-types: 5.26.5
     dev: true
 
+  /@types/node@20.12.5:
+    resolution: {integrity: sha512-BD+BjQ9LS/D8ST9p5uqBxghlN+S42iuNxjsUGjeZobe/ciXzk2qb1B6IXc6AnRLS+yFJRpN2IPEHMzwspfDJNw==}
+    dependencies:
+      undici-types: 5.26.5
+    dev: true
+
   /@types/node@20.6.2:
     resolution: {integrity: sha512-Y+/1vGBHV/cYk6OI1Na/LHzwnlNCAfU3ZNGrc1LdRe/LAIbdDPTTv/HU3M7yXN448aTVDq3eKRm2cg7iKLb8gw==}
     dev: true
@@ -958,7 +964,7 @@ packages:
   /@types/react-dom@18.2.22:
     resolution: {integrity: sha512-fHkBXPeNtfvri6gdsMYyW+dW7RXFo6Ad09nLFK0VQWR7yGLai/Cyvyj696gbwYvBnhGtevUG9cET0pmUbMtoPQ==}
     dependencies:
-      '@types/react': 18.2.71
+      '@types/react': 18.2.74
     dev: true
 
   /@types/react@18.2.71:
@@ -966,6 +972,13 @@ packages:
     dependencies:
       '@types/prop-types': 15.7.8
       '@types/scheduler': 0.16.4
+      csstype: 3.1.2
+    dev: true
+
+  /@types/react@18.2.74:
+    resolution: {integrity: sha512-9AEqNZZyBx8OdZpxzQlaFEVCSFUM2YXJH46yPOiOpm078k6ZLOCcuAzGum/zK8YBwY+dbahVNbHrbgrAwIRlqw==}
+    dependencies:
+      '@types/prop-types': 15.7.8
       csstype: 3.1.2
     dev: true
 
@@ -3887,7 +3900,7 @@ packages:
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
-  /vite-node@0.34.5(@types/node@20.11.30):
+  /vite-node@0.34.5(@types/node@20.12.5):
     resolution: {integrity: sha512-RNZ+DwbCvDoI5CbCSQSyRyzDTfFvFauvMs6Yq4ObJROKlIKuat1KgSX/Ako5rlDMfVCyMcpMRMTkJBxd6z8YRA==}
     engines: {node: '>=v14.18.0'}
     hasBin: true
@@ -3897,7 +3910,7 @@ packages:
       mlly: 1.4.2
       pathe: 1.1.1
       picocolors: 1.0.0
-      vite: 4.4.9(@types/node@20.11.30)
+      vite: 4.4.9(@types/node@20.12.5)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -3909,7 +3922,7 @@ packages:
       - terser
     dev: true
 
-  /vite@4.4.9(@types/node@20.11.30):
+  /vite@4.4.9(@types/node@20.12.5):
     resolution: {integrity: sha512-2mbUn2LlUmNASWwSCNSJ/EG2HuSRTnVNaydp6vMCm5VIqJsjMfbIWtbH2kDuwUVW5mMUKKZvGPX/rqeqVvv1XA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
@@ -3937,7 +3950,7 @@ packages:
       terser:
         optional: true
     dependencies:
-      '@types/node': 20.11.30
+      '@types/node': 20.12.5
       esbuild: 0.18.20
       postcss: 8.4.38
       rollup: 3.29.4
@@ -3978,7 +3991,7 @@ packages:
     dependencies:
       '@types/chai': 4.3.6
       '@types/chai-subset': 1.3.3
-      '@types/node': 20.11.30
+      '@types/node': 20.12.5
       '@vitest/expect': 0.34.5
       '@vitest/runner': 0.34.5
       '@vitest/snapshot': 0.34.5
@@ -3997,8 +4010,8 @@ packages:
       strip-literal: 1.3.0
       tinybench: 2.5.1
       tinypool: 0.7.0
-      vite: 4.4.9(@types/node@20.11.30)
-      vite-node: 0.34.5(@types/node@20.11.30)
+      vite: 4.4.9(@types/node@20.12.5)
+      vite-node: 0.34.5(@types/node@20.12.5)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less
