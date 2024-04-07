@@ -1,16 +1,16 @@
 import React, { ReactNode } from "react";
 import cc from "classcat";
-import type { Rating } from "@namehash/nameguard";
+import { Rating } from "@namehash/nameguard";
 
 function borderColor(rating: Rating) {
   switch (rating) {
-    case "alert": {
+    case Rating.alert: {
       return "border-red-200";
     }
-    case "pass": {
+    case Rating.pass: {
       return "border-green-200";
     }
-    case "warn": {
+    case Rating.warn: {
       return "border-yellow-200";
     }
     default: {
@@ -21,13 +21,13 @@ function borderColor(rating: Rating) {
 
 function shadowColor(rating: Rating) {
   switch (rating) {
-    case "alert": {
+    case Rating.alert: {
       return "shadow-red-50";
     }
-    case "pass": {
+    case Rating.pass: {
       return "shadow-green-50";
     }
-    case "warn": {
+    case Rating.warn: {
       return "shadow-yellow-50";
     }
     default: {

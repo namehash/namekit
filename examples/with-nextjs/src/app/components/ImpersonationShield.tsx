@@ -1,6 +1,6 @@
 "use client";
 
-import type { SecurePrimaryNameResult, Rating } from "@namehash/nameguard";
+import { type SecurePrimaryNameResult, Rating } from "@namehash/nameguard";
 import cc from "classcat";
 
 import { Tooltip } from "./Tooltip";
@@ -9,13 +9,13 @@ import { WarnIcon } from "./icons/Warn";
 
 function textColor(rating?: Rating) {
   switch (rating) {
-    case "alert": {
+    case Rating.alert: {
       return "text-red-700";
     }
-    case "pass": {
+    case Rating.pass: {
       return "text-emerald-600";
     }
-    case "warn": {
+    case Rating.warn: {
       return "text-yellow-600";
     }
     default: {

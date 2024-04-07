@@ -1,5 +1,5 @@
 import React, { type ReactNode } from "react";
-import type { ConsolidatedNameGuardReport, Rating } from "@namehash/nameguard";
+import { ConsolidatedNameGuardReport, Rating } from "@namehash/nameguard";
 import cc from "classcat";
 
 import { Tooltip } from "../Tooltip/Tooltip";
@@ -7,13 +7,13 @@ import { Shield } from "../Report/Shield";
 
 function textColor(rating?: Rating) {
   switch (rating) {
-    case "alert": {
+    case Rating.alert: {
       return "text-red-600";
     }
-    case "pass": {
+    case Rating.pass: {
       return "text-emerald-600";
     }
-    case "warn": {
+    case Rating.warn: {
       return "text-amber-500";
     }
     default: {

@@ -1,5 +1,8 @@
 import React, { type MouseEventHandler } from "react";
-import type { ConsolidatedNameGuardReport } from "@namehash/nameguard";
+import {
+  CheckResultCode,
+  type ConsolidatedNameGuardReport,
+} from "@namehash/nameguard";
 import cc from "classcat";
 
 import { NameShield } from "../NameShield";
@@ -59,7 +62,11 @@ export const NameBadge = ({ name, onClick, data, error }: NameBadgeProps) => {
         ) : (
           <span className="rounded-full h-2 w-16 bg-gray-200 animate-pulse"></span>
         )}
-        <Shield status="info" size="micro" className={cursorClass} />
+        <Shield
+          status={CheckResultCode.info}
+          size="micro"
+          className={cursorClass}
+        />
       </button>
     );
 

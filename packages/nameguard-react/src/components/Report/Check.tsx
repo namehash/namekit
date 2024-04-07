@@ -4,15 +4,15 @@ import { Tooltip } from "../Tooltip/Tooltip";
 
 function text(code: CheckResultCode) {
   switch (code) {
-    case "pass":
+    case CheckResultCode.pass:
       return "All Checks Passed";
-    case "warn":
+    case CheckResultCode.warn:
       return "Warning";
-    case "alert":
+    case CheckResultCode.alert:
       return "Alert";
-    case "info":
+    case CheckResultCode.info:
       return "Informational Notice";
-    case "skip":
+    case CheckResultCode.skip:
     default:
       return "Check Not Applicable";
   }
@@ -50,7 +50,7 @@ function icon(code: CheckResultCode): React.ReactNode {
           />
         </svg>
       );
-    case "alert":
+    case CheckResultCode.alert:
       return (
         <svg
           className="w-5 h-5 fill-current text-red-600 hover:text-red-700 transition cursor-pointer"

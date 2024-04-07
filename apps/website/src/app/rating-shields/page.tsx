@@ -1,5 +1,6 @@
 "use client";
 
+import { CheckResultCode, Normalization, Rating } from "@namehash/nameguard";
 import { Shield, ShieldIcon, NameBadge } from "@namehash/nameguard-react";
 
 export default function RatingShieldsPage() {
@@ -32,7 +33,7 @@ export default function RatingShieldsPage() {
           </div>
           <div className="flex items-center justify-center"></div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status="info" />
+            <ShieldIcon status={CheckResultCode.info} />
           </div>
         </div>
 
@@ -54,7 +55,7 @@ export default function RatingShieldsPage() {
           </div>
           <div className="flex items-center justify-center"></div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status="info" />
+            <ShieldIcon status={CheckResultCode.info} />
           </div>
         </div>
       </div>
@@ -68,13 +69,13 @@ export default function RatingShieldsPage() {
           <div className="flex items-center justify-center">
             <NameBadge
               data={{
-                rating: "pass",
+                rating: Rating.pass,
                 risk_count: 0,
                 highest_risk: null,
                 name: "lightwalker.eth",
                 namehash:
                   "0x5c1f4e4189d173a562af8d27771e2a1394ccbfa466f0e72b429dd317afce4c06",
-                normalization: "normalized",
+                normalization: Normalization.normalized,
                 title: "Looks Good",
                 subtitle: "All security checks passed!",
                 beautiful_name: "lightwalker.eth",
@@ -84,18 +85,18 @@ export default function RatingShieldsPage() {
           <div className="flex items-center justify-center">
             <NameBadge
               data={{
-                rating: "warn",
+                rating: Rating.warn,
                 risk_count: 3,
                 highest_risk: {
                   check: "confusables",
-                  status: "warn",
+                  status: CheckResultCode.warn,
                   message: "May be confusable",
                   check_name: "Character Recognition",
                 },
                 name: "culturecafé.eth",
                 namehash:
                   "0x633b4f6a64d539885d9b85c8730a0bc3479c6248f7a99cd2e302707f49c6d5a5",
-                normalization: "normalized",
+                normalization: Normalization.normalized,
                 title: "Some Risk",
                 subtitle: "Review risks before proceeding",
                 beautiful_name: "culturecafé.eth",
@@ -105,18 +106,18 @@ export default function RatingShieldsPage() {
           <div className="flex items-center justify-center">
             <NameBadge
               data={{
-                rating: "alert",
+                rating: Rating.alert,
                 risk_count: 3,
                 highest_risk: {
                   check: "invisible",
-                  status: "alert",
+                  status: CheckResultCode.alert,
                   message: "Contains invisible characters",
                   check_name: "Character Visibility",
                 },
                 name: "‍420.eth",
                 namehash:
                   "0x61ce4b1e75e224233d08821593eaa0615e29bd984bbd39fc2830257ceecfcb40",
-                normalization: "unnormalized",
+                normalization: Normalization.unnormalized,
                 title: "High Risk",
                 subtitle: "Better not to use this name",
                 beautiful_name: "",
@@ -138,13 +139,13 @@ export default function RatingShieldsPage() {
           <div className="flex items-center justify-center">
             <NameBadge
               data={{
-                rating: "pass",
+                rating: Rating.pass,
                 risk_count: 0,
                 highest_risk: null,
                 name: "lightwalker.eth",
                 namehash:
                   "0x5c1f4e4189d173a562af8d27771e2a1394ccbfa466f0e72b429dd317afce4c06",
-                normalization: "normalized",
+                normalization: Normalization.normalized,
                 title: "Looks Good",
                 subtitle: "All security checks passed!",
                 beautiful_name: "lightwalker.eth",
@@ -155,18 +156,18 @@ export default function RatingShieldsPage() {
           <div className="flex items-center justify-center">
             <NameBadge
               data={{
-                rating: "warn",
+                rating: Rating.warn,
                 risk_count: 3,
                 highest_risk: {
                   check: "confusables",
-                  status: "warn",
+                  status: CheckResultCode.warn,
                   message: "May be confusable",
                   check_name: "Character Recognition",
                 },
                 name: "culturecafé.eth",
                 namehash:
                   "0x633b4f6a64d539885d9b85c8730a0bc3479c6248f7a99cd2e302707f49c6d5a5",
-                normalization: "normalized",
+                normalization: Normalization.normalized,
                 title: "Some Risk",
                 subtitle: "Review risks before proceeding",
                 beautiful_name: "culturecafé.eth",
@@ -177,18 +178,18 @@ export default function RatingShieldsPage() {
           <div className="flex items-center justify-center">
             <NameBadge
               data={{
-                rating: "alert",
+                rating: Rating.alert,
                 risk_count: 3,
                 highest_risk: {
                   check: "invisible",
-                  status: "alert",
+                  status: CheckResultCode.alert,
                   message: "Contains invisible characters",
                   check_name: "Character Visibility",
                 },
                 name: "‍420.eth",
                 namehash:
                   "0x61ce4b1e75e224233d08821593eaa0615e29bd984bbd39fc2830257ceecfcb40",
-                normalization: "unnormalized",
+                normalization: Normalization.unnormalized,
                 title: "High Risk",
                 subtitle: "Better not to use this name",
                 beautiful_name: "",
@@ -216,19 +217,19 @@ export default function RatingShieldsPage() {
           </div>
 
           <div className="flex items-center justify-center">
-            <ShieldIcon status="pass" size="large" />
+            <ShieldIcon status={CheckResultCode.pass} size="large" />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status="warn" size="large" />
+            <ShieldIcon status={CheckResultCode.warn} size="large" />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status="alert" size="large" />
+            <ShieldIcon status={CheckResultCode.alert} size="large" />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status="skip" size="large" />
+            <ShieldIcon status={CheckResultCode.skip} size="large" />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status="info" size="large" />
+            <ShieldIcon status={CheckResultCode.info} size="large" />
           </div>
         </div>
 
@@ -238,19 +239,19 @@ export default function RatingShieldsPage() {
           </div>
 
           <div className="flex items-center justify-center">
-            <ShieldIcon status="pass" size="medium" />
+            <ShieldIcon status={CheckResultCode.pass} size="medium" />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status="warn" size="medium" />
+            <ShieldIcon status={CheckResultCode.warn} size="medium" />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status="alert" size="medium" />
+            <ShieldIcon status={CheckResultCode.alert} size="medium" />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status="skip" size="medium" />
+            <ShieldIcon status={CheckResultCode.skip} size="medium" />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status="info" size="medium" />
+            <ShieldIcon status={CheckResultCode.info} size="medium" />
           </div>
         </div>
 
@@ -260,19 +261,19 @@ export default function RatingShieldsPage() {
           </div>
 
           <div className="flex items-center justify-center">
-            <ShieldIcon status="pass" size="small" />
+            <ShieldIcon status={CheckResultCode.pass} size="small" />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status="warn" size="small" />
+            <ShieldIcon status={CheckResultCode.warn} size="small" />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status="alert" size="small" />
+            <ShieldIcon status={CheckResultCode.alert} size="small" />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status="skip" size="small" />
+            <ShieldIcon status={CheckResultCode.skip} size="small" />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status="info" size="small" />
+            <ShieldIcon status={CheckResultCode.info} size="small" />
           </div>
         </div>
 
@@ -282,19 +283,19 @@ export default function RatingShieldsPage() {
           </div>
 
           <div className="flex items-center justify-center">
-            <ShieldIcon status="pass" size="micro" />
+            <ShieldIcon status={CheckResultCode.pass} size="micro" />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status="warn" size="micro" />
+            <ShieldIcon status={CheckResultCode.warn} size="micro" />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status="alert" size="micro" />
+            <ShieldIcon status={CheckResultCode.alert} size="micro" />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status="skip" size="micro" />
+            <ShieldIcon status={CheckResultCode.skip} size="micro" />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status="info" size="micro" />
+            <ShieldIcon status={CheckResultCode.info} size="micro" />
           </div>
         </div>
       </div>

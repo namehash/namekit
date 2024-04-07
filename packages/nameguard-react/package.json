@@ -1,6 +1,6 @@
 {
   "name": "@namehash/nameguard-react",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch --clean=false",
@@ -28,7 +28,7 @@
     "@heroicons/react": "2.0.18",
     "@namehash/ens-utils": "latest",
     "@namehash/ens-webfont": "latest",
-    "@namehash/nameguard": "workspace:*",
+    "@namehash/nameguard": "latest",
     "classcat": "5.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
