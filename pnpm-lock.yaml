@@ -33,7 +33,7 @@ importers:
         specifier: workspace:*
         version: link:../../packages/ens-webfont
       '@namehash/nameguard':
-        specifier: latest
+        specifier: workspace:*
         version: link:../../packages/sdk
       '@namehash/nameguard-react':
         specifier: workspace:*
@@ -121,7 +121,7 @@ importers:
         specifier: latest
         version: link:../ens-webfont
       '@namehash/nameguard':
-        specifier: latest
+        specifier: workspace:*
         version: link:../sdk
       classcat:
         specifier: 5.0.4
