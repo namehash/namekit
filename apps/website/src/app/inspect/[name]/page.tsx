@@ -1,13 +1,32 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { nameguard } from "@namehash/nameguard";
 
 import { NGReport } from "@/app/components/NGReport";
 
-export default async function Namekit({
-  params,
-}: {
+type Props = {
   params: { name: string };
-}) {
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { name } = params;
+
+  if (!name) return notFound();
+
+  const decodedName = decodeURIComponent(name);
+
+  return {
+    title: `Report for ${decodedName}`,
+    twitter: {
+      title: `Report for ${decodedName}`,
+    },
+    openGraph: {
+      title: `Report for ${decodedName}`,
+    },
+  };
+}
+
+export default async function Namekit({ params }: Props) {
   const { name } = params;
 
   if (!name) return notFound();
