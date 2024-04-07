@@ -72,6 +72,7 @@ const title = "NameGuard - Protect your community with NameGuard for ENS";
 
 export const metadata: Metadata = {
   title,
+  keywords: ["nameguard", "normalization", "ens", "web3", "eth"],
 };
 
 export default function Home() {

@@ -27,7 +27,6 @@ export const metadata: Metadata = {
     default: title,
   },
   description,
-  keywords: ["nameguard", "normalization", "ens", "web3", "eth"],
   icons: [
     { rel: "icon", url: Favicon.src },
     { rel: "apple-touch-icon", url: AppleTouchIcon.src },
@@ -36,12 +35,18 @@ export const metadata: Metadata = {
     ...NamehashMetadata.defaultMetdata.openGraph,
     title,
     description,
-    images: "openGraph/og-image.png",
+    images: {
+      url: "openGraph/og-image.png",
+      alt: `NameGuard - ${title}`,
+    },
   },
   twitter: {
     ...NamehashMetadata.defaultMetdata.twitter,
     description,
-    images: "openGraph/og-image-twitter.png",
+    images: {
+      url: "openGraph/og-image-twitter.png",
+      alt: `NameGuard - ${title}`,
+    },
   },
 };
 
