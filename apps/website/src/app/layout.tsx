@@ -22,6 +22,9 @@ const description =
 export const metadata: Metadata = {
   ...NamehashMetadata.defaultMetdata,
   metadataBase: new URL("https://nameguard.io"),
+  alternates: {
+    canonical: "/",
+  },
   title: {
     template: "NameGuard - %s",
     default: title,
@@ -35,18 +38,10 @@ export const metadata: Metadata = {
     ...NamehashMetadata.defaultMetdata.openGraph,
     title,
     description,
-    images: {
-      url: "openGraph/og-image.png",
-      alt: `NameGuard - ${title}`,
-    },
   },
   twitter: {
     ...NamehashMetadata.defaultMetdata.twitter,
     description,
-    images: {
-      url: "openGraph/og-image-twitter.png",
-      alt: `NameGuard - ${title}`,
-    },
   },
 };
 
