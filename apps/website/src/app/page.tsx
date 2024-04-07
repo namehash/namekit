@@ -43,6 +43,7 @@ import { FileIcon } from "@/app/atoms/icons/FileIcon";
 import { FontIcon } from "@/app/atoms/icons/FontIcon";
 import { Hero } from "./components/Hero";
 import { NGSearch } from "./components/NGSearch";
+import { Metadata } from "next";
 
 const getSecurePrimaryName = `import { nameguard } from "@namehash/nameguard";
 
@@ -66,6 +67,13 @@ const result = await nameguard.inspectName(name);
 
 const names = ["abc.eth", "123.eth", "xyz.eth"];
 const results = await nameguard.bulkInspectNames(names);`;
+
+const title = "NameGuard - Protect your community with NameGuard for ENS";
+
+export const metadata: Metadata = {
+  title,
+  keywords: ["nameguard", "normalization", "ens", "web3", "eth"],
+};
 
 export default function Home() {
   return (
@@ -1111,7 +1119,7 @@ function RoadMap() {
                   className={classNames(
                     idx === roadMapElements.length - 1 ? "h-4/5" : "h-full",
                     "-bottom-6",
-                    "absolute left-0 top-0 flex w-6 justify-center mt-2",
+                    "absolute left-0 top-0 flex w-6 justify-center mt-2"
                   )}
                 >
                   <div
@@ -1160,7 +1168,7 @@ function RoadMap() {
                           >
                             {sentence}
                           </li>
-                        ),
+                        )
                       )}
                     </ul>
                   </div>
