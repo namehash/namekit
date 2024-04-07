@@ -121,7 +121,7 @@ importers:
         specifier: latest
         version: link:../ens-webfont
       '@namehash/nameguard':
-        specifier: workspace:*
+        specifier: latest
         version: link:../sdk
       classcat:
         specifier: 5.0.4
