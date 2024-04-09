@@ -26,14 +26,14 @@ type NameShieldProps = {
   data?: ConsolidatedNameGuardReport;
   children?: ReactNode;
   disableHover?: boolean;
-  size?: "small" | "medium" | "large" | "micro";
+  size?: ShieldSize;
 } & React.ComponentProps<typeof Shield>;
 
 export function NameShield({
   data,
   children,
   disableHover,
-  size = "small",
+  size = ShieldSize.small,
   ...props
 }: NameShieldProps) {
   if (!data) return null;

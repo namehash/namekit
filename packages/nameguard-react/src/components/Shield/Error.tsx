@@ -1,23 +1,28 @@
 import React, { type ReactNode } from "react";
 
-import { Shield as ShieldIcon } from "../Report/Shield";
+import { Shield as ShieldIcon, ShieldSize } from "../Report/Shield";
 import { Tooltip } from "../Tooltip/Tooltip";
+import { CheckResultCode } from "@namehash/nameguard";
 
 type ShieldErrorProps = {
   children?: ReactNode;
-  size?: "small" | "medium" | "large" | "micro";
+  size?: ShieldSize;
 } & React.ComponentProps<typeof ShieldIcon>;
 
 export const ShieldError = ({
   children,
-  size = "small",
+  size = ShieldSize.small,
   ...props
 }: ShieldErrorProps) => {
   return (
-    <Tooltip trigger={<ShieldIcon status="skip" size={size} {...props} />}>
+    <Tooltip
+      trigger={
+        <ShieldIcon status={CheckResultCode.skip} size={size} {...props} />
+      }
+    >
       <div className="flex items-start space-x-3 py-2.5 min-w-[300px] max-w-[300px]">
         <div className="mt-0.5">
-          <ShieldIcon status="skip" size="small" />
+          <ShieldIcon status={CheckResultCode.skip} size={ShieldSize.small} />
         </div>
 
         <div className="flex-1">
