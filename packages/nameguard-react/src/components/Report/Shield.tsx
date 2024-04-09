@@ -22,7 +22,7 @@ import { PassIcon as PassShieldMicro } from "../icons/Pass";
 import { LoadingIcon as LoadingShieldMicro } from "../icons/Loading";
 import { ErrorIcon as ErrorShieldMicro } from "../icons/Error";
 
-export enum Size {
+export enum ShieldSize {
   micro = "micro",
   small = "small",
   medium = "medium",
@@ -30,7 +30,7 @@ export enum Size {
 }
 
 type Props = {
-  size?: Size;
+  size?: ShieldSize;
   status: CheckResultCode;
   className?: string;
 };
@@ -43,7 +43,7 @@ const STATUS_TO_BASE_NAME: { [key in CheckResultCode]: string } = {
   [CheckResultCode.skip]: "ErrorShield",
 };
 
-const getComponent = (status: CheckResultCode, size: Size) => {
+const getComponent = (status: CheckResultCode, size: ShieldSize) => {
   const baseName = STATUS_TO_BASE_NAME[status];
   const componentName = `${baseName}${capitalizeFirstLetter(size)}`;
 
@@ -77,7 +77,11 @@ function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export const Shield = ({ status, size = Size.small, ...props }: Props) => {
+export const Shield = ({
+  status,
+  size = ShieldSize.small,
+  ...props
+}: Props) => {
   const Component = getComponent(status, size);
 
   return Component ? <Component {...props} /> : null;

@@ -6,7 +6,7 @@ import {
 import cc from "classcat";
 
 import { NameShield } from "../NameShield";
-import { Shield, Size } from "../Report/Shield";
+import { Shield, ShieldSize } from "../Report/Shield";
 import { ShieldError } from "../Shield/Error";
 
 type NameBadgeProps = {
@@ -63,7 +63,7 @@ export const NameBadge = ({ name, onClick, data, error }: NameBadgeProps) => {
           <span className="rounded-full h-2 w-16 bg-gray-200 animate-pulse"></span>
         )}
         <Shield
-          size={Size.micro}
+          size={ShieldSize.micro}
           className={cursorClass}
           status={CheckResultCode.info}
         />

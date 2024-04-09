@@ -3,7 +3,7 @@ import { ConsolidatedNameGuardReport, Rating } from "@namehash/nameguard";
 import cc from "classcat";
 
 import { Tooltip } from "../Tooltip/Tooltip";
-import { Shield, Size } from "../Report/Shield";
+import { Shield, ShieldSize } from "../Report/Shield";
 
 function textColor(rating?: Rating) {
   switch (rating) {
@@ -54,7 +54,7 @@ export function NameShield({
     <Tooltip trigger={<Shield status={rating} size={size} {...props} />}>
       <div className="flex items-start space-x-3 py-2.5 min-w-[300px] max-w-[300px]">
         <div className="mt-0.5">
-          <Shield status={rating} size={Size.small} />
+          <Shield status={rating} size={ShieldSize.small} />
         </div>
 
         <div className="flex-1">
