@@ -1,7 +1,12 @@
 "use client";
 
 import { CheckResultCode, Normalization, Rating } from "@namehash/nameguard";
-import { Shield, ShieldIcon, NameBadge } from "@namehash/nameguard-react";
+import {
+  Shield,
+  ShieldIcon,
+  NameBadge,
+  ShieldSize,
+} from "@namehash/nameguard-react";
 
 export default function RatingShieldsPage() {
   return (
@@ -217,19 +222,22 @@ export default function RatingShieldsPage() {
           </div>
 
           <div className="flex items-center justify-center">
-            <ShieldIcon status={CheckResultCode.pass} size="large" />
+            <ShieldIcon status={CheckResultCode.pass} size={ShieldSize.large} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={CheckResultCode.warn} size="large" />
+            <ShieldIcon status={CheckResultCode.warn} size={ShieldSize.large} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={CheckResultCode.alert} size="large" />
+            <ShieldIcon
+              status={CheckResultCode.alert}
+              size={ShieldSize.large}
+            />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={CheckResultCode.skip} size="large" />
+            <ShieldIcon status={CheckResultCode.skip} size={ShieldSize.large} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={CheckResultCode.info} size="large" />
+            <ShieldIcon status={CheckResultCode.info} size={ShieldSize.large} />
           </div>
         </div>
 
@@ -239,19 +247,34 @@ export default function RatingShieldsPage() {
           </div>
 
           <div className="flex items-center justify-center">
-            <ShieldIcon status={CheckResultCode.pass} size="medium" />
+            <ShieldIcon
+              status={CheckResultCode.pass}
+              size={ShieldSize.medium}
+            />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={CheckResultCode.warn} size="medium" />
+            <ShieldIcon
+              status={CheckResultCode.warn}
+              size={ShieldSize.medium}
+            />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={CheckResultCode.alert} size="medium" />
+            <ShieldIcon
+              status={CheckResultCode.alert}
+              size={ShieldSize.medium}
+            />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={CheckResultCode.skip} size="medium" />
+            <ShieldIcon
+              status={CheckResultCode.skip}
+              size={ShieldSize.medium}
+            />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={CheckResultCode.info} size="medium" />
+            <ShieldIcon
+              status={CheckResultCode.info}
+              size={ShieldSize.medium}
+            />
           </div>
         </div>
 
@@ -261,19 +284,22 @@ export default function RatingShieldsPage() {
           </div>
 
           <div className="flex items-center justify-center">
-            <ShieldIcon status={CheckResultCode.pass} size="small" />
+            <ShieldIcon status={CheckResultCode.pass} size={ShieldSize.small} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={CheckResultCode.warn} size="small" />
+            <ShieldIcon status={CheckResultCode.warn} size={ShieldSize.small} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={CheckResultCode.alert} size="small" />
+            <ShieldIcon
+              status={CheckResultCode.alert}
+              size={ShieldSize.small}
+            />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={CheckResultCode.skip} size="small" />
+            <ShieldIcon status={CheckResultCode.skip} size={ShieldSize.small} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={CheckResultCode.info} size="small" />
+            <ShieldIcon status={CheckResultCode.info} size={ShieldSize.small} />
           </div>
         </div>
 
@@ -283,19 +309,22 @@ export default function RatingShieldsPage() {
           </div>
 
           <div className="flex items-center justify-center">
-            <ShieldIcon status={CheckResultCode.pass} size="micro" />
+            <ShieldIcon status={CheckResultCode.pass} size={ShieldSize.micro} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={CheckResultCode.warn} size="micro" />
+            <ShieldIcon status={CheckResultCode.warn} size={ShieldSize.micro} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={CheckResultCode.alert} size="micro" />
+            <ShieldIcon
+              status={CheckResultCode.alert}
+              size={ShieldSize.micro}
+            />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={CheckResultCode.skip} size="micro" />
+            <ShieldIcon status={CheckResultCode.skip} size={ShieldSize.micro} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={CheckResultCode.info} size="micro" />
+            <ShieldIcon status={CheckResultCode.info} size={ShieldSize.micro} />
           </div>
         </div>
       </div>

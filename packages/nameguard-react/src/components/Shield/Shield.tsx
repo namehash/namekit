@@ -10,7 +10,7 @@ import {
 import { parseName } from "@namehash/ens-utils";
 import cc from "classcat";
 
-import { Shield as ShieldIcon } from "../Report/Shield";
+import { Shield as ShieldIcon, Size } from "../Report/Shield";
 import { Tooltip } from "../Tooltip/Tooltip";
 import { ShieldError } from "./Error";
 
@@ -34,7 +34,7 @@ function textColor(rating: Rating) {
 type ShieldProps = {
   name?: string;
   children?: ReactNode;
-  size?: "small" | "medium" | "large" | "micro";
+  size?: Size;
 };
 
 export const Shield = ({ name, children, size }: ShieldProps) => {
