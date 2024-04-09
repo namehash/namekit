@@ -22,7 +22,7 @@ import { PassIcon as PassShieldMicro } from "../icons/Pass";
 import { LoadingIcon as LoadingShieldMicro } from "../icons/Loading";
 import { ErrorIcon as ErrorShieldMicro } from "../icons/Error";
 
-type Size = "small" | "medium" | "large" | "micro";
+export type Size = "small" | "medium" | "large" | "micro";
 
 type Props = {
   size?: Size;
