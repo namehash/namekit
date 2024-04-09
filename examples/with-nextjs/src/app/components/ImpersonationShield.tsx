@@ -1,6 +1,6 @@
 "use client";
 
-import { type SecurePrimaryNameResult, Rating } from "@namehash/nameguard";
+import { Rating, type SecurePrimaryNameResult } from "@namehash/nameguard";
 import cc from "classcat";
 
 import { Tooltip } from "./Tooltip";
@@ -40,7 +40,7 @@ export function ImpersonationShield({ data }: ImpersonationShieldProps) {
 
   const textClass = cc(["font-semibold", textColor(nameguard_result?.rating)]);
 
-  const Icon = nameguard_result?.rating === "warn" ? WarnIcon : AlertIcon;
+  const Icon = nameguard_result?.rating === Rating.warn ? WarnIcon : AlertIcon;
 
   return (
     <Tooltip trigger={<Icon />}>

@@ -22,7 +22,12 @@ import { PassIcon as PassShieldMicro } from "../icons/Pass";
 import { LoadingIcon as LoadingShieldMicro } from "../icons/Loading";
 import { ErrorIcon as ErrorShieldMicro } from "../icons/Error";
 
-type Size = "small" | "medium" | "large" | "micro";
+export enum Size {
+  micro = "micro",
+  small = "small",
+  medium = "medium",
+  large = "large",
+}
 
 type Props = {
   size?: Size;
@@ -72,7 +77,7 @@ function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export const Shield = ({ status, size = "small", ...props }: Props) => {
+export const Shield = ({ status, size = Size.small, ...props }: Props) => {
   const Component = getComponent(status, size);
 
   return Component ? <Component {...props} /> : null;
