@@ -1,50 +1,46 @@
 import React, { type ReactNode } from "react";
-import { ConsolidatedNameGuardReport, Rating } from "@namehash/nameguard";
+import { ConsolidatedNameGuardReport } from "@namehash/nameguard";
 import cc from "classcat";
 
 import { Tooltip } from "../Tooltip/Tooltip";
-import { Shield, ShieldSize } from "../Report/Shield";
-
-function textColor(rating?: Rating) {
-  switch (rating) {
-    case Rating.alert: {
-      return "text-red-600";
-    }
-    case Rating.pass: {
-      return "text-emerald-600";
-    }
-    case Rating.warn: {
-      return "text-amber-500";
-    }
-    default: {
-      return "text-gray-500";
-    }
-  }
-}
+import {
+  Shield,
+  ShieldSize,
+  getNameGuardRatingTextColors,
+} from "../Report/Shield";
+import { LoadingShield } from "../icons/LoadingShield";
+import { ErrorShield } from "../icons/ErrorShield";
 
 type NameShieldProps = {
   data?: ConsolidatedNameGuardReport;
   children?: ReactNode;
   disableHover?: boolean;
   size?: ShieldSize;
-} & React.ComponentProps<typeof Shield>;
+  error?: string;
+} & React.ComponentProps;
 
 export function NameShield({
   data,
+  error,
   children,
   disableHover,
   size = ShieldSize.small,
   ...props
 }: NameShieldProps) {
-  if (!data) return null;
+  if (error) {
+    return <ErrorShield size={size} {...props} />;
+  }
+
+  if (!data || !data.rating) {
+    return <LoadingShield size={size} {...props} />;
+  }
 
   const { title, subtitle, rating, risk_count, highest_risk } = data;
 
-  const textClass = cc(["font-semibold mb-1", textColor(rating)]);
-
-  if (!rating) {
-    return <Shield status="info" size={size} {...props} />;
-  }
+  const textClass = cc([
+    "font-semibold mb-1",
+    getNameGuardRatingTextColors(rating),
+  ]);
 
   if (disableHover) {
     return <Shield status={rating} size={size} {...props} />;

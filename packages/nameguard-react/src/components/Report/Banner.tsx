@@ -3,27 +3,10 @@ import cc from "classcat";
 import { type NameGuardReport, Rating } from "@namehash/nameguard";
 import type { ParsedName } from "@namehash/ens-utils";
 
-import { Shield } from "./Shield";
+import { Shield, ShieldSize, getNameGuardRatingTextColors } from "./Shield";
 import { RatedBox } from "../RatedBox/RatedBox";
 import { ReportChangesApplied } from "./ReportChangesApplied";
 import { ReportFormattedDisplayName } from "./ReportFormattedName";
-
-function textColor(rating: Rating) {
-  switch (rating) {
-    case Rating.alert: {
-      return "text-red-700";
-    }
-    case Rating.pass: {
-      return "text-emerald-600";
-    }
-    case Rating.warn: {
-      return "text-yellow-600";
-    }
-    default: {
-      return "text-gray-500";
-    }
-  }
-}
 
 type Props = {
   report?: NameGuardReport;
@@ -34,7 +17,10 @@ export function Banner({ report, parsedName }: Props) {
   const { name, title, subtitle, rating, beautiful_name, normalization } =
     report;
 
-  const text = cc(["font-semibold text-sm md:text-2xl", textColor(rating)]);
+  const text = cc([
+    "font-semibold text-sm md:text-2xl",
+    getNameGuardRatingTextColors(rating),
+  ]);
 
   return (
     <RatedBox rating={rating}>
@@ -54,7 +40,7 @@ export function Banner({ report, parsedName }: Props) {
         </div>
         <div className="flex items-start space-x-4 pt-5 md:pt-0 md:w-2/6 flex-shrink-0">
           <div className="flex-shrink-0">
-            <Shield status={rating} size="large" />
+            <Shield status={rating} size={ShieldSize.large} />
           </div>
           <div className="space-y-1 flex-shrink-0">
             <p className={text}>{title}</p>

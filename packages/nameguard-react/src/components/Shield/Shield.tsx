@@ -3,9 +3,7 @@ import React from "react";
 import useSWR from "swr";
 import {
   nameguard,
-  Rating,
   type BulkConsolidatedNameGuardReport,
-  CheckResultCode,
 } from "@namehash/nameguard";
 import { parseName } from "@namehash/ens-utils";
 import cc from "classcat";
@@ -13,23 +11,7 @@ import cc from "classcat";
 import { Shield as ShieldIcon, ShieldSize } from "../Report/Shield";
 import { Tooltip } from "../Tooltip/Tooltip";
 import { ShieldError } from "./Error";
-
-function textColor(rating: Rating) {
-  switch (rating) {
-    case Rating.alert: {
-      return "text-red-600";
-    }
-    case Rating.pass: {
-      return "text-emerald-600";
-    }
-    case Rating.warn: {
-      return "text-amber-500";
-    }
-    default: {
-      return "text-gray-500";
-    }
-  }
-}
+import { LoadingShield, getNameGuardRatingTextColors } from "../..";
 
 type ShieldProps = {
   name?: string;
@@ -45,29 +27,22 @@ export const Shield = ({ name, children, size }: ShieldProps) => {
     (n: string) => nameguard.bulkInspectNames([parseName(n).outputName.name])
   );
 
-  const result = data?.results[0];
-
-  const status = isLoading
-    ? CheckResultCode.info
-    : result.highest_risk
-    ? result.highest_risk.status
-    : CheckResultCode.info;
-
-  if (isLoading || !data) {
-    return (
-      <ShieldIcon
-        status={status}
-        className={isLoading && "animate-pulse"}
-        size={size}
-      />
-    );
+  if (isLoading) {
+    return <LoadingShield className={isLoading && "animate-pulse"} />;
   }
 
-  if (error) {
+  if (error || !data) {
     return <ShieldError size={size}>{children}</ShieldError>;
   }
 
-  const textClass = cc(["font-semibold mb-1", textColor(result.rating)]);
+  const result = data?.results[0];
+
+  const status = result.rating;
+
+  const textClass = cc([
+    "font-semibold mb-1",
+    getNameGuardRatingTextColors(result.rating),
+  ]);
 
   return (
     <Tooltip trigger={<ShieldIcon status={status} size={size} />}>

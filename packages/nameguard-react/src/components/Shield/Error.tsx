@@ -2,7 +2,7 @@ import React, { type ReactNode } from "react";
 
 import { Shield as ShieldIcon, ShieldSize } from "../Report/Shield";
 import { Tooltip } from "../Tooltip/Tooltip";
-import { CheckResultCode } from "@namehash/nameguard";
+import { ErrorShield } from "../icons/ErrorShield";
 
 type ShieldErrorProps = {
   children?: ReactNode;
@@ -15,14 +15,10 @@ export const ShieldError = ({
   ...props
 }: ShieldErrorProps) => {
   return (
-    <Tooltip
-      trigger={
-        <ShieldIcon status={CheckResultCode.skip} size={size} {...props} />
-      }
-    >
+    <Tooltip trigger={<ErrorShield size={size} {...props} />}>
       <div className="flex items-start space-x-3 py-2.5 min-w-[300px] max-w-[300px]">
         <div className="mt-0.5">
-          <ShieldIcon status={CheckResultCode.skip} size={ShieldSize.small} />
+          <ErrorShield size={ShieldSize.small} />
         </div>
 
         <div className="flex-1">

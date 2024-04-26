@@ -1,28 +1,15 @@
 "use client";
 
 import { Rating, type SecurePrimaryNameResult } from "@namehash/nameguard";
+import {
+  LoadingShield,
+  getNameGuardRatingTextColors,
+} from "@namehash/nameguard-react";
 import cc from "classcat";
 
 import { Tooltip } from "./Tooltip";
 import { AlertIcon } from "./icons/Alert";
 import { WarnIcon } from "./icons/Warn";
-
-function textColor(rating?: Rating) {
-  switch (rating) {
-    case Rating.alert: {
-      return "text-red-700";
-    }
-    case Rating.pass: {
-      return "text-emerald-600";
-    }
-    case Rating.warn: {
-      return "text-yellow-600";
-    }
-    default: {
-      return "text-gray-500";
-    }
-  }
-}
 
 type ImpersonationShieldProps = {
   data?: SecurePrimaryNameResult;
@@ -38,7 +25,12 @@ export function ImpersonationShield({ data }: ImpersonationShieldProps) {
 
   const { display_name, nameguard_result } = data;
 
-  const textClass = cc(["font-semibold", textColor(nameguard_result?.rating)]);
+  if (!nameguard_result) return <LoadingShield />;
+
+  const textClass = cc([
+    "font-semibold",
+    getNameGuardRatingTextColors(nameguard_result.rating),
+  ]);
 
   const Icon = nameguard_result?.rating === Rating.warn ? WarnIcon : AlertIcon;
 

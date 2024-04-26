@@ -20,7 +20,7 @@ function text(code: CheckResultCode) {
 
 function icon(code: CheckResultCode): React.ReactNode {
   switch (code) {
-    case "pass":
+    case CheckResultCode.pass:
       return (
         <svg
           className="w-5 h-5 fill-current text-emerald-600 hover:text-emerald-700 transition cursor-pointer"
@@ -35,7 +35,7 @@ function icon(code: CheckResultCode): React.ReactNode {
           />
         </svg>
       );
-    case "warn":
+    case CheckResultCode.warn:
       return (
         <svg
           className="w-5 h-5 fill-current text-yellow-500 hover:text-yellow-600 transition cursor-pointer"
@@ -65,7 +65,7 @@ function icon(code: CheckResultCode): React.ReactNode {
           />
         </svg>
       );
-    case "info":
+    case CheckResultCode.info:
       return (
         <svg
           className="w-5 h-5 fill-current text-gray-400 hover:text-gray-500 transition cursor-pointer"
@@ -80,7 +80,7 @@ function icon(code: CheckResultCode): React.ReactNode {
           />
         </svg>
       );
-    case "skip":
+    case CheckResultCode.skip:
     default:
       return (
         <svg

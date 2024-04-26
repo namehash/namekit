@@ -1,26 +1,35 @@
 import React from "react";
-import { CheckResultCode } from "@namehash/nameguard";
+import { Rating } from "@namehash/nameguard";
 
 import { PassShieldLarge } from "../icons/PassShieldLarge";
 import { WarnShieldLarge } from "../icons/WarnShieldLarge";
 import { AlertShieldLarge } from "../icons/AlertShieldLarge";
-import { LoadingShieldLarge } from "../icons/LoadingShieldLarge";
-import { ErrorShieldLarge } from "../icons/ErrorShieldLarge";
 import { PassShieldMedium } from "../icons/PassShieldMedium";
 import { WarnShieldMedium } from "../icons/WarnShieldMedium";
 import { AlertShieldMedium } from "../icons/AlertShieldMedium";
-import { LoadingShieldMedium } from "../icons/LoadingShieldMedium";
-import { ErrorShieldMedium } from "../icons/ErrorShieldMedium";
 import { PassShieldSmall } from "../icons/PassShieldSmall";
 import { WarnShieldSmall } from "../icons/WarnShieldSmall";
 import { AlertShieldSmall } from "../icons/AlertShieldSmall";
-import { LoadingShieldSmall } from "../icons/LoadingShieldSmall";
-import { ErrorShieldSmall } from "../icons/ErrorShieldSmall";
 import { AlertIcon as AlertShieldMicro } from "../icons/Alert";
 import { WarnIcon as WarnShieldMicro } from "../icons/Warn";
 import { PassIcon as PassShieldMicro } from "../icons/Pass";
-import { LoadingIcon as LoadingShieldMicro } from "../icons/Loading";
-import { ErrorIcon as ErrorShieldMicro } from "../icons/Error";
+
+export function getNameGuardRatingTextColors(rating: Rating) {
+  switch (rating) {
+    case Rating.alert: {
+      return "text-red-600 hover:text-red-700";
+    }
+    case Rating.pass: {
+      return "text-emerald-600 hover:text-emerald-800";
+    }
+    case Rating.warn: {
+      return "text-yellow-500 hover:text-yellow-600";
+    }
+    default: {
+      return "text-gray-400 hover:text-gray-500";
+    }
+  }
+}
 
 export enum ShieldSize {
   micro = "micro",
@@ -30,20 +39,18 @@ export enum ShieldSize {
 }
 
 type Props = {
+  status: Rating;
   size?: ShieldSize;
-  status: CheckResultCode;
   className?: string;
 };
 
-const STATUS_TO_BASE_NAME: { [key in CheckResultCode]: string } = {
-  [CheckResultCode.alert]: "AlertShield",
-  [CheckResultCode.pass]: "PassShield",
-  [CheckResultCode.warn]: "WarnShield",
-  [CheckResultCode.info]: "LoadingShield",
-  [CheckResultCode.skip]: "ErrorShield",
+const STATUS_TO_BASE_NAME: { [key in Rating]: string } = {
+  [Rating.alert]: "AlertShield",
+  [Rating.pass]: "PassShield",
+  [Rating.warn]: "WarnShield",
 };
 
-const getComponent = (status: CheckResultCode, size: ShieldSize) => {
+const getComponent = (status: Rating, size: ShieldSize) => {
   const baseName = STATUS_TO_BASE_NAME[status];
   const componentName = `${baseName}${capitalizeFirstLetter(size)}`;
 
@@ -60,14 +67,6 @@ const getComponent = (status: CheckResultCode, size: ShieldSize) => {
     AlertShieldMedium,
     AlertShieldSmall,
     AlertShieldMicro,
-    LoadingShieldLarge,
-    LoadingShieldMedium,
-    LoadingShieldSmall,
-    LoadingShieldMicro,
-    ErrorShieldLarge,
-    ErrorShieldMedium,
-    ErrorShieldSmall,
-    ErrorShieldMicro,
   };
 
   return components[componentName] || null;

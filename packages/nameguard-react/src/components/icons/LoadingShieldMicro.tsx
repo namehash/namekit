@@ -1,6 +1,6 @@
 import React from "react";
 
-export const LoadingIcon = (props: any) => (
+export const LoadingShieldMicro = (props: any) => (
   <svg
     width="14"
     height="14"

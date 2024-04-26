@@ -6,7 +6,7 @@ import {
 } from "@namehash/nameguard";
 import { parseName } from "@namehash/ens-utils";
 
-import { NameBadge } from "../NameBadge/NameBadge";
+import { NameBadge } from "../NameBadge";
 import { useSearchStore } from "../../stores/search";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 
@@ -44,7 +44,7 @@ export const SearchEmptyState = () => {
       revalidateIfStale: false,
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
-    },
+    }
   );
 
   useEffect(() => {
