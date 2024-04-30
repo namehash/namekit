@@ -1,6 +1,11 @@
 import React from "react";
-import { CheckResultCode } from "@namehash/nameguard";
+import { CheckResultCode, Rating } from "@namehash/nameguard";
 import { Tooltip } from "../Tooltip/Tooltip";
+import cc from "classcat";
+import {
+  getNameGuardRatingHoverTextColors,
+  getNameGuardRatingTextColors,
+} from "./ShieldIcon";
 
 function text(code: CheckResultCode) {
   switch (code) {
@@ -23,7 +28,11 @@ function icon(code: CheckResultCode): React.ReactNode {
     case CheckResultCode.pass:
       return (
         <svg
-          className="w-5 h-5 fill-current text-emerald-600 hover:text-emerald-700 transition cursor-pointer"
+          className={cc([
+            "w-5 h-5 fill-current transition cursor-pointer",
+            getNameGuardRatingTextColors(Rating.pass),
+            getNameGuardRatingHoverTextColors(Rating.pass),
+          ])}
           viewBox="0 0 20 20"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

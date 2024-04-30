@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export const WarnShieldMedium = (props) => (
+export const WarnShieldMediumIcon = (props) => (
   <svg
     fill="none"
     height="56"

@@ -3,11 +3,11 @@
 import { CheckResultCode, Normalization, Rating } from "@namehash/nameguard";
 import {
   ShieldIcon,
-  ShieldSize,
-  LoadingShield,
+  ShieldIconSize,
+  LoadingShieldIcon,
   NameBadge,
-  ErrorShield,
-  NameShield,
+  UnknownShieldIcon,
+  ReportShield,
 } from "@namehash/nameguard-react";
 
 export default function RatingShieldsPage() {
@@ -26,11 +26,11 @@ export default function RatingShieldsPage() {
         <div className="divide-y divide-gray-100">
           <div className="grid grid-cols-6 gap-x-6 py-5">
             <div className="flex items-center font-mono">
-              <pre>{"<NameShield />"}</pre>
+              <pre>{"<ReportShield />"}</pre>
             </div>
 
             <div className="flex items-center justify-center">
-              <NameShield
+              <ReportShield
                 data={{
                   rating: Rating.pass,
                   risk_count: 0,
@@ -46,7 +46,7 @@ export default function RatingShieldsPage() {
               />
             </div>
             <div className="flex items-center justify-center">
-              <NameShield
+              <ReportShield
                 data={{
                   rating: Rating.warn,
                   risk_count: 3,
@@ -67,7 +67,7 @@ export default function RatingShieldsPage() {
               />
             </div>
             <div className="flex items-center justify-center">
-              <NameShield
+              <ReportShield
                 data={{
                   rating: Rating.alert,
                   risk_count: 3,
@@ -88,19 +88,19 @@ export default function RatingShieldsPage() {
               />
             </div>
             <div className="flex items-center justify-center">
-              <NameShield name="notrab.eth" error="Something went wrong" />
+              <ReportShield name="notrab.eth" error={true} />
             </div>
             <div className="flex items-center justify-center">
-              <NameShield name="notrab.eth" />
+              <ReportShield name="notrab.eth" />
             </div>
           </div>
           <div className="grid grid-cols-6 gap-x-6 py-5">
             <div className="flex items-center font-mono">
-              <pre>{"<NameShield onClick />"}</pre>
+              <pre>{"<ReportShield onClick />"}</pre>
             </div>
 
             <div className="flex items-center justify-center">
-              <NameShield
+              <ReportShield
                 data={{
                   rating: Rating.pass,
                   risk_count: 0,
@@ -117,7 +117,7 @@ export default function RatingShieldsPage() {
               />
             </div>
             <div className="flex items-center justify-center">
-              <NameShield
+              <ReportShield
                 data={{
                   rating: Rating.warn,
                   risk_count: 3,
@@ -139,7 +139,7 @@ export default function RatingShieldsPage() {
               />
             </div>
             <div className="flex items-center justify-center">
-              <NameShield
+              <ReportShield
                 data={{
                   rating: Rating.alert,
                   risk_count: 3,
@@ -161,23 +161,26 @@ export default function RatingShieldsPage() {
               />
             </div>
             <div className="flex items-center justify-center">
-              <NameShield
+              <ReportShield
                 name="notrab.eth"
                 error="Something went wrong"
                 onClick={() => alert("Clicked")}
               />
             </div>
             <div className="flex items-center justify-center">
-              <NameShield name="notrab.eth" onClick={() => alert("Clicked")} />
+              <ReportShield
+                name="notrab.eth"
+                onClick={() => alert("Clicked")}
+              />
             </div>
           </div>
           <div className="grid grid-cols-6 gap-x-6 py-5">
             <div className="flex items-center font-mono">
-              <pre>{"<NameShield> \n Hello World \n </NameShield>"}</pre>
+              <pre>{"<ReportShield> \n Hello World \n </ReportShield>"}</pre>
             </div>
 
             <div className="flex items-center justify-center">
-              <NameShield
+              <ReportShield
                 data={{
                   rating: Rating.pass,
                   risk_count: 0,
@@ -193,10 +196,10 @@ export default function RatingShieldsPage() {
                 onClick={() => alert("Clicked")}
               >
                 Hello world
-              </NameShield>
+              </ReportShield>
             </div>
             <div className="flex items-center justify-center">
-              <NameShield
+              <ReportShield
                 data={{
                   rating: Rating.warn,
                   risk_count: 3,
@@ -217,10 +220,10 @@ export default function RatingShieldsPage() {
                 onClick={() => alert("Clicked")}
               >
                 Hello world
-              </NameShield>
+              </ReportShield>
             </div>
             <div className="flex items-center justify-center">
-              <NameShield
+              <ReportShield
                 data={{
                   rating: Rating.alert,
                   risk_count: 3,
@@ -241,21 +244,21 @@ export default function RatingShieldsPage() {
                 onClick={() => alert("Clicked")}
               >
                 Hello world
-              </NameShield>
+              </ReportShield>
             </div>
             <div className="flex items-center justify-center">
-              <NameShield
+              <ReportShield
                 name="notrab.eth"
                 error="Something went wrong"
                 onClick={() => alert("Clicked")}
               >
                 Hello world
-              </NameShield>
+              </ReportShield>
             </div>
             <div className="flex items-center justify-center">
-              <NameShield name="notrab.eth" onClick={() => alert("Clicked")}>
+              <ReportShield name="notrab.eth" onClick={() => alert("Clicked")}>
                 Hello world
-              </NameShield>
+              </ReportShield>
             </div>
           </div>
         </div>
@@ -426,19 +429,19 @@ export default function RatingShieldsPage() {
           </div>
 
           <div className="flex items-center justify-center">
-            <ShieldIcon status={Rating.pass} size={ShieldSize.large} />
+            <ShieldIcon rating={Rating.pass} size={ShieldIconSize.large} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={Rating.warn} size={ShieldSize.large} />
+            <ShieldIcon rating={Rating.warn} size={ShieldIconSize.large} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={Rating.alert} size={ShieldSize.large} />
+            <ShieldIcon rating={Rating.alert} size={ShieldIconSize.large} />
           </div>
           <div className="flex items-center justify-center">
-            <ErrorShield size={ShieldSize.large} />
+            <UnknownShieldIcon size={ShieldIconSize.large} />
           </div>
           <div className="flex items-center justify-center">
-            <LoadingShield size={ShieldSize.large} />
+            <LoadingShieldIcon size={ShieldIconSize.large} />
           </div>
         </div>
 
@@ -448,19 +451,19 @@ export default function RatingShieldsPage() {
           </div>
 
           <div className="flex items-center justify-center">
-            <ShieldIcon status={Rating.pass} size={ShieldSize.medium} />
+            <ShieldIcon rating={Rating.pass} size={ShieldIconSize.medium} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={Rating.warn} size={ShieldSize.medium} />
+            <ShieldIcon rating={Rating.warn} size={ShieldIconSize.medium} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={Rating.alert} size={ShieldSize.medium} />
+            <ShieldIcon rating={Rating.alert} size={ShieldIconSize.medium} />
           </div>
           <div className="flex items-center justify-center">
-            <ErrorShield size={ShieldSize.medium} />
+            <UnknownShieldIcon size={ShieldIconSize.medium} />
           </div>
           <div className="flex items-center justify-center">
-            <LoadingShield size={ShieldSize.medium} />
+            <LoadingShieldIcon size={ShieldIconSize.medium} />
           </div>
         </div>
 
@@ -470,19 +473,19 @@ export default function RatingShieldsPage() {
           </div>
 
           <div className="flex items-center justify-center">
-            <ShieldIcon status={Rating.pass} size={ShieldSize.small} />
+            <ShieldIcon rating={Rating.pass} size={ShieldIconSize.small} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={Rating.warn} size={ShieldSize.small} />
+            <ShieldIcon rating={Rating.warn} size={ShieldIconSize.small} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={Rating.alert} size={ShieldSize.small} />
+            <ShieldIcon rating={Rating.alert} size={ShieldIconSize.small} />
           </div>
           <div className="flex items-center justify-center">
-            <ErrorShield size={ShieldSize.small} />
+            <UnknownShieldIcon size={ShieldIconSize.small} />
           </div>
           <div className="flex items-center justify-center">
-            <LoadingShield size={ShieldSize.small} />
+            <LoadingShieldIcon size={ShieldIconSize.small} />
           </div>
         </div>
 
@@ -492,19 +495,19 @@ export default function RatingShieldsPage() {
           </div>
 
           <div className="flex items-center justify-center">
-            <ShieldIcon status={Rating.pass} size={ShieldSize.micro} />
+            <ShieldIcon rating={Rating.pass} size={ShieldIconSize.micro} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={Rating.warn} size={ShieldSize.micro} />
+            <ShieldIcon rating={Rating.warn} size={ShieldIconSize.micro} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon status={Rating.alert} size={ShieldSize.micro} />
+            <ShieldIcon rating={Rating.alert} size={ShieldIconSize.micro} />
           </div>
           <div className="flex items-center justify-center">
-            <ErrorShield size={ShieldSize.micro} />
+            <UnknownShieldIcon size={ShieldIconSize.micro} />
           </div>
           <div className="flex items-center justify-center">
-            <LoadingShield size={ShieldSize.micro} />
+            <LoadingShieldIcon size={ShieldIconSize.micro} />
           </div>
         </div>
       </div>

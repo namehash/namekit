@@ -44,6 +44,8 @@ import { FontIcon } from "@/app/atoms/icons/FontIcon";
 import { Hero } from "./components/Hero";
 import { NGSearch } from "./components/NGSearch";
 import { Metadata } from "next";
+import { getNameGuardRatingTextColors } from "@namehash/nameguard-react";
+import { Rating } from "@namehash/nameguard";
 
 const getSecurePrimaryName = `import { nameguard } from "@namehash/nameguard";
 
@@ -1222,7 +1224,9 @@ function ListSectionBadge(props: ListBadgeProps) {
 function ChecksSection() {
   const checkCircle = (
     <div className="w-12 h-12 flex justify-center items-center flex-shrink-0 p-[14px] bg-white rounded-[40px] border border-gray-200">
-      <CheckCircleIcon className="text-emerald-600 w-5 h-5" />
+      <CheckCircleIcon
+        className={cc(["w-5 h-5", getNameGuardRatingTextColors(Rating.pass)])}
+      />
     </div>
   );
   const questionmarkCircle = (

@@ -3,7 +3,11 @@ import cc from "classcat";
 import { type NameGuardReport, Rating } from "@namehash/nameguard";
 import type { ParsedName } from "@namehash/ens-utils";
 
-import { Shield, ShieldSize, getNameGuardRatingTextColors } from "./Shield";
+import {
+  ShieldIcon,
+  ShieldIconSize,
+  getNameGuardRatingTextColors,
+} from "./ShieldIcon";
 import { RatedBox } from "../RatedBox/RatedBox";
 import { ReportChangesApplied } from "./ReportChangesApplied";
 import { ReportFormattedDisplayName } from "./ReportFormattedName";
@@ -40,7 +44,7 @@ export function Banner({ report, parsedName }: Props) {
         </div>
         <div className="flex items-start space-x-4 pt-5 md:pt-0 md:w-2/6 flex-shrink-0">
           <div className="flex-shrink-0">
-            <Shield status={rating} size={ShieldSize.large} />
+            <ShieldIcon rating={rating} size={ShieldIconSize.large} />
           </div>
           <div className="space-y-1 flex-shrink-0">
             <p className={text}>{title}</p>

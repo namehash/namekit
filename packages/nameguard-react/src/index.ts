@@ -7,16 +7,16 @@ export { useChatModalStore } from "./stores/chat";
 export { useSearchStore } from "./stores/search";
 
 export { NameBadge } from "./components/NameBadge";
-export { NameShield } from "./components/NameShield";
+export { ReportShield } from "./components/ReportShield";
 
-export { Shield } from "./components/Shield/Shield";
-export { ShieldSize } from "./components/Report/Shield";
+export { ShieldIconSize } from "./components/Report/ShieldIcon";
 export {
-  Shield as ShieldIcon,
+  ShieldIcon,
   getNameGuardRatingTextColors,
-} from "./components/Report/Shield";
+  getNameGuardRatingHoverTextColors,
+} from "./components/Report/ShieldIcon";
 
-export { LoadingShield } from "./components/icons/LoadingShield";
-export { ErrorShield } from "./components/icons/ErrorShield";
+export { LoadingShieldIcon } from "./components/icons/LoadingShieldIcon";
+export { UnknownShieldIcon } from "./components/icons/UnknownShieldIcon";
 
 import "@namehash/ens-webfont";

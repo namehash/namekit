@@ -1,24 +1,24 @@
 import React, { type ReactNode } from "react";
 
-import { Shield as ShieldIcon, ShieldSize } from "../Report/Shield";
+import { ShieldIcon, ShieldIconSize } from "../Report/ShieldIcon";
 import { Tooltip } from "../Tooltip/Tooltip";
-import { ErrorShield } from "../icons/ErrorShield";
+import { UnknownShieldIcon } from "../icons/UnknownShieldIcon";
 
-type ShieldErrorProps = {
+type UnknownShieldProps = {
   children?: ReactNode;
-  size?: ShieldSize;
+  size?: ShieldIconSize;
 } & React.ComponentProps<typeof ShieldIcon>;
 
-export const ShieldError = ({
+export const UnknownShield = ({
   children,
-  size = ShieldSize.small,
+  size = ShieldIconSize.small,
   ...props
-}: ShieldErrorProps) => {
+}: UnknownShieldProps) => {
   return (
-    <Tooltip trigger={<ErrorShield size={size} {...props} />}>
+    <Tooltip trigger={<UnknownShieldIcon size={size} {...props} />}>
       <div className="flex items-start space-x-3 py-2.5 min-w-[300px] max-w-[300px]">
         <div className="mt-0.5">
-          <ErrorShield size={ShieldSize.small} />
+          <UnknownShieldIcon size={ShieldIconSize.small} />
         </div>
 
         <div className="flex-1">

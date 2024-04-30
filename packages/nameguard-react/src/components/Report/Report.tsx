@@ -1,6 +1,6 @@
 import React, { Fragment, useMemo } from "react";
 import useSWR from "swr";
-import { type NameGuardReport, nameguard } from "@namehash/nameguard";
+import { type NameGuardReport, nameguard, Rating } from "@namehash/nameguard";
 import { parseName } from "@namehash/ens-utils";
 import { Toaster } from "sonner";
 
@@ -24,6 +24,7 @@ import { useGraphemeModalStore } from "../../stores/grapheme";
 import { ReportError } from "./ReportError";
 import { ExternalLinks } from "../ExternalLinks/ExternalLinks";
 import { Share } from "../Share/Share";
+import { getNameGuardRatingTextColors } from "./ShieldIcon";
 
 type ReportProps = {
   data?: NameGuardReport;
@@ -168,7 +169,9 @@ export const Report = ({
             toast:
               "!bg-black !border-black !relative !text-sm !leading-5 !font-medium !px-5",
             title: "!text-white",
-            success: "!fill-current !text-emerald-600",
+            success: `!fill-current !${getNameGuardRatingTextColors(
+              Rating.pass
+            )}`,
             closeButton: "!hidden",
           },
         }}

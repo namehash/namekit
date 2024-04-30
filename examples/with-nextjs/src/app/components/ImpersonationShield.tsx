@@ -2,7 +2,7 @@
 
 import { Rating, type SecurePrimaryNameResult } from "@namehash/nameguard";
 import {
-  LoadingShield,
+  LoadingShieldIcon,
   getNameGuardRatingTextColors,
 } from "@namehash/nameguard-react";
 import cc from "classcat";
@@ -25,14 +25,14 @@ export function ImpersonationShield({ data }: ImpersonationShieldProps) {
 
   const { display_name, nameguard_result } = data;
 
-  if (!nameguard_result) return <LoadingShield />;
+  if (!nameguard_result) return <LoadingShieldIcon />;
 
   const textClass = cc([
     "font-semibold",
     getNameGuardRatingTextColors(nameguard_result.rating),
   ]);
 
-  const Icon = nameguard_result?.rating === Rating.warn ? WarnIcon : AlertIcon;
+  const Icon = nameguard_result.rating === Rating.warn ? WarnIcon : AlertIcon;
 
   return (
     <Tooltip trigger={<Icon />}>
@@ -44,16 +44,16 @@ export function ImpersonationShield({ data }: ImpersonationShieldProps) {
         <div className="space-y-1.5 flex-1">
           <div className="flex items-center justify-between">
             <span className={textClass}>
-              {nameguard_result?.highest_risk?.check_name}
+              {nameguard_result.highest_risk?.check_name}
             </span>
             <span className="text-sm font-normal text-gray-400">
-              {nameguard_result?.risk_count} risk
-              {(nameguard_result?.risk_count || 0) >= 0 && "s"} detected
+              {nameguard_result.risk_count} risk
+              {(nameguard_result.risk_count || 0) >= 0 && "s"} detected
             </span>
           </div>
           <div className="space-y-0.5">
             <div className="text-sm text-white">
-              {nameguard_result?.highest_risk?.message}
+              {nameguard_result.highest_risk?.message}
             </div>
             <div className="text-sm text-white">
               <a

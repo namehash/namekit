@@ -2,9 +2,9 @@ import React, { type MouseEventHandler } from "react";
 import { type ConsolidatedNameGuardReport } from "@namehash/nameguard";
 import cc from "classcat";
 
-import { NameShield } from "../NameShield";
-import { ShieldError } from "../Shield/Error";
-import { LoadingShield, ShieldSize } from "../..";
+import { ReportShield } from "../ReportShield";
+import { UnknownShield } from "../Shield/UnknownShield";
+import { LoadingShieldIcon, ShieldIconSize } from "../..";
 
 interface NameBadgeProps {
   name?: string;
@@ -34,7 +34,7 @@ export function NameBadge({ name, onClick, data, error }: NameBadgeProps) {
         ) : (
           <span className="rounded-full h-2 w-16 bg-gray-200 animate-pulse"></span>
         )}
-        <ShieldError size="micro" className={cursorClass}>
+        <UnknownShield size="micro" className={cursorClass}>
           {onClick && (
             <div className="text-sm text-white">
               <button
@@ -45,7 +45,7 @@ export function NameBadge({ name, onClick, data, error }: NameBadgeProps) {
               </button>
             </div>
           )}
-        </ShieldError>
+        </UnknownShield>
       </button>
     );
 
@@ -59,7 +59,10 @@ export function NameBadge({ name, onClick, data, error }: NameBadgeProps) {
         ) : (
           <span className="rounded-full h-2 w-16 bg-gray-200 animate-pulse"></span>
         )}
-        <LoadingShield className={cursorClass} />
+        <LoadingShieldIcon
+          size={ShieldIconSize.small}
+          className={cursorClass}
+        />
       </button>
     );
 
@@ -68,10 +71,10 @@ export function NameBadge({ name, onClick, data, error }: NameBadgeProps) {
       <span className="text-black text-sm leading-5 ens-webfont">
         {data.beautiful_name || data.name}
       </span>
-      <NameShield
+      <ReportShield
         data={data}
-        error={error}
-        size={ShieldSize.micro}
+        error={!!error}
+        size={ShieldIconSize.micro}
         className={cursorClass}
       >
         {onClick && (
@@ -84,7 +87,7 @@ export function NameBadge({ name, onClick, data, error }: NameBadgeProps) {
             </button>
           </div>
         )}
-      </NameShield>
+      </ReportShield>
     </button>
   );
 }

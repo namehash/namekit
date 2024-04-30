@@ -9,6 +9,9 @@ import {
 import { toast } from "sonner";
 
 import { Tooltip } from "../Tooltip/Tooltip";
+import { getNameGuardRatingTextColors } from "../Report/ShieldIcon";
+import { Rating } from "@namehash/nameguard";
+import cc from "classcat";
 
 type ShareProps = {
   name?: string;
@@ -19,7 +22,7 @@ function createTwitterLink(name: string) {
   const url = `https://nameguard.io/inspect/${encodeURIComponent(name)}`;
 
   return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-    tweetText,
+    tweetText
   )}&url=${encodeURIComponent(url)}`;
 }
 
@@ -41,18 +44,22 @@ export function Share({ name }: ShareProps) {
 
   const twitterLink = createTwitterLink(name);
   const telegramLink = createTelegramLink(
-    `https://nameguard.io/inspect/${encodeURIComponent(name)}`,
+    `https://nameguard.io/inspect/${encodeURIComponent(name)}`
   );
   const emailLink = createMailToLink(
     `NameGuard Report for ${name}`,
-    `Check this out!\nhttps://nameguard.io/inspect/${encodeURIComponent(name)}`,
+    `Check this out!\nhttps://nameguard.io/inspect/${encodeURIComponent(name)}`
   );
   const copyLinkToClipboard = () => {
     navigator.clipboard.writeText(
-      `https://nameguard.io/inspect/${encodeURIComponent(name)}`,
+      `https://nameguard.io/inspect/${encodeURIComponent(name)}`
     );
     toast.success("Link copied to clipboard", {
-      icon: <CheckCircleIcon className="text-emerald-600 w-5 h-5" />,
+      icon: (
+        <CheckCircleIcon
+          className={cc(["w-5 h-5", getNameGuardRatingTextColors(Rating.pass)])}
+        />
+      ),
     });
     closeModal();
   };

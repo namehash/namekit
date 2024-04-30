@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export const PassShieldMedium = (props) => (
+export const PassShieldMediumIcon = (props) => (
   <svg
     fill="none"
     height="56"

@@ -4,35 +4,35 @@ import cc from "classcat";
 
 import { Tooltip } from "../Tooltip/Tooltip";
 import {
-  Shield,
-  ShieldSize,
+  ShieldIcon,
+  ShieldIconSize,
   getNameGuardRatingTextColors,
-} from "../Report/Shield";
-import { LoadingShield } from "../icons/LoadingShield";
-import { ErrorShield } from "../icons/ErrorShield";
+} from "../Report/ShieldIcon";
+import { LoadingShieldIcon } from "../icons/LoadingShieldIcon";
+import { UnknownShieldIcon } from "../icons/UnknownShieldIcon";
 
 type NameShieldProps = {
   data?: ConsolidatedNameGuardReport;
   children?: ReactNode;
   disableHover?: boolean;
-  size?: ShieldSize;
-  error?: string;
+  size?: ShieldIconSize;
+  error: boolean;
 } & React.ComponentProps;
 
-export function NameShield({
+export function ReportShield({
   data,
   error,
   children,
   disableHover,
-  size = ShieldSize.small,
+  size = ShieldIconSize.small,
   ...props
 }: NameShieldProps) {
   if (error) {
-    return <ErrorShield size={size} {...props} />;
+    return <UnknownShieldIcon size={size} {...props} />;
   }
 
-  if (!data || !data.rating) {
-    return <LoadingShield size={size} {...props} />;
+  if (!data) {
+    return <LoadingShieldIcon size={size} {...props} />;
   }
 
   const { title, subtitle, rating, risk_count, highest_risk } = data;
@@ -43,14 +43,14 @@ export function NameShield({
   ]);
 
   if (disableHover) {
-    return <Shield status={rating} size={size} {...props} />;
+    return <ShieldIcon rating={rating} size={size} {...props} />;
   }
 
   return (
-    <Tooltip trigger={<Shield status={rating} size={size} {...props} />}>
+    <Tooltip trigger={<ShieldIcon rating={rating} size={size} {...props} />}>
       <div className="flex items-start space-x-3 py-2.5 min-w-[300px] max-w-[300px]">
         <div className="mt-0.5">
-          <Shield status={rating} size={ShieldSize.small} />
+          <ShieldIcon rating={rating} size={ShieldIconSize.small} />
         </div>
 
         <div className="flex-1">
