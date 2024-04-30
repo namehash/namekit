@@ -1,16 +1,13 @@
 import React from "react";
 import cc from "classcat";
-import { type NameGuardReport, Rating } from "@namehash/nameguard";
+import { type NameGuardReport } from "@namehash/nameguard";
 import type { ParsedName } from "@namehash/ens-utils";
 
-import {
-  ShieldIcon,
-  ShieldIconSize,
-  getNameGuardRatingTextColors,
-} from "./ShieldIcon";
+import { RatingIcon, RatingIconSize } from "./RatingIcon";
 import { RatedBox } from "../RatedBox/RatedBox";
 import { ReportChangesApplied } from "./ReportChangesApplied";
 import { ReportFormattedDisplayName } from "./ReportFormattedName";
+import { ratingTextColor } from "../../utils/text";
 
 type Props = {
   report?: NameGuardReport;
@@ -23,7 +20,7 @@ export function Banner({ report, parsedName }: Props) {
 
   const text = cc([
     "font-semibold text-sm md:text-2xl",
-    getNameGuardRatingTextColors(rating),
+    ratingTextColor(rating),
   ]);
 
   return (
@@ -44,7 +41,7 @@ export function Banner({ report, parsedName }: Props) {
         </div>
         <div className="flex items-start space-x-4 pt-5 md:pt-0 md:w-2/6 flex-shrink-0">
           <div className="flex-shrink-0">
-            <ShieldIcon rating={rating} size={ShieldIconSize.large} />
+            <RatingIcon rating={rating} size={RatingIconSize.large} />
           </div>
           <div className="space-y-1 flex-shrink-0">
             <p className={text}>{title}</p>

@@ -1,6 +1,6 @@
 import React from "react";
 
-export const WarnIcon = (props: any) => (
+export const WarnShieldMicroIcon = (props: any) => (
   <svg
     width="14"
     height="14"

@@ -1,33 +1,33 @@
 import React, { type ReactNode } from "react";
-import { ConsolidatedNameGuardReport } from "@namehash/nameguard";
+import {
+  CheckResultCode,
+  ConsolidatedNameGuardReport,
+} from "@namehash/nameguard";
 import cc from "classcat";
 
 import { Tooltip } from "../Tooltip/Tooltip";
-import {
-  ShieldIcon,
-  ShieldIconSize,
-  getNameGuardRatingTextColors,
-} from "../Report/ShieldIcon";
+import { RatingIcon, RatingIconSize } from "../Report/RatingIcon";
 import { LoadingShieldIcon } from "../icons/LoadingShieldIcon";
 import { UnknownShieldIcon } from "../icons/UnknownShieldIcon";
+import { checkResultCodeTextColor, ratingTextColor } from "../../utils/text";
 
 type NameShieldProps = {
   data?: ConsolidatedNameGuardReport;
   children?: ReactNode;
   disableHover?: boolean;
-  size?: ShieldIconSize;
-  error: boolean;
+  size?: RatingIconSize;
+  hadLoadingError: boolean;
 } & React.ComponentProps;
 
 export function ReportShield({
   data,
-  error,
   children,
   disableHover,
-  size = ShieldIconSize.small,
+  hasLoadingError,
+  size = RatingIconSize.small,
   ...props
 }: NameShieldProps) {
-  if (error) {
+  if (hasLoadingError) {
     return <UnknownShieldIcon size={size} {...props} />;
   }
 
@@ -37,27 +37,29 @@ export function ReportShield({
 
   const { title, subtitle, rating, risk_count, highest_risk } = data;
 
-  const textClass = cc([
-    "font-semibold mb-1",
-    getNameGuardRatingTextColors(rating),
-  ]);
+  const textClass = cc(["font-semibold mb-1", ratingTextColor(rating)]);
 
   if (disableHover) {
-    return <ShieldIcon rating={rating} size={size} {...props} />;
+    return <RatingIcon rating={rating} size={size} {...props} />;
   }
 
   return (
-    <Tooltip trigger={<ShieldIcon rating={rating} size={size} {...props} />}>
+    <Tooltip trigger={<RatingIcon rating={rating} size={size} {...props} />}>
       <div className="flex items-start space-x-3 py-2.5 min-w-[300px] max-w-[300px]">
         <div className="mt-0.5">
-          <ShieldIcon rating={rating} size={ShieldIconSize.small} />
+          <RatingIcon rating={rating} size={RatingIconSize.small} />
         </div>
 
         <div className="flex-1">
           <div className="flex items-center justify-between">
             <span className={textClass}>{title}</span>
             {risk_count >= 1 && (
-              <span className="text-sm font-normal text-gray-400">
+              <span
+                className={cc([
+                  "text-sm font-normal",
+                  checkResultCodeTextColor(CheckResultCode.info),
+                ])}
+              >
                 {risk_count} risk{risk_count !== 1 && "s"} detected
               </span>
             )}

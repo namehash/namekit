@@ -39,7 +39,7 @@ export const ConfusableListItem = ({ item }: ConfusableListItemProps) => {
         <div className="md:col-span-4 flex space-between space-x-3">
           <div className="flex items-center space-x-2 flex-1 pr-6 md:pr-12">
             <div className="flex-shrink-0 flex items-center">
-              <Check code={item.rating} />
+              <Check code={item.highest_risk.status} />
             </div>
 
             <p className="md:font-medium text-gray-500 md:text-black text-sm w-full md:pl-2">

@@ -6,15 +6,11 @@ export { SettingsModal } from "./components/SettingsModal/SettingsModal";
 export { useChatModalStore } from "./stores/chat";
 export { useSearchStore } from "./stores/search";
 
-export { NameBadge } from "./components/NameBadge";
-export { ReportShield } from "./components/ReportShield";
+export { ratingTextColor, checkResultCodeTextColor } from "./utils/text";
 
-export { ShieldIconSize } from "./components/Report/ShieldIcon";
-export {
-  ShieldIcon,
-  getNameGuardRatingTextColors,
-  getNameGuardRatingHoverTextColors,
-} from "./components/Report/ShieldIcon";
+export { ReportBadge } from "./components/ReportBadge/index";
+export { ReportShield } from "./components/ReportShield/index";
+export { RatingIcon, RatingIconSize } from "./components/Report/RatingIcon";
 
 export { LoadingShieldIcon } from "./components/icons/LoadingShieldIcon";
 export { UnknownShieldIcon } from "./components/icons/UnknownShieldIcon";

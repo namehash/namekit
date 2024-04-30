@@ -24,7 +24,7 @@ import { useGraphemeModalStore } from "../../stores/grapheme";
 import { ReportError } from "./ReportError";
 import { ExternalLinks } from "../ExternalLinks/ExternalLinks";
 import { Share } from "../Share/Share";
-import { getNameGuardRatingTextColors } from "./ShieldIcon";
+import { ratingTextColor } from "../../utils/text";
 
 type ReportProps = {
   data?: NameGuardReport;
@@ -169,9 +169,7 @@ export const Report = ({
             toast:
               "!bg-black !border-black !relative !text-sm !leading-5 !font-medium !px-5",
             title: "!text-white",
-            success: `!fill-current !${getNameGuardRatingTextColors(
-              Rating.pass
-            )}`,
+            success: `!fill-current !${ratingTextColor(Rating.pass)}`,
             closeButton: "!hidden",
           },
         }}

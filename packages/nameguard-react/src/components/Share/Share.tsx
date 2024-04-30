@@ -8,10 +8,10 @@ import {
 
 import { toast } from "sonner";
 
-import { Tooltip } from "../Tooltip/Tooltip";
-import { getNameGuardRatingTextColors } from "../Report/ShieldIcon";
-import { Rating } from "@namehash/nameguard";
 import cc from "classcat";
+import { Tooltip } from "../Tooltip/Tooltip";
+import { CheckResultCode } from "@namehash/nameguard";
+import { checkResultCodeTextColor } from "../../utils/text";
 
 type ShareProps = {
   name?: string;
@@ -57,7 +57,10 @@ export function Share({ name }: ShareProps) {
     toast.success("Link copied to clipboard", {
       icon: (
         <CheckCircleIcon
-          className={cc(["w-5 h-5", getNameGuardRatingTextColors(Rating.pass)])}
+          className={cc([
+            "w-5 h-5",
+            checkResultCodeTextColor(CheckResultCode.pass),
+          ])}
         />
       ),
     });

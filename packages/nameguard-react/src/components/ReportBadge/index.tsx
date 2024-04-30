@@ -3,17 +3,17 @@ import { type ConsolidatedNameGuardReport } from "@namehash/nameguard";
 import cc from "classcat";
 
 import { ReportShield } from "../ReportShield";
-import { UnknownShield } from "../Shield/UnknownShield";
-import { LoadingShieldIcon, ShieldIconSize } from "../..";
+import { UnknownReportShield } from "../UnknownReportShield/UnknownReportShield";
+import { LoadingShieldIcon, RatingIconSize } from "../..";
 
-interface NameBadgeProps {
+interface ReportBadgeProps {
   name?: string;
   data?: ConsolidatedNameGuardReport;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   error?: string;
 }
 
-export function NameBadge({ name, onClick, data, error }: NameBadgeProps) {
+export function ReportBadge({ name, onClick, data, error }: ReportBadgeProps) {
   const buttonClass =
     "flex-shrink-0 appearance-none bg-white transition-colors hover:bg-gray-50 border border-gray-200 rounded-md px-2.5 py-1.5 space-x-1.5 inline-flex items-center";
   const cursorClass = cc([
@@ -34,7 +34,7 @@ export function NameBadge({ name, onClick, data, error }: NameBadgeProps) {
         ) : (
           <span className="rounded-full h-2 w-16 bg-gray-200 animate-pulse"></span>
         )}
-        <UnknownShield size="micro" className={cursorClass}>
+        <UnknownReportShield size="micro" className={cursorClass}>
           {onClick && (
             <div className="text-sm text-white">
               <button
@@ -45,7 +45,7 @@ export function NameBadge({ name, onClick, data, error }: NameBadgeProps) {
               </button>
             </div>
           )}
-        </UnknownShield>
+        </UnknownReportShield>
       </button>
     );
 
@@ -60,7 +60,7 @@ export function NameBadge({ name, onClick, data, error }: NameBadgeProps) {
           <span className="rounded-full h-2 w-16 bg-gray-200 animate-pulse"></span>
         )}
         <LoadingShieldIcon
-          size={ShieldIconSize.small}
+          size={RatingIconSize.small}
           className={cursorClass}
         />
       </button>
@@ -74,7 +74,7 @@ export function NameBadge({ name, onClick, data, error }: NameBadgeProps) {
       <ReportShield
         data={data}
         error={!!error}
-        size={ShieldIconSize.micro}
+        size={RatingIconSize.micro}
         className={cursorClass}
       >
         {onClick && (

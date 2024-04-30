@@ -26,7 +26,7 @@
     "@headlessui-float/react": "0.11.4",
     "@headlessui/react": "1.7.17",
     "@heroicons/react": "2.0.18",
-    "@namehash/ens-utils": "1.3.0",
+    "@namehash/ens-utils": "1.8.6",
     "@namehash/ens-webfont": "latest",
     "@namehash/nameguard": "latest",
     "classcat": "5.0.4",
@@ -37,6 +37,7 @@
     "zustand": "4.4.5"
   },
   "devDependencies": {
+    "@swc/core": "1.4.17",
     "tsup": "^7.2.0",
     "typescript": "^5.2.2"
   },

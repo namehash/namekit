@@ -49,7 +49,7 @@ export function GraphemeListItem({ item }: GraphemeListItemProps) {
             </div>
 
             <div className="flex-shrink-0 ml-auto md:ml-auto md:order-1 flex items-center">
-              <Check code={item.rating} />
+              <Check code={item.highest_risk.status} />
             </div>
           </div>
         </div>

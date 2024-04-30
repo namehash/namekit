@@ -1,21 +1,18 @@
 "use client";
 
 import { Rating, type SecurePrimaryNameResult } from "@namehash/nameguard";
-import {
-  LoadingShieldIcon,
-  getNameGuardRatingTextColors,
-} from "@namehash/nameguard-react";
+import { LoadingShieldIcon, ratingTextColor } from "@namehash/nameguard-react";
 import cc from "classcat";
 
 import { Tooltip } from "./Tooltip";
 import { AlertIcon } from "./icons/Alert";
 import { WarnIcon } from "./icons/Warn";
 
-type ImpersonationShieldProps = {
+type ImpersonationReportProps = {
   data?: SecurePrimaryNameResult;
 };
 
-export function ImpersonationShield({ data }: ImpersonationShieldProps) {
+export function ImpersonationReport({ data }: ImpersonationReportProps) {
   if (
     !data ||
     data?.impersonation_status === null ||
@@ -23,13 +20,13 @@ export function ImpersonationShield({ data }: ImpersonationShieldProps) {
   )
     return null;
 
-  const { display_name, nameguard_result } = data;
+  const { nameguard_result } = data;
 
   if (!nameguard_result) return <LoadingShieldIcon />;
 
   const textClass = cc([
     "font-semibold",
-    getNameGuardRatingTextColors(nameguard_result.rating),
+    ratingTextColor(nameguard_result.rating),
   ]);
 
   const Icon = nameguard_result.rating === Rating.warn ? WarnIcon : AlertIcon;
@@ -57,7 +54,9 @@ export function ImpersonationShield({ data }: ImpersonationShieldProps) {
             </div>
             <div className="text-sm text-white">
               <a
-                href={`https://nameguard.io/inspect/${display_name}`}
+                href={`https://nameguard.io/inspect/${encodeURIComponent(
+                  nameguard_result.name
+                )}`}
                 className="underline"
                 rel="noopener noreferrer"
                 target="_blank"

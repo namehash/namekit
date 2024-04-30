@@ -1,4 +1,4 @@
-import { ShieldIconSize } from "../Report/ShieldIcon";
+import { RatingIconSize } from "../Report/RatingIcon";
 import { UnknownShieldLargeIcon } from "./UnknownShieldLargeIcon";
 import { UnknownShieldMediumIcon } from "./UnknownShieldMediumIcon";
 import { UnknownShieldSmallIcon } from "./UnknownShieldSmallIcon";
@@ -9,15 +9,15 @@ import React from "react";
 export const UnknownShieldIcon = ({
   size,
   ...props
-}: { size: ShieldIconSize } & React.ComponentProps) => {
+}: { size: RatingIconSize } & React.ComponentProps) => {
   switch (size) {
-    case ShieldIconSize.large:
+    case RatingIconSize.large:
       return <UnknownShieldLargeIcon {...props} />;
-    case ShieldIconSize.medium:
+    case RatingIconSize.medium:
       return <UnknownShieldMediumIcon {...props} />;
-    case ShieldIconSize.small:
+    case RatingIconSize.small:
       return <UnknownShieldSmallIcon {...props} />;
-    case ShieldIconSize.micro:
+    case RatingIconSize.micro:
       return <UnknownShieldMicroIcon {...props} />;
   }
 };

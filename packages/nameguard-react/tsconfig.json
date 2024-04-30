@@ -2,9 +2,12 @@
   "compilerOptions": {
     "outDir": "./dist",
     "rootDir": "./src",
-    "jsx": "react",
-    "module": "commonjs",
-    "target": "es6",
+    "jsx": "react-jsx",
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],    
+    "module": "CommonJS",
+    "skipLibCheck": true,
+    "moduleResolution": "node",
     "esModuleInterop": true
   },
   "include": ["src/**/*"]

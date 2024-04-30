@@ -4,7 +4,7 @@ type Callback = () => void;
 
 export const useOutsideClick = (
   callback: Callback,
-  isOpen: boolean,
+  isOpen: boolean
 ): MutableRefObject<null | HTMLDivElement> => {
   const ref = useRef<null | HTMLDivElement>(null);
 

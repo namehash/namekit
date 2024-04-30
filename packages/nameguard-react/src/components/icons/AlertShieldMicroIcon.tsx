@@ -1,6 +1,6 @@
 import React from "react";
 
-export const AlertIcon = (props: any) => (
+export const AlertShieldMicroIcon = (props: any) => (
   <svg
     width="14"
     height="14"

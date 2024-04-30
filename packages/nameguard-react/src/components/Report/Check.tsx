@@ -2,10 +2,7 @@ import React from "react";
 import { CheckResultCode, Rating } from "@namehash/nameguard";
 import { Tooltip } from "../Tooltip/Tooltip";
 import cc from "classcat";
-import {
-  getNameGuardRatingHoverTextColors,
-  getNameGuardRatingTextColors,
-} from "./ShieldIcon";
+import { checkResultCodeTextColor } from "../../utils/text";
 
 function text(code: CheckResultCode) {
   switch (code) {
@@ -30,8 +27,7 @@ function icon(code: CheckResultCode): React.ReactNode {
         <svg
           className={cc([
             "w-5 h-5 fill-current transition cursor-pointer",
-            getNameGuardRatingTextColors(Rating.pass),
-            getNameGuardRatingHoverTextColors(Rating.pass),
+            checkResultCodeTextColor(CheckResultCode.pass, true),
           ])}
           viewBox="0 0 20 20"
           fill="none"
@@ -47,7 +43,10 @@ function icon(code: CheckResultCode): React.ReactNode {
     case CheckResultCode.warn:
       return (
         <svg
-          className="w-5 h-5 fill-current text-yellow-500 hover:text-yellow-600 transition cursor-pointer"
+          className={cc([
+            "w-5 h-5 fill-current transition cursor-pointer",
+            checkResultCodeTextColor(CheckResultCode.warn, true),
+          ])}
           viewBox="0 0 20 20"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +61,10 @@ function icon(code: CheckResultCode): React.ReactNode {
     case CheckResultCode.alert:
       return (
         <svg
-          className="w-5 h-5 fill-current text-red-600 hover:text-red-700 transition cursor-pointer"
+          className={cc([
+            "w-5 h-5 fill-current transition cursor-pointer",
+            checkResultCodeTextColor(CheckResultCode.alert, true),
+          ])}
           viewBox="0 0 20 20"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +79,10 @@ function icon(code: CheckResultCode): React.ReactNode {
     case CheckResultCode.info:
       return (
         <svg
-          className="w-5 h-5 fill-current text-gray-400 hover:text-gray-500 transition cursor-pointer"
+          className={cc([
+            "w-5 h-5 fill-current text-gray-400 hover:text-gray-500 transition cursor-pointer",
+            checkResultCodeTextColor(CheckResultCode.info, true),
+          ])}
           viewBox="0 0 20 20"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -93,7 +98,10 @@ function icon(code: CheckResultCode): React.ReactNode {
     default:
       return (
         <svg
-          className="w-[12px] h-[10px] fill-current text-gray-400 hover:text-gray-500 transition cursor-pointer"
+          className={cc([
+            "w-[12px] h-[10px] fill-current transition cursor-pointer",
+            checkResultCodeTextColor(CheckResultCode.skip, true),
+          ])}
           viewBox="0 0 12 10"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

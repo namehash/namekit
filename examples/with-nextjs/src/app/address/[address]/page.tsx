@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { nameguard } from "@namehash/nameguard";
-import { ImpersonationShield } from "../../components/ImpersonationShield";
+import { ImpersonationReport } from "../../components/ImpersonationReport";
 import { Avatar } from "@/app/components/Avatar";
 
 export default async function Page({
@@ -22,7 +22,7 @@ export default async function Page({
             <div className="ml-2 md:ml-4">
               <div className="font-bold text-md flex items-center space-x-1.5">
                 <span>{data.display_name}</span>
-                <ImpersonationShield data={data} />
+                <ImpersonationReport data={data} />
               </div>
               <div className="font-mono text-sm max-md:text-xs h-5 text-gray-500">
                 {address}

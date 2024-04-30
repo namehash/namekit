@@ -6,7 +6,7 @@ import {
 } from "@namehash/nameguard";
 import { parseName } from "@namehash/ens-utils";
 
-import { NameBadge } from "../NameBadge";
+import { ReportBadge } from "../ReportBadge";
 import { useSearchStore } from "../../stores/search";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 
@@ -117,9 +117,9 @@ export const SearchEmptyState = () => {
               </div>
             )}
             {isLoading &&
-              examples.map((e, index) => <NameBadge name={e} key={index} />)}
+              examples.map((e, index) => <ReportBadge name={e} key={index} />)}
             {data?.results?.map((report, index) => (
-              <NameBadge
+              <ReportBadge
                 key={index}
                 data={report}
                 onClick={() => openModal(report.name)}

@@ -10,39 +10,11 @@ import { AlertShieldMediumIcon } from "../icons/AlertShieldMediumIcon";
 import { PassShieldSmallIcon } from "../icons/PassShieldSmallIcon";
 import { WarnShieldSmallIcon } from "../icons/WarnShieldSmallIcon";
 import { AlertShieldSmallIcon } from "../icons/AlertShieldSmallIcon";
-import { AlertIcon as AlertShieldMicroIcon } from "../icons/AlertIcon";
-import { WarnIcon as WarnShieldMicroIcon } from "../icons/WarnIcon";
-import { PassIcon as PassShieldMicroIcon } from "../icons/PassIcon";
+import { AlertShieldMicroIcon } from "../icons/AlertShieldMicroIcon";
+import { WarnShieldMicroIcon } from "../icons/WarnShieldMicroIcon";
+import { PassShieldMicroIcon } from "../icons/PassShieldMicroIcon";
 
-export function getNameGuardRatingHoverTextColors(rating: Rating) {
-  switch (rating) {
-    case Rating.alert: {
-      return "hover:text-red-700";
-    }
-    case Rating.pass: {
-      return "hover:text-emerald-800";
-    }
-    case Rating.warn: {
-      return "hover:text-yellow-600";
-    }
-  }
-}
-
-export function getNameGuardRatingTextColors(rating: Rating) {
-  switch (rating) {
-    case Rating.alert: {
-      return "text-red-600";
-    }
-    case Rating.pass: {
-      return "text-emerald-600";
-    }
-    case Rating.warn: {
-      return "text-yellow-500";
-    }
-  }
-}
-
-export enum ShieldIconSize {
+export enum RatingIconSize {
   micro = "micro",
   small = "small",
   medium = "medium",
@@ -51,7 +23,7 @@ export enum ShieldIconSize {
 
 type Props = {
   rating: Rating;
-  size?: ShieldIconSize;
+  size?: RatingIconSize;
   className?: string;
 };
 
@@ -61,7 +33,7 @@ const STATUS_TO_BASE_NAME: { [key in Rating]: string } = {
   [Rating.warn]: "WarnShield",
 };
 
-const getComponent = (rating: Rating, size: ShieldIconSize) => {
+const getComponent = (rating: Rating, size: RatingIconSize): React.Node => {
   const baseName = STATUS_TO_BASE_NAME[rating];
   const componentName = `${baseName}${capitalizeFirstLetter(size)}Icon`;
 
@@ -82,7 +54,7 @@ const getComponent = (rating: Rating, size: ShieldIconSize) => {
 
   if (!components[componentName]) {
     throw new Error(
-      `ShieldIcon could not be built with params: \n\n rating: ${rating}\n size: ${size}`
+      `RatingIcon could not be built with params: \n\n rating: ${rating}\n size: ${size}`
     );
   }
 
@@ -93,12 +65,12 @@ function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export const ShieldIcon = ({
+export const RatingIcon = ({
   rating,
-  size = ShieldIconSize.small,
+  size = RatingIconSize.small,
   ...props
 }: Props) => {
   const Component = getComponent(rating, size);
 
-  return Component ? <Component {...props} /> : null;
+  return <Component {...props} />;
 };

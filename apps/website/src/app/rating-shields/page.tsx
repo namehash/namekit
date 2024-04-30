@@ -2,10 +2,10 @@
 
 import { CheckResultCode, Normalization, Rating } from "@namehash/nameguard";
 import {
-  ShieldIcon,
-  ShieldIconSize,
+  RatingIcon,
+  RatingIconSize,
   LoadingShieldIcon,
-  NameBadge,
+  ReportBadge,
   UnknownShieldIcon,
   ReportShield,
 } from "@namehash/nameguard-react";
@@ -88,7 +88,7 @@ export default function RatingShieldsPage() {
               />
             </div>
             <div className="flex items-center justify-center">
-              <ReportShield name="notrab.eth" error={true} />
+              <ReportShield name="notrab.eth" hasLoadingError={true} />
             </div>
             <div className="flex items-center justify-center">
               <ReportShield name="notrab.eth" />
@@ -266,12 +266,12 @@ export default function RatingShieldsPage() {
         <div className="grid grid-cols-6 gap-x-6 py-5 mt-8">
           <div className="flex items-center">
             <div className="flex items-center font-mono">
-              <pre>{"<NameBadge onClick />"}</pre>
+              <pre>{"<ReportBadge onClick />"}</pre>
             </div>
           </div>
 
           <div className="flex items-center justify-center">
-            <NameBadge
+            <ReportBadge
               name="lightwalker.eth"
               data={{
                 rating: Rating.pass,
@@ -289,7 +289,7 @@ export default function RatingShieldsPage() {
             />
           </div>
           <div className="flex items-center justify-center">
-            <NameBadge
+            <ReportBadge
               name="culturecafé.eth"
               data={{
                 rating: Rating.warn,
@@ -312,7 +312,7 @@ export default function RatingShieldsPage() {
             />
           </div>
           <div className="flex items-center justify-center">
-            <NameBadge
+            <ReportBadge
               name="‍420.eth"
               data={{
                 rating: Rating.alert,
@@ -335,25 +335,25 @@ export default function RatingShieldsPage() {
             />
           </div>
           <div className="flex items-center justify-center">
-            <NameBadge
+            <ReportBadge
               name="notrab.eth"
               error="Something went wrong"
               onClick={() => alert("Clicked")}
             />
           </div>
           <div className="flex items-center justify-center">
-            <NameBadge onClick={() => alert("Clicked")} />
+            <ReportBadge onClick={() => alert("Clicked")} />
           </div>
         </div>
         <div className="grid grid-cols-6 gap-x-6 py-5">
           <div className="flex items-center">
             <div className="flex items-center font-mono">
-              <pre>{"<NameBadge />"}</pre>
+              <pre>{"<ReportBadge />"}</pre>
             </div>
           </div>
 
           <div className="flex items-center justify-center">
-            <NameBadge
+            <ReportBadge
               name="lightwalker.eth"
               data={{
                 rating: Rating.pass,
@@ -370,7 +370,7 @@ export default function RatingShieldsPage() {
             />
           </div>
           <div className="flex items-center justify-center">
-            <NameBadge
+            <ReportBadge
               name="culturecafé.eth"
               data={{
                 rating: Rating.warn,
@@ -392,7 +392,7 @@ export default function RatingShieldsPage() {
             />
           </div>
           <div className="flex items-center justify-center">
-            <NameBadge
+            <ReportBadge
               name="‍420.eth"
               data={{
                 rating: Rating.alert,
@@ -414,10 +414,10 @@ export default function RatingShieldsPage() {
             />
           </div>
           <div className="flex items-center justify-center">
-            <NameBadge name="notrab.eth" error="Something went wrong" />
+            <ReportBadge name="notrab.eth" error="Something went wrong" />
           </div>
           <div className="flex items-center justify-center">
-            <NameBadge />
+            <ReportBadge />
           </div>
         </div>
       </div>
@@ -425,89 +425,89 @@ export default function RatingShieldsPage() {
       <div className="divide-y divide-gray-100">
         <div className="grid grid-cols-6 gap-x-6 py-5">
           <div className="flex items-center font-mono">
-            <pre>{`<ShieldIcon large />`}</pre>
+            <pre>{`<RatingIcon large />`}</pre>
           </div>
 
           <div className="flex items-center justify-center">
-            <ShieldIcon rating={Rating.pass} size={ShieldIconSize.large} />
+            <RatingIcon rating={Rating.pass} size={RatingIconSize.large} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon rating={Rating.warn} size={ShieldIconSize.large} />
+            <RatingIcon rating={Rating.warn} size={RatingIconSize.large} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon rating={Rating.alert} size={ShieldIconSize.large} />
+            <RatingIcon rating={Rating.alert} size={RatingIconSize.large} />
           </div>
           <div className="flex items-center justify-center">
-            <UnknownShieldIcon size={ShieldIconSize.large} />
+            <UnknownShieldIcon size={RatingIconSize.large} />
           </div>
           <div className="flex items-center justify-center">
-            <LoadingShieldIcon size={ShieldIconSize.large} />
+            <LoadingShieldIcon size={RatingIconSize.large} />
           </div>
         </div>
 
         <div className="grid grid-cols-6 gap-x-6 py-5">
           <div className="flex items-center font-mono">
-            <pre>{`<ShieldIcon medium />`}</pre>
+            <pre>{`<RatingIcon medium />`}</pre>
           </div>
 
           <div className="flex items-center justify-center">
-            <ShieldIcon rating={Rating.pass} size={ShieldIconSize.medium} />
+            <RatingIcon rating={Rating.pass} size={RatingIconSize.medium} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon rating={Rating.warn} size={ShieldIconSize.medium} />
+            <RatingIcon rating={Rating.warn} size={RatingIconSize.medium} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon rating={Rating.alert} size={ShieldIconSize.medium} />
+            <RatingIcon rating={Rating.alert} size={RatingIconSize.medium} />
           </div>
           <div className="flex items-center justify-center">
-            <UnknownShieldIcon size={ShieldIconSize.medium} />
+            <UnknownShieldIcon size={RatingIconSize.medium} />
           </div>
           <div className="flex items-center justify-center">
-            <LoadingShieldIcon size={ShieldIconSize.medium} />
+            <LoadingShieldIcon size={RatingIconSize.medium} />
           </div>
         </div>
 
         <div className="grid grid-cols-6 gap-x-6 py-5">
           <div className="flex items-center font-mono">
-            <pre>{`<ShieldIcon small />`}</pre>
+            <pre>{`<RatingIcon small />`}</pre>
           </div>
 
           <div className="flex items-center justify-center">
-            <ShieldIcon rating={Rating.pass} size={ShieldIconSize.small} />
+            <RatingIcon rating={Rating.pass} size={RatingIconSize.small} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon rating={Rating.warn} size={ShieldIconSize.small} />
+            <RatingIcon rating={Rating.warn} size={RatingIconSize.small} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon rating={Rating.alert} size={ShieldIconSize.small} />
+            <RatingIcon rating={Rating.alert} size={RatingIconSize.small} />
           </div>
           <div className="flex items-center justify-center">
-            <UnknownShieldIcon size={ShieldIconSize.small} />
+            <UnknownShieldIcon size={RatingIconSize.small} />
           </div>
           <div className="flex items-center justify-center">
-            <LoadingShieldIcon size={ShieldIconSize.small} />
+            <LoadingShieldIcon size={RatingIconSize.small} />
           </div>
         </div>
 
         <div className="grid grid-cols-6 gap-x-6 py-5">
           <div className="flex items-center font-mono">
-            <pre>{`<ShieldIcon micro />`}</pre>
+            <pre>{`<RatingIcon micro />`}</pre>
           </div>
 
           <div className="flex items-center justify-center">
-            <ShieldIcon rating={Rating.pass} size={ShieldIconSize.micro} />
+            <RatingIcon rating={Rating.pass} size={RatingIconSize.micro} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon rating={Rating.warn} size={ShieldIconSize.micro} />
+            <RatingIcon rating={Rating.warn} size={RatingIconSize.micro} />
           </div>
           <div className="flex items-center justify-center">
-            <ShieldIcon rating={Rating.alert} size={ShieldIconSize.micro} />
+            <RatingIcon rating={Rating.alert} size={RatingIconSize.micro} />
           </div>
           <div className="flex items-center justify-center">
-            <UnknownShieldIcon size={ShieldIconSize.micro} />
+            <UnknownShieldIcon size={RatingIconSize.micro} />
           </div>
           <div className="flex items-center justify-center">
-            <LoadingShieldIcon size={ShieldIconSize.micro} />
+            <LoadingShieldIcon size={RatingIconSize.micro} />
           </div>
         </div>
       </div>
