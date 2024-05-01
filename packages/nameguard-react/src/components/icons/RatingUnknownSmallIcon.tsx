@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export const UnknownShieldSmallIcon = (props) => (
+export const RatingUnknownSmallIcon = (props) => (
   <svg
     width="18"
     height="18"

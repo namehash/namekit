@@ -1,6 +1,6 @@
 import React from "react";
 
-export const UnknownShieldMicroIcon = (props: any) => (
+export const RatingUnknownMicroIcon = (props: any) => (
   <svg
     width="14"
     height="14"

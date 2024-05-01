@@ -2,7 +2,7 @@ import React, { type ReactNode } from "react";
 
 import { RatingIcon, RatingIconSize } from "../Report/RatingIcon";
 import { Tooltip } from "../Tooltip/Tooltip";
-import { UnknownShieldIcon } from "../icons/UnknownShieldIcon";
+import { RatingUnknownIcon } from "../icons/RatingUnknownIcon";
 
 type UnknownShieldProps = {
   children?: ReactNode;
@@ -15,10 +15,10 @@ export const UnknownReportShield = ({
   ...props
 }: UnknownShieldProps) => {
   return (
-    <Tooltip trigger={<UnknownShieldIcon size={size} {...props} />}>
+    <Tooltip trigger={<RatingUnknownIcon size={size} {...props} />}>
       <div className="flex items-start space-x-3 py-2.5 min-w-[300px] max-w-[300px]">
         <div className="mt-0.5">
-          <UnknownShieldIcon size={RatingIconSize.small} />
+          <RatingUnknownIcon size={RatingIconSize.small} />
         </div>
 
         <div className="flex-1">

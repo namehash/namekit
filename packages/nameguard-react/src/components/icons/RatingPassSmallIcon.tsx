@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export const PassShieldSmallIcon = (props) => (
+export const RatingPassSmallIcon = (props) => (
   <svg
     width="18"
     height="18"

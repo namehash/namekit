@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export const PassShieldLargeIcon = (props) => (
+export const RatingPassLargeIcon = (props) => (
   <svg
     fill="none"
     height="71"

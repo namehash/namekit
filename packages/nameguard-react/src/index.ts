@@ -12,7 +12,7 @@ export { ReportBadge } from "./components/ReportBadge/index";
 export { ReportShield } from "./components/ReportShield/index";
 export { RatingIcon, RatingIconSize } from "./components/Report/RatingIcon";
 
-export { LoadingShieldIcon } from "./components/icons/LoadingShieldIcon";
-export { UnknownShieldIcon } from "./components/icons/UnknownShieldIcon";
+export { RatingLoadingIcon } from "./components/icons/RatingLoadingIcon";
+export { RatingUnknownIcon } from "./components/icons/RatingUnknownIcon";
 
 import "@namehash/ens-webfont";

@@ -7,8 +7,8 @@ import cc from "classcat";
 
 import { Tooltip } from "../Tooltip/Tooltip";
 import { RatingIcon, RatingIconSize } from "../Report/RatingIcon";
-import { LoadingShieldIcon } from "../icons/LoadingShieldIcon";
-import { UnknownShieldIcon } from "../icons/UnknownShieldIcon";
+import { RatingLoadingIcon } from "../icons/RatingLoadingIcon";
+import { RatingUnknownIcon } from "../icons/RatingUnknownIcon";
 import { checkResultCodeTextColor, ratingTextColor } from "../../utils/text";
 
 type ReportShieldProps = {
@@ -28,11 +28,11 @@ export function ReportShield({
   ...props
 }: ReportShieldProps) {
   if (hasLoadingError) {
-    return <UnknownShieldIcon size={size} {...props} />;
+    return <RatingUnknownIcon size={size} {...props} />;
   }
 
   if (!data) {
-    return <LoadingShieldIcon size={size} {...props} />;
+    return <RatingLoadingIcon size={size} {...props} />;
   }
 
   const { title, subtitle, rating, risk_count, highest_risk } = data;
