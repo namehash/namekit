@@ -1,9 +1,9 @@
-import { ShieldExclamationIcon } from "@heroicons/react/20/solid";
 import React from "react";
 import cc from "classcat";
-import { Check } from "./Check";
+import { CheckIcon } from "./CheckIcon";
 import { CheckResultCode } from "@namehash/nameguard";
 import { checkResultCodeTextColor } from "../../utils/text";
+import { ShieldExclamationIcon } from "@heroicons/react/20/solid";
 
 type Props = {
   title: string;
@@ -32,7 +32,7 @@ export function NoGraphemesWarning({ title, description }: Props) {
 
         <div className="md:col-span-4 flex justify-between space-x-3 w-full">
           <div className="flex flex-row-reverse md:flex-row items-center justify-between md:justify-start space-y-1 md:space-y-0 md:space-x-2 flex-1 pr-6 md:pr-12">
-            <Check code={CheckResultCode.alert} />
+            <CheckIcon code={CheckResultCode.alert} />
             <p
               className={cc([
                 "md:font-medium md:text-black text-sm w-full",

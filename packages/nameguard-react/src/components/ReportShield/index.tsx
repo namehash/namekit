@@ -11,7 +11,7 @@ import { LoadingShieldIcon } from "../icons/LoadingShieldIcon";
 import { UnknownShieldIcon } from "../icons/UnknownShieldIcon";
 import { checkResultCodeTextColor, ratingTextColor } from "../../utils/text";
 
-type NameShieldProps = {
+type ReportShieldProps = {
   data?: ConsolidatedNameGuardReport;
   children?: ReactNode;
   disableHover?: boolean;
@@ -26,7 +26,7 @@ export function ReportShield({
   hasLoadingError,
   size = RatingIconSize.small,
   ...props
-}: NameShieldProps) {
+}: ReportShieldProps) {
   if (hasLoadingError) {
     return <UnknownShieldIcon size={size} {...props} />;
   }
