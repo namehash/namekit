@@ -10,7 +10,7 @@ interface ReportBadgeProps {
   name?: string;
   data?: ConsolidatedNameGuardReport;
   onClick?: MouseEventHandler<HTMLButtonElement>;
-  error?: string;
+  error?: boolean;
 }
 
 export function ReportBadge({ name, onClick, data, error }: ReportBadgeProps) {
@@ -73,7 +73,7 @@ export function ReportBadge({ name, onClick, data, error }: ReportBadgeProps) {
       </span>
       <ReportShield
         data={data}
-        error={!!error}
+        error={error}
         size={RatingIconSize.micro}
         className={cursorClass}
       >

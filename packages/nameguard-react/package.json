@@ -1,6 +1,6 @@
 {
   "name": "@namehash/nameguard-react",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch --clean=false",

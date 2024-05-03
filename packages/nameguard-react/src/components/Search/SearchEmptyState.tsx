@@ -36,7 +36,7 @@ export const SearchEmptyState = () => {
   const { openModal } = useSearchStore();
   const parsedNames = examples.map((n) => parseName(n));
 
-  const { data, isLoading } = useSWR<BulkConsolidatedNameGuardReport>(
+  const { data, isLoading, error } = useSWR<BulkConsolidatedNameGuardReport>(
     examples.join(),
     (_) =>
       nameguard.bulkInspectNames(parsedNames.map((n) => n.outputName.name)),
@@ -44,7 +44,7 @@ export const SearchEmptyState = () => {
       revalidateIfStale: false,
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
-    }
+    },
   );
 
   useEffect(() => {
@@ -122,6 +122,7 @@ export const SearchEmptyState = () => {
               <ReportBadge
                 key={index}
                 data={report}
+                error={error}
                 onClick={() => openModal(report.name)}
               />
             ))}

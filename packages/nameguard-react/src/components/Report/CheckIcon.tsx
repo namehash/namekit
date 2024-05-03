@@ -22,18 +22,18 @@ function text(code: CheckResultCode) {
   }
 }
 
-function icon(code: CheckResultCode): React.ReactNode {
+function icon(code: CheckResultCode, withHoverEffect = true): React.ReactNode {
   switch (code) {
     case CheckResultCode.pass:
-      return <CheckResultCodePassIcon />;
+      return <CheckResultCodePassIcon withHoverEffect={withHoverEffect} />;
     case CheckResultCode.warn:
-      return <CheckResultCodeWarnIcon />;
+      return <CheckResultCodeWarnIcon withHoverEffect={withHoverEffect} />;
     case CheckResultCode.alert:
-      return <CheckResultCodeAlertIcon />;
+      return <CheckResultCodeAlertIcon withHoverEffect={withHoverEffect} />;
     case CheckResultCode.info:
-      return <CheckResultCodeInfoIcon />;
+      return <CheckResultCodeInfoIcon withHoverEffect={withHoverEffect} />;
     case CheckResultCode.skip:
-      return <CheckResultCodeSkipIcon />;
+      return <CheckResultCodeSkipIcon withHoverEffect={withHoverEffect} />;
   }
 }
 
@@ -45,7 +45,7 @@ export function CheckIcon({
   withTooltip?: boolean;
 }) {
   const tooltipText = text(code);
-  const Icon = icon(code);
+  const Icon = icon(code, withTooltip);
 
   if (!withTooltip) {
     return Icon;
