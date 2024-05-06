@@ -4,7 +4,7 @@ import { RatingIcon, RatingIconSize } from "./RatingIcon";
 import { ReportFormattedDisplayName } from "./ReportFormattedName";
 import { ReportChangesApplied } from "./ReportChangesApplied";
 import { ParsedName } from "@namehash/ens-utils";
-import { LoadingShieldIcon } from "../icons/LoadingShieldIcon";
+import { RatingLoadingIcon } from "../icons/RatingLoadingIcon";
 
 type LoadingSkeletonProps = {
   parsedName: ParsedName;
@@ -37,7 +37,7 @@ export const LoadingSkeleton = ({ parsedName }: LoadingSkeletonProps) => {
           )}
         </div>
         <div className="flex items-start space-x-4 pt-5 md:pt-0 md:w-2/6">
-          <LoadingShieldIcon size={RatingIconSize.large} />
+          <RatingLoadingIcon size={RatingIconSize.large} />
           <div className="space-y-1 flex-shrink-0">
             <p className="font-semibold text-sm md:text-2xl text-gray-500">
               Inspecting...

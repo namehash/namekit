@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export const LoadingShieldLargeIcon = (props) => (
+export const RatingLoadingLargeIcon = (props) => (
   <svg
     width="68"
     height="71"

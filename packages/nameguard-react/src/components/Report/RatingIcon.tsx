@@ -1,18 +1,18 @@
 import React from "react";
 import { Rating } from "@namehash/nameguard";
 
-import { PassShieldLargeIcon } from "../icons/PassShieldLargeIcon";
-import { WarnShieldLargeIcon } from "../icons/WarnShieldLargeIcon";
-import { AlertShieldLargeIcon } from "../icons/AlertShieldLargeIcon";
-import { PassShieldMediumIcon } from "../icons/PassShieldMediumIcon";
-import { WarnShieldMediumIcon } from "../icons/WarnShieldMediumIcon";
-import { AlertShieldMediumIcon } from "../icons/AlertShieldMediumIcon";
-import { PassShieldSmallIcon } from "../icons/PassShieldSmallIcon";
-import { WarnShieldSmallIcon } from "../icons/WarnShieldSmallIcon";
-import { AlertShieldSmallIcon } from "../icons/AlertShieldSmallIcon";
-import { AlertShieldMicroIcon } from "../icons/AlertShieldMicroIcon";
-import { WarnShieldMicroIcon } from "../icons/WarnShieldMicroIcon";
-import { PassShieldMicroIcon } from "../icons/PassShieldMicroIcon";
+import { RatingPassLargeIcon } from "../icons/RatingPassLargeIcon";
+import { RatingWarnLargeIcon } from "../icons/RatingWarnLargeIcon";
+import { RatingAlertLargeIcon } from "../icons/RatingAlertLargeIcon";
+import { RatingPassMediumIcon } from "../icons/RatingPassMediumIcon";
+import { RatingWarnMediumIcon } from "../icons/RatingWarnMediumIcon";
+import { RatingAlertMediumIcon } from "../icons/RatingAlertMediumIcon";
+import { RatingPassSmallIcon } from "../icons/RatingPassSmallIcon";
+import { RatingWarnSmallIcon } from "../icons/RatingWarnSmallIcon";
+import { RatingAlertSmallIcon } from "../icons/RatingAlertSmallIcon";
+import { RatingAlertMicroIcon } from "../icons/RatingAlertMicroIcon";
+import { RatingWarnMicroIcon } from "../icons/RatingWarnMicroIcon";
+import { RatingPassMicroIcon } from "../icons/RatingPassMicroIcon";
 
 export enum RatingIconSize {
   micro = "micro",
@@ -28,9 +28,9 @@ type Props = {
 };
 
 const STATUS_TO_BASE_NAME: { [key in Rating]: string } = {
-  [Rating.alert]: "AlertShield",
-  [Rating.pass]: "PassShield",
-  [Rating.warn]: "WarnShield",
+  [Rating.alert]: "RatingAlert",
+  [Rating.pass]: "RatingPass",
+  [Rating.warn]: "RatingWarn",
 };
 
 const getComponent = (rating: Rating, size: RatingIconSize): React.Node => {
@@ -38,18 +38,18 @@ const getComponent = (rating: Rating, size: RatingIconSize): React.Node => {
   const componentName = `${baseName}${capitalizeFirstLetter(size)}Icon`;
 
   const components: { [key: string]: React.ComponentType } = {
-    PassShieldLargeIcon,
-    PassShieldMediumIcon,
-    PassShieldSmallIcon,
-    PassShieldMicroIcon,
-    WarnShieldLargeIcon,
-    WarnShieldMediumIcon,
-    WarnShieldSmallIcon,
-    WarnShieldMicroIcon,
-    AlertShieldLargeIcon,
-    AlertShieldMediumIcon,
-    AlertShieldSmallIcon,
-    AlertShieldMicroIcon,
+    PassShieldLargeIcon: RatingPassLargeIcon,
+    PassShieldMediumIcon: RatingPassMediumIcon,
+    PassShieldSmallIcon: RatingPassSmallIcon,
+    PassShieldMicroIcon: RatingPassMicroIcon,
+    WarnShieldLargeIcon: RatingWarnLargeIcon,
+    WarnShieldMediumIcon: RatingWarnMediumIcon,
+    WarnShieldSmallIcon: RatingWarnSmallIcon,
+    WarnShieldMicroIcon: RatingWarnMicroIcon,
+    AlertShieldLargeIcon: RatingAlertLargeIcon,
+    AlertShieldMediumIcon: RatingAlertMediumIcon,
+    AlertShieldSmallIcon: RatingAlertSmallIcon,
+    AlertShieldMicroIcon: RatingAlertMicroIcon,
   };
 
   if (!components[componentName]) {

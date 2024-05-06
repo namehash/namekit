@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export const AlertShieldLargeIcon = (props) => (
+export const RatingAlertLargeIcon = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={68}

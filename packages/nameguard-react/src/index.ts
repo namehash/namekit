@@ -10,8 +10,8 @@ export { ReportShield } from "./components/ReportShield";
 export { CheckIcon } from "./components/Report/CheckIcon";
 export { RatingIcon, RatingIconSize } from "./components/Report/RatingIcon";
 
-export { LoadingShieldIcon } from "./components/icons/LoadingShieldIcon";
-export { UnknownShieldIcon } from "./components/icons/UnknownShieldIcon";
+export { RatingLoadingIcon } from "./components/icons/RatingLoadingIcon";
+export { RatingUnknownIcon } from "./components/icons/RatingUnknownIcon";
 
 export { useChatModalStore } from "./stores/chat";
 export { useSearchStore } from "./stores/search";

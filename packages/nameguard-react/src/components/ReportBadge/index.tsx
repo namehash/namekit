@@ -4,7 +4,7 @@ import cc from "classcat";
 
 import { ReportShield } from "../ReportShield";
 import { UnknownReportShield } from "../UnknownReportShield/UnknownReportShield";
-import { LoadingShieldIcon, RatingIconSize } from "../..";
+import { RatingLoadingIcon, RatingIconSize } from "../..";
 
 interface ReportBadgeProps {
   name?: string;
@@ -59,7 +59,7 @@ export function ReportBadge({ name, onClick, data, error }: ReportBadgeProps) {
         ) : (
           <span className="rounded-full h-2 w-16 bg-gray-200 animate-pulse"></span>
         )}
-        <LoadingShieldIcon
+        <RatingLoadingIcon
           size={RatingIconSize.small}
           className={cursorClass}
         />
