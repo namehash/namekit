@@ -34,19 +34,22 @@ export default function RatingShieldsPage() {
             </div>
 
             <div className="flex items-center justify-center">
-              <ReportIcon data={getReportExampleData(Rating.pass)} />
+              <ReportIcon data={getExampleReportData(Rating.pass)} />
             </div>
             <div className="flex items-center justify-center">
-              <ReportIcon data={getReportExampleData(Rating.warn)} />
+              <ReportIcon data={getExampleReportData(Rating.warn)} />
             </div>
             <div className="flex items-center justify-center">
-              <ReportIcon data={getReportExampleData(Rating.alert)} />
+              <ReportIcon data={getExampleReportData(Rating.alert)} />
             </div>
             <div className="flex items-center justify-center">
-              <ReportIcon name="notrab.eth" hadLoadingError={true} />
+              <ReportIcon
+                name={getExampleReportName(undefined, true)}
+                hadLoadingError={true}
+              />
             </div>
             <div className="flex items-center justify-center">
-              <ReportIcon name="notrab.eth" />
+              <ReportIcon name={getExampleReportName(undefined, true)} />
             </div>
           </div>
           <div className="grid grid-cols-6 gap-x-6 py-5">
@@ -56,31 +59,34 @@ export default function RatingShieldsPage() {
 
             <div className="flex items-center justify-center">
               <ReportIcon
-                data={getReportExampleData(Rating.pass)}
+                data={getExampleReportData(Rating.pass)}
                 onClick={() => alert("Clicked")}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                data={getReportExampleData(Rating.warn)}
+                data={getExampleReportData(Rating.warn)}
                 onClick={() => alert("Clicked")}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                data={getReportExampleData(Rating.alert)}
+                data={getExampleReportData(Rating.alert)}
                 onClick={() => alert("Clicked")}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
                 hadLoadingError={true}
-                name="notrab.eth"
+                name={getExampleReportName(undefined, true)}
                 onClick={() => alert("Clicked")}
               />
             </div>
             <div className="flex items-center justify-center">
-              <ReportIcon name="notrab.eth" onClick={() => alert("Clicked")} />
+              <ReportIcon
+                name={getExampleReportName(undefined, true)}
+                onClick={() => alert("Clicked")}
+              />
             </div>
           </div>
         </div>
@@ -109,27 +115,30 @@ export default function RatingShieldsPage() {
 
           <div className="flex items-center justify-center">
             <ReportBadge
-              name="lightwalker.eth"
-              data={getReportExampleData(Rating.pass)}
+              name={getExampleReportName(Rating.pass)}
+              data={getExampleReportData(Rating.pass)}
             />
           </div>
           <div className="flex items-center justify-center">
             <ReportBadge
-              name="culturecafé.eth"
-              data={getReportExampleData(Rating.warn)}
+              name={getExampleReportName(Rating.warn)}
+              data={getExampleReportData(Rating.warn)}
             />
           </div>
           <div className="flex items-center justify-center">
             <ReportBadge
-              name="‍420.eth"
-              data={getReportExampleData(Rating.alert)}
+              name={getExampleReportName(Rating.alert)}
+              data={getExampleReportData(Rating.alert)}
             />
           </div>
           <div className="flex items-center justify-center">
-            <ReportBadge name="notrab.eth" hadLoadingError={true} />
+            <ReportBadge
+              name={getExampleReportName(undefined, true)}
+              hadLoadingError={true}
+            />
           </div>
           <div className="flex items-center justify-center">
-            <ReportBadge name="loading.eth" />
+            <ReportBadge name={getExampleReportName()} />
           </div>
         </div>
 
@@ -142,34 +151,37 @@ export default function RatingShieldsPage() {
 
           <div className="flex items-center justify-center">
             <ReportBadge
-              name="lightwalker.eth"
-              data={getReportExampleData(Rating.pass)}
+              name={getExampleReportName(Rating.pass)}
+              data={getExampleReportData(Rating.pass)}
               onClick={() => alert("Clicked")}
             />
           </div>
           <div className="flex items-center justify-center">
             <ReportBadge
-              name="culturecafé.eth"
-              data={getReportExampleData(Rating.warn)}
+              name={getExampleReportName(Rating.warn)}
+              data={getExampleReportData(Rating.warn)}
               onClick={() => alert("Clicked")}
             />
           </div>
           <div className="flex items-center justify-center">
             <ReportBadge
-              name="‍420.eth"
-              data={getReportExampleData(Rating.alert)}
+              name={getExampleReportName(Rating.alert)}
+              data={getExampleReportData(Rating.alert)}
               onClick={() => alert("Clicked")}
             />
           </div>
           <div className="flex items-center justify-center">
             <ReportBadge
               hadLoadingError={true}
-              name="notrab.eth"
+              name={getExampleReportName(Rating.pass, true)}
               onClick={() => alert("Clicked")}
             />
           </div>
           <div className="flex items-center justify-center">
-            <ReportBadge name="loading.eth" onClick={() => alert("Clicked")} />
+            <ReportBadge
+              name={getExampleReportName()}
+              onClick={() => alert("Clicked")}
+            />
           </div>
         </div>
       </div>
@@ -177,7 +189,25 @@ export default function RatingShieldsPage() {
   );
 }
 
-const getReportExampleData = (rating: Rating): ConsolidatedNameGuardReport => {
+const getExampleReportName = (
+  rating?: Rating,
+  compWithError = false,
+): string => {
+  if (compWithError) return "notrab.eth";
+
+  if (!rating) return "loading.eth";
+
+  switch (rating) {
+    case Rating.pass:
+      return "lightwalker.eth";
+    case Rating.warn:
+      return "culturecafé.eth";
+    case Rating.alert:
+      return "‍420.eth";
+  }
+};
+
+const getExampleReportData = (rating: Rating): ConsolidatedNameGuardReport => {
   switch (rating) {
     case Rating.pass:
       return {
