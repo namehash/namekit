@@ -38,23 +38,23 @@ const getComponent = (rating: Rating, size: RatingIconSize): React.Node => {
   const componentName = `${baseName}${capitalizeFirstLetter(size)}Icon`;
 
   const components: { [key: string]: React.ComponentType } = {
-    PassShieldLargeIcon: RatingPassLargeIcon,
-    PassShieldMediumIcon: RatingPassMediumIcon,
-    PassShieldSmallIcon: RatingPassSmallIcon,
-    PassShieldMicroIcon: RatingPassMicroIcon,
-    WarnShieldLargeIcon: RatingWarnLargeIcon,
-    WarnShieldMediumIcon: RatingWarnMediumIcon,
-    WarnShieldSmallIcon: RatingWarnSmallIcon,
-    WarnShieldMicroIcon: RatingWarnMicroIcon,
-    AlertShieldLargeIcon: RatingAlertLargeIcon,
-    AlertShieldMediumIcon: RatingAlertMediumIcon,
-    AlertShieldSmallIcon: RatingAlertSmallIcon,
-    AlertShieldMicroIcon: RatingAlertMicroIcon,
+    RatingPassLargeIcon,
+    RatingPassMediumIcon,
+    RatingPassSmallIcon,
+    RatingPassMicroIcon,
+    RatingWarnLargeIcon,
+    RatingWarnMediumIcon,
+    RatingWarnSmallIcon,
+    RatingWarnMicroIcon,
+    RatingAlertLargeIcon,
+    RatingAlertMediumIcon,
+    RatingAlertSmallIcon,
+    RatingAlertMicroIcon,
   };
 
   if (!components[componentName]) {
     throw new Error(
-      `RatingIcon could not be built with params: \n\n rating: ${rating}\n size: ${size}`
+      `RatingIcon could not be built with params: \n\n rating: ${rating}\n size: ${size}`,
     );
   }
 

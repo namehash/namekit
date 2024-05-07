@@ -1,4 +1,4 @@
-import React, { type ReactNode } from "react";
+import React from "react";
 import {
   CheckResultCode,
   ConsolidatedNameGuardReport,
@@ -6,28 +6,32 @@ import {
 import cc from "classcat";
 
 import { Tooltip } from "../Tooltip/Tooltip";
-import { RatingIcon, RatingIconSize } from "../Report/RatingIcon";
 import { RatingLoadingIcon } from "../icons/RatingLoadingIcon";
 import { RatingUnknownIcon } from "../icons/RatingUnknownIcon";
+import { RatingIcon, RatingIconSize } from "../Report/RatingIcon";
 import { checkResultCodeTextColor, ratingTextColor } from "../../utils/text";
 
 type ReportShieldProps = {
+  onClick?: () => any;
   data?: ConsolidatedNameGuardReport;
-  children?: ReactNode;
-  disableHover?: boolean;
-  size?: RatingIconSize;
   hadLoadingError: boolean;
+  size?: RatingIconSize;
 } & React.ComponentProps;
 
-export function ReportShield({
+declare global {
+  interface Window {
+    location: Location;
+  }
+}
+
+export function ReportIcon({
   data,
-  children,
-  disableHover,
-  hasLoadingError,
+  onClick,
+  hadLoadingError,
   size = RatingIconSize.small,
   ...props
 }: ReportShieldProps) {
-  if (hasLoadingError) {
+  if (hadLoadingError) {
     return <RatingUnknownIcon size={size} {...props} />;
   }
 
@@ -39,12 +43,28 @@ export function ReportShield({
 
   const textClass = cc(["font-semibold mb-1", ratingTextColor(rating)]);
 
-  if (disableHover) {
-    return <RatingIcon rating={rating} size={size} {...props} />;
-  }
+  const onClickHandler = () => {
+    if (onClick) onClick();
+    else {
+      window.location.href = `https://nameguard.io/inspect/${encodeURIComponent(
+        data.name,
+      )}`;
+    }
+  };
 
   return (
-    <Tooltip trigger={<RatingIcon rating={rating} size={size} {...props} />}>
+    <Tooltip
+      trigger={
+        <RatingIcon
+          role="button"
+          onClick={onClickHandler}
+          className="cursor-pointer"
+          rating={rating}
+          size={size}
+          {...props}
+        />
+      }
+    >
       <div className="flex items-start space-x-3 py-2.5 min-w-[300px] max-w-[300px]">
         <div className="mt-0.5">
           <RatingIcon rating={rating} size={RatingIconSize.small} />
@@ -65,10 +85,9 @@ export function ReportShield({
             )}
           </div>
 
-          <div className="text-sm text-white font-normal">
+          <div className="text-left text-sm text-white font-normal">
             {highest_risk?.message || subtitle}
           </div>
-          {children}
         </div>
       </div>
     </Tooltip>

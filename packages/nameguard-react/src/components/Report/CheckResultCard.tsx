@@ -3,6 +3,8 @@ import { CheckResult } from "@namehash/nameguard";
 import { CheckIcon } from "./CheckIcon";
 
 export function CheckResultCard(props: CheckResult) {
+  if (!props) return <></>;
+
   return (
     <div className="p-5 flex md:items-center space-x-4 border border-gray-200 rounded-md bg-gray-50">
       <div className="flex-shrink-0 rounded-full w-12 h-12 border border-gray-200 bg-white flex items-center justify-center">

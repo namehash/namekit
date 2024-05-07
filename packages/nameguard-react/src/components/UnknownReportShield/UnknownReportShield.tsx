@@ -31,7 +31,6 @@ export const UnknownReportShield = ({
           <div className="text-sm text-white font-normal">
             Refresh the page to try again.
           </div>
-          {children}
         </div>
       </div>
     </Tooltip>

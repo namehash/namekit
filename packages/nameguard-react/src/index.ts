@@ -6,7 +6,7 @@ export { SearchModal } from "./components/Search/SearchModal";
 export { SettingsModal } from "./components/SettingsModal/SettingsModal";
 
 export { ReportBadge } from "./components/ReportBadge";
-export { ReportShield } from "./components/ReportShield";
+export { ReportIcon } from "./components/ReportIcon";
 export { CheckIcon } from "./components/Report/CheckIcon";
 export { RatingIcon, RatingIconSize } from "./components/Report/RatingIcon";
 
