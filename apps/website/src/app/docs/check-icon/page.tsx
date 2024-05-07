@@ -8,7 +8,7 @@ export default function RatingShieldsPage() {
     <div className="py-12 max-w-7xl mx-auto px-6 space-y-12">
       <div className="divide-y divide-gray-100">
         <h1 className="justify-center flex font-bold text-2xl mb-4">
-          {"<"}CheckResultCode {"/>"} documentation
+          {"<"}CheckIcon {"/>"} documentation
         </h1>
 
         <div className="grid grid-cols-6 gap-x-6 py-5 text-center font-medium mt-12">
