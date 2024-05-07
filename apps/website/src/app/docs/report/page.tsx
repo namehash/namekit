@@ -96,7 +96,7 @@ export default function RatingShieldsPage() {
             <div>Warn</div>
             <div>Alert</div>
             <div>Unknown</div>
-            <div>Loading</div>
+            <div>no data</div>
           </div>
         </div>
 
