@@ -7,9 +7,6 @@ export const CheckResultCodeWarnIcon = ({ withHoverEffect = true }) => (
   <svg
     className={cc([
       "w-5 h-5 fill-current transition",
-      {
-        "cursor-pointer": withHoverEffect,
-      },
       checkResultCodeTextColor(CheckResultCode.warn, withHoverEffect),
     ])}
     viewBox="0 0 20 20"

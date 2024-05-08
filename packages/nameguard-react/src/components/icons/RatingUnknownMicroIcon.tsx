@@ -6,6 +6,7 @@ export const RatingUnknownMicroIcon = (props: any) => (
     height="14"
     viewBox="0 0 14 14"
     fill="none"
+    className="group"
     xmlns="http://www.w3.org/2000/svg"
     {...props}
   >

@@ -1,11 +1,7 @@
 "use client";
 
 import { Rating } from "@namehash/nameguard";
-import {
-  RatingIcon,
-  RatingIconSize,
-  RatingLoadingIcon,
-} from "@namehash/nameguard-react";
+import { RatingIcon, RatingIconSize } from "@namehash/nameguard-react";
 
 export default function RatingShieldsPage() {
   return (
@@ -15,16 +11,15 @@ export default function RatingShieldsPage() {
           {"<"}RatingIcon {"/>"} documentation
         </h1>
 
-        <div className="grid grid-cols-5 gap-x-6 py-5 text-center font-medium mt-12">
+        <div className="grid grid-cols-4 gap-x-6 py-5 text-center font-medium mt-12">
           <div></div>
           <div>Rating.pass</div>
           <div>Rating.warn</div>
           <div>Rating.alert</div>
-          <div>Loading Rating</div>
         </div>
 
         <div className="divide-y divide-gray-100">
-          <div className="grid grid-cols-5 gap-x-6 py-5">
+          <div className="grid grid-cols-4 gap-x-6 py-5">
             <div className="flex items-center font-mono">
               <pre>{`<RatingIcon large />`}</pre>
             </div>
@@ -38,12 +33,9 @@ export default function RatingShieldsPage() {
             <div className="flex items-center justify-center">
               <RatingIcon rating={Rating.alert} size={RatingIconSize.large} />
             </div>
-            <div className="flex items-center justify-center">
-              <RatingLoadingIcon size={RatingIconSize.large} />
-            </div>
           </div>
 
-          <div className="grid grid-cols-5 gap-x-6 py-5">
+          <div className="grid grid-cols-4 gap-x-6 py-5">
             <div className="flex items-center font-mono">
               <pre>{`<RatingIcon medium />`}</pre>
             </div>
@@ -57,12 +49,9 @@ export default function RatingShieldsPage() {
             <div className="flex items-center justify-center">
               <RatingIcon rating={Rating.alert} size={RatingIconSize.medium} />
             </div>
-            <div className="flex items-center justify-center">
-              <RatingLoadingIcon size={RatingIconSize.medium} />
-            </div>
           </div>
 
-          <div className="grid grid-cols-5 gap-x-6 py-5">
+          <div className="grid grid-cols-4 gap-x-6 py-5">
             <div className="flex items-center font-mono">
               <pre>{`<RatingIcon small />`}</pre>
             </div>
@@ -76,12 +65,9 @@ export default function RatingShieldsPage() {
             <div className="flex items-center justify-center">
               <RatingIcon rating={Rating.alert} size={RatingIconSize.small} />
             </div>
-            <div className="flex items-center justify-center">
-              <RatingLoadingIcon size={RatingIconSize.small} />
-            </div>
           </div>
 
-          <div className="grid grid-cols-5 gap-x-6 py-5">
+          <div className="grid grid-cols-4 gap-x-6 py-5">
             <div className="flex items-center font-mono">
               <pre>{`<RatingIcon micro />`}</pre>
             </div>
@@ -94,9 +80,6 @@ export default function RatingShieldsPage() {
             </div>
             <div className="flex items-center justify-center">
               <RatingIcon rating={Rating.alert} size={RatingIconSize.micro} />
-            </div>
-            <div className="flex items-center justify-center">
-              <RatingLoadingIcon size={RatingIconSize.micro} />
             </div>
           </div>
         </div>

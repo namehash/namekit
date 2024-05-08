@@ -121,12 +121,13 @@ export const SearchEmptyState = () => {
               </div>
             )}
             {isLoading &&
-              examples.map((e, index) => <ReportBadge name={e} key={index} />)}
+              examples.map((e, index) => (
+                <ReportBadge ensName={e} key={index} />
+              ))}
             {data?.results?.map((report, index) => (
               <ReportBadge
                 key={index}
                 data={report}
-                hadLoadingError={hadLoadingError}
                 onClick={() => openModal(report.name)}
               />
             ))}

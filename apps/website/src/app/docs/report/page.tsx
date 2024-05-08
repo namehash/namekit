@@ -1,11 +1,13 @@
 "use client";
 
+import { ENSName, buildENSName } from "@namehash/ens-utils";
 import {
   CheckResultCode,
   ConsolidatedNameGuardReport,
   Normalization,
   Rating,
 } from "@namehash/nameguard";
+import { RatingIconSize } from "@namehash/nameguard-react";
 import { ReportBadge, ReportIcon } from "@namehash/nameguard-react";
 
 export default function RatingShieldsPage() {
@@ -22,7 +24,7 @@ export default function RatingShieldsPage() {
             <div>Success</div>
             <div>Warn</div>
             <div>Alert</div>
-            <div>hasLoadingError</div>
+            <div>hadLoadingError</div>
             <div>no data</div>
           </div>
         </div>
@@ -30,62 +32,201 @@ export default function RatingShieldsPage() {
         <div className="divide-y divide-gray-100">
           <div className="grid grid-cols-6 gap-x-6 py-5">
             <div className="flex items-center font-mono">
-              <pre>{"<ReportIcon />"}</pre>
+              <pre>{"<ReportIcon large />"}</pre>
             </div>
 
             <div className="flex items-center justify-center">
-              <ReportIcon data={getExampleReportData(Rating.pass)} />
-            </div>
-            <div className="flex items-center justify-center">
-              <ReportIcon data={getExampleReportData(Rating.warn)} />
-            </div>
-            <div className="flex items-center justify-center">
-              <ReportIcon data={getExampleReportData(Rating.alert)} />
+              <ReportIcon
+                ensName={getExampleReportName(Rating.pass)}
+                data={getExampleReportData(Rating.pass)}
+                size={RatingIconSize.large}
+              />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                name={getExampleReportName(undefined, true)}
+                ensName={getExampleReportName(Rating.warn)}
+                data={getExampleReportData(Rating.warn)}
+                size={RatingIconSize.large}
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <ReportIcon
+                ensName={getExampleReportName(Rating.alert)}
+                data={getExampleReportData(Rating.alert)}
+                size={RatingIconSize.large}
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <ReportIcon
+                ensName={getExampleReportName(undefined, true)}
+                size={RatingIconSize.large}
                 hadLoadingError={true}
               />
             </div>
             <div className="flex items-center justify-center">
-              <ReportIcon name={getExampleReportName(undefined, true)} />
+              <ReportIcon
+                ensName={getExampleReportName(undefined, true)}
+                size={RatingIconSize.large}
+              />
             </div>
           </div>
           <div className="grid grid-cols-6 gap-x-6 py-5">
             <div className="flex items-center font-mono">
-              <pre>{"<ReportIcon onClick />"}</pre>
+              <pre>{"<ReportIcon medium />"}</pre>
             </div>
 
             <div className="flex items-center justify-center">
               <ReportIcon
+                ensName={getExampleReportName(Rating.pass)}
                 data={getExampleReportData(Rating.pass)}
-                onClick={() => alert("Clicked")}
+                size={RatingIconSize.medium}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
+                ensName={getExampleReportName(Rating.warn)}
                 data={getExampleReportData(Rating.warn)}
-                onClick={() => alert("Clicked")}
+                size={RatingIconSize.medium}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
+                ensName={getExampleReportName(Rating.alert)}
                 data={getExampleReportData(Rating.alert)}
-                onClick={() => alert("Clicked")}
+                size={RatingIconSize.medium}
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <ReportIcon
+                ensName={getExampleReportName(undefined, true)}
+                size={RatingIconSize.medium}
+                hadLoadingError={true}
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <ReportIcon
+                ensName={getExampleReportName(undefined, true)}
+                size={RatingIconSize.medium}
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-6 gap-x-6 py-5">
+            <div className="flex items-center font-mono">
+              <pre>{"<ReportIcon small />"}</pre>
+            </div>
+
+            <div className="flex items-center justify-center">
+              <ReportIcon
+                ensName={getExampleReportName(Rating.pass)}
+                data={getExampleReportData(Rating.pass)}
+                size={RatingIconSize.small}
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <ReportIcon
+                ensName={getExampleReportName(Rating.warn)}
+                data={getExampleReportData(Rating.warn)}
+                size={RatingIconSize.small}
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <ReportIcon
+                ensName={getExampleReportName(Rating.alert)}
+                data={getExampleReportData(Rating.alert)}
+                size={RatingIconSize.small}
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <ReportIcon
+                ensName={getExampleReportName(undefined, true)}
+                size={RatingIconSize.small}
+                hadLoadingError={true}
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <ReportIcon
+                ensName={getExampleReportName(undefined, true)}
+                size={RatingIconSize.small}
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-6 gap-x-6 py-5">
+            <div className="flex items-center font-mono">
+              <pre>{"<ReportIcon micro />"}</pre>
+            </div>
+
+            <div className="flex items-center justify-center">
+              <ReportIcon
+                ensName={getExampleReportName(Rating.pass)}
+                data={getExampleReportData(Rating.pass)}
+                size={RatingIconSize.micro}
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <ReportIcon
+                ensName={getExampleReportName(Rating.warn)}
+                data={getExampleReportData(Rating.warn)}
+                size={RatingIconSize.micro}
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <ReportIcon
+                ensName={getExampleReportName(Rating.alert)}
+                data={getExampleReportData(Rating.alert)}
+                size={RatingIconSize.micro}
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <ReportIcon
+                ensName={getExampleReportName(undefined, true)}
+                size={RatingIconSize.micro}
+                hadLoadingError={true}
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <ReportIcon
+                ensName={getExampleReportName(undefined, true)}
+                size={RatingIconSize.micro}
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-6 gap-x-6 py-5">
+            <div className="flex items-center font-mono">
+              <pre>{"<ReportIcon \n   onClickOverride />"}</pre>
+            </div>
+
+            <div className="flex items-center justify-center">
+              <ReportIcon
+                ensName={getExampleReportName(Rating.pass)}
+                data={getExampleReportData(Rating.pass)}
+                onClickOverride={() => alert("Clicked")}
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <ReportIcon
+                ensName={getExampleReportName(Rating.warn)}
+                data={getExampleReportData(Rating.warn)}
+                onClickOverride={() => alert("Clicked")}
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <ReportIcon
+                ensName={getExampleReportName(Rating.alert)}
+                data={getExampleReportData(Rating.alert)}
+                onClickOverride={() => alert("Clicked")}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
                 hadLoadingError={true}
-                name={getExampleReportName(undefined, true)}
-                onClick={() => alert("Clicked")}
+                ensName={getExampleReportName(undefined, true)}
+                onClickOverride={() => alert("Clicked")}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                name={getExampleReportName(undefined, true)}
-                onClick={() => alert("Clicked")}
+                ensName={getExampleReportName(undefined, true)}
+                onClickOverride={() => alert("Clicked")}
               />
             </div>
           </div>
@@ -101,7 +242,7 @@ export default function RatingShieldsPage() {
             <div>Success</div>
             <div>Warn</div>
             <div>Alert</div>
-            <div>hasLoadingError</div>
+            <div>hadLoadingError</div>
             <div>no data</div>
           </div>
         </div>
@@ -115,72 +256,72 @@ export default function RatingShieldsPage() {
 
           <div className="flex items-center justify-center">
             <ReportBadge
-              name={getExampleReportName(Rating.pass)}
+              ensName={getExampleReportName(Rating.pass)}
               data={getExampleReportData(Rating.pass)}
             />
           </div>
           <div className="flex items-center justify-center">
             <ReportBadge
-              name={getExampleReportName(Rating.warn)}
+              ensName={getExampleReportName(Rating.warn)}
               data={getExampleReportData(Rating.warn)}
             />
           </div>
           <div className="flex items-center justify-center">
             <ReportBadge
-              name={getExampleReportName(Rating.alert)}
+              ensName={getExampleReportName(Rating.alert)}
               data={getExampleReportData(Rating.alert)}
             />
           </div>
           <div className="flex items-center justify-center">
             <ReportBadge
-              name={getExampleReportName(undefined, true)}
+              ensName={getExampleReportName(undefined, true)}
               hadLoadingError={true}
             />
           </div>
           <div className="flex items-center justify-center">
-            <ReportBadge name={getExampleReportName()} />
+            <ReportBadge ensName={getExampleReportName()} />
           </div>
         </div>
 
         <div className="grid grid-cols-6 gap-x-6 py-5">
           <div className="flex items-center">
             <div className="flex items-center font-mono">
-              <pre>{"<ReportBadge onClick />"}</pre>
+              <pre>{"<ReportBadge \n   onClickOverride />"}</pre>
             </div>
           </div>
 
           <div className="flex items-center justify-center">
             <ReportBadge
-              name={getExampleReportName(Rating.pass)}
+              ensName={getExampleReportName(Rating.pass)}
               data={getExampleReportData(Rating.pass)}
-              onClick={() => alert("Clicked")}
+              onClickOverride={() => alert("Clicked")}
             />
           </div>
           <div className="flex items-center justify-center">
             <ReportBadge
-              name={getExampleReportName(Rating.warn)}
+              ensName={getExampleReportName(Rating.warn)}
               data={getExampleReportData(Rating.warn)}
-              onClick={() => alert("Clicked")}
+              onClickOverride={() => alert("Clicked")}
             />
           </div>
           <div className="flex items-center justify-center">
             <ReportBadge
-              name={getExampleReportName(Rating.alert)}
+              ensName={getExampleReportName(Rating.alert)}
               data={getExampleReportData(Rating.alert)}
-              onClick={() => alert("Clicked")}
+              onClickOverride={() => alert("Clicked")}
             />
           </div>
           <div className="flex items-center justify-center">
             <ReportBadge
               hadLoadingError={true}
-              name={getExampleReportName(Rating.pass, true)}
-              onClick={() => alert("Clicked")}
+              ensName={getExampleReportName(Rating.pass, true)}
+              onClickOverride={() => alert("Clicked")}
             />
           </div>
           <div className="flex items-center justify-center">
             <ReportBadge
-              name={getExampleReportName()}
-              onClick={() => alert("Clicked")}
+              ensName={getExampleReportName()}
+              onClickOverride={() => alert("Clicked")}
             />
           </div>
         </div>
@@ -192,18 +333,18 @@ export default function RatingShieldsPage() {
 const getExampleReportName = (
   rating?: Rating,
   compWithError = false,
-): string => {
-  if (compWithError) return "notrab.eth";
+): ENSName => {
+  if (compWithError) return buildENSName("notrab.eth");
 
-  if (!rating) return "loading.eth";
+  if (!rating) return buildENSName("loading.eth");
 
   switch (rating) {
     case Rating.pass:
-      return "lightwalker.eth";
+      return buildENSName("lightwalker.eth");
     case Rating.warn:
-      return "culturecafé.eth";
+      return buildENSName("culturecafé.eth");
     case Rating.alert:
-      return "‍420.eth";
+      return buildENSName("‍420.eth");
   }
 };
 
@@ -232,13 +373,13 @@ const getExampleReportData = (rating: Rating): ConsolidatedNameGuardReport => {
           message: "May be confusable",
           check_name: "Character Recognition",
         },
-        name: "thequickbrownfoxjumpsoverthelazydòg.eth",
+        name: "culturecafé.eth",
         namehash:
-          "0x90f86b68361b1034db95680f02f209314e0c9024fb7a60ad323e2530a0c18513",
+          "0x633b4f6a64d539885d9b85c8730a0bc3479c6248f7a99cd2e302707f49c6d5a5",
         normalization: Normalization.normalized,
         title: "Some Risk",
         subtitle: "Review risks before proceeding",
-        beautiful_name: "thequickbrownfoxjumpsoverthelazydòg.eth",
+        beautiful_name: "culturecafé.eth",
       };
     case Rating.alert:
       return {

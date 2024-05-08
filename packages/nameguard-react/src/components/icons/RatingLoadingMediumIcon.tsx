@@ -1,98 +1,34 @@
 import * as React from "react";
 
 export const RatingLoadingMediumIcon = (props) => (
-  <svg
-    width="56"
-    height="58"
-    viewBox="0 0 56 58"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className="animate-pulse"
-    {...props}
-  >
-    <g filter="url(#filter0_dd_405_7386)">
+  <div className="animate-pulse">
+    <svg
+      width="20"
+      height="22"
+      viewBox="0 0 20 22"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
       <path
-        d="M30.0629 4.2505C28.9059 3.15478 27.0941 3.15478 25.9371 4.2505C22.1711 7.81709 17.0938 10.0002 11.5 10.0002C11.4109 10.0002 11.3219 9.99966 11.2331 9.99855C9.92358 9.98229 8.75489 10.8173 8.34587 12.0613C7.4717 14.7202 7 17.5581 7 20.5003C7 33.0855 15.6078 43.6524 27.2522 46.6495C27.7428 46.7758 28.2573 46.7758 28.7478 46.6495C40.3922 43.6524 49 33.0855 49 20.5003C49 17.5581 48.5283 14.7202 47.6541 12.0613C47.2451 10.8173 46.0764 9.98229 44.767 9.99855C44.6781 9.99966 44.5891 10.0002 44.5 10.0002C38.9062 10.0002 33.8289 7.81709 30.0629 4.2505Z"
-        fill="url(#paint0_linear_405_7386)"
-        stroke="white"
-        strokeWidth="3"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M9.48428 1.1698C9.77353 0.895873 10.2265 0.895873 10.5157 1.1698C12.5325 3.07977 15.2538 4.25011 18.25 4.25011C18.2977 4.25011 18.3453 4.24981 18.3928 4.24922C18.7202 4.24515 19.0123 4.4539 19.1146 4.76491C19.5271 6.01968 19.75 7.35963 19.75 8.75015C19.75 14.6922 15.6859 19.6831 10.1869 21.0984C10.0643 21.13 9.93569 21.13 9.81306 21.0984C4.31406 19.6831 0.25 14.6922 0.25 8.75015C0.25 7.35963 0.472873 6.01968 0.885415 4.76491C0.987669 4.4539 1.27984 4.24515 1.60721 4.24922C1.65473 4.24981 1.70233 4.25011 1.75 4.25011C4.74624 4.25011 7.46752 3.07977 9.48428 1.1698Z"
+        fill="url(#paint0_linear_4512_17)"
       />
-    </g>
-    <defs>
-      <filter
-        id="filter0_dd_405_7386"
-        x="-1"
-        y="0"
-        width="58"
-        height="58"
-        filterUnits="userSpaceOnUse"
-        colorInterpolationFilters="sRGB"
-      >
-        <feFlood floodOpacity="0" result="BackgroundImageFix" />
-        <feColorMatrix
-          in="SourceAlpha"
-          type="matrix"
-          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-          result="hardAlpha"
-        />
-        <feMorphology
-          radius="1"
-          operator="erode"
-          in="SourceAlpha"
-          result="effect1_dropShadow_405_7386"
-        />
-        <feOffset dy="2" />
-        <feGaussianBlur stdDeviation="2" />
-        <feColorMatrix
-          type="matrix"
-          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.06 0"
-        />
-        <feBlend
-          mode="normal"
-          in2="BackgroundImageFix"
-          result="effect1_dropShadow_405_7386"
-        />
-        <feColorMatrix
-          in="SourceAlpha"
-          type="matrix"
-          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-          result="hardAlpha"
-        />
-        <feMorphology
-          radius="1"
-          operator="erode"
-          in="SourceAlpha"
-          result="effect2_dropShadow_405_7386"
-        />
-        <feOffset dy="4" />
-        <feGaussianBlur stdDeviation="3" />
-        <feColorMatrix
-          type="matrix"
-          values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0"
-        />
-        <feBlend
-          mode="normal"
-          in2="effect1_dropShadow_405_7386"
-          result="effect2_dropShadow_405_7386"
-        />
-        <feBlend
-          mode="normal"
-          in="SourceGraphic"
-          in2="effect2_dropShadow_405_7386"
-          result="shape"
-        />
-      </filter>
-      <linearGradient
-        id="paint0_linear_405_7386"
-        x1="8.5"
-        y1="7.02848"
-        x2="48.9151"
-        y2="8.80222"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#000000" stopOpacity="0.2" />
-        <stop offset="1" stopColor="#000000" stopOpacity="0" />
-      </linearGradient>
-    </defs>
-  </svg>
+      <defs>
+        <linearGradient
+          id="paint0_linear_4512_17"
+          x1="0.4"
+          y1="1.4"
+          x2="19.6"
+          y2="20.6"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopOpacity="0.2" />
+          <stop offset="1" stopOpacity="0" />
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
 );

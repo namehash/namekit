@@ -7,9 +7,6 @@ export const CheckResultCodeSkipIcon = ({ withHoverEffect = true }) => (
   <svg
     className={cc([
       "w-[12px] h-[10px] fill-current transition",
-      {
-        "cursor-pointer": withHoverEffect,
-      },
       checkResultCodeTextColor(CheckResultCode.skip, withHoverEffect),
     ])}
     viewBox="0 0 12 10"

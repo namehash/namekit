@@ -6,29 +6,42 @@ import cc from "classcat";
 import { ReportIcon } from "../ReportIcon/index";
 import { RatingLoadingIcon, RatingIconSize, Tooltip } from "../..";
 import { UnknownReportShield } from "../UnknownReportShield/UnknownReportShield";
+import { ENSName } from "@namehash/ens-utils";
 
 interface ReportBadgeProps {
-  name: string;
-  onClick?: () => any;
+  onClickOverride?: () => any;
+
+  /*
+    The data prop is the consolidated report for the ensName.
+    The ensName prop is the ENSName object.
+
+    The data prop should always be relative to the ensName prop.
+    This means that the data prop should always be the report for
+    the ensName provided in the ensName prop.
+  */
+  ensName: ENSName;
   data?: ConsolidatedNameGuardReport;
+
   hadLoadingError?: boolean;
 }
 
+const MAX_TOOLTIP_WIDTH = 202;
+
 export function ReportBadge({
-  name,
+  ensName,
   data,
-  onClick,
+  onClickOverride,
   hadLoadingError,
 }: ReportBadgeProps) {
   const buttonClass =
-    "flex-shrink-0 appearance-none bg-white transition-colors hover:bg-gray-50 border border-gray-200 rounded-md px-2.5 py-1.5 space-x-1.5 inline-flex items-center";
+    "flex-shrink-0 appearance-none bg-white transition-colors hover:bg-gray-50 border border-gray-200 rounded-md px-2.5 py-1.5 inline-flex items-center";
   const buttonAndCursorClass = cc([buttonClass, "cursor-pointer"]);
 
   const onClickHandler = () => {
-    if (onClick) onClick();
+    if (onClickOverride) onClickOverride();
     else {
       window.location.href = `https://nameguard.io/inspect/${encodeURIComponent(
-        data.name,
+        ensName.name,
       )}`;
     }
   };
@@ -37,11 +50,18 @@ export function ReportBadge({
   const [showTooltip, setShowTooltip] = useState(false);
 
   useEffect(() => {
-    console.log(nameRef);
+    if (data) {
+      if (data.name !== ensName.name) {
+        throw new Error(`The data received is not for the provided ensName`);
+      }
+    }
+  }, [data]);
+
+  useEffect(() => {
     if (nameRef && nameRef.current) {
       const nameIsBiggerThanPillShows =
-        Math.round(nameRef.current.scrollWidth) >
-        Math.round(nameRef.current.getBoundingClientRect().width);
+        Math.round(nameRef.current.getBoundingClientRect().width) >
+        MAX_TOOLTIP_WIDTH;
 
       setShowTooltip(!!nameIsBiggerThanPillShows);
     }
@@ -50,14 +70,16 @@ export function ReportBadge({
   if (hadLoadingError)
     return (
       <button className={buttonAndCursorClass} onClick={onClickHandler}>
-        <span className="text-black text-sm leading-5 ens-webfont">{name}</span>
+        <span className="text-black text-sm leading-5 ens-webfont mr-1.5">
+          {ensName.displayName}
+        </span>
         <UnknownReportShield size="micro" className={"cursor-pointer"}>
           <div className="text-sm text-white">
             <button
               className="appearance-none underline font-medium"
               onClick={onClickHandler}
             >
-              Inspect name for details
+              Inspect ensName for details
             </button>
           </div>
         </UnknownReportShield>
@@ -67,7 +89,9 @@ export function ReportBadge({
   if (!data)
     return (
       <button className={buttonAndCursorClass} onClick={onClickHandler}>
-        <span className="text-black text-sm leading-5 ens-webfont">{name}</span>
+        <span className="text-black text-sm leading-5 ens-webfont mr-1.5">
+          {ensName.displayName}
+        </span>
         <RatingLoadingIcon
           size={RatingIconSize.small}
           className={"cursor-pointer"}
@@ -77,42 +101,41 @@ export function ReportBadge({
 
   return (
     <button className={buttonAndCursorClass} onClick={onClickHandler}>
-      <>
-        {/*
-          Below HTML is used for comparing wether name is
+      {/*
+          Below HTML is used for comparing wether ensName is
           using ellipsis in Ui or not. This is important
-          for displaying tooltip whenever name is longer
-          than the pill itself (name shows ellipsis).
+          for displaying tooltip whenever ensName is longer
+          than the badge itself (ensName shows ellipsis).
         */}
-        <div className="invisible absolute left-0 top-0 pointer-events-none">
-          <div ref={nameRef}>{data.beautiful_name || data.name}</div>
-        </div>
+      <div className="invisible absolute left-0 top-0 pointer-events-none">
+        <div ref={nameRef}>{ensName.displayName}</div>
+      </div>
 
-        {/*
-          Below HTML is the rendered Account Pill and Account tooltip,
-          which is displayed only when needed. When is it needed?
-          Whenever the primary name is longer than the pill itself.
+      {/*
+          Below HTML is the rendered badge and tooltip, being the
+          last one displayed only when needed. When is it needed?
+          Whenever the ensName displayed is longer than the badge itself.
         */}
-        {showTooltip ? (
-          <Tooltip
-            trigger={
-              <span className="text-black text-sm leading-5 ens-webfont max-w-[202px] truncate tultipe">
-                {data.beautiful_name || data.name}
-              </span>
-            }
-          >
-            <span className="text-black text-sm leading-5 ens-webfont">
-              {data.beautiful_name || data.name}
-            </span>
-          </Tooltip>
-        ) : (
-          <span className="text-black text-sm leading-5 ens-webfont max-w-[202px] truncate">
-            {data.beautiful_name || data.name}
+      {showTooltip ? (
+        <Tooltip
+          trigger={
+            <div className="cursor-pointer text-black text-sm leading-5 ens-webfont max-w-[202px] truncate pr-1">
+              {ensName.displayName}
+            </div>
+          }
+        >
+          <span className="text-white text-sm leading-5 ens-webfont">
+            {ensName.displayName}
           </span>
-        )}
-      </>
+        </Tooltip>
+      ) : (
+        <span className="cursor-pointer text-black text-sm leading-5 ens-webfont max-w-[202px] truncate pr-1.5">
+          {ensName.displayName}
+        </span>
+      )}
       <ReportIcon
         data={data}
+        ensName={ensName}
         size={RatingIconSize.micro}
         className={"cursor-pointer"}
         hadLoadingError={hadLoadingError}
