@@ -1,10 +1,5 @@
 import React from "react";
-import cc from "classcat";
-import {
-  CheckResultCode,
-  ConsolidatedGraphemeGuardReport,
-} from "@namehash/nameguard";
-import { checkResultCodeTextColor } from "../../utils/text";
+import { ConsolidatedGraphemeGuardReport } from "@namehash/nameguard";
 
 export function RiskCounter({
   count,
@@ -14,12 +9,7 @@ export function RiskCounter({
   if (count === 0 || count === 1) return null;
 
   return (
-    <span
-      className={cc([
-        "bg-yellow-100 rounded-full px-3 py-0.5 text-xs md:text-sm font-medium",
-        checkResultCodeTextColor(CheckResultCode.warn),
-      ])}
-    >
+    <span className="bg-yellow-100 rounded-full px-3 py-0.5 text-xs md:text-sm font-medium text-yellow-800">
       + {count - 1} more risk{count - 1 >= 2 && "s"}
     </span>
   );

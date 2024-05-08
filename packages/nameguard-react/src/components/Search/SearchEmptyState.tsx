@@ -36,7 +36,11 @@ export const SearchEmptyState = () => {
   const { openModal } = useSearchStore();
   const parsedNames = examples.map((n) => parseName(n));
 
-  const { data, isLoading, error } = useSWR<BulkConsolidatedNameGuardReport>(
+  const {
+    data,
+    isLoading,
+    error: hadLoadingError,
+  } = useSWR<BulkConsolidatedNameGuardReport>(
     examples.join(),
     (_) =>
       nameguard.bulkInspectNames(parsedNames.map((n) => n.outputName.name)),
@@ -122,7 +126,7 @@ export const SearchEmptyState = () => {
               <ReportBadge
                 key={index}
                 data={report}
-                error={error}
+                hadLoadingError={hadLoadingError}
                 onClick={() => openModal(report.name)}
               />
             ))}

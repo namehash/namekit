@@ -88,6 +88,15 @@ export function ReportIcon({
           <div className="text-left text-sm text-white font-normal">
             {highest_risk?.message || subtitle}
           </div>
+
+          <div className="text-sm text-white">
+            <button
+              className="appearance-none underline font-medium"
+              onClick={onClickHandler}
+            >
+              Inspect name for details
+            </button>
+          </div>
         </div>
       </div>
     </Tooltip>

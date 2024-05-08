@@ -65,7 +65,11 @@ export const Report = ({
 
   const showEmptyState = parsedName.outputName.name.length === 0 ?? true;
 
-  const { data, error, isLoading } = useSWR<NameGuardReport>(
+  const {
+    data,
+    error: hadLoadingError,
+    isLoading,
+  } = useSWR<NameGuardReport>(
     fallbackData ? null : parsedName.outputName.name,
     (n: string) => nameguard.inspectName(n),
     {
@@ -118,14 +122,14 @@ export const Report = ({
           </div>
         </div>
 
-        {isLoading && !error && normalizationUnknown && (
+        {isLoading && !hadLoadingError && normalizationUnknown && (
           <LoadingSkeleton parsedName={parsedName} />
         )}
-        {isLoading && !error && !normalizationUnknown && (
+        {isLoading && !hadLoadingError && !normalizationUnknown && (
           <LoadingSkeleton parsedName={parsedName} />
         )}
 
-        {error && <ReportError />}
+        {hadLoadingError && <ReportError />}
 
         {data && (
           <Fragment>

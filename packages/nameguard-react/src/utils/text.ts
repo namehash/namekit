@@ -2,7 +2,7 @@ import { CheckResultCode, Rating } from "@namehash/nameguard";
 
 export function checkResultCodeTextColor(
   check: CheckResultCode,
-  isHover = false
+  isHover = false,
 ): string {
   let color = "";
 
@@ -23,7 +23,8 @@ export function checkResultCodeTextColor(
         : "text-yellow-500";
       return color;
     }
-    case (CheckResultCode.info, CheckResultCode.skip): {
+    case CheckResultCode.info:
+    case CheckResultCode.skip: {
       color = isHover ? "text-gray-400 hover:text-gray-500" : "text-gray-400";
       return color;
     }
