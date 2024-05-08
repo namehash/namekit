@@ -232,13 +232,13 @@ const getExampleReportData = (rating: Rating): ConsolidatedNameGuardReport => {
           message: "May be confusable",
           check_name: "Character Recognition",
         },
-        name: "culturecafé.eth",
+        name: "thequickbrownfoxjumpsoverthelazydòg.eth",
         namehash:
-          "0x633b4f6a64d539885d9b85c8730a0bc3479c6248f7a99cd2e302707f49c6d5a5",
+          "0x90f86b68361b1034db95680f02f209314e0c9024fb7a60ad323e2530a0c18513",
         normalization: Normalization.normalized,
         title: "Some Risk",
         subtitle: "Review risks before proceeding",
-        beautiful_name: "culturecafé.eth",
+        beautiful_name: "thequickbrownfoxjumpsoverthelazydòg.eth",
       };
     case Rating.alert:
       return {
