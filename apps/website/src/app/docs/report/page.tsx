@@ -22,7 +22,7 @@ export default function RatingShieldsPage() {
             <div>Success</div>
             <div>Warn</div>
             <div>Alert</div>
-            <div>Unknown</div>
+            <div>hasLoadingError</div>
             <div>no data</div>
           </div>
         </div>
