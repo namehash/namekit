@@ -9,7 +9,7 @@ type UnknownShieldProps = {
   size?: RatingIconSize;
 } & React.ComponentProps<typeof RatingIcon>;
 
-export const UnknownReportShield = ({
+export const UnknownReportIcon = ({
   children,
   size = RatingIconSize.small,
   ...props

@@ -4,28 +4,28 @@ import {
   nameguard,
   type BulkConsolidatedNameGuardReport,
 } from "@namehash/nameguard";
-import { parseName } from "@namehash/ens-utils";
+import { buildENSName, parseName } from "@namehash/ens-utils";
 
 import { ReportBadge } from "../ReportBadge";
 import { useSearchStore } from "../../stores/search";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 
 const examples = [
-  "culturecafé.eth",
-  "моёт.eth",
-  "batman十robin.eth",
-  "‍420.eth",
-  "0x🥷🏼.eth",
-  "metaverse‌.eth",
-  "🪼jellyfish.eth",
-  "español.eth",
-  "‍‍‍‍‍‍😎.eth",
-  "gm‍.eth",
-  "vitalik‍‍‍.eth",
-  "♪♪♪.eth",
-  "unknоwn.eth",
-  "john🇺🇸",
-  "7️⃣7️⃣7️⃣.eth",
+  buildENSName("culturecafé.eth"),
+  buildENSName("моёт.eth"),
+  buildENSName("batman十robin.eth"),
+  buildENSName("‍420.eth"),
+  buildENSName("0x🥷🏼.eth"),
+  buildENSName("metaverse‌.eth"),
+  buildENSName("🪼jellyfish.eth"),
+  buildENSName("español.eth"),
+  buildENSName("‍‍‍‍‍‍😎.eth"),
+  buildENSName("gm‍.eth"),
+  buildENSName("vitalik‍‍‍.eth"),
+  buildENSName("♪♪♪.eth"),
+  buildENSName("unknоwn.eth"),
+  buildENSName("john🇺🇸"),
+  buildENSName("7️⃣7️⃣7️⃣.eth"),
 ];
 
 export const SearchEmptyState = () => {
@@ -34,16 +34,15 @@ export const SearchEmptyState = () => {
   const [isAtEnd, setIsAtEnd] = useState<boolean>(false);
 
   const { openModal } = useSearchStore();
-  const parsedNames = examples.map((n) => parseName(n));
+  const exampleNames = examples.map((n) => n.name);
 
   const {
     data,
     isLoading,
     error: hadLoadingError,
   } = useSWR<BulkConsolidatedNameGuardReport>(
-    examples.join(),
-    (_) =>
-      nameguard.bulkInspectNames(parsedNames.map((n) => n.outputName.name)),
+    exampleNames.join(),
+    (_) => nameguard.bulkInspectNames(exampleNames),
     {
       revalidateIfStale: false,
       revalidateOnFocus: false,
@@ -122,13 +121,14 @@ export const SearchEmptyState = () => {
             )}
             {isLoading &&
               examples.map((e, index) => (
-                <ReportBadge ensName={e} key={index} />
+                <ReportBadge ensName={examples[index]} key={index} />
               ))}
             {data?.results?.map((report, index) => (
               <ReportBadge
                 key={index}
                 data={report}
-                onClick={() => openModal(report.name)}
+                ensName={examples[index]}
+                onClickOverride={() => openModal(report.name)}
               />
             ))}
             <div className="w-5 flex-shrink-0 relative">

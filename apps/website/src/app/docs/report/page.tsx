@@ -199,34 +199,34 @@ export default function RatingShieldsPage() {
               <ReportIcon
                 ensName={getExampleReportName(Rating.pass)}
                 data={getExampleReportData(Rating.pass)}
-                onClickOverride={() => alert("Clicked")}
+                onClickOverride={(ensName: ENSName) => alert(ensName.name)}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
                 ensName={getExampleReportName(Rating.warn)}
                 data={getExampleReportData(Rating.warn)}
-                onClickOverride={() => alert("Clicked")}
+                onClickOverride={(ensName: ENSName) => alert(ensName.name)}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
                 ensName={getExampleReportName(Rating.alert)}
                 data={getExampleReportData(Rating.alert)}
-                onClickOverride={() => alert("Clicked")}
+                onClickOverride={(ensName: ENSName) => alert(ensName.name)}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
                 hadLoadingError={true}
                 ensName={getExampleReportName(undefined, true)}
-                onClickOverride={() => alert("Clicked")}
+                onClickOverride={(ensName: ENSName) => alert(ensName.name)}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(undefined, true)}
-                onClickOverride={() => alert("Clicked")}
+                ensName={getExampleReportName()}
+                onClickOverride={(ensName: ENSName) => alert(ensName.name)}
               />
             </div>
           </div>
@@ -294,34 +294,34 @@ export default function RatingShieldsPage() {
             <ReportBadge
               ensName={getExampleReportName(Rating.pass)}
               data={getExampleReportData(Rating.pass)}
-              onClickOverride={() => alert("Clicked")}
+              onClickOverride={(ensName) => alert(ensName.name)}
             />
           </div>
           <div className="flex items-center justify-center">
             <ReportBadge
               ensName={getExampleReportName(Rating.warn)}
               data={getExampleReportData(Rating.warn)}
-              onClickOverride={() => alert("Clicked")}
+              onClickOverride={(ensName: ENSName) => alert(ensName.name)}
             />
           </div>
           <div className="flex items-center justify-center">
             <ReportBadge
               ensName={getExampleReportName(Rating.alert)}
               data={getExampleReportData(Rating.alert)}
-              onClickOverride={() => alert("Clicked")}
+              onClickOverride={(ensName: ENSName) => alert(ensName.name)}
             />
           </div>
           <div className="flex items-center justify-center">
             <ReportBadge
               hadLoadingError={true}
               ensName={getExampleReportName(Rating.pass, true)}
-              onClickOverride={() => alert("Clicked")}
+              onClickOverride={(ensName: ENSName) => alert(ensName.name)}
             />
           </div>
           <div className="flex items-center justify-center">
             <ReportBadge
               ensName={getExampleReportName()}
-              onClickOverride={() => alert("Clicked")}
+              onClickOverride={(ensName: ENSName) => alert(ensName.name)}
             />
           </div>
         </div>
@@ -338,14 +338,7 @@ const getExampleReportName = (
 
   if (!rating) return buildENSName("loading.eth");
 
-  switch (rating) {
-    case Rating.pass:
-      return buildENSName("lightwalker.eth");
-    case Rating.warn:
-      return buildENSName("culturecafé.eth");
-    case Rating.alert:
-      return buildENSName("‍420.eth");
-  }
+  return buildENSName(getExampleReportData(rating).name);
 };
 
 const getExampleReportData = (rating: Rating): ConsolidatedNameGuardReport => {

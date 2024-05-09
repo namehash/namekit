@@ -13,10 +13,10 @@ import { RatingUnknownIcon } from "../icons/RatingUnknownIcon";
 import { RatingIcon, RatingIconSize } from "../Report/RatingIcon";
 import { checkResultCodeTextColor, ratingTextColor } from "../../utils/text";
 import { ENSName } from "@namehash/ens-utils";
-import { UnknownReportShield } from "../UnknownReportShield/UnknownReportShield";
+import { UnknownReportIcon } from "../UnknownReportIcon/UnknownReportIcon";
 
 type ReportShieldProps = {
-  onClickOverride?: () => any;
+  onClickOverride?: (ensName: ENSName) => any;
 
   /*
     The data prop is the consolidated report for the ensName.
@@ -48,7 +48,7 @@ export function ReportIcon({
   ...props
 }: ReportShieldProps) {
   const onClickHandler = () => {
-    if (onClickOverride) onClickOverride();
+    if (onClickOverride) onClickOverride(ensName);
     else {
       window.location.href = `https://nameguard.io/inspect/${encodeURIComponent(
         ensName.name,
@@ -58,7 +58,7 @@ export function ReportIcon({
 
   if (hadLoadingError) {
     return (
-      <UnknownReportShield
+      <UnknownReportIcon
         size={size}
         onClick={onClickHandler}
         className={"cursor-pointer"}
@@ -72,7 +72,7 @@ export function ReportIcon({
             Inspect ensName for details
           </button>
         </div>
-      </UnknownReportShield>
+      </UnknownReportIcon>
     );
   }
 
