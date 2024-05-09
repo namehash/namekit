@@ -1,12 +1,15 @@
 "use client";
 
 import { Rating, type SecurePrimaryNameResult } from "@namehash/nameguard";
-import { LoadingShieldIcon, ratingTextColor } from "@namehash/nameguard-react";
+import {
+  RatingIcon,
+  RatingIconSize,
+  RatingLoadingIcon,
+  ratingTextColor,
+} from "@namehash/nameguard-react";
 import cc from "classcat";
 
 import { Tooltip } from "./Tooltip";
-import { AlertIcon } from "./icons/Alert";
-import { WarnIcon } from "./icons/Warn";
 
 type ImpersonationReportProps = {
   data?: SecurePrimaryNameResult;
@@ -22,20 +25,28 @@ export function ImpersonationReport({ data }: ImpersonationReportProps) {
 
   const { nameguard_result } = data;
 
-  if (!nameguard_result) return <LoadingShieldIcon />;
+  if (!nameguard_result) return <RatingLoadingIcon />;
 
   const textClass = cc([
     "font-semibold",
     ratingTextColor(nameguard_result.rating),
   ]);
 
-  const Icon = nameguard_result.rating === Rating.warn ? WarnIcon : AlertIcon;
-
   return (
-    <Tooltip trigger={<Icon />}>
+    <Tooltip
+      trigger={
+        <RatingIcon
+          rating={nameguard_result.rating}
+          size={RatingIconSize.micro}
+        />
+      }
+    >
       <div className="hidden md:flex items-start space-x-3 py-2.5 min-w-[300px]">
         <div className="mt-0.5">
-          <Icon />
+          <RatingIcon
+            rating={nameguard_result.rating}
+            size={RatingIconSize.micro}
+          />
         </div>
 
         <div className="space-y-1.5 flex-1">
@@ -55,7 +66,7 @@ export function ImpersonationReport({ data }: ImpersonationReportProps) {
             <div className="text-sm text-white">
               <a
                 href={`https://nameguard.io/inspect/${encodeURIComponent(
-                  nameguard_result.name
+                  nameguard_result.name,
                 )}`}
                 className="underline"
                 rel="noopener noreferrer"
