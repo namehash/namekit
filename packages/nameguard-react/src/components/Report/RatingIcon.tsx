@@ -23,6 +23,7 @@ export enum RatingIconSize {
 
 type Props = {
   rating: Rating;
+  isNotInteractive?: boolean;
   size?: RatingIconSize;
   className?: string;
 };
@@ -67,10 +68,11 @@ function capitalizeFirstLetter(string: string) {
 
 export const RatingIcon = ({
   rating,
+  isNotInteractive = false,
   size = RatingIconSize.small,
   ...props
 }: Props) => {
   const Component = getComponent(rating, size);
 
-  return <Component {...props} />;
+  return <Component isNotInteractive={isNotInteractive} {...props} />;
 };

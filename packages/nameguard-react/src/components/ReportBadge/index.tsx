@@ -1,5 +1,8 @@
 "use client";
-import { type ConsolidatedNameGuardReport } from "@namehash/nameguard";
+import {
+  Normalization,
+  type ConsolidatedNameGuardReport,
+} from "@namehash/nameguard";
 import React, { useEffect, useState, useRef } from "react";
 import cc from "classcat";
 
@@ -9,8 +12,6 @@ import { UnknownReportIcon } from "../UnknownReportIcon/UnknownReportIcon";
 import { ENSName } from "@namehash/ens-utils";
 
 interface ReportBadgeProps {
-  onClickOverride?: (ensName: ENSName) => any;
-
   /*
     The data prop is the consolidated report for the ensName.
     The ensName prop is the ENSName object.
@@ -23,6 +24,8 @@ interface ReportBadgeProps {
   data?: ConsolidatedNameGuardReport;
 
   hadLoadingError?: boolean;
+  displayUnnormalizedNames?: boolean;
+  onClickOverride?: (ensName: ENSName) => any;
 }
 
 /*
@@ -34,10 +37,11 @@ interface ReportBadgeProps {
 const MAX_ENSNAME_DISPLAY_WIDTH = 200;
 
 export function ReportBadge({
-  ensName,
   data,
+  ensName,
   onClickOverride,
-  hadLoadingError,
+  hadLoadingError = false,
+  displayUnnormalizedNames = false,
 }: ReportBadgeProps) {
   const buttonClass =
     "flex-shrink-0 appearance-none bg-white transition-colors hover:bg-gray-50 border border-gray-200 rounded-md px-2.5 py-1.5 inline-flex items-center";
@@ -58,8 +62,9 @@ export function ReportBadge({
     Below state is only true if the ensName displayed is longer 
     than badge's ensName max-width (defined by MAX_ENSNAME_DISPLAY_WIDTH)
   */
-  const [displayFullNameInTooltip, setDisplayFullNameInTooltip] =
-    useState(false);
+  const [displayFullNameInTooltip, setDisplayFullNameInTooltip] = useState<
+    null | boolean
+  >(null);
 
   useEffect(() => {
     if (data) {
@@ -82,37 +87,10 @@ export function ReportBadge({
     }
   }, [invisibleNameWidthTester]);
 
-  if (hadLoadingError)
-    return (
-      <button className={buttonAndCursorClass} onClick={onClickHandler}>
-        <span className="text-black text-sm leading-5 ens-webfont mr-1.5">
-          {ensName.displayName}
-        </span>
-        <UnknownReportIcon size="micro" className={"cursor-pointer"}>
-          <div className="text-sm text-white">
-            <button
-              className="appearance-none underline font-medium"
-              onClick={onClickHandler}
-            >
-              Inspect name for details
-            </button>
-          </div>
-        </UnknownReportIcon>
-      </button>
-    );
-
-  if (!data)
-    return (
-      <button className={buttonAndCursorClass} onClick={onClickHandler}>
-        <span className="text-black text-sm leading-5 ens-webfont mr-1.5">
-          {ensName.displayName}
-        </span>
-        <RatingLoadingIcon
-          size={RatingIconSize.small}
-          className={"cursor-pointer"}
-        />
-      </button>
-    );
+  const showDisplayName =
+    displayUnnormalizedNames &&
+    ensName.normalization === Normalization.unnormalized;
+  const displayName = showDisplayName ? ensName.name : ensName.displayName;
 
   return (
     <button className={buttonAndCursorClass} onClick={onClickHandler}>
@@ -129,40 +107,64 @@ export function ReportBadge({
         truncation and if we should activate the tooltip. 
       */}
       <div className="invisible absolute left-0 top-0 pointer-events-none">
-        <div ref={invisibleNameWidthTester}>{ensName.displayName}</div>
+        <div ref={invisibleNameWidthTester}>{displayName}</div>
       </div>
       {/*
         Below HTML is the rendered badge and tooltip, being the
         tooltip only displayed when it is needed. When is it needed?
         Whenever the ensName displayed is longer than MAX_ENSNAME_DISPLAY_WIDTH.
       */}
-      {displayFullNameInTooltip ? (
+      {displayFullNameInTooltip === null ? (
+        <div className="h-2.5 my-[5px] w-[90px] mr-1.5 bg-gray-100 rounded-lg"></div>
+      ) : displayFullNameInTooltip ? (
         <Tooltip
           trigger={
             <div
               style={{ maxWidth: MAX_ENSNAME_DISPLAY_WIDTH }}
               className="cursor-pointer text-black text-sm leading-5 ens-webfont truncate pr-1"
             >
-              {ensName.displayName}
+              {displayName}
             </div>
           }
         >
           <span className="text-white text-sm leading-5 ens-webfont">
-            {ensName.displayName}
+            {displayName}
           </span>
         </Tooltip>
       ) : (
         <span className="cursor-pointer text-black text-sm leading-5 ens-webfont truncate pr-1.5">
-          {ensName.displayName}
+          {displayName}
         </span>
       )}
-      <ReportIcon
-        data={data}
-        ensName={ensName}
-        size={RatingIconSize.micro}
-        className={"cursor-pointer"}
-        hadLoadingError={hadLoadingError}
-      />
+
+      {hadLoadingError ? (
+        // Unknown Rating
+        <UnknownReportIcon size="micro" className={"cursor-pointer"}>
+          <div className="text-sm text-white">
+            <button
+              className="appearance-none underline font-medium"
+              onClick={onClickHandler}
+            >
+              Inspect name for details
+            </button>
+          </div>
+        </UnknownReportIcon>
+      ) : !data ? (
+        // Loading Rating
+        <RatingLoadingIcon
+          size={RatingIconSize.small}
+          className={"cursor-pointer"}
+        />
+      ) : (
+        // Known Rating
+        <ReportIcon
+          data={data}
+          ensName={ensName}
+          size={RatingIconSize.micro}
+          className={"cursor-pointer"}
+          hadLoadingError={hadLoadingError}
+        />
+      )}
     </button>
   );
 }

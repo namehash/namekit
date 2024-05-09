@@ -82,6 +82,33 @@ export default function RatingShieldsPage() {
               <RatingIcon rating={Rating.alert} size={RatingIconSize.micro} />
             </div>
           </div>
+          <div className="grid grid-cols-4 gap-x-6 py-5">
+            <div className="flex items-center font-mono">
+              <pre>{`<RatingIcon isNotInteractive />`}</pre>
+            </div>
+
+            <div className="flex items-center justify-center">
+              <RatingIcon
+                rating={Rating.pass}
+                isNotInteractive={true}
+                size={RatingIconSize.medium}
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <RatingIcon
+                rating={Rating.warn}
+                isNotInteractive={true}
+                size={RatingIconSize.medium}
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <RatingIcon
+                rating={Rating.alert}
+                isNotInteractive={true}
+                size={RatingIconSize.medium}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

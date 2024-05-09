@@ -2,7 +2,9 @@ import * as React from "react";
 
 export const RatingUnknownMediumIcon = (props) => (
   <div className="group">
-    <div className="group-hover:hidden block">
+    <div
+      className={props.isNotInteractive ? "block" : "group-hover:hidden block"}
+    >
       <svg
         width="20"
         height="22"
@@ -20,7 +22,9 @@ export const RatingUnknownMediumIcon = (props) => (
         />
       </svg>
     </div>
-    <div className="group-hover:block hidden">
+    <div
+      className={props.isNotInteractive ? "hidden" : "group-hover:block hidden"}
+    >
       <svg
         width="20"
         height="22"

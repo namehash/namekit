@@ -121,13 +121,18 @@ export const SearchEmptyState = () => {
             )}
             {isLoading &&
               examples.map((e, index) => (
-                <ReportBadge ensName={examples[index]} key={index} />
+                <ReportBadge
+                  displayUnnormalizedNames={true}
+                  ensName={examples[index]}
+                  key={index}
+                />
               ))}
             {data?.results?.map((report, index) => (
               <ReportBadge
                 key={index}
                 data={report}
                 ensName={examples[index]}
+                displayUnnormalizedNames={true}
                 onClickOverride={() => openModal(report.name)}
               />
             ))}

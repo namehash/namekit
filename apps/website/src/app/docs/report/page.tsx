@@ -13,7 +13,7 @@ import { ReportBadge, ReportIcon } from "@namehash/nameguard-react";
 export default function RatingShieldsPage() {
   return (
     <div className="py-12 max-w-7xl mx-auto px-6 space-y-12">
-      <div className="divide-y divide-gray-100">
+      <div>
         <h1 className="justify-center flex font-bold text-2xl my-8">
           {"<"}ReportIcon {"/>"} documentation
         </h1>
@@ -247,7 +247,7 @@ export default function RatingShieldsPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-6 gap-x-6 py-5">
+        <div className="grid grid-cols-6 gap-x-6 py-5 border-t border-gray-100">
           <div className="flex items-center">
             <div className="flex items-center font-mono">
               <pre>{"<ReportBadge />"}</pre>
@@ -268,8 +268,9 @@ export default function RatingShieldsPage() {
           </div>
           <div className="flex items-center justify-center">
             <ReportBadge
-              ensName={getExampleReportName(Rating.alert)}
+              displayUnnormalizedNames={true}
               data={getExampleReportData(Rating.alert)}
+              ensName={getExampleReportName(Rating.alert)}
             />
           </div>
           <div className="flex items-center justify-center">
@@ -283,7 +284,7 @@ export default function RatingShieldsPage() {
           </div>
         </div>
 
-        <div className="grid grid-cols-6 gap-x-6 py-5">
+        <div className="grid grid-cols-6 gap-x-6 py-5 border-t border-gray-100">
           <div className="flex items-center">
             <div className="flex items-center font-mono">
               <pre>{"<ReportBadge \n   onClickOverride />"}</pre>
@@ -306,8 +307,9 @@ export default function RatingShieldsPage() {
           </div>
           <div className="flex items-center justify-center">
             <ReportBadge
-              ensName={getExampleReportName(Rating.alert)}
+              displayUnnormalizedNames={true}
               data={getExampleReportData(Rating.alert)}
+              ensName={getExampleReportName(Rating.alert)}
               onClickOverride={(ensName: ENSName) => alert(ensName.name)}
             />
           </div>
@@ -325,6 +327,51 @@ export default function RatingShieldsPage() {
             />
           </div>
         </div>
+
+        <div className="grid grid-cols-8 gap-x-6 py-5 border-t border-gray-100">
+          <div className="flex items-center">
+            <div className="flex items-center font-mono">
+              <pre>{"<ReportBadge /> \n for long names"}</pre>
+            </div>
+          </div>
+
+          <div className="col-span-2 flex items-center justify-center">
+            <ReportBadge
+              ensName={getExampleReportName(Rating.pass, false, true)}
+              data={getExampleReportData(Rating.pass, true)}
+              onClickOverride={(ensName) => alert(ensName.name)}
+            />
+          </div>
+          <div className="col-span-3 flex items-center justify-center">
+            <ReportBadge
+              data={getExampleReportData(Rating.alert)}
+              ensName={getExampleReportName(Rating.alert, false, true)}
+              onClickOverride={(ensName: ENSName) => alert(ensName.name)}
+            />
+          </div>
+          <div className="col-span-2 flex items-center justify-center">
+            <ReportBadge
+              ensName={getExampleReportName(undefined, false, true)}
+              onClickOverride={(ensName: ENSName) => alert(ensName.name)}
+            />
+          </div>
+        </div>
+        <div className="grid grid-cols-12 gap-x-6">
+          <div className="col-start-4 col-end-8 flex items-center justify-center">
+            <ReportBadge
+              ensName={getExampleReportName(Rating.warn, false, true)}
+              data={getExampleReportData(Rating.warn, true)}
+              onClickOverride={(ensName: ENSName) => alert(ensName.name)}
+            />
+          </div>
+          <div className="col-start-8 col-end-12 flex items-center justify-center">
+            <ReportBadge
+              hadLoadingError={true}
+              ensName={getExampleReportName(Rating.pass, true, true)}
+              onClickOverride={(ensName: ENSName) => alert(ensName.name)}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -333,15 +380,63 @@ export default function RatingShieldsPage() {
 const getExampleReportName = (
   rating?: Rating,
   compWithError = false,
+  withLongName = false,
 ): ENSName => {
-  if (compWithError) return buildENSName("notrab.eth");
+  if (compWithError) {
+    if (!withLongName) return buildENSName("notrab.eth");
 
-  if (!rating) return buildENSName("loading.eth");
+    return buildENSName(getExampleReportData(Rating.pass, withLongName).name);
+  }
 
-  return buildENSName(getExampleReportData(rating).name);
+  if (!rating) {
+    if (!withLongName) return buildENSName("frankind.eth");
+
+    return buildENSName(getExampleReportData(Rating.pass, withLongName).name);
+  }
+
+  return buildENSName(getExampleReportData(rating, withLongName).name);
 };
 
-const getExampleReportData = (rating: Rating): ConsolidatedNameGuardReport => {
+const getExampleReportData = (
+  rating: Rating,
+  withLongName = false,
+): ConsolidatedNameGuardReport => {
+  if (withLongName) {
+    switch (rating) {
+      case Rating.pass:
+        return {
+          rating: Rating.pass,
+          risk_count: 0,
+          highest_risk: null,
+          name: "thisisaveryveryveryveryveryverylongname.eth",
+          namehash:
+            "0x0cc7d00caf661d06274aa1d5241230cff097386291b72a27bad09a4182dde923",
+          normalization: Normalization.normalized,
+          title: "Looks Good",
+          subtitle: "All security checks passed!",
+          beautiful_name: "thisisaveryveryveryveryveryverylongname.eth",
+        };
+      case Rating.warn:
+        return {
+          rating: Rating.warn,
+          risk_count: 3,
+          highest_risk: {
+            check: "confusables",
+            status: CheckResultCode.warn,
+            message: "May be confusable",
+            check_name: "Character Recognition",
+          },
+          name: "thisìsaveryveryveryveryveryverylongname.eth",
+          namehash:
+            "0x368edb7de4b5ad933a67148a18a7e65e1310a160ff4dce43c68ff563b8439a14",
+          normalization: Normalization.normalized,
+          title: "Some Risk",
+          subtitle: "Review risks before proceeding",
+          beautiful_name: "thisìsaveryveryveryveryveryverylongname.eth",
+        };
+    }
+  }
+
   switch (rating) {
     case Rating.pass:
       return {

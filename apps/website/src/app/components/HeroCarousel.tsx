@@ -1,5 +1,5 @@
 import { nameguard } from "@namehash/nameguard";
-import { parseName } from "@namehash/ens-utils";
+import { buildENSName } from "@namehash/ens-utils";
 
 import { HeroReportBadge } from "./HeroReportBadge";
 
@@ -37,24 +37,22 @@ const examples = [
 ];
 
 export async function HeroCarousel() {
-  const parsedNames = examples.map((n) => parseName(n));
-  const data = await nameguard.bulkInspectNames(
-    parsedNames.map((n) => n.outputName.name),
-  );
+  const ensNames = examples.map((n) => buildENSName(n));
+  const data = await nameguard.bulkInspectNames(examples);
 
   return (
     <div className="w-[200%] group flex flex-nowrap justify-center items-center space-x-1 animate-carousel group-hover:pause-on-hover">
       {data?.results?.map((report, index) => (
         <HeroReportBadge
           key={`carousel-item-${index}`}
-          ensName={parsedNames[index]}
+          ensName={ensNames[index]}
           data={report}
         />
       ))}
       {data?.results?.map((report, index) => (
         <HeroReportBadge
           key={`carousel-item-2-${index}`}
-          ensName={parsedNames[index]}
+          ensName={ensNames[index]}
           data={report}
         />
       ))}
