@@ -39,16 +39,24 @@ const examples = [
 export async function HeroCarousel() {
   const parsedNames = examples.map((n) => parseName(n));
   const data = await nameguard.bulkInspectNames(
-    parsedNames.map((n) => n.outputName.name)
+    parsedNames.map((n) => n.outputName.name),
   );
 
   return (
     <div className="w-[200%] group flex flex-nowrap justify-center items-center space-x-1 animate-carousel group-hover:pause-on-hover">
       {data?.results?.map((report, index) => (
-        <HeroReportBadge key={`carousel-item-${index}`} data={report} />
+        <HeroReportBadge
+          key={`carousel-item-${index}`}
+          ensName={parsedNames[index]}
+          data={report}
+        />
       ))}
       {data?.results?.map((report, index) => (
-        <HeroReportBadge key={`carousel-item-2-${index}`} data={report} />
+        <HeroReportBadge
+          key={`carousel-item-2-${index}`}
+          ensName={parsedNames[index]}
+          data={report}
+        />
       ))}
     </div>
   );
