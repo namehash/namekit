@@ -81,7 +81,7 @@ export function ReportBadge({
               className="appearance-none underline font-medium"
               onClick={onClickHandler}
             >
-              Inspect ensName for details
+              Inspect name for details
             </button>
           </div>
         </UnknownReportShield>
