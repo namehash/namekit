@@ -94,7 +94,9 @@ export function ReportIcon({
   useEffect(() => {
     if (data) {
       if (data.name !== ensName.name) {
-        throw new Error(`The data received is not for the provided ensName`);
+        throw new Error(
+          `The data received is from: ${data.name} and not for the provided ensName, which is ${ensName.name}`,
+        );
       }
     }
   }, [data]);
