@@ -41,6 +41,18 @@ export async function HeroCarousel() {
 
   return (
     <div className="w-[200%] group flex flex-nowrap justify-center items-center space-x-1 animate-carousel group-hover:pause-on-hover">
+      {/* 
+        This carousel component needs lots of badges in order
+        to look good in the Ui, we are, then, duplicating the
+        badges displayed to enhance badges number.
+      */}
+      {data?.results?.map((report, index) => (
+        <HeroReportBadge
+          key={`carousel-item-${index}`}
+          ensName={ensNames[index]}
+          data={report}
+        />
+      ))}
       {data?.results?.map((report, index) => (
         <HeroReportBadge
           key={`carousel-item-${index}`}
