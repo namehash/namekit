@@ -40,19 +40,19 @@ function icon(code: CheckResultCode, withHoverEffect = true): React.ReactNode {
 /**
  * A component that displays a check result code as an icon with a tooltip.
  * @param {CheckResultCode} code - The CheckResultCode status to display.
- * @param {boolean} isInteractive - Wether to display a Tooltip and a color effect on icon hover.
+ * @param {boolean} isNotInteractive - Wether to display a Tooltip and a color effect on icon hover or not.
  */
 export function CheckIcon({
   code,
-  isInteractive = true,
+  isNotInteractive = true,
 }: {
   code: CheckResultCode;
-  isInteractive?: boolean;
+  isNotInteractive?: boolean;
 }) {
   const tooltipText = text(code);
-  const Icon = icon(code, isInteractive);
+  const Icon = icon(code, isNotInteractive);
 
-  if (!isInteractive) {
+  if (isNotInteractive) {
     return Icon;
   }
 

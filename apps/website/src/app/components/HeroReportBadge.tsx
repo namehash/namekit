@@ -1,14 +1,29 @@
 "use client";
 
+import { ENSName } from "@namehash/ens-utils";
+import { ConsolidatedNameGuardReport } from "@namehash/nameguard";
 import { ReportBadge, useSearchStore } from "@namehash/nameguard-react";
 
-export function HeroReportBadge(props: any) {
+interface HeroReportBadgeProps {
+  data: ConsolidatedNameGuardReport;
+  ensName: ENSName;
+  props?: any;
+}
+
+export function HeroReportBadge({
+  data,
+  ensName,
+  props,
+}: HeroReportBadgeProps) {
   const { openModal } = useSearchStore();
 
   return (
     <ReportBadge
       {...props}
-      onClickOverride={() => openModal(props.data.name)}
+      data={data}
+      ensName={ensName}
+      displayUnnormalizedNames={true}
+      onClickOverride={(ensName: ENSName) => openModal(ensName.name)}
     />
   );
 }

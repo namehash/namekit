@@ -1,6 +1,8 @@
 import * as React from "react";
 
-export const RatingUnknownSmallIcon = (props) => (
+export const RatingUnknownSmallIcon = (
+  props: React.SVGProps<SVGSVGElement>,
+) => (
   <div className="group">
     <div className="group-hover:block hidden">
       <svg

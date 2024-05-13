@@ -30,24 +30,23 @@ export function checkResultCodeTextColor(
 }
 
 export function ratingTextColor(rating: Rating, isHover = false): string {
-  let color = "";
+  let color: string | null = null;
 
   switch (rating) {
     case Rating.alert: {
       color = isHover ? "text-red-600 hover:text-red-700" : "text-red-600";
-      return color;
     }
     case Rating.pass: {
       color = isHover
         ? "text-emerald-600 hover:text-emerald-800"
         : "text-emerald-600";
-      return color;
     }
     case Rating.warn: {
       color = isHover
         ? "text-yellow-500 hover:text-yellow-600"
         : "text-yellow-500";
-      return color;
     }
   }
+
+  return color;
 }

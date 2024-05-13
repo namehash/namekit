@@ -1,6 +1,6 @@
 import * as React from "react";
 
-export const RatingAlertLargeIcon = (props) => (
+export const RatingAlertLargeIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <>
     <div className="hidden lg:block">
       <svg

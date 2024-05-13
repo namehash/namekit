@@ -3,8 +3,9 @@ import React, { Fragment } from "react";
 import { GraphemeList } from "./GraphemeList";
 import { NoGraphemesWarning } from "./NoGraphemesWarning";
 import { ShieldExclamationIcon } from "@heroicons/react/20/solid";
-import { CheckResultCode, NameGuardReport } from "@namehash/nameguard";
+import { CheckResultCode, NameGuardReport, Rating } from "@namehash/nameguard";
 import { checkResultCodeTextColor } from "../../utils/text";
+import { RatingIcon } from "./RatingIcon";
 
 type LabelListItemProps = {
   item: NameGuardReport["labels"][0];
@@ -44,12 +45,7 @@ export const LabelListItem = ({
         {(item.normalization === "unnormalized" ||
           item.normalization === "unknown") && (
           <div className="flex items-center space-x-2">
-            <ShieldExclamationIcon
-              className={cc([
-                "w-4 h-4 fill-current",
-                checkResultCodeTextColor(CheckResultCode.alert),
-              ])}
-            />
+            <RatingIcon isNotInteractive={true} rating={Rating.alert} />
             <span
               className={cc([
                 "text-sm",

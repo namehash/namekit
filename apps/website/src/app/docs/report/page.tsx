@@ -351,6 +351,7 @@ export default function RatingShieldsPage() {
           </div>
           <div className="col-span-2 flex items-center justify-center">
             <ReportBadge
+              maxEnsNameDisplayWidth={400}
               ensName={getExampleReportName(undefined, false, true)}
               onClickOverride={(ensName: ENSName) => alert(ensName.name)}
             />

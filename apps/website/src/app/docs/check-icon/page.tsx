@@ -44,23 +44,26 @@ export default function RatingShieldsPage() {
           </div>
           <div className="grid grid-cols-6 gap-x-6 py-5">
             <div className="flex items-center font-mono">
-              <pre>{"<CheckIcon \n isInteractive={false} />"}</pre>
+              <pre>{"<CheckIcon \n isNotInteractive={false} />"}</pre>
             </div>
 
             <div className="flex items-center justify-center">
-              <CheckIcon code={CheckResultCode.pass} isInteractive={false} />
+              <CheckIcon code={CheckResultCode.pass} isNotInteractive={false} />
             </div>
             <div className="flex items-center justify-center">
-              <CheckIcon code={CheckResultCode.warn} isInteractive={false} />
+              <CheckIcon code={CheckResultCode.warn} isNotInteractive={false} />
             </div>
             <div className="flex items-center justify-center">
-              <CheckIcon code={CheckResultCode.alert} isInteractive={false} />
+              <CheckIcon
+                code={CheckResultCode.alert}
+                isNotInteractive={false}
+              />
             </div>
             <div className="flex items-center justify-center">
-              <CheckIcon code={CheckResultCode.info} isInteractive={false} />
+              <CheckIcon code={CheckResultCode.info} isNotInteractive={false} />
             </div>
             <div className="flex items-center justify-center">
-              <CheckIcon code={CheckResultCode.skip} isInteractive={false} />
+              <CheckIcon code={CheckResultCode.skip} isNotInteractive={false} />
             </div>
           </div>
         </div>

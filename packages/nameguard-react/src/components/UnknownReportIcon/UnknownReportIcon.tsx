@@ -5,14 +5,18 @@ import { Tooltip } from "../Tooltip/Tooltip";
 import { RatingUnknownIcon } from "../icons/RatingUnknownIcon";
 
 type UnknownShieldProps = {
-  children?: ReactNode;
   size?: RatingIconSize;
+
+  /*
+    Props are applied to the shield icon component, 
+    which is a trigger for the tooltip with Report information.
+  */
+  props: React.SVGProps<SVGSVGElement>;
 } & React.ComponentProps<typeof RatingIcon>;
 
 export const UnknownReportIcon = ({
-  children,
   size = RatingIconSize.small,
-  ...props
+  props,
 }: UnknownShieldProps) => {
   return (
     <Tooltip trigger={<RatingUnknownIcon size={size} {...props} />}>

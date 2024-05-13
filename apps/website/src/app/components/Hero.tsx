@@ -84,7 +84,7 @@ export function Hero() {
   );
 }
 
-const WarningShieldOrangeOutline = (props: any) => (
+const WarningShieldOrangeOutline = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -103,7 +103,7 @@ const WarningShieldOrangeOutline = (props: any) => (
   </svg>
 );
 
-const WarningShieldRedOutline = (props: any) => (
+const WarningShieldRedOutline = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -122,7 +122,7 @@ const WarningShieldRedOutline = (props: any) => (
   </svg>
 );
 
-const CheckShieldOutline = (props: any) => (
+const CheckShieldOutline = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -141,7 +141,7 @@ const CheckShieldOutline = (props: any) => (
   </svg>
 );
 
-const CheckShieldLarge = (props: any) => (
+const CheckShieldLarge = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="98"
@@ -229,7 +229,7 @@ const CheckShieldLarge = (props: any) => (
   </svg>
 );
 
-const WarningShieldLarge = (props: any) => (
+const WarningShieldLarge = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="98"
@@ -319,7 +319,7 @@ const WarningShieldLarge = (props: any) => (
   </svg>
 );
 
-const UnknownShieldLargeIcon = (props: any) => (
+const UnknownShieldLargeIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="98"
@@ -409,7 +409,7 @@ const UnknownShieldLargeIcon = (props: any) => (
   </svg>
 );
 
-const WarningShieldSmall = (props: any) => (
+const WarningShieldSmall = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="56"
@@ -499,7 +499,7 @@ const WarningShieldSmall = (props: any) => (
   </svg>
 );
 
-const UnknownShieldSmallIcon = (props: any) => (
+const UnknownShieldSmallIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="56"

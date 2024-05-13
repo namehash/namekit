@@ -1,6 +1,5 @@
 import { nameguard } from "@namehash/nameguard";
 import { buildENSName } from "@namehash/ens-utils";
-
 import { HeroReportBadge } from "./HeroReportBadge";
 
 const examples = [
@@ -45,13 +44,6 @@ export async function HeroCarousel() {
       {data?.results?.map((report, index) => (
         <HeroReportBadge
           key={`carousel-item-${index}`}
-          ensName={ensNames[index]}
-          data={report}
-        />
-      ))}
-      {data?.results?.map((report, index) => (
-        <HeroReportBadge
-          key={`carousel-item-2-${index}`}
           ensName={ensNames[index]}
           data={report}
         />

@@ -25,16 +25,18 @@ interface ReportBadgeProps {
 
   hadLoadingError?: boolean;
   displayUnnormalizedNames?: boolean;
-  onClickOverride?: (ensName: ENSName) => any;
+  onClickOverride?: (ensName: ENSName) => void;
+
+  /*
+    Below number is a measure of the maximum width that the ensName 
+    should have inside ReportBadge. If the ensName displayed is longer 
+    than this number, the badge will truncate the ensName and display a 
+    tooltip on hover that shows the full ensName. This number is measured in pixels.
+  */
+  maxEnsNameDisplayWidth?: number;
 }
 
-/*
-  Below number is a measure of the maximum width that the ensName 
-  should have inside ReportBadge. If the ensName displayed is longer 
-  than this number, the badge will truncate the ensName and display a 
-  tooltip on hover that shows the full ensName. This number is measured in pixels.
-*/
-const MAX_ENSNAME_DISPLAY_WIDTH = 200;
+const DEFAULT_ENSNAME_DISPLAY_WIDTH = 200;
 
 export function ReportBadge({
   data,
@@ -42,6 +44,7 @@ export function ReportBadge({
   onClickOverride,
   hadLoadingError = false,
   displayUnnormalizedNames = false,
+  maxEnsNameDisplayWidth = DEFAULT_ENSNAME_DISPLAY_WIDTH,
 }: ReportBadgeProps) {
   const buttonClass =
     "flex-shrink-0 appearance-none bg-white transition-colors hover:bg-gray-50 border border-gray-200 rounded-md px-2.5 py-1.5 inline-flex items-center";
@@ -81,16 +84,16 @@ export function ReportBadge({
       const nameIsBiggerThanBadgeMax =
         Math.ceil(
           invisibleNameWidthTester.current.getBoundingClientRect().width,
-        ) > MAX_ENSNAME_DISPLAY_WIDTH;
+        ) > maxEnsNameDisplayWidth;
 
       setDisplayFullNameInTooltip(nameIsBiggerThanBadgeMax);
     }
   }, [invisibleNameWidthTester]);
 
-  const showDisplayName =
+  const showUnnormalizedName =
     displayUnnormalizedNames &&
     ensName.normalization === Normalization.unnormalized;
-  const displayName = showDisplayName ? ensName.name : ensName.displayName;
+  const displayName = showUnnormalizedName ? ensName.name : ensName.displayName;
 
   return (
     <button className={buttonAndCursorClass} onClick={onClickHandler}>
@@ -120,7 +123,7 @@ export function ReportBadge({
         <Tooltip
           trigger={
             <div
-              style={{ maxWidth: MAX_ENSNAME_DISPLAY_WIDTH }}
+              style={{ maxWidth: maxEnsNameDisplayWidth }}
               className="cursor-pointer text-black text-sm leading-5 ens-webfont truncate pr-1"
             >
               {displayName}

@@ -1,6 +1,6 @@
 import React from "react";
 
-export const RatingAlertMicroIcon = (props: any) => (
+export const RatingAlertMicroIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     width="14"
     height="14"

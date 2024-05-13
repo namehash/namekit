@@ -12,6 +12,11 @@ export function Tooltip({
   trigger,
   children,
   placement = "top",
+
+  /*
+    Props are applied to the Float component, 
+    which is a wrapper for the tooltip "children".
+  */
   ...props
 }: Props) {
   const [open, setOpen] = useState(false);

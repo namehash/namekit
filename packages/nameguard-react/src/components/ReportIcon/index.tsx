@@ -9,14 +9,13 @@ import cc from "classcat";
 
 import { Tooltip } from "../Tooltip/Tooltip";
 import { RatingLoadingIcon } from "../icons/RatingLoadingIcon";
-import { RatingUnknownIcon } from "../icons/RatingUnknownIcon";
 import { RatingIcon, RatingIconSize } from "../Report/RatingIcon";
 import { checkResultCodeTextColor, ratingTextColor } from "../../utils/text";
 import { ENSName } from "@namehash/ens-utils";
 import { UnknownReportIcon } from "../UnknownReportIcon/UnknownReportIcon";
 
 type ReportShieldProps = {
-  onClickOverride?: (ensName: ENSName) => any;
+  onClickOverride?: (ensName: ENSName) => void;
 
   /*
     The data prop is the consolidated report for the ensName.
@@ -69,7 +68,7 @@ export function ReportIcon({
             className="appearance-none underline font-medium"
             onClick={onClickHandler}
           >
-            Inspect ensName for details
+            Inspect name for details
           </button>
         </div>
       </UnknownReportIcon>
@@ -80,11 +79,7 @@ export function ReportIcon({
     return (
       <RatingLoadingIcon
         onClick={onClickHandler}
-        className={cc([
-          props.className
-            ? props.className + " cursor-pointer"
-            : "cursor-pointer",
-        ])}
+        className={cc([props.className, " cursor-pointer"])}
         size={size}
         {...props}
       />

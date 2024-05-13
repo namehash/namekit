@@ -1,6 +1,8 @@
 import * as React from "react";
 
-export const RatingLoadingSmallIcon = (props) => (
+export const RatingLoadingSmallIcon = (
+  props: React.SVGProps<SVGSVGElement>,
+) => (
   <div className="animate-pulse">
     <svg
       width="18"

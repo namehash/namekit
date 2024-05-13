@@ -1,6 +1,8 @@
 import * as React from "react";
 
-export const RatingUnknownLargeIcon = (props) => (
+export const RatingUnknownLargeIcon = (
+  props: React.SVGProps<SVGSVGElement>,
+) => (
   <>
     <div className="hidden lg:block">
       <svg

@@ -4,29 +4,29 @@ import {
   nameguard,
   type BulkConsolidatedNameGuardReport,
 } from "@namehash/nameguard";
-import { buildENSName, parseName } from "@namehash/ens-utils";
+import { ENSName, buildENSName, parseName } from "@namehash/ens-utils";
 
 import { ReportBadge } from "../ReportBadge";
 import { useSearchStore } from "../../stores/search";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 
 const examples = [
-  buildENSName("culturecafé.eth"),
-  buildENSName("моёт.eth"),
-  buildENSName("batman十robin.eth"),
-  buildENSName("‍420.eth"),
-  buildENSName("0x🥷🏼.eth"),
-  buildENSName("metaverse‌.eth"),
-  buildENSName("🪼jellyfish.eth"),
-  buildENSName("español.eth"),
-  buildENSName("‍‍‍‍‍‍😎.eth"),
-  buildENSName("gm‍.eth"),
-  buildENSName("vitalik‍‍‍.eth"),
-  buildENSName("♪♪♪.eth"),
-  buildENSName("unknоwn.eth"),
-  buildENSName("john🇺🇸"),
-  buildENSName("7️⃣7️⃣7️⃣.eth"),
-];
+  "culturecafé.eth",
+  "моёт.eth",
+  "batman十robin.eth",
+  "‍420.eth",
+  "0x🥷🏼.eth",
+  "metaverse‌.eth",
+  "🪼jellyfish.eth",
+  "español.eth",
+  "‍‍‍‍‍‍😎.eth",
+  "gm‍.eth",
+  "vitalik‍‍‍.eth",
+  "♪♪♪.eth",
+  "unknоwn.eth",
+  "john🇺🇸",
+  "7️⃣7️⃣7️⃣.eth",
+].map((name) => buildENSName(name));
 
 export const SearchEmptyState = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -122,6 +122,9 @@ export const SearchEmptyState = () => {
             {isLoading &&
               examples.map((e, index) => (
                 <ReportBadge
+                  onClickOverride={(ensName: ENSName) =>
+                    openModal(ensName.name)
+                  }
                   displayUnnormalizedNames={true}
                   ensName={examples[index]}
                   key={index}
@@ -133,7 +136,7 @@ export const SearchEmptyState = () => {
                 data={report}
                 ensName={examples[index]}
                 displayUnnormalizedNames={true}
-                onClickOverride={() => openModal(report.name)}
+                onClickOverride={(ensName: ENSName) => openModal(ensName.name)}
               />
             ))}
             <div className="w-5 flex-shrink-0 relative">
