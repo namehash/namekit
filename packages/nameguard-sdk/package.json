@@ -18,20 +18,15 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": [
-    "dist",
-    "README.md"
-  ],
+  "files": ["dist", "README.md"],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch --clean=false",
-    "test": "vitest",
-    "prettier-check": "prettier --check ."
+    "test": "vitest"
   },
   "devDependencies": {
     "@types/node": "^20.6.2",
-    "prettier": "^3.0.3",
     "tsup": "^7.2.0",
     "typescript": "^5.2.2",
     "vitest": "^0.34.5"

@@ -3,8 +3,7 @@
   "version": "0.0.29",
   "scripts": {
     "build": "tsup",
-    "dev": "tsup --watch --clean=false",
-    "prettier-check": "prettier --check ."
+    "dev": "tsup --watch --clean=false"
   },
   "exports": {
     ".": {
