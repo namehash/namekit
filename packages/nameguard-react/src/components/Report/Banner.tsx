@@ -44,7 +44,7 @@ export function Banner({ report, parsedName }: Props) {
             <RatingIcon rating={rating} size={RatingIconSize.large} />
           </div>
           <div className="space-y-1 flex-shrink-0">
-            <p className={text}>{title}</p>
+            <p className={cc([text, ratingTextColor(rating)])}>{title}</p>
             <p className="text-black text-sm font-normal leading-6 break-all">
               {subtitle}
             </p>

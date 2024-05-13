@@ -2,7 +2,6 @@ import cc from "classcat";
 import React, { Fragment } from "react";
 import { GraphemeList } from "./GraphemeList";
 import { NoGraphemesWarning } from "./NoGraphemesWarning";
-import { ShieldExclamationIcon } from "@heroicons/react/20/solid";
 import { CheckResultCode, NameGuardReport, Rating } from "@namehash/nameguard";
 import { checkResultCodeTextColor } from "../../utils/text";
 import { RatingIcon } from "./RatingIcon";

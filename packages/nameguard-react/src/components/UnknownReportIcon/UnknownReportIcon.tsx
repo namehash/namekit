@@ -19,10 +19,18 @@ export const UnknownReportIcon = ({
   props,
 }: UnknownShieldProps) => {
   return (
-    <Tooltip trigger={<RatingUnknownIcon size={size} {...props} />}>
+    <Tooltip
+      trigger={RatingUnknownIcon({
+        size,
+        className: "cursor-pointer",
+      })}
+    >
       <div className="flex items-start space-x-3 py-2.5 min-w-[300px] max-w-[300px]">
         <div className="mt-0.5">
-          <RatingUnknownIcon size={RatingIconSize.small} />
+          <RatingUnknownIcon
+            isNotInteractive={true}
+            size={RatingIconSize.small}
+          />
         </div>
 
         <div className="flex-1">

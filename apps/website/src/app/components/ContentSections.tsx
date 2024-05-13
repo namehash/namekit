@@ -325,7 +325,6 @@ export function ChecksSection() {
       <CheckCircleIcon
         className={cc([
           "w-5 h-5",
-          "text-emerald-600",
           checkResultCodeTextColor(CheckResultCode.pass),
         ])}
       />

@@ -57,12 +57,7 @@ export function ReportIcon({
 
   if (hadLoadingError) {
     return (
-      <UnknownReportIcon
-        size={size}
-        onClick={onClickHandler}
-        className={"cursor-pointer"}
-        {...props}
-      >
+      <UnknownReportIcon size={size} onClick={onClickHandler}>
         <div className="text-sm text-white">
           <button
             className="appearance-none underline font-medium"
@@ -115,7 +110,11 @@ export function ReportIcon({
     >
       <div className="flex items-start space-x-3 py-2.5 min-w-[300px] max-w-[300px]">
         <div className="mt-0.5">
-          <RatingIcon rating={rating} size={RatingIconSize.small} />
+          <RatingIcon
+            rating={rating}
+            size={RatingIconSize.small}
+            isNotInteractive={true}
+          />
         </div>
 
         <div className="flex-1">

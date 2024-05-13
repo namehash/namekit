@@ -22,18 +22,21 @@ function text(code: CheckResultCode) {
   }
 }
 
-function icon(code: CheckResultCode, withHoverEffect = true): React.ReactNode {
+function icon(
+  code: CheckResultCode,
+  isNotInteractive = false,
+): React.ReactNode {
   switch (code) {
     case CheckResultCode.pass:
-      return <CheckResultCodePassIcon withHoverEffect={withHoverEffect} />;
+      return <CheckResultCodePassIcon isNotInteractive={isNotInteractive} />;
     case CheckResultCode.warn:
-      return <CheckResultCodeWarnIcon withHoverEffect={withHoverEffect} />;
+      return <CheckResultCodeWarnIcon isNotInteractive={isNotInteractive} />;
     case CheckResultCode.alert:
-      return <CheckResultCodeAlertIcon withHoverEffect={withHoverEffect} />;
+      return <CheckResultCodeAlertIcon isNotInteractive={isNotInteractive} />;
     case CheckResultCode.info:
-      return <CheckResultCodeInfoIcon withHoverEffect={withHoverEffect} />;
+      return <CheckResultCodeInfoIcon isNotInteractive={isNotInteractive} />;
     case CheckResultCode.skip:
-      return <CheckResultCodeSkipIcon withHoverEffect={withHoverEffect} />;
+      return <CheckResultCodeSkipIcon isNotInteractive={isNotInteractive} />;
   }
 }
 

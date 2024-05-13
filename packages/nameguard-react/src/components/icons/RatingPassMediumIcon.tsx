@@ -1,8 +1,8 @@
 import * as React from "react";
 
 export const RatingPassMediumIcon = (
-  isNotInteractive: boolean,
-  ...props: React.SVGProps<SVGSVGElement>
+  props: React.SVGProps<SVGSVGElement>,
+  isNotInteractive = false,
 ) => (
   <div className="group">
     <div className={isNotInteractive ? "block" : "group-hover:hidden block"}>

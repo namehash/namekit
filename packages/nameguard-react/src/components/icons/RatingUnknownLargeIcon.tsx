@@ -1,8 +1,6 @@
 import * as React from "react";
 
-export const RatingUnknownLargeIcon = (
-  props: React.SVGProps<SVGSVGElement>,
-) => (
+export const RatingUnknownLargeIcon = (className = "") => (
   <>
     <div className="hidden lg:block">
       <svg
@@ -11,7 +9,7 @@ export const RatingUnknownLargeIcon = (
         viewBox="0 0 68 71"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        {...props}
+        className={className}
       >
         <g filter="url(#filter0_dd_1495_11663)">
           <path
@@ -108,7 +106,7 @@ export const RatingUnknownLargeIcon = (
         viewBox="0 0 55 57"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        {...props}
+        className={className}
       >
         <g filter="url(#filter0_dd_405_7383)">
           <path

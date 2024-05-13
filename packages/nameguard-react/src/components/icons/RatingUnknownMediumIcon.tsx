@@ -1,8 +1,8 @@
 import * as React from "react";
 
 export const RatingUnknownMediumIcon = (
-  isNotInteractive: boolean,
-  ...props: React.SVGProps<SVGSVGElement>
+  className = "",
+  isNotInteractive = false,
 ) => (
   <div className="group">
     <div className={isNotInteractive ? "block" : "group-hover:hidden block"}>
@@ -12,7 +12,6 @@ export const RatingUnknownMediumIcon = (
         viewBox="0 0 20 22"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        {...props}
       >
         <path
           d="M10.0075 16.2501H10V16.2576M7.87891 7.51894C9.05048 6.49381 10.95 6.49381 12.1215 7.51894C13.2931 8.54406 13.2931 10.2061 12.1215 11.2312C11.9176 11.4097 11.6917 11.557 11.4513 11.6734C10.7056 12.0342 10.0002 12.6717 10.0002 13.5001M10 1.71436C7.8495 3.75098 4.94563 5.00011 1.75 5.00011C1.69922 5.00011 1.64852 4.99979 1.59789 4.99916C1.2099 6.17927 1 7.4402 1 8.75015C1 14.3417 4.82432 19.04 10 20.3721C15.1757 19.04 19 14.3417 19 8.75015C19 7.4402 18.7901 6.17927 18.4021 4.99916C18.3515 4.99979 18.3008 5.00011 18.25 5.00011C15.0544 5.00011 12.1505 3.75098 10 1.71436Z"
@@ -30,7 +29,7 @@ export const RatingUnknownMediumIcon = (
         viewBox="0 0 20 22"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        {...props}
+        className={className}
       >
         <path
           fillRule="evenodd"

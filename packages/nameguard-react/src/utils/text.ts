@@ -9,20 +9,24 @@ export function checkResultCodeTextColor(
   switch (check) {
     case CheckResultCode.alert: {
       color = isHover ? "text-red-600 hover:text-red-700" : "text-red-600";
+      break;
     }
     case CheckResultCode.pass: {
       color = isHover
         ? "text-emerald-600 hover:text-emerald-800"
         : "text-emerald-600";
+      break;
     }
     case CheckResultCode.warn: {
       color = isHover
         ? "text-yellow-500 hover:text-yellow-600"
         : "text-yellow-500";
+      break;
     }
     case CheckResultCode.info:
     case CheckResultCode.skip: {
       color = isHover ? "text-gray-400 hover:text-gray-500" : "text-gray-400";
+      break;
     }
   }
 
@@ -35,16 +39,19 @@ export function ratingTextColor(rating: Rating, isHover = false): string {
   switch (rating) {
     case Rating.alert: {
       color = isHover ? "text-red-600 hover:text-red-700" : "text-red-600";
+      break;
     }
     case Rating.pass: {
       color = isHover
         ? "text-emerald-600 hover:text-emerald-800"
         : "text-emerald-600";
+      break;
     }
     case Rating.warn: {
       color = isHover
         ? "text-yellow-500 hover:text-yellow-600"
         : "text-yellow-500";
+      break;
     }
   }
 

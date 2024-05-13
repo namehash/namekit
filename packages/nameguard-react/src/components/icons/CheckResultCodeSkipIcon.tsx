@@ -3,11 +3,11 @@ import cc from "classcat";
 import { checkResultCodeTextColor } from "../../utils/text";
 import { CheckResultCode } from "@namehash/nameguard";
 
-export const CheckResultCodeSkipIcon = ({ withHoverEffect = true }) => (
+export const CheckResultCodeSkipIcon = ({ isNotInteractive = true }) => (
   <svg
     className={cc([
       "w-[12px] h-[10px] fill-current transition",
-      checkResultCodeTextColor(CheckResultCode.skip, withHoverEffect),
+      checkResultCodeTextColor(CheckResultCode.skip, !isNotInteractive),
     ])}
     viewBox="0 0 12 10"
     fill="none"

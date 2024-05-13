@@ -74,5 +74,5 @@ export const RatingIcon = ({
 }: Props) => {
   const Component = getComponent(rating, size);
 
-  return <Component isNotInteractive={isNotInteractive} {...props} />;
+  return Component(props, isNotInteractive);
 };

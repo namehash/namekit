@@ -50,7 +50,10 @@ export function GraphemeListItem({ item }: GraphemeListItemProps) {
 
             {item.highest_risk && (
               <div className="flex-shrink-0 ml-auto md:ml-auto md:order-1 flex items-center">
-                <CheckIcon code={item.highest_risk.status} />
+                <CheckIcon
+                  code={item.highest_risk.status}
+                  isNotInteractive={true}
+                />
               </div>
             )}
           </div>
