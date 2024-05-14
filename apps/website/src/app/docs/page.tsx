@@ -13,8 +13,8 @@ export default function DocsPage() {
         <Link className="hover:underline" href={"/docs/rating-icon"}>
           {"<RatingIcon />"}
         </Link>
-        <Link className="hover:underline" href={"/docs/result-code-icon"}>
-          {"<ResultCodeIcon />"}
+        <Link className="hover:underline" href={"/docs/check-result-code-icon"}>
+          {"<CheckResultCodeIcon />"}
         </Link>
         <Link className="hover:underline" href={"/docs/report"}>
           {"<ReportIcon /> and <ReportBadge />"}

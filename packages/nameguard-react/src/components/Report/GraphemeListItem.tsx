@@ -1,7 +1,7 @@
 import React from "react";
 import { ConsolidatedGraphemeGuardReport } from "@namehash/nameguard";
 
-import { ResultCodeIcon } from "./ResultCodeIcon";
+import { CheckResultCodeIcon } from "./CheckResultCodeIcon";
 import { RiskCounter } from "./RiskCounter";
 import { useGraphemeModalStore } from "../../stores/grapheme";
 
@@ -49,7 +49,7 @@ export function GraphemeListItem({ item }: GraphemeListItemProps) {
             </div>
 
             <div className="flex-shrink-0 ml-auto md:ml-auto md:order-1 flex items-center">
-              <ResultCodeIcon
+              <CheckResultCodeIcon
                 isInteractive={true}
                 className="cursor-pointer"
                 code={item.rating}

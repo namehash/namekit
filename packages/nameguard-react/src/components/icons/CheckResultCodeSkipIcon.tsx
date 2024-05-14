@@ -5,9 +5,11 @@ import { CheckResultCode } from "@namehash/nameguard";
 
 export const CheckResultCodeSkipIcon = ({
   isInteractive = false,
+  onClick = () => {},
   className = "",
 }) => (
   <svg
+    onClick={onClick}
     className={cc([
       className,
       "w-[12px] h-[10px] fill-current transition",

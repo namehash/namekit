@@ -28,6 +28,7 @@ function text(code: CheckResultCode | Rating) {
 function icon(
   code: CheckResultCode | Rating,
   isInteractive = false,
+  onClick = () => {},
   className = "",
 ): React.ReactNode {
   switch (code) {
@@ -37,6 +38,7 @@ function icon(
         <CheckResultCodePassIcon
           isInteractive={isInteractive}
           className={className}
+          onClick={onClick}
         />
       );
     case CheckResultCode.warn:
@@ -45,6 +47,7 @@ function icon(
         <CheckResultCodeWarnIcon
           isInteractive={isInteractive}
           className={className}
+          onClick={onClick}
         />
       );
     case CheckResultCode.alert:
@@ -53,6 +56,7 @@ function icon(
         <CheckResultCodeAlertIcon
           isInteractive={isInteractive}
           className={className}
+          onClick={onClick}
         />
       );
     case CheckResultCode.info:
@@ -60,6 +64,7 @@ function icon(
         <CheckResultCodeInfoIcon
           isInteractive={isInteractive}
           className={className}
+          onClick={onClick}
         />
       );
     case CheckResultCode.skip:
@@ -67,6 +72,7 @@ function icon(
         <CheckResultCodeSkipIcon
           isInteractive={isInteractive}
           className={className}
+          onClick={onClick}
         />
       );
   }
@@ -77,17 +83,19 @@ function icon(
  * @param {CheckResultCode} code - The CheckResultCode status to display.
  * @param {boolean} isInteractive - Wether to display a Tooltip and a color effect on icon hover or not.
  */
-export function ResultCodeIcon({
+export function CheckResultCodeIcon({
   code,
+  onClick = () => {},
   isInteractive = false,
   className = "",
 }: {
+  onClick?: () => void;
   code: CheckResultCode | Rating;
   isInteractive?: boolean;
   className?: string;
 }) {
   const tooltipText = text(code);
-  const Icon = icon(code, isInteractive, className);
+  const Icon = icon(code, isInteractive, onClick, className);
 
   if (isInteractive) {
     return <Tooltip trigger={Icon} children={tooltipText} />;

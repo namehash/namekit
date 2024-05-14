@@ -4,9 +4,9 @@ import {
   nameguard,
   type BulkConsolidatedNameGuardReport,
 } from "@namehash/nameguard";
-import { ENSName, buildENSName, parseName } from "@namehash/ens-utils";
+import { buildENSName } from "@namehash/ens-utils";
 
-import { ReportBadge } from "../ReportBadge";
+import { NGWebsiteReportBadge } from "../Report/NGWebsiteReportBadge";
 import { useSearchStore } from "../../stores/search";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 
@@ -36,7 +36,11 @@ export const SearchEmptyState = () => {
   const { openModal } = useSearchStore();
   const exampleNames = examples.map((n) => n.name);
 
-  const { data, isLoading } = useSWR<BulkConsolidatedNameGuardReport>(
+  const {
+    data,
+    isLoading,
+    error: hadLoadingError,
+  } = useSWR<BulkConsolidatedNameGuardReport>(
     exampleNames.join(),
     (_) => nameguard.bulkInspectNames(exampleNames),
     {
@@ -115,24 +119,20 @@ export const SearchEmptyState = () => {
                 </button>
               </div>
             )}
-            {isLoading &&
-              examples.map((e, index) => (
-                <ReportBadge
-                  onClickOverride={(ensName: ENSName) =>
-                    openModal(ensName.name)
-                  }
-                  displayUnnormalizedNames={true}
+            {(hadLoadingError || isLoading) &&
+              examples.map((_, index) => (
+                <NGWebsiteReportBadge
+                  hadLoadingError={hadLoadingError}
                   ensName={examples[index]}
                   key={index}
                 />
               ))}
             {data?.results?.map((report, index) => (
-              <ReportBadge
+              <NGWebsiteReportBadge
                 key={index}
-                data={report}
+                hadLoadingError={hadLoadingError}
                 ensName={examples[index]}
-                displayUnnormalizedNames={true}
-                onClickOverride={(ensName: ENSName) => openModal(ensName.name)}
+                data={report}
               />
             ))}
             <div className="w-5 flex-shrink-0 relative">

@@ -4,10 +4,12 @@ import { checkResultCodeTextColor } from "../../utils/text";
 import { CheckResultCode } from "@namehash/nameguard";
 
 export const CheckResultCodeAlertIcon = ({
+  onClick = () => {},
   isInteractive = false,
   className = "",
 }) => (
   <svg
+    onClick={onClick}
     className={cc([
       className,
       "w-5 h-5 fill-current transition",

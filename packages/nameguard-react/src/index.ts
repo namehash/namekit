@@ -7,8 +7,9 @@ export { SettingsModal } from "./components/SettingsModal/SettingsModal";
 
 export { ReportBadge } from "./components/ReportBadge";
 export { ReportIcon } from "./components/ReportIcon";
-export { ResultCodeIcon } from "./components/Report/ResultCodeIcon";
+export { CheckResultCodeIcon } from "./components/Report/CheckResultCodeIcon";
 export { RatingIcon, RatingIconSize } from "./components/Report/RatingIcon";
+export { NGWebsiteReportBadge } from "./components/Report/NGWebsiteReportBadge";
 
 export { RatingLoadingIcon } from "./components/icons/RatingLoadingIcon";
 export { RatingUnknownIcon } from "./components/icons/RatingUnknownIcon";

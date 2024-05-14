@@ -65,9 +65,8 @@ export function ReportBadge({
     Below state is only true if the ensName displayed is longer 
     than badge's ensName max-width (defined by MAX_ENSNAME_DISPLAY_WIDTH)
   */
-  const [displayFullNameInTooltip, setDisplayFullNameInTooltip] = useState<
-    null | boolean
-  >(null);
+  const [displayFullNameInTooltip, setDisplayFullNameInTooltip] =
+    useState<boolean>(false);
 
   useEffect(() => {
     if (data) {
@@ -117,14 +116,7 @@ export function ReportBadge({
         tooltip only displayed when it is needed. When is it needed?
         Whenever the ensName displayed is longer than MAX_ENSNAME_DISPLAY_WIDTH.
       */}
-      {displayFullNameInTooltip === null ? (
-        <div
-          style={{ maxWidth: maxEnsNameDisplayWidth }}
-          className="h-2.5 my-[5px] mr-1.5 bg-gray-100 rounded-lg text-transparent"
-        >
-          {displayName}
-        </div>
-      ) : displayFullNameInTooltip ? (
+      {displayFullNameInTooltip ? (
         <Tooltip
           trigger={
             <div
@@ -140,9 +132,12 @@ export function ReportBadge({
           </span>
         </Tooltip>
       ) : (
-        <span className="cursor-pointer text-black text-sm leading-5 ens-webfont truncate pr-1.5">
+        <p
+          style={{ maxWidth: maxEnsNameDisplayWidth }}
+          className="cursor-pointer text-black text-sm leading-5 ens-webfont truncate pr-1.5"
+        >
           {displayName}
-        </span>
+        </p>
       )}
 
       {hadLoadingError ? (
