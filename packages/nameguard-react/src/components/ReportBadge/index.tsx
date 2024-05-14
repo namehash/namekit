@@ -118,7 +118,12 @@ export function ReportBadge({
         Whenever the ensName displayed is longer than MAX_ENSNAME_DISPLAY_WIDTH.
       */}
       {displayFullNameInTooltip === null ? (
-        <div className="h-2.5 my-[5px] w-[90px] mr-1.5 bg-gray-100 rounded-lg"></div>
+        <div
+          style={{ maxWidth: maxEnsNameDisplayWidth }}
+          className="h-2.5 my-[5px] mr-1.5 bg-gray-100 rounded-lg text-transparent"
+        >
+          {displayName}
+        </div>
       ) : displayFullNameInTooltip ? (
         <Tooltip
           trigger={
@@ -158,8 +163,8 @@ export function ReportBadge({
       ) : !data ? (
         // Loading Rating
         <RatingLoadingIcon
-          size={RatingIconSize.small}
-          className={"cursor-pointer"}
+          size={RatingIconSize.micro}
+          className="cursor-pointer"
         />
       ) : (
         // Known Rating

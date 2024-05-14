@@ -1,7 +1,7 @@
 import React from "react";
 import { ConsolidatedGraphemeGuardReport } from "@namehash/nameguard";
 
-import { ResultCodeIcon } from "./CheckIcon";
+import { ResultCodeIcon } from "./ResultCodeIcon";
 import { RiskCounter } from "./RiskCounter";
 import { useGraphemeModalStore } from "../../stores/grapheme";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import cc from "classcat";
-import { ResultCodeIcon } from "./CheckIcon";
+import { ResultCodeIcon } from "./ResultCodeIcon";
 import { CheckResultCode } from "@namehash/nameguard";
 import { checkResultCodeTextColor } from "../../utils/text";
 import { ShieldExclamationIcon } from "@heroicons/react/20/solid";

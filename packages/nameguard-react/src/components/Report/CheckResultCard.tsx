@@ -1,6 +1,6 @@
 import React from "react";
 import { CheckResult } from "@namehash/nameguard";
-import { ResultCodeIcon } from "./CheckIcon";
+import { ResultCodeIcon } from "./ResultCodeIcon";
 
 export function CheckResultCard(props: CheckResult) {
   return (

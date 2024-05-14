@@ -21,8 +21,8 @@ export function checkResultCodeTextColor(
     }
     case CheckResultCode.warn: {
       color = isInteractive
-        ? "text-yellow-500 hover:text-yellow-600"
-        : "text-yellow-500";
+        ? "text-yellow-600 hover:text-yellow-700"
+        : "text-yellow-600";
       break;
     }
     case CheckResultCode.info:
@@ -55,8 +55,8 @@ export function ratingTextColor(rating: Rating, isInteractive = false): string {
     }
     case Rating.warn: {
       color = isInteractive
-        ? "text-yellow-500 hover:text-yellow-600"
-        : "text-yellow-500";
+        ? "text-yellow-600 hover:text-yellow-700"
+        : "text-yellow-600";
       break;
     }
   }

@@ -1,7 +1,7 @@
 import React from "react";
 import { GraphemeGuardReport } from "@namehash/nameguard";
 
-import { ResultCodeIcon } from "../Report/CheckIcon";
+import { ResultCodeIcon } from "../Report/ResultCodeIcon";
 import { useGraphemeModalStore } from "../../stores/grapheme";
 
 type ConfusableListItemProps = {
