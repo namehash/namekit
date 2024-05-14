@@ -1,21 +1,8 @@
 {
   "name": "@namehash/seo",
   "version": "1.0.0",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": {
-        "node": "./dist/index.js",
-        "default": "./dist/index.js"
-      },
-      "require": {
-        "node": "./dist/index.cjs",
-        "default": "./dist/index.cjs"
-      }
-    }
-  },
+  "main": "src/index.ts",
+  "types": "src/index.ts",
   "devDependencies": {
     "next": "^14.1.1",
     "typescript": "^5.3.3"
