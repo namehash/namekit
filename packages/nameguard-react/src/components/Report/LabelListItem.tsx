@@ -44,7 +44,7 @@ export const LabelListItem = ({
         {(item.normalization === "unnormalized" ||
           item.normalization === "unknown") && (
           <div className="flex items-center space-x-2">
-            <RatingIcon isNotInteractive={true} rating={Rating.alert} />
+            <RatingIcon rating={Rating.alert} />
             <span
               className={cc([
                 "text-sm",

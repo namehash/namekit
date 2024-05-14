@@ -1,19 +1,19 @@
 import React from "react";
 
 export const RatingUnknownMicroIcon = (
-  className = "",
-  isNotInteractive = false,
+  props: React.SVGProps<SVGSVGElement>,
+  isInteractive = false,
 ) => {
   return (
     <div className="group">
-      <div className={isNotInteractive ? "block" : "group-hover:hidden block"}>
+      <div className={isInteractive ? "group-hover:hidden block" : "block"}>
         <svg
           width="14"
           height="14"
           viewBox="0 0 14 14"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className={className}
+          {...props}
         >
           <path
             d="M7.005 10.5001H7V10.5051M5.58594 4.67929C6.36699 3.99587 7.63332 3.99587 8.41437 4.67929C9.19541 5.36271 9.19541 6.47075 8.41437 7.15416C8.27842 7.27311 8.12778 7.37136 7.96755 7.4489C7.47043 7.68949 7.00015 8.11444 7.00015 8.66673M7 0.80957C5.56634 2.16732 3.63042 3.00007 1.5 3.00007C1.46615 3.00007 1.43235 2.99986 1.3986 2.99944C1.13993 3.78618 1 4.6268 1 5.5001C1 9.22778 3.54955 12.36 7 13.2481C10.4505 12.36 13 9.22778 13 5.5001C13 4.6268 12.8601 3.78618 12.6014 2.99944C12.5677 2.99986 12.5339 3.00007 12.5 3.00007C10.3696 3.00007 8.43366 2.16732 7 0.80957Z"
@@ -24,14 +24,14 @@ export const RatingUnknownMicroIcon = (
           />
         </svg>
       </div>
-      <div className={isNotInteractive ? "hidden" : "group-hover:block hidden"}>
+      <div className={isInteractive ? "group-hover:block hidden" : "hidden"}>
         <svg
           width="14"
           height="14"
           viewBox="0 0 14 14"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className={className}
+          {...props}
         >
           <path
             fillRule="evenodd"

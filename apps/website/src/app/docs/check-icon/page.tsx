@@ -3,7 +3,7 @@
 import { CheckResultCode } from "@namehash/nameguard";
 import { CheckIcon } from "@namehash/nameguard-react";
 
-export default function RatingShieldsPage() {
+export default function CheckIconsDocsPage() {
   return (
     <div className="py-12 max-w-7xl mx-auto px-6 space-y-12">
       <div className="divide-y divide-gray-100">
@@ -44,26 +44,23 @@ export default function RatingShieldsPage() {
           </div>
           <div className="grid grid-cols-6 gap-x-6 py-5">
             <div className="flex items-center font-mono">
-              <pre>{"<CheckIcon \n isNotInteractive={false} />"}</pre>
+              <pre>{"<CheckIcon \n isInteractive={true} />"}</pre>
             </div>
 
             <div className="flex items-center justify-center">
-              <CheckIcon code={CheckResultCode.pass} isNotInteractive={false} />
+              <CheckIcon code={CheckResultCode.pass} isInteractive={true} />
             </div>
             <div className="flex items-center justify-center">
-              <CheckIcon code={CheckResultCode.warn} isNotInteractive={false} />
+              <CheckIcon code={CheckResultCode.warn} isInteractive={true} />
             </div>
             <div className="flex items-center justify-center">
-              <CheckIcon
-                code={CheckResultCode.alert}
-                isNotInteractive={false}
-              />
+              <CheckIcon code={CheckResultCode.alert} isInteractive={true} />
             </div>
             <div className="flex items-center justify-center">
-              <CheckIcon code={CheckResultCode.info} isNotInteractive={false} />
+              <CheckIcon code={CheckResultCode.info} isInteractive={true} />
             </div>
             <div className="flex items-center justify-center">
-              <CheckIcon code={CheckResultCode.skip} isNotInteractive={false} />
+              <CheckIcon code={CheckResultCode.skip} isInteractive={true} />
             </div>
           </div>
         </div>

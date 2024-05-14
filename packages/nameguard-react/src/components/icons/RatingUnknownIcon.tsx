@@ -8,21 +8,20 @@ import React from "react";
 
 export const RatingUnknownIcon = ({
   size,
-  isNotInteractive = false,
-  className = "",
+  isInteractive = false,
+  ...props
 }: {
   size: RatingIconSize;
-  isNotInteractive?: boolean;
+  isInteractive?: boolean;
 } & React.ComponentProps) => {
-  console.log();
   switch (size) {
     case RatingIconSize.large:
-      return RatingUnknownLargeIcon(className);
+      return RatingUnknownLargeIcon(props);
     case RatingIconSize.medium:
-      return RatingUnknownMediumIcon(className, isNotInteractive);
+      return RatingUnknownMediumIcon(props, isInteractive);
     case RatingIconSize.small:
-      return RatingUnknownSmallIcon(className, isNotInteractive);
+      return RatingUnknownSmallIcon(props, isInteractive);
     case RatingIconSize.micro:
-      return RatingUnknownMicroIcon(className, isNotInteractive);
+      return RatingUnknownMicroIcon(props, isInteractive);
   }
 };

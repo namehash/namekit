@@ -36,7 +36,7 @@ interface ReportBadgeProps {
   maxEnsNameDisplayWidth?: number;
 }
 
-const DEFAULT_ENSNAME_DISPLAY_WIDTH = 200;
+const DEFAULT_MAX_ENSNAME_DISPLAY_WIDTH = 200;
 
 export function ReportBadge({
   data,
@@ -44,7 +44,7 @@ export function ReportBadge({
   onClickOverride,
   hadLoadingError = false,
   displayUnnormalizedNames = false,
-  maxEnsNameDisplayWidth = DEFAULT_ENSNAME_DISPLAY_WIDTH,
+  maxEnsNameDisplayWidth = DEFAULT_MAX_ENSNAME_DISPLAY_WIDTH,
 }: ReportBadgeProps) {
   const buttonClass =
     "flex-shrink-0 appearance-none bg-white transition-colors hover:bg-gray-50 border border-gray-200 rounded-md px-2.5 py-1.5 inline-flex items-center";
@@ -142,7 +142,10 @@ export function ReportBadge({
 
       {hadLoadingError ? (
         // Unknown Rating
-        <UnknownReportIcon size="micro" className={"cursor-pointer"}>
+        <UnknownReportIcon
+          size={RatingIconSize.micro}
+          className="cursor-pointer"
+        >
           <div className="text-sm text-white">
             <button
               className="appearance-none underline font-medium"
@@ -163,6 +166,7 @@ export function ReportBadge({
         <ReportIcon
           data={data}
           ensName={ensName}
+          isInteractive={true}
           size={RatingIconSize.micro}
           className={"cursor-pointer"}
           hadLoadingError={hadLoadingError}

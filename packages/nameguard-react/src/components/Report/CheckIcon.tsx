@@ -22,42 +22,39 @@ function text(code: CheckResultCode) {
   }
 }
 
-function icon(
-  code: CheckResultCode,
-  isNotInteractive = false,
-): React.ReactNode {
+function icon(code: CheckResultCode, isInteractive = false): React.ReactNode {
   switch (code) {
     case CheckResultCode.pass:
-      return <CheckResultCodePassIcon isNotInteractive={isNotInteractive} />;
+      return <CheckResultCodePassIcon isInteractive={isInteractive} />;
     case CheckResultCode.warn:
-      return <CheckResultCodeWarnIcon isNotInteractive={isNotInteractive} />;
+      return <CheckResultCodeWarnIcon isInteractive={isInteractive} />;
     case CheckResultCode.alert:
-      return <CheckResultCodeAlertIcon isNotInteractive={isNotInteractive} />;
+      return <CheckResultCodeAlertIcon isInteractive={isInteractive} />;
     case CheckResultCode.info:
-      return <CheckResultCodeInfoIcon isNotInteractive={isNotInteractive} />;
+      return <CheckResultCodeInfoIcon isInteractive={isInteractive} />;
     case CheckResultCode.skip:
-      return <CheckResultCodeSkipIcon isNotInteractive={isNotInteractive} />;
+      return <CheckResultCodeSkipIcon isInteractive={isInteractive} />;
   }
 }
 
 /**
  * A component that displays a check result code as an icon with a tooltip.
  * @param {CheckResultCode} code - The CheckResultCode status to display.
- * @param {boolean} isNotInteractive - Wether to display a Tooltip and a color effect on icon hover or not.
+ * @param {boolean} isInteractive - Wether to display a Tooltip and a color effect on icon hover or not.
  */
 export function CheckIcon({
   code,
-  isNotInteractive = true,
+  isInteractive = false,
 }: {
   code: CheckResultCode;
-  isNotInteractive?: boolean;
+  isInteractive?: boolean;
 }) {
   const tooltipText = text(code);
-  const Icon = icon(code, isNotInteractive);
+  const Icon = icon(code, isInteractive);
 
-  if (isNotInteractive) {
+  if (isInteractive) {
+    return <Tooltip trigger={Icon} children={tooltipText} />;
+  } else {
     return Icon;
   }
-
-  return <Tooltip trigger={Icon} children={tooltipText} />;
 }

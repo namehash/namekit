@@ -10,7 +10,7 @@ import {
 import { RatingIconSize } from "@namehash/nameguard-react";
 import { ReportBadge, ReportIcon } from "@namehash/nameguard-react";
 
-export default function RatingShieldsPage() {
+export default function ReportDocsPage() {
   return (
     <div className="py-12 max-w-7xl mx-auto px-6 space-y-12">
       <div>
@@ -58,14 +58,14 @@ export default function RatingShieldsPage() {
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(undefined, true)}
+                ensName={getExampleReportName()}
                 size={RatingIconSize.large}
                 hadLoadingError={true}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(undefined, true)}
+                ensName={getExampleReportName()}
                 size={RatingIconSize.large}
               />
             </div>
@@ -98,14 +98,14 @@ export default function RatingShieldsPage() {
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(undefined, true)}
+                ensName={getExampleReportName()}
                 size={RatingIconSize.medium}
                 hadLoadingError={true}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(undefined, true)}
+                ensName={getExampleReportName()}
                 size={RatingIconSize.medium}
               />
             </div>
@@ -138,14 +138,14 @@ export default function RatingShieldsPage() {
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(undefined, true)}
+                ensName={getExampleReportName()}
                 size={RatingIconSize.small}
                 hadLoadingError={true}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(undefined, true)}
+                ensName={getExampleReportName()}
                 size={RatingIconSize.small}
               />
             </div>
@@ -178,14 +178,14 @@ export default function RatingShieldsPage() {
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(undefined, true)}
+                ensName={getExampleReportName()}
                 size={RatingIconSize.micro}
                 hadLoadingError={true}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(undefined, true)}
+                ensName={getExampleReportName()}
                 size={RatingIconSize.micro}
               />
             </div>
@@ -219,7 +219,7 @@ export default function RatingShieldsPage() {
             <div className="flex items-center justify-center">
               <ReportIcon
                 hadLoadingError={true}
-                ensName={getExampleReportName(undefined, true)}
+                ensName={getExampleReportName()}
                 onClickOverride={(ensName: ENSName) => alert(ensName.name)}
               />
             </div>
@@ -274,7 +274,7 @@ export default function RatingShieldsPage() {
           </div>
           <div className="col-span-2 flex items-center justify-center">
             <ReportBadge
-              ensName={getExampleReportName(undefined, true)}
+              ensName={getExampleReportName()}
               hadLoadingError={true}
             />
           </div>
@@ -314,7 +314,7 @@ export default function RatingShieldsPage() {
           <div className="col-span-2 flex items-center justify-center">
             <ReportBadge
               hadLoadingError={true}
-              ensName={getExampleReportName(Rating.pass, true)}
+              ensName={getExampleReportName()}
               onClickOverride={(ensName: ENSName) => alert(ensName.name)}
             />
           </div>
@@ -357,7 +357,7 @@ export default function RatingShieldsPage() {
           <div className="col-span-2 flex items-center justify-center">
             <ReportBadge
               hadLoadingError={true}
-              ensName={getExampleReportName(Rating.pass, true)}
+              ensName={getExampleReportName()}
               onClickOverride={(ensName: ENSName) => alert(ensName.name)}
             />
           </div>
@@ -373,14 +373,7 @@ export default function RatingShieldsPage() {
   );
 }
 
-const getExampleReportName = (
-  rating?: Rating,
-  compWithError = false,
-): ENSName => {
-  if (compWithError) {
-    return buildENSName(getExampleReportData(Rating.pass).name);
-  }
-
+const getExampleReportName = (rating?: Rating): ENSName => {
   if (!rating) {
     return buildENSName(getExampleReportData(Rating.pass).name);
   }

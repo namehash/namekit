@@ -44,6 +44,14 @@ export function ReportIcon({
   onClickOverride,
   hadLoadingError,
   size = RatingIconSize.small,
+
+  /*
+    Props are applied to the shield icon which is the onHover trigger element 
+    for the tooltip with Report information. For examples, please visit the
+    https://nameguard.io/docs/report and see the ReportIcon docs. Any 
+    additional props are passed to the shield icon that when hovered,
+    displays the tooltip with the report information.
+  */
   ...props
 }: ReportShieldProps) {
   const onClickHandler = () => {
@@ -57,7 +65,11 @@ export function ReportIcon({
 
   if (hadLoadingError) {
     return (
-      <UnknownReportIcon size={size} onClick={onClickHandler}>
+      <UnknownReportIcon
+        size={size}
+        onClick={onClickHandler}
+        className="cursor-pointer"
+      >
         <div className="text-sm text-white">
           <button
             className="appearance-none underline font-medium"
@@ -100,6 +112,7 @@ export function ReportIcon({
       trigger={
         <RatingIcon
           role="button"
+          isInteractive={true}
           onClick={onClickHandler}
           className="cursor-pointer"
           rating={rating}
@@ -110,11 +123,7 @@ export function ReportIcon({
     >
       <div className="flex items-start space-x-3 py-2.5 min-w-[300px] max-w-[300px]">
         <div className="mt-0.5">
-          <RatingIcon
-            rating={rating}
-            size={RatingIconSize.small}
-            isNotInteractive={true}
-          />
+          <RatingIcon rating={rating} size={RatingIconSize.small} />
         </div>
 
         <div className="flex-1">

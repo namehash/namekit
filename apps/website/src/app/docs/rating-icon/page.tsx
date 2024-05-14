@@ -3,7 +3,7 @@
 import { Rating } from "@namehash/nameguard";
 import { RatingIcon, RatingIconSize } from "@namehash/nameguard-react";
 
-export default function RatingShieldsPage() {
+export default function RatingIconsDocsPage() {
   return (
     <div className="py-12 max-w-7xl mx-auto px-6 space-y-12">
       <div className="divide-y divide-gray-100">
@@ -84,27 +84,27 @@ export default function RatingShieldsPage() {
           </div>
           <div className="grid grid-cols-4 gap-x-6 py-5">
             <div className="flex items-center font-mono">
-              <pre>{`<RatingIcon isNotInteractive />`}</pre>
+              <pre>{`<RatingIcon isInteractive={true} />`}</pre>
             </div>
 
             <div className="flex items-center justify-center">
               <RatingIcon
+                isInteractive={true}
                 rating={Rating.pass}
-                isNotInteractive={true}
                 size={RatingIconSize.medium}
               />
             </div>
             <div className="flex items-center justify-center">
               <RatingIcon
+                isInteractive={true}
                 rating={Rating.warn}
-                isNotInteractive={true}
                 size={RatingIconSize.medium}
               />
             </div>
             <div className="flex items-center justify-center">
               <RatingIcon
+                isInteractive={true}
                 rating={Rating.alert}
-                isNotInteractive={true}
                 size={RatingIconSize.medium}
               />
             </div>

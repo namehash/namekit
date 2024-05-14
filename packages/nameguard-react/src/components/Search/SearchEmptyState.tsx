@@ -36,11 +36,7 @@ export const SearchEmptyState = () => {
   const { openModal } = useSearchStore();
   const exampleNames = examples.map((n) => n.name);
 
-  const {
-    data,
-    isLoading,
-    error: hadLoadingError,
-  } = useSWR<BulkConsolidatedNameGuardReport>(
+  const { data, isLoading } = useSWR<BulkConsolidatedNameGuardReport>(
     exampleNames.join(),
     (_) => nameguard.bulkInspectNames(exampleNames),
     {
