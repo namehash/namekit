@@ -1,19 +1,22 @@
 import React from "react";
 import { Tooltip } from "../Tooltip/Tooltip";
-import { CheckResultCode } from "@namehash/nameguard";
+import { CheckResultCode, Rating } from "@namehash/nameguard";
 import { CheckResultCodePassIcon } from "../icons/CheckResultCodePassIcon";
 import { CheckResultCodeWarnIcon } from "../icons/CheckResultCodeWarnIcon";
 import { CheckResultCodeAlertIcon } from "../icons/CheckResultCodeAlertIcon";
 import { CheckResultCodeInfoIcon } from "../icons/CheckResultCodeInfoIcon";
 import { CheckResultCodeSkipIcon } from "../icons/CheckResultCodeSkipIcon";
 
-function text(code: CheckResultCode) {
+function text(code: CheckResultCode | Rating) {
   switch (code) {
     case CheckResultCode.pass:
+    case Rating.pass:
       return "All Checks Passed";
     case CheckResultCode.warn:
+    case Rating.warn:
       return "Warning";
     case CheckResultCode.alert:
+    case Rating.alert:
       return "Alert";
     case CheckResultCode.info:
       return "Informational Notice";
@@ -22,18 +25,50 @@ function text(code: CheckResultCode) {
   }
 }
 
-function icon(code: CheckResultCode, isInteractive = false): React.ReactNode {
+function icon(
+  code: CheckResultCode | Rating,
+  isInteractive = false,
+  className = "",
+): React.ReactNode {
   switch (code) {
     case CheckResultCode.pass:
-      return <CheckResultCodePassIcon isInteractive={isInteractive} />;
+    case Rating.pass:
+      return (
+        <CheckResultCodePassIcon
+          isInteractive={isInteractive}
+          className={className}
+        />
+      );
     case CheckResultCode.warn:
-      return <CheckResultCodeWarnIcon isInteractive={isInteractive} />;
+    case Rating.warn:
+      return (
+        <CheckResultCodeWarnIcon
+          isInteractive={isInteractive}
+          className={className}
+        />
+      );
     case CheckResultCode.alert:
-      return <CheckResultCodeAlertIcon isInteractive={isInteractive} />;
+    case Rating.alert:
+      return (
+        <CheckResultCodeAlertIcon
+          isInteractive={isInteractive}
+          className={className}
+        />
+      );
     case CheckResultCode.info:
-      return <CheckResultCodeInfoIcon isInteractive={isInteractive} />;
+      return (
+        <CheckResultCodeInfoIcon
+          isInteractive={isInteractive}
+          className={className}
+        />
+      );
     case CheckResultCode.skip:
-      return <CheckResultCodeSkipIcon isInteractive={isInteractive} />;
+      return (
+        <CheckResultCodeSkipIcon
+          isInteractive={isInteractive}
+          className={className}
+        />
+      );
   }
 }
 
@@ -42,15 +77,17 @@ function icon(code: CheckResultCode, isInteractive = false): React.ReactNode {
  * @param {CheckResultCode} code - The CheckResultCode status to display.
  * @param {boolean} isInteractive - Wether to display a Tooltip and a color effect on icon hover or not.
  */
-export function CheckIcon({
+export function ResultCodeIcon({
   code,
   isInteractive = false,
+  className = "",
 }: {
-  code: CheckResultCode;
+  code: CheckResultCode | Rating;
   isInteractive?: boolean;
+  className?: string;
 }) {
   const tooltipText = text(code);
-  const Icon = icon(code, isInteractive);
+  const Icon = icon(code, isInteractive, className);
 
   if (isInteractive) {
     return <Tooltip trigger={Icon} children={tooltipText} />;

@@ -1,7 +1,7 @@
 import React from "react";
 import { GraphemeGuardReport } from "@namehash/nameguard";
 
-import { CheckIcon } from "../Report/CheckIcon";
+import { ResultCodeIcon } from "../Report/CheckIcon";
 import { useGraphemeModalStore } from "../../stores/grapheme";
 
 type ConfusableListItemProps = {
@@ -40,7 +40,10 @@ export const ConfusableListItem = ({ item }: ConfusableListItemProps) => {
           <div className="flex items-center space-x-2 flex-1 pr-6 md:pr-12">
             {item.highest_risk && (
               <div className="flex-shrink-0 flex items-center">
-                <CheckIcon code={item.highest_risk.status} />
+                <ResultCodeIcon
+                  isInteractive={true}
+                  code={item.highest_risk.status}
+                />
               </div>
             )}
 

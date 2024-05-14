@@ -167,6 +167,14 @@ export function ReportBadge({
           data={data}
           ensName={ensName}
           isInteractive={true}
+          /*
+            Since the ReportBadge has already executed the onClickHandler
+            function when the user clicks on it, there is no need to execute
+            it once again inside the ReportIcon component. Therefore, we
+            override the onClick function of the ReportIcon component 
+            to do nothing when the user clicks on it ⬇️
+          */
+          onClickOverride={() => {}}
           size={RatingIconSize.micro}
           className={"cursor-pointer"}
           hadLoadingError={hadLoadingError}

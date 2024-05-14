@@ -4,8 +4,8 @@ export const RatingPassMicroIcon = (
   props: React.SVGProps<SVGSVGElement>,
   isInteractive = false,
 ) => (
-  <div className="group">
-    <div className={isInteractive ? "group-hover:hidden block" : "block"}>
+  <div className="group/pass">
+    <div className={isInteractive ? "group-hover/pass:hidden block" : "block"}>
       <svg
         width="14"
         height="14"
@@ -23,7 +23,7 @@ export const RatingPassMicroIcon = (
         />
       </svg>
     </div>
-    <div className={isInteractive ? "group-hover:block hidden" : "hidden"}>
+    <div className={isInteractive ? "group-hover/pass:block hidden" : "hidden"}>
       <svg
         width="14"
         height="14"

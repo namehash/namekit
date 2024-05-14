@@ -4,8 +4,8 @@ export const RatingAlertMicroIcon = (
   props: React.SVGProps<SVGSVGElement>,
   isInteractive = false,
 ) => (
-  <div className="group">
-    <div className={isInteractive ? "group-hover:hidden block" : "block"}>
+  <div className="group/alert">
+    <div className={isInteractive ? "group-hover/alert:hidden block" : "block"}>
       <svg
         width="14"
         height="14"
@@ -23,7 +23,9 @@ export const RatingAlertMicroIcon = (
         />
       </svg>
     </div>
-    <div className={isInteractive ? "group-hover:block hidden" : "hidden"}>
+    <div
+      className={isInteractive ? "group-hover/alert:block hidden" : "hidden"}
+    >
       <svg
         width="14"
         height="14"

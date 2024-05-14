@@ -294,7 +294,7 @@ export default function ReportDocsPage() {
             <ReportBadge
               ensName={getExampleReportName(Rating.pass)}
               data={getExampleReportData(Rating.pass)}
-              onClickOverride={(ensName) => alert(ensName.name)}
+              onClickOverride={(ensName: ENSName) => alert(ensName.name)}
             />
           </div>
           <div className="col-span-3 flex items-center justify-center">
@@ -336,7 +336,7 @@ export default function ReportDocsPage() {
             <ReportBadge
               ensName={getExampleReportName(Rating.pass)}
               data={getExampleReportData(Rating.pass)}
-              onClickOverride={(ensName) => alert(ensName.name)}
+              onClickOverride={(ensName: ENSName) => alert(ensName.name)}
             />
           </div>
           <div className="col-span-3 flex items-center justify-center ml-16">
