@@ -1,7 +1,7 @@
 import "./globals.css";
 import "@namehash/ens-webfont";
 import type { Metadata } from "next";
-import { Metadata as NamehashMetadata } from "@namehash/utils";
+import { Metadata as NamehashMetadata } from "@namehash/seo";
 import { Inter } from "next/font/google";
 import Favicon from "../../public/favicon/favicon_package_v0-2/favicon.ico";
 import AppleTouchIcon from "../../public/favicon/favicon_package_v0-2/apple-touch-icon.png";

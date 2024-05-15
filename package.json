@@ -1,13 +1,13 @@
 {
-  "name": "nameguard-monorepo",
+  "name": "namekit",
+
   "private": true,
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "clean": "turbo clean",
-    "prettier-check": "prettier --check \"**/*.{ts,tsx,md}\"",
-    "prettier-fix": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "packageManager": "pnpm@8.6.10",
   "devDependencies": {

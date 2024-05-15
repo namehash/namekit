@@ -2,16 +2,8 @@
   "name": "@namehash/ens-webfont",
   "version": "0.1.0",
   "main": "index.css",
-  "files": [
-    "index.css",
-    "Unifont.otf"
-  ],
-  "scripts": {
-    "prettier-check": "prettier --check ."
-  },
-  "devDependencies": {
-    "prettier": "^3.0.3"
-  },
+  "files": ["index.css", "Unifont.otf"],
+  "scripts": {},
   "publishConfig": {
     "access": "public"
   }
