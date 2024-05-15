@@ -77,7 +77,7 @@ jobs:
 
       - name: Generate coverage badge
         working-directory: ./api
-        run: poetry run coverage-badge -fo ../coverage_badge.svg
+        run: poetry run coverage-badge -fo coverage_badge.svg
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
@@ -85,4 +85,4 @@ jobs:
           author_name: github-actions
           author_email: actions@github.com
           message: 'Update coverage badge'
-          add: 'coverage_badge.svg'
+          add: 'api/coverage_badge.svg'
