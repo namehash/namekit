@@ -1,22 +1,19 @@
 import React from "react";
 import { Tooltip } from "../Tooltip/Tooltip";
-import { CheckResultCode, Rating } from "@namehash/nameguard";
+import { CheckResultCode } from "@namehash/nameguard";
 import { CheckResultCodePassIcon } from "../icons/CheckResultCodePassIcon";
 import { CheckResultCodeWarnIcon } from "../icons/CheckResultCodeWarnIcon";
 import { CheckResultCodeAlertIcon } from "../icons/CheckResultCodeAlertIcon";
 import { CheckResultCodeInfoIcon } from "../icons/CheckResultCodeInfoIcon";
 import { CheckResultCodeSkipIcon } from "../icons/CheckResultCodeSkipIcon";
 
-function text(code: CheckResultCode | Rating) {
+function text(code: CheckResultCode) {
   switch (code) {
     case CheckResultCode.pass:
-    case Rating.pass:
       return "All Checks Passed";
     case CheckResultCode.warn:
-    case Rating.warn:
       return "Warning";
     case CheckResultCode.alert:
-    case Rating.alert:
       return "Alert";
     case CheckResultCode.info:
       return "Informational Notice";
@@ -26,14 +23,13 @@ function text(code: CheckResultCode | Rating) {
 }
 
 function icon(
-  code: CheckResultCode | Rating,
+  code: CheckResultCode,
   isInteractive = false,
   onClick = () => {},
   className = "",
 ): React.ReactNode {
   switch (code) {
     case CheckResultCode.pass:
-    case Rating.pass:
       return (
         <CheckResultCodePassIcon
           isInteractive={isInteractive}
@@ -42,7 +38,6 @@ function icon(
         />
       );
     case CheckResultCode.warn:
-    case Rating.warn:
       return (
         <CheckResultCodeWarnIcon
           isInteractive={isInteractive}
@@ -51,7 +46,6 @@ function icon(
         />
       );
     case CheckResultCode.alert:
-    case Rating.alert:
       return (
         <CheckResultCodeAlertIcon
           isInteractive={isInteractive}
@@ -90,7 +84,7 @@ export function CheckResultCodeIcon({
   className = "",
 }: {
   onClick?: () => void;
-  code: CheckResultCode | Rating;
+  code: CheckResultCode;
   isInteractive?: boolean;
   className?: string;
 }) {
