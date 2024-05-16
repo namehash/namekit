@@ -68,10 +68,10 @@ importers:
     devDependencies:
       '@types/node':
         specifier: latest
-        version: 20.12.8
+        version: 20.12.12
       '@types/react':
         specifier: latest
-        version: 18.3.1
+        version: 18.3.2
       '@types/react-dom':
         specifier: latest
         version: 18.3.0
@@ -154,10 +154,10 @@ importers:
         specifier: 1.9.0
         version: 1.9.0(typescript@5.4.5)
       '@namehash/ens-webfont':
-        specifier: latest
+        specifier: workspace:^
         version: link:../ens-webfont
       '@namehash/nameguard':
-        specifier: latest
+        specifier: workspace:^
         version: link:../nameguard-sdk
       classcat:
         specifier: 5.0.4

@@ -55,6 +55,11 @@ export async function HeroCarousel() {
           data={report}
         />
       ))}
+      {/* 
+        This carousel component needs lots of badges in order
+        to look good in the Ui, we are, then, duplicating the
+        badges displayed to enhance badges number.
+      */}
       {data?.results?.map((report, index) => (
         <ReportModalNameBadge
           key={`carousel-item-${index}`}
