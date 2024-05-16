@@ -54,17 +54,17 @@ export function Hero() {
           <WarningShieldOrangeOutline className="absolute z-10 hidden lg:block top-[6%] right-[22%]" />
           <CheckShieldLarge className="absolute z-10 hidden xl:block top-[7%] left-[60%]" />
           <WarningShieldSmall className="absolute z-10 hidden lg:block top-[7%] right-[5%]" />
-          <ErrorShieldSmall className="absolute z-10 hidden xl:block top-[11%] left-[42%]" />
+          <UnknownShieldSmallIcon className="absolute z-10 hidden xl:block top-[11%] left-[42%]" />
           <CheckShieldLarge className="absolute z-10 hidden lg:block top-[12%] left-[7%]" />
-          <ErrorShieldLarge className="absolute z-10 hidden lg:block top-[18%] right-[12%]" />
+          <UnknownShieldLargeIcon className="absolute z-10 hidden lg:block top-[18%] right-[12%]" />
           <WarningShieldSmall className="absolute z-10 hidden xl:block top-[37%] left-[20%]" />
           <WarningShieldRedOutline className="absolute z-10 hidden lg:block top-[45%] right-[5%]" />
           <CheckShieldOutline className="absolute z-10 hidden lg:block top-[50%] left-[6%]" />
           <WarningShieldSmall className="absolute z-10 hidden lg:block bottom-[47%] right-[20%]" />
-          <ErrorShieldSmall className="absolute z-10 hidden lg:block bottom-[40%] left-[25%]" />
+          <UnknownShieldSmallIcon className="absolute z-10 hidden lg:block bottom-[40%] left-[25%]" />
           <WarningShieldLarge className="absolute z-10 hidden lg:block bottom-[22%] left-[6%]" />
           <CheckShieldLarge className="absolute z-10 hidden xl:block bottom-[25%] right-[30%]" />
-          <ErrorShieldSmall className="absolute z-10 hidden xl:block bottom-[19%] left-[43%]" />
+          <UnknownShieldSmallIcon className="absolute z-10 hidden xl:block bottom-[19%] left-[43%]" />
           <WarningShieldLarge className="absolute z-10 hidden lg:block bottom-[15%] right-[6%]" />
           <WarningShieldRedOutline className="absolute z-10 hidden lg:block bottom-[15%] left-[30%]" />
           <WarningShieldOrangeOutline className="absolute z-10 hidden lg:block bottom-[12%] right-[41%]" />
@@ -84,7 +84,7 @@ export function Hero() {
   );
 }
 
-const WarningShieldOrangeOutline = (props: any) => (
+const WarningShieldOrangeOutline = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -103,7 +103,7 @@ const WarningShieldOrangeOutline = (props: any) => (
   </svg>
 );
 
-const WarningShieldRedOutline = (props: any) => (
+const WarningShieldRedOutline = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -122,7 +122,7 @@ const WarningShieldRedOutline = (props: any) => (
   </svg>
 );
 
-const CheckShieldOutline = (props: any) => (
+const CheckShieldOutline = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="24"
@@ -141,7 +141,7 @@ const CheckShieldOutline = (props: any) => (
   </svg>
 );
 
-const CheckShieldLarge = (props: any) => (
+const CheckShieldLarge = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="98"
@@ -229,7 +229,7 @@ const CheckShieldLarge = (props: any) => (
   </svg>
 );
 
-const WarningShieldLarge = (props: any) => (
+const WarningShieldLarge = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="98"
@@ -319,7 +319,7 @@ const WarningShieldLarge = (props: any) => (
   </svg>
 );
 
-const ErrorShieldLarge = (props: any) => (
+const UnknownShieldLargeIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="98"
@@ -409,7 +409,7 @@ const ErrorShieldLarge = (props: any) => (
   </svg>
 );
 
-const WarningShieldSmall = (props: any) => (
+const WarningShieldSmall = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="56"
@@ -499,7 +499,7 @@ const WarningShieldSmall = (props: any) => (
   </svg>
 );
 
-const ErrorShieldSmall = (props: any) => (
+const UnknownShieldSmallIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="56"

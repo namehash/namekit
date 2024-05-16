@@ -4,9 +4,9 @@ import {
   nameguard,
   type BulkConsolidatedNameGuardReport,
 } from "@namehash/nameguard";
-import { parseName } from "@namehash/ens-utils";
+import { buildENSName } from "@namehash/ens-utils";
 
-import { NameBadge } from "../NameBadge/NameBadge";
+import { ReportModalNameBadge } from "../Report/ReportModalNameBadge";
 import { useSearchStore } from "../../stores/search";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 
@@ -26,7 +26,7 @@ const examples = [
   "unknоwn.eth",
   "john🇺🇸",
   "7️⃣7️⃣7️⃣.eth",
-];
+].map((name) => buildENSName(name));
 
 export const SearchEmptyState = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -34,12 +34,15 @@ export const SearchEmptyState = () => {
   const [isAtEnd, setIsAtEnd] = useState<boolean>(false);
 
   const { openModal } = useSearchStore();
-  const parsedNames = examples.map((n) => parseName(n));
+  const exampleNames = examples.map((n) => n.name);
 
-  const { data, isLoading } = useSWR<BulkConsolidatedNameGuardReport>(
-    examples.join(),
-    (_) =>
-      nameguard.bulkInspectNames(parsedNames.map((n) => n.outputName.name)),
+  const {
+    data,
+    isLoading,
+    error: hadLoadingError,
+  } = useSWR<BulkConsolidatedNameGuardReport>(
+    exampleNames.join(),
+    (_) => nameguard.bulkInspectNames(exampleNames),
     {
       revalidateIfStale: false,
       revalidateOnFocus: false,
@@ -116,13 +119,20 @@ export const SearchEmptyState = () => {
                 </button>
               </div>
             )}
-            {isLoading &&
-              examples.map((e, index) => <NameBadge name={e} key={index} />)}
+            {(hadLoadingError || isLoading) &&
+              examples.map((_, index) => (
+                <ReportModalNameBadge
+                  hadLoadingError={hadLoadingError}
+                  ensName={examples[index]}
+                  key={index}
+                />
+              ))}
             {data?.results?.map((report, index) => (
-              <NameBadge
+              <ReportModalNameBadge
                 key={index}
+                hadLoadingError={hadLoadingError}
+                ensName={examples[index]}
                 data={report}
-                onClick={() => openModal(report.name)}
               />
             ))}
             <div className="w-5 flex-shrink-0 relative">

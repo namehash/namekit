@@ -5,7 +5,7 @@ import { type GraphemeGuardReport, nameguard } from "@namehash/nameguard";
 import { useGraphemeModalStore } from "../../stores/grapheme";
 import { Slideover } from "../Slideover/Slideover";
 import { CheckResultCard } from "../Report/CheckResultCard";
-import { Shield, ShieldSize } from "../Report/Shield";
+import { RatingIcon, RatingIconSize } from "../Report/RatingIcon";
 import { RatedBox } from "../RatedBox/RatedBox";
 import { ConfusableList } from "./ConfusableList";
 import { LoadingSkeleton } from "./LoadingSkeleton";
@@ -46,7 +46,10 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
             <div className="px-5 pt-7 pb-10 md:py-7 lg:pt-8 lg:pb-10 md:px-[30px] flex flex-col">
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-2.5">
-                  <Shield status={data?.rating} size={ShieldSize.small} />
+                  <RatingIcon
+                    rating={data?.rating}
+                    size={RatingIconSize.small}
+                  />
                   <span className="text-black text-sm">{data?.title}</span>
                 </div>
               </div>

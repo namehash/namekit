@@ -13,9 +13,6 @@ function borderColor(rating: Rating) {
     case Rating.warn: {
       return "border-yellow-200";
     }
-    default: {
-      return "border-gray-200";
-    }
   }
 }
 
@@ -29,9 +26,6 @@ function shadowColor(rating: Rating) {
     }
     case Rating.warn: {
       return "shadow-yellow-50";
-    }
-    default: {
-      return "shadow-gray-50";
     }
   }
 }

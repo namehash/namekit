@@ -1,7 +1,7 @@
 import React from "react";
-import { GraphemeGuardReport } from "@namehash/nameguard";
+import { CheckResultCode, GraphemeGuardReport } from "@namehash/nameguard";
 
-import { Check } from "../Report/Check";
+import { CheckResultCodeIcon } from "../Report/CheckResultCodeIcon";
 import { useGraphemeModalStore } from "../../stores/grapheme";
 
 type ConfusableListItemProps = {
@@ -38,9 +38,21 @@ export const ConfusableListItem = ({ item }: ConfusableListItemProps) => {
 
         <div className="md:col-span-4 flex space-between space-x-3">
           <div className="flex items-center space-x-2 flex-1 pr-6 md:pr-12">
-            <div className="flex-shrink-0 flex items-center">
-              <Check code={item.rating} />
-            </div>
+            {item.highest_risk ? (
+              <div className="flex-shrink-0 flex items-center">
+                <CheckResultCodeIcon
+                  isInteractive={true}
+                  code={item.highest_risk.status}
+                />
+              </div>
+            ) : (
+              <div className="flex-shrink-0 flex items-center">
+                <CheckResultCodeIcon
+                  isInteractive={true}
+                  code={CheckResultCode.pass}
+                />
+              </div>
+            )}
 
             <p className="md:font-medium text-gray-500 md:text-black text-sm w-full md:pl-2">
               {item.rating === "pass" ? item.title : item.highest_risk?.message}

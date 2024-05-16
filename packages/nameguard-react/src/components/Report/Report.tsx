@@ -1,6 +1,6 @@
 import React, { Fragment, useMemo } from "react";
 import useSWR from "swr";
-import { type NameGuardReport, nameguard } from "@namehash/nameguard";
+import { type NameGuardReport, nameguard, Rating } from "@namehash/nameguard";
 import { parseName } from "@namehash/ens-utils";
 import { Toaster } from "sonner";
 
@@ -24,6 +24,7 @@ import { useGraphemeModalStore } from "../../stores/grapheme";
 import { ReportError } from "./ReportError";
 import { ExternalLinks } from "../ExternalLinks/ExternalLinks";
 import { Share } from "../Share/Share";
+import { ratingTextColor } from "../../utils/text";
 
 type ReportProps = {
   data?: NameGuardReport;
@@ -64,7 +65,11 @@ export const Report = ({
 
   const showEmptyState = parsedName.outputName.name.length === 0 ?? true;
 
-  const { data, error, isLoading } = useSWR<NameGuardReport>(
+  const {
+    data,
+    error: hadLoadingError,
+    isLoading,
+  } = useSWR<NameGuardReport>(
     fallbackData ? null : parsedName.outputName.name,
     (n: string) => nameguard.inspectName(n),
     {
@@ -117,14 +122,14 @@ export const Report = ({
           </div>
         </div>
 
-        {isLoading && !error && normalizationUnknown && (
+        {isLoading && !hadLoadingError && normalizationUnknown && (
           <LoadingSkeleton parsedName={parsedName} />
         )}
-        {isLoading && !error && !normalizationUnknown && (
+        {isLoading && !hadLoadingError && !normalizationUnknown && (
           <LoadingSkeleton parsedName={parsedName} />
         )}
 
-        {error && <ReportError />}
+        {hadLoadingError && <ReportError />}
 
         {data && (
           <Fragment>
@@ -168,7 +173,7 @@ export const Report = ({
             toast:
               "!bg-black !border-black !relative !text-sm !leading-5 !font-medium !px-5",
             title: "!text-white",
-            success: "!fill-current !text-green-400",
+            success: `!fill-current !${ratingTextColor(Rating.pass)}`,
             closeButton: "!hidden",
           },
         }}

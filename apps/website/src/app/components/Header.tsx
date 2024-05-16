@@ -25,7 +25,7 @@ export const Header = () => {
               </div>
             </Link>
           </div>
-          <div className="hidden flex search_bar_change:block gt_mobile:w-full gt_mobile:h-full gt_mobile:p-0 gt_mobile:m-0">
+          <div className="flex search_bar_change:block gt_mobile:w-full gt_mobile:h-full gt_mobile:p-0 gt_mobile:m-0">
             <NGSearch />
           </div>
         </div>
