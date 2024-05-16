@@ -9,7 +9,7 @@ export { ReportBadge } from "./components/ReportBadge";
 export { ReportIcon } from "./components/ReportIcon";
 export { CheckResultCodeIcon } from "./components/Report/CheckResultCodeIcon";
 export { RatingIcon, RatingIconSize } from "./components/Report/RatingIcon";
-export { NGWebsiteReportBadge } from "./components/Report/NGWebsiteReportBadge";
+export { ReportModalNameBadge } from "./components/Report/ReportModalNameBadge";
 
 export { RatingLoadingIcon } from "./components/icons/RatingLoadingIcon";
 export { RatingUnknownIcon } from "./components/icons/RatingUnknownIcon";

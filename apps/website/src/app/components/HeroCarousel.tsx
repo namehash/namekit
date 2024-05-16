@@ -2,7 +2,7 @@
 
 import { nameguard } from "@namehash/nameguard";
 import { buildENSName } from "@namehash/ens-utils";
-import { NGWebsiteReportBadge } from "@namehash/nameguard-react";
+import { ReportModalNameBadge } from "@namehash/nameguard-react";
 
 const examples = [
   "culturecafé.eth",
@@ -49,14 +49,14 @@ export async function HeroCarousel() {
         badges displayed to enhance badges number.
       */}
       {data?.results?.map((report, index) => (
-        <NGWebsiteReportBadge
+        <ReportModalNameBadge
           key={`carousel-item-${index}`}
           ensName={ensNames[index]}
           data={report}
         />
       ))}
       {data?.results?.map((report, index) => (
-        <NGWebsiteReportBadge
+        <ReportModalNameBadge
           key={`carousel-item-${index}`}
           ensName={ensNames[index]}
           data={report}

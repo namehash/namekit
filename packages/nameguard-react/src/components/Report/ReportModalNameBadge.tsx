@@ -4,18 +4,18 @@ import { ConsolidatedNameGuardReport } from "@namehash/nameguard";
 import { useSearchStore } from "../../stores/search";
 import { ReportBadge } from "../ReportBadge";
 
-interface NGWebsiteReportBadgeProps {
+interface ReportModalNameBadgeProps {
   data?: ConsolidatedNameGuardReport;
   hadLoadingError?: boolean;
   ensName: ENSName;
 }
 
-export function NGWebsiteReportBadge({
+export function ReportModalNameBadge({
   data,
   ensName,
   hadLoadingError = false,
   ...props
-}: NGWebsiteReportBadgeProps) {
+}: ReportModalNameBadgeProps) {
   const { openModal } = useSearchStore();
   return (
     <ReportBadge

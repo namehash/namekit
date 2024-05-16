@@ -6,7 +6,7 @@ import {
 } from "@namehash/nameguard";
 import { buildENSName } from "@namehash/ens-utils";
 
-import { NGWebsiteReportBadge } from "../Report/NGWebsiteReportBadge";
+import { ReportModalNameBadge } from "../Report/ReportModalNameBadge";
 import { useSearchStore } from "../../stores/search";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 
@@ -121,14 +121,14 @@ export const SearchEmptyState = () => {
             )}
             {(hadLoadingError || isLoading) &&
               examples.map((_, index) => (
-                <NGWebsiteReportBadge
+                <ReportModalNameBadge
                   hadLoadingError={hadLoadingError}
                   ensName={examples[index]}
                   key={index}
                 />
               ))}
             {data?.results?.map((report, index) => (
-              <NGWebsiteReportBadge
+              <ReportModalNameBadge
                 key={index}
                 hadLoadingError={hadLoadingError}
                 ensName={examples[index]}
