@@ -1,6 +1,6 @@
 # NameGuard SDK ⨯ Next.js
 
-This example shows how to use the NameGuard SDK with Next.js (App Router).
+This example shows how to use the NameGuard SDK with Next.js (App Router). 
 
 ## Download locally
 
