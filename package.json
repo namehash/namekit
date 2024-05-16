@@ -1,18 +1,18 @@
 {
   "name": "namekit",
-
   "private": true,
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "clean": "turbo clean",
+    "clean": "rimraf -g \"**/node_modules\" \"**/dist\" \"**/.turbo\" \"**/.next\"",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "packageManager": "pnpm@8.6.10",
   "devDependencies": {
-    "eslint": "8.51.0",
+    "eslint": "^8.56.0",
     "prettier": "^3.2.5",
+    "rimraf": "^5.0.7",
     "turbo": "1.13.3"
   }
 }

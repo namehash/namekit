@@ -4,7 +4,6 @@ export const RatingUnknownMediumIcon = (
   props: React.SVGProps<SVGSVGElement>,
   isInteractive = false,
 ) => {
-  console.log(props, isInteractive);
   return (
     <div className="group">
       <div className={isInteractive ? "group-hover:hidden block" : "block"}>
