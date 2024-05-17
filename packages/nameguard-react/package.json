@@ -8,18 +8,12 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": {
-        "node": "./dist/index.js",
-        "default": "./dist/index.js"
-      },
-      "require": {
-        "node": "./dist/index.cjs",
-        "default": "./dist/index.cjs"
-      }
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.mjs"
     }
   },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "dependencies": {
     "@headlessui-float/react": "0.11.4",

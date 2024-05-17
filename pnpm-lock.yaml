@@ -30,10 +30,10 @@ importers:
         specifier: 1.7.17
         version: 1.7.17(react-dom@18.2.0)(react@18.2.0)
       '@namehash/nameguard':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../packages/nameguard-sdk
       '@namehash/nameguard-react':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../packages/nameguard-react
       classcat:
         specifier: 5.0.4
@@ -85,19 +85,19 @@ importers:
         specifier: 2.0.18
         version: 2.0.18(react@18.2.0)
       '@namehash/ens-utils':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../packages/ens-utils
       '@namehash/ens-webfont':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../packages/ens-webfont
       '@namehash/nameguard':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../packages/nameguard-sdk
       '@namehash/nameguard-react':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../packages/nameguard-react
       '@namehash/seo':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../../internal/seo
       '@tailwindcss/forms':
         specifier: 0.5.6
@@ -212,8 +212,8 @@ importers:
         specifier: 2.0.18
         version: 2.0.18(react@18.2.0)
       '@namehash/ens-utils':
-        specifier: 1.9.0
-        version: 1.9.0(typescript@5.3.3)
+        specifier: workspace:^
+        version: link:../ens-utils
       '@namehash/ens-webfont':
         specifier: workspace:^
         version: link:../ens-webfont
@@ -1229,21 +1229,6 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
-
-  /@namehash/ens-utils@1.9.0(typescript@5.3.3):
-    resolution: {integrity: sha512-NHZdHsDLPYEH4OrQenyd/M1vXjYeQNF3fq1MIcRCEsZqw4rtNyxCluuMKBlTxL/mubkaUAEwCl5JG/qt4MKeqw==}
-    dependencies:
-      '@adraffy/ens-normalize': 1.10.1
-      '@ethersproject/hash': 5.7.0
-      date-fns: 3.3.1
-      decimal.js: 10.4.3
-      viem: 2.9.3(typescript@5.3.3)
-    transitivePeerDependencies:
-      - bufferutil
-      - typescript
-      - utf-8-validate
-      - zod
-    dev: false
 
   /@next/env@14.1.0:
     resolution: {integrity: sha512-Py8zIo+02ht82brwwhTg36iogzFqGLPXlRGKQw5s+qP/kMNc4MAyDeEwBKDijk6zTIbegEgu8Qy7C1LboslQAw==}
