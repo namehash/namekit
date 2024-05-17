@@ -5,7 +5,7 @@ import { RatedBox } from "../RatedBox/RatedBox";
 
 import cc from "classcat";
 import { CheckResultCode } from "@namehash/nameguard";
-import { checkResultCodeTextColor } from "../../utils/text";
+import { checkResultCodeTextColor } from "../../utils/colors";
 
 export const ReportError = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);

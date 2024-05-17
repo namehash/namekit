@@ -1,6 +1,6 @@
 import * as React from "react";
 import cc from "classcat";
-import { checkResultCodeTextColor } from "../../utils/text";
+import { checkResultCodeTextColor } from "../../utils/colors";
 import { CheckResultCode } from "@namehash/nameguard";
 
 export const CheckResultCodePassIcon = ({

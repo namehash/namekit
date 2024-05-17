@@ -10,7 +10,7 @@ import cc from "classcat";
 import { Tooltip } from "../Tooltip/Tooltip";
 import { RatingLoadingIcon } from "../icons/RatingLoadingIcon";
 import { RatingIcon, RatingIconSize } from "../Report/RatingIcon";
-import { checkResultCodeTextColor, ratingTextColor } from "../../utils/text";
+import { checkResultCodeTextColor, ratingTextColor } from "../../utils/colors";
 import { ENSName } from "@namehash/ens-utils";
 import { UnknownReportIcon } from "../UnknownReportIcon/UnknownReportIcon";
 
