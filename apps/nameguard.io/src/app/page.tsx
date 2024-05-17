@@ -773,7 +773,7 @@ function RoadMap() {
           Offered a more convenient method for{" "}
           <a
             className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
-            href="https://github.com/namehash/nameguard/tree/main/packages/sdk"
+            href="https://github.com/namehash/nameguard/tree/main/packages/nameguard-sdk"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -826,7 +826,7 @@ function RoadMap() {
           Created a{" "}
           <a
             className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
-            href="https://github.com/namehash/ens-utils/blob/main/README.md"
+            href="https://github.com/namehash/nameguard/blob/main/packages/ens-utils/src/nameparser.ts"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -861,7 +861,7 @@ function RoadMap() {
           Built and released an{" "}
           <a
             className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
-            href="https://nameguard-examples-nextjs.vercel.app/"
+            href="https://examples.nameguard.io"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -944,7 +944,7 @@ function RoadMap() {
     {
       stageOfCompletion: "launched",
       headerText: "Cross-chain Support",
-      commentSentences: ["Integrated mainnet, and sepolia."],
+      commentSentences: ["Integrated mainnet and sepolia."],
     },
     {
       stageOfCompletion: "launched",
@@ -954,7 +954,7 @@ function RoadMap() {
           Released an{" "}
           <a
             className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
-            href="https://github.com/namehash/nameguard/pull/139"
+            href="https://github.com/namehash/nameguard/tree/main/packages/ens-webfont"
             target="_blank"
             rel="noopener noreferrer"
           >

@@ -88,7 +88,7 @@ export function DevelopersSection() {
           <GithubIconDevelopers />
         </div>
       ),
-      link: "https://github.com/namehash/nameguard/tree/main/packages/sdk",
+      link: "https://github.com/namehash/nameguard/tree/main/packages/nameguard-sdk",
     },
     {
       header: (
@@ -192,7 +192,7 @@ export function DevelopersSection() {
           <GithubIconDevelopers />
         </div>
       ),
-      link: "https://github.com/namehash/ens-utils/blob/main/README.md",
+      link: "https://github.com/namehash/nameguard/blob/main/packages/ens-utils/src/nameparser.ts",
     },
     {
       header: (
