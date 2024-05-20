@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 // @ts-ignore
 import { getCalApi } from "@calcom/embed-react";
+import { Button as UIButton } from "@ui/button";
 
 export const CalButton = ({
   children,
@@ -20,12 +21,14 @@ export const CalButton = ({
   }, []);
 
   return (
-    <button
+    <UIButton
+      variant="secondary"
+      size="medium"
       data-cal-link="namehashlabs/nameguard"
       data-cal-config='{"layout":"month_view"}'
       {...props}
     >
       {children}
-    </button>
+    </UIButton>
   );
 };

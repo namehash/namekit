@@ -608,9 +608,7 @@ function NewExitSection() {
                   Our team is here to assist you.
                 </p>
               </div>
-              <CalButton className="max-h-12 flex justify-center items-center px-[25px] py-[13px] rounded-lg border border-gray-300 bg-white z-10 shadow-sm transition hover:bg-gray-100 cursor-pointer text-black not-italic font-medium text-base leading-6">
-                Schedule a call
-              </CalButton>
+              <CalButton>Schedule a call</CalButton>
             </div>
           </div>
         </div>
@@ -1108,7 +1106,7 @@ function RoadMap() {
                   className={classNames(
                     idx === roadMapElements.length - 1 ? "h-4/5" : "h-full",
                     "-bottom-6",
-                    "absolute left-0 top-0 flex w-6 justify-center mt-2"
+                    "absolute left-0 top-0 flex w-6 justify-center mt-2",
                   )}
                 >
                   <div
@@ -1157,7 +1155,7 @@ function RoadMap() {
                           >
                             {sentence}
                           </li>
-                        )
+                        ),
                       )}
                     </ul>
                   </div>

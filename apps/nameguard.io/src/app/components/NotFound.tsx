@@ -1,6 +1,7 @@
 "use client";
 
 import { useSearchStore } from "@namehash/nameguard-react";
+import { Button } from "@ui/button";
 
 export default function NotFound() {
   const { openModal } = useSearchStore();
@@ -20,14 +21,13 @@ export default function NotFound() {
                 We can&apos;t seem to find the page you&apos;re looking for
               </p>
             </div>
-            <button
+            <Button
+              variant="secondary"
+              size="small"
               onClick={() => openModal()}
-              className="flex justify-center items-center px-[17px] py-[9px] bg-white rounded-lg border border-gray-300 shadow-sm pointer-cursor hover:bg-gray-50 transition-colors"
             >
-              <p className="text-black text-base leading-6 font-medium gt_mobile:text-sm gt_mobile:leading-5">
-                Inspect any ENS name
-              </p>
-            </button>
+              Inspect any ENS name
+            </Button>
           </div>
         </div>
         <div className="fixed inset-0 z-0 h-full w-[100vw] max-w-[100vw] overflow-x-hidden bg-[radial-gradient(#DDDDDD_1px,transparent_1px)] [background-size:24px_24px] opacity-70"></div>
