@@ -8,3 +8,6 @@ __pycache__
 .turbo
 .next
 .vercel
+
+*storybook.log
+storybook-static
