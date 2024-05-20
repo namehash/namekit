@@ -6,10 +6,12 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "clean": "rimraf -g \"**/node_modules\" \"**/dist\" \"**/.turbo\" \"**/.next\"",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "release": "pnpm publish -r"
   },
   "packageManager": "pnpm@8.6.10",
   "devDependencies": {
+    "@changesets/cli": "^2.27.2",
     "eslint": "^8.56.0",
     "prettier": "^3.2.5",
     "rimraf": "^5.0.7",
