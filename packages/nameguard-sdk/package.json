@@ -1,6 +1,6 @@
 {
   "name": "@namehash/nameguard",
-  "version": "0.0.18",
+  "version": "1.0.0",
   "type": "module",
   "exports": {
     ".": {
@@ -12,7 +12,10 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",

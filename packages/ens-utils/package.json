@@ -1,7 +1,7 @@
 {
   "name": "@namehash/ens-utils",
   "description": "",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "license": "MIT",
   "repository": "namehash/ens-utils",
   "keywords": ["ens", "ethereum", "namehash", "ens-utils"],
