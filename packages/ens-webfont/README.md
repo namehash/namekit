@@ -8,7 +8,7 @@ run `npm i @namehash/ens-webfont`.
 
 Add the following import statement to your app:
 
-```
+```ts
 import "@namehash/ens-webfont";
 ```
 
