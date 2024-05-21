@@ -1,8 +1,11 @@
 {
   "name": "@namehash/ens-webfont",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "index.css",
-  "files": ["index.css", "Unifont.otf"],
+  "files": [
+    "index.css",
+    "Unifont.otf"
+  ],
   "scripts": {},
   "publishConfig": {
     "access": "public"
