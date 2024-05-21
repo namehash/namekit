@@ -5,7 +5,7 @@ import {
   QuestionMarkCircleIcon,
 } from "@heroicons/react/24/solid";
 import cc from "classcat";
-import { checkResultCodeTextColor } from "../../../../../packages/nameguard-react/dist";
+import { checkResultCodeTextColor } from "@namehash/nameguard-react";
 import { CheckResultCode } from "@namehash/nameguard";
 import { Fragment } from "react";
 
