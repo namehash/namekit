@@ -1,8 +1,8 @@
 import React from "react";
-import { TwitterIcon } from "@/app/atoms/icons/TwitterIcon";
-import { EmailIcon } from "@/app/atoms/icons/EmailIcon";
-import { TelegramIcon } from "@/app/atoms/icons/TelegramIcon";
-import { GithubIcon } from "@/app/atoms/icons/GithubIcon";
+import { TwitterIcon } from "@/app/components/atoms/icons/TwitterIcon";
+import { EmailIcon } from "@/app/components/atoms/icons/EmailIcon";
+import { TelegramIcon } from "@/app/components/atoms/icons/TelegramIcon";
+import { GithubIcon } from "@/app/components/atoms/icons/GithubIcon";
 
 export const Footer = () => {
   return (

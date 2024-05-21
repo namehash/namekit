@@ -9,15 +9,15 @@ import { checkResultCodeTextColor } from "../../../../../packages/nameguard-reac
 import { CheckResultCode } from "@namehash/nameguard";
 import { Fragment } from "react";
 
-import { FigmaIcon } from "@/app/atoms/icons/FigmaIcon";
-import { RedirectIcon } from "@/app/atoms/icons/RedirectIcon";
-import { GithubIconSmall } from "@/app/atoms/icons/GithubIconSmall";
-import { CheckShieldGrayOutline } from "@/app/atoms/icons/CheckShieldGrayOutline";
-import { GithubIconDevelopers } from "@/app/atoms/icons/GithubIconDevelopers";
-import { CloudOutlineIcon } from "@/app/atoms/icons/CloudOutlineIcon";
-import { GearWheelIcon } from "@/app/atoms/icons/GearWheelIcon";
-import { FileIcon } from "@/app/atoms/icons/FileIcon";
-import { FontIcon } from "@/app/atoms/icons/FontIcon";
+import { FigmaIcon } from "@/app/components/atoms/icons/FigmaIcon";
+import { RedirectIcon } from "@/app/components/atoms/icons/RedirectIcon";
+import { GithubIconSmall } from "@/app/components/atoms/icons/GithubIconSmall";
+import { CheckShieldGrayOutline } from "@/app/components/atoms/icons/CheckShieldGrayOutline";
+import { GithubIconDevelopers } from "@/app/components/atoms/icons/GithubIconDevelopers";
+import { CloudOutlineIcon } from "@/app/components/atoms/icons/CloudOutlineIcon";
+import { GearWheelIcon } from "@/app/components/atoms/icons/GearWheelIcon";
+import { FileIcon } from "@/app/components/atoms/icons/FileIcon";
+import { FontIcon } from "@/app/components/atoms/icons/FontIcon";
 
 type ListSectionElement = {
   header: React.ReactNode;

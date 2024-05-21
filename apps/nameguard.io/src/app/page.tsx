@@ -12,22 +12,22 @@ import ens_completion_score_img from "../../public/assets/completion_score.svg";
 import the_unknown_img from "../../public/assets/making_the_unknown.svg";
 import explore_ecosystem_img from "../../public/assets/ecosystem_scheme.png";
 import { highlight } from "sugar-high";
-import { CalButton } from "@/app/atoms/CalButton";
-import { PushIcon } from "@/app/atoms/icons/PushIcon";
-import { WalletConnectIcon } from "@/app/atoms/icons/WalletConnectIcon";
-import { IntegrationIcon } from "@/app/atoms/icons/IntegrationIcon";
-import { RoadmapPositiveShield } from "@/app/atoms/icons/RoadmapPositiveShield";
-import { RoadmapWarningShield } from "@/app/atoms/icons/RoadmapWarningShield";
-import { RoadmapNegativeShield } from "@/app/atoms/icons/RoadmapNegativeShield";
-import { MessageIcon } from "@/app/atoms/icons/MessageIcon";
-import { XMTPIcon } from "@/app/atoms/icons/XMTPIcon";
-import { LensProtocolIcon } from "@/app/atoms/icons/LensProtocolIcon";
-import { ShoppingCartIcon } from "@/app/atoms/icons/ShoppingCartIcon";
-import { FarcasterLogo } from "@/app/atoms/icons/FarcasterLogo";
-import { OpenSeaIcon } from "@/app/atoms/icons/OpenSeaIcon";
-import { RaribleIcon } from "@/app/atoms/icons/RaribleIcon";
-import { CoinbaseIcon } from "@/app/atoms/icons/CoinbaseIcon";
-import { WalletIcon } from "@/app/atoms/icons/WalletIcon";
+import { CalButton } from "@/app/components/atoms/CalButton";
+import { PushIcon } from "@/app/components/atoms/icons/PushIcon";
+import { WalletConnectIcon } from "@/app/components/atoms/icons/WalletConnectIcon";
+import { IntegrationIcon } from "@/app/components/atoms/icons/IntegrationIcon";
+import { RoadmapPositiveShield } from "@/app/components/atoms/icons/RoadmapPositiveShield";
+import { RoadmapWarningShield } from "@/app/components/atoms/icons/RoadmapWarningShield";
+import { RoadmapNegativeShield } from "@/app/components/atoms/icons/RoadmapNegativeShield";
+import { MessageIcon } from "@/app/components/atoms/icons/MessageIcon";
+import { XMTPIcon } from "@/app/components/atoms/icons/XMTPIcon";
+import { LensProtocolIcon } from "@/app/components/atoms/icons/LensProtocolIcon";
+import { ShoppingCartIcon } from "@/app/components/atoms/icons/ShoppingCartIcon";
+import { FarcasterLogo } from "@/app/components/atoms/icons/FarcasterLogo";
+import { OpenSeaIcon } from "@/app/components/atoms/icons/OpenSeaIcon";
+import { RaribleIcon } from "@/app/components/atoms/icons/RaribleIcon";
+import { CoinbaseIcon } from "@/app/components/atoms/icons/CoinbaseIcon";
+import { WalletIcon } from "@/app/components/atoms/icons/WalletIcon";
 import { Hero } from "./components/Hero";
 import { NGSearch } from "./components/NGSearch";
 import { Metadata } from "next";
@@ -1108,7 +1108,7 @@ function RoadMap() {
                   className={classNames(
                     idx === roadMapElements.length - 1 ? "h-4/5" : "h-full",
                     "-bottom-6",
-                    "absolute left-0 top-0 flex w-6 justify-center mt-2"
+                    "absolute left-0 top-0 flex w-6 justify-center mt-2",
                   )}
                 >
                   <div
@@ -1157,7 +1157,7 @@ function RoadMap() {
                           >
                             {sentence}
                           </li>
-                        )
+                        ),
                       )}
                     </ul>
                   </div>

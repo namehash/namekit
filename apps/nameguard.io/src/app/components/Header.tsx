@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { GithubIcon } from "@/app/atoms/icons/GithubIcon";
-import { NGSearchIcon } from "@/app/atoms/NGSearchIcon";
+import { GithubIcon } from "@/app/components/atoms/icons/GithubIcon";
+import { NGSearchIcon } from "@/app/components/atoms/NGSearchIcon";
 import { NGSearch } from "@/app/components/NGSearch";
 
 export const Header = () => {
