@@ -7,7 +7,8 @@
     "lint": "turbo lint",
     "clean": "rimraf -g \"**/node_modules\" \"**/dist\" \"**/.turbo\" \"**/.next\"",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "release": "pnpm publish -r"
+    "release": "pnpm publish -r",
+    "changeset": "changeset"
   },
   "packageManager": "pnpm@8.6.10",
   "devDependencies": {
