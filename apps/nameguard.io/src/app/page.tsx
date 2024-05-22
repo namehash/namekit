@@ -31,8 +31,9 @@ import { WalletIcon } from "@/app/components/atoms/icons/WalletIcon";
 import { Hero } from "./components/Hero";
 import { NGSearch } from "./components/NGSearch";
 import { Metadata } from "next";
-import { ChecksSection, DevelopersSection } from "./components/ContentSections";
+import { ChecksSection } from "./components/ChecksSection";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import { DevelopersSection } from "./components/DevelopersSection";
 
 const getSecurePrimaryName = `import { nameguard } from "@namehash/nameguard";
 

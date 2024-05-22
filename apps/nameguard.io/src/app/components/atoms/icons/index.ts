@@ -40,3 +40,5 @@ export * from "./WarningShieldRedOutline";
 export * from "./WarningShieldSmall";
 export * from "./XMTPIcon";
 export * from "./NGSearchIcon";
+export * from "./Error404IconLarge";
+export * from "./Error404IconSmall";
