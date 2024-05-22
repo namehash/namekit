@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { GithubIcon } from "@/app/components/atoms/icons/GithubIcon";
-import { NGSearchIcon } from "@/app/components/atoms/NGSearchIcon";
+import { NGSearchIcon } from "@/app/components/atoms/icons/NGSearchIcon";
 import { NGSearch } from "@/app/components/NGSearch";
 
 export const Header = () => {
