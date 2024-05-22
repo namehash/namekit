@@ -10,7 +10,7 @@ importers:
     devDependencies:
       '@changesets/cli':
         specifier: ^2.27.2
-        version: 2.27.2
+        version: 2.27.3
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -164,7 +164,7 @@ importers:
   apps/storybook:
     dependencies:
       '@namehash/ens-webfont':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../../packages/ens-webfont
       react-dom:
         specifier: ^18.3.1
@@ -267,13 +267,13 @@ importers:
         specifier: 2.0.18
         version: 2.0.18(react@18.2.0)
       '@namehash/ens-utils':
-        specifier: 1.9.0
-        version: 1.9.0(typescript@5.3.3)
+        specifier: workspace:*
+        version: link:../ens-utils
       '@namehash/ens-webfont':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../ens-webfont
       '@namehash/nameguard':
-        specifier: workspace:^
+        specifier: workspace:*
         version: link:../nameguard-sdk
       classcat:
         specifier: 5.0.4
@@ -1685,8 +1685,8 @@ packages:
       '@changesets/types': 6.0.0
     dev: true
 
-  /@changesets/cli@2.27.2:
-    resolution: {integrity: sha512-6/kADjKMOrlLwNr/Y5HAq7T9oGOA2Lq5A59AGtwQCCiXuSGp4EgszzdJFeBiF8pdz7Wn1HaLzSUBhAaNToEJqg==}
+  /@changesets/cli@2.27.3:
+    resolution: {integrity: sha512-ve/VpWApILlSs8cr0okNx5C2LKRawI9XZgvfmf58S8sar2nhx5DPJREFXYZBahs0FeTfvH0rdVl+nGe8QF45Ig==}
     hasBin: true
     dependencies:
       '@babel/runtime': 7.24.5
@@ -2841,21 +2841,6 @@ packages:
       '@types/react': 18.3.2
       react: 18.3.1
     dev: true
-
-  /@namehash/ens-utils@1.9.0(typescript@5.3.3):
-    resolution: {integrity: sha512-NHZdHsDLPYEH4OrQenyd/M1vXjYeQNF3fq1MIcRCEsZqw4rtNyxCluuMKBlTxL/mubkaUAEwCl5JG/qt4MKeqw==}
-    dependencies:
-      '@adraffy/ens-normalize': 1.10.1
-      '@ethersproject/hash': 5.7.0
-      date-fns: 3.3.1
-      decimal.js: 10.4.3
-      viem: 2.9.3(typescript@5.3.3)
-    transitivePeerDependencies:
-      - bufferutil
-      - typescript
-      - utf-8-validate
-      - zod
-    dev: false
 
   /@ndelangen/get-tarball@3.0.9:
     resolution: {integrity: sha512-9JKTEik4vq+yGosHYhZ1tiH/3WpUS0Nh0kej4Agndhox8pAdWhEx5knFVRcb/ya9knCRCs1rPxNrSXTDdfVqpA==}

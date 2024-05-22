@@ -1,7 +1,7 @@
 {
   "name": "@namehash/ens-utils",
   "description": "",
-  "version": "0.0.0-development",
+  "version": "1.12.0",
   "license": "MIT",
   "repository": "namehash/ens-utils",
   "keywords": ["ens", "ethereum", "namehash", "ens-utils"],
@@ -16,16 +16,14 @@
     "test:watch": "vitest watch"
   },
   "type": "module",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": {
-        "node": "./dist/index.js",
-        "default": "./dist/index.js"
-      }
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
     }
   },
   "publishConfig": {

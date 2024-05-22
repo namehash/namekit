@@ -22,7 +22,7 @@
     "storybook": "^8.1.1"
   },
   "dependencies": {
-    "@namehash/ens-webfont": "workspace:^",
+    "@namehash/ens-webfont": "workspace:*",
     "react-dom": "^18.3.1"
   }
 }
