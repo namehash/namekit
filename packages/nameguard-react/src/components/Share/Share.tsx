@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import cc from "classcat";
 import { Tooltip } from "../Tooltip/Tooltip";
 import { CheckResultCode } from "@namehash/nameguard";
-import { checkResultCodeTextColor } from "../../utils/text";
+import { checkResultCodeTextColor } from "../../utils/colors";
 
 type ShareProps = {
   name?: string;

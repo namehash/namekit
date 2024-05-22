@@ -24,7 +24,7 @@ import { useGraphemeModalStore } from "../../stores/grapheme";
 import { ReportError } from "./ReportError";
 import { ExternalLinks } from "../ExternalLinks/ExternalLinks";
 import { Share } from "../Share/Share";
-import { ratingTextColor } from "../../utils/text";
+import { ratingTextColor } from "../../utils/colors";
 
 type ReportProps = {
   data?: NameGuardReport;

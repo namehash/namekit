@@ -1,34 +1,7 @@
 import React, { ReactNode } from "react";
 import cc from "classcat";
 import { Rating } from "@namehash/nameguard";
-
-function borderColor(rating: Rating) {
-  switch (rating) {
-    case Rating.alert: {
-      return "border-red-200";
-    }
-    case Rating.pass: {
-      return "border-green-200";
-    }
-    case Rating.warn: {
-      return "border-yellow-200";
-    }
-  }
-}
-
-function shadowColor(rating: Rating) {
-  switch (rating) {
-    case Rating.alert: {
-      return "shadow-red-50";
-    }
-    case Rating.pass: {
-      return "shadow-green-50";
-    }
-    case Rating.warn: {
-      return "shadow-yellow-50";
-    }
-  }
-}
+import { ratingBorderColor, ratingShadowColor } from "../../utils/colors";
 
 type RatedBoxProps = {
   rating?: Rating;
@@ -36,8 +9,8 @@ type RatedBoxProps = {
 };
 
 export const RatedBox = ({ rating, children }: RatedBoxProps) => {
-  const border = borderColor(rating);
-  const shadow = shadowColor(rating);
+  const border = ratingBorderColor(rating);
+  const shadow = ratingShadowColor(rating);
 
   const wrapperClass = cc(["rounded-xl border shadow-xl", border, shadow]);
 

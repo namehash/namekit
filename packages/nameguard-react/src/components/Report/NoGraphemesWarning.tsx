@@ -2,7 +2,7 @@ import React from "react";
 import cc from "classcat";
 import { CheckResultCodeIcon } from "./CheckResultCodeIcon";
 import { CheckResultCode } from "@namehash/nameguard";
-import { checkResultCodeTextColor } from "../../utils/text";
+import { checkResultCodeTextColor } from "../../utils/colors";
 import { ShieldExclamationIcon } from "@heroicons/react/20/solid";
 
 type Props = {

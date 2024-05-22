@@ -4,62 +4,75 @@ export function checkResultCodeTextColor(
   check: CheckResultCode,
   isInteractive = false,
 ): string {
-  let color: string | null = null;
-
   switch (check) {
     case CheckResultCode.alert: {
-      color = isInteractive
+      return isInteractive
         ? "text-red-600 hover:text-red-700"
         : "text-red-600";
-      break;
     }
     case CheckResultCode.pass: {
-      color = isInteractive
+      return isInteractive
         ? "text-emerald-600 hover:text-emerald-800"
         : "text-emerald-600";
-      break;
     }
     case CheckResultCode.warn: {
-      color = isInteractive
+      return isInteractive
         ? "text-yellow-600 hover:text-yellow-700"
         : "text-yellow-600";
-      break;
     }
     case CheckResultCode.info:
     case CheckResultCode.skip: {
-      color = isInteractive
+      return isInteractive
         ? "text-gray-400 hover:text-gray-500"
         : "text-gray-400";
-      break;
     }
   }
-
-  return color;
 }
 
 export function ratingTextColor(rating: Rating, isInteractive = false): string {
-  let color: string | null = null;
-
   switch (rating) {
     case Rating.alert: {
-      color = isInteractive
+      return isInteractive
         ? "text-red-600 hover:text-red-700"
         : "text-red-600";
-      break;
     }
     case Rating.pass: {
-      color = isInteractive
+      return isInteractive
         ? "text-emerald-600 hover:text-emerald-800"
         : "text-emerald-600";
-      break;
     }
     case Rating.warn: {
-      color = isInteractive
+      return isInteractive
         ? "text-yellow-600 hover:text-yellow-700"
         : "text-yellow-600";
-      break;
     }
   }
+}
 
-  return color;
+export function ratingBorderColor(rating: Rating): string {
+  switch (rating) {
+    case Rating.alert: {
+      return "border-red-200";
+    }
+    case Rating.pass: {
+      return "border-green-200";
+    }
+    case Rating.warn: {
+      return "border-yellow-200";
+    }
+  }
+}
+
+export function ratingShadowColor(rating: Rating): string {
+  switch (rating) {
+    case Rating.alert: {
+      return "shadow-red-50";
+    }
+    case Rating.pass: {
+      return "shadow-green-50";
+    }
+    case Rating.warn: {
+      return "shadow-yellow-50";
+    }
+  }
 }

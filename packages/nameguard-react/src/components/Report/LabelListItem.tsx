@@ -3,7 +3,7 @@ import React, { Fragment } from "react";
 import { GraphemeList } from "./GraphemeList";
 import { NoGraphemesWarning } from "./NoGraphemesWarning";
 import { CheckResultCode, NameGuardReport, Rating } from "@namehash/nameguard";
-import { checkResultCodeTextColor } from "../../utils/text";
+import { checkResultCodeTextColor } from "../../utils/colors";
 import { RatingIcon } from "./RatingIcon";
 
 type LabelListItemProps = {
