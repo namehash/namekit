@@ -8,27 +8,31 @@ import autorenew_img from "../../public/assets/ens_autorenew.svg";
 import ens_webfont_img from "../../public/assets/ens_webfont.svg";
 import ens_completion_score_img from "../../public/assets/completion_score.svg";
 import the_unknown_img from "../../public/assets/making_the_unknown.svg";
-import { PushIcon } from "@/app/components/atoms/icons/PushIcon";
-import { WalletConnectIcon } from "@/app/components/atoms/icons/WalletConnectIcon";
-import { MessageIcon } from "@/app/components/atoms/icons/MessageIcon";
-import { XMTPIcon } from "@/app/components/atoms/icons/XMTPIcon";
-import { LensProtocolIcon } from "@/app/components/atoms/icons/LensProtocolIcon";
-import { ShoppingCartIcon } from "@/app/components/atoms/icons/ShoppingCartIcon";
-import { FarcasterLogo } from "@/app/components/atoms/icons/FarcasterLogo";
-import { OpenSeaIcon } from "@/app/components/atoms/icons/OpenSeaIcon";
-import { RaribleIcon } from "@/app/components/atoms/icons/RaribleIcon";
-import { CoinbaseIcon } from "@/app/components/atoms/icons/CoinbaseIcon";
-import { WalletIcon } from "@/app/components/atoms/icons/WalletIcon";
-import { Hero } from "./components/Hero";
 import { Metadata } from "next";
-import { ChecksSection } from "./components/ChecksSection";
-import { DevelopersSection } from "./components/DevelopersSection";
-import { ComingSoonSection } from "./components/ComingSoonSection";
-import { NewExitSection } from "./components/NewExitSection";
-import { ReadySection } from "./components/ReadySection";
-import { ExploreTheEcosystemSection } from "./components/ExploreTheEcosystemSection";
-import { RoadMap } from "./components/RoadMap";
-import { MobileSectionDivider } from "./components/MobileSectionDivider";
+import {
+  ChecksSection,
+  ComingSoonSection,
+  DevelopersSection,
+  ExploreTheEcosystemSection,
+  Hero,
+  NewExitSection,
+  ReadySection,
+  RoadMap,
+} from "./components/organisms";
+import {
+  CoinbaseIcon,
+  FarcasterLogo,
+  LensProtocolIcon,
+  MessageIcon,
+  OpenSeaIcon,
+  PushIcon,
+  RaribleIcon,
+  ShoppingCartIcon,
+  WalletConnectIcon,
+  WalletIcon,
+  XMTPIcon,
+} from "./components/atoms";
+import { MobileSectionDivider } from "./components/atoms/MobileSectionDivider";
 
 const getSecurePrimaryName = `import { nameguard } from "@namehash/nameguard";
 
@@ -269,4 +273,3 @@ export default function Home() {
     </>
   );
 }
-//TODO: for all icons make them take props (later refactor, especially when moving them to /atoms/icons)

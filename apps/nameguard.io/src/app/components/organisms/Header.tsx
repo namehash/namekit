@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { GithubIcon } from "@/app/components/atoms/icons/GithubIcon";
 import { NGSearchIcon } from "@/app/components/atoms/icons/NGSearchIcon";
-import { NGSearch } from "@/app/components/NGSearch";
+import { NGSearch } from "@/app/components/molecules/NGSearch";
 
 export const Header = () => {
   return (

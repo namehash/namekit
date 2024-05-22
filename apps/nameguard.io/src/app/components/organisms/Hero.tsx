@@ -1,6 +1,6 @@
 import { HeroCarousel } from "./HeroCarousel";
-import { HeroStartCommand } from "./HeroStartCommand";
-import { NGSearch } from "./NGSearch";
+import { HeroStartCommand } from "../molecules/HeroStartCommand";
+import { NGSearch } from "../molecules/NGSearch";
 import {
   CheckShieldLarge,
   CheckShieldOutline,
@@ -10,7 +10,7 @@ import {
   WarningShieldOrangeOutline,
   WarningShieldRedOutline,
   WarningShieldSmall,
-} from "./atoms";
+} from "../atoms";
 
 export function Hero() {
   return (

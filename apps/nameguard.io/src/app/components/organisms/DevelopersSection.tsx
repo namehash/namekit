@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { ListSectionBadge } from "./ListSectionBadge";
+import { ListSectionBadge } from "../atoms/ListSectionBadge";
 import {
   CloudOutlineIcon,
   FigmaIcon,
@@ -9,9 +9,9 @@ import {
   GithubIconDevelopers,
   GithubIconSmall,
   RedirectIcon,
-} from "./atoms";
+} from "../atoms";
 import cc from "classcat";
-import { ListSectionElement } from "./ChecksSection";
+import { ListSectionElement } from "@/types/listSectionTypes";
 
 export function DevelopersSection() {
   const iconWrapperStyle =

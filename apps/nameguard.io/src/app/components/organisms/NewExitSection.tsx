@@ -1,5 +1,5 @@
-import { NGSearch } from "./NGSearch";
-import { CalButton } from "./atoms";
+import { NGSearch } from "../molecules/NGSearch";
+import { CalButton } from "../atoms";
 
 export function NewExitSection() {
   return (
