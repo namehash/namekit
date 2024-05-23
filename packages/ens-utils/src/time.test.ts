@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 
-import { addSeconds, buildTimePeriod, buildTimestamp, buildTimestampMs, buildDateFromTimestamp, timestampMsToTimestamp, now, buildTimestampFromDate, buildDuration, isOverlappingTimestamp, subtractSeconds, formatTimestamp, FormatTimestampOptions, formatTimestampAsDistance, formatTimestampAsDistanceToNow, scaleDuration, SECONDS_PER_DAY, DAYS_PER_YEAR } from "./time";
+import { addSeconds, buildTimePeriod, buildTimestamp, buildTimestampMs, buildDateFromTimestamp, timestampMsToTimestamp, now, buildTimestampFromDate, buildDuration, isOverlappingTimestamp, subtractSeconds, formatTimestamp, FormatTimestampOptions, formatTimestampAsDistance, formatTimestampAsDistanceToNow, scaleDuration, SECONDS_PER_DAY, DAYS_PER_YEAR, isOverlappingTimePeriod, absoluteTimestampDistance, timePeriodDuration, buildIndefiniteTimePeriod, IndefiniteTimePeriodType, isTimestampOverlappingIndefiniteTimePeriod, isTimePeriodOverlappingIndefiniteTimePeriod, isOverlappingIndefiniteTimePeriod } from "./time";
 
 describe("timestampMsToTimestamp() function", () => {
   it("Correctly returns 0s for less than 1000ms params", () => {
@@ -186,6 +186,49 @@ describe("subtractSeconds() function", () => {
 
     expect(resultDate).toStrictEqual(expectedDate);
   });
+});
+
+describe("absoluteTimestampDistance() function", () => {
+    
+  it("same Timestamp", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+
+    const date2 = new Date("2024-01-01T00:00:00Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+    
+    const result = absoluteTimestampDistance(timestamp1, timestamp1).seconds;
+    const expectedResult = 0n;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("1 second before", () => {
+    const date1 = new Date("2024-01-01T00:00:01Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+
+    const date2 = new Date("2024-01-01T00:00:00Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+    
+    const result = absoluteTimestampDistance(timestamp1, timestamp2).seconds;
+    const expectedResult = 1n;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("1 second after", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+
+    const date2 = new Date("2024-01-01T00:00:01Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+    
+    const result = absoluteTimestampDistance(timestamp1, timestamp2).seconds;
+    const expectedResult = 1n;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
 });
 
 describe("formatTimestamp() function", () => {
@@ -779,4 +822,602 @@ describe("isOverlappingTimestamp() function", () => {
 
     expect(result).toStrictEqual(expectedResult);
   });
+});
+
+describe("isOverlappingTimePeriod() function", () => {
+    
+  it("overlapping zero duration TimePeriods", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const period1Begin = timestamp;
+    const period1End = timestamp;
+    const period1 = buildTimePeriod(period1Begin, period1End);
+
+    const period2Begin = timestamp;
+    const period2End = timestamp;
+    const period2 = buildTimePeriod(period2Begin, period2End);
+
+    
+    const result = isOverlappingTimePeriod(period1, period2);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("1 second before TimePeriod", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const period1Begin = timestamp;
+    const period1End = timestamp;
+    const period1 = buildTimePeriod(period1Begin, period1End);
+
+    const period2Begin = addSeconds(timestamp, buildDuration(1n));
+    const period2End = addSeconds(timestamp, buildDuration(2n));
+    const period2 = buildTimePeriod(period2Begin, period2End);
+
+    
+    const result = isOverlappingTimePeriod(period1, period2);
+    const expectedResult = false;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("exactly at TimePeriod begin", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const period1Begin = timestamp;
+    const period1End = timestamp;
+    const period1 = buildTimePeriod(period1Begin, period1End);
+
+    const period2Begin = timestamp;
+    const period2End = addSeconds(timestamp, buildDuration(1n));
+    const period2 = buildTimePeriod(period2Begin, period2End);
+
+    
+    const result = isOverlappingTimePeriod(period1, period2);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("during TimePeriod", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const period1Begin = timestamp;
+    const period1End = addSeconds(timestamp, buildDuration(3n));
+    const period1 = buildTimePeriod(period1Begin, period1End);
+
+    const period2Begin = addSeconds(timestamp, buildDuration(1n));
+    const period2End = addSeconds(timestamp, buildDuration(2n));
+    const period2 = buildTimePeriod(period2Begin, period2End);
+
+    
+    const result = isOverlappingTimePeriod(period1, period2);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("exactly at TimePeriod end", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const period1Begin = timestamp;
+    const period1End = addSeconds(timestamp, buildDuration(3n));
+    const period1 = buildTimePeriod(period1Begin, period1End);
+
+    const period2Begin = addSeconds(timestamp, buildDuration(3n));
+    const period2End = addSeconds(timestamp, buildDuration(4n));
+    const period2 = buildTimePeriod(period2Begin, period2End);
+
+    
+    const result = isOverlappingTimePeriod(period1, period2);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("1 second after TimePeriod", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const period1Begin = timestamp;
+    const period1End = addSeconds(timestamp, buildDuration(3n));
+    const period1 = buildTimePeriod(period1Begin, period1End);
+
+    const period2Begin = addSeconds(timestamp, buildDuration(4n));
+    const period2End = addSeconds(timestamp, buildDuration(5n));
+    const period2 = buildTimePeriod(period2Begin, period2End);
+
+    
+    const result = isOverlappingTimePeriod(period1, period2);
+    const expectedResult = false;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+});
+
+describe("timePeriodDuration() function", () => {
+    
+  it("zero duration", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+
+    const date2 = new Date("2024-01-01T00:00:00Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+
+    const period = buildTimePeriod(timestamp1, timestamp2);
+    
+    const result = timePeriodDuration(period).seconds;
+    const expectedResult = 0n;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("positive duration", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+
+    const date2 = new Date("2024-01-01T00:00:05Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+
+    const period = buildTimePeriod(timestamp1, timestamp2);
+    
+    const result = timePeriodDuration(period).seconds;
+    const expectedResult = 5n;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+});
+
+describe("isTimestampOverlappingIndefiniteTimePeriod() function", () => {
+    
+  it("INCLUDE_INDEFINITE_PAST 1 second before", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const boundary = addSeconds(timestamp, buildDuration(1n));
+
+    const period = buildIndefiniteTimePeriod(boundary, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_PAST);
+    
+    const result = isTimestampOverlappingIndefiniteTimePeriod(period, timestamp);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_PAST at boundary", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const boundary = timestamp;
+
+    const period = buildIndefiniteTimePeriod(boundary, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_PAST);
+    
+    const result = isTimestampOverlappingIndefiniteTimePeriod(period, timestamp);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_PAST 1 second after", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const boundary = subtractSeconds(timestamp, buildDuration(1n));
+
+    const period = buildIndefiniteTimePeriod(boundary, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_PAST);
+    
+    const result = isTimestampOverlappingIndefiniteTimePeriod(period, timestamp);
+    const expectedResult = false;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_FUTURE 1 second before", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const boundary = addSeconds(timestamp, buildDuration(1n));
+
+    const period = buildIndefiniteTimePeriod(boundary, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_FUTURE);
+    
+    const result = isTimestampOverlappingIndefiniteTimePeriod(period, timestamp);
+    const expectedResult = false;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_FUTURE at boundary", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const boundary = timestamp;
+
+    const period = buildIndefiniteTimePeriod(boundary, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_FUTURE);
+    
+    const result = isTimestampOverlappingIndefiniteTimePeriod(period, timestamp);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_FUTURE 1 second after", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const boundary = subtractSeconds(timestamp, buildDuration(1n));
+
+    const period = buildIndefiniteTimePeriod(boundary, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_FUTURE);
+    
+    const result = isTimestampOverlappingIndefiniteTimePeriod(period, timestamp);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+});
+
+describe("isTimePeriodOverlappingIndefiniteTimePeriod() function", () => {
+    
+  it("INCLUDE_INDEFINITE_PAST - boundary fully before definite time period", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const date2 = new Date("2024-01-01T00:00:03Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+    const definitePeriod = buildTimePeriod(timestamp1, timestamp2);
+
+    const boundary = subtractSeconds(timestamp1, buildDuration(1n));
+    const indefinitePeriod = buildIndefiniteTimePeriod(boundary, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_PAST);
+    
+    const result = isTimePeriodOverlappingIndefiniteTimePeriod(indefinitePeriod, definitePeriod);
+    const expectedResult = false;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_PAST - boundary at definite time period begins", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const date2 = new Date("2024-01-01T00:00:03Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+    const definitePeriod = buildTimePeriod(timestamp1, timestamp2);
+
+    const boundary = timestamp1;
+    const indefinitePeriod = buildIndefiniteTimePeriod(boundary, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_PAST);
+    
+    const result = isTimePeriodOverlappingIndefiniteTimePeriod(indefinitePeriod, definitePeriod);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_PAST - boundary during definite time period", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const date2 = new Date("2024-01-01T00:00:03Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+    const definitePeriod = buildTimePeriod(timestamp1, timestamp2);
+
+    const boundary = subtractSeconds(timestamp2, buildDuration(1n));
+    const indefinitePeriod = buildIndefiniteTimePeriod(boundary, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_PAST);
+    
+    const result = isTimePeriodOverlappingIndefiniteTimePeriod(indefinitePeriod, definitePeriod);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_PAST - boundary at definite time period ends", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const date2 = new Date("2024-01-01T00:00:03Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+    const definitePeriod = buildTimePeriod(timestamp1, timestamp2);
+
+    const boundary = timestamp2;
+    const indefinitePeriod = buildIndefiniteTimePeriod(boundary, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_PAST);
+    
+    const result = isTimePeriodOverlappingIndefiniteTimePeriod(indefinitePeriod, definitePeriod);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_PAST - boundary fully after definite time period", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const date2 = new Date("2024-01-01T00:00:03Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+    const definitePeriod = buildTimePeriod(timestamp1, timestamp2);
+
+    const boundary = addSeconds(timestamp2, buildDuration(1n));
+    const indefinitePeriod = buildIndefiniteTimePeriod(boundary, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_PAST);
+    
+    const result = isTimePeriodOverlappingIndefiniteTimePeriod(indefinitePeriod, definitePeriod);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_FUTURE - boundary fully before definite time period", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const date2 = new Date("2024-01-01T00:00:03Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+    const definitePeriod = buildTimePeriod(timestamp1, timestamp2);
+
+    const boundary = subtractSeconds(timestamp1, buildDuration(1n));
+    const indefinitePeriod = buildIndefiniteTimePeriod(boundary, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_FUTURE);
+    
+    const result = isTimePeriodOverlappingIndefiniteTimePeriod(indefinitePeriod, definitePeriod);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_FUTURE - boundary at definite time period begins", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const date2 = new Date("2024-01-01T00:00:03Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+    const definitePeriod = buildTimePeriod(timestamp1, timestamp2);
+
+    const boundary = timestamp1;
+    const indefinitePeriod = buildIndefiniteTimePeriod(boundary, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_FUTURE);
+    
+    const result = isTimePeriodOverlappingIndefiniteTimePeriod(indefinitePeriod, definitePeriod);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_FUTURE - boundary during definite time period", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const date2 = new Date("2024-01-01T00:00:03Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+    const definitePeriod = buildTimePeriod(timestamp1, timestamp2);
+
+    const boundary = subtractSeconds(timestamp2, buildDuration(1n));
+    const indefinitePeriod = buildIndefiniteTimePeriod(boundary, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_FUTURE);
+    
+    const result = isTimePeriodOverlappingIndefiniteTimePeriod(indefinitePeriod, definitePeriod);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_FUTURE - boundary at definite time period ends", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const date2 = new Date("2024-01-01T00:00:03Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+    const definitePeriod = buildTimePeriod(timestamp1, timestamp2);
+
+    const boundary = timestamp2;
+    const indefinitePeriod = buildIndefiniteTimePeriod(boundary, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_FUTURE);
+    
+    const result = isTimePeriodOverlappingIndefiniteTimePeriod(indefinitePeriod, definitePeriod);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_FUTURE - boundary fully after definite time period", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const date2 = new Date("2024-01-01T00:00:03Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+    const definitePeriod = buildTimePeriod(timestamp1, timestamp2);
+
+    const boundary = addSeconds(timestamp2, buildDuration(1n));
+    const indefinitePeriod = buildIndefiniteTimePeriod(boundary, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_FUTURE);
+    
+    const result = isTimePeriodOverlappingIndefiniteTimePeriod(indefinitePeriod, definitePeriod);
+    const expectedResult = false;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+});
+
+describe("isOverlappingIndefiniteTimePeriod() function", () => {
+    
+  it("INCLUDE_INDEFINITE_PAST < INCLUDE_INDEFINITE_PAST", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = addSeconds(timestamp1, buildDuration(1n));
+    
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(boundary1, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_PAST);
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(boundary2, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_PAST);
+    
+    const result = isOverlappingIndefiniteTimePeriod(indefinitePeriod1, indefinitePeriod2);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_PAST === INCLUDE_INDEFINITE_PAST", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = timestamp1;
+    
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(boundary1, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_PAST);
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(boundary2, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_PAST);
+    
+    const result = isOverlappingIndefiniteTimePeriod(indefinitePeriod1, indefinitePeriod2);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_PAST > INCLUDE_INDEFINITE_PAST", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = subtractSeconds(timestamp1, buildDuration(1n));
+    
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(boundary1, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_PAST);
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(boundary2, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_PAST);
+    
+    const result = isOverlappingIndefiniteTimePeriod(indefinitePeriod1, indefinitePeriod2);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_PAST < INCLUDE_INDEFINITE_FUTURE", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = addSeconds(timestamp1, buildDuration(1n));
+    
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(boundary1, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_PAST);
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(boundary2, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_FUTURE);
+    
+    const result = isOverlappingIndefiniteTimePeriod(indefinitePeriod1, indefinitePeriod2);
+    const expectedResult = false;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_PAST === INCLUDE_INDEFINITE_FUTURE", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = timestamp1;
+    
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(boundary1, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_PAST);
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(boundary2, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_FUTURE);
+    
+    const result = isOverlappingIndefiniteTimePeriod(indefinitePeriod1, indefinitePeriod2);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_PAST > INCLUDE_INDEFINITE_FUTURE", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = subtractSeconds(timestamp1, buildDuration(1n));
+    
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(boundary1, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_PAST);
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(boundary2, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_FUTURE);
+    
+    const result = isOverlappingIndefiniteTimePeriod(indefinitePeriod1, indefinitePeriod2);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_FUTURE < INCLUDE_INDEFINITE_PAST", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = addSeconds(timestamp1, buildDuration(1n));
+    
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(boundary1, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_FUTURE);
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(boundary2, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_PAST);
+    
+    const result = isOverlappingIndefiniteTimePeriod(indefinitePeriod1, indefinitePeriod2);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_FUTURE === INCLUDE_INDEFINITE_PAST", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = timestamp1;
+    
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(boundary1, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_FUTURE);
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(boundary2, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_PAST);
+    
+    const result = isOverlappingIndefiniteTimePeriod(indefinitePeriod1, indefinitePeriod2);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_FUTURE > INCLUDE_INDEFINITE_PAST", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = subtractSeconds(timestamp1, buildDuration(1n));
+    
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(boundary1, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_FUTURE);
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(boundary2, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_PAST);
+    
+    const result = isOverlappingIndefiniteTimePeriod(indefinitePeriod1, indefinitePeriod2);
+    const expectedResult = false;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_FUTURE < INCLUDE_INDEFINITE_FUTURE", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = addSeconds(timestamp1, buildDuration(1n));
+    
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(boundary1, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_FUTURE);
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(boundary2, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_FUTURE);
+    
+    const result = isOverlappingIndefiniteTimePeriod(indefinitePeriod1, indefinitePeriod2);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_FUTURE === INCLUDE_INDEFINITE_FUTURE", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = timestamp1;
+    
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(boundary1, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_FUTURE);
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(boundary2, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_FUTURE);
+    
+    const result = isOverlappingIndefiniteTimePeriod(indefinitePeriod1, indefinitePeriod2);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("INCLUDE_INDEFINITE_FUTURE > INCLUDE_INDEFINITE_FUTURE", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = subtractSeconds(timestamp1, buildDuration(1n));
+    
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(boundary1, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_FUTURE);
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(boundary2, IndefiniteTimePeriodType.INCLUDE_INDEFINITE_FUTURE);
+    
+    const result = isOverlappingIndefiniteTimePeriod(indefinitePeriod1, indefinitePeriod2);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+
 });

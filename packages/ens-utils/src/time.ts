@@ -91,7 +91,9 @@ export const SECONDS_PER_WEEK = scaleDuration(SECONDS_PER_DAY, 7n);
 export const DAYS_PER_YEAR = 365.2425;
 
 /**
- * 31,556,952n seconds
+ * 31,556,952n seconds.
+ * 
+ * EthRegistrarController contracts use the same value for this constant.
  */
 export const SECONDS_PER_YEAR = scaleDuration(SECONDS_PER_DAY, DAYS_PER_YEAR);
 
@@ -255,6 +257,20 @@ export const addSeconds = (timestamp: Timestamp, seconds: Duration): Timestamp =
  */
 export const subtractSeconds = (timestamp: Timestamp, seconds: Duration): Timestamp => {
   return buildTimestamp(timestamp.time - seconds.seconds);
+}
+
+/**
+ * Returns the absolute distance between two Timestamps as a Duration.
+ * 
+ * @param timestamp1 - The first Timestamp.
+ * @param timestamp2 - The second Timestamp.
+ * @returns The absolute distance between the two Timestamps as a Duration.
+ */
+export const absoluteTimestampDistance = (timestamp1: Timestamp, timestamp2: Timestamp): Duration => {
+  const distance = timestamp1.time - timestamp2.time;
+  const absDistance = distance < 0 ? -distance : distance;
+  
+  return buildDuration(absDistance);
 }
 
 export interface FormatTimestampOptions {
@@ -476,4 +492,121 @@ export const buildTimePeriod = (
  */
 export const isOverlappingTimestamp = (period: TimePeriod, timestamp: Timestamp): boolean => {
   return period.begin.time <= timestamp.time && timestamp.time <= period.end.time;
+}
+
+/**
+ * Identifies if the given TimePeriods overlap (inclusive).
+ * 
+ * @param period1 The first TimePeriod to check.
+ * @param period2 The second TimePeriod to check.
+ * @returns true if the TimePeriods overlap, otherwise false.
+ */
+export const isOverlappingTimePeriod = (period1: TimePeriod, period2: TimePeriod): boolean => {
+  return isOverlappingTimestamp(period1, period2.begin) || isOverlappingTimestamp(period1, period2.end);
+}
+
+
+/**
+ * Returns the Duration of a TimePeriod.
+ * 
+ * @param period The TimePeriod to measure.
+ * @returns The Duration of the TimePeriod.
+ */
+export const timePeriodDuration = (period: TimePeriod): Duration => {
+  return absoluteTimestampDistance(period.begin, period.end);
+}
+
+/**
+ * Identifies if an IndefiniteTimePeriod includes all time before or after its boundary Timestamp.
+ */
+export enum IndefiniteTimePeriodType {
+
+  /**
+   * The IndefiniteTimePeriod includes all time before the boundary and the boundary itself.
+   */
+  INCLUDE_INDEFINITE_PAST="indefinite_past",
+
+  /**
+   * The IndefiniteTimePeriod includes the boundary itself and all time after the boundary.
+   */
+  INCLUDE_INDEFINITE_FUTURE="indefinite_future",
+}
+
+/**
+ * An IndefiniteTimePeriod represents a range of time between a definite Timestamp and all time before or after it.
+ * All IndefiniteTimePeriod are inclusive, meaning that the boundary Timestamp is included in the range.
+ */
+export interface IndefiniteTimePeriod {
+
+  /**
+   * The definite moment that the IndefiniteTimePeriod begins or ends.
+   */
+  boundary: Timestamp;
+
+  /**
+   * The type of IndefiniteTimePeriod.
+   * If INCLUDE_INDEFINITE_PAST, the IndefiniteTimePeriod includes all time before the boundary and the boundary itself.
+   * If INCLUDE_INDEFINITE_FUTURE, the IndefiniteTimePeriod includes the boundary itself and all time after the boundary.
+   */
+  type: IndefiniteTimePeriodType;
+}
+
+/**
+ * Builds an IndefiniteTimePeriod.
+ * 
+ * @param boundary - The definite moment that the IndefiniteTimePeriod begins or ends.
+ * @param type - The type of IndefiniteTimePeriod.
+ * @returns The resulting IndefiniteTimePeriod.
+ */
+export const buildIndefiniteTimePeriod = (boundary: Timestamp, type: IndefiniteTimePeriodType): IndefiniteTimePeriod => {
+  return {
+    boundary,
+    type
+  };
+};
+
+/**
+ * Identifies if the IndefiniteTimePeriod overlaps with the Timestamp (inclusive).
+ * 
+ * @param indefinitePeriod The IndefiniteTimePeriod to check. 
+ * @param timestamp The Timestamp to check.
+ * @returns true if the Timestamp is within the IndefiniteTimePeriod, otherwise false.
+ */
+export const isTimestampOverlappingIndefiniteTimePeriod = (indefinitePeriod: IndefiniteTimePeriod, timestamp: Timestamp): boolean => {
+  if (indefinitePeriod.type === IndefiniteTimePeriodType.INCLUDE_INDEFINITE_PAST) {
+    return timestamp.time <= indefinitePeriod.boundary.time;
+  } else {
+    return timestamp.time >= indefinitePeriod.boundary.time;
+  }
+}
+
+/**
+ * Identifies if the IndefiniteTimePeriod overlaps with the TimePeriod (inclusive).
+ * 
+ * @param indefinitePeriod The IndefiniteTimePeriod to check.
+ * @param period The TimePeriod to check.
+ * @returns true if the TimePeriod is within the IndefiniteTimePeriod, otherwise false.
+ */
+export const isTimePeriodOverlappingIndefiniteTimePeriod = (indefinitePeriod: IndefiniteTimePeriod, period: TimePeriod): boolean => {
+  return isTimestampOverlappingIndefiniteTimePeriod(indefinitePeriod, period.begin) ||
+         isTimestampOverlappingIndefiniteTimePeriod(indefinitePeriod, period.end);
+}
+
+/**
+ * Identifies if the IndefiniteTimePeriods overlap (inclusive).
+ * @param period1 The first IndefiniteTimePeriod to check.
+ * @param period2 The second IndefiniteTimePeriod to check.
+ * @returns true if the IndefiniteTimePeriods overlap, otherwise false.
+ */
+export const isOverlappingIndefiniteTimePeriod = (period1: IndefiniteTimePeriod, period2: IndefiniteTimePeriod): boolean => {
+
+  // overlap is eventually guaranteed if both IndefiniteTimePeriods are of the same type
+  if (period1.type === period2.type) {
+    return true;
+  }
+
+  // since the IndefiniteTimePeriods are of different types it is guaranteed that either
+  // they both overlap or neither overlap. therefore we only need to check if either of
+  // the IndefiniteTimePeriods overlaps the boundary of the other.
+  return isTimestampOverlappingIndefiniteTimePeriod(period1, period2.boundary);
 }
