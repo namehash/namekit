@@ -4,6 +4,7 @@ import { namehash, labelhash } from 'viem/ens'
 import { buildAddress } from "./address";
 import { ChainId, MAINNET } from "./chain";
 import { ContractRef, buildContractRef } from "./contract";
+import { SECONDS_PER_DAY, TimePeriod, formatTimestamp, scaleDuration, timePeriodDuration } from "./time";
 
 export interface Registrar {
   contract: ContractRef;
@@ -18,6 +19,98 @@ export const WRAPPED_MAINNET_ETH_REGISTRAR_CONTRACT =
 export const UNWRAPPED_MAINNET_ETH_REGISTRAR_CONTRACT =
   buildContractRef(MAINNET, buildAddress("0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85"));
 
+/**
+ * The minimum days a .eth name can be registered for.
+ * 
+ * This value is enforced by EthRegistrarController contracts.
+ */
+export const MIN_REGISTRATION_PERIOD_DAYS = 28n;
+
+/**
+ * The maximum days before the registration of a .eth name expires when we
+ * consider it helpful to provide a more visible notice that the name expires
+ * soon and should be renewed as soon as possible to avoid loss.
+ * 
+ * This is an arbitrary value we selected for UX purposes. It is not a standard.
+ */
+export const MAX_EXPIRING_SOON_PERIOD_DAYS = 90n;
+
+/**
+ * The days an expired registration of a .eth name is in a grace period
+ * prior to being released to the public.
+ * 
+ * This value is enforced by EthRegistrarController contracts.
+ */
+export const GRACE_PERIOD_DAYS = 90n;
+
+/**
+ * The days a recently released .eth name has a temporary premium price applied.
+ * 
+ * This value is enforced by EthRegistrarController contracts.
+ */
+export const TEMPORARY_PREMIUM_PERIOD_DAYS = 21n;
+
+/**
+ * The minimum Duration a .eth name can be registered for.
+ * 
+ * This value is enforced by EthRegistrarController contracts.
+ * 
+ * 28 days or 2,419,200 seconds.
+ */
+export const MIN_REGISTRATION_PERIOD = scaleDuration(SECONDS_PER_DAY, MIN_REGISTRATION_PERIOD_DAYS);
+
+/**
+ * The Duration before the registration of a .eth name expires when we
+ * consider it helpful to provide a more visible notice that the name expires
+ * soon and should be renewed as soon as possible to avoid loss.
+ * 
+ * This is an arbitrary value we selected for UX purposes. It is not a standard.
+ * 
+ * 90 days or 7,776,000 seconds.
+ */
+export const MAX_EXPIRING_SOON_PERIOD = scaleDuration(SECONDS_PER_DAY, MAX_EXPIRING_SOON_PERIOD_DAYS);
+
+/**
+ * The Duration an expired registration of a .eth name is in a grace period
+ * prior to being released to the public.
+ * 
+ * This value is enforced by EthRegistrarController contracts.
+ * 
+ * 90 days or 7,776,000 seconds.
+ */
+export const GRACE_PERIOD = scaleDuration(SECONDS_PER_DAY, GRACE_PERIOD_DAYS);
+
+/**
+ * The Duration a recently released .eth name has a temporary premium price applied.
+ * 
+ * This value is enforced by EthRegistrarController contracts.
+ * 
+ * 21 days or 1,814,400 seconds.
+ */
+export const TEMPORARY_PREMIUM_PERIOD = scaleDuration(SECONDS_PER_DAY, TEMPORARY_PREMIUM_PERIOD_DAYS);
+
+/**
+ * Identifies if the provided registration period would be accepted by EthRegistrarController contracts.
+ * @param registration The registration period to evaluate.
+ * @returns true if the registration period is valid, false otherwise.
+ */
+export const isValidRegistrationPeriod = (registration: TimePeriod): boolean => {
+
+  const duration = timePeriodDuration(registration);
+  return duration.seconds >= MIN_REGISTRATION_PERIOD.seconds;
+}
+
+/**
+ * Validates that the provided registration period would be accepted by EthRegistrarController contracts.
+ * @param registration The registration period to evaluate.
+ * @throws Error if the registration period is not valid.
+ */
+export const validateRegistrationPeriod = (registration: TimePeriod): void => {
+  if (!isValidRegistrationPeriod(registration)) {
+    const duration = timePeriodDuration(registration);
+    throw new Error(`Invalid registration period: ${formatTimestamp(registration.begin)} to ${formatTimestamp(registration.end)} is only ${duration.seconds} seconds long. Minimum registration period is ${MIN_REGISTRATION_PERIOD.seconds} seconds.`);
+  }
+}
 
 export class NameWrapper implements Registrar {
 
