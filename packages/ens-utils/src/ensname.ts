@@ -5,7 +5,7 @@ import {
   labelhash,
   normalizeEncodedLabelhash,
 } from "./hashutils";
-import { namehash } from "viem";
+import { ENSNameNode, namehash } from "./namehash";
 
 export const LABEL_SEPARATOR = ".";
 export const ETH_TLD = "eth";
@@ -70,9 +70,9 @@ export interface ENSName {
   normalization: Normalization;
 
   /**
-   * The node of `name` as calculated by the `namehash` function.
+   * The `ENSNameNode` of `name` as calculated by the `namehash` function.
    */
-  node: `0x${string}`;
+  node: ENSNameNode;
 }
 
 /**
