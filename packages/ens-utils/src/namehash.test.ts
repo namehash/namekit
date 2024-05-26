@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { ENS_ROOT_NODE, namehash } from "./namehash";
+import { ENS_ROOT_NODE, isEqualNodes, namehash } from "./namehash";
 import { isKeccak256Hash } from "./hashutils";
 
 describe("namehash", () => {
@@ -25,8 +25,10 @@ describe("namehash", () => {
 
     const normalizedName = "namehash.eth";
     const normalizedNode = namehash(normalizedName);
+
+    const result = isEqualNodes(unnormalizedNode, normalizedNode);
     
-    expect(unnormalizedNode).not.toStrictEqual(normalizedNode);
+    expect(result).toStrictEqual(false);
   });
 
 });
