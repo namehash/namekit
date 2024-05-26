@@ -24,12 +24,13 @@ export function isKeccak256Hash(hash: string) {
 }
 
 /**
- * Encodes the labelhash value into an encoded labelhash.
+ * Encodes the labelhash value into a normalized encoded labelhash with a format of `[labelhash]` where labelhash is a normalized Keccak-256 hash with no `0x` prefix.
  * @param labelhash the labelhash value to encode.
  * @returns the encoded labelhash.
  */
 export function encodeLabelhash(labelhash: string) {
-  return `[${labelhash}]`;
+  const normalizedHash = normalizeKeccak256Hash(labelhash, false);
+  return `[${normalizedHash}]`;
 }
 
 /**
