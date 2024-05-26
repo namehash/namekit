@@ -9,6 +9,7 @@ import {
   getRegistrationPotential,
   isValidDNSTld,
   labelsEqual,
+  maximallyHealUnknownLabels,
   tryNormalize,
 } from "./ensname";
 
@@ -443,4 +444,39 @@ describe("charCount", () => {
     expect(result).toBe(4); // 4 Unicode characters
     expect(label.length).toBe(6);  // 6 UTF-16 code units
   });
+});
+
+describe("maximallyHealUnknownLabels", () => {
+  it("empty name", () => {
+    const left = buildENSName("");
+    const right = buildENSName("");
+    const result = maximallyHealUnknownLabels(left, right);
+
+    expect(result.name).toBe("");
+  });
+
+  it("equal names", () => {
+    const left = buildENSName("ens.eth");
+    const right = buildENSName("ens.eth");
+    const result = maximallyHealUnknownLabels(left, right);
+
+    expect(result.name).toBe("ens.eth");
+  });
+
+  it("fully heal from both left and right", () => {
+    const left = buildENSName("[1d14eb086d625e0474c5b787eafc53c34fec5f5973cf94b4180089d0d2d8d91f].label2.[9bec77bc68839f6dbc637ba5daac6e989c1806eef98e14014d0cc175d329f724]");
+    const right = buildENSName("label1.[f82fc7ef3b79bca88e4a53918696f62d6c05b8fa76b6170b2a43ad5a569c1950].label3");
+    const result = maximallyHealUnknownLabels(left, right);
+
+    expect(result.name).toBe("label1.label2.label3");
+  });
+
+  it("partially heal from both left and right", () => {
+    const left = buildENSName("[1d14eb086d625e0474c5b787eafc53c34fec5f5973cf94b4180089d0d2d8d91f].label2.[9bec77bc68839f6dbc637ba5daac6e989c1806eef98e14014d0cc175d329f724]");
+    const right = buildENSName("[1d14eb086d625e0474c5b787eafc53c34fec5f5973cf94b4180089d0d2d8d91f].[f82fc7ef3b79bca88e4a53918696f62d6c05b8fa76b6170b2a43ad5a569c1950].label3");
+    const result = maximallyHealUnknownLabels(left, right);
+
+    expect(result.name).toBe("[1d14eb086d625e0474c5b787eafc53c34fec5f5973cf94b4180089d0d2d8d91f].label2.label3");
+  });
+
 });
