@@ -18,7 +18,8 @@
     "build": "tsup",
     "dev": "tsup --watch --clean=false",
     "test": "vitest",
-    "test:watch": "vitest watch"
+    "test:watch": "vitest watch",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,scss,md}\""
   },
   "type": "module",
   "main": "./dist/index.js",
@@ -40,6 +41,7 @@
     "cross-fetch": "4.0.0",
     "date-fns": "3.3.1",
     "decimal.js": "10.4.3",
+    "prettier": "^3.2.5",
     "viem": "2.9.3"
   },
   "devDependencies": {
