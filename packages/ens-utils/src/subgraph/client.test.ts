@@ -3,7 +3,7 @@ import {
   IssueHandlingPolicy,
   SEPOLIA_SUBGRAPH,
   SubgraphClient,
-} from './subgraph';
+} from './client';
 
 // TODO: expand test cases!
 describe('SubgraphClient', () => {

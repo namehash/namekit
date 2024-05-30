@@ -1,6 +1,6 @@
 import fetch from 'cross-fetch';
-import { ChainId, MAINNET, SEPOLIA } from './chain';
-import { Timestamp, buildTimestamp } from './time';
+import { ChainId, MAINNET, SEPOLIA } from '../chain';
+import { Timestamp, buildTimestamp } from '../time';
 
 export interface SubgraphRef {
   chain: ChainId;
