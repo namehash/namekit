@@ -1,5 +1,8 @@
-import { PublicClient } from 'viem';
+import { PublicClient } from "viem";
 
-export function lookupPrimaryName(address: string, client: PublicClient): Promise<string | null> {
-    return client.getEnsName({ address });
+export function lookupPrimaryName(
+  address: string,
+  client: PublicClient,
+): Promise<string | null> {
+  return client.getEnsName({ address });
 }

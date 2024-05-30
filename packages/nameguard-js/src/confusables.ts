@@ -5,18 +5,25 @@ import CONFUSABLE_GRAPHEMES_ from "./data/confusables.json";
 const COMBINING: string[] = COMBINING_;
 
 // grapheme -> (canonical, num other confusables)
-const CONFUSABLE_GRAPHEMES: { [key: string]: (string | number)[] } = CONFUSABLE_GRAPHEMES_;
+const CONFUSABLE_GRAPHEMES: { [key: string]: (string | number)[] } =
+  CONFUSABLE_GRAPHEMES_;
 
 function isCombining(char: string): boolean {
   if (char.length !== 1) {
-    throw new TypeError("combining() argument must be a unicode character, not str");
+    throw new TypeError(
+      "combining() argument must be a unicode character, not str",
+    );
   }
   // TODO: optimize this
   return COMBINING.includes(char);
 }
 
 function checkGraphemeConfusableWithCombiningMarks(grapheme: string): boolean {
-  return grapheme.length > 1 && !isCombining(grapheme[0]) && grapheme.slice(1).split("").every(isCombining);
+  return (
+    grapheme.length > 1 &&
+    !isCombining(grapheme[0]) &&
+    grapheme.slice(1).split("").every(isCombining)
+  );
 }
 
 export function checkGraphemeConfusable(grapheme: string): boolean {
@@ -25,7 +32,10 @@ export function checkGraphemeConfusable(grapheme: string): boolean {
   }
 
   if (CONFUSABLE_GRAPHEMES[grapheme]) {
-    if (CONFUSABLE_GRAPHEMES[grapheme][0] === grapheme && CONFUSABLE_GRAPHEMES[grapheme][1] === 0) {
+    if (
+      CONFUSABLE_GRAPHEMES[grapheme][0] === grapheme &&
+      CONFUSABLE_GRAPHEMES[grapheme][1] === 0
+    ) {
       return false;
     } else {
       return true;
@@ -61,7 +71,9 @@ export interface ConfusableAnalysis {
   canonical: string | null;
 }
 
-export function graphemeConfusableAnalysis(grapheme: string): ConfusableAnalysis {
+export function graphemeConfusableAnalysis(
+  grapheme: string,
+): ConfusableAnalysis {
   const isConfusable = checkGraphemeConfusable(grapheme);
   const canonical = getCanonical(grapheme);
   return { isConfusable, canonical };
