@@ -13,7 +13,10 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -27,6 +30,9 @@
     "vitest": "1.4.0"
   },
   "dependencies": {
+    "@adraffy/ens-normalize": "1.10.1",
+    "text-segmentation": "1.0.3",
+    "viem": "2.9.3",
     "whatwg-fetch": "3.6.19"
   },
   "publishConfig": {
