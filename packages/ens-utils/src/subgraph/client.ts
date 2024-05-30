@@ -1,62 +1,28 @@
 import fetch from 'cross-fetch';
-import { ChainId, MAINNET, SEPOLIA } from '../chain';
+import { ChainId } from '../chain';
 import { Timestamp, buildTimestamp } from '../time';
 
 export interface SubgraphRef {
   chain: ChainId;
-  deploymentId: string;
   endpoint: URL;
+  deploymentId: string;
 }
 
 export const buildSubgraphRef = (
   chain: ChainId,
-  customEndpoint?: string,
-  deploymentId?: string
+  endpoint: URL,
+  deploymentId: string
 ): SubgraphRef => {
   return {
     chain,
-    endpoint: customEndpoint
-      ? new URL(customEndpoint)
-      : getOfficialSubgraphEndpoint(chain),
-    deploymentId: deploymentId ?? getOfficialSubgraphDeploymentId(chain),
+    endpoint,
+    deploymentId,
   };
-};
-
-// TODO: update for new decentralized subgraph transition. More details at https://discuss.ens.domains/t/ens-subgraph-migration-to-the-decentralised-version/19183
-export const getOfficialSubgraphEndpoint = (chain: ChainId): URL => {
-  switch (chain.chainId) {
-    case MAINNET.chainId:
-      return new URL('https://api.thegraph.com/subgraphs/name/ensdomains/ens');
-    case SEPOLIA.chainId:
-      return new URL(
-        'https://api.studio.thegraph.com/query/49574/enssepolia/version/latest'
-      );
-    default:
-      throw new Error(
-        `Official ENS subgraph endpoint for ChainId ${chain.chainId} is unknown.`
-      );
-  }
-};
-
-export const getOfficialSubgraphDeploymentId = (chain: ChainId): string => {
-  switch (chain.chainId) {
-    case MAINNET.chainId:
-      return 'QmYNJebmKg5mw6kBd4aN8UtJ3SuE1zDvoibfQJ7fjyFNv4';
-    case SEPOLIA.chainId:
-      return 'QmdDtoN9QCRsBUsyoiiUUMQPPmPp5jimUQe81828UyWLtg';
-    default:
-      throw new Error(
-        `Official ENS Subgraph Deployment Id for ChainId ${chain.chainId} is unknown.`
-      );
-  }
 };
 
 export const formatSubgraphRef = (subgraph: SubgraphRef): string => {
   return `SubgraphRef(chainId:\"${subgraph.chain.chainId}\", endpoint:\"${subgraph.endpoint}\", deploymentId:\"${subgraph.deploymentId}\")`;
 };
-
-export const MAINNET_SUBGRAPH = buildSubgraphRef(MAINNET);
-export const SEPOLIA_SUBGRAPH = buildSubgraphRef(SEPOLIA);
 
 export interface GraphQLErrorLocation {
   line: number;
@@ -188,7 +154,6 @@ export type IssueHandlingPolicy =
   (typeof IssueHandlingPolicy)[keyof typeof IssueHandlingPolicy];
 
 export interface SubgraphClientOptions {
-  subgraph?: SubgraphRef;
   deploymentIdMismatchPolicy?: IssueHandlingPolicy;
   hasIndexingErrorPolicy?: IssueHandlingPolicy;
 }
@@ -201,8 +166,8 @@ export class SubgraphClient {
   public readonly hasIndexingErrorPolicy: IssueHandlingPolicy;
 
   // TODO: document me
-  constructor(options?: SubgraphClientOptions) {
-    this.subgraph = options?.subgraph ?? MAINNET_SUBGRAPH;
+  constructor(subgraph: SubgraphRef, options?: SubgraphClientOptions) {
+    this.subgraph = subgraph;
     this.deploymentIdMismatchPolicy =
       options?.deploymentIdMismatchPolicy ?? IssueHandlingPolicy.Warn;
     this.hasIndexingErrorPolicy =

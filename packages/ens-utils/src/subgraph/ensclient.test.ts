@@ -1,28 +1,29 @@
 import { describe, it, expect } from 'vitest';
+import { IssueHandlingPolicy } from './client';
 import {
-  IssueHandlingPolicy,
-  SEPOLIA_SUBGRAPH,
-  SubgraphClient,
-} from './client';
+  ENSSubgraphClient,
+  ENS_SUBGRAPH_MAINNET,
+  ENS_SUBGRAPH_SEPOLIA,
+} from './ensclient';
 
 // TODO: expand test cases!
 describe('SubgraphClient', () => {
   it('can query official mainnet subgraph', async () => {
-    const client = new SubgraphClient();
+    const client = new ENSSubgraphClient(ENS_SUBGRAPH_MAINNET);
 
     const result = await client.queryIndexingStatus();
     expect(result).toBeDefined();
   });
 
   it('can query official sepolia subgraph', async () => {
-    const client = new SubgraphClient({ subgraph: SEPOLIA_SUBGRAPH });
+    const client = new ENSSubgraphClient(ENS_SUBGRAPH_SEPOLIA);
 
     const result = await client.queryIndexingStatus();
     expect(result).toBeDefined();
   });
 
   it('has the latest mainnet subgraph deployment id', async () => {
-    const client = new SubgraphClient({
+    const client = new ENSSubgraphClient(ENS_SUBGRAPH_MAINNET, {
       deploymentIdMismatchPolicy: IssueHandlingPolicy.Error,
     });
 
@@ -31,8 +32,7 @@ describe('SubgraphClient', () => {
   });
 
   it('has the latest sepolia subgraph deployment id', async () => {
-    const client = new SubgraphClient({
-      subgraph: SEPOLIA_SUBGRAPH,
+    const client = new ENSSubgraphClient(ENS_SUBGRAPH_SEPOLIA, {
       deploymentIdMismatchPolicy: IssueHandlingPolicy.Error,
     });
 
