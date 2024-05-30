@@ -3,6 +3,7 @@ import { TwitterIcon } from "@/app/atoms/icons/TwitterIcon";
 import { EmailIcon } from "@/app/atoms/icons/EmailIcon";
 import { TelegramIcon } from "@/app/atoms/icons/TelegramIcon";
 import { GithubIcon } from "@/app/atoms/icons/GithubIcon";
+import { FarcasterIcon } from "../atoms/icons/FarcasterIcon";
 
 export const Footer = () => {
   return (
@@ -25,6 +26,15 @@ export const Footer = () => {
         >
           <GithubIcon className="gt_mobile:hover:fill-black text-[#AFAFAF] fill-current transition-all duration-200" />
         </a>
+
+        <a
+          href="https://warpcast.com/namehash"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FarcasterIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200" />
+        </a>
+
         <a
           href="https://t.me/namehash"
           target="_blank"
