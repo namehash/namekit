@@ -450,6 +450,7 @@ const MAX_BULK_INSPECTION_NAMES = 250;
 interface NameGuardOptions {
   endpoint?: string;
   network?: Network;
+  localProvider?: NameGuardLocalProvider;
 }
 
 interface InspectNameOptions {
@@ -477,15 +478,25 @@ interface FieldsWithRequiredTitle extends Record<string, string> {
   title: string;
 }
 
+interface NameGuardLocalProvider {
+  securePrimaryName(address: string): Promise<SecurePrimaryNameResult>;
+}
+
 class NameGuard {
   private endpoint: URL;
   private network: Network;
   private abortController: AbortController;
+  private localProvider: NameGuardLocalProvider | undefined;
 
-  constructor({ endpoint = DEFAULT_ENDPOINT, network = DEFAULT_NETWORK } = {}) {
+  constructor({
+    endpoint = DEFAULT_ENDPOINT,
+    network = DEFAULT_NETWORK,
+    localProvider = undefined,
+  }: NameGuardOptions = {}) {
     this.endpoint = new URL(endpoint);
     this.network = network;
     this.abortController = new AbortController();
+    this.localProvider = localProvider;
   }
 
   /**
@@ -665,6 +676,10 @@ class NameGuard {
       throw new Error(
         `The provided address: "${address}" is not in a valid Ethereum address format.`
       );
+    }
+
+    if (this.localProvider) {
+      return this.localProvider.securePrimaryName(address);
     }
 
     const network_name = options?.network || this.network;
