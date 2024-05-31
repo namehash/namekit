@@ -30,6 +30,7 @@
     "vitest": "1.4.0"
   },
   "dependencies": {
+    "@namehash/nameguard": "workspace:*",
     "@adraffy/ens-normalize": "1.10.1",
     "text-segmentation": "1.0.3",
     "viem": "2.9.3",

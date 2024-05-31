@@ -1,12 +1,8 @@
 import { describe, it, expect } from "vitest";
 import { createPublicClient, http } from "viem";
 import { mainnet } from "viem/chains";
-import {
-  SecurePrimaryNameResult,
-  securePrimaryName,
-} from "./securePrimaryName";
-import { ImpersonationStatus } from "./impersonation";
-import { PrimaryNameStatus } from "./securePrimaryName";
+import { SecurePrimaryNameResult } from "@namehash/nameguard";
+import { securePrimaryName } from "./securePrimaryName";
 
 describe("secure primary name", () => {
   it("should detect impersonation", async () => {
@@ -190,14 +186,8 @@ describe("secure primary name", () => {
       const primaryName = test[3] as string;
       const displayName = test[4] as string;
       expect(r.displayName).toBe(displayName);
-      expect(
-        r.impersonationStatus !== null
-          ? ImpersonationStatus[r.impersonationStatus]
-          : null,
-      ).toBe(impersonationStatus?.toUpperCase());
-      expect(PrimaryNameStatus[r.primaryNameStatus]).toBe(
-        primaryNameStatus.toUpperCase(),
-      );
+      expect(r.impersonationStatus).toBe(impersonationStatus);
+      expect(r.primaryNameStatus).toBe(primaryNameStatus);
       expect(r.primaryName).toBe(primaryName);
     }
   }, 30000);

@@ -1,11 +1,7 @@
 import { ens_normalize } from "@adraffy/ens-normalize";
 import { splitGraphemes } from "text-segmentation";
+import { ImpersonationStatus } from "@namehash/nameguard";
 import { graphemeConfusableAnalysis } from "./confusables";
-
-export enum ImpersonationStatus {
-  UNLIKELY,
-  POTENTIAL,
-}
 
 const LABELHASH_REGEX = /^\[[0-9a-f]{64}\]$/;
 
@@ -43,13 +39,13 @@ function getNormalizedCanonicalLabel(label: string): string | null {
 export function computeImpersonationStatus(name: string): ImpersonationStatus {
   const labels = name.length === 0 ? [] : name.split(".");
   if (labels.some(isLabelhash)) {
-    return ImpersonationStatus.POTENTIAL;
+    return "potential";
   }
   const canonicals = labels.map(getNormalizedCanonicalLabel);
   if (canonicals.includes(null)) {
-    return ImpersonationStatus.POTENTIAL;
+    return "potential";
   }
   const canonical = canonicals.join(".");
   const passed = canonical === name;
-  return passed ? ImpersonationStatus.UNLIKELY : ImpersonationStatus.POTENTIAL;
+  return passed ? "unlikely" : "potential";
 }
