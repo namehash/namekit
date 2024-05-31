@@ -2,6 +2,14 @@ import { describe, it, expect } from 'vitest';
 import { beautifyLabel, isNormalizedLabel, normalizeLabel } from './normalize';
 
 describe('normalizeLabel', () => {
+
+  it('normalizes an empty label', () => {
+    const label = '';
+    const result = normalizeLabel(label);
+
+    expect(result).toEqual('');
+  });
+
   it('throws an Error if given more than 1 label', () => {
     const label = 'label1.label2';
 
@@ -56,6 +64,14 @@ describe('normalizeLabel', () => {
 });
 
 describe('beautifyLabel', () => {
+
+  it('beautifies an empty label', () => {
+    const label = '';
+    const result = beautifyLabel(label);
+
+    expect(result).toEqual('');
+  });
+
   it('throws an Error if given more than 1 label', () => {
     const label = 'label1.label2';
 
@@ -117,25 +133,32 @@ describe('beautifyLabel', () => {
 });
 
 describe('isNormalizedLabel', () => {
-  it('properly handles more than 1 label', () => {
+
+  it('returns true for an empty label', () => {
+    const label = '';
+    const result = isNormalizedLabel(label);
+    expect(result).toEqual(true);
+  });
+
+  it('returns false more than 1 label', () => {
     const label = 'label1.label2';
     const result = isNormalizedLabel(label);
     expect(result).toEqual(false);
   });
 
-  it('properly handles a label that cannot be normalized', () => {
+  it('returns false for a label that cannot be normalized', () => {
     const label = 'unnormalizable|label';
     const result = isNormalizedLabel(label);
     expect(result).toEqual(false);
   });
 
-  it('properly handles a normalizable label', () => {
+  it('returns false for a normalizable label', () => {
     const label = 'UNNORMALIZEDLABEL';
     const result = isNormalizedLabel(label);
     expect(result).toEqual(false);
   });
 
-  it('properly handles a normalized label', () => {
+  it('returns true a normalized label', () => {
     const label = 'normalizedlabel';
     const result = isNormalizedLabel(label);
     expect(result).toEqual(true);
