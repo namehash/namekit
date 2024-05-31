@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest';
 import {
   EncodedLabelHashInterpretationStrategy,
   buildLabelHash,
+  encodeLabelHash,
   isEncodedLabelHash,
   normalizeEncodedLabelHashAsEncodedLabelHash,
   normalizeEncodedLabelHashAsLabelHash,
@@ -163,6 +164,17 @@ describe('normalizeEncodedLabelHashAsEncodedLabelHash', () => {
     const encodedLabelHash = '[0x4F5B812789FC606BE1B3B16908DB13FC7A9ADF7CA72641F84D75B47069D3D7F0]';
 
     const result = normalizeEncodedLabelHashAsEncodedLabelHash(encodedLabelHash);
+
+    expect(result).toEqual('[4f5b812789fc606be1b3b16908db13fc7a9adf7ca72641f84d75b47069d3d7f0]');
+  });
+});
+
+describe('encodeLabelHash', () => {
+
+  it('correctly generates a normalized encoded labelhash', () => {
+    const label = 'eth';
+    const labelHash = buildLabelHash(label);
+    const result = encodeLabelHash(labelHash);
 
     expect(result).toEqual('[4f5b812789fc606be1b3b16908db13fc7a9adf7ca72641f84d75b47069d3d7f0]');
   });

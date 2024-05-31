@@ -156,3 +156,13 @@ export const isEncodedLabelHash = (label: string): boolean => {
 
   return result;
 };
+
+/**
+ * Generates a normalized "encoded" version of the `LabelHash`.
+ * 
+ * @param labelHash The `LabelHash` to encode.
+ * @returns A normalized "encoded" version of the `LabelHash`.
+ */
+export const encodeLabelHash = (labelHash: LabelHash): string => {
+  return `[${labelHash.labelHash.substring(2)}]`;
+}
