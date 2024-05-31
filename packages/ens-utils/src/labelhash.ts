@@ -31,7 +31,7 @@ export const EncodedLabelHashInterpretationStrategy = {
   UnknownLabel: 'UNKNOWN_LABEL',
 } as const;
 
-export type EncodedLabelhashInterpretationStrategy =
+export type EncodedLabelHashInterpretationStrategy =
   (typeof EncodedLabelHashInterpretationStrategy)[keyof typeof EncodedLabelHashInterpretationStrategy];
 
 /**
@@ -41,11 +41,11 @@ export interface LabelHashOptions {
   /**
    * The strategy to use when interpreting `label` where `isEncodedLabelhash(label)` is `true`.
    */
-  encodedLabelhashInterpretationStrategy?: EncodedLabelhashInterpretationStrategy;
+  encodedLabelHashInterpretationStrategy?: EncodedLabelHashInterpretationStrategy;
 }
 
 export const DEFAULT_LABELHASH_OPTIONS: Required<LabelHashOptions> = {
-  encodedLabelhashInterpretationStrategy:
+  encodedLabelHashInterpretationStrategy:
     EncodedLabelHashInterpretationStrategy.UnknownLabel,
 };
 
@@ -72,17 +72,17 @@ export const buildLabelHash = (
   label: string,
   options?: LabelHashOptions
 ): LabelHash => {
-  const { encodedLabelhashInterpretationStrategy } =
+  const { encodedLabelHashInterpretationStrategy: encodedLabelHashInterpretationStrategy } =
     getLabelHashOptions(options);
 
-  const cacheKey = `${label}:${encodedLabelhashInterpretationStrategy}`;
+  const cacheKey = `${label}:${encodedLabelHashInterpretationStrategy}`;
   const cachedLabelHash = LABELHASH_CACHE.get(cacheKey);
 
   if (cachedLabelHash) return cachedLabelHash;
 
   const labelHash = _buildLabelHash(
     label,
-    encodedLabelhashInterpretationStrategy
+    encodedLabelHashInterpretationStrategy
   );
 
   LABELHASH_CACHE.set(cacheKey, labelHash);
@@ -95,7 +95,7 @@ export const buildLabelHash = (
  */
 const _buildLabelHash = (
   label: string,
-  encodedLabelhashInterpretationStrategy: EncodedLabelhashInterpretationStrategy
+  encodedLabelHashInterpretationStrategy: EncodedLabelHashInterpretationStrategy
 ): LabelHash => {
   if (label.length === 0)
     return {
@@ -103,7 +103,7 @@ const _buildLabelHash = (
     };
 
   if (
-    encodedLabelhashInterpretationStrategy ==
+    encodedLabelHashInterpretationStrategy ==
       EncodedLabelHashInterpretationStrategy.UnknownLabel &&
     isEncodedLabelHash(label)
   ) {
