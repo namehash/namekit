@@ -16,16 +16,16 @@ export interface LabelHash {
 
 /**
  * The strategy to use when building the `LabelHash` for a `label` where
- * `isEncodedLabelhash(label)` is `true`.
+ * `isEncodedLabelHash(label)` is `true`.
  */
 export const EncodedLabelHashInterpretationStrategy = {
   /**
-   * The `label` will be interpreted literally, independent of `isEncodedLabelhash(label)`.
+   * The `label` will be interpreted literally, independent of `isEncodedLabelHash(label)`.
    */
   Literal: 'LITERAL',
 
   /**
-   * If `isEncodedLabelhash(label)` then the `label` will be interpreted as an encoded
+   * If `isEncodedLabelHash(label)` then the `label` will be interpreted as an encoded
    * `LabelHash` for an unknown label rather than as a literal label value.
    */
   UnknownLabel: 'UNKNOWN_LABEL',
@@ -39,7 +39,7 @@ export type EncodedLabelHashInterpretationStrategy =
  */
 export interface LabelHashOptions {
   /**
-   * The strategy to use when interpreting `label` where `isEncodedLabelhash(label)` is `true`.
+   * The strategy to use when interpreting `label` where `isEncodedLabelHash(label)` is `true`.
    */
   encodedLabelHashInterpretationStrategy?: EncodedLabelHashInterpretationStrategy;
 }
@@ -65,7 +65,7 @@ const LABELHASH_CACHE = new LruStringMap<LabelHash>(8192);
  *
  * @param label label to calculate the `LabelHash` of.
  * @param options the strategy to use when building the `LabelHash` for a
- *                `label` where `isEncodedLabelhash(label)` is `true`.
+ *                `label` where `isEncodedLabelHash(label)` is `true`.
  * @returns the `LabelHash` of `label`.
  */
 export const buildLabelHash = (
