@@ -9,6 +9,9 @@ export const LABEL_SEPARATOR = '.';
  * If a label is in the format of an encoded LabelHash ("[labelhash]"), and:
  *   * `EncodedLabelHashInterpretationStrategy` is `UnknownLabel`: then the `Normalization` of the label is considered to be `unknown`.
  *   * `EncodedLabelHashInterpretationStrategy` is `Literal`: then the `Normalization` of the label is considered to be `unnormalized`.
+ * If a label is being intepreted from blockchain data / events where
+ *   the label was created / referenced via a smart contract that did not verify that the label was actually a single label without any `LABEL_SEPARATOR` characters inside and
+ *   `LabelSeparatorInterpretationStrategy` is `Literal` then the `Normalization` of the label is recognized as `unnormalized`.
  * If a name contains any label that is `unnormalized` then the `Normalization` of the entire name is considered to be `unnormalized`.
  * If a name contains no `unnormalized` labels but 1 or more `unknown` labels then the entire name is considered to be `unknown`.
  * A name is `normalized` if and only if all of its labels are `normalized`.
