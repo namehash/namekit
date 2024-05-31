@@ -108,15 +108,28 @@ const _buildLabelHash = (
     isEncodedLabelHash(label)
   ) {
     // Extract the labelhash value from an encoded labelhash.
-    const decodedLabelhash = label.substring(1, label.length - 1);
     return {
-      labelHash: normalizeKeccak256Hash(decodedLabelhash) as `0x${string}`,
+      labelHash: normalizeEncodedLabelHashAsLabelHash(label),
     };
   }
 
   return {
     labelHash: keccak256(stringToBytes(label)),
   };
+};
+
+export const normalizeEncodedLabelHashAsLabelHash = (encodedLabelHash: string): `0x${string}` => {
+  if (!isEncodedLabelHash(encodedLabelHash)) {
+    throw new Error(`Invalid encoded labelhash format: ${encodedLabelHash}`);
+  }
+  const decodedLabelhash = encodedLabelHash.substring(1, encodedLabelHash.length - 1);
+  return normalizeKeccak256Hash(decodedLabelhash) as `0x${string}`;
+};
+
+export const normalizeEncodedLabelHashAsEncodedLabelHash = (encodedLabelHash: string): string => {
+
+  const labelHash = normalizeEncodedLabelHashAsLabelHash(encodedLabelHash);
+  return `[${labelHash.substring(2)}]`;
 };
 
 const EMPTY_LABEL_LABELHASH =
