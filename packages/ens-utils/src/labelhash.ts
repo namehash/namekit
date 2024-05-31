@@ -137,6 +137,8 @@ const EMPTY_LABEL_LABELHASH =
 
 const ENCODED_LABELHASH_REGEX = /^\[(?:0x)?[0-9a-f]{64}\]$/i;
 
+const IS_LABELHASH_CACHE = new LruStringMap<boolean>(8192);
+
 /**
  * Checks if `label` is an encoded `LabelHash`.
  *
@@ -144,5 +146,13 @@ const ENCODED_LABELHASH_REGEX = /^\[(?:0x)?[0-9a-f]{64}\]$/i;
  * @returns `true` if and only if `label` is an encoded `LabelHash`.
  */
 export const isEncodedLabelHash = (label: string): boolean => {
-  return ENCODED_LABELHASH_REGEX.test(label);
+  const cachedResult = IS_LABELHASH_CACHE.get(label);
+
+  if (cachedResult !== undefined) return cachedResult;
+
+  const result = ENCODED_LABELHASH_REGEX.test(label);
+
+  IS_LABELHASH_CACHE.set(label, result);
+
+  return result;
 };
