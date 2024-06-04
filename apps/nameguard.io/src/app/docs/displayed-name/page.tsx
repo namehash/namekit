@@ -1,34 +1,37 @@
 "use client";
 
 import { ENSName, buildENSName } from "@namehash/ens-utils";
-import { DisplayedName } from "@namehash/nameguard-react";
+import { DisplayedName, Text } from "@namehash/nameguard-react";
 
 export default function DisplayedNamePage() {
   return (
     <div className="py-12 max-w-7xl mx-auto px-6 space-y-12">
       <div className="max-w-[600px] mx-auto">
         <h1 className="justify-center flex font-bold text-2xl my-8">
-          {"<"}DisplayedName {"/>"} documentation
+          {"<"}Text {"/>"} and {"<"}DisplayedName {"/>"} documentation
         </h1>
 
+        <h2 className="text-lg font-bold w-full text-center border-b-2 border-t-2 py-4">
+          {"<"}Text {"/>"} component
+        </h2>
         <div className="divide-y divide-gray-100">
           <div className="grid grid-cols-2 gap-x-6 py-5 text-center font-medium">
-            <div>Component usage</div>
-            <div>Example</div>
+            <div className="font-semibold">Component usage</div>
+            <div className="font-semibold">Example</div>
           </div>
         </div>
 
         <div className="divide-y divide-gray-100">
           <div className="grid grid-cols-2 gap-x-6 py-5">
             <div className="w-full flex justify-center items-center font-mono">
-              <pre>{"<DisplayedName ensName />"}</pre>
+              <pre>{"<Text name />"}</pre>
             </div>
 
             <div className="flex items-center justify-center">
-              <DisplayedName
-                ensName={getExampleDisplayedName(
-                  DisplayedNameExample.SHORT_NAME,
-                )}
+              <Text
+                string={
+                  getExampleDisplayedName(DisplayedNameExample.SHORT_NAME).name
+                }
               />
             </div>
           </div>
@@ -36,14 +39,133 @@ export default function DisplayedNamePage() {
         <div className="divide-y divide-gray-100">
           <div className="grid grid-cols-2 gap-x-6 py-5">
             <div className="w-full flex justify-center items-center font-mono">
-              <pre>{"<DisplayedName ensName />"}</pre>
+              <pre>{"<Text name \n stringClasses='text-purple-400' />"}</pre>
+            </div>
+
+            <div className="flex items-center justify-center">
+              <Text
+                stringClasses="text-purple-400"
+                string={
+                  getExampleDisplayedName(DisplayedNameExample.LONG_NAME).name
+                }
+              />
+            </div>
+          </div>
+        </div>
+        <div className="divide-y divide-gray-100">
+          <div className="grid grid-cols-2 gap-x-6 py-5">
+            <div className="w-full flex justify-center items-center font-mono">
+              <pre>{"<Text name \n maxTooltipWidth={100} />"}</pre>
+            </div>
+
+            <div className="flex items-center justify-center">
+              <Text
+                maxTooltipWidth={100}
+                string={
+                  getExampleDisplayedName(DisplayedNameExample.LONG_NAME).name
+                }
+              />
+            </div>
+          </div>
+        </div>
+        <div className="divide-y divide-gray-100">
+          <div className="grid grid-cols-2 gap-x-6 py-5">
+            <div className="w-full flex justify-center items-center font-mono">
+              <pre>
+                {"<Text name \n displayTooltipWhenNameClamps={false} />"}
+              </pre>
+            </div>
+
+            <div className="flex items-center justify-center">
+              <Text
+                displayTooltipWhenNameClamps={false}
+                string={
+                  getExampleDisplayedName(DisplayedNameExample.WITHOUT_TOOLTIP)
+                    .name
+                }
+              />
+            </div>
+          </div>
+        </div>
+        <div className="divide-y divide-gray-100">
+          <div className="grid grid-cols-2 gap-x-6 py-5">
+            <div className="w-full flex justify-center items-center font-mono">
+              <pre>{"<Text name \n maxDisplayWidth={60} />"}</pre>
+            </div>
+
+            <div className="flex items-center justify-center">
+              <Text
+                maxDisplayWidth={60}
+                string={
+                  getExampleDisplayedName(DisplayedNameExample.SHORT_MAX_WIDTH)
+                    .name
+                }
+              />
+            </div>
+          </div>
+        </div>
+        <h2 className="text-lg font-bold w-full text-center border-b-2 border-t-2 py-4 mt-10">
+          {"<"}DisplayedName {"/>"} component
+        </h2>
+        <div className="divide-y divide-gray-100">
+          <div className="grid grid-cols-2 gap-x-6 py-5 text-center font-medium">
+            <div className="font-semibold">Component usage</div>
+            <div className="font-semibold">Example</div>
+          </div>
+        </div>
+
+        <div className="divide-y divide-gray-100">
+          <div className="grid grid-cols-2 gap-x-6 py-5">
+            <div className="w-full flex justify-center items-center font-mono">
+              <pre>{"<DisplayedName name />"}</pre>
             </div>
 
             <div className="flex items-center justify-center">
               <DisplayedName
-                ensName={getExampleDisplayedName(
-                  DisplayedNameExample.LONG_NAME,
-                )}
+                name={getExampleDisplayedName(DisplayedNameExample.SHORT_NAME)}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="divide-y divide-gray-100">
+          <div className="grid grid-cols-2 gap-x-6 py-5">
+            <div className="w-full flex justify-center items-center font-mono">
+              <pre>
+                {"<DisplayedName name\n stylingClasses='text-purple-400' />"}
+              </pre>
+            </div>
+
+            <div className="flex items-center justify-center">
+              <DisplayedName
+                stylingClasses="text-purple-400"
+                name={getExampleDisplayedName(DisplayedNameExample.SHORT_NAME)}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="divide-y divide-gray-100">
+          <div className="grid grid-cols-2 gap-x-6 py-5">
+            <div className="w-full flex justify-center items-center font-mono">
+              <pre>{"<DisplayedName name\n maxTooltipWidth={100} />"}</pre>
+            </div>
+
+            <div className="flex items-center justify-center">
+              <DisplayedName
+                maxTooltipWidth={100}
+                name={getExampleDisplayedName(DisplayedNameExample.LONG_NAME)}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="divide-y divide-gray-100">
+          <div className="grid grid-cols-2 gap-x-6 py-5">
+            <div className="w-full flex justify-center items-center font-mono">
+              <pre>{"<DisplayedName name />"}</pre>
+            </div>
+
+            <div className="flex items-center justify-center">
+              <DisplayedName
+                name={getExampleDisplayedName(DisplayedNameExample.LONG_NAME)}
               />
             </div>
           </div>
@@ -53,7 +175,7 @@ export default function DisplayedNamePage() {
             <div className="w-full flex justify-center items-center font-mono">
               <pre>
                 {
-                  "<DisplayedName ensName \n displayTooltipWhenNameClamps={false} />"
+                  "<DisplayedName name \n displayTooltipWhenNameClamps={false} />"
                 }
               </pre>
             </div>
@@ -61,7 +183,7 @@ export default function DisplayedNamePage() {
             <div className="flex items-center justify-center">
               <DisplayedName
                 displayTooltipWhenNameClamps={false}
-                ensName={getExampleDisplayedName(
+                name={getExampleDisplayedName(
                   DisplayedNameExample.WITHOUT_TOOLTIP,
                 )}
               />
@@ -72,14 +194,14 @@ export default function DisplayedNamePage() {
           <div className="grid grid-cols-2 gap-x-6 py-5">
             <div className="w-full flex justify-center items-center font-mono">
               <pre>
-                {"<DisplayedName ensName \n displayUnnormalizedNames={true} />"}
+                {"<DisplayedName name \n displayUnnormalizedNames={true} />"}
               </pre>
             </div>
 
             <div className="flex items-center justify-center">
               <DisplayedName
                 displayUnnormalizedNames={true}
-                ensName={getExampleDisplayedName(
+                name={getExampleDisplayedName(
                   DisplayedNameExample.DISPLAY_UNNORMALIZED_NAMES,
                 )}
               />
@@ -90,16 +212,14 @@ export default function DisplayedNamePage() {
           <div className="grid grid-cols-2 gap-x-6 py-5">
             <div className="w-full flex justify-center items-center font-mono">
               <pre>
-                {
-                  "<DisplayedName ensName \n displayUnnormalizedNames={false} />"
-                }
+                {"<DisplayedName name \n displayUnnormalizedNames={false} />"}
               </pre>
             </div>
 
             <div className="flex items-center justify-center">
               <DisplayedName
                 displayUnnormalizedNames={false}
-                ensName={getExampleDisplayedName(
+                name={getExampleDisplayedName(
                   DisplayedNameExample.DISPLAY_UNNORMALIZED_NAMES,
                 )}
               />
@@ -109,15 +229,13 @@ export default function DisplayedNamePage() {
         <div className="divide-y divide-gray-100">
           <div className="grid grid-cols-2 gap-x-6 py-5">
             <div className="w-full flex justify-center items-center font-mono">
-              <pre>
-                {"<DisplayedName ensName \n maxEnsNameDisplayWidth={60} />"}
-              </pre>
+              <pre>{"<DisplayedName name \n maxDisplayWidth={60} />"}</pre>
             </div>
 
             <div className="flex items-center justify-center">
               <DisplayedName
-                maxEnsNameDisplayWidth={60}
-                ensName={getExampleDisplayedName(
+                maxDisplayWidth={60}
+                name={getExampleDisplayedName(
                   DisplayedNameExample.SHORT_MAX_WIDTH,
                 )}
               />

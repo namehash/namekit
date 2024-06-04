@@ -35,7 +35,7 @@ interface ReportBadgeProps {
     than this number, the badge will truncate the ensName and display a 
     tooltip on hover that shows the full ensName. This number is measured in pixels.
   */
-  maxEnsNameDisplayWidth?: number;
+  maxDisplayWidth?: number;
 }
 
 const DEFAULT_MAX_ENSNAME_DISPLAY_WIDTH = 200;
@@ -46,7 +46,7 @@ export function ReportBadge({
   onClickOverride,
   hadLoadingError = false,
   displayUnnormalizedNames = false,
-  maxEnsNameDisplayWidth = DEFAULT_MAX_ENSNAME_DISPLAY_WIDTH,
+  maxDisplayWidth = DEFAULT_MAX_ENSNAME_DISPLAY_WIDTH,
 }: ReportBadgeProps) {
   const buttonClass =
     "flex-shrink-0 appearance-none bg-white transition-colors hover:bg-gray-50 border border-gray-200 rounded-md px-2.5 py-1.5 inline-flex items-center";
@@ -74,9 +74,10 @@ export function ReportBadge({
   return (
     <button className={buttonAndCursorClass} onClick={onClickHandler}>
       <DisplayedName
+        stylingClasses="cursor-pointer"
         displayUnnormalizedNames={displayUnnormalizedNames}
-        maxEnsNameDisplayWidth={maxEnsNameDisplayWidth}
-        ensName={ensName}
+        maxDisplayWidth={maxDisplayWidth}
+        name={ensName}
       />
 
       {hadLoadingError ? (
