@@ -81,6 +81,10 @@ export function ReportIcon({
     }
   };
 
+  const redirectUserToNameGuardInspectPage = (ensName: ENSName) => {
+    window.location.href = getNameGuardURLForENSname(ensName);
+  };
+
   if (hadLoadingError) {
     return (
       <ReportUnknownIcon
