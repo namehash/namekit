@@ -146,13 +146,22 @@ class NameGuard:
         """
         Inspect a name. A name is a sequence of labels separated by dots.
         A label can be a labelhash or a string.
+        If a labelhash is encountered and `resolve_labelhashes` is `True`, a lookup will be performed.
+        """
+        if resolve_labelhashes:
+            name = await resolve_all_labelhashes_in_name_querying_labelhashes(network_name, name)
+        return self.inspect_name_sync(name, bulk_mode)
+
+    def inspect_name_sync(
+        self, name: str, bulk_mode: bool = False
+    ) -> Union[NameGuardReport, ConsolidatedNameGuardReport]:
+        """
+        Inspect a name. A name is a sequence of labels separated by dots.
+        A label can be a labelhash or a string.
         If a labelhash is encountered, it will be treated as an unknown label.
         """
 
         logger.debug(f"[inspect_name] name: '{name}'")
-
-        if resolve_labelhashes:
-            name = await resolve_all_labelhashes_in_name_querying_labelhashes(network_name, name)
 
         if bulk_mode and simple_name(name):
             return consolidated_report_from_simple_name(name)

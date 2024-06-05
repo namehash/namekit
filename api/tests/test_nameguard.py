@@ -644,3 +644,9 @@ async def test_stress_ens_cure(nameguard: NameGuard):
     # with omit_cure=False takes 1 minute
     result = await nameguard.inspect_name('mainnet', '⎛⎝⎞⎠' * 1000)
     assert result.rating is Rating.ALERT
+
+
+def test_sync_inspect(nameguard: NameGuard):
+    result = nameguard.inspect_name_sync('nick.eth')
+    assert result.rating is Rating.PASS
+    assert all(check.rating is Rating.PASS for check in result.checks)

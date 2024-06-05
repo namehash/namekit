@@ -25,7 +25,8 @@ export function ImpersonationReport({ data }: ImpersonationReportProps) {
 
   const { nameguard_result } = data;
 
-  if (!nameguard_result) return <RatingLoadingIcon />;
+  if (!nameguard_result)
+    return <RatingLoadingIcon size={RatingIconSize.micro} />;
 
   const textClass = cc([
     "font-semibold",

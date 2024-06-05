@@ -42,3 +42,4 @@ export * from "./XMTPIcon";
 export * from "./NGSearchIcon";
 export * from "./Error404IconLarge";
 export * from "./Error404IconSmall";
+export * from "./FarcasterIcon";
