@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@namehash/ens-webfont": "workspace:*",
+    "@namehash/namekit-react": "workspace:*",
     "react-dom": "^18.3.1"
   }
 }
