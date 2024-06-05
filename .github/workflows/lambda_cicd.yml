@@ -3,7 +3,7 @@ name: Deploy NameGuard to AWS as a serverless lambda
 on:
   push:
     branches:
-      - sebastianbana/sc-25138/fix-cicd-for-nameguard-lambda #temporary for testing
+      - ci-cd-lambda-nameguard-v2 #temporary for testing
       - main
 
 env:
