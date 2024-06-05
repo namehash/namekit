@@ -3,46 +3,46 @@ import React, { useEffect, useState, useRef } from "react";
 import { Tooltip } from "../..";
 
 interface TextProps {
-  displayTooltipWhenNameClamps?: boolean;
+  displayTooltipWhenTextOverflows?: boolean;
   maxTooltipWidth?: number;
   maxDisplayWidth?: number;
-  stylingClasses?: string;
-  string: string;
+  textStylingClasses?: string;
+  text: string;
 }
 
-const DEFAULT_MAX_DISPLAY_WIDTH = 200;
+const DEFAULT_MAX_DISPLAY_WIDTH = 300;
 const DEFAULT_MAX_TOOLTIP_WIDTH = 400;
 
 export const Text = ({
-  string,
-  stylingClasses = "",
-  displayTooltipWhenNameClamps = true,
+  text,
+  textStylingClasses = "",
+  displayTooltipWhenTextOverflows = true,
   maxTooltipWidth = DEFAULT_MAX_TOOLTIP_WIDTH,
   maxDisplayWidth = DEFAULT_MAX_DISPLAY_WIDTH,
 }: TextProps) => {
-  const invisibleNameWidthTester = useRef<null | HTMLParagraphElement>(null);
+  const invisibleTextWidthTester = useRef<null | HTMLParagraphElement>(null);
 
   /* 
-    Below state is only true if the name displayed is longer 
-    than name max-width (defined by MAX_ENSNAME_DISPLAY_WIDTH)
+    Below state is only true if the text displayed 
+    is longer than text maxDisplayWidth
   */
-  const [displayFullNameInTooltip, setDisplayFullNameInTooltip] =
+  const [displayFullTextInTooltip, setDisplayFullTextInTooltip] =
     useState<boolean>(false);
 
   useEffect(() => {
     if (
-      displayTooltipWhenNameClamps &&
-      invisibleNameWidthTester &&
-      invisibleNameWidthTester.current
+      displayTooltipWhenTextOverflows &&
+      invisibleTextWidthTester &&
+      invisibleTextWidthTester.current
     ) {
-      const nameIsBiggerThanMax =
+      const textIsBiggerThanMax =
         Math.ceil(
-          invisibleNameWidthTester.current.getBoundingClientRect().width,
+          invisibleTextWidthTester.current.getBoundingClientRect().width,
         ) > maxDisplayWidth;
 
-      setDisplayFullNameInTooltip(nameIsBiggerThanMax);
+      setDisplayFullTextInTooltip(textIsBiggerThanMax);
     }
-  }, [invisibleNameWidthTester]);
+  }, [invisibleTextWidthTester]);
 
   const getTextElm = (
     classes: string,
@@ -50,43 +50,41 @@ export const Text = ({
   ): JSX.Element => {
     return (
       <p style={{ maxWidth: maxWidth }} className={classes}>
-        {string}
+        {text}
       </p>
     );
   };
 
+  const textDefaultClasses = "text-black text-sm leading-5 truncate pr-1.5";
+
   return (
     <div>
-      {displayTooltipWhenNameClamps && (
+      {displayTooltipWhenTextOverflows && (
         <div className="invisible absolute left-0 top-0 pointer-events-none">
-          <div ref={invisibleNameWidthTester}>{string}</div>
+          <div ref={invisibleTextWidthTester}>{text}</div>
         </div>
       )}
       {/*
         Below HTML is the rendered text and tooltip, being the
         tooltip only shown when it is needed, on mouse hover. When is it needed?
-        Whenever the name displayed is longer than MAX_ENSNAME_DISPLAY_WIDTH.
+        Whenever the text displayed is longer than maxDisplayWidth.
       */}
-      {displayFullNameInTooltip && displayTooltipWhenNameClamps ? (
+      {displayFullTextInTooltip && displayTooltipWhenTextOverflows ? (
         <>
           {/* 
-            To ensure the DisplayedName doesn't appear wider than `maxDisplayWidth`. 
-            If the width required to display the full name exceeds that maximum, CSS automatically
-            truncates the displayed name with an ellipsis to ensure it fits within the
+            To ensure the Text doesn't appear wider than `maxDisplayWidth`. 
+            If the width required to display the full text exceeds that maximum, CSS automatically
+            truncates the displayed text with an ellipsis to ensure it fits within the
             required maximum. If and only if CSS performs this truncation we want to
-            provide users with a tooltip on the DisplayedName mouseOver that allows them
-            to view the full name. We use the invisible div defined below to check the
-            width that would be required to display the full name in the DOM.
+            provide users with a tooltip on the Text mouseOver that allows them
+            to view the full text. We use the invisible div defined below to check the
+            width that would be required to display the full text in the DOM.
             We can use the width of this invisible div to determine if CSS performed
             truncation and if we should activate the tooltip. 
           */}
           <Tooltip
             trigger={
-              <>
-                {getTextElm(
-                  `${stylingClasses} text-black text-sm leading-5 truncate pr-1`,
-                )}
-              </>
+              <>{getTextElm(`${textStylingClasses} ${textDefaultClasses}`)}</>
             }
           >
             {getTextElm(
@@ -96,11 +94,7 @@ export const Text = ({
           </Tooltip>
         </>
       ) : (
-        <>
-          {getTextElm(
-            `${stylingClasses} text-black text-sm leading-5 truncate pr-1.5`,
-          )}
-        </>
+        <>{getTextElm(`${textStylingClasses} ${textDefaultClasses}`)}</>
       )}
     </div>
   );

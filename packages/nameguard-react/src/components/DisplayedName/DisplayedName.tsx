@@ -5,20 +5,22 @@ import { Text } from "../Text/Text";
 
 interface DisplayedNameProps {
   name: ENSName;
-  stylingClasses?: string;
+  textStylingClasses?: string;
   maxDisplayWidth?: number;
   maxTooltipWidth?: number;
   displayUnnormalizedNames?: boolean;
-  displayTooltipWhenNameClamps?: boolean;
+  displayTooltipWhenNameOverflows?: boolean;
 }
+
+const DEFAULT_MAX_DISPLAY_WIDTH = 200;
 
 export function DisplayedName({
   name,
-  stylingClasses,
-  maxDisplayWidth,
+  textStylingClasses,
   maxTooltipWidth,
   displayUnnormalizedNames = false,
-  displayTooltipWhenNameClamps = true,
+  displayTooltipWhenNameOverflows = true,
+  maxDisplayWidth = DEFAULT_MAX_DISPLAY_WIDTH,
 }: DisplayedNameProps) {
   const showUnnormalizedName =
     displayUnnormalizedNames &&
@@ -27,11 +29,11 @@ export function DisplayedName({
 
   return (
     <Text
-      string={displayName}
-      stylingClasses={stylingClasses + " ens-webfont"}
+      text={displayName}
+      textStylingClasses={textStylingClasses + " ens-webfont"}
       maxTooltipWidth={maxTooltipWidth}
       maxDisplayWidth={maxDisplayWidth}
-      displayTooltipWhenNameClamps={displayTooltipWhenNameClamps}
+      displayTooltipWhenTextOverflows={displayTooltipWhenNameOverflows}
     />
   );
 }

@@ -29,7 +29,7 @@ export default function DisplayedNamePage() {
 
             <div className="flex items-center justify-center">
               <Text
-                string={
+                text={
                   getExampleDisplayedName(DisplayedNameExample.SHORT_NAME).name
                 }
               />
@@ -39,14 +39,16 @@ export default function DisplayedNamePage() {
         <div className="divide-y divide-gray-100">
           <div className="grid grid-cols-2 gap-x-6 py-5">
             <div className="w-full flex justify-center items-center font-mono">
-              <pre>{"<Text name \n stylingClasses='text-purple-400' />"}</pre>
+              <pre>
+                {"<Text name \n textStylingClasses='text-purple-400' />"}
+              </pre>
             </div>
 
             <div className="flex items-center justify-center">
               <Text
-                stylingClasses="text-purple-400"
-                string={
-                  getExampleDisplayedName(DisplayedNameExample.LONG_NAME).name
+                textStylingClasses="text-purple-400"
+                text={
+                  getExampleDisplayedName(DisplayedNameExample.SHORT_NAME).name
                 }
               />
             </div>
@@ -61,7 +63,7 @@ export default function DisplayedNamePage() {
             <div className="flex items-center justify-center">
               <Text
                 maxTooltipWidth={100}
-                string={
+                text={
                   getExampleDisplayedName(DisplayedNameExample.LONG_NAME).name
                 }
               />
@@ -72,14 +74,14 @@ export default function DisplayedNamePage() {
           <div className="grid grid-cols-2 gap-x-6 py-5">
             <div className="w-full flex justify-center items-center font-mono">
               <pre>
-                {"<Text name \n displayTooltipWhenNameClamps={false} />"}
+                {"<Text name \n displayTooltipWhenNameOverflows={false} />"}
               </pre>
             </div>
 
             <div className="flex items-center justify-center">
               <Text
-                displayTooltipWhenNameClamps={false}
-                string={
+                displayTooltipWhenTextOverflows={false}
+                text={
                   getExampleDisplayedName(DisplayedNameExample.WITHOUT_TOOLTIP)
                     .name
                 }
@@ -96,7 +98,7 @@ export default function DisplayedNamePage() {
             <div className="flex items-center justify-center">
               <Text
                 maxDisplayWidth={60}
-                string={
+                text={
                   getExampleDisplayedName(DisplayedNameExample.SHORT_MAX_WIDTH)
                     .name
                 }
@@ -131,13 +133,15 @@ export default function DisplayedNamePage() {
           <div className="grid grid-cols-2 gap-x-6 py-5">
             <div className="w-full flex justify-center items-center font-mono">
               <pre>
-                {"<DisplayedName name\n stylingClasses='text-purple-400' />"}
+                {
+                  "<DisplayedName name\n textStylingClasses='text-purple-400' />"
+                }
               </pre>
             </div>
 
             <div className="flex items-center justify-center">
               <DisplayedName
-                stylingClasses="text-purple-400"
+                textStylingClasses="text-purple-400"
                 name={getExampleDisplayedName(DisplayedNameExample.SHORT_NAME)}
               />
             </div>
@@ -175,14 +179,14 @@ export default function DisplayedNamePage() {
             <div className="w-full flex justify-center items-center font-mono">
               <pre>
                 {
-                  "<DisplayedName name \n displayTooltipWhenNameClamps={false} />"
+                  "<DisplayedName name \n displayTooltipWhenNameOverflows={false} />"
                 }
               </pre>
             </div>
 
             <div className="flex items-center justify-center">
               <DisplayedName
-                displayTooltipWhenNameClamps={false}
+                displayTooltipWhenNameOverflows={false}
                 name={getExampleDisplayedName(
                   DisplayedNameExample.WITHOUT_TOOLTIP,
                 )}
