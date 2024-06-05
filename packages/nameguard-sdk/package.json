@@ -12,7 +12,10 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "sideEffects": false,
   "scripts": {
     "build": "tsup",
@@ -26,6 +29,7 @@
     "vitest": "1.4.0"
   },
   "dependencies": {
+    "@namehash/ens-utils": "workspace:*",
     "whatwg-fetch": "3.6.19"
   },
   "publishConfig": {

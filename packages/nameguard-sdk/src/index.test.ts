@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 
-import { createClient } from ".";
+import { createClient } from "./index.js";
 
 const nameguard = createClient({
   // undefined will default to the production endpoint
