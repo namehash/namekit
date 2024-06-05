@@ -5,6 +5,11 @@ import { RatingIcon, RatingIconSize } from "@namehash/nameguard-react";
 const meta: Meta<typeof RatingIcon> = {
   component: RatingIcon,
   title: "Nameguard/RatingIcon",
+  parameters: {
+    controls: {
+      exclude: ["size", "isInteractive"],
+    },
+  },
   argTypes: {
     rating: {
       options: [Rating.pass, Rating.warn, Rating.alert],

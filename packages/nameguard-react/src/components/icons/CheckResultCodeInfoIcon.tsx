@@ -12,7 +12,7 @@ export const CheckResultCodeInfoIcon = ({
     onClick={onClick}
     className={cc([
       className,
-      "w-5 h-5 fill-current transition",
+      "ng-w-5 ng-h-5 ng-fill-current ng-transition",
       checkResultCodeTextColor(CheckResultCode.info, isInteractive),
     ])}
     viewBox="0 0 20 20"

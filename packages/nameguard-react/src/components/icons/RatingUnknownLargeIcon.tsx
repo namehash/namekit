@@ -4,7 +4,7 @@ export const RatingUnknownLargeIcon = (
   props: React.SVGProps<SVGSVGElement>,
 ) => (
   <>
-    <div className="hidden lg:block">
+    <div className="ng-hidden lg:ng-block">
       <svg
         width="68"
         height="71"
@@ -101,7 +101,7 @@ export const RatingUnknownLargeIcon = (
         </defs>
       </svg>
     </div>
-    <div className="block lg:hidden">
+    <div className="ng-block lg:ng-hidden">
       <svg
         width="55"
         height="57"
