@@ -39,12 +39,12 @@ export default function DisplayedNamePage() {
         <div className="divide-y divide-gray-100">
           <div className="grid grid-cols-2 gap-x-6 py-5">
             <div className="w-full flex justify-center items-center font-mono">
-              <pre>{"<Text name \n stringClasses='text-purple-400' />"}</pre>
+              <pre>{"<Text name \n stylingClasses='text-purple-400' />"}</pre>
             </div>
 
             <div className="flex items-center justify-center">
               <Text
-                stringClasses="text-purple-400"
+                stylingClasses="text-purple-400"
                 string={
                   getExampleDisplayedName(DisplayedNameExample.LONG_NAME).name
                 }
