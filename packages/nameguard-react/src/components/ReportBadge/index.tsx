@@ -1,5 +1,4 @@
 "use client";
-import { DisplayedName, RatingIconSize } from "../..";
 import { redirectToViewNameReportURL } from "../../utils/url";
 import { type ConsolidatedNameGuardReport } from "@namehash/nameguard";
 import { ENSName } from "@namehash/ens-utils";
@@ -7,6 +6,7 @@ import React, { useEffect } from "react";
 import cc from "classcat";
 
 import { ReportIcon } from "../ReportIcon/index";
+import { RatingIconSize, DisplayedName } from "../..";
 import { ReportUnknownIcon } from "../ReportUnknownIcon/ReportUnknownIcon";
 import { ReportLoadingIcon } from "../ReportLoadingIcon/ReportLoadingIcon";
 

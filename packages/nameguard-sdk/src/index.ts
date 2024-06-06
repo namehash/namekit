@@ -1,7 +1,5 @@
 import "whatwg-fetch";
-import { isEthereumAddress, isTokenId, isKeccak256Hash } from "./utils.js";
-
-export { getNameGuardURLForENSname } from "./utils.js";
+import { isEthereumAddress, isTokenId, isKeccak256Hash } from "./utils";
 
 const ETH_TLD = "eth";
 

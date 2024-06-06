@@ -1,5 +1,8 @@
-export { ratingTextColor, checkResultCodeTextColor } from "./utils/text";
-export { viewNameReportURL, redirectToViewNameReportURL } from "./utils/url";
+export {
+  ratingTextColor,
+  checkResultCodeTextColor,
+  getNameGuardURLForENSname,
+} from "./utils/text";
 export { Tooltip } from "./components/Tooltip/Tooltip";
 export { Search } from "./components/Search/Search";
 export { Report } from "./components/Report/Report";

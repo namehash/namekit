@@ -1,5 +1,3 @@
-import { ENSName } from "@namehash/ens-utils";
-
 // using our own regex for this instead of viem's implementation of `isAddress`
 // as we want "0X..." in uppercase to also be considered an address
 const ethereumAddressRegex = /^0x[0-9a-f]{40}$/i;
@@ -26,8 +24,4 @@ const keccak256Regex = /^(?:0x)?[0-9a-f]{64}$/i;
  * */
 export function isKeccak256Hash(hash: string) {
   return keccak256Regex.test(hash);
-}
-
-export function getNameGuardURLForENSname(ensName: ENSName): string {
-  return `https://nameguard.io/inspect/${encodeURIComponent(ensName.name)}`;
 }

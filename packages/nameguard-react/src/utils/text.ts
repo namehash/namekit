@@ -1,3 +1,4 @@
+import { ENSName } from "@namehash/ens-utils";
 import { CheckResultCode, Rating } from "@namehash/nameguard";
 
 export function checkResultCodeTextColor(
@@ -62,4 +63,8 @@ export function ratingTextColor(rating: Rating, isInteractive = false): string {
   }
 
   return color;
+}
+
+export function getNameGuardURLForENSname(ensName: ENSName): string {
+  return `https://nameguard.io/inspect/${encodeURIComponent(ensName.name)}`;
 }

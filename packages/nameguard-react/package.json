@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "scripts": {
     "build": "tsup",
-    "dev": "tsup --watch --clean=false"
+    "dev": "tsup --watch --clean=false",
+    "test": "vitest"
   },
   "exports": {
     ".": {

@@ -4,9 +4,9 @@ import { type SecurePrimaryNameResult } from "@namehash/nameguard";
 import {
   RatingIcon,
   RatingIconSize,
-  RatingLoadingIcon,
   viewNameReportURL,
   ratingTextColor,
+  RatingLoadingIcon,
 } from "@namehash/nameguard-react";
 import cc from "classcat";
 
