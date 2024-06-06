@@ -1,7 +1,7 @@
 import { Normalization } from "@namehash/nameguard";
 import { ENSName } from "@namehash/ens-utils";
 import React from "react";
-import { Text } from "../Text/Text";
+import { TruncatedText } from "../TruncatedText/TruncatedText";
 
 interface DisplayedNameProps {
   name: ENSName;
@@ -28,7 +28,7 @@ export function DisplayedName({
   const displayName = showUnnormalizedName ? name.name : name.displayName;
 
   return (
-    <Text
+    <TruncatedText
       text={displayName}
       textStylingClasses={textStylingClasses + " ens-webfont"}
       maxTooltipWidth={maxTooltipWidth}

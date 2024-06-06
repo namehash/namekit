@@ -20,7 +20,7 @@ export default function DocsPage() {
           {"<ReportIcon /> and <ReportBadge />"}
         </Link>
         <Link className="hover:underline" href={"/docs/displayed-name"}>
-          {"<Text /> and <DisplayedName />"}
+          {"<TruncatedText /> and <DisplayedName />"}
         </Link>
       </nav>
     </div>

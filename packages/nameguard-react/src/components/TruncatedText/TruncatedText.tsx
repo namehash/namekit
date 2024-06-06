@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 
 import { Tooltip } from "../..";
 
-interface TextProps {
+interface TruncatedTextProps {
   displayTooltipWhenTextOverflows?: boolean;
   maxTooltipWidth?: number;
   maxDisplayWidth?: number;
@@ -13,21 +13,20 @@ interface TextProps {
 const DEFAULT_MAX_DISPLAY_WIDTH = 300;
 const DEFAULT_MAX_TOOLTIP_WIDTH = 400;
 
-export const Text = ({
+export const TruncatedText = ({
   text,
   textStylingClasses = "",
   displayTooltipWhenTextOverflows = true,
   maxTooltipWidth = DEFAULT_MAX_TOOLTIP_WIDTH,
   maxDisplayWidth = DEFAULT_MAX_DISPLAY_WIDTH,
-}: TextProps) => {
+}: TruncatedTextProps) => {
   const invisibleTextWidthTester = useRef<null | HTMLParagraphElement>(null);
 
   /* 
     Below state is only true if the text displayed 
     is longer than text maxDisplayWidth
   */
-  const [displayFullTextInTooltip, setDisplayFullTextInTooltip] =
-    useState<boolean>(false);
+  const [textOverflows, setTextOverflows] = useState<boolean>(false);
 
   useEffect(() => {
     if (
@@ -35,12 +34,12 @@ export const Text = ({
       invisibleTextWidthTester &&
       invisibleTextWidthTester.current
     ) {
-      const textIsBiggerThanMax =
+      const textOverflows =
         Math.ceil(
           invisibleTextWidthTester.current.getBoundingClientRect().width,
         ) > maxDisplayWidth;
 
-      setDisplayFullTextInTooltip(textIsBiggerThanMax);
+      setTextOverflows(textOverflows);
     }
   }, [invisibleTextWidthTester]);
 
@@ -59,6 +58,13 @@ export const Text = ({
 
   return (
     <div>
+      {/* 
+        We use the invisible div defined below to acknowledge the 
+        pixels amount required to display the full 'text' in the DOM.
+
+        We then use this pixels count in comparison to maxDisplayWidth
+        to determine if CSS truncation and full-text tooltip are needed. 
+      */}
       {displayTooltipWhenTextOverflows && (
         <div className="invisible absolute left-0 top-0 pointer-events-none">
           <div ref={invisibleTextWidthTester}>{text}</div>
@@ -66,21 +72,19 @@ export const Text = ({
       )}
       {/*
         Below HTML is the rendered text and tooltip, being the
-        tooltip only shown when it is needed, on mouse hover. When is it needed?
+        tooltip only shown when it is needed, on mouse hover. 
+        
+        But when is it needed?
         Whenever the text displayed is longer than maxDisplayWidth.
       */}
-      {displayFullTextInTooltip && displayTooltipWhenTextOverflows ? (
+      {textOverflows && displayTooltipWhenTextOverflows ? (
         <>
           {/* 
-            To ensure the Text doesn't appear wider than `maxDisplayWidth`. 
-            If the width required to display the full text exceeds that maximum, CSS automatically
-            truncates the displayed text with an ellipsis to ensure it fits within the
-            required maximum. If and only if CSS performs this truncation we want to
-            provide users with a tooltip on the Text mouseOver that allows them
-            to view the full text. We use the invisible div defined below to check the
-            width that would be required to display the full text in the DOM.
-            We can use the width of this invisible div to determine if CSS performed
-            truncation and if we should activate the tooltip. 
+            To ensure the TruncatedText doesn't appear wider than maxDisplayWidth,
+            if the width required to display the full text exceeds that maximum CSS 
+            automatically truncates the displayed text with an ellipsis ensuring it 
+            fits within the required maximum width. If and only if CSS performs this 
+            text truncation, a tooltip allows users to view the full text onMouseOver. 
           */}
           <Tooltip
             trigger={

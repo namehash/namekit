@@ -1,18 +1,18 @@
 "use client";
 
 import { ENSName, buildENSName } from "@namehash/ens-utils";
-import { DisplayedName, Text } from "@namehash/nameguard-react";
+import { DisplayedName, TruncatedText } from "@namehash/nameguard-react";
 
 export default function DisplayedNamePage() {
   return (
     <div className="py-12 max-w-7xl mx-auto px-6 space-y-12">
       <div className="max-w-[600px] mx-auto">
         <h1 className="justify-center flex font-bold text-2xl my-8">
-          {"<"}Text {"/>"} and {"<"}DisplayedName {"/>"} documentation
+          {"<"}TruncatedText {"/>"} and {"<"}DisplayedName {"/>"} documentation
         </h1>
 
         <h2 className="text-lg font-bold w-full text-center border-b-2 border-t-2 py-4">
-          {"<"}Text {"/>"} component
+          {"<"}TruncatedText {"/>"} component
         </h2>
         <div className="divide-y divide-gray-100">
           <div className="grid grid-cols-2 gap-x-6 py-5 text-center font-medium">
@@ -24,11 +24,11 @@ export default function DisplayedNamePage() {
         <div className="divide-y divide-gray-100">
           <div className="grid grid-cols-2 gap-x-6 py-5">
             <div className="w-full flex justify-center items-center font-mono">
-              <pre>{"<Text name />"}</pre>
+              <pre>{"<TruncatedText name />"}</pre>
             </div>
 
             <div className="flex items-center justify-center">
-              <Text
+              <TruncatedText
                 text={
                   getExampleDisplayedName(DisplayedNameExample.SHORT_NAME).name
                 }
@@ -40,12 +40,14 @@ export default function DisplayedNamePage() {
           <div className="grid grid-cols-2 gap-x-6 py-5">
             <div className="w-full flex justify-center items-center font-mono">
               <pre>
-                {"<Text name \n textStylingClasses='text-purple-400' />"}
+                {
+                  "<TruncatedText name \n textStylingClasses='text-purple-400' />"
+                }
               </pre>
             </div>
 
             <div className="flex items-center justify-center">
-              <Text
+              <TruncatedText
                 textStylingClasses="text-purple-400"
                 text={
                   getExampleDisplayedName(DisplayedNameExample.SHORT_NAME).name
@@ -57,11 +59,11 @@ export default function DisplayedNamePage() {
         <div className="divide-y divide-gray-100">
           <div className="grid grid-cols-2 gap-x-6 py-5">
             <div className="w-full flex justify-center items-center font-mono">
-              <pre>{"<Text name \n maxTooltipWidth={100} />"}</pre>
+              <pre>{"<TruncatedText name \n maxTooltipWidth={100} />"}</pre>
             </div>
 
             <div className="flex items-center justify-center">
-              <Text
+              <TruncatedText
                 maxTooltipWidth={100}
                 text={
                   getExampleDisplayedName(DisplayedNameExample.LONG_NAME).name
@@ -74,12 +76,14 @@ export default function DisplayedNamePage() {
           <div className="grid grid-cols-2 gap-x-6 py-5">
             <div className="w-full flex justify-center items-center font-mono">
               <pre>
-                {"<Text name \n displayTooltipWhenNameOverflows={false} />"}
+                {
+                  "<TruncatedText name \n displayTooltipWhenNameOverflows={false} />"
+                }
               </pre>
             </div>
 
             <div className="flex items-center justify-center">
-              <Text
+              <TruncatedText
                 displayTooltipWhenTextOverflows={false}
                 text={
                   getExampleDisplayedName(DisplayedNameExample.WITHOUT_TOOLTIP)
@@ -92,11 +96,11 @@ export default function DisplayedNamePage() {
         <div className="divide-y divide-gray-100">
           <div className="grid grid-cols-2 gap-x-6 py-5">
             <div className="w-full flex justify-center items-center font-mono">
-              <pre>{"<Text name \n maxDisplayWidth={60} />"}</pre>
+              <pre>{"<TruncatedText name \n maxDisplayWidth={60} />"}</pre>
             </div>
 
             <div className="flex items-center justify-center">
-              <Text
+              <TruncatedText
                 maxDisplayWidth={60}
                 text={
                   getExampleDisplayedName(DisplayedNameExample.SHORT_MAX_WIDTH)
