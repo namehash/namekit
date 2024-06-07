@@ -1,8 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { Registrar, UNWRAPPED_MAINNET_ETH_REGISTRAR, WRAPPED_MAINNET_ETH_REGISTRAR, buildNFTRefFromENSName } from "./ethregistrar";
+import { MIN_REGISTRATION_PERIOD, Registrar, UNWRAPPED_MAINNET_ETH_REGISTRAR, WRAPPED_MAINNET_ETH_REGISTRAR, buildNFTRefFromENSName, isValidRegistrationPeriod, validateRegistrationPeriod } from "./ethregistrar";
 import { ENSName, buildENSName } from "./ensname";
 import { MAINNET, SEPOLIA } from "./chain";
 import { buildNFTRef } from "./nft";
+import { addSeconds, buildDuration, buildTimePeriod, buildTimestampFromDate } from "./time";
 
 // TODO: add a lot more unit tests here
 
@@ -53,5 +54,92 @@ describe("buildNFTRefFromENSName", () => {
         const registrar = WRAPPED_MAINNET_ETH_REGISTRAR;
         const isWrapped = true;
         testNFTRefFromRegistrar(name, registrar, isWrapped);
+    });
+});
+
+describe("isValidRegistrationPeriod", () => {
+
+    it("below minimum", () => {
+
+        const registrationDate = new Date("2024-01-01T00:00:00Z");
+        const registrationTimestamp = buildTimestampFromDate(registrationDate);
+        const duration = buildDuration(MIN_REGISTRATION_PERIOD.seconds - 1n);
+        const expirationTimestamp = addSeconds(registrationTimestamp, duration);
+        const registration = buildTimePeriod(registrationTimestamp, expirationTimestamp);
+
+        const result = isValidRegistrationPeriod(registration);
+        const expectedResult = false;
+
+        expect(result).toStrictEqual(expectedResult);
+    });
+
+    it("exact minimum", () => {
+
+        const registrationDate = new Date("2024-01-01T00:00:00Z");
+        const registrationTimestamp = buildTimestampFromDate(registrationDate);
+        const duration = MIN_REGISTRATION_PERIOD;
+        const expirationTimestamp = addSeconds(registrationTimestamp, duration);
+        const registration = buildTimePeriod(registrationTimestamp, expirationTimestamp);
+
+        const result = isValidRegistrationPeriod(registration);
+        const expectedResult = true;
+
+        expect(result).toStrictEqual(expectedResult);
+    });
+
+    it("above minimum", () => {
+
+        const registrationDate = new Date("2024-01-01T00:00:00Z");
+        const registrationTimestamp = buildTimestampFromDate(registrationDate);
+        const duration = buildDuration(MIN_REGISTRATION_PERIOD.seconds + 1n);
+        const expirationTimestamp = addSeconds(registrationTimestamp, duration);
+        const registration = buildTimePeriod(registrationTimestamp, expirationTimestamp);
+
+        const result = isValidRegistrationPeriod(registration);
+        const expectedResult = true;
+
+        expect(result).toStrictEqual(expectedResult);
+    });
+});
+
+describe("validateRegistrationPeriod", () => {
+
+    it("below minimum", () => {
+
+        const registrationDate = new Date("2024-01-01T00:00:00Z");
+        const registrationTimestamp = buildTimestampFromDate(registrationDate);
+        const duration = buildDuration(MIN_REGISTRATION_PERIOD.seconds - 1n);
+        const expirationTimestamp = addSeconds(registrationTimestamp, duration);
+        const registration = buildTimePeriod(registrationTimestamp, expirationTimestamp);
+
+        expect(() => validateRegistrationPeriod(registration)).toThrow();
+    });
+
+    it("exact minimum", () => {
+
+        const registrationDate = new Date("2024-01-01T00:00:00Z");
+        const registrationTimestamp = buildTimestampFromDate(registrationDate);
+        const duration = MIN_REGISTRATION_PERIOD;
+        const expirationTimestamp = addSeconds(registrationTimestamp, duration);
+        const registration = buildTimePeriod(registrationTimestamp, expirationTimestamp);
+
+        const result = isValidRegistrationPeriod(registration);
+        const expectedResult = true;
+
+        expect(result).toStrictEqual(expectedResult);
+    });
+
+    it("above minimum", () => {
+
+        const registrationDate = new Date("2024-01-01T00:00:00Z");
+        const registrationTimestamp = buildTimestampFromDate(registrationDate);
+        const duration = buildDuration(MIN_REGISTRATION_PERIOD.seconds + 1n);
+        const expirationTimestamp = addSeconds(registrationTimestamp, duration);
+        const registration = buildTimePeriod(registrationTimestamp, expirationTimestamp);
+
+        const result = isValidRegistrationPeriod(registration);
+        const expectedResult = true;
+
+        expect(result).toStrictEqual(expectedResult);
     });
 });

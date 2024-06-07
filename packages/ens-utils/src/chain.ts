@@ -93,6 +93,8 @@ export const addKnownChain = (
 export const MAINNET = buildChainId(1);
 export const SEPOLIA = buildChainId(11155111);
 
+export const DEFAULT_CHAIN = MAINNET;
+
 addKnownChain({chain: MAINNET, name: "mainnet", displayName: "Ethereum Mainnet" });
 addKnownChain({chain: SEPOLIA, name: "sepolia", displayName: "Sepolia" });
 

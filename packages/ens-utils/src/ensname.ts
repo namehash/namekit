@@ -5,7 +5,7 @@ import {
   labelhash,
   normalizeEncodedLabelhash,
 } from "./hashutils";
-import { namehash } from "viem";
+import { ENSNameNode, isEqualNodes, namehash } from "./namehash";
 
 export const LABEL_SEPARATOR = ".";
 export const ETH_TLD = "eth";
@@ -70,9 +70,9 @@ export interface ENSName {
   normalization: Normalization;
 
   /**
-   * The node of `name` as calculated by the `namehash` function.
+   * The `ENSNameNode` of `name` as calculated by the `namehash` function.
    */
-  node: `0x${string}`;
+  node: ENSNameNode;
 }
 
 /**
@@ -334,4 +334,49 @@ export function getRegistrationPotential(name: ENSName): RegistrationPotential {
  */
 export function charCount(label: string) {
   return [...label].length;
+}
+
+/**
+ * Given two `ENSName` with equal `node` values, returns a maximally "healed" `ENSName` that uses known labels wherever possible.
+ * 
+ * @param left The left `ENSName` to compare.
+ * @param right The right `ENSName` to compare.
+ * @returns A maximally "healed" `ENSName` that uses known labels wherever possible.
+ * @throws `Error` if the nodes of the names are not equal or if the names have an unequal number of labels.
+ */
+export const maximallyHealUnknownLabels = (left: ENSName, right: ENSName): ENSName => {
+  if (!isEqualNodes(left.node, right.node)) {
+      throw new Error(`maximallyHealUnknownLabels should only be performed on names with equal nodes: ${left.name} and ${right.name}`);
+  }
+
+  if (left.labels.length !== right.labels.length) {
+      throw new Error(`maximallyHealUnknownLabels should only be performed on names with an equal number of labels: ${left.name} and ${right.name}`);
+  }
+
+  if (left.name === right.name) {
+      // no healing possible
+      return left;
+  }
+
+  // we have two ENSName with equal nodes but non-equal names. This means that one or more labels at position [i]:
+  // 1. left[i] is known and right[i] is unknown; or
+  // 2. left[i] is unknown and right[i] is known.
+  // In either case, we want to maximally "heal" by selecting known labels wherever possible.
+
+  let healedLabels: string[] = [];
+
+  for (let i = 0; i < left.labels.length; i++) {
+      const leftLabel = left.labels[i];
+      const rightLabel = right.labels[i];
+
+      if (!isEncodedLabelhash(leftLabel)) {
+          // left is known, so we definitely want to use it
+          healedLabels.push(leftLabel);
+      } else {
+          // right could be known or unknown, but either way there's no point to using the left
+          healedLabels.push(rightLabel);
+      }
+  }
+
+  return buildENSName(healedLabels.join(LABEL_SEPARATOR));
 }
