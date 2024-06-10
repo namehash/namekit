@@ -2,6 +2,7 @@ import gc
 import json
 import os
 import time
+from typing import Optional
 
 # ruff: noqa: E402
 init_time = time.time()
@@ -13,7 +14,13 @@ from pydantic import BaseModel, Field
 
 import nameguard.context
 from nameguard.nameguard import NameGuard
-from nameguard.utils import validate_namehash, namehash_from_labelhash, validate_token_id, validate_ethereum_address
+from nameguard.utils import (
+    validate_namehash,
+    namehash_from_labelhash,
+    validate_token_id,
+    validate_ethereum_address,
+    INSPECTABLE_NAMES_LENGTH,
+)
 from nameguard.models import (
     NameGuardReport,
     BulkNameGuardBulkReport,
@@ -119,11 +126,11 @@ async def inspect_name_get(
         description='**Name should be url-encoded (except when using the Swagger UI). Name can be empty.**',
         examples=['vitalìk.eth'],
     ),
-) -> NameGuardReport:
-    """
+) -> Optional[NameGuardReport]:
+    f"""
     ## Inspects a single name with NameGuard.
 
-    Provides a `NameGuardReport` including:
+    Provides `null` if the `name` is longer than {INSPECTABLE_NAMES_LENGTH} characters or a `NameGuardReport` including:
     1. The details of all checks performed on `name` that consolidates all checks performed on labels and graphemes in `name`.
     2. The details of all labels in `name`.
     3. A consolidated inspection result of all graphemes in `name`.
@@ -157,7 +164,7 @@ async def inspect_name_get(
         **ENSSubgraphUnavailable.get_responses_spec(),
     },
 )
-async def inspect_empty_name_get(network_name: NetworkName) -> NameGuardReport:
+async def inspect_empty_name_get(network_name: NetworkName) -> Optional[NameGuardReport]:
     return await inspect_name_get(network_name, '')
 
 
@@ -169,11 +176,11 @@ async def inspect_empty_name_get(network_name: NetworkName) -> NameGuardReport:
         **ENSSubgraphUnavailable.get_responses_spec(),
     },
 )
-async def inspect_name_post(request: InspectNameRequest) -> NameGuardReport:
-    """
+async def inspect_name_post(request: InspectNameRequest) -> Optional[NameGuardReport]:
+    f"""
     ## Inspects a single name with NameGuard.
 
-    Provides a `NameGuardReport` including:
+    Provides `null` if the `name` is longer than {INSPECTABLE_NAMES_LENGTH} characters or a `NameGuardReport` including:
     1. The details of all checks performed on `request.name` that consolidates all checks performed on labels and graphemes in `request.name`.
     2. The details of all labels in `request.name`.
     3. A consolidated inspection result of all graphemes in `request.name`.
@@ -215,10 +222,10 @@ class BulkInspectNamesRequest(BaseModel):
     },
 )
 async def bulk_inspect_names(request: BulkInspectNamesRequest) -> BulkNameGuardBulkReport:
-    """
+    f"""
     ## Inspects up to 250 names at a time with NameGuard.
 
-    Provides a `ConsolidatedNameGuardReport` for each name provided in `request.names`, including:
+    Provides `null` if the `name` is longer than {INSPECTABLE_NAMES_LENGTH} characters or a `ConsolidatedNameGuardReport` for each name provided in `request.names`, including:
     1. The details of all checks performed on a name that consolidates all checks performed on labels and graphemes in this name.
 
     Each `ConsolidatedNameGuardReport` returned represents an equivalent set of checks as a `NameGuardReport`. However:
@@ -274,14 +281,14 @@ async def inspect_namehash_get(
         examples=['0xd48fd5598e605861cbd8e45419b41b83739bff52eaef0e283181bbe0a43a5b32'],
         description='Namehash should be a decimal or a hex (prefixed with 0x) string.',
     ),
-) -> NameGuardReport:
-    """
+) -> Optional[NameGuardReport]:
+    f"""
     ## Inspects the name associated with a namehash.
 
     NameGuard will attempt to resolve the name associated with the `namehash` through the ENS Subgraph,
     using the network specified in `network_name`.
 
-    If this resolution succeeds then NameGuard will generate and return a `NameGuardReport` for the name.
+    If this resolution succeeds then NameGuard will generate and return `null` if the `name` is longer than {INSPECTABLE_NAMES_LENGTH} characters or a `NameGuardReport` for the name.
 
     If this resolution fails then NameGuard will return an error.
     """
@@ -307,14 +314,14 @@ async def inspect_namehash_get(
         **NamehashNotFoundInSubgraph.get_responses_spec(),
     },
 )
-async def inspect_namehash_post(request: InspectNamehashRequest) -> NameGuardReport:
-    """
+async def inspect_namehash_post(request: InspectNamehashRequest) -> Optional[NameGuardReport]:
+    f"""
     ## Inspects the name associated with a namehash.
 
     NameGuard will attempt to resolve the name associated with the `request.namehash` through the ENS Subgraph,
     using the network specified in `request.network_name`.
 
-    If this resolution succeeds then NameGuard will generate and return a `NameGuardReport` for the name.
+    If this resolution succeeds then NameGuard will generate and return `null` if the `name` is longer than {INSPECTABLE_NAMES_LENGTH} characters or a `NameGuardReport` for the name.
 
     If this resolution fails then NameGuard will return an error.
     """
@@ -362,9 +369,9 @@ async def inspect_labelhash_get(
         description='Parent name of the labelhash (default empty).',
         examples=['eth'],
     ),
-) -> NameGuardReport:
-    """
-    ## Inspects the name `[{labelhash}].{parent_name}`.
+) -> Optional[NameGuardReport]:
+    f"""
+    ## Inspects the name `[{{labelhash}}].{{parent_name}}`.
 
     Parent may be a name with any number of labels. The default parent is "eth".
 
@@ -372,16 +379,18 @@ async def inspect_labelhash_get(
     1. The labelhash of the "childmost" label of a name.
     2. The complete parent name of the "childmost" label.
 
+    Returns `null` if the `name` is longer than {INSPECTABLE_NAMES_LENGTH} characters.
+
     NameGuard always inspects names, rather than labelhashes. So this endpoint will first attempt
     to resolve the "childmost" label associated with the provided labelhash through the ENS Subgraph,
     using the network specified in `network_name`.
 
     If this label resolution fails the resulting `NameGuardReport` will be equivalent to requesting
-    a `NameGuardReport` for the name `[{labelhash}].{parent_name}` which will contain (at least)
+    a `NameGuardReport` for the name `[{{labelhash}}].{{parent_name}}` which will contain (at least)
     one label with an `unknown` `Normalization`.
 
     If this label resolution succeeds the resulting `NameGuardReport` will be equivalent to requesting
-    a `NameGuardReport` for the name `{label}.{parent_name}`.
+    a `NameGuardReport` for the name `{{label}}.{{parent_name}}`.
     """
 
     logger.debug(
@@ -411,7 +420,7 @@ async def inspect_labelhash_get_empty_parent(
         examples=['0x3276e4878615389906712b876ce1455b8f5d1c5ea3ffcf7a705e0d32fafae9c5'],
         description='Labelhash should be a decimal or a hex (prefixed with 0x) string.',
     ),
-) -> NameGuardReport:
+) -> Optional[NameGuardReport]:
     return await inspect_labelhash_get(network_name, labelhash, '')
 
 
@@ -426,9 +435,9 @@ async def inspect_labelhash_get_empty_parent(
         **NamehashNotFoundInSubgraph.get_responses_spec(),
     },
 )
-async def inspect_labelhash_post(request: InspectLabelhashRequest) -> NameGuardReport:
-    """
-    ## Inspects the name `[{request.labelhash}].{request.parent_name}`.
+async def inspect_labelhash_post(request: InspectLabelhashRequest) -> Optional[NameGuardReport]:
+    f"""
+    ## Inspects the name `[{{request.labelhash}}].{{request.parent_name}}`.
 
     Parent may be a name with any number of labels. The default parent is "eth".
 
@@ -436,16 +445,18 @@ async def inspect_labelhash_post(request: InspectLabelhashRequest) -> NameGuardR
     1. The labelhash of the "childmost" label of a name.
     2. The complete parent name of the "childmost" label.
 
+    Returns `null` if the `name` is longer than {INSPECTABLE_NAMES_LENGTH} characters.
+
     NameGuard always inspects names, rather than labelhashes. So this endpoint will first attempt
     to resolve the "childmost" label associated with the provided labelhash through the ENS Subgraph,
     using the network specified in `request.network_name`.
 
     If this label resolution fails the resulting `NameGuardReport` will be equivalent to requesting
-    a `NameGuardReport` for the name `[{request.labelhash}].{request.parent_name}` which will contain (at least)
+    a `NameGuardReport` for the name `[{{request.labelhash}}].{{request.parent_name}}` which will contain (at least)
     one label with an `unknown` `Normalization`.
 
     If this label resolution succeeds the resulting `NameGuardReport` will be equivalent to requesting
-    a `NameGuardReport` for the name `{label}.{request.parent_name}`.
+    a `NameGuardReport` for the name `{{label}}.{{request.parent_name}}`.
     """
 
     logger.debug(

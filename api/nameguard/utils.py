@@ -7,6 +7,8 @@ from ens.constants import EMPTY_SHA3_BYTES
 from nameguard.exceptions import InvalidNameHash, InvalidTokenID, InvalidEthereumAddress
 from nameguard.models import Rating, GenericCheckResult, Check
 
+INSPECTABLE_NAMES_LENGTH = 200
+
 
 def compute_canonical_from_list(canonicals: list[Optional[str]], sep='') -> Optional[str]:
     """

@@ -1,6 +1,6 @@
 import os
 import re
-from typing import Union
+from typing import Union, Optional
 
 from nameguard.our_ens import OurENS
 from ens_normalize import is_ens_normalized, ens_cure, DisallowedSequence
@@ -44,6 +44,7 @@ from nameguard.utils import (
     label_is_labelhash,
     compute_canonical_from_list,
     is_labelhash_eth,
+    INSPECTABLE_NAMES_LENGTH,
 )
 from nameguard.exceptions import ProviderUnavailable, NotAGrapheme, MissingTitle
 from nameguard.logging import logger
@@ -142,19 +143,25 @@ class NameGuard:
 
     async def inspect_name(
         self, network_name: NetworkName, name: str, resolve_labelhashes: bool = True, bulk_mode: bool = False
-    ) -> Union[NameGuardReport, ConsolidatedNameGuardReport]:
+    ) -> Optional[Union[NameGuardReport, ConsolidatedNameGuardReport]]:
         """
         Inspect a name. A name is a sequence of labels separated by dots.
         A label can be a labelhash or a string.
         If a labelhash is encountered and `resolve_labelhashes` is `True`, a lookup will be performed.
         """
+
+        logger.debug(f"[inspect_name] name: '{name}'")
+
+        # if len(name) > INSPECTABLE_NAMES_LENGTH: #TODO do we need it here or limit number of labelhashes in the name?
+        #     return None
+
         if resolve_labelhashes:
             name = await resolve_all_labelhashes_in_name_querying_labelhashes(network_name, name)
         return self.inspect_name_sync(name, bulk_mode)
 
     def inspect_name_sync(
         self, name: str, bulk_mode: bool = False
-    ) -> Union[NameGuardReport, ConsolidatedNameGuardReport]:
+    ) -> Optional[Union[NameGuardReport, ConsolidatedNameGuardReport]]:
         """
         Inspect a name. A name is a sequence of labels separated by dots.
         A label can be a labelhash or a string.
@@ -162,6 +169,9 @@ class NameGuard:
         """
 
         logger.debug(f"[inspect_name] name: '{name}'")
+
+        if len(name) > INSPECTABLE_NAMES_LENGTH:
+            return None
 
         if bulk_mode and simple_name(name):
             return consolidated_report_from_simple_name(name)
@@ -306,12 +316,14 @@ class NameGuard:
             ],
         )
 
-    async def inspect_namehash(self, network_name: NetworkName, namehash: str) -> NameGuardReport:
+    async def inspect_namehash(self, network_name: NetworkName, namehash: str) -> Optional[NameGuardReport]:
         logger.debug(f"[inspect_namehash] namehash: '{namehash}'")
         name = await namehash_to_name_lookup(network_name, namehash)
         return await self.inspect_name(network_name, name)
 
-    async def inspect_name_with_labelhash_lookup(self, network_name: NetworkName, name: str) -> NameGuardReport:
+    async def inspect_name_with_labelhash_lookup(
+        self, network_name: NetworkName, name: str
+    ) -> Optional[NameGuardReport]:
         """
         Inspect a name. A name is a sequence of labels separated by dots.
         A label can be a labelhash or a string.
@@ -397,7 +409,10 @@ class NameGuard:
         else:
             nameguard_result = await self.inspect_name(network_name, domain)
 
-            if nameguard_result.normalization == Normalization.UNNORMALIZED:
+            if nameguard_result is None:
+                status = None  # TODO
+                impersonation_status = None  # TODO
+            elif nameguard_result.normalization == Normalization.UNNORMALIZED:
                 status = SecurePrimaryNameStatus.UNNORMALIZED
                 impersonation_status = None
             else:

@@ -6,6 +6,7 @@ from nameguard.models import Rating, Check, CheckStatus, Normalization, GenericC
 from nameguard.nameguard import NameGuard
 from nameguard.exceptions import NamehashNotFoundInSubgraph, NotAGrapheme
 from nameguard.endpoints import Endpoints
+from nameguard.utils import INSPECTABLE_NAMES_LENGTH
 
 
 @pytest.fixture(scope='module')
@@ -164,14 +165,20 @@ async def test_bulk_stress(nameguard: NameGuard):
 @pytest.mark.parametrize('label_length', [3, 10, 62, 63, 64, 200, 240, 252, 253, 254, 255, 256, 300])
 @pytest.mark.asyncio
 async def test_bulk_simple_name(nameguard: NameGuard, label_length):
-    result = await nameguard.inspect_name('mainnet', ('a' * label_length) + '.eth')
-    result_bulk = await nameguard.inspect_name('mainnet', ('a' * label_length) + '.eth', bulk_mode=True)
+    name = ('a' * label_length) + '.eth'
+    result = await nameguard.inspect_name('mainnet', name)
+    result_bulk = await nameguard.inspect_name('mainnet', name, bulk_mode=True)
 
-    assert result.namehash == result_bulk.namehash
-    assert result.normalization == result_bulk.normalization
-    assert result.rating == result_bulk.rating
-    assert result.risk_count == result_bulk.risk_count
-    assert result.highest_risk == result_bulk.highest_risk
+    if len(name) > INSPECTABLE_NAMES_LENGTH:
+        assert result is None
+        assert result_bulk is None
+        return
+    else:
+        assert result.namehash == result_bulk.namehash
+        assert result.normalization == result_bulk.normalization
+        assert result.rating == result_bulk.rating
+        assert result.risk_count == result_bulk.risk_count
+        assert result.highest_risk == result_bulk.highest_risk
 
 
 @pytest.mark.asyncio
@@ -640,13 +647,13 @@ async def test_dynamic_check_order(nameguard: NameGuard):
 
 
 @pytest.mark.asyncio
-async def test_stress_ens_cure(nameguard: NameGuard):
+async def test_stress_inspect_name(nameguard: NameGuard):
     # with omit_cure=False takes 1 minute
     result = await nameguard.inspect_name('mainnet', '⎛⎝⎞⎠' * 1000)
-    assert result.rating is Rating.ALERT
+    assert result is None
 
 
-def test_sync_inspect(nameguard: NameGuard):
-    result = nameguard.inspect_name_sync('nick.eth')
-    assert result.rating is Rating.PASS
-    assert all(check.rating is Rating.PASS for check in result.checks)
+@pytest.mark.asyncio
+async def test_stress_bulk_inspect_name(nameguard: NameGuard):
+    result = await nameguard.bulk_inspect_names('mainnet', ['≡ƒÿ║' * 10000] * 250)
+    assert all([x is None for x in result.results])

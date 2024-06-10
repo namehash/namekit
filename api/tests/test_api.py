@@ -1256,3 +1256,31 @@ def test_fake_eth_name_check_fields_missing_title(test_client, contract_address,
     }
     response = test_client.post('/fake-eth-name-check', json=json_req)
     assert response.status_code == 422
+
+
+def test_inspect_name_post_long(test_client):
+    name = '≡ƒÿ║' * 250
+    response = test_client.post('/inspect-name', json={'name': name, 'network_name': 'mainnet'})
+    assert response.status_code == 200
+    res_json = response.json()
+    pprint(res_json)
+
+
+def test_bulk_inspect_name_post_long(test_client):
+    name = '≡ƒÿ║' * 50
+    names = [name] * 250
+    response = test_client.post('/bulk-inspect-names', json={'names': names, 'network_name': 'mainnet'})
+    assert response.status_code == 200
+    res_json = response.json()
+    pprint(res_json)
+    assert all([x is not None for x in res_json['results']])
+
+
+def test_bulk_inspect_name_post_too_long(test_client):
+    name = '≡ƒÿ║' * 51
+    names = [name] * 250
+    response = test_client.post('/bulk-inspect-names', json={'names': names, 'network_name': 'mainnet'})
+    assert response.status_code == 200
+    res_json = response.json()
+    pprint(res_json)
+    assert all([x is None for x in res_json['results']])
