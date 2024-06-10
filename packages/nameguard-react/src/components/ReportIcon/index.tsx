@@ -6,12 +6,12 @@ import {
   ConsolidatedNameGuardReport,
 } from "@namehash/nameguard";
 import cc from "classcat";
+import { ENSName } from "@namehash/ens-utils";
 
 import { Tooltip } from "../Tooltip/Tooltip";
 import { RatingLoadingIcon } from "../icons/RatingLoadingIcon";
 import { RatingIcon, RatingIconSize } from "../Report/RatingIcon";
 import { checkResultCodeTextColor, ratingTextColor } from "../../utils/text";
-import { ENSName } from "@namehash/ens-utils";
 import { UnknownReportIcon } from "../UnknownReportIcon/UnknownReportIcon";
 
 type ReportShieldProps = {
@@ -30,7 +30,7 @@ type ReportShieldProps = {
 
   hadLoadingError: boolean;
   size?: RatingIconSize;
-} & React.ComponentProps;
+} & React.ComponentProps<typeof UnknownReportIcon>;
 
 declare global {
   interface Window {
@@ -46,9 +46,9 @@ export function ReportIcon({
   size = RatingIconSize.small,
 
   /*
-    Props are applied to the shield icon which is the onHover trigger element 
+    Props are applied to the shield icon which is the onHover trigger element
     for the tooltip with Report information. For examples, please visit the
-    https://nameguard.io/docs/report and see the ReportIcon docs. Any 
+    https://nameguard.io/docs/report and see the ReportIcon docs. Any
     additional props are passed to the shield icon that when hovered,
     displays the tooltip with the report information.
   */
@@ -67,6 +67,7 @@ export function ReportIcon({
     return (
       <UnknownReportIcon
         size={size}
+        // @ts-expect-error
         onClick={onClickHandler}
         className="cursor-pointer"
       >
