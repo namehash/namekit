@@ -6,7 +6,7 @@ import { RatingUnknownIcon } from "../icons/RatingUnknownIcon";
 
 type UnknownShieldProps = {
   size?: RatingIconSize;
-} & React.ComponentProps<typeof RatingIcon>;
+} & React.ComponentProps<"svg">;
 
 export const UnknownReportIcon = ({
   size = RatingIconSize.small,

@@ -13,7 +13,7 @@ export const RatingUnknownIcon = ({
 }: {
   size: RatingIconSize;
   isInteractive?: boolean;
-} & React.ComponentProps) => {
+} & React.ComponentProps<"svg">) => {
   switch (size) {
     case RatingIconSize.large:
       return RatingUnknownLargeIcon(props);

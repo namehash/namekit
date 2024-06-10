@@ -6,9 +6,7 @@ export const RatingPassMediumIcon = (
 ) => (
   <div className="ng-group">
     <div
-      className={
-        isInteractive ? "ng-group-hover:ng-hidden ng-block" : "ng-block"
-      }
+      className={isInteractive ? "group-hover:ng-hidden ng-block" : "ng-block"}
     >
       <svg
         width="20"
@@ -28,9 +26,7 @@ export const RatingPassMediumIcon = (
       </svg>
     </div>
     <div
-      className={
-        isInteractive ? "ng-group-hover:ng-block ng-hidden" : "ng-hidden"
-      }
+      className={isInteractive ? "group-hover:ng-block ng-hidden" : "ng-hidden"}
     >
       <svg
         width="20"

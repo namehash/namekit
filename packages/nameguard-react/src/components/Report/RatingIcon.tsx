@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SVGProps } from "react";
 import { Rating } from "@namehash/nameguard";
 
 import { RatingPassLargeIcon } from "../icons/RatingPassLargeIcon";
@@ -34,11 +34,22 @@ const STATUS_TO_BASE_NAME: { [key in Rating]: string } = {
   [Rating.warn]: "RatingWarn",
 };
 
-const getComponent = (rating: Rating, size: RatingIconSize): React.Node => {
+const getComponent = (
+  rating: Rating,
+  size: RatingIconSize,
+): ((
+  props: SVGProps<SVGSVGElement>,
+  isInteractive?: boolean,
+) => React.JSX.Element) => {
   const baseName = STATUS_TO_BASE_NAME[rating];
   const componentName = `${baseName}${capitalizeFirstLetter(size)}Icon`;
 
-  const components: { [key: string]: React.ComponentType } = {
+  const components: {
+    [key: string]: (
+      props: SVGProps<SVGSVGElement>,
+      isInteractive?: boolean,
+    ) => React.JSX.Element;
+  } = {
     RatingPassLargeIcon,
     RatingPassMediumIcon,
     RatingPassSmallIcon,

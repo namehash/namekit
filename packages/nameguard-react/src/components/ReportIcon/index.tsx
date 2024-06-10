@@ -14,7 +14,7 @@ import { RatingIcon, RatingIconSize } from "../Report/RatingIcon";
 import { checkResultCodeTextColor, ratingTextColor } from "../../utils/text";
 import { UnknownReportIcon } from "../UnknownReportIcon/UnknownReportIcon";
 
-type ReportShieldProps = {
+type ReportIconProps = {
   onClickOverride?: (ensName: ENSName) => void;
 
   /*
@@ -30,7 +30,7 @@ type ReportShieldProps = {
 
   hadLoadingError: boolean;
   size?: RatingIconSize;
-} & React.ComponentProps;
+} & React.ComponentProps<"svg">;
 
 declare global {
   interface Window {
@@ -53,7 +53,7 @@ export function ReportIcon({
     displays the tooltip with the report information.
   */
   ...props
-}: ReportShieldProps) {
+}: ReportIconProps) {
   const onClickHandler = () => {
     if (onClickOverride) onClickOverride(ensName);
     else {
