@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { nameguard } from "@namehash/nameguard";
 
-import { NGReport } from "@/app/components/NGReport";
+import { NGReport } from "@/app/components/molecules/NGReport";
 
 type Props = {
   params: { name: string };
