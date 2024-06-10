@@ -861,6 +861,19 @@ def test_primary_name_get_unnormalized(test_client):
     assert res_json['display_name'] == 'Unnamed fa9a'
 
 
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
+def test_primary_name_get_uninspectable(test_client):
+    address = '0xf4A4D9C75dA65d507cfcd5ff0aCB73D40D3A3bCB'
+    response = test_client.get(f'/secure-primary-name/mainnet/{address}')
+    assert response.status_code == 200
+    res_json = response.json()
+    print(res_json)
+    assert res_json['impersonation_status'] is None
+    assert res_json['primary_name_status'] == 'uninspectable'
+    assert res_json['primary_name'] is None
+    assert res_json['display_name'] == 'Unnamed f4a4'
+
+
 def test_primary_name_get_invalid_address(test_client):
     address = '0xfA9A134f997b3d48e122d043E12d04E909b1107g'
     response = test_client.get(f'/secure-primary-name/mainnet/{address}')

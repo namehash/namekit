@@ -4,7 +4,7 @@ from nameguard.subgraph import (
     resolve_labelhashes_querying_labelhashes,
     resolve_all_labelhashes_in_name_querying_labelhashes,
 )
-from nameguard.utils import namehash_from_name
+from nameguard.utils import namehash_from_name, MAX_NUMBER_OF_LABELHASHES_IN_NAME
 
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
@@ -54,11 +54,17 @@ async def test_lookup(name, namehash, expected):
 @pytest.mark.asyncio
 async def test_long_lookup():
     network_name = 'mainnet'
-    name = '[2af8fae91ee5ef94f17f2c2f23532cc2d1ccaee78cae52efed0df04bc2463b13].' * 250 + 'eth'
+    name = (
+        '[2af8fae91ee5ef94f17f2c2f23532cc2d1ccaee78cae52efed0df04bc2463b13].' * MAX_NUMBER_OF_LABELHASHES_IN_NAME
+        + 'eth'
+    )
     assert await resolve_all_labelhashes_in_name_querying_labelhashes(network_name, name) == name
 
-    name = '[2af8fae91ee5ef94f17f2c2f23532cc2d1ccaee78cae52efed0df04bc2463b13].' * 500 + 'eth'
-    assert await resolve_all_labelhashes_in_name_querying_labelhashes(network_name, name) == name
+    name = (
+        '[2af8fae91ee5ef94f17f2c2f23532cc2d1ccaee78cae52efed0df04bc2463b13].' * (MAX_NUMBER_OF_LABELHASHES_IN_NAME + 1)
+        + 'eth'
+    )
+    assert await resolve_all_labelhashes_in_name_querying_labelhashes(network_name, name) is None
 
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)

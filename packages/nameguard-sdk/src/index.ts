@@ -87,7 +87,8 @@ export enum Rating {
 export type SecurePrimaryNameStatus =
   | "normalized" /** The ENS primary name was found and it is normalized. */
   | "no_primary_name" /** The ENS primary name was not found. */
-  | "unnormalized" /** The ENS primary name was found, but it is not normalized. */;
+  | "unnormalized" /** The ENS primary name was found, but it is not normalized. */
+  | "uninspectable" /** The name was not checked, because it is too long. */;
 
 export type ImpersonationStatus =
   | "unlikely" /** The name is unlikely to be impersonating. */
@@ -436,6 +437,7 @@ const DEFAULT_INSPECT_LABELHASH_PARENT = ETH_TLD;
 export const DEFAULT_COMPUTE_NAMEGUARD_REPORT = false;
 const MAX_BULK_INSPECTION_NAMES = 250;
 const MAX_INSPECTABLE_NAME_LENGTH = 200;
+const MAX_NUMBER_OF_LABELHASHES_IN_NAME = 5;
 
 export interface NameGuardOptions {
   endpoint?: string;
@@ -478,7 +480,7 @@ export class NameGuard {
   }
 
   /**
-   * Inspects a single name with NameGuard. If the `name` is longer than `MAX_INSPECTABLE_NAME_LENGTH` characters returns `null`; else returns a `NameGuardReport` including:
+   * Inspects a single name with NameGuard. If the `name` is longer than `MAX_INSPECTABLE_NAME_LENGTH` characters or consists of more than {MAX_NUMBER_OF_LABELHASHES_IN_NAME} labelhases returns `null`; else returns a `NameGuardReport` including:
    *   1. The details of all checks performed on `name` that consolidates all checks performed on labels and graphemes in `name`.
    *   2. The details of all labels in `name`.
    *   3. A consolidated inspection result of all graphemes in `name`.
@@ -503,7 +505,7 @@ export class NameGuard {
 
   // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
   /**
-   * Inspects up to 250 names at a time with NameGuard. Provides a `ConsolidatedNameGuardReport` for each name provided in `names`, including:
+   * Inspects up to 250 names at a time with NameGuard. Provides `null` if the `name` is longer than `MAX_INSPECTABLE_NAME_LENGTH` characters or consists of more than `MAX_NUMBER_OF_LABELHASHES_IN_NAME` labelhases; else returns a `ConsolidatedNameGuardReport` for each name provided in `names`, including:
    *   1. The details of all checks performed on a name that consolidates all checks performed on labels and graphemes in this name.
    *
    * Each `ConsolidatedNameGuardReport` returned represents an equivalent set of checks as a `NameGuardReport`. However:

@@ -6,7 +6,7 @@ from nameguard.models import Rating, Check, CheckStatus, Normalization, GenericC
 from nameguard.nameguard import NameGuard
 from nameguard.exceptions import NamehashNotFoundInSubgraph, NotAGrapheme
 from nameguard.endpoints import Endpoints
-from nameguard.utils import INSPECTABLE_NAMES_LENGTH
+from nameguard.utils import MAX_INSPECTABLE_NAME_LENGTH
 
 
 @pytest.fixture(scope='module')
@@ -169,7 +169,7 @@ async def test_bulk_simple_name(nameguard: NameGuard, label_length):
     result = await nameguard.inspect_name('mainnet', name)
     result_bulk = await nameguard.inspect_name('mainnet', name, bulk_mode=True)
 
-    if len(name) > INSPECTABLE_NAMES_LENGTH:
+    if len(name) > MAX_INSPECTABLE_NAME_LENGTH:
         assert result is None
         assert result_bulk is None
         return
@@ -657,3 +657,19 @@ async def test_stress_inspect_name(nameguard: NameGuard):
 async def test_stress_bulk_inspect_name(nameguard: NameGuard):
     result = await nameguard.bulk_inspect_names('mainnet', ['≡ƒÿ║' * 10000] * 250)
     assert all([x is None for x in result.results])
+
+
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
+@pytest.mark.asyncio
+async def test_max_hashes(nameguard: NameGuard):
+    r = await nameguard.inspect_name(
+        'mainnet',
+        '[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth',
+    )
+    assert r.name == 'nick.nick.nick.nick.nick.eth'
+
+    r = await nameguard.inspect_name(
+        'mainnet',
+        '[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth',
+    )
+    assert r is None

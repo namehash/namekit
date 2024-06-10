@@ -44,7 +44,7 @@ from nameguard.utils import (
     label_is_labelhash,
     compute_canonical_from_list,
     is_labelhash_eth,
-    INSPECTABLE_NAMES_LENGTH,
+    MAX_INSPECTABLE_NAME_LENGTH,
 )
 from nameguard.exceptions import ProviderUnavailable, NotAGrapheme, MissingTitle
 from nameguard.logging import logger
@@ -148,15 +148,15 @@ class NameGuard:
         Inspect a name. A name is a sequence of labels separated by dots.
         A label can be a labelhash or a string.
         If a labelhash is encountered and `resolve_labelhashes` is `True`, a lookup will be performed.
+        Returns None if there is more labelhashes than MAX_NUMBER_OF_LABELHASHES_IN_NAME.
         """
 
         logger.debug(f"[inspect_name] name: '{name}'")
 
-        # if len(name) > INSPECTABLE_NAMES_LENGTH: #TODO do we need it here or limit number of labelhashes in the name?
-        #     return None
-
         if resolve_labelhashes:
             name = await resolve_all_labelhashes_in_name_querying_labelhashes(network_name, name)
+            if name is None:
+                return None
         return self.inspect_name_sync(name, bulk_mode)
 
     def inspect_name_sync(
@@ -170,7 +170,7 @@ class NameGuard:
 
         logger.debug(f"[inspect_name] name: '{name}'")
 
-        if len(name) > INSPECTABLE_NAMES_LENGTH:
+        if len(name) > MAX_INSPECTABLE_NAME_LENGTH:
             return None
 
         if bulk_mode and simple_name(name):
@@ -410,8 +410,8 @@ class NameGuard:
             nameguard_result = await self.inspect_name(network_name, domain)
 
             if nameguard_result is None:
-                status = None  # TODO
-                impersonation_status = None  # TODO
+                status = SecurePrimaryNameStatus.UNINSPECTABLE
+                impersonation_status = None
             elif nameguard_result.normalization == Normalization.UNNORMALIZED:
                 status = SecurePrimaryNameStatus.UNNORMALIZED
                 impersonation_status = None
