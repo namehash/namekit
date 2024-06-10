@@ -30,7 +30,7 @@ type ReportShieldProps = {
 
   hadLoadingError: boolean;
   size?: RatingIconSize;
-} & React.ComponentProps<typeof UnknownReportIcon>;
+} & React.ComponentProps;
 
 declare global {
   interface Window {
@@ -67,7 +67,6 @@ export function ReportIcon({
     return (
       <UnknownReportIcon
         size={size}
-        // @ts-expect-error
         onClick={onClickHandler}
         className="cursor-pointer"
       >
