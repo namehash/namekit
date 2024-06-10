@@ -381,7 +381,7 @@ export interface NameGuardReport extends ConsolidatedNameGuardReport {
 }
 
 export interface BulkConsolidatedNameGuardReport {
-  results: ()ConsolidatedNameGuardReport | null)[];
+  results: (ConsolidatedNameGuardReport | null)[];
 }
 
 export interface SecurePrimaryNameResult {
