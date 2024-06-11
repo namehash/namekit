@@ -1,6 +1,6 @@
-import React, { type ReactNode } from "react";
+import React from "react";
 
-import { RatingIcon, RatingIconSize } from "../Report/RatingIcon";
+import { RatingIconSize } from "../Report/RatingIcon";
 import { Tooltip } from "../Tooltip/Tooltip";
 import { RatingUnknownIcon } from "../icons/RatingUnknownIcon";
 

@@ -28,7 +28,7 @@ type ReportIconProps = {
   ensName: ENSName;
   data?: ConsolidatedNameGuardReport;
 
-  hadLoadingError: boolean;
+  hadLoadingError?: boolean;
   size?: RatingIconSize;
 } & React.ComponentProps<"svg">;
 
