@@ -5,9 +5,11 @@ export const RatingUnknownMicroIcon = (
   isInteractive = false,
 ) => {
   return (
-    <div className="group/unknown">
+    <div className="ng-group/unknown">
       <div
-        className={isInteractive ? "group-hover/unknown:hidden block" : "block"}
+        className={
+          isInteractive ? "group-hover/unknown:ng-hidden ng-block" : "ng-block"
+        }
       >
         <svg
           width="14"
@@ -28,7 +30,7 @@ export const RatingUnknownMicroIcon = (
       </div>
       <div
         className={
-          isInteractive ? "group-hover/unknown:block hidden" : "hidden"
+          isInteractive ? "group-hover/unknown:ng-block ng-hidden" : "ng-hidden"
         }
       >
         <svg

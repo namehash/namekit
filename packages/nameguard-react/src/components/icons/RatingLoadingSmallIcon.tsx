@@ -3,7 +3,7 @@ import * as React from "react";
 export const RatingLoadingSmallIcon = (
   props: React.SVGProps<SVGSVGElement>,
 ) => (
-  <div className="animate-pulse">
+  <div className="ng-animate-pulse">
     <svg
       width="18"
       height="18"

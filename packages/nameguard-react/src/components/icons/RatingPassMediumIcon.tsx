@@ -4,8 +4,10 @@ export const RatingPassMediumIcon = (
   props: React.SVGProps<SVGSVGElement>,
   isInteractive = false,
 ) => (
-  <div className="group">
-    <div className={isInteractive ? "group-hover:hidden block" : "block"}>
+  <div className="ng-group">
+    <div
+      className={isInteractive ? "group-hover:ng-hidden ng-block" : "ng-block"}
+    >
       <svg
         width="20"
         height="22"
@@ -23,7 +25,9 @@ export const RatingPassMediumIcon = (
         />
       </svg>
     </div>
-    <div className={isInteractive ? "group-hover:block hidden" : "hidden"}>
+    <div
+      className={isInteractive ? "group-hover:ng-block ng-hidden" : "ng-hidden"}
+    >
       <svg
         width="20"
         height="22"

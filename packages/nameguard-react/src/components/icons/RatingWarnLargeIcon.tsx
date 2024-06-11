@@ -2,7 +2,7 @@ import * as React from "react";
 
 export const RatingWarnLargeIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <>
-    <div className="hidden lg:block">
+    <div className="ng-hidden lg:ng-block">
       <svg
         fill="none"
         height="71"
@@ -87,7 +87,7 @@ export const RatingWarnLargeIcon = (props: React.SVGProps<SVGSVGElement>) => (
         </g>
       </svg>
     </div>
-    <div className="block lg:hidden">
+    <div className="ng-block lg:ng-hidden">
       <svg
         fill="none"
         height="56"
