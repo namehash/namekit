@@ -1,20 +1,20 @@
-import React, { type ReactNode } from "react";
+import React from "react";
 
-import { RatingIcon, RatingIconSize } from "../Report/RatingIcon";
+import { RatingIconSize } from "../Report/RatingIcon";
 import { Tooltip } from "../Tooltip/Tooltip";
 import { RatingUnknownIcon } from "../icons/RatingUnknownIcon";
 
 type UnknownShieldProps = {
   size?: RatingIconSize;
-} & React.ComponentProps<typeof RatingIcon>;
+} & React.ComponentProps<"svg">;
 
 export const UnknownReportIcon = ({
   size = RatingIconSize.small,
 
   /*
-    Props are applied to the shield icon which is the onHover trigger element 
+    Props are applied to the shield icon which is the onHover trigger element
     for the tooltip with Report information. For examples, please visit the
-    https://nameguard.io/docs/report and see the ReportIcon docs. Any 
+    https://nameguard.io/docs/report and see the ReportIcon docs. Any
     additional props are passed to the shield icon that when hovered,
     displays the tooltip with the report information.
   */

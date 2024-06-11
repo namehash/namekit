@@ -24,6 +24,8 @@
   "dependencies": {
     "@namehash/ens-webfont": "workspace:*",
     "@namehash/namekit-react": "workspace:*",
+    "@namehash/nameguard-react": "workspace:*",
+    "@namehash/nameguard": "workspace:*",
     "react-dom": "^18.3.1"
   }
 }

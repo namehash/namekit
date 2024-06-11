@@ -47,7 +47,7 @@ jobs:
       - name: Build and deploy lambda
         run: |
           cp ../LICENSE .
-          npm install -g serverless
+          npm install -g serverless@3.39.0
           npm install serverless-prune-plugin
           serverless deploy --stage prod --param="PROVIDER_URI_MAINNET=${{secrets.PROVIDER_URI_MAINNET}}" --param="PROVIDER_URI_SEPOLIA=${{secrets.PROVIDER_URI_SEPOLIA}}"
         working-directory: api

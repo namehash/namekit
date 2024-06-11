@@ -1,5 +1,5 @@
 {
-  "name": "website",
+  "name": "nameguard.io",
   "private": true,
   "scripts": {
     "dev": "next dev",
