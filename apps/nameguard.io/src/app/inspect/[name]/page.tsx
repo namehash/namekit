@@ -36,7 +36,7 @@ export default async function Namekit({ params }: Props) {
 
   return (
     <div className="max-w-7xl mx-auto p-6 py-12">
-      <NGReport name={name} data={report} />
+      <NGReport name={name} data={report ? report : undefined} />
     </div>
   );
 }
