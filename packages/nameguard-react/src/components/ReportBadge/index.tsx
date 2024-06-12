@@ -104,7 +104,6 @@ export function ReportBadge({
         <ReportIcon
           data={data}
           ensName={ensName}
-          isInteractive={true}
           /*
             Since the ReportBadge has already executed the onClickHandler
             function when the user clicks on it, there is no need to execute

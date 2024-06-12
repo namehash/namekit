@@ -20,3 +20,5 @@ export { useChatModalStore } from "./stores/chat";
 export { useSearchStore } from "./stores/search";
 
 import "@namehash/ens-webfont";
+
+import "./styles.css";

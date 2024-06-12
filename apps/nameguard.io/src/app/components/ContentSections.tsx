@@ -8,16 +8,17 @@ import cc from "classcat";
 import { checkResultCodeTextColor } from "@namehash/nameguard-react";
 import { CheckResultCode } from "@namehash/nameguard";
 import { Fragment } from "react";
-
-import { FigmaIcon } from "@/app/atoms/icons/FigmaIcon";
-import { RedirectIcon } from "@/app/atoms/icons/RedirectIcon";
-import { GithubIconSmall } from "@/app/atoms/icons/GithubIconSmall";
-import { CheckShieldGrayOutline } from "@/app/atoms/icons/CheckShieldGrayOutline";
-import { GithubIconDevelopers } from "@/app/atoms/icons/GithubIconDevelopers";
-import { CloudOutlineIcon } from "@/app/atoms/icons/CloudOutlineIcon";
-import { GearWheelIcon } from "@/app/atoms/icons/GearWheelIcon";
-import { FileIcon } from "@/app/atoms/icons/FileIcon";
-import { FontIcon } from "@/app/atoms/icons/FontIcon";
+import {
+  CheckShieldGrayOutline,
+  CloudOutlineIcon,
+  FigmaIcon,
+  FileIcon,
+  FontIcon,
+  GearWheelIcon,
+  GithubIconDevelopers,
+  GithubIconSmall,
+  RedirectIcon,
+} from "./atoms";
 
 type ListSectionElement = {
   header: React.ReactNode;
