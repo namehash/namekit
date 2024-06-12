@@ -41,16 +41,36 @@ export default function DisplayedNamePage() {
             <div className="w-full flex justify-center items-center font-mono">
               <pre>
                 {
-                  "<TruncatedText name \n textStylingClasses='text-purple-400' />"
+                  "<TruncatedText name \n textStylingClasses='\nens-webfont font-black' />"
                 }
               </pre>
             </div>
 
             <div className="flex items-center justify-center">
               <TruncatedText
-                textStylingClasses="text-purple-400"
+                textStylingClasses="ens-webfont font-black"
                 text={
                   getExampleDisplayedName(DisplayedNameExample.SHORT_NAME).name
+                }
+              />
+            </div>
+          </div>
+        </div>
+        <div className="divide-y divide-gray-100">
+          <div className="grid grid-cols-2 gap-x-6 py-5">
+            <div className="w-full flex justify-center items-center font-mono">
+              <pre>
+                {
+                  "<TruncatedText name \n textStylingClasses='\nens-webfont font-black' />"
+                }
+              </pre>
+            </div>
+
+            <div className="flex items-center justify-center">
+              <TruncatedText
+                tooltipContentStylingClasses="ens-webfont font-black"
+                text={
+                  getExampleDisplayedName(DisplayedNameExample.LONG_NAME).name
                 }
               />
             </div>
@@ -75,18 +95,14 @@ export default function DisplayedNamePage() {
         <div className="divide-y divide-gray-100">
           <div className="grid grid-cols-2 gap-x-6 py-5">
             <div className="w-full flex justify-center items-center font-mono">
-              <pre>
-                {
-                  "<TruncatedText name \n displayTooltipWhenNameOverflows={false} />"
-                }
-              </pre>
+              <pre>{"<TruncatedText name \n maxDisplayWidth={60} />"}</pre>
             </div>
 
             <div className="flex items-center justify-center">
               <TruncatedText
-                displayTooltipWhenTextOverflows={false}
+                maxDisplayWidth={60}
                 text={
-                  getExampleDisplayedName(DisplayedNameExample.WITHOUT_TOOLTIP)
+                  getExampleDisplayedName(DisplayedNameExample.SHORT_MAX_WIDTH)
                     .name
                 }
               />
@@ -96,14 +112,19 @@ export default function DisplayedNamePage() {
         <div className="divide-y divide-gray-100">
           <div className="grid grid-cols-2 gap-x-6 py-5">
             <div className="w-full flex justify-center items-center font-mono">
-              <pre>{"<TruncatedText name \n maxDisplayWidth={60} />"}</pre>
+              <pre>
+                {
+                  "<TruncatedText name \n displayTooltipWhenNameOverflows={false}\n maxDisplayWidth={200} />"
+                }
+              </pre>
             </div>
 
             <div className="flex items-center justify-center">
               <TruncatedText
-                maxDisplayWidth={60}
+                maxDisplayWidth={200}
+                displayTooltipWhenTextOverflows={false}
                 text={
-                  getExampleDisplayedName(DisplayedNameExample.SHORT_MAX_WIDTH)
+                  getExampleDisplayedName(DisplayedNameExample.WITHOUT_TOOLTIP)
                     .name
                 }
               />
@@ -138,15 +159,33 @@ export default function DisplayedNamePage() {
             <div className="w-full flex justify-center items-center font-mono">
               <pre>
                 {
-                  "<DisplayedName name\n textStylingClasses='text-purple-400' />"
+                  "<DisplayedName name\n textStylingClasses='\nens-webfont font-black' />"
                 }
               </pre>
             </div>
 
             <div className="flex items-center justify-center">
               <DisplayedName
-                textStylingClasses="text-purple-400"
+                textStylingClasses="ens-webfont font-black"
                 name={getExampleDisplayedName(DisplayedNameExample.SHORT_NAME)}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="divide-y divide-gray-100">
+          <div className="grid grid-cols-2 gap-x-6 py-5">
+            <div className="w-full flex justify-center items-center font-mono">
+              <pre>
+                {
+                  "<DisplayedName name\n tooltipContentStylingClasses='\nens-webfont font-black' />"
+                }
+              </pre>
+            </div>
+
+            <div className="flex items-center justify-center">
+              <DisplayedName
+                tooltipContentStylingClasses="ens-webfont font-black"
+                name={getExampleDisplayedName(DisplayedNameExample.LONG_NAME)}
               />
             </div>
           </div>

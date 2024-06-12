@@ -5,10 +5,11 @@ import { TruncatedText } from "../TruncatedText/TruncatedText";
 
 interface DisplayedNameProps {
   name: ENSName;
-  textStylingClasses?: string;
   maxDisplayWidth?: number;
   maxTooltipWidth?: number;
+  textStylingClasses?: string;
   displayUnnormalizedNames?: boolean;
+  tooltipContentStylingClasses?: string;
   displayTooltipWhenNameOverflows?: boolean;
 }
 
@@ -16,8 +17,9 @@ const DEFAULT_MAX_DISPLAY_WIDTH = 200;
 
 export function DisplayedName({
   name,
-  textStylingClasses,
   maxTooltipWidth,
+  textStylingClasses,
+  tooltipContentStylingClasses,
   displayUnnormalizedNames = false,
   displayTooltipWhenNameOverflows = true,
   maxDisplayWidth = DEFAULT_MAX_DISPLAY_WIDTH,
@@ -30,9 +32,10 @@ export function DisplayedName({
   return (
     <TruncatedText
       text={displayName}
-      textStylingClasses={textStylingClasses + " ens-webfont"}
       maxTooltipWidth={maxTooltipWidth}
       maxDisplayWidth={maxDisplayWidth}
+      textStylingClasses={textStylingClasses + " ens-webfont"}
+      tooltipContentStylingClasses={tooltipContentStylingClasses}
       displayTooltipWhenTextOverflows={displayTooltipWhenNameOverflows}
     />
   );

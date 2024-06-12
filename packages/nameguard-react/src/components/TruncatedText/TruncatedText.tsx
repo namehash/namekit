@@ -3,11 +3,12 @@ import React, { useEffect, useState, useRef } from "react";
 import { Tooltip } from "../..";
 
 interface TruncatedTextProps {
-  displayTooltipWhenTextOverflows?: boolean;
+  text: string;
   maxTooltipWidth?: number;
   maxDisplayWidth?: number;
   textStylingClasses?: string;
-  text: string;
+  tooltipContentStylingClasses?: string;
+  displayTooltipWhenTextOverflows?: boolean;
 }
 
 const DEFAULT_MAX_DISPLAY_WIDTH = 300;
@@ -16,6 +17,7 @@ const DEFAULT_MAX_TOOLTIP_WIDTH = 400;
 export const TruncatedText = ({
   text,
   textStylingClasses = "",
+  tooltipContentStylingClasses = "",
   displayTooltipWhenTextOverflows = true,
   maxTooltipWidth = DEFAULT_MAX_TOOLTIP_WIDTH,
   maxDisplayWidth = DEFAULT_MAX_DISPLAY_WIDTH,
@@ -92,7 +94,7 @@ export const TruncatedText = ({
             }
           >
             {getTextElm(
-              "text-white text-sm leading-5 break-all",
+              `text-white text-sm leading-5 break-all ${tooltipContentStylingClasses}`,
               maxTooltipWidth,
             )}
           </Tooltip>
