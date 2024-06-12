@@ -1,7 +1,8 @@
+import { TruncatedText } from "../TruncatedText/TruncatedText";
 import { Normalization } from "@namehash/nameguard";
 import { ENSName } from "@namehash/ens-utils";
 import React from "react";
-import { TruncatedText } from "../TruncatedText/TruncatedText";
+import cc from "classcat";
 
 interface DisplayedNameProps {
   name: ENSName;
@@ -9,7 +10,7 @@ interface DisplayedNameProps {
   maxTooltipWidth?: number;
   textStylingClasses?: string;
   displayUnnormalizedNames?: boolean;
-  tooltipContentStylingClasses?: string;
+  tooltipTextStylingClasses?: string;
   displayTooltipWhenNameOverflows?: boolean;
 }
 
@@ -19,7 +20,7 @@ export function DisplayedName({
   name,
   maxTooltipWidth,
   textStylingClasses,
-  tooltipContentStylingClasses,
+  tooltipTextStylingClasses,
   displayUnnormalizedNames = false,
   displayTooltipWhenNameOverflows = true,
   maxDisplayWidth = DEFAULT_MAX_DISPLAY_WIDTH,
@@ -34,9 +35,9 @@ export function DisplayedName({
       text={displayName}
       maxTooltipWidth={maxTooltipWidth}
       maxDisplayWidth={maxDisplayWidth}
-      textStylingClasses={textStylingClasses + " ens-webfont"}
-      tooltipContentStylingClasses={tooltipContentStylingClasses}
+      textStylingClasses={cc([textStylingClasses, "ens-webfont"])}
       displayTooltipWhenTextOverflows={displayTooltipWhenNameOverflows}
+      tooltipTextStylingClasses={cc([tooltipTextStylingClasses, "ens-webfont"])}
     />
   );
 }

@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useRef } from "react";
-
 import { Tooltip } from "../..";
+import cc from "classcat";
 
 interface TruncatedTextProps {
   text: string;
   maxTooltipWidth?: number;
   maxDisplayWidth?: number;
   textStylingClasses?: string;
-  tooltipContentStylingClasses?: string;
+  tooltipTextStylingClasses?: string;
   displayTooltipWhenTextOverflows?: boolean;
 }
 
@@ -17,7 +17,7 @@ const DEFAULT_MAX_TOOLTIP_WIDTH = 400;
 export const TruncatedText = ({
   text,
   textStylingClasses = "",
-  tooltipContentStylingClasses = "",
+  tooltipTextStylingClasses = "",
   displayTooltipWhenTextOverflows = true,
   maxTooltipWidth = DEFAULT_MAX_TOOLTIP_WIDTH,
   maxDisplayWidth = DEFAULT_MAX_DISPLAY_WIDTH,
@@ -90,17 +90,20 @@ export const TruncatedText = ({
           */}
           <Tooltip
             trigger={
-              <>{getTextElm(`${textStylingClasses} ${textDefaultClasses}`)}</>
+              <>{getTextElm(cc([textStylingClasses, textDefaultClasses]))}</>
             }
           >
             {getTextElm(
-              `text-white text-sm leading-5 break-all ${tooltipContentStylingClasses}`,
+              cc([
+                "text-white text-sm leading-5 break-all",
+                tooltipTextStylingClasses,
+              ]),
               maxTooltipWidth,
             )}
           </Tooltip>
         </>
       ) : (
-        <>{getTextElm(`${textStylingClasses} ${textDefaultClasses}`)}</>
+        <>{getTextElm(cc([textStylingClasses, textDefaultClasses]))}</>
       )}
     </div>
   );
