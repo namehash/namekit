@@ -1,6 +1,5 @@
 import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
-
 import { Text } from "@namehash/namekit-react";
 
 const meta: Meta<typeof Text> = {

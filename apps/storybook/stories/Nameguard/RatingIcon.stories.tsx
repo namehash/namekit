@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { Rating } from "@namehash/nameguard";
-
-import { RatingIcon, RatingIconSize } from "../";
+import { RatingIcon, RatingIconSize } from "@namehash/nameguard-react";
 
 const meta: Meta<typeof RatingIcon> = {
   component: RatingIcon,
