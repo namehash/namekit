@@ -7,5 +7,5 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["website", "nameguard-storybook", "nameguard-examples"]
+  "ignore": ["nameguard.io", "nameguard-storybook", "nameguard-examples"]
 }
