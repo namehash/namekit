@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+
 import { DomainCard } from "@namehash/namekit-react";
 
 const meta: Meta<typeof DomainCard> = {

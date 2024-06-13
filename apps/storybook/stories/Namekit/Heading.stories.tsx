@@ -1,6 +1,7 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Heading } from "./Heading";
+
+import { Heading } from "@namehash/namekit-react";
 
 const meta: Meta<typeof Heading> = {
   title: "UI/Heading",
@@ -13,6 +14,7 @@ const meta: Meta<typeof Heading> = {
       },
     },
     asChild: { control: { disable: true } },
+    children: { control: "text" },
   },
 };
 
@@ -59,6 +61,14 @@ export const H6: Story = {
   args: {
     as: "h6",
     children: "Heading 6",
+  },
+};
+
+export const CustomClass: Story = {
+  args: {
+    as: "h1",
+    children: "Custom Class Text",
+    className: "my-class-name",
   },
 };
 
