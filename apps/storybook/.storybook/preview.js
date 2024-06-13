@@ -1,5 +1,6 @@
 import "@namehash/nameguard-react/styles.css";
 import "@namehash/namekit-react/styles.css";
+import '../styles/output.css';
 
 /** @type { import('@storybook/react').Preview } */
 const preview = {
@@ -16,6 +17,7 @@ const preview = {
       },
     },
   },
+
 };
 
 export default preview;

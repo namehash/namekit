@@ -23,7 +23,10 @@
     }
   },
   "dependencies": {
+    "@namehash/ens-utils": "workspace:*",
+    "@namehash/nameguard": "workspace:*",
     "@namehash/ens-webfont": "workspace:*",
+    "@namehash/nameguard-react": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
