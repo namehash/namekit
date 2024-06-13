@@ -1,26 +1,28 @@
 import React from "react";
+import { DisplayedName } from "../DisplayedName/DisplayedName";
+import { ENSName } from "@namehash/ens-utils";
+import { Normalization } from "@namehash/nameguard";
 
 type Props = {
+  name: ENSName;
   normalization: string;
-  name: string;
-  displayName: string;
+  beautifiedName?: string;
 };
 
 export function ReportFormattedDisplayName({
+  beautifiedName,
   normalization,
   name,
-  displayName,
 }: Props) {
-  const displayNameDifferent =
-    normalization === "normalized" && name !== displayName;
+  const displayNameDifferentThanBeautifiedName =
+    normalization === Normalization.normalized &&
+    (name.displayName !== beautifiedName || !beautifiedName);
 
-  if (displayNameDifferent)
+  if (displayNameDifferentThanBeautifiedName)
     return (
-      <p className="text-sm text-gray-500 mt-4">
+      <p className="flex text-sm text-gray-500 mt-4">
         <span className="mr-2.5">Generally displays as:</span>
-        <span className="text-black overflow-hidden overflow-ellipsis whitespace-nowrap ens-webfont">
-          {displayName}
-        </span>
+        <DisplayedName name={name} />
       </p>
     );
 

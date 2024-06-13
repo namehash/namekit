@@ -56,7 +56,7 @@ export const TruncatedText = ({
     );
   };
 
-  const textDefaultClasses = "text-black text-sm leading-5 truncate pr-1.5";
+  const textDefaultClasses = "text-black text-sm truncate";
 
   return (
     <div>

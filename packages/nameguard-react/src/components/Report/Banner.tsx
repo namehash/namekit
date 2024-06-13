@@ -34,9 +34,9 @@ export function Banner({ report, parsedName }: Props) {
             {name}
           </h1>
           <ReportFormattedDisplayName
-            displayName={beautiful_name}
-            name={name}
+            beautifiedName={beautiful_name}
             normalization={normalization}
+            name={parsedName.outputName}
           />
         </div>
         <div className="flex items-start space-x-4 pt-5 md:pt-0 md:w-2/6 flex-shrink-0">

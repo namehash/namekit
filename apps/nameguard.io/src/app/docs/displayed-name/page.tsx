@@ -117,7 +117,7 @@ export default function DisplayedNamePage() {
             <div className="w-full flex justify-center items-center font-mono">
               <pre>
                 {
-                  "<TruncatedText name \n displayTooltipWhenNameOverflows={false}\n maxDisplayWidth={200} />"
+                  "<TruncatedText name \n displayTooltipWhenTextOverflows={false}\n maxDisplayWidth={200} />"
                 }
               </pre>
             </div>

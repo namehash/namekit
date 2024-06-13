@@ -72,7 +72,7 @@ export function ReportBadge({
   return (
     <button className={buttonAndCursorClass} onClick={onClickHandler}>
       <DisplayedName
-        textStylingClasses="cursor-pointer"
+        textStylingClasses="cursor-pointer pr-1.5"
         displayUnnormalizedNames={displayUnnormalizedNames}
         maxDisplayWidth={maxDisplayWidth}
         name={ensName}
