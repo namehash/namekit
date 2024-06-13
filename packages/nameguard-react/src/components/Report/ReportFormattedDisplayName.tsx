@@ -5,18 +5,12 @@ import { Normalization } from "@namehash/nameguard";
 
 type Props = {
   name: ENSName;
-  normalization: string;
-  beautifiedName?: string;
 };
 
-export function ReportFormattedDisplayName({
-  beautifiedName,
-  normalization,
-  name,
-}: Props) {
+export function ReportFormattedDisplayName({ name }: Props) {
   const displayNameDifferentThanBeautifiedName =
-    normalization === Normalization.normalized &&
-    (name.displayName !== beautifiedName || !beautifiedName);
+    name.normalization === Normalization.normalized &&
+    name.displayName !== name.name;
 
   if (displayNameDifferentThanBeautifiedName)
     return (

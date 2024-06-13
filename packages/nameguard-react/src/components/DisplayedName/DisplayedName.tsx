@@ -9,6 +9,7 @@ interface DisplayedNameProps {
   maxDisplayWidth?: number;
   maxTooltipWidth?: number;
   textStylingClasses?: string;
+  displayRawName?: boolean;
   displayUnnormalizedNames?: boolean;
   tooltipTextStylingClasses?: string;
   displayTooltipWhenNameOverflows?: boolean;
@@ -20,14 +21,16 @@ export function DisplayedName({
   name,
   maxTooltipWidth,
   textStylingClasses,
+  displayRawName = false,
   tooltipTextStylingClasses,
   displayUnnormalizedNames = false,
   displayTooltipWhenNameOverflows = true,
   maxDisplayWidth = DEFAULT_MAX_DISPLAY_WIDTH,
 }: DisplayedNameProps) {
   const showUnnormalizedName =
-    displayUnnormalizedNames &&
-    name.normalization === Normalization.unnormalized;
+    displayRawName ||
+    (displayUnnormalizedNames &&
+      name.normalization === Normalization.unnormalized);
   const displayName = showUnnormalizedName ? name.name : name.displayName;
 
   return (
