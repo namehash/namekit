@@ -25,7 +25,7 @@ export const LoadingSkeleton = ({ parsedName }: LoadingSkeletonProps) => {
             <>
               <h1>
                 <DisplayedName
-                  textStylingClasses="pt-1 text-2xl md:text-4xl text-black font-semibold md:font-bold overflow-hidden overflow-ellipsis whitespace-nowrap ens-webfont"
+                  textStylingClasses="pt-1 text-2xl md:text-4xl text-black font-semibold md:font-bold whitespace-nowrap"
                   name={parsedName.outputName}
                   maxDisplayWidth={600}
                   displayRawName={true}
