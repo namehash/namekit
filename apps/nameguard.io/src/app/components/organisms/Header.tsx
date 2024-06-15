@@ -52,6 +52,13 @@ export const Header = () => {
                 </p>
               </div>
             </a>
+            <Link
+              className="px-[10px] py-[9px] not-italic text-black font-medium text-sm leading-5 rounded-md gt_mobile:hover:bg-gray-100"
+              href="/contact"
+              rel="noopener noreferrer"
+            >
+              Contact
+            </Link>
           </div>
 
           <div className="flex search_bar_change:hidden justify-center align-center p-[7px]">
