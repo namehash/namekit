@@ -6,15 +6,18 @@ export interface ButtonProps
   asChild?: React.ReactElement;
   className?: string;
   children?: React.ReactNode;
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "ghost";
   size?: "small" | "medium" | "large";
 }
 
-const buttonBaseClasses = "nk-text-base nk-rounded nk-border";
+const buttonBaseClasses =
+  "nk-transition nk-text-base nk-rounded-lg nk-border nk-font-medium";
 
 const variantClasses = {
-  primary: "nk-bg-black nk-text-white nk-border-black",
-  secondary: "nk-bg-white nk-text-black nk-border-gray-200",
+  primary: "nk-bg-black nk-text-white nk-border-black hover:nk-bg-mine-shaft",
+  secondary:
+    "nk-bg-white nk-text-black nk-border-alto nk-shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] hover:nk-bg-gray-50",
+  ghost: "nk-text-black nk-border-transparent hover:nk-bg-black/5",
 };
 
 const sizeClasses = {

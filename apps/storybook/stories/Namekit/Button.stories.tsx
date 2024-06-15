@@ -9,7 +9,7 @@ const meta: Meta<typeof Button> = {
     variant: {
       control: {
         type: "select",
-        options: ["primary", "secondary"],
+        options: ["primary", "secondary", "ghost"],
       },
     },
     size: {
@@ -43,6 +43,14 @@ export const SecondaryMedium: Story = {
   },
 };
 
+export const GhostMedium: Story = {
+  args: {
+    variant: "ghost",
+    size: "medium",
+    children: "Ghost Medium Button",
+  },
+};
+
 export const PrimarySmall: Story = {
   args: {
     variant: "primary",
@@ -59,6 +67,14 @@ export const SecondarySmall: Story = {
   },
 };
 
+export const GhostSmall: Story = {
+  args: {
+    variant: "ghost",
+    size: "small",
+    children: "Ghost Small Button",
+  },
+};
+
 export const PrimaryLarge: Story = {
   args: {
     variant: "primary",
@@ -70,6 +86,14 @@ export const PrimaryLarge: Story = {
 export const SecondaryLarge: Story = {
   args: {
     variant: "secondary",
+    size: "large",
+    children: "Secondary Large Button",
+  },
+};
+
+export const GhostLarge: Story = {
+  args: {
+    variant: "ghost",
     size: "large",
     children: "Secondary Large Button",
   },
