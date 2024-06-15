@@ -1,5 +1,6 @@
 import { Currency } from "@namehash/ens-utils";
 import {
+  AltPriceDisplayFormat,
   DisplayedPrice,
   PriceDisplayPosition,
   PriceDisplaySize,
@@ -37,7 +38,7 @@ export const EthPrice: Story = {
       currency: Currency.Usd,
       value: 198900n,
     },
-    altPriceDisplayedAsText: false,
+    altPriceDisplayFormat: AltPriceDisplayFormat.Tooltip,
   },
 };
 export const EthPriceWithoutCurrencyTooltip: Story = {
@@ -50,7 +51,7 @@ export const EthPriceWithoutCurrencyTooltip: Story = {
       currency: Currency.Usd,
       value: 198900n,
     },
-    altPriceDisplayedAsText: false,
+    altPriceDisplayFormat: AltPriceDisplayFormat.Tooltip,
     showCurrencyTooltipDescription: false,
   },
 };
@@ -64,7 +65,7 @@ export const UsdPrice: Story = {
       currency: Currency.Eth,
       value: 1000000000000000000n,
     },
-    altPriceDisplayedAsText: false,
+    altPriceDisplayFormat: AltPriceDisplayFormat.Tooltip,
   },
 };
 export const AlternativePriceDisplayedAsTextNextToPrice: Story = {
@@ -79,7 +80,7 @@ export const AlternativePriceDisplayedAsTextNextToPrice: Story = {
     },
     priceTextDisplaySize: PriceDisplaySize.Large,
     altPriceDisplayPosition: PriceDisplayPosition.Right,
-    altPriceDisplayedAsText: true,
+    altPriceDisplayFormat: AltPriceDisplayFormat.Text,
   },
 };
 export const AlternativePriceDisplayedAsTextInBottom: Story = {
@@ -93,7 +94,7 @@ export const AlternativePriceDisplayedAsTextInBottom: Story = {
       value: 1000000000000000000n,
     },
     altPriceDisplayPosition: PriceDisplayPosition.Bottom,
-    altPriceDisplayedAsText: true,
+    altPriceDisplayFormat: AltPriceDisplayFormat.Text,
   },
 };
 
@@ -237,7 +238,7 @@ export const LargeAltPriceDisplaySize: Story = {
       currency: Currency.Eth,
       value: 1000000000000000000n,
     },
-    altPriceDisplayedAsText: true,
+    altPriceDisplayFormat: AltPriceDisplayFormat.Text,
     altPriceDisplaySize: PriceDisplaySize.Large,
   },
 };
@@ -251,7 +252,7 @@ export const MediumAltPriceDisplaySize: Story = {
       currency: Currency.Eth,
       value: 1000000000000000000n,
     },
-    altPriceDisplayedAsText: true,
+    altPriceDisplayFormat: AltPriceDisplayFormat.Text,
     altPriceDisplaySize: PriceDisplaySize.Medium,
   },
 };
@@ -265,7 +266,7 @@ export const SmallAltPriceDisplaySize: Story = {
       currency: Currency.Eth,
       value: 1000000000000000000n,
     },
-    altPriceDisplayedAsText: true,
+    altPriceDisplayFormat: AltPriceDisplayFormat.Text,
     altPriceDisplaySize: PriceDisplaySize.Small,
   },
 };
@@ -279,7 +280,7 @@ export const MicroAltPriceDisplaySize: Story = {
       currency: Currency.Eth,
       value: 1000000000000000000n,
     },
-    altPriceDisplayedAsText: true,
+    altPriceDisplayFormat: AltPriceDisplayFormat.Text,
     altPriceDisplaySize: PriceDisplaySize.Micro,
   },
 };

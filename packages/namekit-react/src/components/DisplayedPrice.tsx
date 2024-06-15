@@ -12,12 +12,13 @@ import {
   PriceDisplayPosition,
   PriceDisplaySize,
   PriceSymbology,
+  AltPriceDisplayFormat,
 } from "./PriceSymbol";
 
 import cc from "classcat";
-import { Tooltip } from "@namehash/nameguard-react";
+import { Tooltip } from "./Tooltip";
 
-interface PriceProps {
+interface DisplayedPriceProps {
   // The price to be displayed
   price: Price;
   // The alternative price to be displayed (the price converted to another currency)
@@ -25,7 +26,7 @@ interface PriceProps {
   // The onClick event handler for the price text
   onTextClick?: () => void;
   // Wether to display the alternative price as a text instead of a tooltip
-  altPriceDisplayedAsText: boolean;
+  altPriceDisplayFormat: AltPriceDisplayFormat;
   // Wether to display a currency symbology as its acronym or symbol
   currencySymbology?: PriceSymbology;
   // The place to display the currency symbology
@@ -44,46 +45,47 @@ export const DisplayedPrice = ({
   price,
   altPrice,
   onTextClick,
-  altPriceDisplayedAsText,
   showCurrencyTooltipDescription = true,
   symbolPosition = PriceSymbolPosition.Left,
   currencySymbology = PriceSymbology.Symbol,
   altPriceDisplaySize = PriceDisplaySize.Micro,
   priceTextDisplaySize = PriceDisplaySize.Small,
   altPriceDisplayPosition = PriceDisplayPosition.Right,
-}: PriceProps) => {
+  altPriceDisplayFormat = AltPriceDisplayFormat.Tooltip,
+}: DisplayedPriceProps) => {
   const triggerElm = (
     <div
       role={onTextClick ? "button" : undefined}
       onClick={onTextClick ? onTextClick : undefined}
       className={cc([
-        "min-w-max inline-flex items-center justify-end tabular-nums leading-none",
+        "nk-min-w-max nk-inline-flex nk-items-center nk-justify-end nk-tabular-nums nk-leading-none",
         priceTextDisplaySize,
         {
-          "cursor-text": !onTextClick,
-          "cursor-pointer": onTextClick,
+          "nk-cursor-text": !onTextClick,
+          "nk-cursor-pointer": onTextClick,
         },
       ])}
     >
-      <p className="order-2 leading-none">{formattedPrice({ price })}</p>
+      <p className="nk-order-2 nk-leading-none">{formattedPrice({ price })}</p>
 
       {(currencySymbology === PriceSymbology.Symbol &&
-        !altPriceDisplayedAsText &&
+        altPriceDisplayFormat === AltPriceDisplayFormat.Tooltip &&
         !altPrice) ||
       (currencySymbology === PriceSymbology.Symbol &&
-        altPriceDisplayedAsText) ? (
+        altPriceDisplayFormat === AltPriceDisplayFormat.Text) ? (
         <div
           className={cc([
-            "leading-none",
+            "nk-leading-none",
             {
-              "mb-[1px]": price.currency !== Currency.Usd,
-              "order-1 mr-1": symbolPosition === PriceSymbolPosition.Left,
-              "mr-1.5 order-3": symbolPosition === PriceSymbolPosition.Right,
+              "nk-mb-[1px]": price.currency !== Currency.Usd,
+              "nk-order-1 nk-mr-1": symbolPosition === PriceSymbolPosition.Left,
+              "nk-mr-1.5 nk-order-3":
+                symbolPosition === PriceSymbolPosition.Right,
             },
           ])}
         >
           <PriceSymbol
-            showTooltipDescription={showCurrencyTooltipDescription}
+            describeCurrencyInTooltip={showCurrencyTooltipDescription}
             currency={price.currency}
             size={priceTextDisplaySize}
           />
@@ -91,27 +93,28 @@ export const DisplayedPrice = ({
       ) : null}
 
       {currencySymbology === PriceSymbology.Acronym && (
-        <p className="ml-1 order-2">
+        <p className="nk-ml-1 nk-order-2">
           {PriceCurrencyFormat[price.currency].Acronym}
         </p>
       )}
     </div>
   );
 
-  if (!altPrice && !altPriceDisplayedAsText) return triggerElm;
+  if (!altPrice && altPriceDisplayFormat === AltPriceDisplayFormat.Tooltip)
+    return triggerElm;
   else if (altPrice) {
     const altPriceDisplayElm = (
       <div
         className={cc([
-          "text-gray-500 text-xs sm:text-sm inline-flex items-end justify-end tabular-nums leading-none mb-0.5",
+          "nk-text-gray-500 nk-text-xs sm:nk-text-sm nk-inline-flex nk-items-end nk-justify-end nk-tabular-nums nk-leading-none nk-mb-0.5",
           altPriceDisplaySize,
           {
-            "cursor-text": !onTextClick,
-            "cursor-pointer": !!onTextClick,
+            "nk-cursor-text": !onTextClick,
+            "nk-cursor-pointer": !!onTextClick,
           },
         ])}
       >
-        <p className="order-2 leading-none">
+        <p className="nk-order-2 nk-leading-none">
           {formattedPrice({ price: altPrice })}
         </p>
 
@@ -119,21 +122,22 @@ export const DisplayedPrice = ({
         altPrice.currency === Currency.Usd ? (
           <div
             className={cc([
-              "leading-none",
+              "nk-leading-none",
               {
-                "order-1 mr-1":
+                "nk-order-1 nk-mr-1":
                   symbolPosition === PriceSymbolPosition.Left &&
                   altPrice.currency === Currency.Usd,
-                "order-1":
+                "nk-order-1":
                   symbolPosition === PriceSymbolPosition.Left &&
                   altPrice.currency !== Currency.Usd,
-                "mr-1.5 order-3": symbolPosition === PriceSymbolPosition.Right,
+                "nk-mr-1.5 nk-order-3":
+                  symbolPosition === PriceSymbolPosition.Right,
               },
             ])}
           >
             <PriceSymbol
               symbolFillColor={"currentColor"}
-              showTooltipDescription={showCurrencyTooltipDescription}
+              describeCurrencyInTooltip={showCurrencyTooltipDescription}
               currency={altPrice.currency}
               size={altPriceDisplaySize}
             />
@@ -141,14 +145,14 @@ export const DisplayedPrice = ({
         ) : null}
 
         {currencySymbology === PriceSymbology.Acronym && (
-          <p className="ml-1 order-2">
+          <p className="nk-ml-1 nk-order-2">
             {PriceCurrencyFormat[altPrice.currency].Acronym}
           </p>
         )}
       </div>
     );
 
-    if (altPriceDisplayedAsText) {
+    if (altPriceDisplayFormat === AltPriceDisplayFormat.Text) {
       return (
         <div className={altPriceDisplayPosition}>
           {triggerElm}
@@ -157,39 +161,44 @@ export const DisplayedPrice = ({
       );
     } else if (altPrice) {
       return (
-        <div className={cc(["inline-flex items-center", priceTextDisplaySize])}>
+        <div
+          className={cc([
+            "nk-inline-flex nk-items-center",
+            priceTextDisplaySize,
+          ])}
+        >
           {currencySymbology === PriceSymbology.Symbol && (
             <div
               className={cc([
                 {
-                  "mr-0.5 order-1 mb-[2px]":
+                  "nk-mr-0.5 nk-order-1 nk-mb-[2px]":
                     symbolPosition === PriceSymbolPosition.Left &&
                     price.currency !== Currency.Usd,
-                  "mr-1.5 order-1":
+                  "nk-mr-1.5 nk-order-1":
                     symbolPosition === PriceSymbolPosition.Left &&
                     price.currency === Currency.Usd,
-                  "ml-1.5 order-3":
+                  "nk-ml-1.5 nk-order-3":
                     symbolPosition === PriceSymbolPosition.Right,
                 },
               ])}
             >
               <PriceSymbol
-                showTooltipDescription={showCurrencyTooltipDescription}
+                describeCurrencyInTooltip={showCurrencyTooltipDescription}
                 currency={price.currency}
                 size={priceTextDisplaySize}
               />
             </div>
           )}
 
-          <div className="order-2 leading-none">
+          <div className="nk-order-2 nk-leading-none">
             <Tooltip trigger={triggerElm}>
               <>
                 {altPrice ? (
-                  <div className="bg-gray-900 focus:outline-none relative h-full rounded-md">
-                    <div className="text-xs text-white sm:text-sm inline-flex items-center space-x-0.5 tabular-nums">
+                  <div className="nk-bg-gray-900 focus:nk-outline-none nk-relative nk-h-full nk-rounded-md">
+                    <div className="nk-text-xs nk-text-white sm:nk-text-sm nk-inline-flex nk-items-center nk-space-x-0.5 nk-tabular-nums">
                       <p
                         className={
-                          onTextClick ? "cursor-pointer" : "cursor-text"
+                          onTextClick ? "nk-cursor-pointer" : "nk-cursor-text"
                         }
                       >
                         {formattedPrice({

@@ -3,11 +3,15 @@ import {
   SecondaryRegistrationStatus,
 } from "@namehash/ens-utils";
 import type { Meta, StoryObj } from "@storybook/react";
-import { PriceInfo } from "@namehash/namekit-react";
+import {
+  RegistrationPriceInfo,
+  RegistrationPriceInfoDisplayingFormat,
+} from "@namehash/namekit-react";
 
 export const DisplayIconWithTooltip: Story = {
   args: {
-    displayIconWithTooltip: true,
+    displayIconWithTooltip:
+      RegistrationPriceInfoDisplayingFormat.IconWithTooltip,
     registration: {
       expiryTimestamp: { time: 1709652875n },
       primaryStatus: PrimaryRegistrationStatus.Expired,
@@ -33,7 +37,7 @@ export const DisplayIconWithTooltip: Story = {
 };
 export const DisplayTextAndIcon: Story = {
   args: {
-    displayIconWithTooltip: false,
+    displayIconWithTooltip: RegistrationPriceInfoDisplayingFormat.IconWithText,
     registration: {
       expiryTimestamp: { time: 1709652875n },
       primaryStatus: PrimaryRegistrationStatus.Expired,
@@ -58,9 +62,9 @@ export const DisplayTextAndIcon: Story = {
   },
 };
 
-const meta: Meta<typeof PriceInfo> = {
-  component: PriceInfo,
-  title: "Namekit/PriceInfo",
+const meta: Meta<typeof RegistrationPriceInfo> = {
+  component: RegistrationPriceInfo,
+  title: "Namekit/RegistrationPriceInfo",
 };
 
 declare global {
@@ -75,4 +79,4 @@ BigInt.prototype.toJSON = function () {
 
 export default meta;
 
-type Story = StoryObj<typeof PriceInfo>;
+type Story = StoryObj<typeof RegistrationPriceInfo>;

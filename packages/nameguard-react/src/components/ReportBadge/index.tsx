@@ -7,8 +7,9 @@ import React, { useEffect, useState, useRef } from "react";
 import cc from "classcat";
 
 import { ReportIcon } from "../ReportIcon/index";
-import { RatingLoadingIcon, RatingIconSize, Tooltip } from "../..";
+import { RatingLoadingIcon, RatingIconSize } from "../..";
 import { UnknownReportIcon } from "../UnknownReportIcon/UnknownReportIcon";
+import { Tooltip } from "@namehash/namekit-react";
 import { ENSName } from "@namehash/ens-utils";
 
 interface ReportBadgeProps {

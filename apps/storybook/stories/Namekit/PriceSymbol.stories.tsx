@@ -65,14 +65,14 @@ export const WithCustomSymbolColor: Story = {
 };
 export const ShowingTooltipDescription: Story = {
   args: {
-    showTooltipDescription: true,
+    describeCurrencyInTooltip: true,
     size: PriceDisplaySize.Large,
     currency: Currency.Eth,
   },
 };
 export const NotShowingTooltipDescription: Story = {
   args: {
-    showTooltipDescription: false,
+    describeCurrencyInTooltip: false,
     size: PriceDisplaySize.Large,
     currency: Currency.Eth,
   },

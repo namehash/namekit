@@ -9,7 +9,7 @@ import {
 import { toast } from "sonner";
 
 import cc from "classcat";
-import { Tooltip } from "../Tooltip/Tooltip";
+import { Tooltip } from "@namehash/namekit-react";
 import { CheckResultCode } from "@namehash/nameguard";
 import { checkResultCodeTextColor } from "../../utils/text";
 
@@ -22,7 +22,7 @@ function createTwitterLink(name: string) {
   const url = `https://nameguard.io/inspect/${encodeURIComponent(name)}`;
 
   return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-    tweetText
+    tweetText,
   )}&url=${encodeURIComponent(url)}`;
 }
 
@@ -44,15 +44,15 @@ export function Share({ name }: ShareProps) {
 
   const twitterLink = createTwitterLink(name);
   const telegramLink = createTelegramLink(
-    `https://nameguard.io/inspect/${encodeURIComponent(name)}`
+    `https://nameguard.io/inspect/${encodeURIComponent(name)}`,
   );
   const emailLink = createMailToLink(
     `NameGuard Report for ${name}`,
-    `Check this out!\nhttps://nameguard.io/inspect/${encodeURIComponent(name)}`
+    `Check this out!\nhttps://nameguard.io/inspect/${encodeURIComponent(name)}`,
   );
   const copyLinkToClipboard = () => {
     navigator.clipboard.writeText(
-      `https://nameguard.io/inspect/${encodeURIComponent(name)}`
+      `https://nameguard.io/inspect/${encodeURIComponent(name)}`,
     );
     toast.success("Link copied to clipboard", {
       icon: (

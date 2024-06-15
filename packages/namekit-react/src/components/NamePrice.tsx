@@ -2,13 +2,15 @@ import { DomainName, Price, Registration } from "@namehash/ens-utils";
 
 import React from "react";
 import { DisplayedPrice } from "./DisplayedPrice";
-import { PriceInfo } from "./PriceInfo";
+import { RegistrationPriceInfo } from "./RegistrationPriceInfo";
 import {
+  AltPriceDisplayFormat,
   PriceDisplayPosition,
   PriceDisplaySize,
   PriceSymbolPosition,
   PriceSymbology,
 } from "./PriceSymbol";
+import { RegistrationPriceInfoDisplayingFormat } from "./RegistrationPriceInfo";
 
 interface NamePriceProps {
   registration: Registration;
@@ -20,7 +22,7 @@ interface NamePriceProps {
   // The onClick event handler for the price text
   onTextClick?: () => void;
   // Wether to display the alternative price as a text instead of a tooltip
-  altPriceDisplayedAsText: boolean;
+  altPriceDisplayFormat: AltPriceDisplayFormat;
   // Wether to display a currency symbology as its acronym or symbol
   currencySymbology?: PriceSymbology;
   // The place to display the currency symbology
@@ -41,21 +43,27 @@ export const NamePrice = ({
   parsedName,
   onTextClick,
   registration,
-  altPriceDisplayedAsText,
   showCurrencyTooltipDescription = true,
   symbolPosition = PriceSymbolPosition.Left,
   currencySymbology = PriceSymbology.Symbol,
   altPriceDisplaySize = PriceDisplaySize.Micro,
   priceTextDisplaySize = PriceDisplaySize.Small,
   altPriceDisplayPosition = PriceDisplayPosition.Right,
+  altPriceDisplayFormat = AltPriceDisplayFormat.Tooltip,
 }: NamePriceProps) => {
   return (
     <div
       role="button"
-      className="mr-4 flex items-center md:space-x-2 justify-end outline-none sm:mr-3 px-3 py-2 bg-black bg-opacity-0 rounded-lg transition whitespace-nowrap hover:bg-opacity-5"
+      className="nk-mr-4 nk-flex nk-items-center md:nk-space-x-2 nk-justify-end nk-outline-none sm:nk-mr-3 nk-px-3 nk-py-2 nk-bg-black nk-bg-opacity-0 nk-rounded-lg nk-transition nk-whitespace-nowrap hover:nk-bg-opacity-5"
     >
-      <PriceInfo registration={registration} parsedName={parsedName} />
-      <div className="ml-1 flex items-center justify-end">
+      <RegistrationPriceInfo
+        displayIconWithTooltip={
+          RegistrationPriceInfoDisplayingFormat.IconWithTooltip
+        }
+        registration={registration}
+        parsedName={parsedName}
+      />
+      <div className="nk-ml-1 nk-flex nk-items-center nk-justify-end">
         <DisplayedPrice
           price={price}
           altPrice={altPrice}
@@ -65,7 +73,7 @@ export const NamePrice = ({
           altPriceDisplaySize={altPriceDisplaySize}
           priceTextDisplaySize={priceTextDisplaySize}
           altPriceDisplayPosition={altPriceDisplayPosition}
-          altPriceDisplayedAsText={altPriceDisplayedAsText}
+          altPriceDisplayFormat={altPriceDisplayFormat}
           showCurrencyTooltipDescription={showCurrencyTooltipDescription}
         />
       </div>
