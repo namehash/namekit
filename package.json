@@ -11,8 +11,19 @@
   },
   "packageManager": "pnpm@8.6.10",
   "devDependencies": {
+<<<<<<< HEAD
     "eslint": "8.51.0",
     "prettier": "^3.0.3",
     "turbo": "1.10.16"
+=======
+    "@changesets/cli": "^2.27.2",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.5",
+    "rimraf": "^5.0.7",
+    "turbo": "1.13.3"
+  },
+  "dependencies": {
+    "yup": "1.4.0"
+>>>>>>> 788d041 (create contact page)
   }
 }
