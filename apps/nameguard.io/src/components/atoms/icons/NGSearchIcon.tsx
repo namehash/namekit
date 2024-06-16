@@ -1,7 +1,7 @@
 "use client";
 
-import { MagnifyingGlassIcon } from "@/app/components/atoms/icons/MagnifyingGlassIcon";
 import { useSearchStore } from "@namehash/nameguard-react";
+import { MagnifyingGlassIcon } from "./MagnifyingGlassIcon";
 
 export function NGSearchIcon() {
   const { openModal } = useSearchStore();

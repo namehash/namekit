@@ -8,9 +8,8 @@ import cc from "classcat";
 import { checkResultCodeTextColor } from "@namehash/nameguard-react";
 import { CheckResultCode } from "@namehash/nameguard";
 import { Fragment } from "react";
-import { CheckShieldGrayOutline } from "@/app/components/atoms/icons/CheckShieldGrayOutline";
-import { ListSectionBadge } from "../atoms/ListSectionBadge";
 import { ListSectionElement } from "@/types/listSectionTypes";
+import { CheckShieldGrayOutline, ListSectionBadge } from "../atoms";
 
 export function ChecksSection() {
   const checkCircle = (

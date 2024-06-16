@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Tooltip } from "@namehash/nameguard-react";
-
-import { CopyIcon } from "@/app/components/atoms/icons/CopyIcon";
+import { CopyIcon } from "../atoms";
 
 const npmCommand = "npm install @namehash/nameguard";
 

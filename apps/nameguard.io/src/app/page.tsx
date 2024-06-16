@@ -18,12 +18,13 @@ import {
   NewExitSection,
   ReadySection,
   RoadMap,
-} from "./components/organisms";
+} from "@/components/organisms";
 import {
   CoinbaseIcon,
   FarcasterLogo,
   LensProtocolIcon,
   MessageIcon,
+  MobileSectionDivider,
   OpenSeaIcon,
   PushIcon,
   RaribleIcon,
@@ -31,8 +32,7 @@ import {
   WalletConnectIcon,
   WalletIcon,
   XMTPIcon,
-} from "./components/atoms";
-import { MobileSectionDivider } from "./components/atoms/MobileSectionDivider";
+} from "@/components/atoms";
 
 const getSecurePrimaryName = `import { nameguard } from "@namehash/nameguard";
 
