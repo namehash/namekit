@@ -24,8 +24,7 @@ export const ContactSection = () => {
             Discuss an integration
           </h3>
           <p className="text-lg leading-7 font-normal text-gray-500">
-            Schedule a call with us to discuss integration with any of our
-            products
+            Schedule a call with us to discuss an integration with NameGuard
           </p>
         </div>
         <CalButton className="px-[25px] py-[13px] rounded-[8px] bg-white flex hover:bg-gray-100 transition-colors duration-200 w-full justify-center lg:w-auto">
@@ -38,16 +37,16 @@ export const ContactSection = () => {
             Let&apos;s chat
           </SectionTitle>
           <SectionText className="text-gray-500 text-lg">
-            If you have questions, ideas, or share a passion for advancing ENS
-            growth and would like to explore collaboration, please don&apos;t
-            hesitate to reach out.{" "}
+            If you have questions, ideas, or share a passion for NameGuard and
+            would like to explore collaboration, please don&apos;t hesitate to
+            reach out to us.
           </SectionText>
           <div className="w-full">
             <AirplaneIllustration />
           </div>
         </div>
         <div className="lg:w-1/2 w-full bg-gray-50 py-4 px-4 lg:py-8 lg:px-10 border rounded-[8px] flex justify-center items-center">
-          <ContactUsForm title="Send a message" />
+          <ContactUsForm title="Send your request" />
         </div>
       </div>
     </section>
