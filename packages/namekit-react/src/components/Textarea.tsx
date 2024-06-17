@@ -8,16 +8,18 @@ export interface TextareaProps
   size?: "small" | "medium" | "large";
 }
 
-const textareaBaseClasses = "nk-rounded nk-border nk-shadow-sm";
+const textareaBaseClasses =
+  "nk-rounded-md nk-border nk-shadow-sm nk-ring-0 focus:nk-outline-none nk-transition-colors";
 
 const variantClasses = {
-  primary: "nk-bg-white nk-text-black nk-border-gray-300",
+  primary:
+    "nk-bg-white nk-text-black nk-border-gray-300 nk-shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] hover:nk-border-gray-400 focus:nk-border-gray-600 placeholder:nk-text-gray-500",
   secondary: "nk-border-gray-200 nk-bg-gray-100",
 };
 
 const sizeClasses = {
   small: "nk-py-1 nk-px-2 nk-text-sm",
-  medium: "nk-py-2 nk-px-4",
+  medium: "nk-py-2 nk-px-3.5",
   large: "nk-py-3 nk-px-6 nk-text-lg",
 };
 
