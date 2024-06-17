@@ -6,7 +6,7 @@ from nameguard.models import Rating, Check, CheckStatus, Normalization, GenericC
 from nameguard.nameguard import NameGuard
 from nameguard.exceptions import NamehashNotFoundInSubgraph, NotAGrapheme
 from nameguard.endpoints import Endpoints
-from nameguard.utils import MAX_INSPECTABLE_NAME_LENGTH
+from nameguard.utils import MAX_INSPECTABLE_NAME_CHARACTERS
 
 
 @pytest.fixture(scope='module')
@@ -169,7 +169,7 @@ async def test_bulk_simple_name(nameguard: NameGuard, label_length):
     result = await nameguard.inspect_name('mainnet', name)
     result_bulk = await nameguard.inspect_name('mainnet', name, bulk_mode=True)
 
-    if len(name) > MAX_INSPECTABLE_NAME_LENGTH:
+    if len(name) > MAX_INSPECTABLE_NAME_CHARACTERS:
         assert result is None
         assert result_bulk is None
         return

@@ -7,7 +7,7 @@ import httpx
 from nameguard.logging import logger
 from nameguard.exceptions import ENSSubgraphUnavailable, NamehashNotFoundInSubgraph, NamehashMismatchError
 from nameguard.models import NetworkName
-from nameguard.utils import namehash_from_name, label_is_labelhash, MAX_NUMBER_OF_LABELHASHES_IN_NAME
+from nameguard.utils import namehash_from_name, label_is_labelhash, MAX_INSPECTABLE_NAME_UNKNOWN_LABELS
 
 # The label limit for using the multi-label lookup query.
 # Longer names will be resolved by querying the namehash of the full name.
@@ -205,7 +205,7 @@ async def resolve_all_labelhashes_in_name_querying_labelhashes(network_name: Net
     if not labelhash_idx:
         return name
 
-    if len(labelhash_idx) > MAX_NUMBER_OF_LABELHASHES_IN_NAME:
+    if len(labelhash_idx) > MAX_INSPECTABLE_NAME_UNKNOWN_LABELS:
         return None
 
     logger.debug(f'Trying to resolve full name: {name}')
