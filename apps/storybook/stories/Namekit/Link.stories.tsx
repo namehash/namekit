@@ -119,3 +119,31 @@ export const AsChild: Story = {
     asChild: <span />,
   },
 };
+
+export const ExternalLinkIconAfter: Story = {
+  args: {
+    variant: "primary",
+    size: "medium",
+    href: "#",
+    children: (
+      <>
+        External Link
+        <Link.ExternalIcon />
+      </>
+    ),
+  },
+};
+
+export const ExternalLinkIconBefore: Story = {
+  args: {
+    variant: "primary",
+    size: "medium",
+    href: "#",
+    children: (
+      <>
+        <Link.ExternalIcon />
+        External Link
+      </>
+    ),
+  },
+};
