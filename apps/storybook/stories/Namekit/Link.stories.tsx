@@ -105,7 +105,7 @@ export const CustomClass: Story = {
     size: "medium",
     href: "#",
     children: "Custom Class Link",
-    className: "my-custom-class",
+    className: "custom-class-name",
   },
 };
 
