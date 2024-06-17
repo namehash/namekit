@@ -8,18 +8,23 @@ export interface LinkProps extends React.ComponentPropsWithoutRef<"a"> {
   asChild?: React.ReactElement;
 }
 
-const linkBaseClasses = "";
+const linkBaseClasses = "nk-transition";
 
 const variantClasses = {
   primary:
     "nk-text-black nk-underline sm:nk-underline-offset-[4px] sm:nk-transition-all sm:nk-duration-200 sm:hover:nk-underline-offset-[2px]",
-  secondary: "nk-text-black",
+  secondary: "nk-text-gray-500 hover:nk-text-black",
 };
 
 const sizeClasses = {
-  small: "nk-py-1 nk-px-2 nk-text-sm",
-  medium: "nk-py-2 nk-px-4",
-  large: "nk-py-3 nk-px-6 nk-text-lg",
+  small: "nk-text-sm",
+  medium: "nk-text-base",
+  large: "nk-text-lg",
+};
+
+const isInternalLink = (href: string | undefined) => {
+  if (!href) return false;
+  return href.startsWith("/") || href.startsWith("#") || !href.includes("://");
 };
 
 export const Link: React.FC<LinkProps> = ({
@@ -27,6 +32,7 @@ export const Link: React.FC<LinkProps> = ({
   className,
   variant = "primary",
   size = "medium",
+  children,
   ...props
 }) => {
   const combinedClassName = cc([
@@ -35,6 +41,12 @@ export const Link: React.FC<LinkProps> = ({
     sizeClasses[size],
     className,
   ]);
+
+  const enhancedChildren = !isInternalLink(props.href) ? (
+    <>{children} ↗</>
+  ) : (
+    children
+  );
 
   if (asChild) {
     const childProps = {
@@ -52,5 +64,9 @@ export const Link: React.FC<LinkProps> = ({
     return React.cloneElement(asChild, childProps);
   }
 
-  return <a className={combinedClassName} {...props} />;
+  return (
+    <a className={combinedClassName} {...props}>
+      {enhancedChildren}
+    </a>
+  );
 };

@@ -83,6 +83,22 @@ export const SecondaryLarge: Story = {
   },
 };
 
+export const PrimaryExternal: Story = {
+  args: {
+    variant: "primary",
+    href: "https://nameguard.io",
+    children: "Primary External",
+  },
+};
+
+export const SecondaryExternal: Story = {
+  args: {
+    variant: "secondary",
+    href: "https://namekit.io",
+    children: "Secondary External",
+  },
+};
+
 export const CustomClass: Story = {
   args: {
     variant: "primary",
