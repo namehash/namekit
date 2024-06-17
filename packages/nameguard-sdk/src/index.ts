@@ -88,7 +88,7 @@ export type SecurePrimaryNameStatus =
   | "normalized" /** The ENS primary name was found and it is normalized. */
   | "no_primary_name" /** The ENS primary name was not found. */
   | "unnormalized" /** The ENS primary name was found, but it is not normalized. */
-  | "uninspectable" /** The name was not checked, because it is too long. */;
+  | "uninspected" /** `isInspectableName(name) === false` therefore the name was not inspected for performance reasons */;
 
 export type ImpersonationStatus =
   | "unlikely" /** The name is unlikely to be impersonating. */
