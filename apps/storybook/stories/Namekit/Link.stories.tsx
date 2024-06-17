@@ -102,7 +102,6 @@ export const SecondaryExternal: Story = {
 export const CustomClass: Story = {
   args: {
     variant: "primary",
-    size: "medium",
     href: "#",
     children: "Custom Class Link",
     className: "custom-class-name",
@@ -112,7 +111,6 @@ export const CustomClass: Story = {
 export const AsChild: Story = {
   args: {
     variant: "primary",
-    size: "medium",
     href: "#",
     children:
       "Link as a Span (which won't work, but is good for next/link instances)",
@@ -120,11 +118,23 @@ export const AsChild: Story = {
   },
 };
 
+export const CurrentColor: Story = {
+  args: {
+    variant: "primary",
+    children: (
+      <>
+        External Link
+        <Link.ExternalIcon />
+      </>
+    ),
+    asChild: <span style={{ color: "green" }} />,
+  },
+};
+
 export const ExternalLinkIconAfter: Story = {
   args: {
     variant: "primary",
-    size: "medium",
-    href: "#",
+    href: "https://namekit.io",
     children: (
       <>
         External Link
@@ -138,7 +148,7 @@ export const ExternalLinkIconBefore: Story = {
   args: {
     variant: "primary",
     size: "medium",
-    href: "#",
+    href: "https://namekit.io",
     children: (
       <>
         <Link.ExternalIcon />

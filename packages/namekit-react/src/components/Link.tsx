@@ -16,7 +16,7 @@ const linkBaseClasses = "nk-transition";
 
 const variantClasses = {
   primary:
-    "nk-text-current nk-underline sm:nk-underline-offset-[4px] sm:nk-transition-all sm:nk-duration-200 sm:hover:nk-underline-offset-[2px]",
+    "nk-text-current nk-underline nk-decoration-inherit sm:nk-underline-offset-[4px] sm:nk-transition-all sm:nk-duration-200 sm:hover:nk-underline-offset-[2px]",
   secondary: "nk-text-gray-500 hover:nk-text-black",
 };
 
@@ -76,7 +76,7 @@ export const Link: LinkComponent = ({
       ]),
     };
 
-    return React.cloneElement(asChild, childProps);
+    return React.cloneElement(asChild, childProps, enhancedChildren);
   }
 
   return (
