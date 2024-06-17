@@ -119,7 +119,7 @@ export const CustomClass: Story = {
     variant: "primary",
     size: "medium",
     icon: <SomeIcon />,
-    className: "my-custom-class",
+    className: "custom-class-name",
   },
 };
 

@@ -104,7 +104,7 @@ export const CustomClass: Story = {
     variant: "primary",
     size: "medium",
     children: "Custom Class Button",
-    className: "my-custom-class",
+    className: "custom-class-name",
   },
 };
 
