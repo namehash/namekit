@@ -99,6 +99,7 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
       method: "POST",
       headers: {
         Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
