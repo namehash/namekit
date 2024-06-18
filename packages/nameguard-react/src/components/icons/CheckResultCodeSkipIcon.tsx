@@ -12,7 +12,7 @@ export const CheckResultCodeSkipIcon = ({
     onClick={onClick}
     className={cc([
       className,
-      "w-[12px] h-[10px] fill-current transition",
+      "ng-w-[12px] ng-h-[10px] ng-fill-current ng-transition",
       checkResultCodeTextColor(CheckResultCode.skip, isInteractive),
     ])}
     viewBox="0 0 12 10"
