@@ -25,12 +25,9 @@ const MobileMenu = () => {
   };
 
   return (
-    <div className="z-50">
+    <div className="z-50 search_bar_change:hidden">
       {/* Hamburguer button  */}
-      <button
-        className="block search_bar_change:hidden"
-        onClick={() => toggleMenu()}
-      >
+      <button className="block" onClick={() => toggleMenu()}>
         <Bars3Icon className="w-6 h-6 text-black" />
       </button>
 

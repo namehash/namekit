@@ -11,9 +11,10 @@ import { ContactUsForm } from "./ContactUsForm";
 
 export const ContactSection = () => {
   return (
-    <section className="w-full max-w-[1216px] m-auto px-5">
-      <ColorfulBg className="absolute top-0 left-0 w-full z-[-1]" />
-      <div className="lg:mt-[100px] lg:mb-[120px] mt-[60px] mb-[60px]">
+    <section className="w-full max-w-[1216px] m-auto px-5 lg:pb-20 pb-5">
+      <ColorfulBg className="absolute top-0 left-0 w-full z-[-1] min-h-[200px]" />
+
+      <div className="lg:mt-[100px] lg:mb-[120px] pt-[60px] mb-[60px]">
         <PreSectionText className="text-start ">Get in touch</PreSectionText>
         <h1 className="font-bold text-[52px] ">Contact</h1>
       </div>
