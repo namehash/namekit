@@ -1,30 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { ens_normalize } from "@adraffy/ens-normalize";
-import { normalizeName } from "./normalizeName";
-import { separateGraphemes } from "./separateGraphemes";
+import { splitGraphemes, countGraphemes } from "./graphemes";
 import jsonNamehashExamples from "../utils/normalized_graphemes.json";
-
-const validInputNames = ["RaFFY🚴‍♂️.eTh"];
-
-const invalidInputNames = ["‍420.eth"];
-
-const validNamesExpectedOutputs = ["raffy🚴‍♂.eth"];
-
-describe("normalizeName", () => {
-  it("should return a name normalized to ENS standards", () => {
-    for (const name_idx in validInputNames) {
-      expect(normalizeName(validInputNames[name_idx])).toBe(
-        validNamesExpectedOutputs[name_idx],
-      );
-    }
-  });
-
-  it("should throw an error when invalid name is provided", () => {
-    for (const name of invalidInputNames) {
-      expect(() => normalizeName(name)).toThrowError("Invalid name");
-    }
-  });
-});
 
 const grapehemeTestInputs = [
   "",
@@ -33,6 +10,7 @@ const grapehemeTestInputs = [
   "🇪🇹",
   "\u{1F469}\u{1F3FF}\u{200D}\u{1F9B2}",
   "👩🏿‍🎓",
+  "Hello 🌍! 👋",
 ];
 
 const graphemeTestOutputs = [
@@ -42,68 +20,47 @@ const graphemeTestOutputs = [
   ["🇪🇹"],
   ["\u{1F469}\u{1F3FF}\u{200D}\u{1F9B2}"],
   ["👩🏿‍🎓"],
+  [
+    "H",
+    "e",
+    "l",
+    "l",
+    "o",
+    " ",
+    "🌍",
+    "!",
+    " ",
+    "👋",
+  ],
 ];
 
-type BreakClass = {
-  symbol: string;
-  breakOpportunity: boolean;
-};
-
-type UnicodeTestcase = {
-  comment: string;
-  codePoints: number[];
-  possibleBreaks: BreakClass[];
-};
-
-const validateUnicodeTest = (
-  graphemes: string[],
-  breakOpportunities: BreakClass[],
-) => {
-  const breakAtTheEnd = 1;
-
-  const expectedNoGraphemes =
-    breakOpportunities.reduce((acc, opportunity) => {
-      if (opportunity.breakOpportunity) {
-        return acc + 1;
-      }
-      return acc;
-    }, 0) - breakAtTheEnd;
-
-  expect(graphemes.length).toEqual(expectedNoGraphemes);
-};
-
-describe("separateGraphemes", () => {
-  it("should separate example graphemes correctly", () => {
-    expect(separateGraphemes("Hello 🌍! 👋")).toStrictEqual([
-      "H",
-      "e",
-      "l",
-      "l",
-      "o",
-      " ",
-      "🌍",
-      "!",
-      " ",
-      "👋",
-    ]);
-  });
-
-  it("should separate graphemes correctly", () => {
+describe("countGraphemes", () => {
+  it("should count graphemes in a string", () => {
     for (const example_idx in grapehemeTestInputs) {
-      expect(separateGraphemes(grapehemeTestInputs[example_idx])).toStrictEqual(
+      expect(countGraphemes(grapehemeTestInputs[example_idx])).toBe(
+        graphemeTestOutputs[example_idx].length,
+      );
+    }
+  });
+});
+
+describe("splitGraphemes", () => {
+  it("should split strings into graphemes", () => {
+    for (const example_idx in grapehemeTestInputs) {
+      expect(splitGraphemes(grapehemeTestInputs[example_idx])).toStrictEqual(
         graphemeTestOutputs[example_idx],
       );
     }
   });
 
-  it("should separate graphemes the same as python version", async () => {
+  it("should split strings the same way as the Python NameGuard library", async () => {
     for (const pair of jsonNamehashExamples) {
-      expect(separateGraphemes(pair[0])).toStrictEqual(pair[1]);
+      expect(splitGraphemes(pair[0])).toStrictEqual(pair[1]);
     }
   });
 
-  it("should work with hanguls", () => {
-    expect(separateGraphemes("Helloᄀᄀᄀ 🌍! 👋")).toStrictEqual([
+  it("should split strings with hanguls", () => {
+    expect(splitGraphemes("Helloᄀᄀᄀ 🌍! 👋")).toStrictEqual([
       "H",
       "e",
       "l",
@@ -120,7 +77,7 @@ describe("separateGraphemes", () => {
     ]);
   });
 
-  it("should separate graphemes edge cases", () => {
+  it("should split strings covering algorithm edge cases", () => {
     const cases = [
       ["", []],
       ["a", ["a"]],
@@ -155,7 +112,7 @@ describe("separateGraphemes", () => {
         ok = ens_normalize(input) === input;
       } catch (ex) {}
       if (ok) {
-        expect(separateGraphemes(input)).toStrictEqual(expected);
+        expect(splitGraphemes(input)).toStrictEqual(expected);
         i += 1;
       }
     }

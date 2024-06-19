@@ -1,51 +1,41 @@
-import { ens_normalize } from "@adraffy/ens-normalize";
-import { splitGraphemes } from "text-segmentation";
 import { ImpersonationStatus } from "@namehash/nameguard";
-import { graphemeConfusableAnalysis } from "./confusables";
+import { getNormalizedCanonicalLabel } from "./canonical";
 
 const LABELHASH_REGEX = /^\[[0-9a-f]{64}\]$/;
 
+/**
+ * Checks if a given label is a valid labelhash.
+ *
+ * @param label - The label to check.
+ * @returns `true` if the label is a valid labelhash, `false` otherwise.
+ */
 function isLabelhash(label: string): boolean {
   return LABELHASH_REGEX.test(label);
 }
 
-function getCanonicalLabel(label: string): string | null {
-  const canonicals: string[] = [];
-  for (const grapheme of splitGraphemes(label)) {
-    const conf = graphemeConfusableAnalysis(grapheme);
-    if (!conf.isConfusable) {
-      canonicals.push(grapheme);
-    } else if (conf.canonical === null) {
-      return null;
-    } else {
-      canonicals.push(conf.canonical);
-    }
-  }
-  return canonicals.join("");
-}
-
-function getNormalizedCanonicalLabel(label: string): string | null {
-  const canonicalLabel = getCanonicalLabel(label);
-  if (canonicalLabel === null) {
-    return null;
-  }
-  try {
-    return ens_normalize(canonicalLabel);
-  } catch (e) {
-    return null;
-  }
-}
-
+/**
+ * Checks if a given name is likely to be an impersonation attempt.
+ *
+ * @param name - The name to analyze.
+ * @returns The impersonation estimate for the given name.
+ */
 export function computeImpersonationStatus(name: string): ImpersonationStatus {
+  // We do not need codepoint splitting here, as we only check for empty names.
+  // If the name is empty, it has 0 labels and .split would return an array with one empty string.
   const labels = name.length === 0 ? [] : name.split(".");
+
   if (labels.some(isLabelhash)) {
+    // We treat labelhashes as potential impersonation attempts.
     return "potential";
   }
-  const canonicals = labels.map(getNormalizedCanonicalLabel);
-  if (canonicals.includes(null)) {
+
+  const canonicalLabels = labels.map(getNormalizedCanonicalLabel);
+  if (canonicalLabels.includes(null)) {
+    // If any label does not have a canonical form, the name might be an impersonation attempt.
     return "potential";
   }
-  const canonical = canonicals.join(".");
-  const passed = canonical === name;
-  return passed ? "unlikely" : "potential";
+
+  const canonicalName = canonicalLabels.join(".");
+  // A name is safe if it is already in canonical form.
+  return canonicalName === name ? "unlikely" : "potential";
 }
