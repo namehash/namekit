@@ -39,6 +39,7 @@ export const metadata: Metadata = {
     ...NamehashMetadata.defaultMetdata.openGraph,
     title,
     description,
+    siteName: "NameGuard",
   },
   twitter: {
     ...NamehashMetadata.defaultMetdata.twitter,
