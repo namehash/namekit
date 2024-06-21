@@ -40,6 +40,7 @@ export const metadata: Metadata = {
     title,
     description,
     siteName: "NameGuard",
+    url: "https://nameguard.io",
   },
   twitter: {
     ...NamehashMetadata.defaultMetdata.twitter,
