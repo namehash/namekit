@@ -7,5 +7,3 @@ export * from "./ColorfulBg";
 export * from "./SectionTitle";
 export * from "./AirplaneIllustration";
 export * from "./";
-export * from "./";
-export * from "./";
