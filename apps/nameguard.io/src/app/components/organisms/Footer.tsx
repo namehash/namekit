@@ -17,6 +17,7 @@ export const Footer = () => {
       <div className="flex flex-row justify-between gap-3">
         <a
           href="https://twitter.com/NamehashLabs"
+          aria-label="Twitter Link"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -24,6 +25,7 @@ export const Footer = () => {
         </a>
         <a
           href="https://github.com/namehash/nameguard"
+          aria-label="Gighub Link"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -32,6 +34,7 @@ export const Footer = () => {
 
         <a
           href="https://warpcast.com/namehash"
+          aria-label="Farcaster Link"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -40,12 +43,13 @@ export const Footer = () => {
 
         <a
           href="https://t.me/namehash"
+          aria-label="Telegram Link"
           target="_blank"
           rel="noopener noreferrer"
         >
           <TelegramIcon className="gt_mobile:hover:fill-black text-[#AFAFAF] fill-current transition-all duration-200" />
         </a>
-        <a href="mailto:hello@namehashlabs.org">
+        <a href="mailto:hello@namehashlabs.org" aria-label="Email Link">
           <EmailIcon className="gt_mobile:hover:fill-black text-[#AFAFAF] fill-current transition-all duration-200" />
         </a>
       </div>
