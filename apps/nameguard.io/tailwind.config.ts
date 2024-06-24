@@ -42,10 +42,6 @@ const config: Config = {
         error404_background_desktop:
           "radial-gradient(50% 35% at 50% 40%, rgba(255, 255, 255, 0.7) 0%, #FFF 100%), linear-gradient(90deg, #FFAF00 0%, #F112D9 32.29%, #4C3FA0 70.83%, #2ED3C6 95.83%)",
       },
-      screens: {
-        gt_mobile: "435px",
-        search_bar_change: "950px",
-      },
       fontSize: {
         footer_text: ["12px", "20px"],
       },

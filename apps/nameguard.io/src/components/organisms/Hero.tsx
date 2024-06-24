@@ -20,18 +20,18 @@ export function Hero() {
             <p className="text-center not-italic uppercase text-gray-500 text-xs tracking-[0.3px] font-medium">
               An open source public good
             </p>
-            <h1 className="text-black text-center not-italic font-bold text-4xl leading-10 gt_mobile:text-5xl gt_mobile:leading-[52px]">
+            <h1 className="text-black text-center not-italic font-bold text-4xl leading-10 sm:text-5xl sm:leading-[52px]">
               Protect your community <br className="hidden md:block" />
               with NameGuard for ENS
             </h1>
           </div>
-          <p className="text-center not-italic font-normal text-gray-500 text-lg leading-7 gt_mobile:text-base gt_mobile:leading-6 gt_mobile:font-light">
+          <p className="text-center not-italic font-normal text-gray-500 text-lg leading-7 sm:text-base sm:leading-6 sm:font-light">
             Guard your users from heartbreak and keep ENS usage safe across web3
           </p>
           <HeroStartCommand />
           <a
             href="https://api.nameguard.io/docs"
-            className="hidden search_bar_change:block relative z-10"
+            className="hidden lg:block relative z-10"
           >
             <button className="flex justify-center items-center px-[25px] py-[13px] rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-800 cursor-pointer">
               <p className="text-white not-italic font-medium text-base leading-6">
@@ -39,9 +39,9 @@ export function Hero() {
               </p>
             </button>
           </a>
-          <div className="flex search_bar_change:hidden flex-col items-center gap-3 self-stretch">
+          <div className="flex lg:hidden flex-col items-center gap-3 self-stretch">
             <NGSearch />
-            <p className="w-full h-fit text-gray-500 text-sm leading-6 font-normal text-center gt_mobile:font-light">
+            <p className="w-full h-fit text-gray-500 text-sm leading-6 font-normal text-center sm:font-light">
               or
             </p>
             <a

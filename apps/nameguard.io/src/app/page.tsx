@@ -89,11 +89,11 @@ export default function Home() {
           isCodeOnTheLeft={false}
           codeSnippet={getSecurePrimaryName}
           integrationsPanel={
-            <div className="hidden gt_mobile:inline-flex flex-col items-center search_bar_change:items-start justify-center gap-4 z-10">
+            <div className="hidden sm:inline-flex flex-col items-center lg:items-start justify-center gap-4 z-10">
               <p className="text-gray-500 text-lg leading-6 font-normal not-italic whitespace-nowrap">
                 Composable integrations include
               </p>
-              <div className="w-full h-fit flex flex-row justify-around search_bar_change:justify-start items-center gap-6 flex-wrap search_bar_change:flex-nowrap">
+              <div className="w-full h-fit flex flex-row justify-around lg:justify-start items-center gap-6 flex-wrap lg:flex-nowrap">
                 <XMTPIcon />
                 <LensProtocolIcon />
                 <FarcasterLogo />
@@ -118,7 +118,7 @@ export default function Home() {
               Just because a NFT names itself &quot;nick.eth&quot; doesn&apos;t
               mean it&apos;s an ENS name. NameGuard makes it easy to stop{" "}
               <a
-                className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+                className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
                 href="https://opensea.io/assets/ethereum/0x495f947276749ce646f68ac8c248420045cb7b5e/61995921128521442959106650131462633744885269624153038309795231243542768648193"
                 target="_blank"
                 rel="noopener noreferrer"

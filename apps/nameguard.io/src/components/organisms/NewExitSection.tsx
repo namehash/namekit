@@ -11,7 +11,7 @@ export function NewExitSection() {
               <h1 className="text-center text-black not-italic text-3xl leading-9 font-bold ">
                 Generate a report
               </h1>
-              <p className="text-center text-gray-500 not-italic text-lg leading-7 font-normal gt_mobile:font-light lg:leading-8">
+              <p className="text-center text-gray-500 not-italic text-lg leading-7 font-normal sm:font-light lg:leading-8">
                 Search for any ENS name to generate a report. Share NameGuard
                 reports with frENS.{" "}
               </p>
@@ -21,12 +21,12 @@ export function NewExitSection() {
         </div>
         <div className="flex flex-col justify-center items-center h-full max-h-[334px] md:max-h-[315px] w-full max-w-3xl rounded-xl border border-gray-200 bg-in_touch_background bg-no-repeat bg-top bg-[length:180%_200%] lg:bg-[length:100%_250%]">
           <div className="h-full w-full inline-flex flex-col justify-center items-center gap-10 py-10 px-5 box-border flex-shrink-0 lg:max-w-[508px] lg:w-full lg:px-10">
-            <div className="flex flex-col h-fit w-full max-w-[295px] gt_mobile:max-w-full items-center justify-center gap-6">
+            <div className="flex flex-col h-fit w-full max-w-[295px] sm:max-w-full items-center justify-center gap-6">
               <div className="flex flex-col gap-4 items-center">
                 <h1 className="text-center text-black not-italic text-3xl leading-9 font-bold ">
                   Get in touch
                 </h1>
-                <p className="text-center text-gray-500 not-italic text-lg leading-7 font-normal gt_mobile:font-light lg:leading-8">
+                <p className="text-center text-gray-500 not-italic text-lg leading-7 font-normal sm:font-light lg:leading-8">
                   Keep your users safe with NameGuard, the choice of leading
                   web3 teams. Ready for seamless integration into your web3 app?
                   Our team is here to assist you.

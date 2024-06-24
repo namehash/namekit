@@ -165,7 +165,7 @@ export function ChecksSection() {
       text: (
         <Fragment>
           <a
-            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
             href="mailto:hello@namehashlabs.org"
           >
             Reach out to us
@@ -183,7 +183,7 @@ export function ChecksSection() {
     "self-stretch not-italic z-10 text-gray-500 text-left text-sm leading-6 font-normal";
 
   return (
-    <section className="relative z-10 w-full h-full box-border flex flex-col py-10 px-5 items-center justify-center self-stretch gap-[32px] md:pt-[100px] md:pb-[48px] md:gap-0 bg-white gt_mobile:bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] gt_mobile:[background-size:24px_24px] search_bar_change:px-28">
+    <section className="relative z-10 w-full h-full box-border flex flex-col py-10 px-5 items-center justify-center self-stretch gap-[32px] md:pt-[100px] md:pb-[48px] md:gap-0 bg-white sm:bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] sm:[background-size:24px_24px] lg:px-28">
       <div className="flex flex-col justify-center items-center gap-5 max-w-[608px]">
         <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-3xl gap-2 justify-center items-center z-10">
           <CheckShieldGrayOutline />
@@ -194,7 +194,7 @@ export function ChecksSection() {
         <h1 className="text-black text-center not-italic z-10 text-2xl leading-8 font-bold md:text-4xl md:leading-10">
           Checks NameGuard Performs
         </h1>
-        <p className="text-center not-italic text-gray-500 text-lg leading-7 font-normal gt_mobile:font-light">
+        <p className="text-center not-italic text-gray-500 text-lg leading-7 font-normal sm:font-light">
           Elevate your security standards. Get next-level protection with a
           rigorous 12-Point inspection on ENS names, meticulously scrutinizing
           each label and grapheme for enhanced safety.

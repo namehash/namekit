@@ -18,19 +18,19 @@ export function RoadMap() {
   };
 
   const launchedBadge = (
-    <span className="relative inline-flex items-center justify-center rounded-[10px] gt_mobile:rounded-xl bg-black px-[10px] gt_mobile:px-3 py-0.5 text-center font-medium text-white not-italic text-xs leading-4 gt_mobile:text-sm gt_mobile:leading-5">
+    <span className="relative inline-flex items-center justify-center rounded-[10px] sm:rounded-xl bg-black px-[10px] sm:px-3 py-0.5 text-center font-medium text-white not-italic text-xs leading-4 sm:text-sm sm:leading-5">
       Launched
     </span>
   );
 
   const inProgressBadge = (
-    <span className="relative inline-flex w-fit h-auto items-center whitespace-nowrap justify-center rounded-[10px] gt_mobile:rounded-xl border border-black bg-white px-[10px] gt_mobile:px-3 py-0.5 text-center font-medium text-black not-italic text-xs leading-4 gt_mobile:text-sm gt_mobile:leading-5">
+    <span className="relative inline-flex w-fit h-auto items-center whitespace-nowrap justify-center rounded-[10px] sm:rounded-xl border border-black bg-white px-[10px] sm:px-3 py-0.5 text-center font-medium text-black not-italic text-xs leading-4 sm:text-sm sm:leading-5">
       In progress
     </span>
   );
 
   const plannedBadge = (
-    <span className="relative inline-flex items-center justify-center rounded-[10px] gt_mobile:rounded-xl bg-black bg-opacity-5 px-[10px] gt_mobile:px-3 py-0.5 text-center font-medium text-black not-italic text-xs leading-4 gt_mobile:text-sm gt_mobile:leading-5">
+    <span className="relative inline-flex items-center justify-center rounded-[10px] sm:rounded-xl bg-black bg-opacity-5 px-[10px] sm:px-3 py-0.5 text-center font-medium text-black not-italic text-xs leading-4 sm:text-sm sm:leading-5">
       Planned
     </span>
   );
@@ -50,7 +50,7 @@ export function RoadMap() {
           Supported the ENS DAO&apos;s approval of ENS Name Normalization
           (ENSIP-15) through the creation of{" "}
           <a
-            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
             href="https://github.com/namehash/ens-normalize-python"
             target="_blank"
             rel="noopener noreferrer"
@@ -68,7 +68,7 @@ export function RoadMap() {
         <span key="ENSFontDataFragment">
           Created{" "}
           <a
-            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
             href="https://github.com/namehash/ens-font-data"
             target="_blank"
             rel="noopener noreferrer"
@@ -86,7 +86,7 @@ export function RoadMap() {
         <span key="ENSLabelInspectorFragment">
           Developed an extensible framework for{" "}
           <a
-            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
             href="https://github.com/namehash/ens-label-inspector"
             target="_blank"
             rel="noopener noreferrer"
@@ -103,7 +103,7 @@ export function RoadMap() {
         <span key="NGLibraryFragment">
           Build{" "}
           <a
-            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
             href="https://github.com/namehash/nameguard/tree/main/api"
             target="_blank"
             rel="noopener noreferrer"
@@ -122,7 +122,7 @@ export function RoadMap() {
         <span key="NGAPIsFragment">
           Provided a{" "}
           <a
-            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
             href="https://api.nameguard.io/docs"
             target="_blank"
             rel="noopener noreferrer"
@@ -140,7 +140,7 @@ export function RoadMap() {
         <span key="NGDevOpsFragment">
           Made it easy for anyone to{" "}
           <a
-            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
             href="https://github.com/namehash/nameguard/blob/main/api/serverless.yml"
             target="_blank"
             rel="noopener noreferrer"
@@ -159,7 +159,7 @@ export function RoadMap() {
         <span key="NGClientSDKFragment">
           Offered a more convenient method for{" "}
           <a
-            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
             href="https://github.com/namehash/nameguard/tree/main/packages/sdk"
             target="_blank"
             rel="noopener noreferrer"
@@ -176,7 +176,7 @@ export function RoadMap() {
         <span key="NGFigmaUIKitFragment">
           Designed{" "}
           <a
-            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
             href="https://www.figma.com/file/aVlWccl7J2MyP8IE56lDMb/NameGuard-UI-Kit---23-11-2023"
             target="_blank"
             rel="noopener noreferrer"
@@ -194,7 +194,7 @@ export function RoadMap() {
         <span key="NGReactUIKitFragment">
           Implemented{" "}
           <a
-            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
             href="https://github.com/namehash/nameguard/tree/main/packages/nameguard-react"
             target="_blank"
             rel="noopener noreferrer"
@@ -212,7 +212,7 @@ export function RoadMap() {
         <span key="ENSNameParserFragment">
           Created a{" "}
           <a
-            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
             href="https://github.com/namehash/ens-utils/blob/main/README.md"
             target="_blank"
             rel="noopener noreferrer"
@@ -230,7 +230,7 @@ export function RoadMap() {
           Identified the risk of impersonation attacks. Built protections in the
           form of a new{" "}
           <a
-            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
             href="https://api.nameguard.io/docs#/secure_primary_name"
             target="_blank"
             rel="noopener noreferrer"
@@ -247,7 +247,7 @@ export function RoadMap() {
         <span key="ExampleAppFragment">
           Built and released an{" "}
           <a
-            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
             href="https://nameguard-examples-nextjs.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
@@ -266,7 +266,7 @@ export function RoadMap() {
         <span key="NGWebsiteFragment">
           Created an{" "}
           <a
-            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
             href="https://nameguard.io/"
             target="_blank"
             rel="noopener noreferrer"
@@ -286,7 +286,7 @@ export function RoadMap() {
           Implemented methods for generic NFT marketplaces such as LooksRare or
           OpenSea to{" "}
           <a
-            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
             href="https://api.nameguard.io/docs#/fake-eth-name-check"
             target="_blank"
             rel="noopener noreferrer"
@@ -318,7 +318,7 @@ export function RoadMap() {
         <span key="ENSCureAlgFragment">
           Implemented a method for further{" "}
           <a
-            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
             href="https://github.com/namehash/ens-normalize-python/blob/main/README.md#ens_cure"
             target="_blank"
             rel="noopener noreferrer"
@@ -340,7 +340,7 @@ export function RoadMap() {
         <span key="ENSWebfontFragment">
           Released an{" "}
           <a
-            className="text-black underline gt_mobile:underline-offset-[4px] gt_mobile:transition-all gt_mobile:duration-200 gt_mobile:hover:underline-offset-[2px]"
+            className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
             href="https://github.com/namehash/nameguard/pull/139"
             target="_blank"
             rel="noopener noreferrer"
@@ -477,12 +477,12 @@ export function RoadMap() {
           </div>
         ))}
       </div>
-      <div className="w-full gt_mobile:w-4/6 h-full flex flex-col items-center justify-center pt-10 gt_mobile:pt-0 pb-5 gt_mobile:pb-0 gap-5 gt_mobile:gap-20">
-        <div className="inline-flex h-fit w-full flex-col items-center gap-5 gt_mobile:gap-2 z-10">
-          <h1 className="text-black text-center not-italic font-bold text-2xl leading-8 gt_mobile:text-4xl gt_mobile:leading-[52px]">
+      <div className="w-full sm:w-4/6 h-full flex flex-col items-center justify-center pt-10 sm:pt-0 pb-5 sm:pb-0 gap-5 sm:gap-20">
+        <div className="inline-flex h-fit w-full flex-col items-center gap-5 sm:gap-2 z-10">
+          <h1 className="text-black text-center not-italic font-bold text-2xl leading-8 sm:text-4xl sm:leading-[52px]">
             NameGuard roadmap
           </h1>
-          <p className="text-center text-gray-500 text-lg leading-7 font-normal not-italic gt_mobile:text-base gt_mobile:font-light">
+          <p className="text-center text-gray-500 text-lg leading-7 font-normal not-italic sm:text-base sm:font-light">
             NameGuard has a mission to keep the ENS community safe and encourage
             optimal use of ENS names.
           </p>

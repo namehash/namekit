@@ -25,10 +25,10 @@ export function DevelopersSection() {
   const headerWrapperStyle =
     "flex flex-row items-center justify-start gap-x-2 gap-y-1 flex-wrap";
   const redirectStyle =
-    "hidden gt_mobile:group-hover:block absolute z-10 top-[18px] right-[18px]";
+    "hidden sm:group-hover:block absolute z-10 top-[18px] right-[18px]";
   const hoverCellStyle = cc([
     cellStyle,
-    "gt_mobile:hover:cursor-pointer gt_mobile:hover:border-gray-300 gt_mobile:hover:shadow-sm transition relative",
+    "sm:hover:cursor-pointer sm:hover:border-gray-300 sm:hover:shadow-sm transition relative",
   ]);
 
   const devElements: ListSectionElement[] = [
@@ -242,7 +242,7 @@ export function DevelopersSection() {
   ];
 
   return (
-    <section className="relative z-10 w-full h-full box-border flex flex-col py-10 px-5 items-center justify-center self-stretch gap-[32px] bg-white gt_mobile:bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] gt_mobile:[background-size:24px_24px] md:px-[100px]">
+    <section className="relative z-10 w-full h-full box-border flex flex-col py-10 px-5 items-center justify-center self-stretch gap-[32px] bg-white sm:bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] sm:[background-size:24px_24px] md:px-[100px]">
       <div className="flex flex-col justify-center items-center gap-5 max-w-[608px]">
         <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-3xl gap-2 justify-center items-center z-10">
           <GithubIconSmall />
@@ -253,7 +253,7 @@ export function DevelopersSection() {
         <h1 className="text-black text-center not-italic z-10 text-2xl leading-8 font-bold md:text-4xl md:leading-10">
           NameGuard 🤝 Developers
         </h1>
-        <p className="text-center not-italic text-gray-500 text-lg leading-7 font-normal gt_mobile:font-light">
+        <p className="text-center not-italic text-gray-500 text-lg leading-7 font-normal sm:font-light">
           All resources are open sourced and freely licensed for the community.
         </p>
       </div>
