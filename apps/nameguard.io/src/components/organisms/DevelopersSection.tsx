@@ -1,7 +1,7 @@
 import { Fragment } from "react";
-import { ListSectionBadge } from "../atoms/ListSectionBadge";
 import {
   CloudOutlineIcon,
+  ListSectionBadge,
   FigmaIcon,
   FileIcon,
   FontIcon,
@@ -13,9 +13,9 @@ import {
   DeveloperSectionIconWrapper,
 } from "@components/atoms";
 import { ListSectionElement } from "@/types/listSectionTypes";
-import { DeveloperResourceItem } from "../molecules/DeveloperResourceItem";
+import { DeveloperResourceItem } from "@components/molecules";
 
-export function DevelopersSection() {
+export const DevelopersSection = () => {
   const devElements: ListSectionElement[] = [
     {
       header: (
@@ -251,4 +251,4 @@ export function DevelopersSection() {
       </div>
     </section>
   );
-}
+};
