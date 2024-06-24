@@ -1,10 +1,11 @@
 import React from "react";
 
 import { RatingIcon, RatingIconSize } from "./RatingIcon";
-import { ReportFormattedDisplayName } from "./ReportFormattedName";
+import { ReportFormattedDisplayName } from "./ReportFormattedDisplayName";
 import { ReportChangesApplied } from "./ReportChangesApplied";
 import { ParsedName } from "@namehash/ens-utils";
 import { RatingLoadingIcon } from "../icons/RatingLoadingIcon";
+import { DisplayedName } from "../DisplayedName/DisplayedName";
 
 type LoadingSkeletonProps = {
   parsedName: ParsedName;
@@ -12,7 +13,6 @@ type LoadingSkeletonProps = {
 
 export const LoadingSkeleton = ({ parsedName }: LoadingSkeletonProps) => {
   const { transformations, outputName } = parsedName;
-  const { name, displayName, normalization } = outputName;
 
   return (
     <div className="rounded-xl border shadow-xl space-y-4 md:space-y-0 border-gray-200 shadow-gray-50">
@@ -21,16 +21,17 @@ export const LoadingSkeleton = ({ parsedName }: LoadingSkeletonProps) => {
           <p className="uppercase text-[12px] text-gray-500 font-medium">
             Rating for
           </p>
-          {name ? (
+          {outputName ? (
             <>
-              <h1 className="pt-1 text-2xl md:text-4xl text-black font-semibold md:font-bold overflow-hidden overflow-ellipsis whitespace-nowrap ens-webfont">
-                {name}
+              <h1>
+                <DisplayedName
+                  textStylingClasses="pt-1 text-2xl md:text-4xl text-black font-semibold md:font-bold whitespace-nowrap"
+                  name={parsedName.outputName}
+                  maxDisplayWidth={600}
+                  displayRawName={true}
+                />
               </h1>
-              <ReportFormattedDisplayName
-                displayName={displayName}
-                name={name}
-                normalization={normalization}
-              />
+              <ReportFormattedDisplayName name={outputName} />
             </>
           ) : (
             <div className="mt-5 w-40 h-3 rounded bg-gradient-to-r from-gray-300 to-gray-100 animate-pulse"></div>
