@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 
-import { GithubIcon, NGSearchIcon } from "../atoms";
-import { NGSearch } from "../molecules";
+import { GithubIcon, NGSearchIcon } from "@components/atoms";
+import { NGSearch } from "@components/molecules";
 
 export const Header = () => {
   return (

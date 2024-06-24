@@ -6,7 +6,7 @@ import {
   GithubIcon,
   TelegramIcon,
   TwitterIcon,
-} from "../atoms";
+} from "@components/atoms";
 
 export const Footer = () => {
   return (

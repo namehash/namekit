@@ -9,7 +9,7 @@ import {
   GithubIconDevelopers,
   GithubIconSmall,
   RedirectIcon,
-} from "../atoms";
+} from "@components/atoms";
 import cc from "classcat";
 import { ListSectionElement } from "@/types/listSectionTypes";
 

@@ -9,7 +9,7 @@ import { checkResultCodeTextColor } from "@namehash/nameguard-react";
 import { CheckResultCode } from "@namehash/nameguard";
 import { Fragment } from "react";
 import { ListSectionElement } from "@/types/listSectionTypes";
-import { CheckShieldGrayOutline, ListSectionBadge } from "../atoms";
+import { CheckShieldGrayOutline, ListSectionBadge } from "@components/atoms";
 
 export function ChecksSection() {
   const checkCircle = (

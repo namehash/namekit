@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchStore } from "@namehash/nameguard-react";
-import { Error404IconLarge, Error404IconSmall } from "../atoms";
+import { Error404IconLarge, Error404IconSmall } from "@components/atoms";
 
 export default function NotFound() {
   const { openModal } = useSearchStore();
