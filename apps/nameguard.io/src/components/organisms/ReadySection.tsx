@@ -3,7 +3,7 @@ import cc from "classcat";
 import { highlight } from "sugar-high";
 import { ImageCharacteristics } from "@/types/imageTypes";
 
-type ReadySectionProps = {
+export type ReadySectionProps = {
   sectionTargetClientMessage: string;
   sectionTargetSvg: React.ReactNode;
   sectionHeader: React.ReactNode;

@@ -10,3 +10,5 @@ export * from "./NewExitSection";
 export * from "./NotFound";
 export * from "./ReadySection";
 export * from "./RoadMap";
+export * from "./ComingSoonSections";
+export * from "./ReadySections";

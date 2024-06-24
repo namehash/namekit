@@ -2,7 +2,7 @@ import Image from "next/image";
 import cc from "classcat";
 import { ImageCharacteristics } from "@/types/imageTypes";
 
-type ComingSoonSectionProps = {
+export type ComingSoonSectionProps = {
   sectionTargetClientMessage: string;
   sectionTargetSvg: React.ReactNode;
   sectionHeader: React.ReactNode;
