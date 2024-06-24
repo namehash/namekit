@@ -9,65 +9,59 @@ import {
   GithubIconDevelopers,
   GithubIconSmall,
   RedirectIcon,
+  DeveloperSectionTitle,
+  DeveloperSectionWrapper,
+  DeveloperSectionIconWrapper,
 } from "@components/atoms";
 import cc from "classcat";
 import { ListSectionElement } from "@/types/listSectionTypes";
 
 export function DevelopersSection() {
-  const iconWrapperStyle =
-    "w-11 h-11 p-[10px] flex justify-center items-center flex-shrink-0 bg-black rounded-lg";
   const cellStyle =
     "group w-full md:w-[602px] h-full sm:min-w-[602px] max-w-[602px] box-border flex flex-row items-start justify-start bg-white p-5 gap-4 rounded-xl border border-gray-200";
   const cellTextStyle =
     "self-stretch not-italic z-10 text-gray-500 text-left text-sm leading-6 font-normal";
-  const headerStyle =
-    "self-stretch not-italic z-10 text-black text-left text-sm leading-6 font-semibold whitespace-nowrap";
-  const headerWrapperStyle =
-    "flex flex-row items-center justify-start gap-x-2 gap-y-1 flex-wrap";
-  const redirectStyle =
-    "hidden sm:group-hover:block absolute z-10 top-[18px] right-[18px]";
   const hoverCellStyle = cc([
-    cellStyle,
-    "sm:hover:cursor-pointer sm:hover:border-gray-300 sm:hover:shadow-sm transition relative",
+    "group w-full md:w-[602px] h-full sm:min-w-[602px] max-w-[602px] box-border flex flex-row items-start justify-start bg-white p-5 gap-4 rounded-xl border border-gray-200 sm:hover:cursor-pointer sm:hover:border-gray-300 sm:hover:shadow-sm transition relative",
   ]);
 
   const devElements: ListSectionElement[] = [
     {
       header: (
-        <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>NameGuard library</h3>
-        </div>
+        <DeveloperSectionWrapper>
+          <DeveloperSectionTitle>NameGuard library</DeveloperSectionTitle>
+        </DeveloperSectionWrapper>
       ),
       text: <Fragment>Security &quot;x-ray&quot; for ENS names.</Fragment>,
       icon: (
-        <div className={iconWrapperStyle}>
+        <DeveloperSectionIconWrapper>
           <GithubIconDevelopers />
-        </div>
+        </DeveloperSectionIconWrapper>
       ),
       link: "https://github.com/namehash/nameguard/tree/main/api",
     },
     {
       header: (
-        <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>NameGuard Client SDK</h3>
-        </div>
+        <DeveloperSectionWrapper>
+          <DeveloperSectionTitle>NameGuard Client SDK</DeveloperSectionTitle>
+        </DeveloperSectionWrapper>
       ),
       text: (
         <Fragment>Thin client SDK for making API calls to NameGuard.</Fragment>
       ),
       icon: (
-        <div className={iconWrapperStyle}>
+        <DeveloperSectionIconWrapper>
           <GithubIconDevelopers />
-        </div>
+        </DeveloperSectionIconWrapper>
       ),
       link: "https://github.com/namehash/nameguard/tree/main/packages/sdk",
     },
     {
       header: (
-        <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>NameGuard React UI Kit</h3>
+        <DeveloperSectionWrapper>
+          <DeveloperSectionTitle>NameGuard React UI Kit</DeveloperSectionTitle>
           <ListSectionBadge width={53} height={20} text="Alpha" />
-        </div>
+        </DeveloperSectionWrapper>
       ),
       text: (
         <Fragment>
@@ -75,17 +69,17 @@ export function DevelopersSection() {
         </Fragment>
       ),
       icon: (
-        <div className={iconWrapperStyle}>
+        <DeveloperSectionIconWrapper>
           <GithubIconDevelopers />
-        </div>
+        </DeveloperSectionIconWrapper>
       ),
       link: "https://github.com/namehash/nameguard/tree/main/packages/nameguard-react",
     },
     {
       header: (
-        <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>Figma UI kit</h3>
-        </div>
+        <DeveloperSectionWrapper>
+          <DeveloperSectionTitle>Figma UI kit</DeveloperSectionTitle>
+        </DeveloperSectionWrapper>
       ),
       text: (
         <Fragment>
@@ -93,31 +87,31 @@ export function DevelopersSection() {
         </Fragment>
       ),
       icon: (
-        <div className={iconWrapperStyle}>
+        <DeveloperSectionIconWrapper>
           <FigmaIcon />
-        </div>
+        </DeveloperSectionIconWrapper>
       ),
       link: "https://www.figma.com/file/aVlWccl7J2MyP8IE56lDMb/NameGuard-UI-Kit---23-11-2023",
     },
     {
       header: (
-        <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>ENS Label Inspector</h3>
-        </div>
+        <DeveloperSectionWrapper>
+          <DeveloperSectionTitle>ENS Label Inspector</DeveloperSectionTitle>
+        </DeveloperSectionWrapper>
       ),
       text: <Fragment>Detailed inspection of labels in ENS names.</Fragment>,
       icon: (
-        <div className={iconWrapperStyle}>
+        <DeveloperSectionIconWrapper>
           <GithubIconDevelopers />
-        </div>
+        </DeveloperSectionIconWrapper>
       ),
       link: "https://github.com/namehash/ens-label-inspector",
     },
     {
       header: (
-        <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>ENS Font Data</h3>
-        </div>
+        <DeveloperSectionWrapper>
+          <DeveloperSectionTitle>ENS Font Data</DeveloperSectionTitle>
+        </DeveloperSectionWrapper>
       ),
       text: (
         <Fragment>
@@ -125,17 +119,17 @@ export function DevelopersSection() {
         </Fragment>
       ),
       icon: (
-        <div className={iconWrapperStyle}>
+        <DeveloperSectionIconWrapper>
           <GithubIconDevelopers />
-        </div>
+        </DeveloperSectionIconWrapper>
       ),
       link: "https://github.com/namehash/ens-font-data",
     },
     {
       header: (
-        <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>ENS Normalize Python</h3>
-        </div>
+        <DeveloperSectionWrapper>
+          <DeveloperSectionTitle>ENS Normalize Python</DeveloperSectionTitle>
+        </DeveloperSectionWrapper>
       ),
       text: (
         <Fragment>
@@ -143,34 +137,34 @@ export function DevelopersSection() {
         </Fragment>
       ),
       icon: (
-        <div className={iconWrapperStyle}>
+        <DeveloperSectionIconWrapper>
           <GithubIconDevelopers />
-        </div>
+        </DeveloperSectionIconWrapper>
       ),
       link: "https://github.com/namehash/ens-normalize-python",
     },
     {
       header: (
-        <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>ENS Name Parser</h3>
+        <DeveloperSectionWrapper>
+          <DeveloperSectionTitle>ENS Name Parser</DeveloperSectionTitle>
           <ListSectionBadge width={53} height={20} text="Alpha" />
-        </div>
+        </DeveloperSectionWrapper>
       ),
       text: (
         <Fragment>Utilities for parsing ENS names from user input.</Fragment>
       ),
       icon: (
-        <div className={iconWrapperStyle}>
+        <DeveloperSectionIconWrapper>
           <GithubIconDevelopers />
-        </div>
+        </DeveloperSectionIconWrapper>
       ),
       link: "https://github.com/namehash/ens-utils/blob/main/README.md",
     },
     {
       header: (
-        <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>Open public API</h3>
-        </div>
+        <DeveloperSectionWrapper>
+          <DeveloperSectionTitle>Open public API</DeveloperSectionTitle>
+        </DeveloperSectionWrapper>
       ),
       text: (
         <Fragment>
@@ -178,17 +172,19 @@ export function DevelopersSection() {
         </Fragment>
       ),
       icon: (
-        <div className={iconWrapperStyle}>
+        <DeveloperSectionIconWrapper>
           <CloudOutlineIcon />
-        </div>
+        </DeveloperSectionIconWrapper>
       ),
       link: "https://api.nameguard.io/docs",
     },
     {
       header: (
-        <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>NameGuard DevOps Scripts</h3>
-        </div>
+        <DeveloperSectionWrapper>
+          <DeveloperSectionTitle>
+            NameGuard DevOps Scripts
+          </DeveloperSectionTitle>
+        </DeveloperSectionWrapper>
       ),
       text: (
         <Fragment>
@@ -196,18 +192,18 @@ export function DevelopersSection() {
         </Fragment>
       ),
       icon: (
-        <div className={iconWrapperStyle}>
+        <DeveloperSectionIconWrapper>
           <GearWheelIcon />
-        </div>
+        </DeveloperSectionIconWrapper>
       ),
       link: "https://github.com/namehash/nameguard/blob/main/api/serverless.yml",
     },
     {
       header: (
-        <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>Detailed documentation</h3>
+        <DeveloperSectionWrapper>
+          <DeveloperSectionTitle>Detailed documentation</DeveloperSectionTitle>
           <ListSectionBadge width={96} height={20} text="Coming soon" />
-        </div>
+        </DeveloperSectionWrapper>
       ),
       text: (
         <Fragment>
@@ -215,17 +211,17 @@ export function DevelopersSection() {
         </Fragment>
       ),
       icon: (
-        <div className={iconWrapperStyle}>
+        <DeveloperSectionIconWrapper>
           <FileIcon />
-        </div>
+        </DeveloperSectionIconWrapper>
       ),
     },
     {
       header: (
-        <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>ENS Webfont</h3>
+        <DeveloperSectionWrapper>
+          <DeveloperSectionTitle>ENS Webfont</DeveloperSectionTitle>
           <ListSectionBadge width={96} height={20} text="Alpha" />
-        </div>
+        </DeveloperSectionWrapper>
       ),
       text: (
         <Fragment>
@@ -233,9 +229,9 @@ export function DevelopersSection() {
         </Fragment>
       ),
       icon: (
-        <div className={iconWrapperStyle}>
+        <DeveloperSectionIconWrapper>
           <FontIcon />
-        </div>
+        </DeveloperSectionIconWrapper>
       ),
       link: "https://github.com/namehash/nameguard/tree/main/packages/ens-webfont",
     },
@@ -259,7 +255,9 @@ export function DevelopersSection() {
       </div>
       <div className="w-full h-full flex flex-col md:flex-row md:flex-wrap max-w-[1840px] items-center justify-center content-between gap-4">
         {devElements.map((elem, idx) => {
-          return elem.link == undefined ? (
+          let elementLink = elem.link;
+
+          return elementLink == undefined ? (
             <div key={`NameGuardCheck#${idx}`} className={cellStyle}>
               {elem.icon}
               <div>
@@ -270,13 +268,13 @@ export function DevelopersSection() {
           ) : (
             <a
               key={`NameGuardCheck#${idx}`}
-              href={elem.link}
+              href={elementLink}
               target="_blank"
               rel="noopener noreferrer"
               className="group w-full sm:w-fit h-fit"
             >
               <div className={hoverCellStyle}>
-                <RedirectIcon className={redirectStyle} />
+                <RedirectIcon className="hidden sm:group-hover:block absolute z-10 top-[18px] right-[18px]" />
                 {elem.icon}
                 <div>
                   {elem.header}
