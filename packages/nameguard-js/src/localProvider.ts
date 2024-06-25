@@ -1,46 +1,39 @@
 import { PublicClient } from "viem";
-import { SecurePrimaryNameResult } from "@namehash/nameguard";
-import { securePrimaryName } from "./securePrimaryName";
+import { LocalSecurePrimaryNameResult, NameGuardLocalProvider } from "@namehash/nameguard";
+import { securePrimaryName as securePrimaryNameImpl } from "./securePrimaryName";
 
 /**
  * Options for the NameGuard LocalProvider constructor.
  */
-interface LocalProviderOptions {
+export interface LocalProviderOptions {
   /**
    * The viem client instance to use for primary name lookups.
-   * The network of this client must match the network of the NameGuard client.
+   * The network of this client must match the network declared in NameGuard's `createClient` options.
+   *
+   * ```typescript
+   * const nameguard = createClient({
+   *   localProviders: new Map([
+   *     // The network of the publicClient must match the network declared here.
+   *     ["mainnet", createLocalProvider({ publicClient })],
+   *     ["sepolia", ...],
+   *   ]),
+   * });
+   * ```
+   *
+   * It is the user's responsibility to ensure that the network of the viem client matches the declared network.
    */
   publicClient: PublicClient;
 }
 
-/**
- * Implements a client-side analysis provider for NameGuard.
- * This provider can be passed to the NameGuard constructor to enable client-side analysis.
- * Requires a viem client instance to perform primary name lookups.
- */
-class LocalProvider {
-  /**
-   * The viem client instance to use for primary name lookups.
-   * The network of this client must match the network of the NameGuard client.
-   */
+class LocalProviderImpl {
   private publicClient: PublicClient;
 
-  /**
-   * Creates an instance of the LocalProvider.
-   * @param options - The options for configuring the local provider.
-   */
   constructor(options: LocalProviderOptions) {
     this.publicClient = options.publicClient;
   }
 
-  /**
-   * Implements the NameGuard securePrimaryName method without using a NameGuard API server.
-   *
-   * @param address - The address for which to secure the primary name.
-   * @returns A promise that resolves to the result of securing the primary name.
-   */
-  securePrimaryName(address: string): Promise<SecurePrimaryNameResult> {
-    return securePrimaryName(address, this.publicClient);
+  securePrimaryName(address: string): Promise<LocalSecurePrimaryNameResult> {
+    return securePrimaryNameImpl(address, this.publicClient);
   }
 }
 
@@ -51,6 +44,6 @@ class LocalProvider {
  * @param options - The options for the local provider.
  * @returns A new instance of the local provider.
  */
-export function createLocalProvider(options: LocalProviderOptions): LocalProvider {
-  return new LocalProvider(options);
+export function createLocalProvider(options: LocalProviderOptions): NameGuardLocalProvider {
+  return new LocalProviderImpl(options);
 }

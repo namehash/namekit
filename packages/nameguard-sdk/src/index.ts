@@ -432,6 +432,48 @@ export interface SecurePrimaryNameResult {
   nameguard_result: NameGuardReport | null;
 }
 
+export interface LocalSecurePrimaryNameResult {
+  /**
+   * Secure primary name status of the Ethereum address.
+   */
+  primary_name_status: SecurePrimaryNameStatus;
+
+  /**
+   * Impersonation status of the `primary_name`.
+   *
+   * `null` if `primary_name` is `null`.
+   */
+  impersonation_status: ImpersonationStatus | null;
+
+  /**
+   * Primary ENS name for the Ethereum address.
+   *
+   * `null` if `primary_name_status` is any value except `normalized`.
+   */
+  primary_name: string | null;
+
+  /**
+   * ENS beautified version of `primary_name`.
+   *
+   * If `primary_name` is `null` then provides a fallback `display_name` of "Unnamed [first four hex digits of Ethereum address]", e.g. "Unnamed c2a6".
+   */
+  display_name: string;
+}
+
+/**
+ * Implements a client-side analysis provider for NameGuard.
+ * This provider can be passed to the NameGuard constructor to enable client-side analysis.
+ */
+export interface NameGuardLocalProvider {
+  /**
+   * Implements the NameGuard securePrimaryName method without using a NameGuard API server.
+   *
+   * @param address - The address to analyze.
+   * @returns A promise that resolves to the result of analysis.
+   */
+  securePrimaryName(address: string): Promise<LocalSecurePrimaryNameResult>;
+}
+
 // TODO: Let's apply more formalization to this error class.
 class NameGuardError extends Error {
   constructor(
@@ -444,13 +486,14 @@ class NameGuardError extends Error {
 
 const DEFAULT_ENDPOINT = "https://api.nameguard.io";
 const DEFAULT_NETWORK: Network = "mainnet";
+const DEFAULT_LOCAL_PROVIDERS: Map<Network, NameGuardLocalProvider> = new Map();
 const DEFAULT_INSPECT_LABELHASH_PARENT = ETH_TLD;
 const MAX_BULK_INSPECTION_NAMES = 250;
 
 interface NameGuardOptions {
   endpoint?: string;
   network?: Network;
-  localProvider?: NameGuardLocalProvider;
+  localProviders?: Map<Network, NameGuardLocalProvider>;
 }
 
 interface InspectNameOptions {
@@ -478,25 +521,21 @@ interface FieldsWithRequiredTitle extends Record<string, string> {
   title: string;
 }
 
-interface NameGuardLocalProvider {
-  securePrimaryName(address: string): Promise<SecurePrimaryNameResult>;
-}
-
 class NameGuard {
   private endpoint: URL;
   private network: Network;
   private abortController: AbortController;
-  private localProvider: NameGuardLocalProvider | undefined;
+  private localProviders: Map<Network, NameGuardLocalProvider>;
 
   constructor({
     endpoint = DEFAULT_ENDPOINT,
     network = DEFAULT_NETWORK,
-    localProvider = undefined,
+    localProviders = DEFAULT_LOCAL_PROVIDERS,
   }: NameGuardOptions = {}) {
     this.endpoint = new URL(endpoint);
     this.network = network;
     this.abortController = new AbortController();
-    this.localProvider = localProvider;
+    this.localProviders = localProviders;
   }
 
   /**
@@ -678,13 +717,59 @@ class NameGuard {
       );
     }
 
-    if (this.localProvider) {
-      return this.localProvider.securePrimaryName(address);
+    const network_name = options?.network || this.network;
+
+    return this.rawRequest(`secure-primary-name/${network_name}/${address}`);
+  }
+
+  /**
+   * Performs a reverse lookup of an Ethereum `address` to a primary name.
+   *
+   * Data sources for the primary name lookup include:
+   * 1. The Ethereum Provider configured in the NameGuard instance.
+   * 2. For ENS names using CCIP-Read: requests to externally defined gateway servers.
+   *
+   * Returns `display_name` to be shown to users and estimates `impersonation_status`.
+   * 
+   * This function does not use the NameGuard API server and instead uses a local provider.
+   * The provider must be configured when creating the NameGuard client.
+   * A viem client is required to create a local provider.
+   * 
+   * ```typescript
+   * const nameguard = createClient({
+   *   localProviders: new Map([
+   *     // The network of the viem publicClient must match the network declared here.
+   *     ["mainnet", createLocalProvider({ publicClient })],
+   *     ["sepolia", ...],
+   *   ]),
+   * });
+   * ```
+   *
+   * @param {string} address An Ethereum address.
+   * @param {SecurePrimaryNameOptions} options The options for the secure primary name.
+   * @returns {Promise<SecurePrimaryNameResult>} A promise that resolves with a `LocalSecurePrimaryNameResult`.
+   */
+  public getSecurePrimaryNameLocal(
+    address: string,
+    options?: SecurePrimaryNameOptions
+  ): Promise<LocalSecurePrimaryNameResult> {
+    if (!isEthereumAddress(address)) {
+      throw new Error(
+        `The provided address: "${address}" is not in a valid Ethereum address format.`
+      );
     }
 
     const network_name = options?.network || this.network;
 
-    return this.rawRequest(`secure-primary-name/${network_name}/${address}`);
+    const localProvider = this.localProviders.get(network_name);
+
+    if (localProvider === undefined) {
+      throw new Error(
+        `Local provider for network ${network_name} is not configured.`
+      );
+    }
+
+    return localProvider.securePrimaryName(address);
   }
 
   /**

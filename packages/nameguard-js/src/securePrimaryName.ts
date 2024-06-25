@@ -1,6 +1,6 @@
 import { ens_beautify } from "@adraffy/ens-normalize";
 import { PublicClient } from "viem";
-import { SecurePrimaryNameResult } from "@namehash/nameguard";
+import { LocalSecurePrimaryNameResult } from "@namehash/nameguard";
 import { computeImpersonationStatus } from "./impersonation";
 import { lookupPrimaryName } from "./lookup";
 import { isEnsNormalized } from "./normalization";
@@ -15,7 +15,7 @@ import { isEnsNormalized } from "./normalization";
 export async function securePrimaryName(
   address: string,
   client: PublicClient,
-): Promise<SecurePrimaryNameResult> {
+): Promise<LocalSecurePrimaryNameResult> {
   const primaryName = await lookupPrimaryName(address, client);
 
   // This name is displayed when the primary name is not found.
@@ -24,20 +24,20 @@ export async function securePrimaryName(
   // No primary name found.
   if (primaryName === null) {
     return {
-      primaryName: null,
-      impersonationStatus: null,
-      displayName: unnamedName,
-      primaryNameStatus: "no_primary_name",
+      primary_name: null,
+      impersonation_status: null,
+      display_name: unnamedName,
+      primary_name_status: "no_primary_name",
     };
   }
 
   // Primary name is not normalized.
   if (!isEnsNormalized(primaryName)) {
     return {
-      primaryName: null,
-      impersonationStatus: null,
-      displayName: unnamedName,
-      primaryNameStatus: "unnormalized",
+      primary_name: null,
+      impersonation_status: null,
+      display_name: unnamedName,
+      primary_name_status: "unnormalized",
     };
   }
 
@@ -45,10 +45,10 @@ export async function securePrimaryName(
   const beautifulName = ens_beautify(primaryName);
 
   return {
-    primaryName: primaryName,
+    primary_name: primaryName,
     // Only perform the impersonation check if the primary name is normalized.
-    impersonationStatus: computeImpersonationStatus(primaryName),
-    displayName: beautifulName,
-    primaryNameStatus: "normalized",
+    impersonation_status: computeImpersonationStatus(primaryName),
+    display_name: beautifulName,
+    primary_name_status: "normalized",
   };
 }

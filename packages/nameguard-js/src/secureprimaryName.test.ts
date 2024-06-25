@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { createPublicClient, http } from "viem";
 import { mainnet } from "viem/chains";
-import { SecurePrimaryNameResult } from "@namehash/nameguard";
+import { LocalSecurePrimaryNameResult } from "@namehash/nameguard";
 import { securePrimaryName } from "./securePrimaryName";
 
 describe("secure primary name", () => {
@@ -172,7 +172,7 @@ describe("secure primary name", () => {
           'hello<world>!.eth',
       ],
     ];
-    const promises: Promise<SecurePrimaryNameResult>[] = [];
+    const promises: Promise<LocalSecurePrimaryNameResult>[] = [];
     for (const test of tests) {
       const address = test[0] as string;
       promises.push(securePrimaryName(address, client));
@@ -185,10 +185,10 @@ describe("secure primary name", () => {
       const primaryNameStatus = test[2] as string;
       const primaryName = test[3] as string;
       const displayName = test[4] as string;
-      expect(r.displayName).toBe(displayName);
-      expect(r.impersonationStatus).toBe(impersonationStatus);
-      expect(r.primaryNameStatus).toBe(primaryNameStatus);
-      expect(r.primaryName).toBe(primaryName);
+      expect(r.display_name).toBe(displayName);
+      expect(r.impersonation_status).toBe(impersonationStatus);
+      expect(r.primary_name_status).toBe(primaryNameStatus);
+      expect(r.primary_name).toBe(primaryName);
     }
   }, 30000);
 });
