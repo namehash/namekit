@@ -7,9 +7,9 @@ import {
   AltPriceDisplayFormat,
   PriceDisplayPosition,
   PriceDisplaySize,
-  PriceSymbolPosition,
-  PriceSymbology,
-} from "./PriceSymbol";
+  CurrencySymbolPosition,
+  CurrencySymbology,
+} from "./CurrencySymbol";
 import { RegistrationPriceInfoDisplayingFormat } from "./RegistrationPriceInfo";
 
 interface NamePriceProps {
@@ -24,9 +24,9 @@ interface NamePriceProps {
   // Wether to display the alternative price as a text instead of a tooltip
   altPriceDisplayFormat: AltPriceDisplayFormat;
   // Wether to display a currency symbology as its acronym or symbol
-  currencySymbology?: PriceSymbology;
+  currencySymbology?: CurrencySymbology;
   // The place to display the currency symbology
-  symbolPosition?: PriceSymbolPosition;
+  symbolPosition?: CurrencySymbolPosition;
   // The size of the alternative price display
   altPriceDisplaySize?: PriceDisplaySize;
   // The size of the price display
@@ -34,7 +34,7 @@ interface NamePriceProps {
   // The place to display the alternative price when displayed as text
   altPriceDisplayPosition?: PriceDisplayPosition;
   // Wether or not to display the name of the currency in a tooltip when its symbol is hovered
-  showCurrencyTooltipDescription?: boolean;
+  describeCurrencyInTooltip?: boolean;
 }
 
 export const NamePrice = ({
@@ -43,9 +43,9 @@ export const NamePrice = ({
   parsedName,
   onTextClick,
   registration,
-  showCurrencyTooltipDescription = true,
-  symbolPosition = PriceSymbolPosition.Left,
-  currencySymbology = PriceSymbology.Symbol,
+  describeCurrencyInTooltip = true,
+  symbolPosition = CurrencySymbolPosition.Left,
+  currencySymbology = CurrencySymbology.Symbol,
   altPriceDisplaySize = PriceDisplaySize.Micro,
   priceTextDisplaySize = PriceDisplaySize.Small,
   altPriceDisplayPosition = PriceDisplayPosition.Right,
@@ -74,7 +74,7 @@ export const NamePrice = ({
           priceTextDisplaySize={priceTextDisplaySize}
           altPriceDisplayPosition={altPriceDisplayPosition}
           altPriceDisplayFormat={altPriceDisplayFormat}
-          showCurrencyTooltipDescription={showCurrencyTooltipDescription}
+          describeCurrencyInTooltip={describeCurrencyInTooltip}
         />
       </div>
     </div>

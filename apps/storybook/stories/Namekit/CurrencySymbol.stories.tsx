@@ -1,5 +1,5 @@
 import { Currency } from "@namehash/ens-utils";
-import { PriceDisplaySize, PriceSymbol } from "@namehash/namekit-react";
+import { PriceDisplaySize, CurrencySymbol } from "@namehash/namekit-react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 export const ETH: Story = {
@@ -78,9 +78,9 @@ export const NotShowingTooltipDescription: Story = {
   },
 };
 
-const meta: Meta<typeof PriceSymbol> = {
-  component: PriceSymbol,
-  title: "Namekit/PriceSymbol",
+const meta: Meta<typeof CurrencySymbol> = {
+  component: CurrencySymbol,
+  title: "Namekit/CurrencySymbol",
 };
 
 declare global {
@@ -95,4 +95,4 @@ BigInt.prototype.toJSON = function () {
 
 export default meta;
 
-type Story = StoryObj<typeof PriceSymbol>;
+type Story = StoryObj<typeof CurrencySymbol>;

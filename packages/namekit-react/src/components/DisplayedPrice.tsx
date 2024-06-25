@@ -7,13 +7,13 @@ import {
 
 import React from "react";
 import {
-  PriceSymbol,
-  PriceSymbolPosition,
+  CurrencySymbol,
+  CurrencySymbolPosition,
   PriceDisplayPosition,
   PriceDisplaySize,
-  PriceSymbology,
+  CurrencySymbology,
   AltPriceDisplayFormat,
-} from "./PriceSymbol";
+} from "./CurrencySymbol";
 
 import cc from "classcat";
 import { Tooltip } from "./Tooltip";
@@ -28,9 +28,9 @@ interface DisplayedPriceProps {
   // Wether to display the alternative price as a text instead of a tooltip
   altPriceDisplayFormat: AltPriceDisplayFormat;
   // Wether to display a currency symbology as its acronym or symbol
-  currencySymbology?: PriceSymbology;
+  currencySymbology?: CurrencySymbology;
   // The place to display the currency symbology
-  symbolPosition?: PriceSymbolPosition;
+  symbolPosition?: CurrencySymbolPosition;
   // The size of the alternative price display
   altPriceDisplaySize?: PriceDisplaySize;
   // The size of the price display
@@ -38,16 +38,16 @@ interface DisplayedPriceProps {
   // The place to display the alternative price when displayed as text
   altPriceDisplayPosition?: PriceDisplayPosition;
   // Wether or not to display the name of the currency in a tooltip when its symbol is hovered
-  showCurrencyTooltipDescription?: boolean;
+  describeCurrencyInTooltip?: boolean;
 }
 
 export const DisplayedPrice = ({
   price,
   altPrice,
   onTextClick,
-  showCurrencyTooltipDescription = true,
-  symbolPosition = PriceSymbolPosition.Left,
-  currencySymbology = PriceSymbology.Symbol,
+  describeCurrencyInTooltip = true,
+  symbolPosition = CurrencySymbolPosition.Left,
+  currencySymbology = CurrencySymbology.Symbol,
   altPriceDisplaySize = PriceDisplaySize.Micro,
   priceTextDisplaySize = PriceDisplaySize.Small,
   altPriceDisplayPosition = PriceDisplayPosition.Right,
@@ -68,31 +68,32 @@ export const DisplayedPrice = ({
     >
       <p className="nk-order-2 nk-leading-none">{formattedPrice({ price })}</p>
 
-      {(currencySymbology === PriceSymbology.Symbol &&
+      {(currencySymbology === CurrencySymbology.Symbol &&
         altPriceDisplayFormat === AltPriceDisplayFormat.Tooltip &&
         !altPrice) ||
-      (currencySymbology === PriceSymbology.Symbol &&
+      (currencySymbology === CurrencySymbology.Symbol &&
         altPriceDisplayFormat === AltPriceDisplayFormat.Text) ? (
         <div
           className={cc([
             "nk-leading-none",
             {
               "nk-mb-[1px]": price.currency !== Currency.Usd,
-              "nk-order-1 nk-mr-1": symbolPosition === PriceSymbolPosition.Left,
+              "nk-order-1 nk-mr-1":
+                symbolPosition === CurrencySymbolPosition.Left,
               "nk-mr-1.5 nk-order-3":
-                symbolPosition === PriceSymbolPosition.Right,
+                symbolPosition === CurrencySymbolPosition.Right,
             },
           ])}
         >
-          <PriceSymbol
-            describeCurrencyInTooltip={showCurrencyTooltipDescription}
+          <CurrencySymbol
+            describeCurrencyInTooltip={describeCurrencyInTooltip}
             currency={price.currency}
             size={priceTextDisplaySize}
           />
         </div>
       ) : null}
 
-      {currencySymbology === PriceSymbology.Acronym && (
+      {currencySymbology === CurrencySymbology.Acronym && (
         <p className="nk-ml-1 nk-order-2">
           {PriceCurrencyFormat[price.currency].Acronym}
         </p>
@@ -118,33 +119,33 @@ export const DisplayedPrice = ({
           {formattedPrice({ price: altPrice })}
         </p>
 
-        {currencySymbology === PriceSymbology.Symbol ||
+        {currencySymbology === CurrencySymbology.Symbol ||
         altPrice.currency === Currency.Usd ? (
           <div
             className={cc([
               "nk-leading-none",
               {
                 "nk-order-1 nk-mr-1":
-                  symbolPosition === PriceSymbolPosition.Left &&
+                  symbolPosition === CurrencySymbolPosition.Left &&
                   altPrice.currency === Currency.Usd,
                 "nk-order-1":
-                  symbolPosition === PriceSymbolPosition.Left &&
+                  symbolPosition === CurrencySymbolPosition.Left &&
                   altPrice.currency !== Currency.Usd,
                 "nk-mr-1.5 nk-order-3":
-                  symbolPosition === PriceSymbolPosition.Right,
+                  symbolPosition === CurrencySymbolPosition.Right,
               },
             ])}
           >
-            <PriceSymbol
+            <CurrencySymbol
               symbolFillColor={"currentColor"}
-              describeCurrencyInTooltip={showCurrencyTooltipDescription}
+              describeCurrencyInTooltip={describeCurrencyInTooltip}
               currency={altPrice.currency}
               size={altPriceDisplaySize}
             />
           </div>
         ) : null}
 
-        {currencySymbology === PriceSymbology.Acronym && (
+        {currencySymbology === CurrencySymbology.Acronym && (
           <p className="nk-ml-1 nk-order-2">
             {PriceCurrencyFormat[altPrice.currency].Acronym}
           </p>
@@ -167,23 +168,23 @@ export const DisplayedPrice = ({
             priceTextDisplaySize,
           ])}
         >
-          {currencySymbology === PriceSymbology.Symbol && (
+          {currencySymbology === CurrencySymbology.Symbol && (
             <div
               className={cc([
                 {
                   "nk-mr-0.5 nk-order-1 nk-mb-[2px]":
-                    symbolPosition === PriceSymbolPosition.Left &&
+                    symbolPosition === CurrencySymbolPosition.Left &&
                     price.currency !== Currency.Usd,
                   "nk-mr-1.5 nk-order-1":
-                    symbolPosition === PriceSymbolPosition.Left &&
+                    symbolPosition === CurrencySymbolPosition.Left &&
                     price.currency === Currency.Usd,
                   "nk-ml-1.5 nk-order-3":
-                    symbolPosition === PriceSymbolPosition.Right,
+                    symbolPosition === CurrencySymbolPosition.Right,
                 },
               ])}
             >
-              <PriceSymbol
-                describeCurrencyInTooltip={showCurrencyTooltipDescription}
+              <CurrencySymbol
+                describeCurrencyInTooltip={describeCurrencyInTooltip}
                 currency={price.currency}
                 size={priceTextDisplaySize}
               />

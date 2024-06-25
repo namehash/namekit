@@ -1,11 +1,13 @@
 import React, { type SVGProps } from "react";
 
-export const EthereumCircleIcon = (props: SVGProps<SVGSVGElement>) => {
+const DEFAULT_ETHEREUM_ICON_COLOR = "#272727";
+
+export const EthSymbol = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
       viewBox="0 0 24 24"
-      fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
+      fill={props.fill ? props.fill : DEFAULT_ETHEREUM_ICON_COLOR}
       {...props}
     >
       <path

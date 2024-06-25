@@ -5,6 +5,7 @@ import {
 } from "./currency";
 import { DomainCard, DomainName } from "./domain";
 import { MIN_ETH_REGISTRABLE_LABEL_LENGTH } from "./ensname";
+import { nameCurrentTemporaryPremium } from "./ethregistrar";
 import { approxScaleBigInt, stringToBigInt } from "./number";
 import {
   PrimaryRegistrationStatus,
@@ -33,17 +34,6 @@ export interface Price {
 
   currency: Currency;
 }
-
-export const GRACE_PERIOD: Readonly<Duration> = buildDuration(
-  90n * SECONDS_PER_DAY.seconds,
-);
-export const TEMPORARY_PREMIUM_DAYS = 21n;
-
-export const TEMPORARY_PREMIUM_PERIOD: Readonly<Duration> = buildDuration(
-  TEMPORARY_PREMIUM_DAYS * SECONDS_PER_DAY.seconds,
-);
-
-export const DOMAIN_HAS_SPECIAL_PRICE_IF_LENGTH_EQUAL_OR_LESS_THAN = 5;
 
 /*
   This is an "internal" helper function only. It can't be directly used anywhere else because
@@ -97,6 +87,8 @@ const AvailableNamePriceUSD = (
   return namehashPrice;
 };
 
+const DEFAULT_REGISTRATION_YEARS = 1;
+
 /*
   Below function returns the "timeless" price for a name, that takes no consideration
   of the current status of the name. This is useful for various cases, including in
@@ -108,145 +100,6 @@ export const AvailableNameTimelessPriceUSD = (
   registerForYears = DEFAULT_REGISTRATION_YEARS,
 ) => {
   return AvailableNamePriceUSD(domainName, registerForYears);
-};
-
-/*
-  This interface defines data that is used to display the price of a domain
-  in the Ui. The reason we are separating this text in different fields is because:
-
-  1. We want to be able to display different texts depending on wether the price of
-  the domain is a premium price or not. In each one of these cases, the text displayed
-  is different.
-  2. Since the design for this data displaying is differently defined for the price field
-  and the descriptive text, we separate it so we can render these two fields separately in the
-  HTML that will be created inside the component. e.g. the price field is bold and the descriptive
-  text is not. Please refer to this Figma artboard for more details: https:/*www.figma.com/file/lZ8HZaBcfx1xfrgx7WOsB0/Namehash?type=design&node-id=12959-119258&mode=design&t=laEDaXW0rg9nIVn7-0
-*/
-interface PriceDescription {
-  /* descriptiveTextBeginning references the text that is displayed before the price */
-  descriptiveTextBeginning: string;
-  /* pricePerYear is a string that represents: Price + "/ year" (e.g. "$5.99 / year") */
-  pricePerYearDescription: string;
-  /* descriptiveTextBeginning references the text that is displayed after the price */
-  descriptiveTextEnd: string;
-}
-
-export const getPriceDescription = (
-  registration: Registration,
-  parsedName: DomainName,
-): PriceDescription | null => {
-  const isExpired =
-    registration.primaryStatus === PrimaryRegistrationStatus.Expired;
-  const wasRecentlyReleased =
-    registration.secondaryStatus ===
-    SecondaryRegistrationStatus.RecentlyReleased;
-  const isRegistered =
-    registration.primaryStatus === PrimaryRegistrationStatus.Active;
-
-  if (!(isExpired && wasRecentlyReleased) && isRegistered) return null;
-  const domainBasePrice = AvailableNameTimelessPriceUSD(parsedName);
-
-  if (!domainBasePrice) return null;
-  else {
-    const domainPrice = formattedPrice({
-      price: domainBasePrice,
-      withPrefix: true,
-    });
-    const pricePerYearDescription = `${domainPrice} / year`;
-
-    const premiumEndsIn = premiumPeriodEndsIn(registration)?.relativeTimestamp;
-
-    if (premiumEndsIn) {
-      const premiumEndMessage = premiumEndsIn
-        ? ` Temporary premium ends ${premiumEndsIn}.`
-        : null;
-      const basePriceMessage = domainBasePrice
-        ? " Discounts continuously until dropping to "
-        : null;
-
-      return {
-        pricePerYearDescription,
-        descriptiveTextBeginning:
-          "Recently released." + premiumEndMessage + basePriceMessage,
-        descriptiveTextEnd: ".",
-      };
-    } else {
-      const domainLabelLength = parsedName.labelName.length;
-      console.log(
-        domainLabelLength,
-        DOMAIN_HAS_SPECIAL_PRICE_IF_LENGTH_EQUAL_OR_LESS_THAN,
-      );
-      return domainLabelLength <
-        DOMAIN_HAS_SPECIAL_PRICE_IF_LENGTH_EQUAL_OR_LESS_THAN
-        ? {
-            pricePerYearDescription,
-            descriptiveTextBeginning: `${domainLabelLength}-character names are `,
-            descriptiveTextEnd: " to register.",
-          }
-        : null;
-    }
-  }
-};
-
-const DEFAULT_REGISTRATION_YEARS = 1;
-
-export const nameCurrentTemporaryPremium = (
-  registration: Registration,
-): Price | null => {
-  if (registration.expirationTimestamp) {
-    return temporaryPremiumPriceAtTimestamp(
-      now(),
-      registration.expirationTimestamp,
-    );
-  } else {
-    return null;
-  }
-};
-
-/* Interface for premium period end details */
-export interface PremiumPeriodEndsIn {
-  relativeTimestamp: string;
-  timestamp: Timestamp;
-}
-
-/**
- * Determines if a domain is in its premium period and returns the end timestamp and a human-readable distance to it.
- * @param domainCard: DomainCard
- * @returns PremiumPeriodEndsIn | null
- */
-export const premiumPeriodEndsIn = (
-  registration: Registration,
-): PremiumPeriodEndsIn | null => {
-  const isExpired =
-    registration.primaryStatus === PrimaryRegistrationStatus.Expired;
-  const wasRecentlyReleased =
-    registration.secondaryStatus ===
-    SecondaryRegistrationStatus.RecentlyReleased;
-
-  /*
-    A domain will only have a premium price if it has Expired and it was Recently Released
-  */
-  if (!isExpired || !wasRecentlyReleased) return null;
-
-  /*
-    This conditional should always be true because expiryTimestamp will only be null when
-    the domain was never registered before. Considering that the domain is Expired,
-    it means that it was registered before. It is just a type safety check.
-  */
-  if (!registration.expiryTimestamp) return null;
-
-  const releasedEpoch = addSeconds(registration.expiryTimestamp, GRACE_PERIOD);
-  const temporaryPremiumEndTimestamp = addSeconds(
-    releasedEpoch,
-    TEMPORARY_PREMIUM_PERIOD,
-  );
-
-  return {
-    relativeTimestamp: formatTimestampAsDistanceToNow(
-      temporaryPremiumEndTimestamp,
-    ),
-    timestamp: temporaryPremiumEndTimestamp,
-  };
 };
 
 // An ExchangeRates object maps different currencies to their rate in USD,
@@ -461,67 +314,3 @@ export const convertCurrencyWithRates = (
 
   return exchangedValuePrice;
 };
-
-/**
- * At the moment a .eth name expires, this recently released temporary premium is added to its price.
- * NOTE: The actual recently released temporary premium added subtracts `PREMIUM_OFFSET`.
- */
-export const PREMIUM_START_PRICE: Price = {
-  value: 10000000000n /* $100,000,000.00 (100 million USD) */,
-  currency: Currency.Usd,
-};
-
-/**
- * The recently released temporary premium drops exponentially by 50% each day.
- */
-const PREMIUM_DECAY = 0.5;
-
-/**
- * Goal:
- *  The temporary premium should drop to $0.00 after exactly `PREMIUM_DAYS` days have passed.
- *
- * Challenge:
- *  If we decay `PREMIUM_START` by a rate of `PREMIUM_DECAY` each day over the course of
- *  `PREMIUM_DAYS` days we don't get $0.00 USD. Instead, we get this `PREMIUM_OFFSET` value
- *  ($47.68 USD).
- *
- * Solution:
- *  Subtract this value from the decayed temporary premium to get the actual temporary premium.
- */
-export const PREMIUM_OFFSET = approxScalePrice(
-  PREMIUM_START_PRICE,
-  PREMIUM_DECAY ** Number(TEMPORARY_PREMIUM_DAYS),
-);
-
-export function temporaryPremiumPriceAtTimestamp(
-  atTimestamp: Timestamp,
-  expirationTimestamp: Timestamp,
-): Price {
-  const releasedTimestamp = addSeconds(expirationTimestamp, GRACE_PERIOD);
-  const secondsSinceRelease = atTimestamp.time - releasedTimestamp.time;
-  if (secondsSinceRelease < 0) {
-    /* if as of the moment of `atTimestamp` a name hasn't expired yet then there is no temporaryPremium */
-    return {
-      value: 0n,
-      currency: Currency.Usd,
-    };
-  }
-
-  const fractionalDaysSinceRelease =
-    Number(secondsSinceRelease) / Number(SECONDS_PER_DAY.seconds);
-
-  const decayFactor = PREMIUM_DECAY ** fractionalDaysSinceRelease;
-
-  const decayedPrice = approxScalePrice(PREMIUM_START_PRICE, decayFactor);
-  const offsetDecayedPrice = subtractPrices(decayedPrice, PREMIUM_OFFSET);
-
-  /* the temporary premium can never be less than $0.00 */
-  if (offsetDecayedPrice.value < 0n) {
-    return {
-      value: 0n,
-      currency: Currency.Usd,
-    };
-  }
-
-  return offsetDecayedPrice;
-}

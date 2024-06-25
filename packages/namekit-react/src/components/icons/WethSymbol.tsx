@@ -4,9 +4,9 @@ export const WethSymbol = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
       {...props}
-      fill="none"
       viewBox="0 0 16 16"
       xmlns="http://www.w3.org/2000/svg"
+      fill={props.fill ? props.fill : "inherit"}
     >
       <path
         d="M8.10071 1.79346L8.01562 2.07919V10.3705L8.10071 10.4545L11.9964 8.17946L8.10071 1.79346Z"

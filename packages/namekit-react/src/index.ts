@@ -4,7 +4,7 @@ import "./styles.css";
 
 export * from "./components/RegistrationPriceInfo";
 export * from "./components/DisplayedPrice";
-export * from "./components/PriceSymbol";
+export * from "./components/CurrencySymbol";
 export * from "./components/DomainCard";
 export * from "./components/NamePrice";
 export * from "./components/Heading";

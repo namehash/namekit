@@ -1,7 +1,7 @@
 import { PriceCurrencyFormat, Currency } from "@namehash/ens-utils";
 import { Tooltip } from "./Tooltip";
 
-import { EthereumCircleIcon } from "./icons/EthereumCircleIcon";
+import { EthSymbol } from "./icons/EthSymbol";
 import { UsdcSymbol } from "./icons/UsdcSymbol";
 import { WethSymbol } from "./icons/WethSymbol";
 import { DaiSymbol } from "./icons/DaiSymbol";
@@ -19,7 +19,7 @@ export enum PriceDisplaySize {
   Large = "nk-text-xl nk-font-semibold md:nk-text-2xl md:nk-font-bold",
 }
 
-export enum PriceSymbolPosition {
+export enum CurrencySymbolPosition {
   Left = "nk-mr-1.5",
   Right = "nk-ml-1.5",
 }
@@ -29,12 +29,12 @@ export enum PriceDisplayPosition {
   Bottom = "nk-flex nk-flex-col nk-text-right nk-items-end nk-space-y-1",
 }
 
-export enum PriceSymbology {
+export enum CurrencySymbology {
   Acronym = "Acronym",
   Symbol = "Symbol",
 }
 
-interface PriceSymbolProps {
+interface CurrencySymbolProps {
   currency: Currency;
   size: PriceDisplaySize;
   // Specifies, as a hex code, the symbol color to be set
@@ -49,54 +49,40 @@ const SymbolSize: Record<PriceDisplaySize, string> = {
   [PriceDisplaySize.Large]: "nk-w-5",
 };
 
-const DEFAULT_ETHEREUM_ICON_COLOR = "#272727";
-
-export const PriceSymbol = ({
+export const CurrencySymbol = ({
   size,
   currency,
   symbolFillColor,
   describeCurrencyInTooltip,
-}: PriceSymbolProps) => {
+}: CurrencySymbolProps) => {
   let symbol: JSX.Element | null = null;
 
   switch (currency) {
     case Currency.Usd:
       symbol = (
-        <p className="nk--mr-1" style={{ color: symbolFillColor || "inherit" }}>
+        <p className="nk--mr-1" style={{ color: symbolFillColor }}>
           $
         </p>
       );
       break;
     case Currency.Usdc:
       symbol = (
-        <UsdcSymbol
-          className={SymbolSize[size]}
-          fill={symbolFillColor || "inherit"}
-        />
+        <UsdcSymbol className={SymbolSize[size]} fill={symbolFillColor} />
       );
       break;
     case Currency.Dai:
       symbol = (
-        <DaiSymbol
-          className={SymbolSize[size]}
-          fill={symbolFillColor || "inherit"}
-        />
+        <DaiSymbol className={SymbolSize[size]} fill={symbolFillColor} />
       );
       break;
     case Currency.Weth:
       symbol = (
-        <WethSymbol
-          className={SymbolSize[size]}
-          fill={symbolFillColor || "inherit"}
-        />
+        <WethSymbol className={SymbolSize[size]} fill={symbolFillColor} />
       );
       break;
     case Currency.Eth:
       symbol = (
-        <EthereumCircleIcon
-          className={SymbolSize[size]}
-          fill={symbolFillColor ? symbolFillColor : DEFAULT_ETHEREUM_ICON_COLOR}
-        />
+        <EthSymbol className={SymbolSize[size]} fill={symbolFillColor} />
       );
       break;
   }

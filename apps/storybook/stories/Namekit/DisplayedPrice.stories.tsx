@@ -4,8 +4,8 @@ import {
   DisplayedPrice,
   PriceDisplayPosition,
   PriceDisplaySize,
-  PriceSymbolPosition,
-  PriceSymbology,
+  CurrencySymbolPosition,
+  CurrencySymbology,
 } from "@namehash/namekit-react";
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -52,7 +52,7 @@ export const EthPriceWithoutCurrencyTooltip: Story = {
       value: 198900n,
     },
     altPriceDisplayFormat: AltPriceDisplayFormat.Tooltip,
-    showCurrencyTooltipDescription: false,
+    describeCurrencyInTooltip: false,
   },
 };
 export const UsdPrice: Story = {
@@ -160,7 +160,7 @@ export const DisplaySymbologyAtLeft: Story = {
       currency: Currency.Eth,
       value: 1000000000000000000n,
     },
-    symbolPosition: PriceSymbolPosition.Left,
+    symbolPosition: CurrencySymbolPosition.Left,
   },
 };
 export const DisplaySymbologyAtRight: Story = {
@@ -173,7 +173,7 @@ export const DisplaySymbologyAtRight: Story = {
       currency: Currency.Eth,
       value: 1000000000000000000n,
     },
-    symbolPosition: PriceSymbolPosition.Right,
+    symbolPosition: CurrencySymbolPosition.Right,
   },
 };
 export const DisplaySymbolSymbologyForETH: Story = {
@@ -186,7 +186,7 @@ export const DisplaySymbolSymbologyForETH: Story = {
       currency: Currency.Usd,
       value: 198900n,
     },
-    currencySymbology: PriceSymbology.Symbol,
+    currencySymbology: CurrencySymbology.Symbol,
   },
 };
 export const DisplayAcronymSymbologyForETH: Story = {
@@ -199,7 +199,7 @@ export const DisplayAcronymSymbologyForETH: Story = {
       currency: Currency.Usd,
       value: 198900n,
     },
-    currencySymbology: PriceSymbology.Acronym,
+    currencySymbology: CurrencySymbology.Acronym,
   },
 };
 export const DisplaySymbolSymbologyForUSD: Story = {
@@ -212,7 +212,7 @@ export const DisplaySymbolSymbologyForUSD: Story = {
       currency: Currency.Eth,
       value: 1000000000000000000n,
     },
-    currencySymbology: PriceSymbology.Symbol,
+    currencySymbology: CurrencySymbology.Symbol,
   },
 };
 export const DisplayAcronymSymbologyForUSD: Story = {
@@ -225,7 +225,7 @@ export const DisplayAcronymSymbologyForUSD: Story = {
       currency: Currency.Eth,
       value: 1000000000000000000n,
     },
-    currencySymbology: PriceSymbology.Acronym,
+    currencySymbology: CurrencySymbology.Acronym,
   },
 };
 export const LargeAltPriceDisplaySize: Story = {
