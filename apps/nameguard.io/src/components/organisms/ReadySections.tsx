@@ -1,3 +1,7 @@
+import impersonation_attack_img from "../../../public/assets/impersonation_attack.svg";
+import fake_NFT_filter_img from "../../../public/assets/fake_NFT_filter.svg";
+import surface_risks_img from "../../../public/assets/surface_risks.svg";
+
 import {
   CoinbaseIcon,
   FarcasterLogo,
@@ -11,9 +15,6 @@ import {
   WalletConnectIcon,
   XMTPIcon,
 } from "@components/atoms";
-import impersonation_attack_img from "../../../public/assets/impersonation_attack.svg";
-import fake_NFT_filter_img from "../../../public/assets/fake_NFT_filter.svg";
-import surface_risks_img from "../../../public/assets/surface_risks.svg";
 
 import { ReadySection, ReadySectionProps } from "./ReadySection";
 import { Fragment } from "react";
@@ -76,7 +77,6 @@ const readySections: ReadySectionProps[] = [
       tagHeight: 814,
     },
   },
-
   {
     sectionTargetSvg: <ShoppingCartIcon />,
     sectionTargetClientMessage: "For NFT Marketplaces",
@@ -98,7 +98,7 @@ const readySections: ReadySectionProps[] = [
       </>
     ),
     sectionBackgroundName: "bg-purple_background",
-    isCodeOnTheLeft: false,
+    isCodeOnTheLeft: true,
     codeSnippet: `import { nameguard } from "@namehash/nameguard";
 
     const contract = "0x8Ae0e6dd8eACe27045d9e017C8Cf6dAa9D08C776";
@@ -124,7 +124,6 @@ const readySections: ReadySectionProps[] = [
       tagHeight: 680,
     },
   },
-
   {
     sectionTargetSvg: <ShoppingCartIcon />,
     sectionTargetClientMessage: "For ENS Registrars & Marketplaces",
