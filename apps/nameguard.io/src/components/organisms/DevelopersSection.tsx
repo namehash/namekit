@@ -16,218 +16,6 @@ import { ListSectionElement } from "@/types/listSectionTypes";
 import { DeveloperResourceItem } from "@components/molecules";
 
 export const DevelopersSection = () => {
-  const devElements: ListSectionElement[] = [
-    {
-      header: (
-        <DeveloperSectionWrapper>
-          <DeveloperSectionTitle>NameGuard library</DeveloperSectionTitle>
-        </DeveloperSectionWrapper>
-      ),
-      text: <Fragment>Security &quot;x-ray&quot; for ENS names.</Fragment>,
-      icon: (
-        <DeveloperSectionIconWrapper>
-          <GithubIconDevelopers />
-        </DeveloperSectionIconWrapper>
-      ),
-      link: "https://github.com/namehash/nameguard/tree/main/api",
-    },
-    {
-      header: (
-        <DeveloperSectionWrapper>
-          <DeveloperSectionTitle>NameGuard Client SDK</DeveloperSectionTitle>
-        </DeveloperSectionWrapper>
-      ),
-      text: (
-        <Fragment>Thin client SDK for making API calls to NameGuard.</Fragment>
-      ),
-      icon: (
-        <DeveloperSectionIconWrapper>
-          <GithubIconDevelopers />
-        </DeveloperSectionIconWrapper>
-      ),
-      link: "https://github.com/namehash/nameguard/tree/main/packages/sdk",
-    },
-    {
-      header: (
-        <DeveloperSectionWrapper>
-          <DeveloperSectionTitle>NameGuard React UI Kit</DeveloperSectionTitle>
-          <ListSectionBadge width={53} height={20} text="Alpha" />
-        </DeveloperSectionWrapper>
-      ),
-      text: (
-        <Fragment>
-          React components for building nice interfaces with NameGuard data.
-        </Fragment>
-      ),
-      icon: (
-        <DeveloperSectionIconWrapper>
-          <GithubIconDevelopers />
-        </DeveloperSectionIconWrapper>
-      ),
-      link: "https://github.com/namehash/nameguard/tree/main/packages/nameguard-react",
-    },
-    {
-      header: (
-        <DeveloperSectionWrapper>
-          <DeveloperSectionTitle>Figma UI kit</DeveloperSectionTitle>
-        </DeveloperSectionWrapper>
-      ),
-      text: (
-        <Fragment>
-          Customize NameKit user interfaces to match your unique app.
-        </Fragment>
-      ),
-      icon: (
-        <DeveloperSectionIconWrapper>
-          <FigmaIcon />
-        </DeveloperSectionIconWrapper>
-      ),
-      link: "https://www.figma.com/file/aVlWccl7J2MyP8IE56lDMb/NameGuard-UI-Kit---23-11-2023",
-    },
-    {
-      header: (
-        <DeveloperSectionWrapper>
-          <DeveloperSectionTitle>ENS Label Inspector</DeveloperSectionTitle>
-        </DeveloperSectionWrapper>
-      ),
-      text: <Fragment>Detailed inspection of labels in ENS names.</Fragment>,
-      icon: (
-        <DeveloperSectionIconWrapper>
-          <GithubIconDevelopers />
-        </DeveloperSectionIconWrapper>
-      ),
-      link: "https://github.com/namehash/ens-label-inspector",
-    },
-    {
-      header: (
-        <DeveloperSectionWrapper>
-          <DeveloperSectionTitle>ENS Font Data</DeveloperSectionTitle>
-        </DeveloperSectionWrapper>
-      ),
-      text: (
-        <Fragment>
-          Metadata for graphemes that may appear in ENS names.
-        </Fragment>
-      ),
-      icon: (
-        <DeveloperSectionIconWrapper>
-          <GithubIconDevelopers />
-        </DeveloperSectionIconWrapper>
-      ),
-      link: "https://github.com/namehash/ens-font-data",
-    },
-    {
-      header: (
-        <DeveloperSectionWrapper>
-          <DeveloperSectionTitle>ENS Normalize Python</DeveloperSectionTitle>
-        </DeveloperSectionWrapper>
-      ),
-      text: (
-        <Fragment>
-          Python implementation of the ENS name normalization standard.
-        </Fragment>
-      ),
-      icon: (
-        <DeveloperSectionIconWrapper>
-          <GithubIconDevelopers />
-        </DeveloperSectionIconWrapper>
-      ),
-      link: "https://github.com/namehash/ens-normalize-python",
-    },
-    {
-      header: (
-        <DeveloperSectionWrapper>
-          <DeveloperSectionTitle>ENS Name Parser</DeveloperSectionTitle>
-          <ListSectionBadge width={53} height={20} text="Alpha" />
-        </DeveloperSectionWrapper>
-      ),
-      text: (
-        <Fragment>Utilities for parsing ENS names from user input.</Fragment>
-      ),
-      icon: (
-        <DeveloperSectionIconWrapper>
-          <GithubIconDevelopers />
-        </DeveloperSectionIconWrapper>
-      ),
-      link: "https://github.com/namehash/ens-utils/blob/main/README.md",
-    },
-    {
-      header: (
-        <DeveloperSectionWrapper>
-          <DeveloperSectionTitle>Open public API</DeveloperSectionTitle>
-        </DeveloperSectionWrapper>
-      ),
-      text: (
-        <Fragment>
-          Connect to the NameGuard instance running in AWS for community use.
-        </Fragment>
-      ),
-      icon: (
-        <DeveloperSectionIconWrapper>
-          <CloudOutlineIcon />
-        </DeveloperSectionIconWrapper>
-      ),
-      link: "https://api.nameguard.io/docs",
-    },
-    {
-      header: (
-        <DeveloperSectionWrapper>
-          <DeveloperSectionTitle>
-            NameGuard DevOps Scripts
-          </DeveloperSectionTitle>
-        </DeveloperSectionWrapper>
-      ),
-      text: (
-        <Fragment>
-          Easily deploy your own instance of NameGuard into your own AWS cloud.
-        </Fragment>
-      ),
-      icon: (
-        <DeveloperSectionIconWrapper>
-          <GearWheelIcon />
-        </DeveloperSectionIconWrapper>
-      ),
-      link: "https://github.com/namehash/nameguard/blob/main/api/serverless.yml",
-    },
-    {
-      header: (
-        <DeveloperSectionWrapper>
-          <DeveloperSectionTitle>Detailed documentation</DeveloperSectionTitle>
-          <ListSectionBadge width={96} height={20} text="Coming soon" />
-        </DeveloperSectionWrapper>
-      ),
-      text: (
-        <Fragment>
-          Step-by-step guides to help developers make the most of NameGuard.
-        </Fragment>
-      ),
-      icon: (
-        <DeveloperSectionIconWrapper>
-          <FileIcon />
-        </DeveloperSectionIconWrapper>
-      ),
-    },
-    {
-      header: (
-        <DeveloperSectionWrapper>
-          <DeveloperSectionTitle>ENS Webfont</DeveloperSectionTitle>
-          <ListSectionBadge width={96} height={20} text="Alpha" />
-        </DeveloperSectionWrapper>
-      ),
-      text: (
-        <Fragment>
-          Increase rendering support for emojis and other special graphemes.
-        </Fragment>
-      ),
-      icon: (
-        <DeveloperSectionIconWrapper>
-          <FontIcon />
-        </DeveloperSectionIconWrapper>
-      ),
-      link: "https://github.com/namehash/nameguard/tree/main/packages/ens-webfont",
-    },
-  ];
-
   return (
     <section className="relative z-10 w-full h-full box-border flex flex-col py-10 px-5 items-center justify-center self-stretch gap-[32px] bg-white sm:bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] sm:[background-size:24px_24px] md:px-[100px]">
       <div className="flex flex-col justify-center items-center gap-5 max-w-[608px]">
@@ -252,3 +40,209 @@ export const DevelopersSection = () => {
     </section>
   );
 };
+
+const devElements: ListSectionElement[] = [
+  {
+    header: (
+      <DeveloperSectionWrapper>
+        <DeveloperSectionTitle>NameGuard library</DeveloperSectionTitle>
+      </DeveloperSectionWrapper>
+    ),
+    text: <Fragment>Security &quot;x-ray&quot; for ENS names.</Fragment>,
+    icon: (
+      <DeveloperSectionIconWrapper>
+        <GithubIconDevelopers />
+      </DeveloperSectionIconWrapper>
+    ),
+    link: "https://github.com/namehash/nameguard/tree/main/api",
+  },
+  {
+    header: (
+      <DeveloperSectionWrapper>
+        <DeveloperSectionTitle>NameGuard Client SDK</DeveloperSectionTitle>
+      </DeveloperSectionWrapper>
+    ),
+    text: (
+      <Fragment>Thin client SDK for making API calls to NameGuard.</Fragment>
+    ),
+    icon: (
+      <DeveloperSectionIconWrapper>
+        <GithubIconDevelopers />
+      </DeveloperSectionIconWrapper>
+    ),
+    link: "https://github.com/namehash/nameguard/tree/main/packages/sdk",
+  },
+  {
+    header: (
+      <DeveloperSectionWrapper>
+        <DeveloperSectionTitle>NameGuard React UI Kit</DeveloperSectionTitle>
+        <ListSectionBadge width={53} height={20} text="Alpha" />
+      </DeveloperSectionWrapper>
+    ),
+    text: (
+      <Fragment>
+        React components for building nice interfaces with NameGuard data.
+      </Fragment>
+    ),
+    icon: (
+      <DeveloperSectionIconWrapper>
+        <GithubIconDevelopers />
+      </DeveloperSectionIconWrapper>
+    ),
+    link: "https://github.com/namehash/nameguard/tree/main/packages/nameguard-react",
+  },
+  {
+    header: (
+      <DeveloperSectionWrapper>
+        <DeveloperSectionTitle>Figma UI kit</DeveloperSectionTitle>
+      </DeveloperSectionWrapper>
+    ),
+    text: (
+      <Fragment>
+        Customize NameKit user interfaces to match your unique app.
+      </Fragment>
+    ),
+    icon: (
+      <DeveloperSectionIconWrapper>
+        <FigmaIcon />
+      </DeveloperSectionIconWrapper>
+    ),
+    link: "https://www.figma.com/file/aVlWccl7J2MyP8IE56lDMb/NameGuard-UI-Kit---23-11-2023",
+  },
+  {
+    header: (
+      <DeveloperSectionWrapper>
+        <DeveloperSectionTitle>ENS Label Inspector</DeveloperSectionTitle>
+      </DeveloperSectionWrapper>
+    ),
+    text: <Fragment>Detailed inspection of labels in ENS names.</Fragment>,
+    icon: (
+      <DeveloperSectionIconWrapper>
+        <GithubIconDevelopers />
+      </DeveloperSectionIconWrapper>
+    ),
+    link: "https://github.com/namehash/ens-label-inspector",
+  },
+  {
+    header: (
+      <DeveloperSectionWrapper>
+        <DeveloperSectionTitle>ENS Font Data</DeveloperSectionTitle>
+      </DeveloperSectionWrapper>
+    ),
+    text: (
+      <Fragment>Metadata for graphemes that may appear in ENS names.</Fragment>
+    ),
+    icon: (
+      <DeveloperSectionIconWrapper>
+        <GithubIconDevelopers />
+      </DeveloperSectionIconWrapper>
+    ),
+    link: "https://github.com/namehash/ens-font-data",
+  },
+  {
+    header: (
+      <DeveloperSectionWrapper>
+        <DeveloperSectionTitle>ENS Normalize Python</DeveloperSectionTitle>
+      </DeveloperSectionWrapper>
+    ),
+    text: (
+      <Fragment>
+        Python implementation of the ENS name normalization standard.
+      </Fragment>
+    ),
+    icon: (
+      <DeveloperSectionIconWrapper>
+        <GithubIconDevelopers />
+      </DeveloperSectionIconWrapper>
+    ),
+    link: "https://github.com/namehash/ens-normalize-python",
+  },
+  {
+    header: (
+      <DeveloperSectionWrapper>
+        <DeveloperSectionTitle>ENS Name Parser</DeveloperSectionTitle>
+        <ListSectionBadge width={53} height={20} text="Alpha" />
+      </DeveloperSectionWrapper>
+    ),
+    text: <Fragment>Utilities for parsing ENS names from user input.</Fragment>,
+    icon: (
+      <DeveloperSectionIconWrapper>
+        <GithubIconDevelopers />
+      </DeveloperSectionIconWrapper>
+    ),
+    link: "https://github.com/namehash/ens-utils/blob/main/README.md",
+  },
+  {
+    header: (
+      <DeveloperSectionWrapper>
+        <DeveloperSectionTitle>Open public API</DeveloperSectionTitle>
+      </DeveloperSectionWrapper>
+    ),
+    text: (
+      <Fragment>
+        Connect to the NameGuard instance running in AWS for community use.
+      </Fragment>
+    ),
+    icon: (
+      <DeveloperSectionIconWrapper>
+        <CloudOutlineIcon />
+      </DeveloperSectionIconWrapper>
+    ),
+    link: "https://api.nameguard.io/docs",
+  },
+  {
+    header: (
+      <DeveloperSectionWrapper>
+        <DeveloperSectionTitle>NameGuard DevOps Scripts</DeveloperSectionTitle>
+      </DeveloperSectionWrapper>
+    ),
+    text: (
+      <Fragment>
+        Easily deploy your own instance of NameGuard into your own AWS cloud.
+      </Fragment>
+    ),
+    icon: (
+      <DeveloperSectionIconWrapper>
+        <GearWheelIcon />
+      </DeveloperSectionIconWrapper>
+    ),
+    link: "https://github.com/namehash/nameguard/blob/main/api/serverless.yml",
+  },
+  {
+    header: (
+      <DeveloperSectionWrapper>
+        <DeveloperSectionTitle>Detailed documentation</DeveloperSectionTitle>
+        <ListSectionBadge width={96} height={20} text="Coming soon" />
+      </DeveloperSectionWrapper>
+    ),
+    text: (
+      <Fragment>
+        Step-by-step guides to help developers make the most of NameGuard.
+      </Fragment>
+    ),
+    icon: (
+      <DeveloperSectionIconWrapper>
+        <FileIcon />
+      </DeveloperSectionIconWrapper>
+    ),
+  },
+  {
+    header: (
+      <DeveloperSectionWrapper>
+        <DeveloperSectionTitle>ENS Webfont</DeveloperSectionTitle>
+        <ListSectionBadge width={96} height={20} text="Alpha" />
+      </DeveloperSectionWrapper>
+    ),
+    text: (
+      <Fragment>
+        Increase rendering support for emojis and other special graphemes.
+      </Fragment>
+    ),
+    icon: (
+      <DeveloperSectionIconWrapper>
+        <FontIcon />
+      </DeveloperSectionIconWrapper>
+    ),
+    link: "https://github.com/namehash/nameguard/tree/main/packages/ens-webfont",
+  },
+];
