@@ -39,6 +39,8 @@ export const metadata: Metadata = {
     ...NamehashMetadata.defaultMetdata.openGraph,
     title,
     description,
+    siteName: "NameGuard",
+    url: "https://nameguard.io",
   },
   twitter: {
     ...NamehashMetadata.defaultMetdata.twitter,
