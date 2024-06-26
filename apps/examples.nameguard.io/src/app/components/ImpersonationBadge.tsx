@@ -42,3 +42,7 @@ export async function ImpersonationBadge({ address }: Props) {
     </>
   );
 }
+
+// Without this, Next.js will try to do static generation
+// and fail because of "Too many requests" caused by viem.
+const dynamic = "force-dynamic";
