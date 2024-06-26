@@ -1,4 +1,4 @@
-import "@namehash/ens-webfont";
+// import "@namehash/ens-webfont";
 
 import "./styles.css";
 
