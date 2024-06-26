@@ -24,22 +24,9 @@ export function ComingSoonSection(props: ComingSoonSectionProps) {
   const rightImageDiv = cc([
     "relative hidden sm:flex flex-row justify-center items-center w-full max-w-2xl xl:w-1/2 rounded-none bg-origin-border flex-shrink-0 xl:right-[50px]",
   ]);
-  const mobileImageDiv = cc([
-    "flex sm:hidden flex-row justify-center items-center w-full h-full rounded-none py-5 bg-origin-border bg-center bg-no-repeat bg-contain flex-shrink-0",
-    get_mobile_bg(),
-  ]);
-
-  const leftImageDiv = cc([
-    "relative hidden xl:flex flex-row justify-center items-center w-full max-w-2xl xl:w-1/2 rounded-none bg-origin-border flex-shrink-0 box-border pr-20",
-  ]);
 
   const rightBackgroundDiv = cc([
     "absolute z-0 top-0 left-0 h-[105%] w-full lg:w-[110%] bg-center bg-no-repeat bg-cover [opacity:0.3]",
-    props.sectionBackgroundName,
-  ]);
-
-  const leftBackgroundDiv = cc([
-    "absolute z-0 h-[195%] w-full lg:w-[115%] bg-center bg-no-repeat bg-cover [opacity:0.3]",
     props.sectionBackgroundName,
   ]);
 
@@ -51,8 +38,17 @@ export function ComingSoonSection(props: ComingSoonSectionProps) {
   return (
     <section className="w-full flex flex-col xl:flex-row items-center justify-center h-full py-10 px-5 bg-white sm:bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] sm:[background-size:24px_24px] sm:h-1/2 md:py-20">
       {!props.isTextOnTheLeft && (
-        <div className={leftImageDiv}>
-          <div className={leftBackgroundDiv} />
+        <div
+          className={cc([
+            "relative hidden xl:flex flex-row justify-center items-center w-full max-w-2xl xl:w-1/2 rounded-none bg-origin-border flex-shrink-0 box-border pr-20",
+          ])}
+        >
+          <div
+            className={cc([
+              "absolute z-0 h-[195%] w-full lg:w-[115%] bg-center bg-no-repeat bg-cover [opacity:0.3]",
+              props.sectionBackgroundName,
+            ])}
+          />
           <Image
             className={
               props.imageSpecifics.styles !== undefined
@@ -97,40 +93,33 @@ export function ComingSoonSection(props: ComingSoonSectionProps) {
           {props.sectionDescription}
         </p>
       </div>
-      {props.isTextOnTheLeft ? (
-        <div className={rightImageDiv}>
-          <div className={rightBackgroundDiv} />
-          <Image
-            className={
-              props.imageSpecifics.styles !== undefined
-                ? cc([baseImageStyles, props.imageSpecifics.styles])
-                : baseImageStyles
-            }
-            src={props.imageSpecifics.source}
-            alt="chat image"
-            width={props.imageSpecifics.tagWidth}
-            height={props.imageSpecifics.tagHeight}
-            quality={100}
-          />
-        </div>
-      ) : (
-        <div className={cc([rightImageDiv, "xl:hidden pt-8"])}>
-          <div className={rightBackgroundDiv} />
-          <Image
-            className={
-              props.imageSpecifics.styles !== undefined
-                ? cc([baseImageStyles, props.imageSpecifics.styles])
-                : baseImageStyles
-            }
-            src={props.imageSpecifics.source}
-            alt="chat image"
-            width={props.imageSpecifics.tagWidth}
-            height={props.imageSpecifics.tagHeight}
-            quality={100}
-          />
-        </div>
-      )}
-      <div className={mobileImageDiv}>
+
+      <div
+        className={cc([
+          rightImageDiv,
+          !props.isTextOnTheLeft && "xl:hidden pt-8",
+        ])}
+      >
+        <div className={rightBackgroundDiv} />
+        <Image
+          className={
+            props.imageSpecifics.styles !== undefined
+              ? cc([baseImageStyles, props.imageSpecifics.styles])
+              : baseImageStyles
+          }
+          src={props.imageSpecifics.source}
+          alt="chat image"
+          width={props.imageSpecifics.tagWidth}
+          height={props.imageSpecifics.tagHeight}
+          quality={100}
+        />
+      </div>
+      <div
+        className={cc([
+          "flex sm:hidden flex-row justify-center items-center w-full h-full rounded-none py-5 bg-origin-border bg-center bg-no-repeat bg-contain flex-shrink-0",
+          get_mobile_bg(),
+        ])}
+      >
         <Image
           className={
             props.imageSpecifics.styles !== undefined
