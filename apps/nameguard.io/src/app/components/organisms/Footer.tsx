@@ -25,7 +25,7 @@ export const Footer = () => {
         </a>
         <a
           href="https://github.com/namehash/nameguard"
-          aria-label="Gighub Link"
+          aria-label="Github Link"
           target="_blank"
           rel="noopener noreferrer"
         >
