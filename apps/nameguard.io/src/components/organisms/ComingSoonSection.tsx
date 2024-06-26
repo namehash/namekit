@@ -21,20 +21,6 @@ export function ComingSoonSection(props: ComingSoonSectionProps) {
     return "bg-green_background_mobile";
   };
 
-  const rightImageDiv = cc([
-    "relative hidden sm:flex flex-row justify-center items-center w-full max-w-2xl xl:w-1/2 rounded-none bg-origin-border flex-shrink-0 xl:right-[50px]",
-  ]);
-
-  const rightBackgroundDiv = cc([
-    "absolute z-0 top-0 left-0 h-[105%] w-full lg:w-[110%] bg-center bg-no-repeat bg-cover [opacity:0.3]",
-    props.sectionBackgroundName,
-  ]);
-
-  const baseTextDiv =
-    "flex flex-col gap-5 h-full w-full max-w-3xl items-center xl:items-start xl:w-1/2 md:px-[72px] xl:px-0";
-
-  const baseImageStyles = "relative z-10 w-full h-full";
-
   return (
     <section className="w-full flex flex-col xl:flex-row items-center justify-center h-full py-10 px-5 bg-white sm:bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] sm:[background-size:24px_24px] sm:h-1/2 md:py-20">
       {!props.isTextOnTheLeft && (
@@ -50,11 +36,10 @@ export function ComingSoonSection(props: ComingSoonSectionProps) {
             ])}
           />
           <Image
-            className={
-              props.imageSpecifics.styles !== undefined
-                ? cc([baseImageStyles, props.imageSpecifics.styles])
-                : baseImageStyles
-            }
+            className={cc([
+              "relative z-10 w-full h-full",
+              props.imageSpecifics.styles,
+            ])}
             src={props.imageSpecifics.source}
             alt="chat image"
             width={props.imageSpecifics.tagWidth}
@@ -65,7 +50,7 @@ export function ComingSoonSection(props: ComingSoonSectionProps) {
       )}
       <div
         className={cc([
-          baseTextDiv,
+          "flex flex-col gap-5 h-full w-full max-w-3xl items-center xl:items-start xl:w-1/2 md:px-[72px] xl:px-0",
           props.isTextOnTheLeft ? "xl:pl-[72px]" : "xl:pr-[72px]",
         ])}
       >
@@ -96,17 +81,21 @@ export function ComingSoonSection(props: ComingSoonSectionProps) {
 
       <div
         className={cc([
-          rightImageDiv,
+          "relative hidden sm:flex flex-row justify-center items-center w-full max-w-2xl xl:w-1/2 rounded-none bg-origin-border flex-shrink-0 xl:right-[50px]",
           !props.isTextOnTheLeft && "xl:hidden pt-8",
         ])}
       >
-        <div className={rightBackgroundDiv} />
+        <div
+          className={cc([
+            "absolute z-0 top-0 left-0 h-[105%] w-full lg:w-[110%] bg-center bg-no-repeat bg-cover [opacity:0.3]",
+            props.sectionBackgroundName,
+          ])}
+        />
         <Image
-          className={
-            props.imageSpecifics.styles !== undefined
-              ? cc([baseImageStyles, props.imageSpecifics.styles])
-              : baseImageStyles
-          }
+          className={cc([
+            "relative z-10 w-full h-full",
+            props.imageSpecifics.styles,
+          ])}
           src={props.imageSpecifics.source}
           alt="chat image"
           width={props.imageSpecifics.tagWidth}
@@ -121,11 +110,10 @@ export function ComingSoonSection(props: ComingSoonSectionProps) {
         ])}
       >
         <Image
-          className={
-            props.imageSpecifics.styles !== undefined
-              ? cc([baseImageStyles, props.imageSpecifics.styles])
-              : baseImageStyles
-          }
+          className={cc([
+            "relative z-10 w-full h-full",
+            props.imageSpecifics.styles,
+          ])}
           src={props.imageSpecifics.source}
           alt="chat image"
           width={props.imageSpecifics.tagWidth}

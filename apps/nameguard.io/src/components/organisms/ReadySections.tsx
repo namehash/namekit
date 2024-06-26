@@ -55,8 +55,8 @@ const readySections: ReadySectionProps[] = [
     isCodeOnTheLeft: false,
     codeSnippet: `import { nameguard } from "@namehash/nameguard";
 
-    const address = "0x8Ae0e6dd8eACe27045d9e017C8Cf6dAa9D08C776";
-    const result = await nameguard.getSecurePrimaryName(address);`,
+const address = "0x8Ae0e6dd8eACe27045d9e017C8Cf6dAa9D08C776";
+const result = await nameguard.getSecurePrimaryName(address);`,
     integrationsPanel: (
       <div className="hidden sm:inline-flex flex-col items-center lg:items-start justify-center gap-4 z-10">
         <p className="text-gray-500 text-lg leading-6 font-normal not-italic whitespace-nowrap">
@@ -101,13 +101,13 @@ const readySections: ReadySectionProps[] = [
     isCodeOnTheLeft: true,
     codeSnippet: `import { nameguard } from "@namehash/nameguard";
 
-    const contract = "0x8Ae0e6dd8eACe27045d9e017C8Cf6dAa9D08C776";
-    const tokenId = "619959211285214429591066501314626337448852696
-                    24153038309795231243542768648193";
+const contract = "0x8Ae0e6dd8eACe27045d9e017C8Cf6dAa9D08C776";
+const tokenId = "619959211285214429591066501314626337448852696
+                24153038309795231243542768648193";
 
-    const result = await nameguard.fakeEthNameCheck(contract, tokenId, {
-      "title": "nick.eth"
-    })`,
+const result = await nameguard.fakeEthNameCheck(contract, tokenId, {
+  "title": "nick.eth"
+})`,
     integrationsPanel: (
       <div className="inline-flex items-center gap-6 z-10">
         <p className="text-gray-500 text-lg leading-6 font-normal not-italic whitespace-nowrap">
@@ -144,11 +144,11 @@ const readySections: ReadySectionProps[] = [
     isCodeOnTheLeft: false,
     codeSnippet: `import { nameguard } from "@namehash/nameguard";
 
-    const name = "abc123🚀.eth";
-    const result = await nameguard.inspectName(name);
+const name = "abc123🚀.eth";
+const result = await nameguard.inspectName(name);
 
-    const names = ["abc.eth", "123.eth", "xyz.eth"];
-    const results = await nameguard.bulkInspectNames(names);`,
+const names = ["abc.eth", "123.eth", "xyz.eth"];
+const results = await nameguard.bulkInspectNames(names);`,
     imageSpecifics: {
       source: surface_risks_img.src,
       tagWidth: 884,
