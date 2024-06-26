@@ -5,23 +5,21 @@
     "build": "tsup",
     "dev": "tsup --watch"
   },
-  "sideEffects": false,
-  "main": "./dist/index.mjs",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "styles": "./dist/index.css",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
-      "default": "./dist/index.mjs",
-      "styles": "./dist/index.css"
+      "default": "./dist/index.mjs"
     },
     "./styles.css": {
       "import": "./dist/index.css",
       "default": "./dist/index.css"
     }
   },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "styles": "./dist/index.css",
   "dependencies": {
     "@namehash/ens-webfont": "workspace:*",
     "react": "^18.2.0",
