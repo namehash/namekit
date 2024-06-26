@@ -6,7 +6,7 @@ import { CodeSnippet } from "@components/molecules";
 export type ReadySectionProps = {
   sectionTargetClientMessage: string;
   sectionTargetSvg: React.ReactNode;
-  sectionHeader: React.ReactNode;
+  sectionHeader: React.ReactElement;
   sectionDescription: React.ReactNode;
   sectionBackgroundName: string;
   isCodeOnTheLeft: boolean;
@@ -51,7 +51,7 @@ export function ReadySection(props: ReadySectionProps) {
           <Image
             className="z-10 w-full h-full max-w-[34rem] xl:w-1/3 xl:h-auto"
             src={props.imageSpecifics.source}
-            alt="chat image"
+            alt={props.imageSpecifics.alt ?? "Section image"}
             width={props.imageSpecifics.tagWidth}
             height={props.imageSpecifics.tagHeight}
             quality={100}

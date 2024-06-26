@@ -73,6 +73,7 @@ const result = await nameguard.getSecurePrimaryName(address);`,
     ),
     imageSpecifics: {
       source: impersonation_attack_img.src,
+      alt: "Alert from deceptive impersonation attacks image",
       tagWidth: 956,
       tagHeight: 814,
     },
@@ -120,6 +121,7 @@ const result = await nameguard.fakeEthNameCheck(contract, tokenId, {
     ),
     imageSpecifics: {
       source: fake_NFT_filter_img.src,
+      alt: "Filter out fake ENS NFTs image",
       tagWidth: 924,
       tagHeight: 680,
     },
@@ -151,6 +153,7 @@ const names = ["abc.eth", "123.eth", "xyz.eth"];
 const results = await nameguard.bulkInspectNames(names);`,
     imageSpecifics: {
       source: surface_risks_img.src,
+      alt: "Surface hidden risks or limitations image",
       tagWidth: 884,
       tagHeight: 682,
     },

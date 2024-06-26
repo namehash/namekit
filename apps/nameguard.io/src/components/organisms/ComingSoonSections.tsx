@@ -61,7 +61,7 @@ const comingSoonSections: ComingSoonSectionProps[] = [
     badgeText: "Planned",
     imageSpecifics: {
       source: autorenew_img.src,
-      tagWidth: 11600,
+      tagWidth: 1160,
       tagHeight: 626,
     },
   },
