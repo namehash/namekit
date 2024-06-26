@@ -1,7 +1,6 @@
 {
   "name": "nameguard-storybook",
   "private": true,
-  "type": "module",
   "scripts": {
     "dev": "storybook dev -p 6006",
     "build": "storybook build"
@@ -23,7 +22,6 @@
     "storybook": "^8.1.1"
   },
   "dependencies": {
-    "@namehash/ens-webfont": "workspace:*",
     "@namehash/namekit-react": "workspace:*",
     "@namehash/nameguard-react": "workspace:*",
     "@namehash/nameguard": "workspace:*",
