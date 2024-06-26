@@ -25,21 +25,20 @@ export async function ImpersonationBadge({ address }: Props) {
   // This function does not use the NameGuard API server
   const data = await nameguard.getSecurePrimaryNameLocal(address);
 
-  if (data.impersonation_status === "unlikely") {
-    return null;
-  }
-
-  if (data.impersonation_status === null) {
-    return (
-      <span className="absolute top-6 left-0 bg-yellow-300 text-xs rounded-full px-1">
-        No primary name!
-      </span>
-    );
-  }
-
   return (
-    <span className="absolute top-6 left-0 bg-red-300 text-xs rounded-full px-1">
-      Potential impersonation!
-    </span>
+    <>
+      <span className="absolute bottom-6 left-0 text-xs">
+        {data.display_name}
+      </span>
+      {data.impersonation_status === "potential" ? (
+        <span className="absolute top-6 left-0 bg-red-300 text-xs rounded-full px-1">
+          Potential impersonation!
+        </span>
+      ) : data.impersonation_status === null ? (
+        <span className="absolute top-6 left-0 bg-yellow-300 text-xs rounded-full px-1">
+          No primary name!
+        </span>
+      ) : null}
+    </>
   );
 }
