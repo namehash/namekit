@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { IntegrationIcon } from "@components/atoms";
+import { IntegrationIcon } from "@/components/atoms";
 
 export function ExploreTheEcosystemSection() {
   return (

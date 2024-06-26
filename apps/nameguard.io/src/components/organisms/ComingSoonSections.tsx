@@ -1,4 +1,4 @@
-import { MobileSectionDivider, WalletIcon } from "@components/atoms";
+import { MobileSectionDivider, WalletIcon } from "@/components/atoms";
 import { ComingSoonSection, ComingSoonSectionProps } from "./ComingSoonSection";
 
 import dangerous_name_config_img from "../../../public/assets/dangerous_name_configuration.svg";

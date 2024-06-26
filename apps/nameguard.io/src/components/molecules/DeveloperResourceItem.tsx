@@ -1,4 +1,4 @@
-import { RedirectIcon } from "@components/atoms";
+import { RedirectIcon } from "@/components/atoms";
 import { ListSectionElement } from "@/types/listSectionTypes";
 
 type DeveloperResourceItemProps = {

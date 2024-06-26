@@ -1,7 +1,7 @@
 import Image from "next/image";
 import cc from "classcat";
 import { ImageCharacteristics } from "@/types/imageTypes";
-import { CodeSnippet } from "@components/molecules";
+import { CodeSnippet } from "@/components/molecules";
 
 export type ReadySectionProps = {
   sectionTargetClientMessage: string;

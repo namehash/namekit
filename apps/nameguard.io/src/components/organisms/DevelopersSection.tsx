@@ -11,9 +11,9 @@ import {
   DeveloperSectionTitle,
   DeveloperSectionWrapper,
   DeveloperSectionIconWrapper,
-} from "@components/atoms";
+} from "@/components/atoms";
 import { ListSectionElement } from "@/types/listSectionTypes";
-import { DeveloperResourceItem } from "@components/molecules";
+import { DeveloperResourceItem } from "@/components/molecules";
 
 export const DevelopersSection = () => {
   return (

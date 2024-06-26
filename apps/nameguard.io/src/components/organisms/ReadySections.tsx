@@ -14,7 +14,7 @@ import {
   ShoppingCartIcon,
   WalletConnectIcon,
   XMTPIcon,
-} from "@components/atoms";
+} from "@/components/atoms";
 
 import { ReadySection, ReadySectionProps } from "./ReadySection";
 import { Fragment } from "react";

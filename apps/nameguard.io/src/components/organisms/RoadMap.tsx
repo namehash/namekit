@@ -3,7 +3,7 @@ import {
   RoadmapNegativeShield,
   RoadmapPositiveShield,
   RoadmapWarningShield,
-} from "@components/atoms";
+} from "@/components/atoms";
 import cc from "classcat";
 
 type RoadMapElement = {
