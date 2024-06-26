@@ -2,6 +2,7 @@ import { createClient } from "@namehash/nameguard";
 import { createLocalProvider } from "@namehash/nameguard-js";
 import { createPublicClient, http } from "viem";
 import { mainnet } from "viem/chains";
+import { headers } from "next/headers";
 
 // You can use your own client
 const publicClient = createPublicClient({
@@ -22,6 +23,12 @@ type Props = {
 };
 
 export async function ImpersonationBadge({ address }: Props) {
+  // This is a workaround to disable static generation for this component.
+  // Without this, Next.js will try to do static generation
+  // and fail because of "Too many requests" caused by viem.
+  // `const dynamic = "force-dynamic"` should be enough, but it doesn't disable static generation.
+  headers();
+
   // This function does not use the NameGuard API server
   const data = await nameguard.getSecurePrimaryNameLocal(address);
 
@@ -42,7 +49,3 @@ export async function ImpersonationBadge({ address }: Props) {
     </>
   );
 }
-
-// Without this, Next.js will try to do static generation
-// and fail because of "Too many requests" caused by viem.
-const dynamic = "force-dynamic";
