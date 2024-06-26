@@ -4,7 +4,6 @@ import Link from "next/link";
 import { GithubIcon } from "@/app/components/atoms/icons/GithubIcon";
 import { NGSearchIcon } from "@/app/components/atoms/icons/NGSearchIcon";
 import { NGSearch } from "@/app/components/molecules/NGSearch";
-import { Bars3Icon } from "@heroicons/react/24/solid";
 import MobileMenu from "./MobileMenu";
 import { CalButton } from "../atoms";
 
