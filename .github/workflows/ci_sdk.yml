@@ -35,6 +35,9 @@ jobs:
         working-directory: ./api
         run: poetry install --with dev
 
+      - name: Build the SDK
+        run: pnpm build
+
       - name: Setup local nameguard api
         working-directory: ./api
         env:
