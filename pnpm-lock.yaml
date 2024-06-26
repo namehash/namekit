@@ -172,9 +172,6 @@ importers:
       '@namehash/nameguard-react':
         specifier: workspace:*
         version: link:../../packages/nameguard-react
-      '@namehash/namekit-react':
-        specifier: workspace:*
-        version: link:../../packages/namekit-react
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
@@ -199,10 +196,10 @@ importers:
         version: 8.1.8(@types/react-dom@18.3.0)(@types/react@18.3.2)(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)
       '@storybook/react':
         specifier: ^8.1.8
-        version: 8.1.8(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.5)
+        version: 8.1.8(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)(typescript@5.5.2)
       '@storybook/react-vite':
         specifier: ^8.1.8
-        version: 8.1.8(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.5)(vite@5.1.7)
+        version: 8.1.8(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)(typescript@5.5.2)(vite@5.1.7)
       '@storybook/test':
         specifier: ^8.1.8
         version: 8.1.8
@@ -2836,7 +2833,7 @@ packages:
       '@sinclair/typebox': 0.27.8
     dev: true
 
-  /@joshwooding/vite-plugin-react-docgen-typescript@0.3.1(typescript@5.4.5)(vite@5.1.7):
+  /@joshwooding/vite-plugin-react-docgen-typescript@0.3.1(typescript@5.5.2)(vite@5.1.7):
     resolution: {integrity: sha512-pdoMZ9QaPnVlSM+SdU/wgg0nyD/8wQ7y90ttO2CMCyrrm7RxveYIJ5eNfjPaoMFqW41LZra7QO9j+xV4Y18Glw==}
     peerDependencies:
       typescript: '>= 4.3.x'
@@ -2848,8 +2845,8 @@ packages:
       glob: 7.2.3
       glob-promise: 4.2.2(glob@7.2.3)
       magic-string: 0.27.0
-      react-docgen-typescript: 2.2.2(typescript@5.4.5)
-      typescript: 5.4.5
+      react-docgen-typescript: 2.2.2(typescript@5.5.2)
+      typescript: 5.5.2
       vite: 5.1.7(@types/node@20.12.12)
     dev: true
 
@@ -4170,7 +4167,7 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/builder-vite@8.1.8(prettier@3.2.5)(typescript@5.4.5)(vite@5.1.7):
+  /@storybook/builder-vite@8.1.8(prettier@3.2.5)(typescript@5.5.2)(vite@5.1.7):
     resolution: {integrity: sha512-eZnHUyQ27A+Cm6UsCC+H2VMbeT+zjAQ8wBexZKhTXjFE0tlD/JWuezb3A2EVjfHrrVLHVc/DZBmxCWr9qddkUQ==}
     peerDependencies:
       '@preact/preset-vite': '*'
@@ -4202,7 +4199,7 @@ packages:
       fs-extra: 11.2.0
       magic-string: 0.30.10
       ts-dedent: 2.2.0
-      typescript: 5.4.5
+      typescript: 5.5.2
       vite: 5.1.7(@types/node@20.12.12)
     transitivePeerDependencies:
       - encoding
@@ -4805,7 +4802,7 @@ packages:
       react-dom: 18.3.1(react@18.3.1)
     dev: true
 
-  /@storybook/react-vite@8.1.8(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.5)(vite@5.1.7):
+  /@storybook/react-vite@8.1.8(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)(typescript@5.5.2)(vite@5.1.7):
     resolution: {integrity: sha512-BdhCmxDY4EMTBFvA0SWdvJOcOc1cBkZ2Y4W44ltOq1KkqTsCgi5BFhB96HZTOMEM/yYyJb9+01iD5uY66xbCpg==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
@@ -4813,11 +4810,11 @@ packages:
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
       vite: ^4.0.0 || ^5.0.0
     dependencies:
-      '@joshwooding/vite-plugin-react-docgen-typescript': 0.3.1(typescript@5.4.5)(vite@5.1.7)
+      '@joshwooding/vite-plugin-react-docgen-typescript': 0.3.1(typescript@5.5.2)(vite@5.1.7)
       '@rollup/pluginutils': 5.1.0
-      '@storybook/builder-vite': 8.1.8(prettier@3.2.5)(typescript@5.4.5)(vite@5.1.7)
+      '@storybook/builder-vite': 8.1.8(prettier@3.2.5)(typescript@5.5.2)(vite@5.1.7)
       '@storybook/node-logger': 8.1.8
-      '@storybook/react': 8.1.8(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.5)
+      '@storybook/react': 8.1.8(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)(typescript@5.5.2)
       '@storybook/types': 8.1.8
       find-up: 5.0.0
       magic-string: 0.30.10
@@ -4878,7 +4875,7 @@ packages:
       - supports-color
     dev: true
 
-  /@storybook/react@8.1.8(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)(typescript@5.4.5):
+  /@storybook/react@8.1.8(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)(typescript@5.5.2):
     resolution: {integrity: sha512-QFwyccbyZGcTpYk6BVChSSemeZ3mmnpp62Ca60j6JO+zbtZv3tTr4PFo79lkWwtz+jpfj0CX8hyYdT1p3r77YA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
@@ -4911,7 +4908,7 @@ packages:
       semver: 7.6.2
       ts-dedent: 2.2.0
       type-fest: 2.19.0
-      typescript: 5.4.5
+      typescript: 5.5.2
       util-deprecate: 1.0.2
     transitivePeerDependencies:
       - encoding
@@ -9900,12 +9897,12 @@ packages:
       tween-functions: 1.2.0
     dev: true
 
-  /react-docgen-typescript@2.2.2(typescript@5.4.5):
+  /react-docgen-typescript@2.2.2(typescript@5.5.2):
     resolution: {integrity: sha512-tvg2ZtOpOi6QDwsb3GZhOjDkkX0h8Z2gipvTg6OVMUyoYoURhEiRNePT8NZItTVCDh39JJHnLdfCOkzoLbFnTg==}
     peerDependencies:
       typescript: '>= 4.3.x'
     dependencies:
-      typescript: 5.4.5
+      typescript: 5.5.2
     dev: true
 
   /react-docgen@7.0.3:
@@ -11528,6 +11525,12 @@ packages:
 
   /typescript@5.4.5:
     resolution: {integrity: sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+    dev: true
+
+  /typescript@5.5.2:
+    resolution: {integrity: sha512-NcRtPEOsPFFWjobJEtfihkLCZCXZt/os3zf8nTxjVH3RvTSxjrCamJpbExGvYOF+tFHc3pA65qpdwPbzjohhew==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: true
