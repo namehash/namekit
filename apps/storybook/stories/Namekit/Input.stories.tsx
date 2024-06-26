@@ -94,6 +94,37 @@ export const CustomClass: Story = {
     inputSize: "medium",
     type: "text",
     placeholder: "Custom Class Input",
-    className: "my-custom-class",
+    className: "custom-class-name",
+  },
+};
+
+export const WithSlotLeft: Story = {
+  args: {
+    variant: "primary",
+    inputSize: "medium",
+    type: "text",
+    placeholder: "Say something",
+    children: <Input.Slot>@</Input.Slot>,
+  },
+};
+
+export const WithSlotRight: Story = {
+  args: {
+    variant: "primary",
+    inputSize: "medium",
+    type: "text",
+    placeholder: "Say something",
+    slotPosition: "right",
+    children: <Input.Slot>@</Input.Slot>,
+  },
+};
+
+export const WithSlotLeftSmall: Story = {
+  args: {
+    variant: "primary",
+    inputSize: "small",
+    type: "text",
+    placeholder: "Say something",
+    children: <Input.Slot>@</Input.Slot>,
   },
 };
