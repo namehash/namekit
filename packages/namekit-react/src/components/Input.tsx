@@ -18,9 +18,9 @@ const wrapperClasses =
 
 const variantClasses = {
   primary:
-    "nk-bg-white nk-text-black nk-border-gray-300 nk-shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] has-[input:hover]:nk-border-gray-400 has-[input:focus]:nk-border-gray-600",
+    "nk-bg-white nk-text-black nk-border-gray-300 nk-shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] has-[input:hover]:nk-border-gray-400 has-[input:focus]:nk-border-gray-600 has-[input:focus:hover]:nk-border-gray-600",
   secondary:
-    "nk-border-gray-200 nk-bg-gray-100 has-[input:hover]:nk-border-gray-300 has-[input:focus]:nk-border-gray-400",
+    "nk-border-gray-200 nk-bg-gray-100 has-[input:hover]:nk-border-gray-300 has-[input:focus]:nk-border-gray-400 has-[input:focus:hover]:nk-border-gray-400",
 };
 
 const sizeClasses = {
@@ -36,7 +36,7 @@ const slotColorClasses = {
   secondary: "nk-text-black",
 };
 
-const Input: React.FC<InputProps> & { Slot: React.FC<SlotProps> } = ({
+export const Input: React.FC<InputProps> & { Slot: React.FC<SlotProps> } = ({
   className,
   variant = "primary",
   inputSize = "medium",
