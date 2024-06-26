@@ -52,8 +52,8 @@ const SymbolSize: Record<PriceDisplaySize, string> = {
 export const CurrencySymbol = ({
   size,
   currency,
-  symbolFillColor,
   describeCurrencyInTooltip,
+  symbolFillColor = undefined,
 }: CurrencySymbolProps) => {
   let symbol: JSX.Element | null = null;
 
