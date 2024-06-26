@@ -9,7 +9,7 @@ const meta: Meta<typeof Link> = {
     variant: {
       control: {
         type: "select",
-        options: ["primary", "secondary"],
+        options: ["primary", "secondary", "underline"],
       },
     },
     size: {
@@ -47,6 +47,15 @@ export const SecondaryMedium: Story = {
   },
 };
 
+export const UnderlineMedium: Story = {
+  args: {
+    variant: "underline",
+    size: "medium",
+    href: "#",
+    children: "Underline Medium Link",
+  },
+};
+
 export const PrimarySmall: Story = {
   args: {
     variant: "primary",
@@ -65,6 +74,15 @@ export const SecondarySmall: Story = {
   },
 };
 
+export const UnderlineSmall: Story = {
+  args: {
+    variant: "underline",
+    size: "small",
+    href: "#",
+    children: "Underline Small Link",
+  },
+};
+
 export const PrimaryLarge: Story = {
   args: {
     variant: "primary",
@@ -80,6 +98,15 @@ export const SecondaryLarge: Story = {
     size: "large",
     href: "#",
     children: "Secondary Large Link",
+  },
+};
+
+export const UnderlineLarge: Story = {
+  args: {
+    variant: "underline",
+    size: "large",
+    href: "#",
+    children: "Underline Large Link",
   },
 };
 
