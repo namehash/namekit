@@ -25,7 +25,7 @@ const MobileMenu = () => {
   };
 
   return (
-    <div className="z-50 search_bar_change:hidden">
+    <div className="z-50 lg:hidden">
       {/* Hamburguer button  */}
       <button className="block" onClick={() => toggleMenu()}>
         <Bars3Icon className="w-6 h-6 text-black" />
@@ -91,7 +91,7 @@ const MobileMenu = () => {
             </Link>
           </nav>
           <div className="p-4 w-full flex items-center justify-center">
-            <CalButton className="w-full block text-base leading-6 font-medium py-2 text-black bg-white hover:bg-opacity-10 hover:bg-white transition-color duration-300 px-3 rounded-[8px] text-center">
+            <CalButton className="w-full block text-base leading-6 font-medium py-2 text-black bg-white hover:bg-opacity-90 hover:bg-white transition-color duration-300 px-3 rounded-[8px] text-center">
               Discuss an integration
             </CalButton>
           </div>
