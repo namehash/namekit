@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
+import { Suspense } from "react";
 
 import "./globals.css";
 import { Avatar } from "./components/Avatar";
+import { ImpersonationBadge } from "./components/ImpersonationBadge";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -72,7 +74,7 @@ export default function RootLayout({
                   </span>
                 </div>
               </div>
-              <div className="overflow-x-hidden overflow-y-scroll flex flex-col h-full bg-gray-100 border-x">
+              <div className="overflow-y-scroll flex flex-col h-full bg-gray-100 border-x">
                 {messages.map(({ address }, index) => (
                   <Link
                     key={index}
@@ -80,8 +82,11 @@ export default function RootLayout({
                     className="flex items-center border-0 border-b border-gray-200 outline-blue outline-b-0 h-min cursor-pointer p-4 hover:bg-gray-200 space-x-3 font-mono"
                   >
                     <Avatar address={address} />
-                    <span className="overflow-clip overflow-ellipsis">
+                    <span className="relative overflow-ellipsis overflow-x-clip">
                       {address}
+                      <Suspense fallback={null}>
+                        <ImpersonationBadge address={address} />
+                      </Suspense>
                     </span>
                   </Link>
                 ))}

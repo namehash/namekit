@@ -4,11 +4,13 @@ import { mainnet } from "viem/chains";
 import { LocalSecurePrimaryNameResult } from "@namehash/nameguard";
 import { securePrimaryName } from "./securePrimaryName";
 
+const PROVIDER_URI_MAINNET = process.env.PROVIDER_URI_MAINNET;
+
 describe("secure primary name", () => {
   it("should detect impersonation", async () => {
     const client = createPublicClient({
       chain: mainnet,
-      transport: http(),
+      transport: http(PROVIDER_URI_MAINNET),
     });
     const tests = [
       [

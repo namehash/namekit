@@ -35,6 +35,9 @@ importers:
       '@namehash/nameguard':
         specifier: workspace:*
         version: link:../../packages/nameguard-sdk
+      '@namehash/nameguard-js':
+        specifier: workspace:*
+        version: link:../../packages/nameguard-js
       '@namehash/nameguard-react':
         specifier: workspace:*
         version: link:../../packages/nameguard-react
@@ -50,6 +53,9 @@ importers:
       react-dom:
         specifier: ^18
         version: 18.2.0(react@18.2.0)
+      viem:
+        specifier: ^2.9.3
+        version: 2.9.3(typescript@5.3.3)
     devDependencies:
       '@types/node':
         specifier: ^20
