@@ -1,7 +1,7 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 
-// import "@namehash/ens-webfont";
+import "@namehash/ens-webfont";
 
 const meta: Meta = {};
 
