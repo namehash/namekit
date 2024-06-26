@@ -4,11 +4,13 @@ import { mainnet } from "viem/chains";
 import { createClient } from "@namehash/nameguard";
 import { createLocalProvider } from "./localProvider";
 
+const PROVIDER_URI_MAINNET = process.env.PROVIDER_URI_MAINNET;
+
 describe("LocalProvider", () => {
   it("should be used by NameGuard", async () => {
     const publicClient = createPublicClient({
       chain: mainnet,
-      transport: http(),
+      transport: http(PROVIDER_URI_MAINNET),
     });
 
     const localNameguard = createClient({
@@ -29,7 +31,7 @@ describe("LocalProvider", () => {
   it("should be rejected by NameGuard with a different network", () => {
     const publicClient = createPublicClient({
       chain: mainnet,
-      transport: http(),
+      transport: http(PROVIDER_URI_MAINNET),
     });
 
     const localNameguard = createClient({
