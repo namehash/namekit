@@ -24,8 +24,8 @@ export const AirplaneIllustration = (props: React.SVGProps<SVGSVGElement>) => (
     <path
       d="M273.5 319C233.5 352.834 141 316.5 164.5 284.5C188 252.5 255 337.5 174 368C61.9347 410.198 34.9207 331.713 66 298C95.5 266 174 334 10 429.5"
       stroke="url(#paint2_linear_2283_11507)"
-      strokeWidth="2"
-      strokeDasharray="8 8"
+      stroke-width="2"
+      stroke-dasharray="8 8"
     />
     <g filter="url(#filter0_d_2283_11507)">
       <path
@@ -53,9 +53,9 @@ export const AirplaneIllustration = (props: React.SVGProps<SVGSVGElement>) => (
         width="528.165"
         height="454.371"
         filterUnits="userSpaceOnUse"
-        colorInterpolationFilters="sRGB"
+        color-interpolation-filters="sRGB"
       >
-        <feFlood floodOpacity="0" result="BackgroundImageFix" />
+        <feFlood flood-opacity="0" result="BackgroundImageFix" />
         <feColorMatrix
           in="SourceAlpha"
           type="matrix"
@@ -89,10 +89,10 @@ export const AirplaneIllustration = (props: React.SVGProps<SVGSVGElement>) => (
         y2="1037"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor="#FBA600" />
-        <stop offset="0.322917" stopColor="#F112D9" />
-        <stop offset="0.708333" stopColor="#4C3FA0" />
-        <stop offset="0.958333" stopColor="#2ED3C6" />
+        <stop stop-color="#FBA600" />
+        <stop offset="0.322917" stop-color="#F112D9" />
+        <stop offset="0.708333" stop-color="#4C3FA0" />
+        <stop offset="0.958333" stop-color="#2ED3C6" />
       </linearGradient>
       <radialGradient
         id="paint1_radial_2283_11507"
@@ -102,8 +102,8 @@ export const AirplaneIllustration = (props: React.SVGProps<SVGSVGElement>) => (
         gradientUnits="userSpaceOnUse"
         gradientTransform="translate(188 748) rotate(90) scale(289 188)"
       >
-        <stop stopColor="white" stopOpacity="0" />
-        <stop offset="1" stopColor="white" />
+        <stop stop-color="white" stop-opacity="0" />
+        <stop offset="1" stop-color="white" />
       </radialGradient>
       <linearGradient
         id="paint2_linear_2283_11507"
@@ -113,8 +113,8 @@ export const AirplaneIllustration = (props: React.SVGProps<SVGSVGElement>) => (
         y2="317.5"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor="#FFAF00" />
-        <stop offset="1" stopColor="#F112D9" />
+        <stop stop-color="#FFAF00" />
+        <stop offset="1" stop-color="#F112D9" />
       </linearGradient>
       <linearGradient
         id="paint3_linear_2283_11507"
@@ -124,8 +124,8 @@ export const AirplaneIllustration = (props: React.SVGProps<SVGSVGElement>) => (
         y2="234"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor="#EAF2F6" />
-        <stop offset="1" stopColor="white" />
+        <stop stop-color="#EAF2F6" />
+        <stop offset="1" stop-color="white" />
       </linearGradient>
       <linearGradient
         id="paint4_linear_2283_11507"
@@ -135,8 +135,8 @@ export const AirplaneIllustration = (props: React.SVGProps<SVGSVGElement>) => (
         y2="102"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor="#EAF2F6" />
-        <stop offset="1" stopColor="white" />
+        <stop stop-color="#EAF2F6" />
+        <stop offset="1" stop-color="white" />
       </linearGradient>
       <linearGradient
         id="paint5_linear_2283_11507"
@@ -146,8 +146,8 @@ export const AirplaneIllustration = (props: React.SVGProps<SVGSVGElement>) => (
         y2="184"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stopColor="#EAF2F6" />
-        <stop offset="1" stopColor="white" />
+        <stop stop-color="#EAF2F6" />
+        <stop offset="1" stop-color="white" />
       </linearGradient>
     </defs>
   </svg>
