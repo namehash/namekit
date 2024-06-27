@@ -1,7 +1,7 @@
 import { splitGraphemes as splitGraphemesInternal } from "text-segmentation";
 
 // for Hangul Jamo splitting
-const HANGUL_REGEXP = new RegExp(/(?:[ᄀ-ᇿ])/.source, "gv");
+const HANGUL_REGEXP = new RegExp(/[ᄀ-ᇿ]/.source, "gu");
 // TODO: replace with unicode character range instead of those pure symbols
 // [\u1100–\u11FF]
 
