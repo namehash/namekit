@@ -44,7 +44,7 @@ from nameguard.utils import (
     label_is_labelhash,
     compute_canonical_from_list,
     is_labelhash_eth,
-    MAX_INSPECTABLE_NAME_CHARACTERS,
+    MAX_INSPECTED_NAME_CHARACTERS,
 )
 from nameguard.exceptions import ProviderUnavailable, NotAGrapheme, MissingTitle
 from nameguard.logging import logger
@@ -148,7 +148,7 @@ class NameGuard:
         Inspect a name. A name is a sequence of labels separated by dots.
         A label can be a labelhash or a string.
         If a labelhash is encountered and `resolve_labelhashes` is `True`, a lookup will be performed.
-        Returns None if there is more labelhashes than MAX_INSPECTABLE_NAME_UNKNOWN_LABELS.
+        Returns None if there are more labelhashes than MAX_INSPECTED_NAME_UNKNOWN_LABELS.
         """
 
         logger.debug(f"[inspect_name] name: '{name}'")
@@ -170,7 +170,7 @@ class NameGuard:
 
         logger.debug(f"[inspect_name] name: '{name}'")
 
-        if len(name) > MAX_INSPECTABLE_NAME_CHARACTERS:
+        if len(name) > MAX_INSPECTED_NAME_CHARACTERS:
             return None
 
         if bulk_mode and simple_name(name):

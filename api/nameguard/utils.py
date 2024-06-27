@@ -7,8 +7,8 @@ from ens.constants import EMPTY_SHA3_BYTES
 from nameguard.exceptions import InvalidNameHash, InvalidTokenID, InvalidEthereumAddress
 from nameguard.models import Rating, GenericCheckResult, Check
 
-MAX_INSPECTABLE_NAME_CHARACTERS = 200  # number of characters to inspect in a name including labels and separators
-MAX_INSPECTABLE_NAME_UNKNOWN_LABELS = 5  # duplicated unknown labels are counted
+MAX_INSPECTED_NAME_CHARACTERS = 200  # maximum number of characters to inspect in a name including labels and separators
+MAX_INSPECTED_NAME_UNKNOWN_LABELS = 5  # each unknown label in a name is distinctly counted, even if there are multiple instances of the same unknown label in a name.
 
 
 def compute_canonical_from_list(canonicals: list[Optional[str]], sep='') -> Optional[str]:
