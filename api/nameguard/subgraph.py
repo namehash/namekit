@@ -1,6 +1,9 @@
 # import hashlib
 # import json
 from typing import Optional
+import os
+from dotenv import load_dotenv
+
 
 import httpx
 
@@ -9,13 +12,15 @@ from nameguard.exceptions import ENSSubgraphUnavailable, NamehashNotFoundInSubgr
 from nameguard.models import NetworkName
 from nameguard.utils import namehash_from_name, label_is_labelhash, MAX_INSPECTED_NAME_UNKNOWN_LABELS
 
+load_dotenv()
+
 # The label limit for using the multi-label lookup query.
 # Longer names will be resolved by querying the namehash of the full name.
 MAX_MULTI_LABEL_LOOKUP = 256
 
 ENS_SUBGRAPH_URL = {
-    NetworkName.MAINNET: 'https://api.thegraph.com/subgraphs/name/ensdomains/ens',
-    NetworkName.SEPOLIA: 'https://api.studio.thegraph.com/proxy/49574/enssepolia/version/latest',
+    NetworkName.MAINNET: os.environ.get('ENS_SUBGRAPH_URL_MAINNET'),
+    NetworkName.SEPOLIA: os.environ.get('ENS_SUBGRAPH_URL_SEPOLIA'),
 }
 
 
@@ -27,6 +32,10 @@ query resolveNamehash($nameHash: String) {
 }
 """
 
+api_key = os.environ.get('SUBGRAPH_API_KEY')
+
+headers = {'Content-Type': 'application/json', 'Authorization': f'Bearer {api_key}'}
+
 
 async def call_subgraph(network_name: NetworkName, query: str, variables: dict) -> dict:
     try:
@@ -34,6 +43,7 @@ async def call_subgraph(network_name: NetworkName, query: str, variables: dict) 
             response = await client.post(
                 ENS_SUBGRAPH_URL[network_name] + '?source=ens-nameguard',
                 json={'query': query, 'variables': variables},
+                headers=headers,
             )
 
         if response.status_code == 200:

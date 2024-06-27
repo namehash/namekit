@@ -1,10 +1,14 @@
 import pytest
 
+from dotenv import load_dotenv
+
 from nameguard.subgraph import (
     resolve_labelhashes_querying_labelhashes,
     resolve_all_labelhashes_in_name_querying_labelhashes,
 )
 from nameguard.utils import namehash_from_name, MAX_INSPECTED_NAME_UNKNOWN_LABELS
+
+load_dotenv()
 
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)

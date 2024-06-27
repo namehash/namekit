@@ -450,7 +450,7 @@ class NameGuard:
         """
         contract_address = contract_address.lower()
 
-        res_json = await get_nft_metadata(contract_address, token_id)
+        res_json = await get_nft_metadata(network_name, contract_address, token_id)
 
         token_type = res_json['id']['tokenMetadata']['tokenType']
 
