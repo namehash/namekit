@@ -27,11 +27,8 @@ type Props = {
 
 export async function ImpersonationBadgeContent({ address }: Props) {
   // This is a workaround to disable static generation for this component.
-  // Without this, Next.js will try to do static generation
-  // and fail because of "Too many requests" caused by viem.
-  // `const dynamic = "force-dynamic"` should be enough, but it doesn't disable pre-rendering.
+  // Without this, Next.js would render this at build time.
   headers();
-
 
   // This function does not use the NameGuard API server
   const data = await nameguard.getSecurePrimaryNameLocal(address);
@@ -53,5 +50,3 @@ export async function ImpersonationBadgeContent({ address }: Props) {
     </>
   );
 }
-
-export const dynamic = "force-dynamic";
