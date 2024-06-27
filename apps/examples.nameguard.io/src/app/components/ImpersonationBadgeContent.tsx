@@ -33,20 +33,28 @@ export async function ImpersonationBadgeContent({ address }: Props) {
   // This function does not use the NameGuard API server
   const data = await nameguard.getSecurePrimaryNameLocal(address);
 
+  const pillColor =
+    data.impersonation_status === "potential" ?
+      "bg-red-300" :
+      data.impersonation_status === "unlikely" ?
+        "bg-green-300" :
+        "bg-yellow-300";
+
+  const pillText =
+    data.impersonation_status === "potential" ?
+      "Potential impersonation!" :
+      data.impersonation_status === "unlikely" ?
+        "Name is secure" :
+        "No primary name!";
+
   return (
     <>
       <span className="absolute bottom-6 left-0 text-xs">
         {data.display_name}
       </span>
-      {data.impersonation_status === "potential" ? (
-        <span className="absolute top-6 left-0 bg-red-300 text-xs rounded-full px-1">
-          Potential impersonation!
-        </span>
-      ) : data.impersonation_status === null ? (
-        <span className="absolute top-6 left-0 bg-yellow-300 text-xs rounded-full px-1">
-          No primary name!
-        </span>
-      ) : null}
+      <span className={"absolute top-6 left-0 text-xs rounded-full px-2 " + pillColor}>
+        {pillText}
+      </span>
     </>
   );
 }
