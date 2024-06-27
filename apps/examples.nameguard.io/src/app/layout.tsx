@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
-import { Suspense } from "react";
 
 import "./globals.css";
 import { Avatar } from "./components/Avatar";
@@ -84,9 +83,7 @@ export default function RootLayout({
                     <Avatar address={address} />
                     <span className="relative overflow-ellipsis overflow-x-clip">
                       {address}
-                      <Suspense fallback={null}>
-                        <ImpersonationBadge address={address} />
-                      </Suspense>
+                      <ImpersonationBadge address={address} />
                     </span>
                   </Link>
                 ))}
