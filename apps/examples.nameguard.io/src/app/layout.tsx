@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
+import { Suspense } from "react";
 
 import "./globals.css";
 import { Avatar } from "./components/Avatar";
-import { ImpersonationBadge } from "./components/ImpersonationBadge";
+import { SecurePrimaryName } from "./components/SecurePrimaryName";
+import { SecurePrimaryNameLoading } from "./components/SecurePrimaryNameLoading";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -81,10 +83,9 @@ export default function RootLayout({
                     className="flex items-center border-0 border-b border-gray-200 outline-blue outline-b-0 h-min cursor-pointer p-4 hover:bg-gray-200 space-x-3 font-mono"
                   >
                     <Avatar address={address} />
-                    <span className="relative overflow-ellipsis overflow-x-clip">
-                      {address}
-                      <ImpersonationBadge address={address} />
-                    </span>
+                    <Suspense fallback={<SecurePrimaryNameLoading address={address} />}>
+                      <SecurePrimaryName address={address} />
+                    </Suspense>
                   </Link>
                 ))}
               </div>

@@ -11,21 +11,21 @@ const PROVIDER_URI_MAINNET = process.env.PROVIDER_URI_MAINNET;
 const publicClient = createPublicClient({
   chain: mainnet,
   // For example, put your own URI here
-  transport: http(PROVIDER_URI_MAINNET)
+  transport: http(PROVIDER_URI_MAINNET),
 });
 
 const nameguard = createClient({
   localProviders: new Map([
     // Register a local provider for mainnet using a given client
-    ["mainnet", createLocalProvider({ publicClient })]
-  ])
+    ["mainnet", createLocalProvider({ publicClient })],
+  ]),
 });
 
-type Props = {
+interface Props {
   address: string;
-};
+}
 
-export async function ImpersonationBadgeContent({ address }: Props) {
+export async function SecurePrimaryName({ address }: Props) {
   // This is a workaround to disable static generation for this component.
   // Without this, Next.js would render this at build time.
   headers();
@@ -48,13 +48,18 @@ export async function ImpersonationBadgeContent({ address }: Props) {
         "No primary name!";
 
   return (
-    <>
-      <span className="absolute bottom-6 left-0 text-xs">
+    <div className="flex flex-col items-start flex-1 overflow-hidden">
+      <div className="text-xs">
         {data.display_name}
-      </span>
-      <span className={"absolute top-6 left-0 text-xs rounded-full px-2 " + pillColor}>
+      </div>
+
+      <div className="self-stretch truncate">
+        {address}
+      </div>
+
+      <div className={"text-xs rounded-full px-2 " + pillColor}>
         {pillText}
-      </span>
-    </>
+      </div>
+    </div>
   );
 }
