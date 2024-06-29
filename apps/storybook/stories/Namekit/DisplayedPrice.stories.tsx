@@ -1,4 +1,4 @@
-import { Currency } from "@namehash/ens-utils";
+import { Currency, PriceCurrencyFormat } from "@namehash/ens-utils";
 import {
   AltPriceDisplayFormat,
   DisplayedPrice,
@@ -12,6 +12,40 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<typeof DisplayedPrice> = {
   component: DisplayedPrice,
   title: "Namekit/DisplayedPrice",
+  argTypes: {
+    symbolFillColor: { control: "color" },
+    price: {
+      control: "object",
+    },
+    size: {
+      options: PriceDisplaySize,
+      control: { type: "select" },
+    },
+    altPriceDisplayFormat: {
+      options: AltPriceDisplayFormat,
+      control: { type: "select" },
+    },
+    symbolPosition: {
+      options: CurrencySymbolPosition,
+      control: { type: "select" },
+    },
+    currencySymbology: {
+      options: CurrencySymbology,
+      control: { type: "select" },
+    },
+    altPriceDisplaySize: {
+      options: PriceDisplaySize,
+      control: { type: "select" },
+    },
+    altPriceDisplayPosition: {
+      options: PriceDisplayPosition,
+      control: { type: "select" },
+    },
+    priceTextDisplaySize: {
+      options: PriceDisplaySize,
+      control: { type: "select" },
+    },
+  },
 };
 
 declare global {
@@ -295,5 +329,37 @@ export const WithOnClickHandler: Story = {
       value: 1000000000000000000n,
     },
     onTextClick: () => alert("Price clicked"),
+  },
+};
+export const EthMinDisplayPrice: Story = {
+  args: {
+    price: {
+      currency: Currency.Eth,
+      value: 100000000000000n,
+    },
+  },
+};
+export const EthMaxDisplayPrice: Story = {
+  args: {
+    price: {
+      currency: Currency.Eth,
+      value: 10000000000000000000000000n,
+    },
+  },
+};
+export const UsdMinDisplayPrice: Story = {
+  args: {
+    price: {
+      currency: Currency.Usd,
+      value: 1n,
+    },
+  },
+};
+export const UsdMaxDisplayPrice: Story = {
+  args: {
+    price: {
+      currency: Currency.Usd,
+      value: 1000000000000000000n,
+    },
   },
 };

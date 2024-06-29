@@ -3,24 +3,11 @@ import {
   PriceCurrencyFormat,
   parseStringToCurrency,
 } from "./currency";
-import { DomainCard, DomainName } from "./domain";
+import { DomainName } from "./domain";
 import { MIN_ETH_REGISTRABLE_LABEL_LENGTH } from "./ensname";
 import { nameCurrentTemporaryPremium } from "./ethregistrar";
 import { approxScaleBigInt, stringToBigInt } from "./number";
-import {
-  PrimaryRegistrationStatus,
-  Registration,
-  SecondaryRegistrationStatus,
-} from "./registration";
-import {
-  Duration,
-  SECONDS_PER_DAY,
-  Timestamp,
-  addSeconds,
-  buildDuration,
-  formatTimestampAsDistanceToNow,
-  now,
-} from "./time";
+import { Registration } from "./registration";
 
 export interface Price {
   // TODO: consider adding a constraint where value is never negative

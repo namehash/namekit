@@ -1,6 +1,8 @@
 import {
   PrimaryRegistrationStatus,
   SecondaryRegistrationStatus,
+  buildTimestamp,
+  now,
 } from "@namehash/ens-utils";
 import type { Meta, StoryObj } from "@storybook/react";
 import {
@@ -8,26 +10,30 @@ import {
   RegistrationPriceInfoDisplayingFormat,
 } from "@namehash/namekit-react";
 
+const ELEVEN_DAYS_FROM_NOW_TIMESTAMP = buildTimestamp(
+  BigInt(new Date().getTime()) / 1005n,
+);
+
 export const DisplayIconWithTooltip: Story = {
   args: {
     displayIconWithTooltip:
       RegistrationPriceInfoDisplayingFormat.IconWithTooltip,
     registration: {
-      expiryTimestamp: { time: 1709652875n },
+      expiryTimestamp: ELEVEN_DAYS_FROM_NOW_TIMESTAMP,
       primaryStatus: PrimaryRegistrationStatus.Expired,
       secondaryStatus: SecondaryRegistrationStatus.RecentlyReleased,
-      registrationTimestamp: { time: 1711380875n },
-      expirationTimestamp: { time: 1709652875n },
+      registrationTimestamp: now(),
+      expirationTimestamp: now(),
     },
     parsedName: {
       namehash:
-        "0xc4feb2ef28ae93ad2847cc7aaa8d614509f29feea35c86555550f071e26cec83",
-      slug: "xtest$1709652875$$$false.eth",
-      displayName: "xtest$1709652875$$$false.eth",
-      normalizedName: "xtest$1709652875$$$false.eth",
-      labelName: "xtest$1709652875$$$false",
+        "0x54f4b08bc10ab9368020f2afdd830ab742058481586c4ae87ba6e37c8912a6ec",
+      slug: "expiredDomain.eth",
+      displayName: "expiredDomain.eth",
+      normalizedName: "expiredDomain.eth",
+      labelName: "expiredDomain",
       labelHash:
-        "0xf9e2a96524775e288c37920e5191e62ebad982b8c357713106bd430646f00146",
+        "0x9458d05651ff8443f025747bf1a859bb26f2815f70d68e8cc9286027013961cd",
       unwrappedTokenId:
         113026375855800814118284943830039256141780833603018686252863399931967234376006n,
       wrappedTokenId:
@@ -39,21 +45,21 @@ export const DisplayTextAndIcon: Story = {
   args: {
     displayIconWithTooltip: RegistrationPriceInfoDisplayingFormat.IconWithText,
     registration: {
-      expiryTimestamp: { time: 1709652875n },
+      expiryTimestamp: ELEVEN_DAYS_FROM_NOW_TIMESTAMP,
       primaryStatus: PrimaryRegistrationStatus.Expired,
       secondaryStatus: SecondaryRegistrationStatus.RecentlyReleased,
-      registrationTimestamp: { time: 1711380875n },
-      expirationTimestamp: { time: 1709652875n },
+      registrationTimestamp: now(),
+      expirationTimestamp: now(),
     },
     parsedName: {
       namehash:
-        "0xc4feb2ef28ae93ad2847cc7aaa8d614509f29feea35c86555550f071e26cec83",
-      slug: "xtest$1709652875$$$false.eth",
-      displayName: "xtest$1709652875$$$false.eth",
-      normalizedName: "xtest$1709652875$$$false.eth",
-      labelName: "xtest$1709652875$$$false",
+        "0x54f4b08bc10ab9368020f2afdd830ab742058481586c4ae87ba6e37c8912a6ec",
+      slug: "expiredDomain.eth",
+      displayName: "expiredDomain.eth",
+      normalizedName: "expiredDomain.eth",
+      labelName: "expiredDomain",
       labelHash:
-        "0xf9e2a96524775e288c37920e5191e62ebad982b8c357713106bd430646f00146",
+        "0x9458d05651ff8443f025747bf1a859bb26f2815f70d68e8cc9286027013961cd",
       unwrappedTokenId:
         113026375855800814118284943830039256141780833603018686252863399931967234376006n,
       wrappedTokenId:
@@ -65,6 +71,12 @@ export const DisplayTextAndIcon: Story = {
 const meta: Meta<typeof RegistrationPriceInfo> = {
   component: RegistrationPriceInfo,
   title: "Namekit/RegistrationPriceInfo",
+  argTypes: {
+    displayIconWithTooltip: {
+      options: RegistrationPriceInfoDisplayingFormat,
+      control: { type: "select" },
+    },
+  },
 };
 
 declare global {

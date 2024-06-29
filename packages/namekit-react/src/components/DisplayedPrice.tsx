@@ -78,7 +78,8 @@ export const DisplayedPrice = ({
             "nk-leading-none",
             {
               "nk-mb-[1px]": price.currency !== Currency.Usd,
-              "nk-order-1 nk-mr-1":
+              "nk-mr-1": price.currency === Currency.Usd,
+              "nk-order-1 nk-mr-0.5":
                 symbolPosition === CurrencySymbolPosition.Left,
               "nk-mr-1.5 nk-order-3":
                 symbolPosition === CurrencySymbolPosition.Right,

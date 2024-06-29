@@ -81,6 +81,25 @@ export const NotShowingTooltipDescription: Story = {
 const meta: Meta<typeof CurrencySymbol> = {
   component: CurrencySymbol,
   title: "Namekit/CurrencySymbol",
+  argTypes: {
+    symbolFillColor: { control: "color" },
+    currency: {
+      options: [
+        Currency.Eth,
+        Currency.Usd,
+        Currency.Usdc,
+        Currency.Weth,
+        Currency.Dai,
+      ],
+      control: { type: "select" },
+    },
+    size: {
+      options: Object.keys(PriceDisplaySize),
+      mapping: PriceDisplaySize,
+      control: { type: "select" },
+    },
+    describeCurrencyInTooltip: { control: { type: "boolean" } },
+  },
 };
 
 declare global {
