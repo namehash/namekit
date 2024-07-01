@@ -61,9 +61,9 @@ export const Header = () => {
             >
               Contact
             </Link>
-            <div className="px-5 py-2 rounded-md bg-black text-white hover:bg-gray-800 transition-all duration-300 whitespace-nowrap">
-              <CalButton>Discuss an integration</CalButton>
-            </div>
+            <CalButton className="px-4 py-2 text-sm rounded-md bg-black text-white hover:bg-gray-800 transition-all duration-300 whitespace-nowrap">
+              Discuss an integration
+            </CalButton>
           </div>
 
           <div className="flex lg:hidden justify-center align-center p-[7px]">

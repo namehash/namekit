@@ -43,3 +43,4 @@ export * from "./NGSearchIcon";
 export * from "./Error404IconLarge";
 export * from "./Error404IconSmall";
 export * from "./FarcasterIcon";
+export * from "./NameGuardLogo";

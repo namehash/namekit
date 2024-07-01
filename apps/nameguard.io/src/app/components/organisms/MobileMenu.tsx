@@ -1,8 +1,7 @@
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import Link from "next/link";
-import { CalButton } from "../atoms";
-import { NameHashLabsLogo } from "../atoms/icons/NamehashLabsLogo";
+import { CalButton, NameGuardLogo } from "@/app/components/atoms";
 
 const MobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,7 +45,7 @@ const MobileMenu = () => {
                 enableScroll();
               }}
             >
-              <NameHashLabsLogo className="text-white" />
+              <NameGuardLogo className="text-white" />
             </Link>
             <button
               className="p-3 hover:bg-white hover:bg-opacity-10 rounded-[6px] transition-colors duration-200"
