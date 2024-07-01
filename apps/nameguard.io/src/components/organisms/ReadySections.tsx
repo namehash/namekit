@@ -121,7 +121,7 @@ const result = await nameguard.fakeEthNameCheck(contract, tokenId, {
     ),
     imageSpecifics: {
       source: fake_NFT_filter_img.src,
-      alt: "Filter out fake ENS NFTs image",
+      alt: "Filter out fake ENS NFTs",
       tagWidth: 924,
       tagHeight: 680,
     },
