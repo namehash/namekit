@@ -153,7 +153,7 @@ const names = ["abc.eth", "123.eth", "xyz.eth"];
 const results = await nameguard.bulkInspectNames(names);`,
     imageSpecifics: {
       source: surface_risks_img.src,
-      alt: "Surface hidden risks or limitations image",
+      alt: "Surface hidden risks or limitations",
       tagWidth: 884,
       tagHeight: 682,
     },
