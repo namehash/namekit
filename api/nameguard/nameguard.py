@@ -3,7 +3,7 @@ import re
 from typing import Union, Optional
 
 from nameguard.our_ens import OurENS
-from ens_normalize import is_ens_normalized, ens_cure, DisallowedSequence
+from ens_normalize import is_ens_normalized, ens_cure, DisallowedSequence, ens_process
 
 import requests
 from label_inspector.inspector import Inspector
@@ -32,6 +32,7 @@ from nameguard.models import (
     ConsolidatedNameGuardReport,
     Rating,
     ConfusableGuardReport,
+    NameCheckResult,
 )
 from nameguard.provider import get_nft_metadata
 from nameguard.utils import (
@@ -45,6 +46,7 @@ from nameguard.utils import (
     compute_canonical_from_list,
     is_labelhash_eth,
     MAX_INSPECTED_NAME_CHARACTERS,
+    labelhash_in_name,
 )
 from nameguard.exceptions import ProviderUnavailable, NotAGrapheme, MissingTitle
 from nameguard.logging import logger
@@ -119,6 +121,31 @@ def consolidated_report_from_simple_name(name: str) -> ConsolidatedNameGuardRepo
     )
 
 
+def consolidated_report_from_uninspected_name(name: str) -> ConsolidatedNameGuardReport:
+    res = ens_process(name, do_normalize=True, do_beautify=True)
+    beautified = res.beautified
+    normalized = name == res.normalized
+
+    return ConsolidatedNameGuardReport(
+        name=name,
+        namehash=namehash_from_name(name),
+        normalization=Normalization.UNKNOWN
+        if labelhash_in_name(name)
+        else Normalization.NORMALIZED
+        if normalized
+        else Normalization.UNNORMALIZED,
+        rating=Rating.ALERT,
+        risk_count=1,
+        highest_risk=NameCheckResult(
+            check=Check.UNINSPECTED,
+            status=CheckStatus.ALERT,
+            _name_message='Name is uninspected',
+            _title='Uninspected',
+        ),
+        beautiful_name=beautified,  # TODO computed twice
+    )
+
+
 class NameGuard:
     def __init__(self):
         self._inspector = init_inspector()
@@ -171,7 +198,7 @@ class NameGuard:
         logger.debug(f"[inspect_name] name: '{name}'")
 
         if len(name) > MAX_INSPECTED_NAME_CHARACTERS:
-            return None
+            return consolidated_report_from_uninspected_name(name)
 
         if bulk_mode and simple_name(name):
             return consolidated_report_from_simple_name(name)
@@ -409,7 +436,7 @@ class NameGuard:
         else:
             nameguard_result = await self.inspect_name(network_name, domain)
 
-            if nameguard_result is None:
+            if nameguard_result.highest_risk and nameguard_result.highest_risk.check.name == Check.UNINSPECTED.name:
                 status = SecurePrimaryNameStatus.UNINSPECTED
                 impersonation_status = None
             elif nameguard_result.normalization == Normalization.UNNORMALIZED:

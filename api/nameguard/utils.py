@@ -23,6 +23,7 @@ def compute_canonical_from_list(canonicals: list[Optional[str]], sep='') -> Opti
 
 LABELHASH_REGEX = re.compile(r'^\[[0-9a-f]{64}\]$')
 LABELHASH_ETH_REGEX = re.compile(r'^\[[0-9a-f]{64}\]\.eth$')
+LABELHASH_IN_NAME_REGEX = re.compile(r'(^|\.)\[[0-9a-f]{64}\]($|\.)')
 
 
 def is_labelhash_eth(x: str) -> bool:
@@ -31,6 +32,10 @@ def is_labelhash_eth(x: str) -> bool:
 
 def label_is_labelhash(x: str) -> bool:
     return bool(LABELHASH_REGEX.match(x))
+
+
+def labelhash_in_name(x: str) -> bool:
+    return bool(LABELHASH_IN_NAME_REGEX.match(x))
 
 
 def hexbytes_to_int(hb: HexBytes) -> int:

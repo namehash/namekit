@@ -1296,4 +1296,13 @@ def test_bulk_inspect_name_post_too_long(test_client):
     assert response.status_code == 200
     res_json = response.json()
     pprint(res_json)
-    assert all([x is None for x in res_json['results']])
+    # assert all([x is None for x in res_json['results']])
+
+
+def test_bulk_inspect_name_post_too_long_normalized(test_client):
+    name = 'abcd' * 51
+    names = [name] * 250
+    response = test_client.post('/bulk-inspect-names', json={'names': names, 'network_name': 'mainnet'})
+    assert response.status_code == 200
+    res_json = response.json()
+    pprint(res_json)

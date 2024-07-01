@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union
 from pydantic import BaseModel, Field, computed_field, field_serializer
 from enum import Enum
 from ens_normalize import ens_beautify
@@ -353,7 +353,7 @@ class SecurePrimaryNameResult(BaseModel):
         examples=['vitalik.eth'],
     )
 
-    nameguard_result: Optional[NameGuardReport] = Field(
+    nameguard_result: Optional[Union[NameGuardReport, ConsolidatedNameGuardReport]] = Field(
         description='NameGuard report for the `primary_name`.\n'
         '* `null` if `primary_name_status` is `no_primary_name` (primary name is not found)'
     )

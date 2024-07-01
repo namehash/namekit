@@ -170,15 +170,14 @@ async def test_bulk_simple_name(nameguard: NameGuard, label_length):
     result_bulk = await nameguard.inspect_name('mainnet', name, bulk_mode=True)
 
     if len(name) > MAX_INSPECTED_NAME_CHARACTERS:
-        assert result is None
-        assert result_bulk is None
-        return
-    else:
-        assert result.namehash == result_bulk.namehash
-        assert result.normalization == result_bulk.normalization
-        assert result.rating == result_bulk.rating
-        assert result.risk_count == result_bulk.risk_count
-        assert result.highest_risk == result_bulk.highest_risk
+        assert result.highest_risk.check.name == 'UNINSPECTED'
+
+    assert result.highest_risk == result_bulk.highest_risk
+    assert result.namehash == result_bulk.namehash
+    assert result.normalization == result_bulk.normalization
+    assert result.rating == result_bulk.rating
+    assert result.risk_count == result_bulk.risk_count
+    assert result.highest_risk == result_bulk.highest_risk
 
 
 @pytest.mark.asyncio
@@ -650,13 +649,13 @@ async def test_dynamic_check_order(nameguard: NameGuard):
 async def test_stress_inspect_name(nameguard: NameGuard):
     # with omit_cure=False takes 1 minute
     result = await nameguard.inspect_name('mainnet', '⎛⎝⎞⎠' * 1000)
-    assert result is None
+    assert result.highest_risk.check.name == 'UNINSPECTED'
 
 
 @pytest.mark.asyncio
 async def test_stress_bulk_inspect_name(nameguard: NameGuard):
     result = await nameguard.bulk_inspect_names('mainnet', ['≡ƒÿ║' * 10000] * 250)
-    assert all([x is None for x in result.results])
+    assert all([x.highest_risk.check.name == 'UNINSPECTED' for x in result.results])
 
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
