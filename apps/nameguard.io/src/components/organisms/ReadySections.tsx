@@ -73,7 +73,7 @@ const result = await nameguard.getSecurePrimaryName(address);`,
     ),
     imageSpecifics: {
       source: impersonation_attack_img.src,
-      alt: "Alert from deceptive impersonation attacks image",
+      alt: "Alert from deceptive impersonation attacks",
       tagWidth: 956,
       tagHeight: 814,
     },
