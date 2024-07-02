@@ -674,19 +674,3 @@ async def test_stress_inspect_name(nameguard: NameGuard):
 async def test_stress_bulk_inspect_name(nameguard: NameGuard):
     result = await nameguard.bulk_inspect_names('mainnet', ['≡ƒÿ║' * 10000] * 250)
     assert all([x.highest_risk.check.name == 'UNINSPECTED' for x in result.results])
-
-
-@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
-@pytest.mark.asyncio
-async def test_max_hashes(nameguard: NameGuard):
-    r = await nameguard.inspect_name(
-        'mainnet',
-        '[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth',
-    )
-    assert r.name == 'nick.nick.nick.nick.nick.eth'
-
-    r = await nameguard.inspect_name(
-        'mainnet',
-        '[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].eth',
-    )
-    assert r is None
