@@ -2,7 +2,7 @@ import gc
 import json
 import os
 import time
-from typing import Optional, Union
+from typing import Union
 
 # ruff: noqa: E402
 init_time = time.time()
@@ -134,7 +134,7 @@ async def inspect_name_get(
         description='**Name should be url-encoded (except when using the Swagger UI). Name can be empty.**',
         examples=['vitalìk.eth'],
     ),
-) -> Optional[Union[NameGuardReport, ConsolidatedNameGuardReport]]:
+) -> Union[NameGuardReport, ConsolidatedNameGuardReport]:
     """
     ## Inspects a single name with NameGuard.
 
@@ -172,7 +172,7 @@ async def inspect_name_get(
         **ENSSubgraphUnavailable.get_responses_spec(),
     },
 )
-async def inspect_empty_name_get(network_name: NetworkName) -> Optional[NameGuardReport]:
+async def inspect_empty_name_get(network_name: NetworkName) -> NameGuardReport:
     return await inspect_name_get(network_name, '')
 
 
@@ -184,9 +184,7 @@ async def inspect_empty_name_get(network_name: NetworkName) -> Optional[NameGuar
         **ENSSubgraphUnavailable.get_responses_spec(),
     },
 )
-async def inspect_name_post(
-    request: InspectNameRequest
-) -> Optional[Union[NameGuardReport, ConsolidatedNameGuardReport]]:
+async def inspect_name_post(request: InspectNameRequest) -> Union[NameGuardReport, ConsolidatedNameGuardReport]:
     """
     ## Inspects a single name with NameGuard.
 
@@ -291,7 +289,7 @@ async def inspect_namehash_get(
         examples=['0xd48fd5598e605861cbd8e45419b41b83739bff52eaef0e283181bbe0a43a5b32'],
         description='Namehash should be a decimal or a hex (prefixed with 0x) string.',
     ),
-) -> Optional[Union[NameGuardReport, ConsolidatedNameGuardReport]]:
+) -> Union[NameGuardReport, ConsolidatedNameGuardReport]:
     """
     ## Inspects the name associated with a namehash.
 
@@ -324,9 +322,7 @@ async def inspect_namehash_get(
         **NamehashNotFoundInSubgraph.get_responses_spec(),
     },
 )
-async def inspect_namehash_post(
-    request: InspectNamehashRequest
-) -> Optional[Union[NameGuardReport, ConsolidatedNameGuardReport]]:
+async def inspect_namehash_post(request: InspectNamehashRequest) -> Union[NameGuardReport, ConsolidatedNameGuardReport]:
     """
     ## Inspects the name associated with a namehash.
 
@@ -381,7 +377,7 @@ async def inspect_labelhash_get(
         description='Parent name of the labelhash (default empty).',
         examples=['eth'],
     ),
-) -> Optional[Union[NameGuardReport, ConsolidatedNameGuardReport]]:
+) -> Union[NameGuardReport, ConsolidatedNameGuardReport]:
     """
     ## Inspects the name `[{labelhash}].{parent_name}`.
 
@@ -432,7 +428,7 @@ async def inspect_labelhash_get_empty_parent(
         examples=['0x3276e4878615389906712b876ce1455b8f5d1c5ea3ffcf7a705e0d32fafae9c5'],
         description='Labelhash should be a decimal or a hex (prefixed with 0x) string.',
     ),
-) -> Optional[Union[NameGuardReport, ConsolidatedNameGuardReport]]:
+) -> Union[NameGuardReport, ConsolidatedNameGuardReport]:
     return await inspect_labelhash_get(network_name, labelhash, '')
 
 
@@ -449,7 +445,7 @@ async def inspect_labelhash_get_empty_parent(
 )
 async def inspect_labelhash_post(
     request: InspectLabelhashRequest
-) -> Optional[Union[NameGuardReport, ConsolidatedNameGuardReport]]:
+) -> Union[NameGuardReport, ConsolidatedNameGuardReport]:
     """
     ## Inspects the name `[{request.labelhash}].{request.parent_name}`.
 

@@ -53,7 +53,10 @@ export type CheckType =
 
   // Name-level checks
   | "impersonation_risk" /** A name might be used for impersonation. */
-  | "punycode_compatible_name" /** A name is compatible with Punycode. */;
+  | "punycode_compatible_name" /** A name is compatible with Punycode. */
+  | "namewrapper_fuses" /** The NameWrapper configuration of a name is safe. */
+  | "decentralized_name" /** A name is decentralized. */
+  | "uninspected" /** A name was not inspected for performance reasons */;
 
 /** The resulting status code of a check that NameGuard performed. */
 export enum CheckResultCode {

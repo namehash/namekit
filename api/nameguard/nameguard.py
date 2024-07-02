@@ -1,6 +1,6 @@
 import os
 import re
-from typing import Union, Optional
+from typing import Union
 
 from nameguard.models.checks import UNINSPECTED_CHECK_RESULT
 from nameguard.models.result import ConsolidatedUninspectedNameGuardReport
@@ -166,12 +166,12 @@ class NameGuard:
 
     async def inspect_name(
         self, network_name: NetworkName, name: str, resolve_labelhashes: bool = True, bulk_mode: bool = False
-    ) -> Optional[Union[NameGuardReport, ConsolidatedNameGuardReport]]:
+    ) -> Union[NameGuardReport, ConsolidatedNameGuardReport]:
         """
         Inspect a name. A name is a sequence of labels separated by dots.
         A label can be a labelhash or a string.
         If a labelhash is encountered and `resolve_labelhashes` is `True`, a lookup will be performed.
-        Returns None if there are more labelhashes than MAX_INSPECTED_NAME_UNKNOWN_LABELS.
+        Returns ConsolidatedUninspectedNameGuardReport if name is uninspected.
         """
 
         logger.debug(f"[inspect_name] name: '{name}'")
@@ -185,7 +185,7 @@ class NameGuard:
 
     def inspect_name_sync(
         self, name: str, bulk_mode: bool = False
-    ) -> Optional[Union[NameGuardReport, ConsolidatedNameGuardReport]]:
+    ) -> Union[NameGuardReport, ConsolidatedNameGuardReport]:
         """
         Inspect a name. A name is a sequence of labels separated by dots.
         A label can be a labelhash or a string.
@@ -340,14 +340,12 @@ class NameGuard:
             ],
         )
 
-    async def inspect_namehash(self, network_name: NetworkName, namehash: str) -> Optional[NameGuardReport]:
+    async def inspect_namehash(self, network_name: NetworkName, namehash: str) -> NameGuardReport:
         logger.debug(f"[inspect_namehash] namehash: '{namehash}'")
         name = await namehash_to_name_lookup(network_name, namehash)
         return await self.inspect_name(network_name, name)
 
-    async def inspect_name_with_labelhash_lookup(
-        self, network_name: NetworkName, name: str
-    ) -> Optional[NameGuardReport]:
+    async def inspect_name_with_labelhash_lookup(self, network_name: NetworkName, name: str) -> NameGuardReport:
         """
         Inspect a name. A name is a sequence of labels separated by dots.
         A label can be a labelhash or a string.

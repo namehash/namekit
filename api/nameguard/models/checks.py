@@ -83,6 +83,7 @@ class Check(str, Enum):
     * `punycode_compatible_name`: A name is compatible with Punycode.
     * `namewrapper_fuses`: The NameWrapper configuration of a name is safe.
     * `decentralized_name`: A name is decentralized.
+    * `uninspected`: A name was not inspected for performance reasons.
     """
 
     # Common
