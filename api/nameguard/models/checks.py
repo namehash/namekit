@@ -303,3 +303,14 @@ class NameCheckResult(GenericCheckResult):
     @property
     def _context(self):
         return 'name'
+
+    def __hash__(self):
+        return hash((self.check, self.status))
+
+
+UNINSPECTED_CHECK_RESULT = NameCheckResult(
+    check=Check.UNINSPECTED,
+    status=CheckStatus.ALERT,
+    _name_message='Name is uninspected',
+    _title='Uninspected',
+)

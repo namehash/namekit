@@ -2,6 +2,8 @@ import os
 import re
 from typing import Union, Optional
 
+from nameguard.models.checks import UNINSPECTED_CHECK_RESULT
+from nameguard.models.result import ConsolidatedUninspectedNameGuardReport
 from nameguard.our_ens import OurENS
 from ens_normalize import is_ens_normalized, ens_cure, DisallowedSequence, ens_process
 
@@ -32,7 +34,6 @@ from nameguard.models import (
     ConsolidatedNameGuardReport,
     Rating,
     ConfusableGuardReport,
-    NameCheckResult,
 )
 from nameguard.provider import get_nft_metadata
 from nameguard.utils import (
@@ -121,12 +122,12 @@ def consolidated_report_from_simple_name(name: str) -> ConsolidatedNameGuardRepo
     )
 
 
-def consolidated_report_from_uninspected_name(name: str) -> ConsolidatedNameGuardReport:
+def consolidated_report_from_uninspected_name(name: str) -> ConsolidatedUninspectedNameGuardReport:
     res = ens_process(name, do_normalize=True, do_beautify=True)
     beautified = res.beautified
     normalized = name == res.normalized
 
-    return ConsolidatedNameGuardReport(
+    return ConsolidatedUninspectedNameGuardReport(
         name=name,
         namehash=namehash_from_name(name),
         normalization=Normalization.UNKNOWN
@@ -136,12 +137,7 @@ def consolidated_report_from_uninspected_name(name: str) -> ConsolidatedNameGuar
         else Normalization.UNNORMALIZED,
         rating=Rating.ALERT,
         risk_count=1,
-        highest_risk=NameCheckResult(
-            check=Check.UNINSPECTED,
-            status=CheckStatus.ALERT,
-            _name_message='Name is uninspected',
-            _title='Uninspected',
-        ),
+        highest_risk=UNINSPECTED_CHECK_RESULT,
         beautiful_name=beautified,  # TODO computed twice
     )
 

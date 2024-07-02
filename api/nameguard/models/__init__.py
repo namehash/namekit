@@ -13,6 +13,7 @@ from .result import (
     ConsolidatedNameGuardReport,
     LabelGuardReport,
     ConsolidatedGraphemeGuardReport,
+    ConsolidatedUninspectedNameGuardReport,
     BulkNameGuardBulkReport,
     ConsolidatedReport,
     Normalization,

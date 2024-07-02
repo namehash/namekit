@@ -19,8 +19,6 @@ from nameguard.utils import (
     namehash_from_labelhash,
     validate_token_id,
     validate_ethereum_address,
-    MAX_INSPECTED_NAME_CHARACTERS,
-    MAX_INSPECTED_NAME_UNKNOWN_LABELS,
 )
 from nameguard.models import (
     NameGuardReport,
@@ -61,7 +59,15 @@ app = FastAPI(
 ⚠️ Beta Version: Please be aware that NameGuard is currently in beta. We appreciate your feedback as we work towards a stable v1 release. Expect changes to the API to address community feedback and improve functionality.
 
 ## Documentation
-These documentation pages focus specifically on the NameGuard API. For information on the NameGuard Library, SDK, and UI Kit, please refer to the [NameGuard GitHub repository](https://github.com/namehash/nameguard).""",
+These documentation pages focus specifically on the NameGuard API. For information on the NameGuard Library, SDK, and UI Kit, please refer to the [NameGuard GitHub repository](https://github.com/namehash/nameguard).
+
+## Glossary
+
+* uninspected name - if labels are going to be resolved then we count unknown labels and check if the number exceeds the limit `MAX_INSPECTED_NAME_UNKNOWN_LABELS`. Unknown names are resolved.
+If length of the name (after optional resolving of unknown labels) exceeds the limit `MAX_INSPECTED_NAME_CHARACTERS`.
+If name is uninspected the ConsolidatedUninspectedNameGuardReport is returned (ConsolidatedNameGuardReport with rating ALERT, highest risk `uninspected` and risk count 1). 
+
+""",
     servers=[
         {'url': 'https://api.nameguard.io', 'description': 'Production server'},
         {'url': '/', 'description': 'Default, relative server'},
@@ -129,10 +135,10 @@ async def inspect_name_get(
         examples=['vitalìk.eth'],
     ),
 ) -> Optional[Union[NameGuardReport, ConsolidatedNameGuardReport]]:
-    f"""
+    """
     ## Inspects a single name with NameGuard.
 
-    If the `name` is longer than {MAX_INSPECTED_NAME_CHARACTERS} characters or consists of more than {MAX_INSPECTED_NAME_UNKNOWN_LABELS} labelhases returns `ConsolidatedNameGuardReport`; else returns a `NameGuardReport` including:
+    If the `name` is uninspected returns `ConsolidatedUninspectedNameGuardReport`; else returns a `NameGuardReport` including:
     1. The details of all checks performed on `name` that consolidates all checks performed on labels and graphemes in `name`.
     2. The details of all labels in `name`.
     3. A consolidated inspection result of all graphemes in `name`.
@@ -181,10 +187,10 @@ async def inspect_empty_name_get(network_name: NetworkName) -> Optional[NameGuar
 async def inspect_name_post(
     request: InspectNameRequest
 ) -> Optional[Union[NameGuardReport, ConsolidatedNameGuardReport]]:
-    f"""
+    """
     ## Inspects a single name with NameGuard.
 
-    If the `name` is longer than {MAX_INSPECTED_NAME_CHARACTERS} characters or consists of more than {MAX_INSPECTED_NAME_UNKNOWN_LABELS} labelhases returns `ConsolidatedNameGuardReport`; else returns a `NameGuardReport` including:
+    If the `name` is uninspected returns `ConsolidatedUninspectedNameGuardReport`; else returns a `NameGuardReport` including:
     1. The details of all checks performed on `request.name` that consolidates all checks performed on labels and graphemes in `request.name`.
     2. The details of all labels in `request.name`.
     3. A consolidated inspection result of all graphemes in `request.name`.
@@ -226,10 +232,10 @@ class BulkInspectNamesRequest(BaseModel):
     },
 )
 async def bulk_inspect_names(request: BulkInspectNamesRequest) -> BulkNameGuardBulkReport:
-    f"""
+    """
     ## Inspects up to 250 names at a time with NameGuard.
 
-    Provides `null` if the `name` is longer than {MAX_INSPECTED_NAME_CHARACTERS} characters or consists of more than {MAX_INSPECTED_NAME_UNKNOWN_LABELS} labelhases; else returns a `ConsolidatedNameGuardReport` for each name provided in `request.names`, including:
+    Provides `ConsolidatedUninspectedNameGuardReport` if the `name` is uninspected; else returns a `ConsolidatedNameGuardReport` for each name provided in `request.names`, including:
     1. The details of all checks performed on a name that consolidates all checks performed on labels and graphemes in this name.
 
     Each `ConsolidatedNameGuardReport` returned represents an equivalent set of checks as a `NameGuardReport`. However:
@@ -286,14 +292,14 @@ async def inspect_namehash_get(
         description='Namehash should be a decimal or a hex (prefixed with 0x) string.',
     ),
 ) -> Optional[Union[NameGuardReport, ConsolidatedNameGuardReport]]:
-    f"""
+    """
     ## Inspects the name associated with a namehash.
 
     NameGuard will attempt to resolve the name associated with the `namehash` through the ENS Subgraph,
     using the network specified in `network_name`.
 
-    If this resolution succeeds then NameGuard will return a `NameGuardReport` for the name. If the resolved `name` is longer than {MAX_INSPECTED_NAME_CHARACTERS} characters then NameGuard will return `ConsolidatedNameGuardReport`.
-    
+    If this resolution succeeds then NameGuard will return a `NameGuardReport` for the name. If the resolved `name` is uninspected then NameGuard will return `ConsolidatedUninspectedNameGuardReport`.
+
     If this resolution fails then NameGuard will return an error.
     """
 
@@ -321,14 +327,14 @@ async def inspect_namehash_get(
 async def inspect_namehash_post(
     request: InspectNamehashRequest
 ) -> Optional[Union[NameGuardReport, ConsolidatedNameGuardReport]]:
-    f"""
+    """
     ## Inspects the name associated with a namehash.
 
     NameGuard will attempt to resolve the name associated with the `request.namehash` through the ENS Subgraph,
     using the network specified in `request.network_name`.
 
-    If this resolution succeeds then NameGuard will return a `NameGuardReport` for the name. If the resolved `name` is longer than {MAX_INSPECTED_NAME_CHARACTERS} characters then NameGuard will return `ConsolidatedNameGuardReport`.
-    
+    If this resolution succeeds then NameGuard will return a `NameGuardReport` for the name. If the resolved `name` is uninspected then NameGuard will return `ConsolidatedUninspectedNameGuardReport`.
+
     If this resolution fails then NameGuard will return an error.
     """
 
@@ -376,8 +382,8 @@ async def inspect_labelhash_get(
         examples=['eth'],
     ),
 ) -> Optional[Union[NameGuardReport, ConsolidatedNameGuardReport]]:
-    f"""
-    ## Inspects the name `[{{labelhash}}].{{parent_name}}`.
+    """
+    ## Inspects the name `[{labelhash}].{parent_name}`.
 
     Parent may be a name with any number of labels. The default parent is "eth".
 
@@ -385,18 +391,18 @@ async def inspect_labelhash_get(
     1. The labelhash of the "childmost" label of a name.
     2. The complete parent name of the "childmost" label.
 
-    Returns `ConsolidatedNameGuardReport` if labels in the resolved `name` are longer than {MAX_INSPECTED_NAME_CHARACTERS} characters.
+    Returns `ConsolidatedUninspectedNameGuardReport` if the resolved name is uninspected.
 
     NameGuard always inspects names, rather than labelhashes. So this endpoint will first attempt
     to resolve the "childmost" label associated with the provided labelhash through the ENS Subgraph,
     using the network specified in `network_name`.
 
     If this label resolution fails the resulting `NameGuardReport` will be equivalent to requesting
-    a `NameGuardReport` for the name `[{{labelhash}}].{{parent_name}}` which will contain (at least)
+    a `NameGuardReport` for the name `[{labelhash}].{parent_name}` which will contain (at least)
     one label with an `unknown` `Normalization`.
 
     If this label resolution succeeds the resulting `NameGuardReport` will be equivalent to requesting
-    a `NameGuardReport` for the name `{{label}}.{{parent_name}}`.
+    a `NameGuardReport` for the name `{label}.{parent_name}`.
     """
 
     logger.debug(
@@ -444,8 +450,8 @@ async def inspect_labelhash_get_empty_parent(
 async def inspect_labelhash_post(
     request: InspectLabelhashRequest
 ) -> Optional[Union[NameGuardReport, ConsolidatedNameGuardReport]]:
-    f"""
-    ## Inspects the name `[{{request.labelhash}}].{{request.parent_name}}`.
+    """
+    ## Inspects the name `[{request.labelhash}].{request.parent_name}`.
 
     Parent may be a name with any number of labels. The default parent is "eth".
 
@@ -453,18 +459,18 @@ async def inspect_labelhash_post(
     1. The labelhash of the "childmost" label of a name.
     2. The complete parent name of the "childmost" label.
 
-    Returns `ConsolidatedNameGuardReport` if labels in the resolved `name` are longer than {MAX_INSPECTED_NAME_CHARACTERS} characters.
+    Returns `ConsolidatedUninspectedNameGuardReport` if the resolved name is uninspected.
 
     NameGuard always inspects names, rather than labelhashes. So this endpoint will first attempt
     to resolve the "childmost" label associated with the provided labelhash through the ENS Subgraph,
     using the network specified in `request.network_name`.
 
     If this label resolution fails the resulting `NameGuardReport` will be equivalent to requesting
-    a `NameGuardReport` for the name `[{{request.labelhash}}].{{request.parent_name}}` which will contain (at least)
+    a `NameGuardReport` for the name `[{request.labelhash}].{request.parent_name}` which will contain (at least)
     one label with an `unknown` `Normalization`.
 
     If this label resolution succeeds the resulting `NameGuardReport` will be equivalent to requesting
-    a `NameGuardReport` for the name `{{label}}.{{request.parent_name}}`.
+    a `NameGuardReport` for the name `{label}.{request.parent_name}`.
     """
 
     logger.debug(

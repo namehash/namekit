@@ -1,10 +1,11 @@
-from typing import Optional, Union
+from typing import Optional, Union, Literal
 from pydantic import BaseModel, Field, computed_field, field_serializer
 from enum import Enum
 from ens_normalize import ens_beautify
 
 from nameguard.context import endpoint_name
-from nameguard.models.checks import GenericCheckResult, Rating, Check
+from nameguard.models.checks import GenericCheckResult, Rating, Check, UNINSPECTED_CHECK_RESULT
+
 from nameguard.utils import detect_grapheme_link_name, MAX_INSPECTED_NAME_CHARACTERS
 from nameguard.endpoints import Endpoints
 
@@ -224,6 +225,18 @@ class ConsolidatedNameGuardReport(ConsolidatedReport):
     @property
     def _string_value(self) -> str:
         return self.name
+
+
+class ConsolidatedUninspectedNameGuardReport(ConsolidatedNameGuardReport):
+    """
+    Uninspected name analysis result without information about checks and labels.
+    """
+
+    risk_count: Literal[1] = Field(description='The number of checks that have a status of `alert` or `warn`.')
+    rating: Literal[Rating.ALERT]
+    highest_risk: Literal[UNINSPECTED_CHECK_RESULT] = Field(
+        description='The check considered to be the highest risk. If no check has a status of `alert` or `warn`, this field is `null`.',
+    )
 
 
 class NameGuardReport(ConsolidatedNameGuardReport):
