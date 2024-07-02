@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 import cc from "classcat";
 
 export interface InputProps
@@ -14,13 +14,13 @@ interface SlotProps {
 }
 
 const wrapperClasses =
-  "nk-flex nk-relative nk-w-full nk-rounded-md nk-border nk-shadow-sm nk-transition-colors";
+  "nk-group nk-flex nk-relative nk-w-full nk-rounded-md nk-border nk-shadow-sm nk-transition-colors";
 
 const variantClasses = {
   primary:
-    "nk-bg-white nk-text-black nk-border-gray-300 nk-shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] has-[input:hover]:nk-border-gray-400 has-[input:focus]:nk-border-gray-600 has-[input:focus:hover]:nk-border-gray-600",
+    "nk-bg-white nk-text-black nk-border-gray-300 nk-shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] hover:nk-border-gray-400 has-[input:focus]:nk-border-gray-600 has-[input:focus:hover]:nk-border-gray-600",
   secondary:
-    "nk-border-gray-200 nk-bg-gray-100 has-[input:hover]:nk-border-gray-300 has-[input:focus]:nk-border-gray-400 has-[input:focus:hover]:nk-border-gray-400",
+    "nk-border-gray-200 nk-bg-gray-100 hover:nk-border-gray-300 has-[input:focus]:nk-border-gray-400 has-[input:focus:hover]:nk-border-gray-400",
 };
 
 const sizeClasses = {
@@ -29,7 +29,8 @@ const sizeClasses = {
   large: "nk-py-3 nk-px-6 nk-text-lg",
 };
 
-const slotBaseClasses = "nk-h-full nk-justify-center nk-flex nk-items-center";
+const slotBaseClasses =
+  "nk-h-full nk-justify-center nk-flex nk-items-center nk-select-none";
 
 const slotColorClasses = {
   primary: "nk-text-gray-500",
@@ -42,8 +43,12 @@ export const Input: React.FC<InputProps> & { Slot: React.FC<SlotProps> } = ({
   inputSize = "medium",
   slotPosition = "left",
   children,
+  id,
   ...props
 }) => {
+  const generatedId = useId();
+  const inputId = id || generatedId;
+
   const slotClassName = cc([slotBaseClasses, slotColorClasses[variant]]);
 
   const hasSlot = React.Children.toArray(children).some(
@@ -65,11 +70,15 @@ export const Input: React.FC<InputProps> & { Slot: React.FC<SlotProps> } = ({
   return (
     <div className={combinedClassName}>
       {hasSlot && slotPosition === "left" && (
-        <div className={slotClassName}>{children}</div>
+        <label htmlFor={inputId} className={slotClassName}>
+          {children}
+        </label>
       )}
-      <input className={inputClasses} {...props} />
+      <input id={inputId} className={inputClasses} {...props} />
       {hasSlot && slotPosition === "right" && (
-        <div className={slotClassName}>{children}</div>
+        <label htmlFor={inputId} className={slotClassName}>
+          {children}
+        </label>
       )}
     </div>
   );
