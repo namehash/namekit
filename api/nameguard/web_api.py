@@ -444,7 +444,7 @@ async def inspect_labelhash_get_empty_parent(
     },
 )
 async def inspect_labelhash_post(
-    request: InspectLabelhashRequest
+    request: InspectLabelhashRequest,
 ) -> Union[NameGuardReport, ConsolidatedNameGuardReport]:
     """
     ## Inspects the name `[{request.labelhash}].{request.parent_name}`.

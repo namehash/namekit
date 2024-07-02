@@ -69,7 +69,7 @@ export const Report = ({
     data,
     error: hadLoadingError,
     isLoading,
-  } = useSWR<NameGuardReport>(
+  } = useSWR<NameGuardReport | ConsolidatedNameGuardReport>(
     fallbackData ? null : parsedName.outputName.name,
     (n: string) => nameguard.inspectName(n),
     {
