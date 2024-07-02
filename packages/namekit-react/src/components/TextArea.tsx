@@ -1,7 +1,7 @@
 import React from "react";
 import cc from "classcat";
 
-export interface TextareaProps
+export interface TextAreaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   className?: string;
   variant?: "primary" | "secondary";
@@ -14,7 +14,8 @@ const textareaBaseClasses =
 const variantClasses = {
   primary:
     "nk-bg-white nk-text-black nk-border-gray-300 nk-shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] hover:nk-border-gray-400 focus:nk-border-gray-600 focus:hover:nk-border-gray-600 placeholder:nk-text-gray-500",
-  secondary: "nk-border-gray-200 nk-bg-gray-100",
+  secondary:
+    "nk-border-gray-200 nk-bg-gray-100 hover:nk-border-gray-300 focus:nk-border-gray-400 focus:hover:nk-border-gray-400",
 };
 
 const sizeClasses = {
@@ -23,7 +24,7 @@ const sizeClasses = {
   large: "nk-py-3 nk-px-6 nk-text-lg",
 };
 
-export const Textarea: React.FC<TextareaProps> = ({
+export const TextArea: React.FC<TextAreaProps> = ({
   className,
   variant = "primary",
   size = "medium",
