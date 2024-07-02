@@ -1,6 +1,6 @@
 import React, { Fragment, useMemo } from "react";
 import useSWR from "swr";
-import { type NameGuardReport, nameguard, Rating } from "@namehash/nameguard";
+import { type NameGuardReport, ConsolidatedNameGuardReport, nameguard, Rating } from "@namehash/nameguard";
 import { parseName, Normalization } from "@namehash/ens-utils";
 import { Toaster } from "sonner";
 
@@ -27,7 +27,7 @@ import { Share } from "../Share/Share";
 import { ratingTextColor } from "../../utils/text";
 
 type ReportProps = {
-  data?: NameGuardReport;
+  data?: ConsolidatedNameGuardReport;
   name?: string;
   settings?: Settings;
   useChatModalStore?: () => ChatModalState;
