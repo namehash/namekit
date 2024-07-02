@@ -181,9 +181,10 @@ class NameGuard:
         logger.debug(f"[inspect_name] name: '{name}'")
 
         if resolve_labelhashes:
-            name = await resolve_all_labelhashes_in_name_querying_labelhashes(network_name, name)
-            if name is None:
-                return None
+            resolved_name = await resolve_all_labelhashes_in_name_querying_labelhashes(network_name, name)
+            if resolved_name is None:
+                return consolidated_report_from_uninspected_name(name)
+            name = resolved_name
         return self.inspect_name_sync(name, bulk_mode)
 
     def inspect_name_sync(

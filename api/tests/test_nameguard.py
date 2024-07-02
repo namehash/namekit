@@ -6,7 +6,7 @@ from nameguard.models import Rating, Check, CheckStatus, Normalization, GenericC
 from nameguard.nameguard import NameGuard
 from nameguard.exceptions import NamehashNotFoundInSubgraph, NotAGrapheme
 from nameguard.endpoints import Endpoints
-from nameguard.utils import MAX_INSPECTED_NAME_CHARACTERS
+from nameguard.utils import MAX_INSPECTED_NAME_CHARACTERS, MAX_INSPECTED_NAME_UNKNOWN_LABELS
 
 
 @pytest.fixture(scope='module')
@@ -333,6 +333,24 @@ async def test_unknown_label(nameguard: NameGuard):
     assert r.rating is Rating.ALERT
     assert r.highest_risk.check is Check.UNKNOWN_LABEL
     assert r.canonical_name == '[56d7ba27aed5cd36fc16684baeb86f73d6d0c60b6501487725bcfc9056378075].eth'
+
+
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
+@pytest.mark.asyncio
+async def test_max_unknown_labels(nameguard: NameGuard):
+    r = await nameguard.inspect_name(
+        'mainnet',
+        '[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].' * MAX_INSPECTED_NAME_UNKNOWN_LABELS
+        + 'eth',
+    )
+    assert r.highest_risk.check is not Check.UNINSPECTED
+
+    r = await nameguard.inspect_name(
+        'mainnet',
+        '[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].' * (MAX_INSPECTED_NAME_UNKNOWN_LABELS + 1)
+        + 'eth',
+    )
+    assert r.highest_risk.check is Check.UNINSPECTED
 
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)

@@ -208,6 +208,9 @@ async def resolve_labelhashes_querying_labelhashes(network_name: NetworkName, la
 
 
 async def resolve_all_labelhashes_in_name_querying_labelhashes(network_name: NetworkName, name: str) -> Optional[str]:
+    """
+    Resolve up to MAX_INSPECTED_NAME_UNKNOWN_LABELS labelhashes in a name. If there is more labelhashes then return None.
+    """
     labels = name.split('.')
 
     labelhash_idx = [i for i, label in enumerate(labels) if label_is_labelhash(label)]
