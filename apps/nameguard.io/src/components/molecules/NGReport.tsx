@@ -7,7 +7,7 @@ export function NGReport({
   data,
   name,
 }: {
-  data?: NameGuardReport;
+  data: NameGuardReport;
   name: string;
 }) {
   return (

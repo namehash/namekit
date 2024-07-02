@@ -385,7 +385,7 @@ export interface NameGuardReport extends ConsolidatedNameGuardReport {
 }
 
 export interface BulkConsolidatedNameGuardReport {
-  results: (ConsolidatedNameGuardReport | null)[];
+  results: ConsolidatedNameGuardReport[];
 }
 
 export interface SecurePrimaryNameResult {
@@ -483,7 +483,7 @@ export class NameGuard {
   }
 
   /**
-   * Inspects a single name with NameGuard. If the `name` is longer than `MAX_INSPECTED_NAME_CHARACTERS` characters or consists of more than {MAX_INSPECTED_NAME_UNKNOWN_LABELS} labelhases returns `null`; else returns a `NameGuardReport` including:
+   * Inspects a single name with NameGuard. If the `name` is uninspected returns `ConsolidatedUninspectedNameGuardReport`; else returns a `NameGuardReport` including:
    *   1. The details of all checks performed on `name` that consolidates all checks performed on labels and graphemes in `name`.
    *   2. The details of all labels in `name`.
    *   3. A consolidated inspection result of all graphemes in `name`.
@@ -493,7 +493,7 @@ export class NameGuard {
    *
    * @param {string} name The name for NameGuard to inspect.
    * @param {InspectNameOptions} options The options for the inspection.
-   * @returns {Promise<NameGuardReport>} A promise that resolves with the `NameGuardReport` of the name.
+   * @returns {Promise<ConsolidatedNameGuardReport>} A promise that resolves with the `NameGuardReport` of the name.
    * @example
    * const nameGuardReport = await nameguard.inspectName('vitalik.eth');
    */
@@ -508,7 +508,7 @@ export class NameGuard {
 
   // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
   /**
-   * Inspects up to 250 names at a time with NameGuard. Provides `null` if the `name` is longer than `MAX_INSPECTED_NAME_CHARACTERS` characters or consists of more than `MAX_INSPECTED_NAME_UNKNOWN_LABELS` labelhases; else returns a `ConsolidatedNameGuardReport` for each name provided in `names`, including:
+   * Inspects up to 250 names at a time with NameGuard. Provides `ConsolidatedUninspectedNameGuardReport` if the `name` is uninspected; else returns a `ConsolidatedNameGuardReport` for each name provided in `names`, including:
    *   1. The details of all checks performed on a name that consolidates all checks performed on labels and graphemes in this name.
    *
    * Each `ConsolidatedNameGuardReport` returned represents an equivalent set of checks as a `NameGuardReport`. However:
@@ -547,12 +547,12 @@ export class NameGuard {
    * Inspects the name associated with a namehash.
    *
    * NameGuard will attempt to resolve the name associated with the namehash through the ENS Subgraph.
-   * If this resolution succeeds then NameGuard will return a `NameGuardReport` for the name. If the resolved `name` is longer than `MAX_INSPECTED_NAME_CHARACTERS` characters then NameGuard will return `null`.
+   * If this resolution succeeds then NameGuard will return a `NameGuardReport` for the name. If the resolved `name` is uninspected then NameGuard will return `ConsolidatedUninspectedNameGuardReport`.
    * If this resolution fails then NameGuard will return an error.
    *
    * @param {string} namehash A namehash should be a decimal or a hex (prefixed with 0x) string.
    * @param {InspectNamehashOptions} options The options for the inspection.
-   * @returns {Promise<NameGuardReport>}  A promise that resolves with a `NameGuardReport` of the resolved name.
+   * @returns {Promise<ConsolidatedNameGuardReport>}  A promise that resolves with a `NameGuardReport` of the resolved name.
    */
   public async inspectNamehash(
     namehash: string,
@@ -594,7 +594,7 @@ export class NameGuard {
    *   1. The labelhash of the "childmost" label of a name.
    *   2. The complete parent name of the "childmost" label.
    *
-   * Returns `null` if labels in the resolved `name` are longer than `MAX_INSPECTED_NAME_CHARACTERS` characters.
+   * Returns `ConsolidatedUninspectedNameGuardReport` if the resolved `name` is uninspected.
    *
    * NameGuard always inspects names, rather than labelhashes. So this function will first attempt
    * to resolve the "childmost" label associated with the provided labelhash through the ENS Subgraph,
@@ -609,7 +609,7 @@ export class NameGuard {
    *
    * @param {string} labelhash A labelhash should be a decimal or a hex (prefixed with 0x) string.
    * @param {InspectLabelhashOptions} options The options for the inspection.
-   * @returns {Promise<NameGuardReport>}  A promise that resolves with a `NameGuardReport` of the resolved name.
+   * @returns {Promise<ConsolidatedNameGuardReport>}  A promise that resolves with a `NameGuardReport` of the resolved name.
    */
   public async inspectLabelhash(
     labelhash: string,

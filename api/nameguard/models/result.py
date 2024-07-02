@@ -6,7 +6,7 @@ from ens_normalize import ens_beautify
 from nameguard.context import endpoint_name
 from nameguard.models.checks import GenericCheckResult, Rating, Check, UNINSPECTED_CHECK_RESULT
 
-from nameguard.utils import detect_grapheme_link_name, MAX_INSPECTED_NAME_CHARACTERS
+from nameguard.utils import detect_grapheme_link_name
 from nameguard.endpoints import Endpoints
 
 
@@ -265,7 +265,7 @@ class BulkNameGuardBulkReport(BaseModel):
     Bulk name analysis results.
     """
 
-    results: list[Optional[ConsolidatedNameGuardReport]]
+    results: list[ConsolidatedNameGuardReport]
 
 
 class ConfusableGuardReport(ConsolidatedGraphemeGuardReport):
@@ -322,7 +322,7 @@ class SecurePrimaryNameStatus(str, Enum):
     * `normalized`: The ENS primary name was found and it is normalized.
     * `no_primary_name`: The ENS primary name was not found.
     * `unnormalized`: The ENS primary name was found, but it is not normalized.
-    * `uninspected`: The name was not inspected, because it is too long.
+    * `uninspected`: The name was not inspected for performance reasons.
     """
 
     NORMALIZED = 'normalized'
@@ -400,10 +400,10 @@ class FakeEthNameCheckResult(BaseModel):
 
     status: FakeEthNameCheckStatus
 
-    nameguard_result: Optional[NameGuardReport] = Field(
+    nameguard_result: Optional[Union[NameGuardReport, ConsolidatedUninspectedNameGuardReport]] = Field(
         description='NameGuard report for the .eth ENS NFT.\n'
         '* `null` if `status` is any value except `authentic_eth_name`, `invalid_eth_name` and `unknown_eth_name` (the NFT is not associated with authentic ".eth" contracts)\n'
-        f'* `null` if name is longer then {MAX_INSPECTED_NAME_CHARACTERS} characters'
+        '* `ConsolidatedUninspectedNameGuardReport` if name is uninspected'
     )
 
     investigated_fields: Optional[dict[str, str]] = Field(
