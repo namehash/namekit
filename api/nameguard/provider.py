@@ -5,14 +5,14 @@ from nameguard.logging import logger
 from nameguard.exceptions import ProviderUnavailable
 from nameguard.models import NetworkName
 
-provider_uris = {
-    NetworkName.MAINNET: os.environ.get('PROVIDER_URI_MAINNET'),
-    NetworkName.SEPOLIA: os.environ.get('PROVIDER_URI_SEPOLIA'),
+alchemy_uris = {
+    NetworkName.MAINNET: os.environ.get('ALCHEMY_URI_MAINNET'),
+    NetworkName.SEPOLIA: os.environ.get('ALCHEMY_URI_SEPOLIA'),
 }
 
 
 async def get_nft_metadata(network_name, contract_address: str, token_id: str) -> dict:
-    url = f'{provider_uris[network_name]}/getNFTMetadata?contractAddress={contract_address}&tokenId={token_id}&refreshCache=false'
+    url = f'{alchemy_uris[network_name]}/getNFTMetadata?contractAddress={contract_address}&tokenId={token_id}&refreshCache=false'
     headers = {'accept': 'application/json'}
 
     try:
