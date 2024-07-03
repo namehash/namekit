@@ -1,10 +1,10 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Textarea } from "@namehash/namekit-react";
+import { TextArea } from "@namehash/namekit-react";
 
-const meta: Meta<typeof Textarea> = {
-  title: "UI/Textarea",
-  component: Textarea,
+const meta: Meta<typeof TextArea> = {
+  title: "UI/TextArea",
+  component: TextArea,
   argTypes: {
     variant: {
       control: {
@@ -26,7 +26,7 @@ const meta: Meta<typeof Textarea> = {
 
 export default meta;
 
-type Story = StoryObj<typeof Textarea>;
+type Story = StoryObj<typeof TextArea>;
 
 export const PrimaryMedium: Story = {
   args: {
@@ -87,7 +87,7 @@ export const CustomClass: Story = {
     variant: "primary",
     size: "medium",
     placeholder: "Custom Class Textarea",
-    className: "my-custom-class",
+    className: "custom-class-name",
     rows: 4,
   },
 };
