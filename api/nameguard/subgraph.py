@@ -34,7 +34,7 @@ query resolveNamehash($nameHash: String) {
 
 api_key = os.environ.get('SUBGRAPH_API_KEY')
 
-headers = {'Content-Type': 'application/json', 'Authorization': f'Bearer {api_key}'}
+headers = {'Content-Type': 'application/json'}
 
 
 async def call_subgraph(network_name: NetworkName, query: str, variables: dict) -> dict:
