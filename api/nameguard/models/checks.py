@@ -83,7 +83,7 @@ class Check(str, Enum):
     * `punycode_compatible_name`: A name is compatible with Punycode.
     * `namewrapper_fuses`: The NameWrapper configuration of a name is safe.
     * `decentralized_name`: A name is decentralized.
-    * `uninspected`: A name was not inspected for performance reasons.
+    * `uninspected`: A name is exceptionally long and will not be inspected by NameGuard for performance reasons.
     """
 
     # Common
@@ -312,6 +312,6 @@ class NameCheckResult(GenericCheckResult):
 UNINSPECTED_CHECK_RESULT = NameCheckResult(
     check=Check.UNINSPECTED,
     status=CheckStatus.ALERT,
-    _name_message='Name is uninspected',
+    _name_message='Name is exceptionally long and was not inspected',
     _title='Uninspected',
 )

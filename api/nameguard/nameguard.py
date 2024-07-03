@@ -171,7 +171,7 @@ class NameGuard:
         Inspect a name. A name is a sequence of labels separated by dots.
         A label can be a labelhash or a string.
         If a labelhash is encountered and `resolve_labelhashes` is `True`, a lookup will be performed.
-        Returns ConsolidatedUninspectedNameGuardReport if name is uninspected.
+        Returns ConsolidatedUninspectedNameGuardReport if name was exceptionally long and was not inspected for performance reasons.
         """
 
         logger.debug(f"[inspect_name] name: '{name}'")

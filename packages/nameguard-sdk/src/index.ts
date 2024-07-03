@@ -56,7 +56,7 @@ export type CheckType =
   | "punycode_compatible_name" /** A name is compatible with Punycode. */
   | "namewrapper_fuses" /** The NameWrapper configuration of a name is safe. */
   | "decentralized_name" /** A name is decentralized. */
-  | "uninspected" /** A name was not inspected for performance reasons */;
+  | "uninspected" /** A name was exceptionally long and was not inspected for performance reasons */;
 
 /** The resulting status code of a check that NameGuard performed. */
 export enum CheckResultCode {

@@ -322,7 +322,7 @@ class SecurePrimaryNameStatus(str, Enum):
     * `normalized`: The ENS primary name was found and it is normalized.
     * `no_primary_name`: The ENS primary name was not found.
     * `unnormalized`: The ENS primary name was found, but it is not normalized.
-    * `uninspected`: The name was not inspected for performance reasons.
+    * `uninspected`: The name was exceptionally long and was not inspected for performance reasons.
     """
 
     NORMALIZED = 'normalized'
