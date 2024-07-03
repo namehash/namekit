@@ -35,7 +35,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>NameGuard library</h3>
+          <p className={headerStyle}>NameGuard library</p>
         </div>
       ),
       text: <Fragment>Security &quot;x-ray&quot; for ENS names.</Fragment>,
@@ -49,7 +49,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>NameGuard Client SDK</h3>
+          <p className={headerStyle}>NameGuard Client SDK</p>
         </div>
       ),
       text: (
@@ -65,7 +65,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>NameGuard React UI Kit</h3>
+          <p className={headerStyle}>NameGuard React UI Kit</p>
           <ListSectionBadge width={53} height={20} text="Alpha" />
         </div>
       ),
@@ -84,7 +84,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>Figma UI kit</h3>
+          <p className={headerStyle}>Figma UI kit</p>
         </div>
       ),
       text: (
@@ -102,7 +102,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>ENS Label Inspector</h3>
+          <p className={headerStyle}>ENS Label Inspector</p>
         </div>
       ),
       text: <Fragment>Detailed inspection of labels in ENS names.</Fragment>,
@@ -116,7 +116,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>ENS Font Data</h3>
+          <p className={headerStyle}>ENS Font Data</p>
         </div>
       ),
       text: (
@@ -134,7 +134,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>ENS Normalize Python</h3>
+          <p className={headerStyle}>ENS Normalize Python</p>
         </div>
       ),
       text: (
@@ -152,7 +152,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>ENS Name Parser</h3>
+          <p className={headerStyle}>ENS Name Parser</p>
           <ListSectionBadge width={53} height={20} text="Alpha" />
         </div>
       ),
@@ -169,7 +169,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>Open public API</h3>
+          <p className={headerStyle}>Open public API</p>
         </div>
       ),
       text: (
@@ -187,7 +187,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>NameGuard DevOps Scripts</h3>
+          <p className={headerStyle}>NameGuard DevOps Scripts</p>
         </div>
       ),
       text: (
@@ -205,7 +205,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>Detailed documentation</h3>
+          <p className={headerStyle}>Detailed documentation</p>
           <ListSectionBadge width={96} height={20} text="Coming soon" />
         </div>
       ),
@@ -223,7 +223,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>ENS Webfont</h3>
+          <p className={headerStyle}>ENS Webfont</p>
           <ListSectionBadge width={96} height={20} text="Alpha" />
         </div>
       ),
