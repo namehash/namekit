@@ -56,7 +56,6 @@ export const PrimarySmall: Story = {
   args: {
     variant: "primary",
     inputSize: "small",
-    type: "number",
     placeholder: "Primary Small Input",
   },
 };
@@ -65,7 +64,6 @@ export const SecondarySmall: Story = {
   args: {
     variant: "secondary",
     inputSize: "small",
-    type: "password",
     placeholder: "Secondary Small Input",
   },
 };
@@ -74,7 +72,6 @@ export const PrimaryLarge: Story = {
   args: {
     variant: "primary",
     inputSize: "large",
-    type: "text",
     placeholder: "Primary Large Input",
   },
 };
@@ -83,7 +80,6 @@ export const SecondaryLarge: Story = {
   args: {
     variant: "secondary",
     inputSize: "large",
-    type: "email",
     placeholder: "Secondary Large Input",
   },
 };
@@ -92,7 +88,6 @@ export const CustomClass: Story = {
   args: {
     variant: "primary",
     inputSize: "medium",
-    type: "text",
     placeholder: "Custom Class Input",
     className: "custom-class-name",
   },
@@ -102,7 +97,6 @@ export const WithSlotLeft: Story = {
   args: {
     variant: "primary",
     inputSize: "medium",
-    type: "text",
     placeholder: "Say something",
     children: <Input.Slot>@</Input.Slot>,
   },
@@ -112,7 +106,6 @@ export const WithSlotRight: Story = {
   args: {
     variant: "primary",
     inputSize: "medium",
-    type: "text",
     placeholder: "Say something",
     slotPosition: "right",
     children: <Input.Slot>@</Input.Slot>,
@@ -123,7 +116,6 @@ export const WithSlotLeftSmall: Story = {
   args: {
     variant: "primary",
     inputSize: "small",
-    type: "text",
     placeholder: "Say something",
     children: <Input.Slot>@</Input.Slot>,
   },
