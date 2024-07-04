@@ -1,6 +1,6 @@
 import React from "react";
 import cc from "classcat";
-import { type NameGuardReport, ConsolidatedNameGuardReport } from "@namehash/nameguard";
+import { type NameGuardReport } from "@namehash/nameguard";
 import type { ParsedName } from "@namehash/ens-utils";
 
 import { RatingIcon, RatingIconSize } from "./RatingIcon";
@@ -11,7 +11,7 @@ import { ratingTextColor } from "../../utils/text";
 import { DisplayedName } from "../DisplayedName/DisplayedName";
 
 type Props = {
-  report?: ConsolidatedNameGuardReport | NameGuardReport;
+  report?: NameGuardReport;
   parsedName?: ParsedName;
 };
 

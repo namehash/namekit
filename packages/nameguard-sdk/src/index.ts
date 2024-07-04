@@ -367,13 +367,16 @@ export interface NameGuardReport extends ConsolidatedNameGuardReport {
   /* The results of all checks performed by NameGuard on `name`. */
   checks: CheckResult[];
 
-  /** Details of the inspection of all labels in `name`. */
-  labels: LabelGuardReport[];
+  /** Details of the inspection of all labels in `name`.
+    *
+    * `null` if `name` is uninspected
+  */
+  labels: LabelGuardReport[] | null;
 
   /**
    * The name considered to be the canonical form of the analyzed `name`.
    *
-   * `null` if and only if the canonical form of `name` is considered to be undefined.
+   * `null` if and only if the canonical form of `name` is considered to be undefined or `name` is uninspected.
    *
    * If a label is represented as `[labelhash]` in `name`,
    * the `canonical_name` will also contain the label represented as `[labelhash]`.
@@ -421,7 +424,7 @@ export interface SecurePrimaryNameResult {
    * * `null` if `primary_name_status` is `no_primary_name` (primary name is not found)
    * * `null` if `SecurePrimaryNameOptions.computeNameGuardReport` is `false` or not provided
    */
-  nameguard_result: NameGuardReport | ConsolidatedNameGuardReport | null;
+  nameguard_result: NameGuardReport | null;
 }
 
 // TODO: Let's apply more formalization to this error class.
@@ -493,7 +496,7 @@ export class NameGuard {
    *
    * @param {string} name The name for NameGuard to inspect.
    * @param {InspectNameOptions} options The options for the inspection.
-   * @returns {Promise<NameGuardReport | ConsolidatedNameGuardReport>} A promise that resolves with the `NameGuardReport` of the name.
+   * @returns {Promise<NameGuardReport>} A promise that resolves with the `NameGuardReport` of the name.
    * @example
    * const nameGuardReport = await nameguard.inspectName('vitalik.eth');
    */
@@ -552,7 +555,7 @@ export class NameGuard {
    *
    * @param {string} namehash A namehash should be a decimal or a hex (prefixed with 0x) string.
    * @param {InspectNamehashOptions} options The options for the inspection.
-   * @returns {Promise<NameGuardReport | ConsolidatedNameGuardReport>}  A promise that resolves with a `NameGuardReport` of the resolved name.
+   * @returns {Promise<NameGuardReport>}  A promise that resolves with a `NameGuardReport` of the resolved name.
    */
   public async inspectNamehash(
     namehash: string,
@@ -609,7 +612,7 @@ export class NameGuard {
    *
    * @param {string} labelhash A labelhash should be a decimal or a hex (prefixed with 0x) string.
    * @param {InspectLabelhashOptions} options The options for the inspection.
-   * @returns {Promise<NameGuardReport | ConsolidatedNameGuardReport>}  A promise that resolves with a `NameGuardReport` of the resolved name.
+   * @returns {Promise<NameGuardReport>}  A promise that resolves with a `NameGuardReport` of the resolved name.
    */
   public async inspectLabelhash(
     labelhash: string,

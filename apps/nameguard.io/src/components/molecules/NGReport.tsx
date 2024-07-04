@@ -1,13 +1,13 @@
 "use client";
 
-import { NameGuardReport, ConsolidatedNameGuardReport } from "@namehash/nameguard";
+import { NameGuardReport } from "@namehash/nameguard";
 import { Report, useChatModalStore } from "@namehash/nameguard-react";
 
 export function NGReport({
   data,
   name,
 }: {
-  data: NameGuardReport | ConsolidatedNameGuardReport;
+  data: NameGuardReport;
   name: string;
 }) {
   return (
