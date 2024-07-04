@@ -12,7 +12,7 @@ import { isCharacter, splitCharacters } from "./utils";
 function isCombining(char: string): boolean {
   if (!isCharacter(char)) {
     throw new TypeError(
-      "combining() argument must be a unicode character, not str",
+      "isCombining() argument must be a unicode character, not str",
     );
   }
   return COMBINING.has(char);
