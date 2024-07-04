@@ -3,7 +3,7 @@ import re
 from typing import Union
 
 from nameguard.models.checks import UNINSPECTED_CHECK_RESULT
-from nameguard.models.result import ConsolidatedUninspectedNameGuardReport
+from nameguard.models.result import UninspectedNameGuardReport
 from nameguard.our_ens import OurENS
 from ens_normalize import is_ens_normalized, ens_cure, DisallowedSequence, ens_process
 
@@ -122,12 +122,12 @@ def consolidated_report_from_simple_name(name: str) -> ConsolidatedNameGuardRepo
     )
 
 
-def consolidated_report_from_uninspected_name(name: str) -> ConsolidatedUninspectedNameGuardReport:
+def consolidated_report_from_uninspected_name(name: str) -> UninspectedNameGuardReport:
     res = ens_process(name, do_normalize=True, do_beautify=True)
     beautified = res.beautified
     normalized = name == res.normalized
 
-    return ConsolidatedUninspectedNameGuardReport(
+    return UninspectedNameGuardReport(
         name=name,
         namehash=namehash_from_name(name),
         normalization=Normalization.UNKNOWN
@@ -139,6 +139,9 @@ def consolidated_report_from_uninspected_name(name: str) -> ConsolidatedUninspec
         risk_count=1,
         highest_risk=UNINSPECTED_CHECK_RESULT,
         beautiful_name=beautified,  # TODO computed twice
+        checks=[],  # TODO
+        labels=None,
+        canonical_name=None,
     )
 
 
@@ -171,7 +174,7 @@ class NameGuard:
         Inspect a name. A name is a sequence of labels separated by dots.
         A label can be a labelhash or a string.
         If a labelhash is encountered and `resolve_labelhashes` is `True`, a lookup will be performed.
-        Returns ConsolidatedUninspectedNameGuardReport if name was exceptionally long and was not inspected for performance reasons.
+        Returns UninspectedNameGuardReport if name was exceptionally long and was not inspected for performance reasons.
         """
 
         logger.debug(f"[inspect_name] name: '{name}'")
