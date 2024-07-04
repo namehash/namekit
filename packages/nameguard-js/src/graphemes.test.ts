@@ -1,5 +1,4 @@
 import { describe, it, expect } from "vitest";
-import { ens_normalize } from "@adraffy/ens-normalize";
 import { splitGraphemes, countGraphemes } from "./graphemes";
 import jsonNamehashExamples from "../utils/normalized_graphemes.json";
 
@@ -78,15 +77,15 @@ describe("splitGraphemes", () => {
   });
 
   it("should split strings covering algorithm edge cases", () => {
-    const cases = [
+    const cases: [string, string[]][] = [
       ["", []],
       ["a", ["a"]],
       ["abc", ["a", "b", "c"]],
       ["a\u200db", ["a", "\u200d", "b"]],
       ["🇪🇹", ["🇪🇹"]],
-      ['\U0001F469\U0001F3FF\U0000200D\U0001F9B2', ['\U0001F469\U0001F3FF\U0000200D\U0001F9B2']],
-      ['\U0001F469\U0001F3FF\U0000200D\U0000200D\U0001F9B2',
-      ['\U0001F469\U0001F3FF', '\U0000200D', '\U0000200D', '\U0001F9B2']],
+      ['\u{0001F469}\u{0001F3FF}\u{0000200D}\u{0001F9B2}', ['\u{0001F469}\u{0001F3FF}\u{0000200D}\u{0001F9B2}']],
+      ['\u{0001F469}\u{0001F3FF}\u{0000200D}\u{0000200D}\u{0001F9B2}',
+      ['\u{0001F469}\u{0001F3FF}', '\u{0000200D}', '\u{0000200D}', '\u{0001F9B2}']],
       ["6️9", ["6", "\ufe0f", "9"]],
       ["️9", ["\ufe0f", "9"]],
       ["6️", ["6", "\ufe0f"]],
@@ -105,17 +104,8 @@ describe("splitGraphemes", () => {
       ["ᄅ\u0328", ["ᄅ\u0328"]],
       ["ᄅᄅ\u0328", ["ᄅ", "ᄅ\u0328"]],
     ];
-    let i = 0;
     for (const [input, expected] of cases) {
-      let ok = false;
-      try {
-        ok = ens_normalize(input) === input;
-      } catch (ex) {}
-      if (ok) {
-        expect(splitGraphemes(input)).toStrictEqual(expected);
-        i += 1;
-      }
+      expect(splitGraphemes(input)).toStrictEqual(expected);
     }
-    expect(i).toBeGreaterThan(0);
   });
 });
