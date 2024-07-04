@@ -8,7 +8,8 @@ const HANGUL_REGEXP = new RegExp(/[ᄀ-ᇿ]/.source, "gu");
 /**
  * Splits the input string into what users perceive as "characters", called graphemes.
  *
- * An assumption is made that the input string is ENSIP-15 normalized.
+ * This function does not try to be fully compliant with the Unicode grapheme splitting algorithm.
+ * It matches the algorithm used by NameGuard which introduces user-friendly features like Hangul Jamo splitting.
  *
  * Splitting is performed using the [text-segmentation](https://github.com/niklasvh/text-segmentation) library with added special Hangul treatment.
  * This makes it possible to handle strings with arbitrary Hangul Jamo sequences that most operating systems render as distinct graphemes.
