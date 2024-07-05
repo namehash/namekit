@@ -1,30 +1,30 @@
 import { describe, it, expect } from "vitest";
-import { checkGraphemeConfusable, getCanonical } from "./confusables";
+import { isGraphemeConfusable, getCanonical } from "./confusables";
 
 describe("confusables", () => {
   it("should check if ASCII is confusable", () => {
-    expect(checkGraphemeConfusable("a")).toBe(false);
-    expect(checkGraphemeConfusable("A")).toBe(true);
-    expect(checkGraphemeConfusable("0")).toBe(false);
-    expect(checkGraphemeConfusable("9")).toBe(false);
-    expect(checkGraphemeConfusable("-")).toBe(false);
-    expect(checkGraphemeConfusable("_")).toBe(false);
-    expect(checkGraphemeConfusable("$")).toBe(false);
+    expect(isGraphemeConfusable("a")).toBe(false);
+    expect(isGraphemeConfusable("A")).toBe(true);
+    expect(isGraphemeConfusable("0")).toBe(false);
+    expect(isGraphemeConfusable("9")).toBe(false);
+    expect(isGraphemeConfusable("-")).toBe(false);
+    expect(isGraphemeConfusable("_")).toBe(false);
+    expect(isGraphemeConfusable("$")).toBe(false);
   });
 
   it("should check basic confusables", () => {
-    expect(checkGraphemeConfusable("ą")).toBe(true);
-    expect(checkGraphemeConfusable("𝕒")).toBe(true);
-    expect(checkGraphemeConfusable("𝖆")).toBe(true);
-    expect(checkGraphemeConfusable("𝗮")).toBe(true);
-    expect(checkGraphemeConfusable("𝘢")).toBe(true);
-    expect(checkGraphemeConfusable("𝙖")).toBe(true);
-    expect(checkGraphemeConfusable("𝚊")).toBe(true);
+    expect(isGraphemeConfusable("ą")).toBe(true);
+    expect(isGraphemeConfusable("𝕒")).toBe(true);
+    expect(isGraphemeConfusable("𝖆")).toBe(true);
+    expect(isGraphemeConfusable("𝗮")).toBe(true);
+    expect(isGraphemeConfusable("𝘢")).toBe(true);
+    expect(isGraphemeConfusable("𝙖")).toBe(true);
+    expect(isGraphemeConfusable("𝚊")).toBe(true);
   });
 
   it("should check graphemes with combining marks", () => {
-    expect(checkGraphemeConfusable("b\u0328")).toBe(true);
-    expect(checkGraphemeConfusable("b\u0329")).toBe(true);
+    expect(isGraphemeConfusable("b\u0328")).toBe(true);
+    expect(isGraphemeConfusable("b\u0329")).toBe(true);
   });
 
   it("should find canonicals", () => {
@@ -85,7 +85,7 @@ describe("confusables", () => {
       ["٧", true, "٧"],
     ];
     for (const [grapheme, isConfusable, canonical] of cases) {
-      expect(checkGraphemeConfusable(grapheme as string)).toBe(isConfusable);
+      expect(isGraphemeConfusable(grapheme as string)).toBe(isConfusable);
       if (isConfusable) {
         expect(getCanonical(grapheme as string)).toBe(canonical);
       }

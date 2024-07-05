@@ -10,7 +10,7 @@ import { graphemeConfusableAnalysis } from "./confusables";
  * A canonical label is the label where all confusable graphemes are replaced with their canonical form.
  *
  * A canonical grapheme is a grapheme that is considered the "base" version of a grapheme, for example, a Latin letter without diacritics.
- * Some graphemes have no canonical form because of language-specific writing scripts.
+ * Some graphemes have no canonical form when this form cannot be unambiguously determined.
  *
  * If the input label contains confusable graphemes with no canonical form, the function returns null.
  *

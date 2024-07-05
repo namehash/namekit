@@ -6,11 +6,10 @@ import { isCombiningChar, splitCharacters } from "./utils";
  * Such a grapheme is considered confusable with the base character.
  *
  * @param grapheme - The grapheme to check.
- * @returns A boolean indicating whether the grapheme is confusable.
+ * @returns A boolean indicating whether the grapheme has combining marks.
  */
-function checkGraphemeConfusableWithCombiningMarks(grapheme: string): boolean {
+function graphemeHasCombiningMarks(grapheme: string): boolean {
   const characters = splitCharacters(grapheme);
-  // Grapheme is confusable if:
   return (
     // has more than one character
     characters.length > 1 &&
@@ -21,23 +20,28 @@ function checkGraphemeConfusableWithCombiningMarks(grapheme: string): boolean {
   );
 }
 
-const SIMPLE_STRING_REGEX = /^[a-z0-9_$-]+$/;
+const ALLOWLISTED_NON_CONFUSABLES_REGEX = /^[a-z0-9_$-]+$/;
 
 /**
- * Checks if a string is "simple".
- * A simple string consists of lowercase letters (a-z), digits (0-9), underscore (_), dollar sign ($), and hyphen (-).
- * A simple string does not contain confusable graphemes.
+ * Checks if a string is an allowlisted non-confusable string:
+ * 
+ * * consists of lowercase letters (a-z), digits (0-9), underscore (_), dollar sign ($), and hyphen (-)
  *
  * @param str - The string to check.
- * @returns `true` if the string is simple, `false` otherwise.
+ * @returns `true` if the string is allowlisted, `false` otherwise.
  */
-function isSimpleString(str: string): boolean {
-  return SIMPLE_STRING_REGEX.test(str);
+function isGraphemeAllowlisted(str: string): boolean {
+  return ALLOWLISTED_NON_CONFUSABLES_REGEX.test(str);
 }
 
-export function checkGraphemeConfusable(grapheme: string): boolean {
-  if (isSimpleString(grapheme)) {
-    // Simple strings are not confusable
+export function isGraphemeConfusable(grapheme: string): boolean {
+  if (grapheme.length === 0) {
+    // empty strings are not confusable
+    return false;
+  }
+
+  if (isGraphemeAllowlisted(grapheme)) {
+    // allowlisted strings are not confusable
     return false;
   }
 
@@ -58,7 +62,7 @@ export function checkGraphemeConfusable(grapheme: string): boolean {
 
   // If the grapheme is not in CONFUSABLE_GRAPHEMES, it might be a grapheme with combining marks, which is confusable.
   // Otherwise, it is not confusable.
-  return checkGraphemeConfusableWithCombiningMarks(grapheme);
+  return graphemeHasCombiningMarks(grapheme);
 }
 
 /**
@@ -78,7 +82,7 @@ export function checkGraphemeConfusable(grapheme: string): boolean {
 function getCanonicalGrapheme(grapheme: string): string | null {
   const characters = splitCharacters(grapheme);
 
-  if (checkGraphemeConfusableWithCombiningMarks(grapheme)) {
+  if (graphemeHasCombiningMarks(grapheme)) {
     return characters[0];
   }
 
@@ -99,6 +103,9 @@ function getCanonicalGrapheme(grapheme: string): string | null {
  * @returns The canonical form of the grapheme, or null if the canonical form is not known.
  */
 export function getCanonical(grapheme: string): string | null {
+  if (grapheme.length === 0) {
+    return grapheme;
+  }
   const canonical = getCanonicalGrapheme(grapheme);
   if (canonical !== null) {
     // Return the result of getCanonicalGrapheme if it found a canonical form
@@ -134,7 +141,7 @@ export interface ConfusableAnalysis {
 export function graphemeConfusableAnalysis(
   grapheme: string,
 ): ConfusableAnalysis {
-  const isConfusable = checkGraphemeConfusable(grapheme);
+  const isConfusable = isGraphemeConfusable(grapheme);
   const canonical = getCanonical(grapheme);
   return { isConfusable, canonical };
 }
