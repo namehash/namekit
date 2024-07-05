@@ -1,5 +1,6 @@
 import { charCount } from "@namehash/ens-utils";
 import { EMOJI_SEQUENCES, EMOJI_ZWJ_SEQUENCES, EMOJI_BLOCK_STARTS, EMOJI_BLOCK_IS_EMOJI } from "./data/unicode";
+import { COMBINING } from "./data/combining";
 
 export { charCount };
 
@@ -48,4 +49,20 @@ export function isEmojiChar(char: string): boolean {
 
 export function isEmoji(text: string): boolean {
   return isEmojiSequence(text) || isEmojiZwjSequence(text) || isEmojiChar(text);
+}
+
+/**
+ * Checks if a given character is a Unicode "combining" character.
+ *
+ * @param char - The character to check.
+ * @returns `true` if the character is a combining character, `false` otherwise.
+ * @throws {TypeError} If the argument is not a single unicode character.
+ */
+export function isCombiningChar(char: string): boolean {
+  if (!isCharacter(char)) {
+    throw new TypeError(
+      "isCombiningChar() argument must be a unicode character, not str",
+    );
+  }
+  return COMBINING.has(char);
 }

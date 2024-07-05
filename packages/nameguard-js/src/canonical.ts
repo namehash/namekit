@@ -4,6 +4,8 @@ import { graphemeConfusableAnalysis } from "./confusables";
 
 /**
  * Returns the canonical form of the input label.
+ * This function should be used to process a name label-by-label, not all at once.
+ * This makes it easier to keep track of the original and canonicalized labels.
  *
  * A canonical label is the label where all confusable graphemes are replaced with their canonical form.
  *

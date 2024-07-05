@@ -1,22 +1,5 @@
-import { COMBINING } from "./data/combining";
-import { CONFUSABLE_GRAPHEMES } from "./data/confusables";
-import { isCharacter, splitCharacters } from "./utils";
-
-/**
- * Checks if a given character is a Unicode "combining" character.
- *
- * @param char - The character to check.
- * @returns `true` if the character is a combining character, `false` otherwise.
- * @throws {TypeError} If the argument is not a single unicode character.
- */
-function isCombining(char: string): boolean {
-  if (!isCharacter(char)) {
-    throw new TypeError(
-      "isCombining() argument must be a unicode character, not str",
-    );
-  }
-  return COMBINING.has(char);
-}
+import { GRAPHEME_CANONICALS } from "./data/canonicals";
+import { isCombiningChar, splitCharacters } from "./utils";
 
 /**
  * Checks if a grapheme is of the form `base character + sequence of combining marks`.
@@ -32,9 +15,9 @@ function checkGraphemeConfusableWithCombiningMarks(grapheme: string): boolean {
     // has more than one character
     characters.length > 1 &&
     // and first character is not a combining mark
-    !isCombining(characters[0]) &&
+    !isCombiningChar(characters[0]) &&
     // and all other characters are combining marks
-    characters.slice(1).every(isCombining)
+    characters.slice(1).every(isCombiningChar)
   );
 }
 
@@ -58,12 +41,12 @@ export function checkGraphemeConfusable(grapheme: string): boolean {
     return false;
   }
 
-  const confusable = CONFUSABLE_GRAPHEMES.get(grapheme);
-  // If the grapheme is in CONFUSABLE_GRAPHEMES, it might be confusable
-  if (confusable !== undefined) {
+  const canonical = GRAPHEME_CANONICALS.get(grapheme);
+  if (canonical !== undefined) {
+    // If the grapheme is in GRAPHEME_CANONICALS, it might be confusable
     if (
-      confusable.canonical === grapheme &&
-      confusable.numConfusables === 0
+      canonical.canonicalGrapheme === grapheme &&
+      canonical.numConfusables === 0
     ) {
       // If the grapheme is its own canonical and has no other confusables, it is not confusable
       return false;
@@ -99,9 +82,9 @@ function getCanonicalGrapheme(grapheme: string): string | null {
     return characters[0];
   }
 
-  const confusable = CONFUSABLE_GRAPHEMES.get(grapheme);
-  if (confusable !== undefined) {
-    return confusable.canonical;
+  const canonical = GRAPHEME_CANONICALS.get(grapheme);
+  if (canonical !== undefined) {
+    return canonical.canonicalGrapheme;
   }
 
   return characters.length === 1 ? grapheme : null;
