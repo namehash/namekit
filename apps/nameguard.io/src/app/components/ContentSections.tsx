@@ -64,7 +64,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>NameGuard library</h3>
+          <span className={headerStyle}>NameGuard library</span>
         </div>
       ),
       text: <Fragment>Security &quot;x-ray&quot; for ENS names.</Fragment>,
@@ -78,7 +78,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>NameGuard Client SDK</h3>
+          <span className={headerStyle}>NameGuard Client SDK</span>
         </div>
       ),
       text: (
@@ -94,7 +94,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>NameGuard React UI Kit</h3>
+          <span className={headerStyle}>NameGuard React UI Kit</span>
           <ListSectionBadge width={53} height={20} text="Alpha" />
         </div>
       ),
@@ -113,7 +113,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>Figma UI kit</h3>
+          <span className={headerStyle}>Figma UI kit</span>
         </div>
       ),
       text: (
@@ -131,7 +131,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>ENS Label Inspector</h3>
+          <span className={headerStyle}>ENS Label Inspector</span>
         </div>
       ),
       text: <Fragment>Detailed inspection of labels in ENS names.</Fragment>,
@@ -145,7 +145,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>ENS Font Data</h3>
+          <span className={headerStyle}>ENS Font Data</span>
         </div>
       ),
       text: (
@@ -163,7 +163,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>ENS Normalize Python</h3>
+          <span className={headerStyle}>ENS Normalize Python</span>
         </div>
       ),
       text: (
@@ -181,7 +181,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>ENS Name Parser</h3>
+          <span className={headerStyle}>ENS Name Parser</span>
           <ListSectionBadge width={53} height={20} text="Alpha" />
         </div>
       ),
@@ -198,7 +198,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>Open public API</h3>
+          <span className={headerStyle}>Open public API</span>
         </div>
       ),
       text: (
@@ -216,7 +216,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>NameGuard DevOps Scripts</h3>
+          <span className={headerStyle}>NameGuard DevOps Scripts</span>
         </div>
       ),
       text: (
@@ -234,7 +234,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>Detailed documentation</h3>
+          <span className={headerStyle}>Detailed documentation</span>
           <ListSectionBadge width={96} height={20} text="Coming soon" />
         </div>
       ),
@@ -252,7 +252,7 @@ export function DevelopersSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>ENS Webfont</h3>
+          <span className={headerStyle}>ENS Webfont</span>
           <ListSectionBadge width={96} height={20} text="Alpha" />
         </div>
       ),
@@ -344,7 +344,7 @@ export function ChecksSection() {
 
   const checkElements: ListSectionElement[] = [
     {
-      header: <h3 className={headerStyle}>Potential Impersonation</h3>,
+      header: <span className={headerStyle}>Potential Impersonation</span>,
       text: (
         <Fragment>
           Protect from inbound messages that may appear to be from someone you
@@ -354,7 +354,7 @@ export function ChecksSection() {
       icon: checkCircle,
     },
     {
-      header: <h3 className={headerStyle}>Confusable Characters</h3>,
+      header: <span className={headerStyle}>Confusable Characters</span>,
       text: (
         <Fragment>
           Identify characters with a higher risk for visual confusion with other
@@ -364,7 +364,7 @@ export function ChecksSection() {
       icon: checkCircle,
     },
     {
-      header: <h3 className={headerStyle}>Cross-Device Font Support</h3>,
+      header: <span className={headerStyle}>Cross-Device Font Support</span>,
       text: (
         <Fragment>
           Detect if characters have limited support to be viewed on popular
@@ -374,7 +374,7 @@ export function ChecksSection() {
       icon: checkCircle,
     },
     {
-      header: <h3 className={headerStyle}>Invisible Characters</h3>,
+      header: <span className={headerStyle}>Invisible Characters</span>,
       text: (
         <Fragment>
           Reveal any invisible characters that might otherwise be hiding in a
@@ -384,7 +384,7 @@ export function ChecksSection() {
       icon: checkCircle,
     },
     {
-      header: <h3 className={headerStyle}>Typing Difficulty</h3>,
+      header: <span className={headerStyle}>Typing Difficulty</span>,
       text: (
         <Fragment>
           Offer usability suggestions for users picking a name to register.
@@ -393,7 +393,7 @@ export function ChecksSection() {
       icon: checkCircle,
     },
     {
-      header: <h3 className={headerStyle}>Mixed Scripts</h3>,
+      header: <span className={headerStyle}>Mixed Scripts</span>,
       text: (
         <Fragment>
           Detect higher risk combinations of multiple scripts in a name.
@@ -402,7 +402,7 @@ export function ChecksSection() {
       icon: checkCircle,
     },
     {
-      header: <h3 className={headerStyle}>NameWrapper Compatibility</h3>,
+      header: <span className={headerStyle}>NameWrapper Compatibility</span>,
       text: (
         <Fragment>
           Warn if the name being registered cannot be supported by the ENS Name
@@ -412,7 +412,7 @@ export function ChecksSection() {
       icon: checkCircle,
     },
     {
-      header: <h3 className={headerStyle}>ENSIP-15 Name Normalization</h3>,
+      header: <span className={headerStyle}>ENSIP-15 Name Normalization</span>,
       text: (
         <Fragment>
           Check if the name is normalized according to ENSIP-15.
@@ -421,7 +421,7 @@ export function ChecksSection() {
       icon: checkCircle,
     },
     {
-      header: <h3 className={headerStyle}>DNS Punycode Compatibility</h3>,
+      header: <span className={headerStyle}>DNS Punycode Compatibility</span>,
       text: (
         <Fragment>
           Warn during registration if a name will have DNS compatibility
@@ -431,7 +431,7 @@ export function ChecksSection() {
       icon: checkCircle,
     },
     {
-      header: <h3 className={headerStyle}>Unknown Labels</h3>,
+      header: <span className={headerStyle}>Unknown Labels</span>,
       text: (
         <Fragment>
           Identify if the name contains unknown labels (e.g. [0123abcd...].eth).
@@ -442,7 +442,7 @@ export function ChecksSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>Name Ruggability</h3>
+          <span className={headerStyle}>Name Ruggability</span>
           <ListSectionBadge width={96} height={20} text="Coming soon" />
         </div>
       ),
@@ -457,7 +457,7 @@ export function ChecksSection() {
     {
       header: (
         <div className={headerWrapperStyle}>
-          <h3 className={headerStyle}>NameWrapper Fuses</h3>
+          <span className={headerStyle}>NameWrapper Fuses</span>
           <ListSectionBadge width={96} height={20} text="Coming soon" />
         </div>
       ),
@@ -470,7 +470,7 @@ export function ChecksSection() {
       icon: checkCircle,
     },
     {
-      header: <h3 className={headerStyle}>Have a check suggestion?</h3>,
+      header: <span className={headerStyle}>Have a check suggestion?</span>,
       text: (
         <Fragment>
           <a

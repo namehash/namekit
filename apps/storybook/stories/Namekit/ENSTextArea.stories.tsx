@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { ENSTextarea } from "@namehash/namekit-react";
+import { ENSTextArea } from "@namehash/namekit-react";
 
-const meta: Meta<typeof ENSTextarea> = {
-  title: "UI/ENSTextarea",
-  component: ENSTextarea,
+const meta: Meta<typeof ENSTextArea> = {
+  title: "UI/ENSTextArea",
+  component: ENSTextArea,
   argTypes: {
     variant: {
       control: {
@@ -25,7 +25,7 @@ const meta: Meta<typeof ENSTextarea> = {
 
 export default meta;
 
-type Story = StoryObj<typeof ENSTextarea>;
+type Story = StoryObj<typeof ENSTextArea>;
 
 export const PrimaryMedium: Story = {
   args: {
