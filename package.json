@@ -16,7 +16,7 @@
     "eslint": "^8.56.0",
     "prettier": "^3.2.5",
     "rimraf": "^5.0.7",
-    "turbo": "1.13.3"
+    "turbo": "2.0.5"
   },
   "dependencies": {
     "yup": "1.4.0"
