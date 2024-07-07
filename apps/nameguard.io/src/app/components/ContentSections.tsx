@@ -18,7 +18,7 @@ import {
   GithubIconDevelopers,
   GithubIconSmall,
   RedirectIcon,
-} from "./atoms";
+} from "@/components/atoms";
 
 type ListSectionElement = {
   header: React.ReactNode;
