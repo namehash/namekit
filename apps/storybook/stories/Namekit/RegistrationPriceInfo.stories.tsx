@@ -71,6 +71,9 @@ export const DisplayTextAndIcon: Story = {
 const meta: Meta<typeof RegistrationPriceInfo> = {
   component: RegistrationPriceInfo,
   title: "Namekit/RegistrationPriceInfo",
+  parameters: {
+    layout: "centered",
+  },
   argTypes: {
     displayIconWithTooltip: {
       options: RegistrationPriceInfoDisplayingFormat,

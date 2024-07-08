@@ -5,6 +5,9 @@ import { Button } from "@namehash/namekit-react";
 const meta: Meta<typeof Button> = {
   title: "UI/Button",
   component: Button,
+  parameters: {
+    layout: "centered",
+  },
   argTypes: {
     variant: {
       control: {

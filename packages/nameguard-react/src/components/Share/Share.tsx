@@ -9,10 +9,10 @@ import {
 import { toast } from "sonner";
 
 import cc from "classcat";
+import { DisplayedName } from "../..";
 import { Tooltip } from "@namehash/namekit-react";
 import { CheckResultCode } from "@namehash/nameguard";
 import { checkResultCodeTextColor } from "../../utils/text";
-import { DisplayedName } from "../DisplayedName/DisplayedName";
 import { buildENSName } from "@namehash/ens-utils";
 
 type ShareProps = {

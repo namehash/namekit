@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Tooltip } from "@namehash/namekit-react";
+import { Tooltip } from "./Tooltip";
 import cc from "classcat";
 
 interface TruncatedTextProps {
@@ -49,11 +49,7 @@ export const TruncatedText = ({
     classes: string,
     maxWidth = maxDisplayWidth,
   ): JSX.Element => {
-    return (
-      <p style={{ maxWidth: maxWidth }} className={classes}>
-        {text}
-      </p>
-    );
+    return <p className={classes}>{text}</p>;
   };
 
   const textDefaultClasses = "nk-text-black nk-text-sm nk-truncate";

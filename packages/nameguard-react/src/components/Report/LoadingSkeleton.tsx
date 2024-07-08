@@ -1,6 +1,6 @@
 import React from "react";
 
-import { RatingIcon, RatingIconSize } from "./RatingIcon";
+import { RatingIconSize } from "./RatingIcon";
 import { ReportFormattedDisplayName } from "./ReportFormattedDisplayName";
 import { ReportChangesApplied } from "./ReportChangesApplied";
 import { ParsedName } from "@namehash/ens-utils";

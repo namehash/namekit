@@ -5,6 +5,9 @@ import { Heading } from "@namehash/namekit-react";
 const meta: Meta<typeof Heading> = {
   title: "UI/Heading",
   component: Heading,
+  parameters: {
+    layout: "centered",
+  },
   argTypes: {
     as: {
       control: {

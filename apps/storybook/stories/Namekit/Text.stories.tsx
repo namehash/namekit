@@ -5,6 +5,9 @@ import { Text } from "@namehash/namekit-react";
 const meta: Meta<typeof Text> = {
   title: "UI/Text",
   component: Text,
+  parameters: {
+    layout: "centered",
+  },
   argTypes: {
     as: {
       control: {

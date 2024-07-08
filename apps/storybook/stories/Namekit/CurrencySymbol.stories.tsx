@@ -81,6 +81,9 @@ export const NotShowingTooltipDescription: Story = {
 const meta: Meta<typeof CurrencySymbol> = {
   component: CurrencySymbol,
   title: "Namekit/CurrencySymbol",
+  parameters: {
+    layout: "centered",
+  },
   argTypes: {
     symbolFillColor: { control: "color" },
     currency: {
