@@ -4,6 +4,8 @@ import Link from "next/link";
 import { GithubIcon } from "@/app/components/atoms/icons/GithubIcon";
 import { NGSearchIcon } from "@/app/components/atoms/icons/NGSearchIcon";
 import { NGSearch } from "@/app/components/molecules/NGSearch";
+import MobileMenu from "./MobileMenu";
+import { CalButton } from "../atoms";
 
 export const Header = () => {
   return (
@@ -25,12 +27,12 @@ export const Header = () => {
               </div>
             </Link>
           </div>
-          <div className="search_bar_change:flex gt_mobile:w-full gt_mobile:h-full gt_mobile:p-0 gt_mobile:m-0 hidden">
+          <div className="lg:flex gt_mobile:w-full gt_mobile:h-full gt_mobile:p-0 gt_mobile:m-0 hidden">
             <NGSearch />
           </div>
         </div>
-        <div className="flex flex-row items-center justify-between gap-1 md:gap-5">
-          <div className="flex items-center justify-center ">
+        <div className="flex flex-row items-center justify-between md:gap-5 h-[40px]">
+          <div className="hidden items-center justify-center lg:flex gap-1">
             <a
               className="px-[10px] py-[9px] not-italic text-black font-medium text-sm leading-5 rounded-md gt_mobile:hover:bg-gray-100"
               href="https://api.nameguard.io/docs"
@@ -52,11 +54,23 @@ export const Header = () => {
                 </p>
               </div>
             </a>
+            <Link
+              className="px-[10px] py-[9px] not-italic text-black font-medium text-sm leading-5 rounded-md gt_mobile:hover:bg-gray-100"
+              href="/contact"
+              rel="noopener noreferrer"
+            >
+              Contact
+            </Link>
+            <CalButton className="px-4 py-2 text-sm rounded-md font-medium bg-black text-white hover:bg-gray-800 transition-all duration-300 whitespace-nowrap">
+              Discuss an integration
+            </CalButton>
           </div>
 
-          <div className="flex search_bar_change:hidden justify-center align-center p-[7px]">
+          <div className="flex lg:hidden justify-center align-center p-[7px]">
             <NGSearchIcon />
           </div>
+
+          <MobileMenu />
         </div>
       </div>
     </header>
