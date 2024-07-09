@@ -120,7 +120,7 @@ export const ExpirationWarning = ({
           <div className="nk-w-5 nk-h-5">{icon}</div>
           <div
             className={cc([
-              "nk-flex nk-text-sm nk-space-x-1",
+              "nk-flex nk-text-sm nk-ml-3 nk-space-x-1",
               {
                 "nk-text-red-500":
                   userOwnershipOfDomain === UserOwnershipOfDomain.activeOwner,

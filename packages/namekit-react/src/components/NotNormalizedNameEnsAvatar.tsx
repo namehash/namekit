@@ -2,12 +2,17 @@ import { Normalization } from "@namehash/nameguard";
 import React from "react";
 
 interface NotNormalizedNameEnsAvatarProps {
-  normalization: Normalization.unknown | Normalization.unnormalized;
+  normalization: Normalization;
 }
 
 export const NotNormalizedNameEnsAvatar = ({
   normalization,
 }: NotNormalizedNameEnsAvatarProps) => {
+  if (normalization === Normalization.normalized) {
+    console.error("This component should not be used for normalized names");
+    return <></>;
+  }
+
   return (
     <div className="nk-w-12 nk-h-12 nk-mx-auto nk-relative">
       <div className="nk-rounded-md nk-border-[#6b72801a] nk-border nk-z-30 nk-w-full nk-h-full nk-absolute nk-left-0 nk-top-0"></div>

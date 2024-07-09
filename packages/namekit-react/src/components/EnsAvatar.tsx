@@ -60,7 +60,9 @@ export const EnsAvatar = ({ name }: AvatarProps) => {
 
   const EnsAvatarLayout =
     name && name.normalization !== Normalization.normalized ? (
-      <NotNormalizedNameEnsAvatar normalization={name.normalization} />
+      <NotNormalizedNameEnsAvatar
+        normalization={name.normalization as Normalization}
+      />
     ) : (
       <div
         className="nk-rounded-md nk-w-12 nk-h-12 nk-animated-fadeIn nk-overflow-hidden nk-transition-all nk-duration-500 nk-relative"
