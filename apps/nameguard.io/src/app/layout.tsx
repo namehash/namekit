@@ -6,7 +6,7 @@ import { Metadata as NamehashMetadata } from "@namehash/seo";
 import { Inter } from "next/font/google";
 import Favicon from "../../public/favicon/favicon_package_v0-2/favicon.ico";
 import AppleTouchIcon from "../../public/favicon/favicon_package_v0-2/apple-touch-icon.png";
-import { NameGuardWrapper } from "./../components/molecules/NameGuardWrapper";
+import { NameGuardWrapper } from "@/components/molecules/NameGuardWrapper";
 import React from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
