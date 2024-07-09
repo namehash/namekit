@@ -4,6 +4,8 @@ import Link from "next/link";
 
 import { GithubIcon, NGSearchIcon } from "@/components/atoms";
 import { NGSearch } from "@/components/molecules";
+import MobileMenu from "./MobileMenu";
+import { CalButton } from "../atoms";
 
 export const Header = () => {
   return (
@@ -29,8 +31,8 @@ export const Header = () => {
             <NGSearch />
           </div>
         </div>
-        <div className="flex flex-row items-center justify-between gap-1 md:gap-5">
-          <div className="flex items-center justify-center ">
+        <div className="flex flex-row items-center justify-between md:gap-5 h-[40px]">
+          <div className="hidden items-center justify-center lg:flex gap-1">
             <a
               className="px-[10px] py-[9px] not-italic text-black font-medium text-sm leading-5 rounded-md sm:hover:bg-gray-100"
               href="https://api.nameguard.io/docs"
@@ -52,11 +54,23 @@ export const Header = () => {
                 </p>
               </div>
             </a>
+            <Link
+              className="px-[10px] py-[9px] not-italic text-black font-medium text-sm leading-5 rounded-md gt_mobile:hover:bg-gray-100"
+              href="/contact"
+              rel="noopener noreferrer"
+            >
+              Contact
+            </Link>
+            <CalButton className="px-4 py-2 text-sm rounded-md font-medium bg-black text-white hover:bg-gray-800 transition-all duration-300 whitespace-nowrap">
+              Discuss an integration
+            </CalButton>
           </div>
 
           <div className="flex lg:hidden justify-center align-center p-[7px]">
             <NGSearchIcon />
           </div>
+
+          <MobileMenu />
         </div>
       </div>
     </header>
