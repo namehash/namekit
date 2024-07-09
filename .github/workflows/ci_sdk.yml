@@ -33,7 +33,10 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./api
-        run: poetry install --with dev
+        run: |
+          poetry install --with dev
+          npm ci --loglevel silly
+          ls -la node_modules # List the contents of node_modules
 
       - name: Setup local nameguard api
         working-directory: ./api
