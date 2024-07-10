@@ -1,7 +1,7 @@
 "use client";
 
 import { ENSName, buildENSName } from "@namehash/ens-utils";
-import { DisplayedName, TruncatedText } from "@namehash/nameguard-react";
+import { DisplayedName, TruncatedText } from "@namehash/namekit-react";
 
 export default function DisplayedNamePage() {
   return (

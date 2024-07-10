@@ -6,6 +6,7 @@ const meta: Meta<typeof RatingIcon> = {
   component: RatingIcon,
   title: "Nameguard/RatingIcon",
   parameters: {
+    layout: "centered",
     controls: {
       exclude: ["size", "isInteractive"],
     },
