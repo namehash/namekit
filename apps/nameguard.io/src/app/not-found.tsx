@@ -1,5 +1,5 @@
+import NotFound from "@/components/organisms/NotFound";
 import type { Metadata } from "next";
-import NotFound from "./components/organisms/NotFound";
 
 export const metadata: Metadata = {
   title: "Not Found",

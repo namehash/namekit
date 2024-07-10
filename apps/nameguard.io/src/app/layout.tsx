@@ -6,13 +6,11 @@ import { Metadata as NamehashMetadata } from "@namehash/seo";
 import { Inter } from "next/font/google";
 import Favicon from "../../public/favicon/favicon_package_v0-2/favicon.ico";
 import AppleTouchIcon from "../../public/favicon/favicon_package_v0-2/apple-touch-icon.png";
-import { NameGuardWrapper } from "./components/molecules/NameGuardWrapper";
-
-import { Footer } from "@/app/components/organisms/Footer";
-import { Header } from "@/app/components/organisms/Header";
+import { NameGuardWrapper } from "@/components/molecules/NameGuardWrapper";
 import React from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Footer, Header } from "@/components/organisms";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 
