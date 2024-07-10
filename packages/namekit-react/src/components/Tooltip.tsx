@@ -25,7 +25,7 @@ export function Tooltip({
   const handleClose = () => setOpen(false);
 
   return (
-    <Popover className="flex items-center justify-center">
+    <Popover className="nk-flex nk-items-center nk-justify-center">
       <Float
         show={open}
         placement={placement}
@@ -34,19 +34,19 @@ export function Tooltip({
         flip={10}
         arrow
         portal
-        enter="transition duration-200 ease-out"
-        enterFrom="opacity-0 -translate-y-1"
-        enterTo="opacity-100 translate-y-0"
-        leave="transition duration-150 ease-in"
-        leaveFrom="opacity-100 translate-y-0"
-        leaveTo="opacity-0 -translate-y-1"
+        enter="nk-transition nk-duration-200 nk-ease-out"
+        enterFrom="nk-opacity-0 nk--translate-y-1"
+        enterTo="nk-opacity-100 nk-translate-y-0"
+        leave="nk-transition nk-duration-150 nk-ease-in"
+        leaveFrom="nk-opacity-100 nk-translate-y-0"
+        leaveTo="nk-opacity-0 nk--translate-y-1"
         {...props}
       >
         <Popover.Group
           onClick={handleOpen}
           onMouseEnter={handleOpen}
           onMouseLeave={handleClose}
-          className="cursor-auto"
+          className="nk-cursor-auto"
         >
           {trigger}
         </Popover.Group>
@@ -54,10 +54,10 @@ export function Tooltip({
         <Popover.Panel
           onMouseEnter={handleOpen}
           onMouseLeave={handleClose}
-          className="rounded-md bg-black focus:outline-none"
+          className="nk-rounded-md nk-bg-black focus:nk-outline-none"
         >
-          <Float.Arrow className="absolute h-5 w-5 rotate-45 bg-black rounded-b" />
-          <div className="relative h-full rounded-md text-sm font-medium text-white py-2 px-4">
+          <Float.Arrow className="nk-absolute nk-h-5 nk-w-5 nk-rotate-45 nk-bg-black nk-rounded-b" />
+          <div className="nk-relative nk-h-full nk-rounded-md nk-text-sm nk-font-medium nk-text-white nk-py-2 nk-px-4">
             {children}
           </div>
         </Popover.Panel>

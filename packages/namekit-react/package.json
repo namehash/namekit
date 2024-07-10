@@ -23,7 +23,11 @@
     }
   },
   "dependencies": {
+    "@headlessui-float/react": "0.11.4",
+    "@headlessui/react": "1.7.17",
+    "@namehash/ens-utils": "workspace:*",
     "@namehash/ens-webfont": "workspace:*",
+    "@namehash/nameguard": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

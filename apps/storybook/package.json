@@ -2,8 +2,8 @@
   "name": "nameguard-storybook",
   "private": true,
   "scripts": {
-    "dev": "storybook dev -p 6006",
-    "build": "storybook build"
+    "build": "storybook build",
+    "dev": "storybook dev -p 6006"
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^1.4.0",
@@ -22,10 +22,12 @@
     "storybook": "^8.1.1"
   },
   "dependencies": {
+    "@headlessui/react": "1.7.17",
+    "@namehash/ens-utils": "workspace:*",
     "@namehash/ens-webfont": "workspace:*",
-    "@namehash/namekit-react": "workspace:*",
-    "@namehash/nameguard-react": "workspace:*",
     "@namehash/nameguard": "workspace:*",
+    "@namehash/nameguard-react": "workspace:*",
+    "@namehash/namekit-react": "workspace:*",
     "react-dom": "^18.3.1"
   }
 }

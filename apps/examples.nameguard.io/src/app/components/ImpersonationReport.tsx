@@ -1,6 +1,6 @@
 "use client";
 
-import { Rating, type SecurePrimaryNameResult } from "@namehash/nameguard";
+import { type SecurePrimaryNameResult } from "@namehash/nameguard";
 import {
   RatingIcon,
   RatingIconSize,
