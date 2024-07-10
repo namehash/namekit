@@ -1,6 +1,6 @@
 import { ens_beautify } from "@adraffy/ens-normalize";
 import { PublicClient } from "viem";
-import { LocalSecurePrimaryNameResult } from "@namehash/nameguard";
+import { SecurePrimaryNameResult } from "@namehash/nameguard";
 import { computeImpersonationStatus } from "./impersonation";
 import { lookupPrimaryName } from "./lookup";
 import { isEnsNormalized } from "./normalization";
@@ -15,7 +15,7 @@ import { isEnsNormalized } from "./normalization";
 export async function securePrimaryName(
   address: string,
   client: PublicClient,
-): Promise<LocalSecurePrimaryNameResult> {
+): Promise<SecurePrimaryNameResult> {
   const primaryName = await lookupPrimaryName(address, client);
 
   // This name is displayed when the primary name is not found.
@@ -28,6 +28,7 @@ export async function securePrimaryName(
       impersonation_status: null,
       display_name: unnamedName,
       primary_name_status: "no_primary_name",
+      nameguard_result: null,
     };
   }
 
@@ -38,6 +39,7 @@ export async function securePrimaryName(
       impersonation_status: null,
       display_name: unnamedName,
       primary_name_status: "unnormalized",
+      nameguard_result: null,
     };
   }
 
@@ -50,5 +52,6 @@ export async function securePrimaryName(
     impersonation_status: computeImpersonationStatus(primaryName),
     display_name: beautifulName,
     primary_name_status: "normalized",
+    nameguard_result: null,
   };
 }

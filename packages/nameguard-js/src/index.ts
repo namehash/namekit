@@ -1,2 +1,1 @@
-export { securePrimaryName } from "./securePrimaryName";
-export { createLocalProvider } from "./localProvider";
+export { createClient, NameGuardJSOptions } from "./nameguard-js";

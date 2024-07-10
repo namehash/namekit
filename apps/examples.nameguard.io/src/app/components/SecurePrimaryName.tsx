@@ -1,5 +1,4 @@
-import { createClient } from "@namehash/nameguard";
-import { createLocalProvider } from "@namehash/nameguard-js";
+import { createClient } from "@namehash/nameguard-js";
 import { createPublicClient, http } from "viem";
 import { mainnet } from "viem/chains";
 import { headers } from "next/headers";
@@ -14,12 +13,7 @@ const publicClient = createPublicClient({
   transport: http(PROVIDER_URI_MAINNET),
 });
 
-const nameguard = createClient({
-  localProviders: new Map([
-    // Register a local provider for mainnet using a given client
-    ["mainnet", createLocalProvider({ publicClient })],
-  ]),
-});
+const nameguard = createClient({ publicClient });
 
 interface Props {
   address: string;
@@ -31,7 +25,7 @@ export async function SecurePrimaryName({ address }: Props) {
   headers();
 
   // This function does not use the NameGuard API server
-  const data = await nameguard.getSecurePrimaryNameLocal(address);
+  const data = await nameguard.getSecurePrimaryName(address);
 
   const pillColor =
     data.impersonation_status === "potential" ?
