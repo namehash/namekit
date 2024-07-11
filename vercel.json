@@ -1,0 +1,5 @@
+{
+  "version": 2,
+  "buildCommand": "pnpm turbo run build",
+  "ignoreCommand": "pnpm turbo-ignore"
+}
