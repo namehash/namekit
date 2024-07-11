@@ -38,9 +38,12 @@ export function DisplayedName({
       text={displayName}
       maxTooltipWidth={maxTooltipWidth}
       maxDisplayWidth={maxDisplayWidth}
-      textStylingClasses={cc([textStylingClasses, "ens-webfont"])}
+      textStylingClasses={cc([textStylingClasses, "nk-ens-webfont"])}
       displayTooltipWhenTextOverflows={displayTooltipWhenNameOverflows}
-      tooltipTextStylingClasses={cc([tooltipTextStylingClasses, "ens-webfont"])}
+      tooltipTextStylingClasses={cc([
+        tooltipTextStylingClasses,
+        "nk-ens-webfont",
+      ])}
     />
   );
 }

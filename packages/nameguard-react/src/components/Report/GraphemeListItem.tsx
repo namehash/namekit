@@ -21,49 +21,51 @@ export function GraphemeListItem({ item }: GraphemeListItemProps) {
 
   return (
     <div
-      className="grid grid-cols-8 md:grid-cols-12 gap-4 py-5 pl-6 cursor-pointer transition-colors hover:bg-gray-50 last:rounded-b-md"
+      className="ng-grid ng-grid-cols-8 md:ng-grid-cols-12 ng-gap-4 ng-py-5 ng-pl-6 ng-cursor-pointer ng-transition-colors hover:ng-bg-gray-50 last:ng-rounded-b-md"
       onClick={handleClick}
     >
-      <div className="flex md:items-center justify-center">
-        <p className="text-4xl text-black font-bold ens-webfont">
+      <div className="ng-flex md:ng-items-center ng-justify-center">
+        <p className="ng-text-4xl ng-text-black ng-font-bold ng-ens-webfont">
           {item.grapheme}
         </p>
       </div>
-      <div className="md:grid md:grid-cols-7 md:gap-4 col-span-7 md:col-span-11">
-        <div className="md:col-span-3">
-          <p className="text-black text-sm font-medium">{item.grapheme_name}</p>
-          <p className="hidden md:inline-block text-gray-500 text-sm font-normal">
+      <div className="md:ng-grid md:ng-grid-cols-7 md:ng-gap-4 ng-col-span-7 md:ng-col-span-11">
+        <div className="md:ng-col-span-3">
+          <p className="ng-text-black ng-text-sm ng-font-medium">
+            {item.grapheme_name}
+          </p>
+          <p className="ng-hidden md:ng-inline-block ng-text-gray-500 ng-text-sm ng-font-normal">
             {item.grapheme_description}
           </p>
         </div>
 
-        <div className="md:col-span-4 flex space-between space-x-3">
-          <div className="flex items-center md:space-between justify-between md:justify-start space-y-1 md:space-y-0 md:space-x-2 flex-1 pr-6 md:pr-12 flex-wrap">
-            <div className="flex-grow md:order-2 flex items-center">
-              <p className="md:font-medium text-gray-500 md:text-black text-sm w-full md:pl-2">
+        <div className="md:ng-col-span-4 ng-flex ng-space-between ng-space-x-3">
+          <div className="ng-flex ng-items-center md:ng-space-between ng-justify-between md:ng-justify-start ng-space-y-1 md:ng-space-y-0 md:ng-space-x-2 ng-flex-1 ng-pr-6 md:ng-pr-12 ng-flex-wrap">
+            <div className="ng-flex-grow md:ng-order-2 ng-flex ng-items-center">
+              <p className="md:ng-font-medium ng-text-gray-500 md:ng-text-black ng-text-sm ng-w-full md:ng-pl-2">
                 {item.rating === "pass"
                   ? item.title
                   : item.highest_risk?.message}
               </p>
             </div>
 
-            <div className="flex-shrink-0 md:order-3 flex items-center md:ml-auto">
+            <div className="ng-flex-shrink-0 md:ng-order-3 ng-flex ng-items-center md:ng-ml-auto">
               <RiskCounter count={item.risk_count} />
             </div>
 
             {item.highest_risk ? (
-              <div className="flex-shrink-0 ml-auto md:ml-auto md:order-1 flex items-center">
+              <div className="ng-flex-shrink-0 ng-ml-auto md:ng-ml-auto md:ng-order-1 ng-flex ng-items-center">
                 <CheckResultCodeIcon
                   isInteractive={true}
-                  className="cursor-pointer"
+                  className="ng-cursor-pointer"
                   code={item.highest_risk.status}
                 />
               </div>
             ) : (
-              <div className="flex-shrink-0 ml-auto md:ml-auto md:order-1 flex items-center">
+              <div className="ng-flex-shrink-0 ng-ml-auto md:ng-ml-auto md:ng-order-1 ng-flex ng-items-center">
                 <CheckResultCodeIcon
                   isInteractive={true}
-                  className="cursor-pointer"
+                  className="ng-cursor-pointer"
                   code={CheckResultCode.pass}
                 />
               </div>

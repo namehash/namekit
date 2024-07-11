@@ -15,46 +15,46 @@ export const Slideover = forwardRef(
 
     return (
       <Transition.Root show={isOpen} as={Fragment}>
-        <div className="fixed z-50 md:z-30 inset-0 overflow-hidden m-0">
+        <div className="ng-fixed ng-z-50 md:ng-z-30 ng-inset-0 ng-overflow-hidden ng-m-0">
           <Transition.Child
             as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
+            enter="ng-ease-out ng-duration-300"
+            enterFrom="ng-opacity-0"
+            enterTo="ng-opacity-100"
+            leave="ng-ease-in ng-duration-200"
+            leaveFrom="ng-opacity-100"
+            leaveTo="ng-opacity-0"
           >
-            <div className="fixed inset-0" />
+            <div className="ng-fixed ng-inset-0" />
           </Transition.Child>
           <Transition.Child
             as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="md:opacity-0 md:translate-x-28"
-            enterTo="md:opacity-100 md:translate-x-0"
-            leave="ease-in duration-200"
-            leaveFrom="md:opacity-100 md:translate-x-0"
-            leaveTo="md:opacity-0 md:translate-x-28"
+            enter="ng-ease-out ng-duration-300"
+            enterFrom="md:ng-opacity-0 md:ng-translate-x-28"
+            enterTo="md:ng-opacity-100 md:ng-translate-x-0"
+            leave="ng-ease-in ng-duration-200"
+            leaveFrom="md:ng-opacity-100 md:ng-translate-x-0"
+            leaveTo="md:ng-opacity-0 md:ng-translate-x-28"
           >
-            <div className="relative z-50 md:z-40 flex justify-end h-full md:pt-[68px] md:pb-[53px]">
+            <div className="ng-relative ng-z-50 md:ng-z-40 ng-flex ng-justify-end ng-h-full md:ng-pt-[68px] md:ng-pb-[53px]">
               <div
-                className="w-full lg:max-w-[668px] transform overflow-y-auto bg-white md:shadow-2xl transition-all h-full flex flex-col"
+                className="ng-w-full lg:ng-max-w-[668px] ng-transform ng-overflow-y-auto ng-bg-white md:ng-shadow-2xl ng-transition-all ng-h-full ng-flex ng-flex-col"
                 ref={ref}
               >
-                <div className="h-[56px] md:h-[68px] flex items-center justify-center shadow px-6 py-5 flex-none relative bg-white z-40">
-                  <h2 className="font-medium text-lg">{title}</h2>
-                  <div className="flex items-center right-0 md:left-0 md:right-auto inset-y-0 absolute pr-3 md:pr-0 md:pl-3 z-20">
+                <div className="ng-h-[56px] md:ng-h-[68px] ng-flex ng-items-center ng-justify-center ng-shadow ng-px-6 ng-py-5 ng-flex-none ng-relative ng-bg-white ng-z-40">
+                  <h2 className="ng-font-medium ng-text-lg">{title}</h2>
+                  <div className="ng-flex ng-items-center ng-right-0 md:ng-left-0 md:ng-right-auto ng-inset-y-0 ng-absolute ng-pr-3 md:ng-pr-0 md:ng-pl-3 ng-z-20">
                     <button
                       onClick={onClose}
-                      className="flex items-center justify-between p-2 appearance-none bg-transparent hover:bg-black/5 transition rounded-md"
+                      className="ng-flex ng-items-center ng-justify-between ng-p-2 ng-appearance-none ng-bg-transparent hover:ng-bg-black/5 ng-transition ng-rounded-md"
                     >
-                      <ChevronDoubleRightIcon className="hidden md:block w-6 h-6 fill-current text-black" />
-                      <XMarkIcon className="md:hidden w-6 h-6 fill-current text-black md:text-gray-400" />
+                      <ChevronDoubleRightIcon className="ng-hidden md:ng-block ng-w-6 ng-h-6 ng-fill-current ng-text-black" />
+                      <XMarkIcon className="md:ng-hidden ng-w-6 ng-h-6 ng-fill-current ng-text-black md:ng-text-gray-400" />
                     </button>
                   </div>
                 </div>
 
-                <div className="h-full">{children}</div>
+                <div className="ng-h-full">{children}</div>
               </div>
             </div>
           </Transition.Child>

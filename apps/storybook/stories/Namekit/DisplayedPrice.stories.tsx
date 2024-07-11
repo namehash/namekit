@@ -13,11 +13,10 @@ const meta: Meta<typeof DisplayedPrice> = {
   component: DisplayedPrice,
   title: "Namekit/DisplayedPrice",
   argTypes: {
-    symbolFillColor: { control: "color" },
     price: {
       control: "object",
     },
-    size: {
+    priceTextDisplaySize: {
       options: PriceDisplaySize,
       control: { type: "select" },
     },
@@ -39,10 +38,6 @@ const meta: Meta<typeof DisplayedPrice> = {
     },
     altPriceDisplayPosition: {
       options: PriceDisplayPosition,
-      control: { type: "select" },
-    },
-    priceTextDisplaySize: {
-      options: PriceDisplaySize,
       control: { type: "select" },
     },
   },

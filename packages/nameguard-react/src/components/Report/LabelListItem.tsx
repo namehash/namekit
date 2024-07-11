@@ -21,33 +21,33 @@ export const LabelListItem = ({
   const empty = item.label === "";
 
   return (
-    <div className="border border-gray-200 rounded-md divide-y divide-gray-200">
-      <div className="py-[10px] px-6 md:flex md:items-center md:justify-between space-y-1 md:space-y-0">
-        <div className="text-sm font-normal break-all ens-webfont">
+    <div className="ng-border ng-border-gray-200 ng-rounded-md ng-divide-y ng-divide-gray-200">
+      <div className="ng-py-[10px] ng-px-6 md:ng-flex md:ng-items-center md:ng-justify-between ng-space-y-1 md:ng-space-y-0">
+        <div className="ng-text-sm ng-font-normal ng-break-all ng-ens-webfont">
           {rawLabels.map((l, labelIndex) => (
             <Fragment key={labelIndex}>
               <span
                 className={
                   index === labelIndex
-                    ? "text-black font-semibold"
-                    : "text-gray-500 grayscale"
+                    ? "ng-text-black ng-font-semibold"
+                    : "ng-text-gray-500 ng-grayscale"
                 }
               >
                 {l === "" ? "[empty]" : l}
               </span>
               {labelIndex < rawLabels.length - 1 && (
-                <span className="text-gray-500">.</span>
+                <span className="ng-text-gray-500">.</span>
               )}
             </Fragment>
           ))}
         </div>
         {(item.normalization === "unnormalized" ||
           item.normalization === "unknown") && (
-          <div className="flex items-center space-x-2">
+          <div className="ng-flex ng-items-center ng-space-x-2">
             <RatingIcon rating={Rating.alert} />
             <span
               className={cc([
-                "text-sm",
+                "ng-text-sm",
                 checkResultCodeTextColor(CheckResultCode.alert),
               ])}
             >

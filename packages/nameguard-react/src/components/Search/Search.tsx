@@ -7,13 +7,13 @@ export const Search = () => {
   const { openModal } = useSearchStore();
 
   return (
-    <div className="relative">
-      <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-[15px]">
-        <MagnifyingGlassIcon className="h-5 w-5 fill-current text-gray-400" />
+    <div className="ng-relative">
+      <div className="ng-pointer-events-none ng-absolute ng-inset-y-0 ng-left-0 ng-flex ng-items-center ng-pl-[15px]">
+        <MagnifyingGlassIcon className="ng-h-5 ng-w-5 ng-fill-current ng-text-gray-400" />
       </div>
       <button
         onClick={() => openModal()}
-        className="w-80 xl:w-96 flex h-10 cursor-text appearance-none items-center justify-between rounded-md border border-gray-300 bg-white py-2 pr-2 pl-10 text-left text-sm text-gray-500 shadow-sm ring-0 hover:border-gray-400 focus:border-gray-300 focus:outline-none focus:ring-0 placeholder-gray-400"
+        className="ng-w-80 xl:ng-w-96 ng-flex ng-h-10 ng-cursor-text ng-appearance-none ng-items-center ng-justify-between ng-rounded-md ng-border ng-border-gray-300 ng-bg-white ng-py-2 ng-pr-2 ng-pl-10 ng-text-left ng-text-sm ng-text-gray-500 ng-shadow-sm ng-ring-0 hover:ng-border-gray-400 focus:ng-border-gray-300 focus:ng-outline-none focus:ng-ring-0 ng-placeholder-gray-400"
       >
         Inspect any ENS name
       </button>

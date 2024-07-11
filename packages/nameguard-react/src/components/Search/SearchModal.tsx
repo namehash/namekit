@@ -29,34 +29,34 @@ export const SearchModal = () => {
 
   return (
     <Transition.Root show={modalOpen} as={Fragment}>
-      <Dialog as="div" onClose={handleClose} className="relative z-20">
+      <Dialog as="div" onClose={handleClose} className="ng-relative ng-z-20">
         <Transition.Child
           as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
+          enter="ng-ease-out ng-duration-300"
+          enterFrom="ng-opacity-0"
+          enterTo="ng-opacity-100"
+          leave="ng-ease-in ng-duration-200"
+          leaveFrom="ng-opacity-100"
+          leaveTo="ng-opacity-0"
         >
-          <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm" />
+          <Dialog.Overlay className="ng-fixed ng-inset-0 ng-bg-black/50 ng-backdrop-blur-sm" />
         </Transition.Child>
 
-        <div className="fixed inset-0 z-20 overflow-y-auto">
-          <div className="flex items-start justify-start md:items-start w-full max-w-7xl mx-auto absolute inset-0 md:py-12 md:px-6">
+        <div className="ng-fixed ng-inset-0 ng-z-20 ng-overflow-y-auto">
+          <div className="ng-flex ng-items-start ng-justify-start md:ng-items-start ng-w-full ng-max-w-7xl ng-mx-auto ng-absolute ng-inset-0 md:ng-py-12 md:ng-px-6">
             <Transition.Child
               as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="md:opacity-0 md:scale-95"
-              enterTo="md:opacity-100 md:scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="md:opacity-100 md:scale-100"
-              leaveTo="md:opacity-0 md:scale-95"
+              enter="ng-ease-out ng-duration-300"
+              enterFrom="md:ng-opacity-0 md:ng-scale-95"
+              enterTo="md:ng-opacity-100 md:ng-scale-100"
+              leave="ng-ease-in ng-duration-200"
+              leaveFrom="md:ng-opacity-100 md:ng-scale-100"
+              leaveTo="md:ng-opacity-0 md:ng-scale-95"
             >
-              <Dialog.Panel className="mx-auto w-full relative transform overflow-hidden md:rounded-xl bg-white shadow-2xl transition-all flex flex-col h-full md:h-auto max-h-full pt-[56px] md:pt-[68px]">
+              <Dialog.Panel className="ng-mx-auto ng-w-full ng-relative ng-transform ng-overflow-hidden md:ng-rounded-xl ng-bg-white ng-shadow-2xl ng-transition-all ng-flex ng-flex-col ng-h-full md:ng-h-auto ng-max-h-full ng-pt-[56px] md:ng-pt-[68px]">
                 <SearchModalHeader />
                 <div
-                  className="overflow-y-scroll relative px-6 py-6 md:py-10 h-full"
+                  className="ng-overflow-y-scroll ng-relative ng-px-6 ng-py-6 md:ng-py-10 ng-h-full"
                   ref={ref}
                 >
                   <Report

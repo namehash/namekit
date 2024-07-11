@@ -13,7 +13,7 @@ export * from "./components/Heading";
 export * from "./components/Tooltip";
 export * from "./components/Text";
 export * from "./components/TextArea";
-export * from "./components/ENSTextArea";
+export * from "./components/EnsTextArea";
 export * from "./components/Input";
 export * from "./components/EnsInput";
 export * from "./components/Link";

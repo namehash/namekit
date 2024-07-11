@@ -31,7 +31,7 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
     <Slideover
       title={
         data?.grapheme_name ?? (
-          <div className="w-56 h-3 rounded bg-gradient-to-r from-gray-300 to-gray-100 animate-pulse"></div>
+          <div className="ng-w-56 ng-h-3 ng-rounded ng-bg-gradient-to-r ng-from-gray-300 ng-to-gray-100 ng-animate-pulse"></div>
         )
       }
       isOpen={isGraphemeModalOpen}
@@ -41,41 +41,43 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
       {isLoading || !data ? (
         <LoadingSkeleton />
       ) : (
-        <div className="p-6 space-y-8 w-full">
+        <div className="ng-p-6 ng-space-y-8 ng-w-full">
           <RatedBox rating={data?.rating}>
-            <div className="px-5 pt-7 pb-10 md:py-7 lg:pt-8 lg:pb-10 md:px-[30px] flex flex-col">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2.5">
+            <div className="ng-px-5 ng-pt-7 ng-pb-10 md:ng-py-7 lg:ng-pt-8 lg:ng-pb-10 md:ng-px-[30px] ng-flex ng-flex-col">
+              <div className="ng-flex ng-items-center ng-justify-between">
+                <div className="ng-flex ng-items-center ng-space-x-2.5">
                   <RatingIcon
                     rating={data?.rating}
                     size={RatingIconSize.small}
                   />
-                  <span className="text-black text-sm">{data?.title}</span>
+                  <span className="ng-text-black ng-text-sm">
+                    {data?.title}
+                  </span>
                 </div>
               </div>
 
-              <div className="flex flex-col justify-center items-center space-y-8">
-                <h2 className="text-[82px] text-black font-extrabold leading-[60px] ens-webfont">
+              <div className="ng-flex ng-flex-col ng-justify-center ng-items-center ng-space-y-8">
+                <h2 className="ng-text-[82px] ng-text-black ng-font-extrabold ng-leading-[60px] ng-ens-webfont">
                   {data?.grapheme}
                 </h2>
-                <p className="text-black text-lg leading-7 font-semibold">
+                <p className="ng-text-black ng-text-lg ng-leading-7 ng-font-semibold">
                   {data?.grapheme_name}
                 </p>
               </div>
 
-              <div className="flex items-start justify-center space-x-10 border-t border-gray-200 mt-10 pt-10">
-                <div className="space-y-1">
-                  <p className="text-gray-500 text-sm">Codepoints</p>
-                  <p className="text-sm font-semibold">
-                    <span className="text-black">{firstCodepoint}</span>
-                    <span className="text-gray-500">
+              <div className="ng-flex ng-items-start ng-justify-center ng-space-x-10 ng-border-t ng-border-gray-200 ng-mt-10 ng-pt-10">
+                <div className="ng-space-y-1">
+                  <p className="ng-text-gray-500 ng-text-sm">Codepoints</p>
+                  <p className="ng-text-sm ng-font-semibold">
+                    <span className="ng-text-black">{firstCodepoint}</span>
+                    <span className="ng-text-gray-500">
                       {totalCodepoints > 1 && ` + ${totalCodepoints - 1} more`}
                     </span>
                   </p>
                 </div>
-                <div className="space-y-1">
-                  <p className="text-gray-500 text-sm">Type</p>
-                  <p className="text-black text-sm font-semibold">
+                <div className="ng-space-y-1">
+                  <p className="ng-text-gray-500 ng-text-sm">Type</p>
+                  <p className="ng-text-black ng-text-sm ng-font-semibold">
                     {data?.grapheme_description}
                   </p>
                 </div>
@@ -83,12 +85,12 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
             </div>
           </RatedBox>
 
-          <div className="space-y-4 md:space-y-5">
-            <p className="text-black font-semibold text-lg leading-6">
+          <div className="ng-space-y-4 md:ng-space-y-5">
+            <p className="ng-text-black ng-font-semibold ng-text-lg ng-leading-6">
               {data?.risk_count} of {data?.checks.length} risks found
             </p>
 
-            <div className="grid gap-4">
+            <div className="ng-grid ng-gap-4">
               {data?.checks.map((check, index) => (
                 <CheckResultCard key={index} {...check} />
               ))}
@@ -96,29 +98,29 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
           </div>
 
           {data?.confusables?.length > 0 && (
-            <div className="space-y-4 md:space-y-5">
-              <div className="flex items-center justify-between">
-                <div className="space-y-1">
-                  <p className="text-black font-semibold text-lg leading-6">
+            <div className="ng-space-y-4 md:ng-space-y-5">
+              <div className="ng-flex ng-items-center ng-justify-between">
+                <div className="ng-space-y-1">
+                  <p className="ng-text-black ng-font-semibold ng-text-lg ng-leading-6">
                     Could be confused with
                   </p>
-                  <p className="text-gray-500 text-sm leading-6">
+                  <p className="ng-text-gray-500 ng-text-sm ng-leading-6">
                     Some people could visually confuse this character for a
                     different character.
                   </p>
                 </div>
-                <div className="hidden md:block">
+                <div className="ng-hidden md:ng-block">
                   <Tooltip
                     placement="left"
                     trigger={
-                      <p className="text-black underline text-sm leading-6 cursor-default">
+                      <p className="ng-text-black ng-underline ng-text-sm ng-leading-6 ng-cursor-default">
                         Why it matters?
                       </p>
                     }
                   >
-                    <div className="max-w-[480px]">
+                    <div className="ng-max-w-[480px]">
+                      If someone types the wrong character when writing a name
                       <p>
-                        If someone types the wrong character when writing a name
                         it can send crypto, NFTs, messages, or other valuables
                         to the wrong person.
                       </p>

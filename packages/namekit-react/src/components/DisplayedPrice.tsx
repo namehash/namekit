@@ -9,14 +9,28 @@ import React from "react";
 import {
   CurrencySymbol,
   CurrencySymbolPosition,
-  PriceDisplayPosition,
-  PriceDisplaySize,
   CurrencySymbology,
-  AltPriceDisplayFormat,
 } from "./CurrencySymbol";
 
 import cc from "classcat";
 import { Tooltip } from "./Tooltip";
+
+export enum AltPriceDisplayFormat {
+  Tooltip,
+  Text,
+}
+
+export enum PriceDisplaySize {
+  Micro = "nk-text-xs md:nk-text-sm nk-font-normal",
+  Small = "nk-text-sm nk-font-semibold",
+  Medium = "nk-text-xl nk-font-semibold",
+  Large = "nk-text-xl nk-font-semibold md:nk-text-2xl md:nk-font-bold",
+}
+
+export enum PriceDisplayPosition {
+  Right = "nk-flex nk-inline-flex nk-items-end nk-space-x-2",
+  Bottom = "nk-flex nk-flex-col nk-text-right nk-items-end nk-space-y-1",
+}
 
 interface DisplayedPriceProps {
   // The price to be displayed
@@ -53,7 +67,17 @@ export const DisplayedPrice = ({
   altPriceDisplayPosition = PriceDisplayPosition.Right,
   altPriceDisplayFormat = AltPriceDisplayFormat.Tooltip,
 }: DisplayedPriceProps) => {
-  const triggerElm = (
+  const displayCurrencySymbol = currencySymbology === CurrencySymbology.Symbol;
+  const displayCurrencyAcronym =
+    currencySymbology === CurrencySymbology.Acronym;
+  const displayPriceConversionInTooltip =
+    altPriceDisplayFormat === AltPriceDisplayFormat.Tooltip;
+  const displayPriceConversionInInlineText =
+    altPriceDisplayFormat === AltPriceDisplayFormat.Text;
+  const displaySymbolInlineAndPriceConversionInTooltip =
+    displayPriceConversionInTooltip && displayCurrencySymbol;
+
+  const priceDisplayElm = (
     <div
       role={onTextClick ? "button" : undefined}
       onClick={onTextClick ? onTextClick : undefined}
@@ -68,11 +92,37 @@ export const DisplayedPrice = ({
     >
       <p className="nk-order-2 nk-leading-none">{formattedPrice({ price })}</p>
 
-      {(currencySymbology === CurrencySymbology.Symbol &&
-        altPriceDisplayFormat === AltPriceDisplayFormat.Tooltip &&
-        !altPrice) ||
-      (currencySymbology === CurrencySymbology.Symbol &&
-        altPriceDisplayFormat === AltPriceDisplayFormat.Text) ? (
+      {/* 
+        There is one important Ui logic here:
+
+        If the user wants to display the price conversion in a tooltip it means
+        that both price hover AND symbol hover would trigger a tooltip, being the 
+        first one the altPrice displaying and the second one, the currency name
+        displaying. In order to avoid the same element (priceDisplayElm) to
+        trigger two different tooltips, we display the currency symbol
+        as a sibling of the price text whenever the price conversion 
+        is displayed in a tooltip. 
+        
+        Reference: last return statement of this file.
+
+        - 
+        
+        But, if:
+        1. The user wants to display the currency symbol inline 
+        and the price conversion in a tooltip AND no altPrice is informed,
+        we come back to the original behavior of displaying the currency symbol
+        inline with the price text (this is OK because there is no altPrice to be
+        displayed in a tooltip, thus, no tooltip trigger conflict will happen)
+
+        2. The user wants to display the currency symbol inline and the price conversion
+        inline as well, there is no need to display the currency symbol as a sibling
+        of the price text because the tooltip trigger conflict will not happen in
+        this case where price is not a trigger!
+
+        These are the two conditionals below.
+      */}
+      {(displaySymbolInlineAndPriceConversionInTooltip && !altPrice) ||
+      (displayCurrencySymbol && displayPriceConversionInInlineText) ? (
         <div
           className={cc([
             "nk-leading-none",
@@ -94,7 +144,7 @@ export const DisplayedPrice = ({
         </div>
       ) : null}
 
-      {currencySymbology === CurrencySymbology.Acronym && (
+      {displayCurrencyAcronym && (
         <p className="nk-ml-1 nk-order-2">
           {PriceCurrencyFormat[price.currency].Acronym}
         </p>
@@ -102,51 +152,53 @@ export const DisplayedPrice = ({
     </div>
   );
 
-  if (!altPrice && altPriceDisplayFormat === AltPriceDisplayFormat.Tooltip)
-    return triggerElm;
-  else if (altPrice) {
+  /*
+    There is no way to display alternative price without altPrice informed
+  */
+  if (!altPrice) return priceDisplayElm;
+  else {
     const altPriceDisplayElm = (
       <div
         className={cc([
-          "nk-text-gray-500 nk-text-xs sm:nk-text-sm nk-inline-flex nk-items-end nk-justify-end nk-tabular-nums nk-leading-none nk-mb-0.5",
+          "nk-text-gray-500 nk-text-xs sm:nk-text-sm nk-inline-flex nk-items-end nk-justify-end nk-tabular-nums nk-leading-none",
+          onTextClick ? "nk-cursor-pointer" : "nk-cursor-text",
           altPriceDisplaySize,
-          {
-            "nk-cursor-text": !onTextClick,
-            "nk-cursor-pointer": !!onTextClick,
-          },
         ])}
       >
         <p className="nk-order-2 nk-leading-none">
           {formattedPrice({ price: altPrice })}
         </p>
 
-        {currencySymbology === CurrencySymbology.Symbol ||
-        altPrice.currency === Currency.Usd ? (
+        {displayCurrencySymbol || altPrice.currency === Currency.Usd ? (
           <div
             className={cc([
               "nk-leading-none",
               {
+                "nk-mr-1.5 nk-order-3":
+                  symbolPosition === CurrencySymbolPosition.Right,
                 "nk-order-1 nk-mr-1":
                   symbolPosition === CurrencySymbolPosition.Left &&
                   altPrice.currency === Currency.Usd,
+                /*
+                  Different margin for USD symbol since it is a single
+                  character while other symbols are wider SVG icons
+                */
                 "nk-order-1":
                   symbolPosition === CurrencySymbolPosition.Left &&
                   altPrice.currency !== Currency.Usd,
-                "nk-mr-1.5 nk-order-3":
-                  symbolPosition === CurrencySymbolPosition.Right,
               },
             ])}
           >
             <CurrencySymbol
-              symbolFillColor={"currentColor"}
               describeCurrencyInTooltip={describeCurrencyInTooltip}
+              symbolFillColor="currentColor"
               currency={altPrice.currency}
               size={altPriceDisplaySize}
             />
           </div>
         ) : null}
 
-        {currencySymbology === CurrencySymbology.Acronym && (
+        {displayCurrencyAcronym && (
           <p className="nk-ml-1 nk-order-2">
             {PriceCurrencyFormat[altPrice.currency].Acronym}
           </p>
@@ -154,14 +206,15 @@ export const DisplayedPrice = ({
       </div>
     );
 
-    if (altPriceDisplayFormat === AltPriceDisplayFormat.Text) {
+    if (displayPriceConversionInInlineText) {
       return (
         <div className={altPriceDisplayPosition}>
-          {triggerElm}
+          {priceDisplayElm}
           {altPriceDisplayElm}
         </div>
       );
-    } else if (altPrice) {
+    } else {
+      // Display the alternative price in a tooltip
       return (
         <div
           className={cc([
@@ -169,13 +222,22 @@ export const DisplayedPrice = ({
             priceTextDisplaySize,
           ])}
         >
-          {currencySymbology === CurrencySymbology.Symbol && (
+          {/* 
+            This is done in order to avoid the same element (priceDisplayElm) to
+            trigger two different tooltips. Broader information can be found up
+            above in the same file, in previous lines of documentation.
+          */}
+          {displayCurrencySymbol && (
             <div
               className={cc([
                 {
                   "nk-mr-0.5 nk-order-1 nk-mb-[2px]":
                     symbolPosition === CurrencySymbolPosition.Left &&
                     price.currency !== Currency.Usd,
+                  /*
+                    Different margin for USD symbol since it is a single
+                    character while other symbols are wider SVG icons
+                  */
                   "nk-mr-1.5 nk-order-1":
                     symbolPosition === CurrencySymbolPosition.Left &&
                     price.currency === Currency.Usd,
@@ -193,10 +255,10 @@ export const DisplayedPrice = ({
           )}
 
           <div className="nk-order-2 nk-leading-none">
-            <Tooltip trigger={triggerElm}>
+            <Tooltip trigger={priceDisplayElm}>
               <>
                 {altPrice ? (
-                  <div className="nk-bg-gray-900 focus:nk-outline-none nk-relative nk-h-full nk-rounded-md">
+                  <div className="focus:nk-outline-none nk-relative nk-h-full nk-rounded-md">
                     <div className="nk-text-xs nk-text-white sm:nk-text-sm nk-inline-flex nk-items-center nk-space-x-0.5 nk-tabular-nums">
                       <p
                         className={
@@ -219,6 +281,6 @@ export const DisplayedPrice = ({
           </div>
         </div>
       );
-    } else return <></>;
-  } else return <></>;
+    }
+  }
 };

@@ -56,7 +56,7 @@ export const TruncatedText = ({
     );
   };
 
-  const textDefaultClasses = "nk-text-black nk-text-sm nk-truncate";
+  const textDefaultClasses = "ng-text-black ng-text-sm ng-truncate";
 
   return (
     <div>
@@ -68,7 +68,7 @@ export const TruncatedText = ({
         to determine if CSS truncation and full-text tooltip are needed. 
       */}
       {displayTooltipWhenTextOverflows && (
-        <div className="nk-invisible nk-absolute nk-left-0 nk-top-0 nk-pointer-events-none">
+        <div className="ng-invisible ng-absolute ng-left-0 ng-top-0 ng-pointer-events-none">
           <div ref={invisibleTextWidthTester}>{text}</div>
         </div>
       )}
@@ -95,7 +95,7 @@ export const TruncatedText = ({
           >
             {getTextElm(
               cc([
-                "nk-text-white nk-text-sm nk-leading-5 nk-break-all",
+                "ng-text-white ng-text-sm ng-leading-5 ng-break-all",
                 tooltipTextStylingClasses,
               ]),
               maxTooltipWidth,

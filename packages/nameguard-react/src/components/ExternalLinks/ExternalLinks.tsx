@@ -20,11 +20,14 @@ type ExternalLinksProps = {
 
 export function ExternalLinks({ title, links }: ExternalLinksProps) {
   return (
-    <Menu as="div" className="relative inline-block text-left group">
+    <Menu
+      as="div"
+      className="ng-relative ng-inline-block ng-text-left ng-group"
+    >
       <Tooltip
         trigger={
-          <Menu.Button className="flex items-center justify-between p-2 appearance-none bg-transparent hover:bg-black/5 transition rounded-md focus:outline-none">
-            <EllipsisVerticalIcon className="text-black fill-current w-6 h-6" />
+          <Menu.Button className="ng-flex ng-items-center ng-justify-between ng-p-2 ng-appearance-none ng-bg-transparent hover:ng-bg-black/5 ng-transition ng-rounded-md focus:ng-outline-none">
+            <EllipsisVerticalIcon className="ng-text-black ng-fill-current ng-w-6 ng-h-6" />
           </Menu.Button>
         }
       >
@@ -33,16 +36,16 @@ export function ExternalLinks({ title, links }: ExternalLinksProps) {
 
       <Transition
         as={Fragment}
-        enter="transition ease-out duration-100"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
+        enter="ng-transition ng-ease-out ng-duration-100"
+        enterFrom="ng-transform ng-opacity-0 ng-scale-95"
+        enterTo="ng-transform ng-opacity-100 ng-scale-100"
+        leave="ng-transition ng-ease-in ng-duration-75"
+        leaveFrom="ng-transform ng-opacity-100 ng-scale-100"
+        leaveTo="ng-transform ng-opacity-0 ng-scale-95"
       >
-        <Menu.Items className="absolute right-0 mt-1 w-44 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black/5 focus:outline-none">
+        <Menu.Items className="ng-absolute ng-right-0 ng-mt-1 ng-w-44 ng-origin-top-right ng-bg-white ng-rounded-md ng-shadow-lg ng-ring-1 ng-ring-black/5 focus:ng-outline-none">
           {title && (
-            <div className="text-gray-500 text-sm px-4 py-2.5 border-b border-gray-100 mb-1">
+            <div className="ng-text-gray-500 ng-text-sm ng-px-4 ng-py-2.5 ng-border-b ng-border-gray-100 ng-mb-1">
               {title}
             </div>
           )}
@@ -51,14 +54,14 @@ export function ExternalLinks({ title, links }: ExternalLinksProps) {
               {({ active }) => (
                 <a
                   className={`${
-                    active ? "bg-gray-100" : ""
-                  } text-black group flex space-x-1 w-full items-center px-4 py-2.5 text-sm last:rounded-b-md`}
+                    active ? "ng-bg-gray-100" : ""
+                  } ng-text-black ng-group ng-flex ng-space-x-1 ng-w-full ng-items-center ng-px-4 ng-py-2.5 ng-text-sm last:ng-rounded-b-md`}
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   <span>{link.text}</span>
-                  <ArrowUpRightIcon className="fill-current w-3 h-3" />
+                  <ArrowUpRightIcon className="ng-fill-current ng-w-3 ng-h-3" />
                 </a>
               )}
             </Menu.Item>

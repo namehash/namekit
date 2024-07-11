@@ -6,24 +6,24 @@ type FeedbackNoticeProps = {
 
 export const FeedbackNotice = ({ onChatClick }: FeedbackNoticeProps) => {
   return (
-    <div className="rounded-md overflow-hidden border border-gray-200 relative bg-gradient-to-r from-[#FBD84D]/5 via-[#F965D9]/5 to-[#503BFE]/5 bg-opacity-5 p-6 md:p-10">
-      <div className="z-0 absolute inset-0 h-full w-full bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
-      <div className="relative z-10 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6 justify-between items-center">
+    <div className="ng-rounded-md ng-overflow-hidden ng-border ng-border-gray-200 ng-relative ng-bg-gradient-to-r ng-from-[#FBD84D]/5 via-[#F965D9]/5 to-[#503BFE]/5 ng-bg-opacity-5 ng-p-6 md:ng-p-10">
+      <div className="ng-z-0 ng-absolute ng-inset-0 ng-h-full ng-w-full ng-bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"></div>
+      <div className="ng-relative ng-z-10 ng-flex ng-flex-col md:ng-flex-row ng-space-y-4 md:ng-space-y-0 md:ng-space-x-6 ng-justify-between ng-items-center">
         <div>
-          <p className="text-black font-semibold text-lg leading-8">
+          <p className="ng-text-black ng-font-semibold ng-text-lg ng-leading-8">
             Have feedback or suggestions?
           </p>
-          <p className="text-gray-500 font-normal leading-6 text-sm">
+          <p className="ng-text-gray-500 ng-font-normal ng-leading-6 ng-text-sm">
             If you think any inspection result could be improved please contact
             us. The NameHash Labs team is happy to help.
           </p>
         </div>
 
         {onChatClick && (
-          <div className="w-full md:w-auto flex-shrink-0">
+          <div className="ng-w-full md:ng-w-auto ng-flex-shrink-0">
             <button
               onClick={onChatClick}
-              className="rounded-md block md:inline-block text-center bg-black text-white px-5 py-3 font-medium leading-6 transition hover:bg-gray-900"
+              className="ng-rounded-md ng-block md:ng-inline-block ng-text-center ng-bg-black ng-text-white ng-px-5 ng-py-3 ng-font-medium ng-leading-6 ng-transition hover:ng-bg-gray-900"
             >
               Chat with us
             </button>

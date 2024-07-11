@@ -6,16 +6,16 @@ import { SearchCloser } from "./SearchCloser";
 
 export const SearchModalHeader = () => {
   return (
-    <div className="h-[56px] md:h-[68px] flex items-center justify-between shadow z-40 absolute top-0 inset-x-0 bg-white">
-      <div className="flex items-center justify-center flex-shrink-0 px-3 md:px-5">
+    <div className="h-[56px] md:ng-h-[68px] ng-flex items-center ng-justify-between ng-shadow ng-z-40 ng-absolute ng-top-0 ng-inset-x-0 ng-bg-white">
+      <div className="ng-flex ng-items-center ng-justify-center ng-flex-shrink-0 ng-px-3 md:ng-px-5">
         <SearchShield />
       </div>
 
-      <div className="w-full flex-1">
+      <div className="ng-w-full ng-flex-1">
         <SearchInput />
       </div>
 
-      <div className="flex items-center justify-center flex-shrink-0 px-3">
+      <div className="ng-flex ng-items-center ng-justify-center ng-flex-shrink-0 ng-px-3">
         <SearchCloser />
       </div>
     </div>

@@ -10,8 +10,8 @@ import {
   RegistrationPriceInfoDisplayingFormat,
 } from "@namehash/namekit-react";
 
-const ELEVEN_DAYS_FROM_NOW_TIMESTAMP = buildTimestamp(
-  BigInt(new Date().getTime()) / 1005n,
+const timestampRepresentingPremiumPriceDomain = buildTimestamp(
+  now().time - 8000000n,
 );
 
 export const DisplayIconWithTooltip: Story = {
@@ -19,11 +19,11 @@ export const DisplayIconWithTooltip: Story = {
     displayIconWithTooltip:
       RegistrationPriceInfoDisplayingFormat.IconWithTooltip,
     registration: {
-      expiryTimestamp: ELEVEN_DAYS_FROM_NOW_TIMESTAMP,
+      expiryTimestamp: timestampRepresentingPremiumPriceDomain,
       primaryStatus: PrimaryRegistrationStatus.Expired,
       secondaryStatus: SecondaryRegistrationStatus.RecentlyReleased,
-      registrationTimestamp: now(),
-      expirationTimestamp: now(),
+      registrationTimestamp: null,
+      expirationTimestamp: timestampRepresentingPremiumPriceDomain,
     },
     parsedName: {
       namehash:
@@ -45,11 +45,11 @@ export const DisplayTextAndIcon: Story = {
   args: {
     displayIconWithTooltip: RegistrationPriceInfoDisplayingFormat.IconWithText,
     registration: {
-      expiryTimestamp: ELEVEN_DAYS_FROM_NOW_TIMESTAMP,
+      expiryTimestamp: timestampRepresentingPremiumPriceDomain,
       primaryStatus: PrimaryRegistrationStatus.Expired,
       secondaryStatus: SecondaryRegistrationStatus.RecentlyReleased,
-      registrationTimestamp: now(),
-      expirationTimestamp: now(),
+      registrationTimestamp: null,
+      expirationTimestamp: timestampRepresentingPremiumPriceDomain,
     },
     parsedName: {
       namehash:

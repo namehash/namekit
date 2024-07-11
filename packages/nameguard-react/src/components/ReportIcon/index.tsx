@@ -68,11 +68,11 @@ export function ReportIcon({
       <UnknownReportIcon
         size={size}
         onClick={onClickHandler}
-        className="cursor-pointer"
+        className="ng-cursor-pointer"
       >
-        <div className="text-sm text-white">
+        <div className="ng-text-sm ng-text-white">
           <button
-            className="appearance-none underline font-medium"
+            className="ng-appearance-none ng-underline ng-font-medium"
             onClick={onClickHandler}
           >
             Inspect name for details
@@ -86,7 +86,7 @@ export function ReportIcon({
     return (
       <RatingLoadingIcon
         onClick={onClickHandler}
-        className={cc([props.className, " cursor-pointer"])}
+        className={cc([props.className, " ng-cursor-pointer"])}
         size={size}
         {...props}
       />
@@ -105,7 +105,7 @@ export function ReportIcon({
 
   const { title, subtitle, rating, risk_count, highest_risk } = data;
 
-  const textClass = cc(["font-semibold mb-1", ratingTextColor(rating)]);
+  const textClass = cc(["ng-font-semibold ng-mb-1", ratingTextColor(rating)]);
 
   return (
     <Tooltip
@@ -114,25 +114,25 @@ export function ReportIcon({
           role="button"
           isInteractive={true}
           onClick={onClickHandler}
-          className="cursor-pointer"
+          className="ng-cursor-pointer"
           rating={rating}
           size={size}
           {...props}
         />
       }
     >
-      <div className="flex items-start space-x-3 py-2.5 min-w-[300px] max-w-[300px]">
-        <div className="mt-0.5">
+      <div className="ng-flex ng-items-start ng-space-x-3 ng-py-2.5 ng-min-w-[300px] ng-max-w-[300px]">
+        <div className="ng-mt-0.5">
           <RatingIcon rating={rating} size={RatingIconSize.small} />
         </div>
 
-        <div className="flex-1">
-          <div className="flex items-center justify-between">
+        <div className="ng-flex-1">
+          <div className="ng-flex ng-items-center ng-justify-between">
             <span className={textClass}>{title}</span>
             {risk_count >= 1 && (
               <span
                 className={cc([
-                  "text-sm font-normal",
+                  "ng-text-sm ng-font-normal",
                   checkResultCodeTextColor(CheckResultCode.info),
                 ])}
               >
@@ -141,13 +141,13 @@ export function ReportIcon({
             )}
           </div>
 
-          <div className="text-left text-sm text-white font-normal">
+          <div className="ng-text-left ng-text-sm ng-text-white ng-font-normal">
             {highest_risk?.message || subtitle}
           </div>
 
-          <div className="text-sm text-white">
+          <div className="ng-text-sm ng-text-white">
             <button
-              className="appearance-none underline font-medium"
+              className="ng-appearance-none ng-underline ng-font-medium"
               onClick={onClickHandler}
             >
               Inspect name for details

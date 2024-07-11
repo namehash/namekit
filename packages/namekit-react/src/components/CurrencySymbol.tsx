@@ -6,27 +6,11 @@ import { UsdcSymbol } from "./icons/UsdcSymbol";
 import { WethSymbol } from "./icons/WethSymbol";
 import { DaiSymbol } from "./icons/DaiSymbol";
 import React from "react";
-
-export enum AltPriceDisplayFormat {
-  Tooltip,
-  Text,
-}
-
-export enum PriceDisplaySize {
-  Micro = "nk-text-xs md:nk-text-sm nk-font-normal",
-  Small = "nk-text-sm nk-font-semibold",
-  Medium = "nk-text-xl nk-font-semibold",
-  Large = "nk-text-xl nk-font-semibold md:nk-text-2xl md:nk-font-bold",
-}
+import { PriceDisplaySize } from "./DisplayedPrice";
 
 export enum CurrencySymbolPosition {
   Left = "nk-mr-1.5",
   Right = "nk-ml-1.5",
-}
-
-export enum PriceDisplayPosition {
-  Right = "nk-flex nk-inline-flex nk-items-end nk-space-x-2",
-  Bottom = "nk-flex nk-flex-col nk-text-right nk-items-end nk-space-y-1",
 }
 
 export enum CurrencySymbology {

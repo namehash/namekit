@@ -9,9 +9,9 @@ export const SearchCloser = () => {
   return (
     <button
       onClick={closeModal}
-      className="flex items-center justify-between p-2 appearance-none bg-transparent hover:bg-black/5 transition rounded-md"
+      className="ng-flex ng-items-center ng-justify-between ng-p-2 ng-appearance-none ng-bg-transparent hover:ng-bg-black/5 ng-transition ng-rounded-md"
     >
-      <XMarkIcon className="w-6 h-6 fill-current text-black" />
+      <XMarkIcon className="ng-w-6 ng-h-6 ng-fill-current ng-text-black" />
     </button>
   );
 };

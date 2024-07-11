@@ -5,13 +5,13 @@ import { Rating } from "@namehash/nameguard";
 function borderColor(rating: Rating) {
   switch (rating) {
     case Rating.alert: {
-      return "border-red-200";
+      return "ng-border-red-200";
     }
     case Rating.pass: {
-      return "border-green-200";
+      return "ng-border-green-200";
     }
     case Rating.warn: {
-      return "border-yellow-200";
+      return "ng-border-yellow-200";
     }
   }
 }
@@ -19,13 +19,13 @@ function borderColor(rating: Rating) {
 function shadowColor(rating: Rating) {
   switch (rating) {
     case Rating.alert: {
-      return "shadow-red-50";
+      return "ng-shadow-red-50";
     }
     case Rating.pass: {
-      return "shadow-green-50";
+      return "ng-shadow-green-50";
     }
     case Rating.warn: {
-      return "shadow-yellow-50";
+      return "ng-shadow-yellow-50";
     }
   }
 }
@@ -39,7 +39,11 @@ export const RatedBox = ({ rating, children }: RatedBoxProps) => {
   const border = borderColor(rating);
   const shadow = shadowColor(rating);
 
-  const wrapperClass = cc(["rounded-xl border shadow-xl", border, shadow]);
+  const wrapperClass = cc([
+    "ng-rounded-xl ng-border ng-shadow-xl",
+    border,
+    shadow,
+  ]);
 
   return <div className={wrapperClass}>{children}</div>;
 };

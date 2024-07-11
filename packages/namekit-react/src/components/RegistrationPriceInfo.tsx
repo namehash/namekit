@@ -4,6 +4,8 @@ import {
   getPriceDescription,
   Registration,
   DomainName,
+  formatTimestampAsDistanceToNow,
+  formatTimestamp,
 } from "@namehash/ens-utils";
 import { InfoIcon } from "./icons/InfoIcon";
 
@@ -26,15 +28,19 @@ export const RegistrationPriceInfo = ({
 }: RegistrationPriceInfoProps) => {
   const priceDescription = getPriceDescription(registration, parsedName);
 
-  if (!priceDescription) return <></>;
+  if (!priceDescription || !registration.expiryTimestamp) return <></>;
 
   const priceDescriptionElm = (
-    <div className="nk-font-normal nk-inline">
-      <p className="nk-inline">{priceDescription.descriptiveTextBeginning}</p>
-      <p className="nk-font-medium nk-inline">
-        {priceDescription.pricePerYearDescription}
-      </p>
-      <p className="nk-inline">{priceDescription.descriptiveTextEnd}</p>
+    <div className="nk-font-normal nk-flex nk-flex-wrap nk-items-center">
+      <Tooltip
+        trigger={
+          <p className="nk-mr-1">{priceDescription.descriptiveTextBeginning}</p>
+        }
+      >
+        <p>{formatTimestamp(registration.expiryTimestamp)}</p>
+      </Tooltip>
+      <p>{priceDescription.pricePerYearDescription}</p>
+      <p>{priceDescription.descriptiveTextEnd}</p>
     </div>
   );
 
@@ -62,7 +68,7 @@ export const RegistrationPriceInfo = ({
           <InfoIcon className="nk-h-5 nk-w-5 nk-text-gray-300" />
         </div>
         <p className="nk-text-sm nk-text-gray-500 nk-ml-3">
-          <div className="nk-inline nk-mr-2">{priceDescriptionElm}</div>
+          {priceDescriptionElm}
         </p>
       </div>
     );

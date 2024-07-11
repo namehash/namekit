@@ -24,10 +24,11 @@ import {
   now,
 } from "./time";
 import {
-  AvailableNameTimelessPriceUSD,
   Price,
+  addPrices,
   approxScalePrice,
   formattedPrice,
+  multiplyPriceByNumber,
   subtractPrices,
 } from "./price";
 import { DomainName } from "./domain";
@@ -252,10 +253,7 @@ export const getPriceDescription = (
       };
     } else {
       const domainLabelLength = parsedName.labelName.length;
-      console.log(
-        domainLabelLength,
-        DOMAIN_HAS_SPECIAL_PRICE_IF_LENGTH_EQUAL_OR_LESS_THAN,
-      );
+
       return domainLabelLength <
         DOMAIN_HAS_SPECIAL_PRICE_IF_LENGTH_EQUAL_OR_LESS_THAN
         ? {
@@ -318,7 +316,12 @@ export const premiumPeriodEndsIn = (
     releasedEpoch,
     TEMPORARY_PREMIUM_PERIOD,
   );
-
+  console.log({
+    relativeTimestamp: formatTimestampAsDistanceToNow(
+      temporaryPremiumEndTimestamp,
+    ),
+    timestamp: temporaryPremiumEndTimestamp,
+  });
   return {
     relativeTimestamp: formatTimestampAsDistanceToNow(
       temporaryPremiumEndTimestamp,
@@ -390,3 +393,70 @@ export function temporaryPremiumPriceAtTimestamp(
 
   return offsetDecayedPrice;
 }
+
+/*
+  This is an "internal" helper function only. It can't be directly used anywhere else because
+  it is too easy to accidently not include the registration object when it should be passed.
+  Three different functions are created right below this one, which are the ones that are
+  safe to be used across the platform, and are then, the ones being exported.
+*/
+const AvailableNamePriceUSD = (
+  parsedName: DomainName,
+  registerForYears = DEFAULT_REGISTRATION_YEARS,
+  registration: Registration | null = null,
+  additionalFee: Price | null = null,
+): Price | null => {
+  if (!parsedName.normalizedName) return null;
+
+  const defaultPrice: Readonly<Price> = {
+    value: 500n,
+    currency: Currency.Usd,
+  };
+  const shortNamePremium: Record<number, Readonly<Price>> = {
+    [MIN_ETH_REGISTRABLE_LABEL_LENGTH]: {
+      value: 64000n,
+      currency: Currency.Usd,
+    },
+    4: {
+      value: 16000n,
+      currency: Currency.Usd,
+    },
+  };
+  const basePrice = shortNamePremium[parsedName.labelName.length]
+    ? shortNamePremium[parsedName.labelName.length]
+    : defaultPrice;
+
+  const namePriceForYears = multiplyPriceByNumber(
+    basePrice,
+    Number(registerForYears),
+  );
+
+  const namehashPrice = additionalFee
+    ? addPrices([additionalFee, namePriceForYears])
+    : namePriceForYears;
+
+  if (registration) {
+    const premiumPrice = nameCurrentTemporaryPremium(registration);
+
+    return premiumPrice
+      ? addPrices([premiumPrice, namehashPrice])
+      : namehashPrice;
+  }
+
+  return namehashPrice;
+};
+
+const DEFAULT_REGISTRATION_YEARS = 1;
+
+/*
+  Below function returns the "timeless" price for a name, that takes no consideration
+  of the current status of the name. This is useful for various cases, including in
+  generating messages that communicate how much a name costs to renew, how much
+  a name will cost at the end of a premium period, etc..
+*/
+export const AvailableNameTimelessPriceUSD = (
+  domainName: DomainName,
+  registerForYears = DEFAULT_REGISTRATION_YEARS,
+) => {
+  return AvailableNamePriceUSD(domainName, registerForYears);
+};

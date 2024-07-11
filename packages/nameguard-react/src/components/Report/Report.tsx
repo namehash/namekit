@@ -113,10 +113,10 @@ export const Report = ({
 
   return (
     <Fragment>
-      <div className="space-y-8 w-full z-30">
-        <div className="md:flex md:justify-between relative">
+      <div className="ng-space-y-8 ng-w-full ng-z-30">
+        <div className="md:ng-flex md:ng-justify-between ng-relative">
           <ReportHeader />
-          <div className="flex-shrink-0 flex items-start space-x-1 absolute md:relative right-0 md:right-auto -top-1 md:top-auto">
+          <div className="ng-flex-shrink-0 ng-flex ng-items-start ng-space-x-1 ng-absolute md:ng-relative ng-right-0 md:ng-right-auto ng--top-1 md:ng-top-auto">
             <Share name={data?.name} />
             <ExternalLinks title="View name in" links={externalLinks} />
           </div>
@@ -134,19 +134,19 @@ export const Report = ({
         {data && (
           <Fragment>
             <Banner parsedName={parsedName} report={data} />
-            <div className="space-y-4 md:space-y-5">
-              <p className="text-black font-semibold text-lg leading-6">
+            <div className="ng-space-y-4 md:ng-space-y-5">
+              <p className="ng-text-black ng-font-semibold ng-text-lg ng-leading-6">
                 {data?.risk_count} of {data?.checks.length} risks found
               </p>
 
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="ng-grid md:ng-grid-cols-2 ng-gap-4">
                 {data?.checks.map((check, index) => (
                   <CheckResultCard key={index} {...check} />
                 ))}
               </div>
             </div>
-            <div className="space-y-4 md:space-y-5">
-              <p className="text-black font-semibold text-lg leading-6">
+            <div className="ng-space-y-4 md:ng-space-y-5">
+              <p className="ng-text-black ng-font-semibold ng-text-lg ng-leading-6">
                 Name inspection
               </p>
 
@@ -171,10 +171,10 @@ export const Report = ({
         toastOptions={{
           classNames: {
             toast:
-              "!bg-black !border-black !relative !text-sm !leading-5 !font-medium !px-5",
-            title: "!text-white",
-            success: `!fill-current !${ratingTextColor(Rating.pass)}`,
-            closeButton: "!hidden",
+              "!ng-bg-black !ng-border-black !ng-relative !ng-text-sm !ng-leading-5 !ng-font-medium !ng-px-5",
+            title: "!ng-text-white",
+            success: `!ng-fill-current !${ratingTextColor(Rating.pass)}`,
+            closeButton: "!ng-hidden",
           },
         }}
       />

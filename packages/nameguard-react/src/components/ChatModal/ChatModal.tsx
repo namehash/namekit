@@ -20,14 +20,14 @@ export const ChatModal = forwardRef(
 
     return (
       <Slideover title="Chat with us" isOpen={open} onClose={onClose} ref={ref}>
-        <div className="flex items-center justify-center h-full py-12">
-          <div className="space-y-5 text-center">
-            <AvatarIcons className="h-[49px] w-[80px] w-auto mx-auto" />
-            <div className="space-y-2">
-              <p className="text-black font-semibold text-lg leading-6">
+        <div className="ng-flex ng-items-center ng-justify-center ng-h-full ng-py-12">
+          <div className="ng-space-y-5 ng-text-center">
+            <AvatarIcons className="ng-h-[49px] ng-w-auto ng-mx-auto" />
+            <div className="ng-space-y-2">
+              <p className="ng-text-black ng-font-semibold ng-text-lg ng-leading-6">
                 Contact nameguard.eth using XMTP
               </p>
-              <p className="text-gray-400 leading-5 text-sm">
+              <p className="ng-text-gray-400 ng-leading-5 ng-text-sm">
                 We&apos;re happy to hear your feedback
               </p>
             </div>
@@ -35,28 +35,28 @@ export const ChatModal = forwardRef(
               href={xmtpChatUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-md bg-black border border-black text-white px-5 py-2 font-medium leading-6 inline-flex items-center space-x-3 transition hover:border-gray-900 hover:bg-gray-900"
+              className="ng-rounded-md ng-bg-black ng-border ng-border-black ng-text-white ng-px-5 ng-py-2 ng-font-medium ng-leading-6 ng-inline-flex ng-items-center ng-space-x-3 ng-transition hover:ng-border-gray-900 hover:ng-bg-gray-900"
             >
               <span>Open XMTP.chat</span>
-              <ArrowTopRightOnSquareIcon className="w-5 h-5 fill-current" />
+              <ArrowTopRightOnSquareIcon className="ng-w-5 ng-h-5 ng-fill-current" />
             </a>
-            <p className="text-gray-400 leading-5 text-sm">OR</p>
-            <p className="text-gray-400 leading-6 text-sm">
+            <p className="ng-text-gray-400 ng-leading-5 ng-text-sm">OR</p>
+            <p className="ng-text-gray-400 ng-leading-6 ng-text-sm">
               You can contact us using any XMTP chat app, including: <br />
               <a
                 href={coinbaseWalletUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px] text-black"
+                className="ng-underline sm:ng-underline-offset-[4px] sm:ng-transition-all sm:ng-duration-200 sm:hover:ng-underline-offset-[2px] ng-text-black"
               >
                 Coinbase Wallet
               </a>
-              <span className="text-black">&nbsp;and&nbsp;</span>
+              <span className="ng-text-black">&nbsp;and&nbsp;</span>
               <a
                 href={converseUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px] text-black"
+                className="ng-underline sm:ng-underline-offset-[4px] sm:ng-transition-all sm:ng-duration-200 sm:hover:ng-underline-offset-[2px] ng-text-black"
               >
                 Converse
               </a>

@@ -11,7 +11,7 @@ export const ConfusableList = ({ items }: ConfusableListProps) => {
   if (!items || items?.length === 0) return null;
 
   return (
-    <div className="rounded-md border border-gray-200 divide-y divide-gray-200">
+    <div className="ng-rounded-md ng-border ng-border-gray-200 ng-divide-y ng-divide-gray-200">
       {items?.map((confusable, index) => (
         <ConfusableListItem key={index} item={confusable} />
       ))}

@@ -19,20 +19,20 @@ export function Banner({ report, parsedName }: Props) {
   const { title, subtitle, rating } = report;
 
   const text = cc([
-    "font-semibold text-sm md:text-2xl",
+    "ng-font-semibold ng-text-sm ng-md:text-2xl",
     ratingTextColor(rating),
   ]);
 
   return (
     <RatedBox rating={rating}>
-      <div className="p-5 md:py-7 md:px-10 flex flex-col md:flex-row md:items-start justify-between">
-        <div className="md:w-4/6 overflow-hidden overflow-ellipsis">
-          <p className="uppercase text-[12px] text-gray-500 font-medium">
+      <div className="ng-p-5 md:ng-py-7 md:ng-px-10 ng-flex ng-flex-col md:ng-flex-row md:ng-items-start ng-justify-between">
+        <div className="md:ng-w-4/6 ng-overflow-hidden ng-overflow-ellipsis">
+          <p className="ng-uppercase ng-text-sm ng-text-gray-500 ng-font-medium">
             Rating for
           </p>
           <h1>
             <DisplayedName
-              textStylingClasses="pt-1 text-2xl md:text-4xl text-black font-semibold md:font-bold whitespace-nowrap"
+              textStylingClasses="ng-pt-1 ng-text-2xl md:ng-text-4xl ng-text-black ng-font-semibold md:ng-font-bold ng-whitespace-nowrap"
               name={parsedName.outputName}
               maxDisplayWidth={600}
               displayRawName={true}
@@ -40,13 +40,13 @@ export function Banner({ report, parsedName }: Props) {
           </h1>
           <ReportFormattedDisplayName name={parsedName.outputName} />
         </div>
-        <div className="flex items-start space-x-4 pt-5 md:pt-0 md:w-2/6 flex-shrink-0">
-          <div className="flex-shrink-0">
+        <div className="ng-flex ng-items-start ng-space-x-4 ng-pt-5 md:ng-pt-0 md:ng-w-2/6 ng-flex-shrink-0">
+          <div className="ng-flex-shrink-0">
             <RatingIcon rating={rating} size={RatingIconSize.large} />
           </div>
-          <div className="space-y-1 flex-shrink-0">
+          <div className="ng-space-y-1 ng-flex-shrink-0">
             <p className={cc([text, ratingTextColor(rating)])}>{title}</p>
-            <p className="text-black text-sm font-normal leading-6 break-all">
+            <p className="ng-text-black ng-text-sm ng-font-normal ng-leading-6 ng-break-all">
               {subtitle}
             </p>
           </div>

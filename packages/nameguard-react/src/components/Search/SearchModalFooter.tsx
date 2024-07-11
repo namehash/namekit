@@ -20,27 +20,27 @@ export const SearchModalFooter = ({
   const { openModal: openSettingsModal } = useSettingsStore();
 
   return (
-    <div className="inset-x-0 z-40">
-      <div className="bg-gray-100 flex flex-col md:flex-row items-center justify-between px-5 py-4 border-t border-gray-300 space-y-3 md:space-y-0">
-        <div className="flex items-center space-x-3">
+    <div className="ng-inset-x-0 ng-z-40">
+      <div className="ng-bg-gray-100 ng-flex ng-flex-col md:ng-flex-row ng-items-center ng-justify-between ng-px-5 ng-py-4 ng-border-t ng-border-gray-300 ng-space-y-3 md:ng-space-y-0">
+        <div className="ng-flex ng-items-center ng-space-x-3">
           <button
-            className="text-xs text-black leading-5 appearance-none underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
+            className="ng-text-xs ng-text-black ng-leading-5 ng-appearance-none ng-underline sm:ng-underline-offset-[4px] sm:ng-transition-all sm:ng-duration-200 sm:hover:ng-underline-offset-[2px]"
             onClick={openChatModal}
           >
             Chat with us
           </button>
           <button
-            className="text-xs text-black leading-5 appearance-none underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
+            className="ng-text-xs ng-text-black ng-leading-5 ng-appearance-none ng-underline sm:ng-underline-offset-[4px] sm:ng-transition-all sm:ng-duration-200 sm:ng-hover:underline-offset-[2px]"
             onClick={openSettingsModal}
           >
             Search settings
           </button>
         </div>
-        <div className="text-xs text-gray-500">
+        <div className="ng-text-xs ng-text-gray-500">
           Made with ❤️ by{" "}
           <a
             href="https://namehashlabs.org"
-            className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
+            className="ng-text-black ng-underline sm:ng-underline-offset-[4px] sm:ng-transition-all sm:ng-duration-200 sm:hover:ng-underline-offset-[2px]"
             target="_blank"
             rel="noreferrer noopener"
           >

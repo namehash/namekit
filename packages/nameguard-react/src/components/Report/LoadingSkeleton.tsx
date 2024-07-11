@@ -15,17 +15,17 @@ export const LoadingSkeleton = ({ parsedName }: LoadingSkeletonProps) => {
   const { transformations, outputName } = parsedName;
 
   return (
-    <div className="rounded-xl border shadow-xl space-y-4 md:space-y-0 border-gray-200 shadow-gray-50">
-      <div className="p-5 md:py-7 md:px-10 flex flex-col md:flex-row md:items-start justify-between">
-        <div className="md:w-4/6">
-          <p className="uppercase text-[12px] text-gray-500 font-medium">
+    <div className="ng-rounded-xl ng-border ng-shadow-xl ng-space-y-4 md:ng-space-y-0 ng-border-gray-200 ng-shadow-gray-50">
+      <div className="ng-p-5 md:ng-py-7 md:ng-px-10 ng-flex ng-flex-col md:ng-flex-row md:ng-items-start ng-justify-between">
+        <div className="md:ng-w-4/6">
+          <p className="ng-uppercase ng-text-sm ng-text-gray-500 ng-font-medium">
             Rating for
           </p>
           {outputName ? (
             <>
               <h1>
                 <DisplayedName
-                  textStylingClasses="pt-1 text-2xl md:text-4xl text-black font-semibold md:font-bold whitespace-nowrap"
+                  textStylingClasses="ng-pt-1 ng-text-2xl md:ng-text-4xl ng-text-black ng-font-semibold md:ng-font-bold ng-whitespace-nowrap"
                   name={parsedName.outputName}
                   maxDisplayWidth={600}
                   displayRawName={true}
@@ -34,16 +34,16 @@ export const LoadingSkeleton = ({ parsedName }: LoadingSkeletonProps) => {
               <ReportFormattedDisplayName name={outputName} />
             </>
           ) : (
-            <div className="mt-5 w-40 h-3 rounded bg-gradient-to-r from-gray-300 to-gray-100 animate-pulse"></div>
+            <div className="ng-mt-5 ng-w-40 ng-h-3 ng-rounded ng-bg-gradient-to-r ng-from-gray-300 ng-to-gray-100 ng-animate-pulse"></div>
           )}
         </div>
-        <div className="flex items-start space-x-4 pt-5 md:pt-0 md:w-2/6">
+        <div className="ng-flex ng-items-start ng-space-x-4 ng-pt-5 md:ng-pt-0 md:ng-w-2/6">
           <RatingLoadingIcon size={RatingIconSize.large} />
-          <div className="space-y-1 flex-shrink-0">
-            <p className="font-semibold text-sm md:text-2xl text-gray-500">
+          <div className="ng-space-y-1 ng-flex-shrink-0">
+            <p className="ng-font-semibold ng-text-sm md:ng-text-2xl ng-text-gray-500">
               Inspecting...
             </p>
-            <p className="text-gray-500 text-sm font-normal leading-6">
+            <p className="ng-text-gray-500 ng-text-sm ng-font-normal ng-leading-6">
               Analyzing name details
             </p>
           </div>

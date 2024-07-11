@@ -14,8 +14,8 @@ export function ReportFormattedDisplayName({ name }: Props) {
 
   if (displayNameDifferentThanBeautifiedName)
     return (
-      <p className="flex text-sm text-gray-500 mt-4">
-        <span className="mr-2.5">Generally displays as:</span>
+      <p className="ng-flex ng-text-sm ng-text-gray-500 ng-mt-4">
+        <span className="ng-mr-2.5">Generally displays as:</span>
         <DisplayedName name={name} />
       </p>
     );

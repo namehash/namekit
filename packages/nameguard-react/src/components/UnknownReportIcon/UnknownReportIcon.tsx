@@ -28,19 +28,19 @@ export const UnknownReportIcon = ({
         ...props,
       })}
     >
-      <div className="flex items-start space-x-3 py-2.5 min-w-[300px] max-w-[300px]">
-        <div className="mt-0.5">
+      <div className="ng-flex ng-items-start ng-space-x-3 ng-py-2.5 ng-min-w-[300px] ng-max-w-[300px]">
+        <div className="ng-mt-0.5">
           <RatingUnknownIcon size={RatingIconSize.small} />
         </div>
 
-        <div className="flex-1">
-          <div className="flex items-center justify-between">
-            <span className="font-semibold mb-1 text-white">
+        <div className="ng-flex-1">
+          <div className="ng-flex ng-items-center ng-justify-between">
+            <span className="ng-font-semibold ng-mb-1 ng-text-white">
               Unable to analyze
             </span>
           </div>
 
-          <div className="text-sm text-white font-normal">
+          <div className="ng-text-sm ng-text-white ng-font-normal">
             Refresh the page to try again.
           </div>
         </div>

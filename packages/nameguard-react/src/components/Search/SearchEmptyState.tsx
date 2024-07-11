@@ -82,40 +82,40 @@ export const SearchEmptyState = () => {
   };
 
   return (
-    <div className="w-full px-5 md:px-0 py-16 md:py-32 flex flex-col items-center justify-center text-center h-full space-y-6">
-      <div className="relative z-20 space-y-2">
-        <p className="text-lg leading-6 font-semibold text-black">
+    <div className="ng-w-full ng-px-5 md:ng-px-0 ng-py-16 md:ng-py-32 ng-flex ng-flex-col ng-items-center ng-justify-center ng-text-center ng-h-full ng-space-y-6">
+      <div className="ng-relative ng-z-20 ng-space-y-2">
+        <p className="ng-text-lg ng-leading-6 ng-font-semibold ng-text-black">
           Search for any ENS name to generate a NameGuard report
         </p>
-        <p className="text-sm leading-6 text-gray-500">
+        <p className="ng-text-sm ng-leading-6 ng-text-gray-500">
           or check out some of the names below to see how it works
         </p>
       </div>
 
-      <div className="relative max-w-3xl mx-auto h-9 w-full">
-        <div className="z-10 absolute top-0 z-20 inset-x-0 w-full h-full pointer-events-none shadow-[inset_45px_0_25px_-20px_rgba(255,255,255,0.97),inset_-45px_0_25px_-20px_rgba(255,255,255,0.97)]"></div>
+      <div className="ng-relative ng-max-w-3xl ng-mx-auto ng-h-9 ng-w-full">
+        <div className="ng-absolute ng-top-0 ng-z-20 ng-inset-x-0 ng-w-full ng-h-full ng-pointer-events-none ng-shadow-[inset_45px_0_25px_-20px_rgba(255,255,255,0.97),inset_-45px_0_25px_-20px_rgba(255,255,255,0.97)]"></div>
         <div
-          className="relative z-10 overflow-x-scroll scrollbar-hide whitespace-nowrap scroll-smooth w-full h-full"
+          className="ng-relative ng-z-10 ng-overflow-x-scroll ng-scrollbar-hide ng-whitespace-nowrap ng-scroll-smooth ng-w-full ng-h-full"
           ref={sliderRef}
         >
-          <div className="inline-flex items-center space-x-1 absolute left-0 w-full pl-6 pr-10">
+          <div className="ng-inline-flex ng-items-center ng-space-x-1 ng-absolute ng-left-0 ng-w-full ng-pl-6 ng-pr-10">
             {!isAtStart && (
-              <div className="md:hidden fixed left-0 z-50">
+              <div className="md:ng-hidden ng-fixed ng-left-0 ng-z-50">
                 <button
-                  className="appearance-none p-2 bg-white flex items-center justify-center"
+                  className="ng-appearance-none ng-p-2 ng-bg-white ng-flex ng-items-center ng-justify-center"
                   onClick={slideLeft}
                 >
-                  <ChevronLeftIcon className="fill-current text-black w-5 h-5" />
+                  <ChevronLeftIcon className="ng-fill-current ng-text-black ng-w-5 ng-h-5" />
                 </button>
               </div>
             )}
             {!isAtEnd && (
-              <div className="md:hidden fixed right-0 z-50">
+              <div className="md:ng-hidden ng-fixed ng-right-0 ng-z-50">
                 <button
-                  className="appearance-none p-2 flex items-center justify-center bg-gradient-to-l from-white via-white to-transparent"
+                  className="ng-appearance-none ng-p-2 ng-flex ng-items-center ng-justify-center ng-bg-gradient-to-l ng-from-white ng-via-white ng-to-transparent"
                   onClick={slideRight}
                 >
-                  <ChevronRightIcon className="fill-current text-black w-5 h-5" />
+                  <ChevronRightIcon className="ng-fill-current ng-text-black ng-w-5 ng-h-5" />
                 </button>
               </div>
             )}
@@ -135,14 +135,14 @@ export const SearchEmptyState = () => {
                 data={report}
               />
             ))}
-            <div className="w-5 flex-shrink-0 relative">
-              <span className="sr-only"></span>
+            <div className="ng-w-5 ng-flex-shrink-0 ng-relative">
+              <span className="ng-sr-only"></span>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="fixed inset-0 z-[5] h-full w-full bg-[radial-gradient(#DDDDDD_1px,transparent_1px)] [background-size:24px_24px] opacity-70"></div>
+      <div className="ng-fixed ng-inset-0 ng-z-[5] ng-h-full ng-w-full ng-bg-[radial-gradient(#DDDDDD_1px,transparent_1px)] [background-size:24px_24px] ng-opacity-70"></div>
     </div>
   );
 };

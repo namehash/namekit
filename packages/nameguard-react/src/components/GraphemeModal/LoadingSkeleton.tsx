@@ -2,9 +2,9 @@ import React from "react";
 
 export const LoadingSkeleton = () => {
   return (
-    <div className="p-6 space-y-8 w-full">
-      <div className="rounded-xl border shadow-xl border-gray-200 shadow-gray-100 px-5 pt-7 pb-10 md:py-7 lg:pt-8 lg:pb-10 md:px-[30px] flex flex-col animate-pulse space-y-1">
-        <div className="flex items-center space-x-3">
+    <div className="ng-p-6 ng-space-y-8 ng-w-full">
+      <div className="ng-rounded-xl ng-border ng-shadow-xl ng-border-gray-200 ng-shadow-gray-100 ng-px-5 ng-pt-7 ng-pb-10 md:ng-py-7 lg:ng-pt-8 lg:ng-pb-10 md:ng-px-[30px] ng-flex ng-flex-col ng-animate-pulse ng-space-y-1">
+        <div className="ng-flex ng-items-center ng-space-x-3">
           <svg
             width="20"
             height="22"
@@ -32,22 +32,22 @@ export const LoadingSkeleton = () => {
               </linearGradient>
             </defs>
           </svg>
-          <div className="w-20 h-2 rounded-full bg-gradient-to-br from-gray-200 to-gray-100"></div>
+          <div className="ng-w-20 ng-h-2 ng-rounded-full ng-bg-gradient-to-br ng-from-gray-200 ng-to-gray-100"></div>
         </div>
 
-        <div className="flex flex-col items-center space-y-10 border-b border-gray-200 pb-10">
-          <div className="rounded-full h-[60px] w-[60px] bg-gradient-to-br from-gray-200 to-gray-100"></div>
-          <div className="rounded h-3 w-52 bg-gradient-to-br from-gray-200 to-gray-100"></div>
+        <div className="ng-flex ng-flex-col ng-items-center ng-space-y-10 ng-border-b ng-border-gray-200 ng-pb-10">
+          <div className="ng-rounded-full ng-h-[60px] ng-w-[60px] ng-bg-gradient-to-br ng-from-gray-200 ng-to-gray-100"></div>
+          <div className="ng-rounded ng-h-3 ng-w-52 ng-bg-gradient-to-br ng-from-gray-200 ng-to-gray-100"></div>
         </div>
 
-        <div className="flex justify-center items-center space-x-10 pt-10">
-          <div className="flex flex-col space-y-3">
-            <div className="rounded h-2 w-20 bg-gradient-to-br from-gray-200 to-gray-100"></div>
-            <div className="rounded h-2 w-14 bg-gradient-to-br from-gray-200 to-gray-100"></div>
+        <div className="ng-flex ng-justify-center ng-items-center ng-space-x-10 ng-pt-10">
+          <div className="ng-flex ng-flex-col ng-space-y-3">
+            <div className="ng-rounded ng-h-2 ng-w-20 ng-bg-gradient-to-br ng-from-gray-200 ng-to-gray-100"></div>
+            <div className="ng-rounded ng-h-2 ng-w-14 ng-bg-gradient-to-br ng-from-gray-200 ng-to-gray-100"></div>
           </div>
           <div className="flex flex-col space-y-3">
-            <div className="rounded h-2 w-8 bg-gradient-to-br from-gray-200 to-gray-100"></div>
-            <div className="rounded h-2 w-16 bg-gradient-to-br from-gray-200 to-gray-100"></div>
+            <div className="ng-rounded ng-h-2 ng-w-8 ng-bg-gradient-to-br ng-from-gray-200 ng-to-gray-100"></div>
+            <div className="ng-rounded ng-h-2 ng-w-16 ng-bg-gradient-to-br ng-from-gray-200 ng-to-gray-100"></div>
           </div>
         </div>
       </div>

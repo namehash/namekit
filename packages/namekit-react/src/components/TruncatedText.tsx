@@ -45,10 +45,7 @@ export const TruncatedText = ({
     }
   }, [invisibleTextWidthTester]);
 
-  const getTextElm = (
-    classes: string,
-    maxWidth = maxDisplayWidth,
-  ): JSX.Element => {
+  const getTextElm = (classes: string): JSX.Element => {
     return <p className={classes}>{text}</p>;
   };
 
@@ -94,7 +91,6 @@ export const TruncatedText = ({
                 "nk-text-white nk-text-sm nk-leading-5 nk-break-all",
                 tooltipTextStylingClasses,
               ]),
-              maxTooltipWidth,
             )}
           </Tooltip>
         </>

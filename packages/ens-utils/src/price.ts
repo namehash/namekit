@@ -3,11 +3,7 @@ import {
   PriceCurrencyFormat,
   parseStringToCurrency,
 } from "./currency";
-import { DomainName } from "./domain";
-import { MIN_ETH_REGISTRABLE_LABEL_LENGTH } from "./ensname";
-import { nameCurrentTemporaryPremium } from "./ethregistrar";
 import { approxScaleBigInt, stringToBigInt } from "./number";
-import { Registration } from "./registration";
 
 export interface Price {
   // TODO: consider adding a constraint where value is never negative
@@ -21,73 +17,6 @@ export interface Price {
 
   currency: Currency;
 }
-
-/*
-  This is an "internal" helper function only. It can't be directly used anywhere else because
-  it is too easy to accidently not include the registration object when it should be passed.
-  Three different functions are created right below this one, which are the ones that are
-  safe to be used across the platform, and are then, the ones being exported.
-*/
-const AvailableNamePriceUSD = (
-  parsedName: DomainName,
-  registerForYears = DEFAULT_REGISTRATION_YEARS,
-  registration: Registration | null = null,
-  additionalFee: Price | null = null,
-): Price | null => {
-  if (!parsedName.normalizedName) return null;
-
-  const defaultPrice: Readonly<Price> = {
-    value: 500n,
-    currency: Currency.Usd,
-  };
-  const shortNamePremium: Record<number, Readonly<Price>> = {
-    [MIN_ETH_REGISTRABLE_LABEL_LENGTH]: {
-      value: 64000n,
-      currency: Currency.Usd,
-    },
-    4: {
-      value: 16000n,
-      currency: Currency.Usd,
-    },
-  };
-  const basePrice = shortNamePremium[parsedName.labelName.length]
-    ? shortNamePremium[parsedName.labelName.length]
-    : defaultPrice;
-
-  const namePriceForYears = multiplyPriceByNumber(
-    basePrice,
-    Number(registerForYears),
-  );
-
-  const namehashPrice = additionalFee
-    ? addPrices([additionalFee, namePriceForYears])
-    : namePriceForYears;
-
-  if (registration) {
-    const premiumPrice = nameCurrentTemporaryPremium(registration);
-
-    return premiumPrice
-      ? addPrices([premiumPrice, namehashPrice])
-      : namehashPrice;
-  }
-
-  return namehashPrice;
-};
-
-const DEFAULT_REGISTRATION_YEARS = 1;
-
-/*
-  Below function returns the "timeless" price for a name, that takes no consideration
-  of the current status of the name. This is useful for various cases, including in
-  generating messages that communicate how much a name costs to renew, how much
-  a name will cost at the end of a premium period, etc..
-*/
-export const AvailableNameTimelessPriceUSD = (
-  domainName: DomainName,
-  registerForYears = DEFAULT_REGISTRATION_YEARS,
-) => {
-  return AvailableNamePriceUSD(domainName, registerForYears);
-};
 
 // An ExchangeRates object maps different currencies to their rate in USD,
 // which is a number value. One example of an ExchangeRates object would be:

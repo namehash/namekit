@@ -12,33 +12,33 @@ type Props = {
 
 export function NoGraphemesWarning({ title, description }: Props) {
   return (
-    <div className="bg-red-50 grid grid-cols-8 lg:grid-cols-12 gap-4 py-5 pl-6 rounded-b-md">
-      <div className="flex md:items-center justify-center">
-        <div className="bg-red-100 rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0">
+    <div className="ng-bg-red-50 ng-grid ng-grid-cols-8 lg:ng-grid-cols-12 ng-gap-4 ng-py-5 ng-pl-6 ng-rounded-b-md">
+      <div className="ng-flex md:ng-items-center ng-justify-center">
+        <div className="ng-bg-red-100 ng-rounded-full ng-w-12 ng-h-12 ng-flex ng-items-center ng-justify-center ng-flex-shrink-0">
           <ShieldExclamationIcon
             className={cc([
-              "w-6 h-6 fill-current",
+              "ng-w-6 ng-h-6 ng-fill-current",
               checkResultCodeTextColor(CheckResultCode.alert),
             ])}
           />
         </div>
       </div>
-      <div className="md:grid md:grid-cols-7 md:gap-4 col-span-7 md:col-span-11 flex items-center md:flex-none flex-wrap">
-        <div className="md:col-span-3 flex items-center w-full">
-          <p className="text-black text-lg md:text-sm font-semibold md:font-medium">
+      <div className="md:ng-grid md:ng-grid-cols-7 md:ng-gap-4 ng-col-span-7 md:ng-col-span-11 ng-flex ng-items-center md:ng-flex-none ng-flex-wrap">
+        <div className="md:ng-col-span-3 ng-flex ng-items-center ng-w-full">
+          <p className="ng-text-black ng-text-lg md:ng-text-sm ng-font-semibold md:ng-font-medium">
             {title}
           </p>
         </div>
 
-        <div className="md:col-span-4 flex justify-between space-x-3 w-full">
-          <div className="flex flex-row-reverse md:flex-row items-center justify-between md:justify-start space-y-1 md:space-y-0 md:space-x-2 flex-1 pr-6 md:pr-12">
+        <div className="md:ng-col-span-4 ng-flex ng-justify-between ng-space-x-3 ng-w-full">
+          <div className="ng-flex ng-flex-row-reverse md:ng-flex-row ng-items-center ng-justify-between md:ng-justify-start ng-space-y-1 md:ng-space-y-0 md:ng-space-x-2 ng-flex-1 ng-pr-6 md:ng-pr-12">
             <CheckResultCodeIcon
               isInteractive={true}
               code={CheckResultCode.alert}
             />
             <p
               className={cc([
-                "md:font-medium md:text-black text-sm w-full",
+                "md:ng-font-medium md:ng-text-black ng-text-sm ng-w-full",
                 checkResultCodeTextColor(CheckResultCode.info),
               ])}
             >

@@ -18,16 +18,16 @@ export function ReportChangesApplied({ transformations = [] }: Props) {
   if (transformations.length === 0) return null;
 
   return (
-    <div className="border-t border-gray-200 mx-6 md:mx-0">
-      <div className="md:px-10 py-4 md:py-3 flex items-center justify-between">
-        <div className="w-full flex items-center flex-wrap">
-          <span className="text-sm text-gray-500 mr-2.5 w-full md:w-auto">
+    <div className="ng-border-t ng-border-gray-200 ng-mx-6 md:ng-mx-0">
+      <div className="md:ng-px-10 ng-py-4 md:ng-py-3 ng-flex ng-items-center ng-justify-between">
+        <div className="ng-w-full ng-flex ng-items-center ng-flex-wrap">
+          <span className="ng-text-sm text-gray-500 ng-mr-2.5 ng-w-full md:ng-w-auto">
             Changes applied to your search:
           </span>
-          <div className="space-x-1.5 flex items-center mt-2 md:mt-0">
+          <div className="ng-space-x-1.5 ng-flex ng-items-center ng-mt-2 md:ng-mt-0">
             {transformations.map((t, i) => (
               <span
-                className="bg-gray-100 rounded-full px-3 py-0.5 text-sm font-medium text-black"
+                className="ng-bg-gray-100 ng-rounded-full ng-px-3 ng-py-0.5 ng-text-sm ng-font-medium ng-text-black"
                 key={i}
               >
                 {transformationText[t]}
@@ -35,9 +35,9 @@ export function ReportChangesApplied({ transformations = [] }: Props) {
             ))}
           </div>
         </div>
-        <div className="md:flex-shrink-0 hidden md:flex md:items-center md:justify-end">
+        <div className="md:ng-flex-shrink-0 ng-hidden md:ng-flex md:ng-items-center md:ng-justify-end">
           <button
-            className="text-sm text-black leading-5 appearance-none underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
+            className="ng-text-sm ng-text-black ng-leading-5 ng-appearance-none ng-underline sm:ng-underline-offset-[4px] sm:ng-transition-all sm:ng-duration-200 sm:hover:ng-underline-offset-[2px]"
             onClick={openSettingsModal}
           >
             Manage settings
