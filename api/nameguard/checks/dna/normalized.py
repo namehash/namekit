@@ -1,8 +1,14 @@
 from typing import Optional
 from label_inspector.models import InspectorGraphemeWithConfusablesResult as Grapheme, InspectorResult as Label
 from nameguard.grapheme_normalization import grapheme_is_normalized
-from nameguard.models import CheckStatus, Check, GraphemeCheckResult, LabelCheckResult, NameCheckResult
-
+from nameguard.models import (
+    CheckStatus,
+    Check,
+    GraphemeCheckResult,
+    LabelCheckResult,
+    NameCheckResult,
+    UNINSPECTED_SKIP_MESSAGE,
+)
 
 STATUS = CheckStatus.ALERT
 
@@ -67,3 +73,11 @@ def check_name(name: list[Optional[Label]]) -> NameCheckResult:
         _name_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
         _title=TITLE_PASS if passed else TITLE_FAIL,
     )
+
+
+UNINSPECTED_SKIP_CHECK_RESULT = GraphemeCheckResult(
+    check=Check.NORMALIZED,
+    status=CheckStatus.SKIP,
+    _name_message=UNINSPECTED_SKIP_MESSAGE,
+    _title=TITLE_SKIP,
+)

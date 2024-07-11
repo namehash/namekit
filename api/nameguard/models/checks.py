@@ -6,6 +6,8 @@ from nameguard.generic_utils import capitalize_words
 import nameguard.context
 from nameguard.endpoints import Endpoints
 
+UNINSPECTED_SKIP_MESSAGE = 'Name is exceptionally long and was not inspected'
+
 
 class CheckStatus(int, Enum):
     """

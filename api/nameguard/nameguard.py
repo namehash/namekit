@@ -122,6 +122,23 @@ def consolidated_report_from_simple_name(name: str) -> ConsolidatedNameGuardRepo
     )
 
 
+Uninspected_name_checks = [
+    UNINSPECTED_CHECK_RESULT,
+    checks.dna.normalized.UNINSPECTED_SKIP_CHECK_RESULT,
+    checks.dna.punycode.UNINSPECTED_SKIP_CHECK_RESULT,
+    checks.grapheme.confusables.UNINSPECTED_SKIP_CHECK_RESULT,
+    checks.grapheme.font_support.UNINSPECTED_SKIP_CHECK_RESULT,
+    checks.grapheme.invisible.UNINSPECTED_SKIP_CHECK_RESULT,
+    checks.grapheme.typing_difficulty.UNINSPECTED_SKIP_CHECK_RESULT,
+    checks.label.mixed_scripts.UNINSPECTED_SKIP_CHECK_RESULT,
+    checks.label.namewrapper.UNINSPECTED_SKIP_CHECK_RESULT,
+    checks.label.unknown.UNINSPECTED_SKIP_CHECK_RESULT,
+    checks.name.decentralized_name.UNINSPECTED_SKIP_CHECK_RESULT,
+    checks.name.impersonation_risk.UNINSPECTED_SKIP_CHECK_RESULT,
+    checks.name.namewrapper_fuses.UNINSPECTED_SKIP_CHECK_RESULT,
+]
+
+
 def consolidated_report_from_uninspected_name(name: str) -> UninspectedNameGuardReport:
     res = ens_process(name, do_normalize=True, do_beautify=True)
     beautified = res.beautified
@@ -139,7 +156,7 @@ def consolidated_report_from_uninspected_name(name: str) -> UninspectedNameGuard
         risk_count=1,
         highest_risk=UNINSPECTED_CHECK_RESULT,
         beautiful_name=beautified,  # TODO computed twice
-        checks=[],  # TODO
+        checks=Uninspected_name_checks,
         labels=None,
         canonical_name=None,
     )

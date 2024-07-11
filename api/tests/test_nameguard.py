@@ -667,7 +667,12 @@ async def test_dynamic_check_order(nameguard: NameGuard):
 async def test_stress_inspect_name(nameguard: NameGuard):
     # with omit_cure=False takes 1 minute
     result = await nameguard.inspect_name('mainnet', '⎛⎝⎞⎠' * 1000)
+
     assert result.highest_risk.check.name == 'UNINSPECTED'
+    assert result.checks[0] == result.highest_risk
+    for check in result.checks[1:]:
+        assert check.status is CheckStatus.SKIP
+        assert check.rating is Rating.PASS
 
 
 @pytest.mark.asyncio

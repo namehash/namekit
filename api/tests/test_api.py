@@ -1272,10 +1272,11 @@ def test_fake_eth_name_check_fields_missing_title(test_client, contract_address,
 
 
 def test_inspect_name_post_long(test_client):
-    name = '≡ƒÿ║' * 250
+    name = '≡ƒÿ║' * 50
     response = test_client.post('/inspect-name', json={'name': name, 'network_name': 'mainnet'})
     assert response.status_code == 200
     res_json = response.json()
+    assert res_json['highest_risk']['check'] == 'normalized'
     pprint(res_json)
 
 
@@ -1285,8 +1286,8 @@ def test_bulk_inspect_name_post_long(test_client):
     response = test_client.post('/bulk-inspect-names', json={'names': names, 'network_name': 'mainnet'})
     assert response.status_code == 200
     res_json = response.json()
-    pprint(res_json)
-    assert all([x is not None for x in res_json['results']])
+    for x in res_json['results']:
+        assert x['highest_risk']['check'] == 'normalized'
 
 
 def test_bulk_inspect_name_post_too_long(test_client):
@@ -1295,8 +1296,10 @@ def test_bulk_inspect_name_post_too_long(test_client):
     response = test_client.post('/bulk-inspect-names', json={'names': names, 'network_name': 'mainnet'})
     assert response.status_code == 200
     res_json = response.json()
-    pprint(res_json)
-    # assert all([x is None for x in res_json['results']])
+
+    for x in res_json['results']:
+        assert x['highest_risk']['check'] == 'uninspected'
+        assert x['normalization'] == 'unnormalized'
 
 
 def test_bulk_inspect_name_post_too_long_normalized(test_client):
@@ -1305,4 +1308,7 @@ def test_bulk_inspect_name_post_too_long_normalized(test_client):
     response = test_client.post('/bulk-inspect-names', json={'names': names, 'network_name': 'mainnet'})
     assert response.status_code == 200
     res_json = response.json()
-    pprint(res_json)
+
+    for x in res_json['results']:
+        assert x['highest_risk']['check'] == 'uninspected'
+        assert x['normalization'] == 'normalized'

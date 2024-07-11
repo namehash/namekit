@@ -6,6 +6,7 @@ from .checks import (
     Rating,
     Check,
     CheckStatus,
+    UNINSPECTED_SKIP_MESSAGE,
 )
 
 from .result import (
