@@ -1,4 +1,4 @@
-import { Currency, PriceCurrencyFormat } from "@namehash/ens-utils";
+import { Currency } from "@namehash/ens-utils";
 import {
   AltPriceDisplayFormat,
   DisplayedPrice,
@@ -12,6 +12,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 const meta: Meta<typeof DisplayedPrice> = {
   component: DisplayedPrice,
   title: "Namekit/DisplayedPrice",
+  parameters: {
+    layout: "centered",
+  },
   argTypes: {
     price: {
       control: "object",
