@@ -49,11 +49,11 @@ export function DisplayedName({
       text={displayName}
       maxTooltipWidth={maxTooltipWidth}
       maxDisplayWidth={maxDisplayWidth}
-      textStylingClasses={cc([textStylingClasses, "nk-ens-webfont"])}
+      textStylingClasses={cc([textStylingClasses, "ng-ens-webfont"])}
       displayTooltipWhenTextOverflows={displayTooltipWhenNameOverflows}
       tooltipTextStylingClasses={cc([
         tooltipTextStylingClasses,
-        "nk-ens-webfont",
+        "ng-ens-webfont",
       ])}
     />
   );
