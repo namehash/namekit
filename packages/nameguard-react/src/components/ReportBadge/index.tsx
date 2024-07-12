@@ -4,8 +4,9 @@ import React, { useEffect } from "react";
 import cc from "classcat";
 
 import { ReportIcon } from "../ReportIcon/index";
-import { RatingLoadingIcon, RatingIconSize, DisplayedName } from "../..";
+import { RatingLoadingIcon, RatingIconSize } from "../..";
 import { UnknownReportIcon } from "../UnknownReportIcon/UnknownReportIcon";
+import { DisplayedName } from "@namehash/namekit-react";
 import { ENSName } from "@namehash/ens-utils";
 
 interface ReportBadgeProps {

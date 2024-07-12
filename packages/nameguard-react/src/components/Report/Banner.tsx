@@ -7,8 +7,8 @@ import { RatingIcon, RatingIconSize } from "./RatingIcon";
 import { RatedBox } from "../RatedBox/RatedBox";
 import { ReportChangesApplied } from "./ReportChangesApplied";
 import { ReportFormattedDisplayName } from "./ReportFormattedDisplayName";
+import { DisplayedName } from "@namehash/namekit-react";
 import { ratingTextColor } from "../../utils/text";
-import { DisplayedName } from "../DisplayedName/DisplayedName";
 
 type Props = {
   report?: NameGuardReport;

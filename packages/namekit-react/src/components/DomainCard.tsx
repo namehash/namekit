@@ -19,7 +19,7 @@ export type DomainCardProps = {
   compactNamecardThreshold?: number; // if the width of the card is less than this value, we show the compact namecard component variation
 };
 
-const EXTRA_HOVER_AREA_WIDTH = 600;
+const DEFAULT_EXTRA_HOVER_AREA_WIDTH = 600;
 
 export function DomainCard({
   domainCard,
@@ -28,7 +28,7 @@ export function DomainCard({
   extraHoverArea = true,
   withHoverEffect = true,
   nameCardClickHandler = undefined,
-  extraHoverAreaWidth = EXTRA_HOVER_AREA_WIDTH,
+  extraHoverAreaWidth = DEFAULT_EXTRA_HOVER_AREA_WIDTH,
 }: DomainCardProps) {
   const domainRef = useRef<HTMLDivElement>(null);
   const [nameCardHovered, setNameCardHovered] = useState(false);

@@ -1,7 +1,7 @@
 import React from "react";
-import { DisplayedName } from "../DisplayedName/DisplayedName";
 import { ENSName } from "@namehash/ens-utils";
 import { Normalization } from "@namehash/nameguard";
+import { DisplayedName } from "@namehash/namekit-react";
 
 type Props = {
   name: ENSName;

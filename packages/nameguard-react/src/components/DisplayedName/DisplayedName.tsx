@@ -9,7 +9,7 @@
   </IMPORTANT>
 */
 
-import { TruncatedText } from "../TruncatedText/TruncatedText";
+import { TruncatedText } from "@namehash/namekit-react";
 import { Normalization } from "@namehash/nameguard";
 import { ENSName } from "@namehash/ens-utils";
 import React from "react";

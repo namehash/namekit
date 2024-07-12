@@ -9,9 +9,9 @@ import {
 import { toast } from "sonner";
 
 import cc from "classcat";
-import { DisplayedName } from "../..";
 import { Tooltip } from "@namehash/namekit-react";
 import { CheckResultCode } from "@namehash/nameguard";
+import { DisplayedName } from "@namehash/namekit-react";
 import { checkResultCodeTextColor } from "../../utils/text";
 import { buildENSName } from "@namehash/ens-utils";
 
