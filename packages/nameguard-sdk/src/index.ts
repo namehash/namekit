@@ -391,6 +391,10 @@ export interface InspectedNameGuardReport extends AbstractNameGuardReport {
     labels: LabelGuardReport[];
 }
 
+/**
+ * NameGuard report for a name that was exceptionally long and was not inspected for performance reasons.
+ * Fields `label` and canonical_name` are nulls, `rating` is `alert`, `highest_risk` is `uninspected`, `risk_count` is `1`.
+ */
 export interface UninspectedNameGuardReport extends AbstractNameGuardReport {
     labels: undefined;
     canonical_name: undefined;
