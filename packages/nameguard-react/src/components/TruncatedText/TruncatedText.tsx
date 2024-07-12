@@ -1,3 +1,14 @@
+/*
+  <IMPORTANT>
+
+    This file was moved to namekit-react package and
+    it is kept here for migration code integrity only.
+
+    Once the migration is done, this file should be deleted.
+
+  </IMPORTANT>
+*/
+
 import React, { useEffect, useState, useRef } from "react";
 import { Tooltip } from "@namehash/namekit-react";
 import cc from "classcat";

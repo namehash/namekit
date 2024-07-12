@@ -20,27 +20,27 @@ const meta: Meta<typeof DisplayedPrice> = {
       control: "object",
     },
     priceTextDisplaySize: {
-      options: PriceDisplaySize,
+      options: Object.keys(PriceDisplaySize),
       control: { type: "select" },
     },
     altPriceDisplayFormat: {
-      options: AltPriceDisplayFormat,
+      options: Object.keys(AltPriceDisplayFormat),
       control: { type: "select" },
     },
     symbolPosition: {
-      options: CurrencySymbolPosition,
+      options: Object.keys(CurrencySymbolPosition),
       control: { type: "select" },
     },
     currencySymbology: {
-      options: CurrencySymbology,
+      options: Object.keys(CurrencySymbology),
       control: { type: "select" },
     },
     altPriceDisplaySize: {
-      options: PriceDisplaySize,
+      options: Object.keys(PriceDisplaySize),
       control: { type: "select" },
     },
     altPriceDisplayPosition: {
-      options: PriceDisplayPosition,
+      options: Object.keys(PriceDisplayPosition),
       control: { type: "select" },
     },
   },
