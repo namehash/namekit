@@ -9,6 +9,8 @@ import {
   ComingSoonSections,
   ReadySections,
 } from "@/components/organisms";
+import "@namehash/namekit-react/styles.css";
+import "@namehash/nameguard-react/styles.css";
 import { MobileSectionDivider } from "@/components/atoms";
 
 export const metadata: Metadata = {

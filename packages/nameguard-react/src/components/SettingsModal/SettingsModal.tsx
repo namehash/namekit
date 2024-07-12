@@ -176,14 +176,14 @@ export const SettingsModal = () => {
 
                   <div className="ng-flex ng-items-center ng-justify-end ng-space-x-3 ng-mt-8 ng-pb-6">
                     <button
-                      className="ng-rounded-md ng-text-sm ng-bg-white ng-shadow-sm ng-border ng-border-gray-300 ng-text-black ng-px-4 ng-py-1.5 ng-font-medium ng-leading-6 ng-transition hover:bg-gray-50"
+                      className="ng-rounded-md ng-text-sm ng-bg-white ng-shadow-sm ng-border ng-border-gray-300 ng-text-black ng-px-4 ng-py-1.5 ng-font-medium ng-leading-6 ng-transition hover:ng-bg-gray-50"
                       onClick={closeModal}
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
-                      className="ng-rounded-md ng-text-sm ng-bg-black ng-border ng-border-black ng-text-white ng-px-4 ng-py-1.5 ng-font-medium ng-leading-6 ng-transition hover:bg-gray-900"
+                      className="ng-rounded-md ng-text-sm ng-bg-black ng-border ng-border-black ng-text-white ng-px-4 ng-py-1.5 ng-font-medium ng-leading-6 ng-transition hover:ng-bg-gray-900"
                     >
                       Save
                     </button>
