@@ -22,7 +22,6 @@
     "storybook": "^8.1.1"
   },
   "dependencies": {
-    "@headlessui/react": "1.7.17",
     "@namehash/ens-utils": "workspace:*",
     "@namehash/ens-webfont": "workspace:*",
     "@namehash/nameguard": "workspace:*",
