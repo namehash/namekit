@@ -91,7 +91,7 @@ export type SecurePrimaryNameStatus =
   | "normalized" /** The ENS primary name was found and it is normalized. */
   | "no_primary_name" /** The ENS primary name was not found. */
   | "unnormalized" /** The ENS primary name was found, but it is not normalized. */
-  | "uninspected" /** `willInspectName(name) === false` therefore the name was not inspected for performance reasons */;
+  | "uninspected" /** A name was exceptionally long and was not inspected for performance reasons */;
 
 export type ImpersonationStatus =
   | "unlikely" /** The name is unlikely to be impersonating. */
@@ -118,7 +118,7 @@ export interface FakeEthNameCheckResult {
    *
    * `null` if `status` is any value except `authentic_eth_name`, `invalid_eth_name` and `unknown_eth_name` (the NFT is not associated with authentic ".eth" contracts)
    */
-  nameguard_result: NameGuardReport | null;
+  nameguard_result: NameGuardReport | UninspectedNameGuardReport | null;
 
   /**
    * Fields with values from Alchemy response which are investigated (e.g. title, collection name, metadata) whether they look like fake .eth ENS name.
@@ -363,7 +363,7 @@ export interface ConsolidatedNameGuardReport extends ConsolidatedReport {
 /**
  * NameGuard report that contains the full results of all `checks` on all `labels` in a name.
  */
-export interface NameGuardReport extends ConsolidatedNameGuardReport {
+export interface AbstractNameGuardReport extends ConsolidatedNameGuardReport {
   /* The results of all checks performed by NameGuard on `name`. */
   checks: CheckResult[];
 
@@ -371,7 +371,7 @@ export interface NameGuardReport extends ConsolidatedNameGuardReport {
     *
     * `null` if `name` is uninspected
   */
-  labels: LabelGuardReport[] | null;
+  labels?: LabelGuardReport[];
 
   /**
    * The name considered to be the canonical form of the analyzed `name`.
@@ -384,7 +384,16 @@ export interface NameGuardReport extends ConsolidatedNameGuardReport {
    * `canonical_name` is guaranteed to be normalized with the exception of the case
    * where `normalization` is `Normalization.Unknown` and one or more labels are represented as `[labelhash]`.
    */
-  canonical_name: string | null;
+  canonical_name?: string;
+}
+
+export interface NameGuardReport extends AbstractNameGuardReport {
+    labels: LabelGuardReport[];
+}
+
+export interface UninspectedNameGuardReport extends AbstractNameGuardReport {
+    labels: undefined;
+    canonical_name: undefined;
 }
 
 export interface BulkConsolidatedNameGuardReport {
@@ -424,7 +433,7 @@ export interface SecurePrimaryNameResult {
    * * `null` if `primary_name_status` is `no_primary_name` (primary name is not found)
    * * `null` if `SecurePrimaryNameOptions.computeNameGuardReport` is `false` or not provided
    */
-  nameguard_result: NameGuardReport | null;
+  nameguard_result: NameGuardReport | UninspectedNameGuardReport | null;
 }
 
 // TODO: Let's apply more formalization to this error class.
@@ -442,7 +451,7 @@ const DEFAULT_NETWORK: Network = "mainnet";
 const DEFAULT_INSPECT_LABELHASH_PARENT = ETH_TLD;
 export const DEFAULT_COMPUTE_NAMEGUARD_REPORT = false;
 const MAX_BULK_INSPECTION_NAMES = 250;
-const MAX_INSPECTED_NAME_CHARACTERS = 200;
+const MAX_INSPECTED_NAME_CHARACTERS = 200;  // includes label separators
 const MAX_INSPECTED_NAME_UNKNOWN_LABELS = 5;
 
 export interface NameGuardOptions {
@@ -496,7 +505,7 @@ export class NameGuard {
    *
    * @param {string} name The name for NameGuard to inspect.
    * @param {InspectNameOptions} options The options for the inspection.
-   * @returns {Promise<NameGuardReport>} A promise that resolves with the `NameGuardReport` of the name.
+   * @returns {Promise<NameGuardReport | UninspectedNameGuardReport>} A promise that resolves with the `NameGuardReport` of the name.
    * @example
    * const nameGuardReport = await nameguard.inspectName('vitalik.eth');
    */
@@ -555,7 +564,7 @@ export class NameGuard {
    *
    * @param {string} namehash A namehash should be a decimal or a hex (prefixed with 0x) string.
    * @param {InspectNamehashOptions} options The options for the inspection.
-   * @returns {Promise<NameGuardReport>}  A promise that resolves with a `NameGuardReport` of the resolved name.
+   * @returns {Promise<NameGuardReport | UninspectedNameGuardReport>}  A promise that resolves with a `NameGuardReport` of the resolved name.
    */
   public async inspectNamehash(
     namehash: string,
@@ -612,7 +621,7 @@ export class NameGuard {
    *
    * @param {string} labelhash A labelhash should be a decimal or a hex (prefixed with 0x) string.
    * @param {InspectLabelhashOptions} options The options for the inspection.
-   * @returns {Promise<NameGuardReport>}  A promise that resolves with a `NameGuardReport` of the resolved name.
+   * @returns {Promise<NameGuardReport | UninspectedNameGuardReport>}  A promise that resolves with a `NameGuardReport` of the resolved name.
    */
   public async inspectLabelhash(
     labelhash: string,
