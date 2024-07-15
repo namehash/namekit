@@ -1,0 +1,74 @@
+{
+    "redirects": [
+        {
+            "source": "/referral-hero.png",
+            "destination": "/proposals/ens/small-grants/round-32/referral-hero.png",
+            "permanent": true
+        },
+        {
+            "source": "/referral-participants.png",
+            "destination": "/proposals/ens/small-grants/round-32/referral-participants.png",
+            "permanent": true
+        },
+        {
+            "source": "/service-provider-proposal/incentives.png",
+            "destination": "/proposals/ens/service-provider/ep4.9/incentives.png",
+            "permanent": true
+        },
+        {
+            "source": "/service-provider-proposal/mission.png",
+            "destination": "/proposals/ens/service-provider/ep4.9/mission.png",
+            "permanent": true
+        },
+        {
+            "source": "/service-provider-proposal/namekit-intro.png",
+            "destination": "/proposals/ens/service-provider/ep4.9/namekit-intro.png",
+            "permanent": true
+        },
+        {
+            "source": "/service-provider-proposal/principles.png",
+            "destination": "/proposals/ens/service-provider/ep4.9/principles.png",
+            "permanent": true
+        },
+        {
+            "source": "/service-provider-proposal/team.png",
+            "destination": "/proposals/ens/service-provider/ep4.9/team.png",
+            "permanent": true
+        },
+        {
+            "source": "/service-provider-proposal/techstack.png",
+            "destination": "/proposals/ens/service-provider/ep4.9/techstack.png",
+            "permanent": true
+        },
+        {
+            "source": "/service-provider-proposal/ux-part-a.png",
+            "destination": "/proposals/ens/service-provider/ep4.9/ux-part-a.png",
+            "permanent": true
+        },
+        {
+            "source": "/service-provider-proposal/ux-part-b.png",
+            "destination": "/proposals/ens/service-provider/ep4.9/ux-part-b.png",
+            "permanent": true
+        },
+        {
+            "source": "/service-provider-proposal/ux-part-c.png",
+            "destination": "/proposals/ens/service-provider/ep4.9/ux-part-c.png",
+            "permanent": true
+        },
+        {
+            "source": "/service-provider-proposal/ux-part1.png",
+            "destination": "/proposals/ens/service-provider/ep4.9/ux-part1.png",
+            "permanent": true
+        },
+        {
+            "source": "/service-provider-proposal/ux-part2.png",
+            "destination": "/proposals/ens/service-provider/ep4.9/ux-part2.png",
+            "permanent": true
+        },
+        {
+            "source": "/service-provider-proposal/ux.png",
+            "destination": "/proposals/ens/service-provider/ep4.9/ux.png",
+            "permanent": true
+        }
+    ]
+}
