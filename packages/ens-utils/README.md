@@ -12,25 +12,6 @@ This repository contains all of the code for the NPM package [`@namehash/ens-uti
 | `price`                     | This module provides a robust foundation for handling monetary values within a financial application, offering flexibility for currency operations, conversions, and formatting. |
 | `time`                      | Includes functions for time manipulation, formatting, and calculation.                                                                                                           |
 
-## Local Development
-
-You must clone this respository, and install the dependencies using [PNPM](https://pnpm.io/installation) before you can run it locally:
-
-1. `git clone https://github.com/namehash/ens-utils.git`
-2. `cd ens-utils`
-3. `pnpm install`
-4. `pnpm dev`
-
-Tests are automatically ran when a new Pull Request is opened. You can run them locally using `pnpm test`.
-
-If you're developing locally, you can watch changes and run tests automatically using `pnpm test:watch`.
-
-## Continuous Deployment
-
-This uses [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) to automatically trigger new releases to NPM on merge to `main`. Make sure the pull request contains a prefix.
-
-We use [Semantic Release](https://semantic-release.gitbook.io/semantic-release/) in CI to check commits, and release a new version on NPM, tag on GitHub, and reply to any Pull Requests that they have been included in the version.
-
 ## Install
 
 ```bash
@@ -235,7 +216,7 @@ const options = {
 
 const { inputName, outputName, transformations } = parseName(
   " example.eth ",
-  options
+  options,
 );
 ```
 
@@ -1021,7 +1002,7 @@ const exchangeRatesRecord = {
 const fromUsdToEth = convertCurrencyWithRates(
   fromUsd,
   Currency.Eth,
-  exchangeRatesRecord
+  exchangeRatesRecord,
 );
 
 // fromUsdToEth equals the Eth amount of $5 based on the provided currencies exchange rates
@@ -1032,12 +1013,24 @@ const fromUsdToEth = convertCurrencyWithRates(
 - **Arithmetic Operations (add, subtract)**: Throws an error if currencies do not match.
 - **Conversion Operations**: Throws an error if exchange rates do not include the necessary currencies.
 
-## Contact us
+## Local Development
+
+It's recommended you run `pnpm dev` in the root of the repository to start all apps, packages, and internal resources to support local development.
+
+See [README.md](../README.md) for more information.
+
+## Testing
+
+Tests are automatically ran when a new Pull Request is opened. You can run them locally using `pnpm test`.
+
+If you're developing locally, you can watch changes and run tests automatically using `pnpm test:watch`.
+
+## Contact Us
 
 Visit our [website](https://namehashlabs.org/) and get in contact.
 
 ## License
 
-Licensed under the MIT License, Copyright © 2023-present [NameHash Labs](https://namehashlabs.org).
+Licensed under the MIT License, Copyright &copy; 2023-present [NameHash Labs](https://namehashlabs.org).
 
 See [LICENSE](./LICENSE) for more information.
