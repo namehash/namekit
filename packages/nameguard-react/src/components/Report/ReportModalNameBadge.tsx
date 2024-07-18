@@ -2,7 +2,7 @@ import React from "react";
 import { ENSName } from "@namehash/ens-utils";
 import { ConsolidatedNameGuardReport } from "@namehash/nameguard";
 import { useSearchStore } from "../../stores/search";
-import { ReportBadge } from "../ReportBadge";
+import { ReportBadge } from "../..";
 
 interface ReportModalNameBadgeProps {
   data?: ConsolidatedNameGuardReport;
@@ -24,7 +24,9 @@ export function ReportModalNameBadge({
       ensName={ensName}
       displayUnnormalizedNames={true}
       hadLoadingError={hadLoadingError}
-      onClickOverride={(ensName: ENSName) => openModal(ensName.name)}
+      onIconClickOverride={(ensName: ENSName) => openModal(ensName.name)}
+      onBadgeClickOverride={(ensName: ENSName) => openModal(ensName.name)}
+      onTooltipClickOverride={(ensName: ENSName) => openModal(ensName.name)}
     />
   );
 }

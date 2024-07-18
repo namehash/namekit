@@ -1,17 +1,14 @@
 "use client";
 import { type ConsolidatedNameGuardReport } from "@namehash/nameguard";
+import { ENSName } from "@namehash/ens-utils";
 import React, { useEffect } from "react";
 import cc from "classcat";
 
 import { ReportIcon } from "../ReportIcon/index";
-import {
-  RatingLoadingIcon,
-  RatingIconSize,
-  Tooltip,
-  DisplayedName,
-} from "../..";
-import { UnknownReportIcon } from "../UnknownReportIcon/UnknownReportIcon";
-import { ENSName } from "@namehash/ens-utils";
+import { DisplayedName, RatingIconSize } from "../..";
+import { redirectToViewNameReportURL } from "../../utils/url";
+import { ReportUnknownIcon } from "../ReportUnknownIcon/ReportUnknownIcon";
+import { ReportLoadingIcon } from "../ReportLoadingIcon/ReportLoadingIcon";
 
 interface ReportBadgeProps {
   /*
@@ -27,7 +24,10 @@ interface ReportBadgeProps {
 
   hadLoadingError?: boolean;
   displayUnnormalizedNames?: boolean;
-  onClickOverride?: (ensName: ENSName) => void;
+
+  onIconClickOverride?: (ensName: ENSName) => void;
+  onBadgeClickOverride?: (ensName: ENSName) => void;
+  onTooltipClickOverride?: (ensName: ENSName) => void;
 
   /*
     Below number is a measure of the maximum width that the ensName 
@@ -38,24 +38,51 @@ interface ReportBadgeProps {
   maxDisplayWidth?: number;
 }
 
+const DEFAULT_MAX_ENSNAME_DISPLAY_WIDTH = 200;
+
+enum ClickHandlerFor {
+  badge,
+  icon,
+  tooltip,
+}
+
 export function ReportBadge({
   data,
   ensName,
-  maxDisplayWidth,
-  onClickOverride,
+  onIconClickOverride,
+  onBadgeClickOverride,
+  onTooltipClickOverride,
   hadLoadingError = false,
   displayUnnormalizedNames = false,
+  maxDisplayWidth = DEFAULT_MAX_ENSNAME_DISPLAY_WIDTH,
 }: ReportBadgeProps) {
   const buttonClass =
     "flex-shrink-0 appearance-none bg-white transition-colors hover:bg-gray-50 border border-gray-200 rounded-md px-2.5 py-1.5 inline-flex items-center";
   const buttonAndCursorClass = cc([buttonClass, "cursor-pointer"]);
 
-  const onClickHandler = () => {
-    if (onClickOverride) onClickOverride(ensName);
-    else {
-      window.location.href = `https://nameguard.io/inspect/${encodeURIComponent(
-        ensName.name,
-      )}`;
+  const onClickHandler = (clickHandlerFor: ClickHandlerFor) => {
+    switch (clickHandlerFor) {
+      case ClickHandlerFor.badge:
+        if (onBadgeClickOverride) {
+          onBadgeClickOverride(ensName);
+        } else {
+          redirectToViewNameReportURL(ensName);
+        }
+        break;
+      case ClickHandlerFor.icon:
+        if (onIconClickOverride) {
+          onIconClickOverride(ensName);
+        } else {
+          redirectToViewNameReportURL(ensName);
+        }
+        break;
+      case ClickHandlerFor.tooltip:
+        if (onTooltipClickOverride) {
+          onTooltipClickOverride(ensName);
+        } else {
+          redirectToViewNameReportURL(ensName);
+        }
+        break;
     }
   };
 
@@ -70,7 +97,12 @@ export function ReportBadge({
   }, [data]);
 
   return (
-    <button className={buttonAndCursorClass} onClick={onClickHandler}>
+    <button
+      className={buttonAndCursorClass}
+      onClick={() => {
+        onClickHandler(ClickHandlerFor.badge);
+      }}
+    >
       <DisplayedName
         textStylingClasses="cursor-pointer pr-1.5"
         displayUnnormalizedNames={displayUnnormalizedNames}
@@ -80,41 +112,42 @@ export function ReportBadge({
 
       {hadLoadingError ? (
         // Unknown Rating
-        <UnknownReportIcon
-          size={RatingIconSize.micro}
+        <ReportUnknownIcon
           className="cursor-pointer"
-        >
-          <div className="text-sm text-white">
-            <button
-              className="appearance-none underline font-medium"
-              onClick={onClickHandler}
-            >
-              Inspect name for details
-            </button>
-          </div>
-        </UnknownReportIcon>
+          size={RatingIconSize.micro}
+          onIconClickOverride={() => {
+            onClickHandler(ClickHandlerFor.icon);
+          }}
+          onTooltipClickOverride={() => {
+            onClickHandler(ClickHandlerFor.tooltip);
+          }}
+        />
       ) : !data ? (
         // Loading Rating
-        <RatingLoadingIcon
-          size={RatingIconSize.micro}
+        <ReportLoadingIcon
           className="cursor-pointer"
+          size={RatingIconSize.micro}
+          onIconClickOverride={() => {
+            onClickHandler(ClickHandlerFor.icon);
+          }}
+          onTooltipClickOverride={() => {
+            onClickHandler(ClickHandlerFor.tooltip);
+          }}
         />
       ) : (
         // Known Rating
         <ReportIcon
           data={data}
           ensName={ensName}
-          /*
-            Since the ReportBadge has already executed the onClickHandler
-            function when the user clicks on it, there is no need to execute
-            it once again inside the ReportIcon component. Therefore, we
-            override the onClick function of the ReportIcon component 
-            to do nothing when the user clicks on it ⬇️
-          */
-          onClickOverride={() => {}}
+          className="cursor-pointer"
           size={RatingIconSize.micro}
-          className={"cursor-pointer"}
           hadLoadingError={hadLoadingError}
+          onIconClickOverride={() => {
+            onClickHandler(ClickHandlerFor.icon);
+          }}
+          onTooltipClickOverride={() => {
+            onClickHandler(ClickHandlerFor.tooltip);
+          }}
         />
       )}
     </button>

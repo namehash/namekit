@@ -18,7 +18,7 @@
   },
   "main": "./dist/index.mjs",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/index.d.mts",
   "styles": "./dist/index.css",
   "dependencies": {
     "@headlessui-float/react": "0.11.4",
@@ -43,7 +43,8 @@
     "postcss": "8.4.38",
     "tailwindcss": "3.4.3",
     "tsup": "^7.2.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vitest": "1.4.0"
   },
   "publishConfig": {
     "access": "public"

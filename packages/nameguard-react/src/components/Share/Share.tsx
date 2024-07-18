@@ -12,16 +12,17 @@ import cc from "classcat";
 import { Tooltip } from "../Tooltip/Tooltip";
 import { CheckResultCode } from "@namehash/nameguard";
 import { checkResultCodeTextColor } from "../../utils/text";
+import { viewNameReportURL } from "../../utils/url";
 import { DisplayedName } from "../DisplayedName/DisplayedName";
 import { buildENSName } from "@namehash/ens-utils";
 
 type ShareProps = {
-  name?: string;
+  name: string;
 };
 
 function createTwitterLink(name: string) {
   const tweetText = `Check out the NameGuard Report for ${name}\n`;
-  const url = `https://nameguard.io/inspect/${encodeURIComponent(name)}`;
+  const url = viewNameReportURL(buildENSName(name)).href;
 
   return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
     tweetText,
@@ -46,16 +47,14 @@ export function Share({ name }: ShareProps) {
 
   const twitterLink = createTwitterLink(name);
   const telegramLink = createTelegramLink(
-    `https://nameguard.io/inspect/${encodeURIComponent(name)}`,
+    viewNameReportURL(buildENSName(name)).href,
   );
   const emailLink = createMailToLink(
     `NameGuard Report for ${name}`,
-    `Check this out!\nhttps://nameguard.io/inspect/${encodeURIComponent(name)}`,
+    `Check this out!\n${viewNameReportURL(buildENSName(name)).href}`,
   );
   const copyLinkToClipboard = () => {
-    navigator.clipboard.writeText(
-      `https://nameguard.io/inspect/${encodeURIComponent(name)}`,
-    );
+    navigator.clipboard.writeText(viewNameReportURL(buildENSName(name)).href);
     toast.success("Link copied to clipboard", {
       icon: (
         <CheckCircleIcon
@@ -133,12 +132,10 @@ export function Share({ name }: ShareProps) {
 
                   <div className="min-h-[200px] flex items-center justify-center px-6 md:px-10">
                     {name && (
-                      <>
-                        <DisplayedName
-                          name={buildENSName(name)}
-                          textStylingClasses="font-extrabold text-black text-xl"
-                        />
-                      </>
+                      <DisplayedName
+                        name={buildENSName(name)}
+                        textStylingClasses="font-extrabold text-black text-xl"
+                      />
                     )}
                   </div>
 

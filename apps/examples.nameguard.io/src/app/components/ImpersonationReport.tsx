@@ -1,15 +1,17 @@
 "use client";
 
-import { Rating, type SecurePrimaryNameResult } from "@namehash/nameguard";
+import { type SecurePrimaryNameResult } from "@namehash/nameguard";
 import {
   RatingIcon,
   RatingIconSize,
   RatingLoadingIcon,
+  viewNameReportURL,
   ratingTextColor,
 } from "@namehash/nameguard-react";
 import cc from "classcat";
 
 import { Tooltip } from "./Tooltip";
+import { buildENSName } from "@namehash/ens-utils";
 
 type ImpersonationReportProps = {
   data?: SecurePrimaryNameResult;
@@ -26,7 +28,12 @@ export function ImpersonationReport({ data }: ImpersonationReportProps) {
   const { nameguard_result } = data;
 
   if (!nameguard_result)
-    return <RatingLoadingIcon size={RatingIconSize.micro} />;
+    return (
+      <RatingLoadingIcon
+        className="animate-pulse"
+        size={RatingIconSize.micro}
+      />
+    );
 
   const textClass = cc([
     "font-semibold",
@@ -66,9 +73,9 @@ export function ImpersonationReport({ data }: ImpersonationReportProps) {
             </div>
             <div className="text-sm text-white">
               <a
-                href={`https://nameguard.io/inspect/${encodeURIComponent(
-                  nameguard_result.name,
-                )}`}
+                href={
+                  viewNameReportURL(buildENSName(nameguard_result.name)).href
+                }
                 className="underline"
                 rel="noopener noreferrer"
                 target="_blank"
