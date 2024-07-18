@@ -3,7 +3,7 @@ import { ReactElement, SVGProps } from "react";
 export interface RoleCategory {
   name: string;
   banner: ReactElement;
-  icon: React.ComponentType<SVGProps<SVGSVGElement>>;
+  icon: React.ElementType;
 }
 
 export interface Role {
