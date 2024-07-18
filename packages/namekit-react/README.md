@@ -10,12 +10,6 @@ This repository contains all of the code for the NPM package [`@namehash/namekit
 npm install @namehash/namekit-react
 ```
 
-## Local Development
-
-It's recommended you run `pnpm dev` in the root of the repository to start all apps, packages, and internal resources to support local development.
-
-See [README.md](../README.md) for more information.
-
 ## Contact Us
 
 Visit our [website](https://namehashlabs.org/) and get in contact.

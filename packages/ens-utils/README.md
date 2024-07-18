@@ -1013,18 +1013,6 @@ const fromUsdToEth = convertCurrencyWithRates(
 - **Arithmetic Operations (add, subtract)**: Throws an error if currencies do not match.
 - **Conversion Operations**: Throws an error if exchange rates do not include the necessary currencies.
 
-## Local Development
-
-It's recommended you run `pnpm dev` in the root of the repository to start all apps, packages, and internal resources to support local development.
-
-See [README.md](../README.md) for more information.
-
-## Testing
-
-Tests are automatically ran when a new Pull Request is opened. You can run them locally using `pnpm test`.
-
-If you're developing locally, you can watch changes and run tests automatically using `pnpm test:watch`.
-
 ## Contact Us
 
 Visit our [website](https://namehashlabs.org/) and get in contact.

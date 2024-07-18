@@ -13,6 +13,12 @@ You must clone this respository, and install the dependencies using [PNPM](https
 
 It's recommended you run `pnpm dev` in the root of the repository to start all apps, packages, and internal resources to support local development.
 
+## Testing
+
+Tests are automatically ran when a new Pull Request is opened. You can run them locally using `pnpm test`.
+
+If you're developing locally, you can watch changes and run tests automatically using `pnpm test:watch`.
+
 ## Continuous Deployment
 
 We use [changesets](https://github.com/changesets/changesets) to manage our releases.
