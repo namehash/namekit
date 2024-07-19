@@ -18,9 +18,13 @@ const title = "Protect your community with NameGuard for ENS";
 const description =
   "Guard your users from heartbreak and encourage best practice usage of ENS.";
 
+const productionUrl =
+  `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` ||
+  "https://www.nameguard.io/";
+
 export const metadata: Metadata = {
   ...NamehashMetadata.defaultMetdata,
-  metadataBase: new URL("https://nameguard.io"),
+  metadataBase: new URL(productionUrl),
   alternates: {
     canonical: "/",
   },
@@ -38,7 +42,7 @@ export const metadata: Metadata = {
     title,
     description,
     siteName: "NameGuard",
-    url: "https://nameguard.io",
+    url: productionUrl,
   },
   twitter: {
     ...NamehashMetadata.defaultMetdata.twitter,
