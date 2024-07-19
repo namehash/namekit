@@ -10,7 +10,6 @@
   "dependencies": {
     "@headlessui-float/react": "0.11.4",
     "@headlessui/react": "1.7.17",
-    "@namehash/ens-utils": "1.12.1",
     "@namehash/nameguard": "workspace:*",
     "@namehash/nameguard-react": "workspace:*",
     "@namehash/ens-utils": "workspace:*",
