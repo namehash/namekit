@@ -1,4 +1,6 @@
 import { join, dirname } from "path";
+import { BigIntSerializer } from "./bigintSerializer";
+
 
 BigInt.prototype.toJSON = function () {
   return this.toString();
@@ -30,5 +32,6 @@ const config = {
     name: getAbsolutePath("@storybook/react-vite"),
     options: {},
   },
+  serializers: [BigIntSerializer],
 };
 export default config;
