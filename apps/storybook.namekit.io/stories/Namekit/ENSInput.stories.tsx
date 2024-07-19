@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { ENSInput } from "@namehash/namekit-react";
+import { EnsInput } from "@namehash/namekit-react";
 
-const meta: Meta<typeof ENSInput> = {
-  title: "UI/ENSInput",
-  component: ENSInput,
+const meta: Meta<typeof EnsInput> = {
+  title: "UI/EnsInput",
+  component: EnsInput,
   argTypes: {
     variant: {
       control: {
@@ -31,7 +31,7 @@ const meta: Meta<typeof ENSInput> = {
 
 export default meta;
 
-type Story = StoryObj<typeof ENSInput>;
+type Story = StoryObj<typeof EnsInput>;
 
 export const PrimaryMedium: Story = {
   args: {
