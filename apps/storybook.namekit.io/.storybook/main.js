@@ -1,5 +1,9 @@
 import { join, dirname } from "path";
 
+BigInt.prototype.toJSON = function () {
+  return this.toString();
+};
+
 /**
  * This function is used to resolve the absolute path of a package.
  * It is needed in projects that use Yarn PnP or are set up within a monorepo.
