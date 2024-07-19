@@ -8,10 +8,13 @@ import {
   buildENSName,
   now,
   subtractSeconds,
+  parseName,
+  getKnownPotentialNFTRefs,
+  buildChainId,
 } from "@namehash/ens-utils";
 import { Normalization } from "@namehash/nameguard";
 
-export const REGISTRATION_OF_EXPIRING_SOON_DOMAIN = {
+export const REGISTRATION_OF_EXPIRING_SOON_DOMAIN: Readonly<Registration> = {
   registrationTimestamp: subtractSeconds(now(), buildDuration(1000n)),
   expirationTimestamp: addSeconds(now(), buildDuration(4000n)),
   expiryTimestamp: null,
@@ -19,7 +22,7 @@ export const REGISTRATION_OF_EXPIRING_SOON_DOMAIN = {
   secondaryStatus: SecondaryRegistrationStatus.ExpiringSoon,
 };
 
-export const REGISTRATION_OF_EXPIRED_DOMAIN = {
+export const REGISTRATION_OF_EXPIRED_DOMAIN: Readonly<Registration> = {
   registrationTimestamp: subtractSeconds(now(), buildDuration(1000n)),
   expirationTimestamp: addSeconds(now(), buildDuration(4000n)),
   expiryTimestamp: null,
@@ -27,13 +30,14 @@ export const REGISTRATION_OF_EXPIRED_DOMAIN = {
   secondaryStatus: SecondaryRegistrationStatus.GracePeriod,
 };
 
-export const REGISTRATION_OF_NORMAL_EXPIRATION_STATUS = {
-  registrationTimestamp: null,
-  expirationTimestamp: null,
-  expiryTimestamp: null,
-  primaryStatus: PrimaryRegistrationStatus.Active,
-  secondaryStatus: null,
-};
+export const REGISTRATION_OF_NORMAL_EXPIRATION_STATUS: Readonly<Registration> =
+  {
+    registrationTimestamp: null,
+    expirationTimestamp: null,
+    expiryTimestamp: null,
+    primaryStatus: PrimaryRegistrationStatus.Active,
+    secondaryStatus: null,
+  };
 
 export enum DomainStatus {
   ExpiringSoon,
@@ -118,6 +122,13 @@ export const getMockedDomainCard = ({
       break;
   }
 
+  // TODO: make this nft and parsedName getters work
+  // const nft = getKnownPotentialNFTRefs({
+  //   name,
+  //   chain: buildChainId(1),
+  // });
+  //const parsedName = parseName(name);
+
   return {
     name,
     nft: {
@@ -133,7 +144,6 @@ export const getMockedDomainCard = ({
         tokenId: 1n,
       },
     },
-    // TODO: updated parsedName object based on the normalization wanted once API is once again available
     parsedName: {
       namehash:
         "0x5c1f4e4189d173a562af8d27771e2a1394ccbfa466f0e72b429dd317afce4c06",
