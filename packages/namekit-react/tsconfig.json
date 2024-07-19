@@ -2,8 +2,11 @@
   "compilerOptions": {
     "strict": true,
     "jsx": "react",
-    "module": "esnext",
-    "moduleResolution": "node",
+    "module": "ES2020",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "moduleResolution": "bundler",
+    "target": "ES2020",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,

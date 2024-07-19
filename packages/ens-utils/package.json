@@ -4,7 +4,12 @@
   "version": "1.12.0",
   "license": "MIT",
   "repository": "namehash/ens-utils",
-  "keywords": ["ens", "ethereum", "namehash", "ens-utils"],
+  "keywords": [
+    "ens",
+    "ethereum",
+    "namehash",
+    "ens-utils"
+  ],
   "contributors": [
     "Jamie Barton <jamie@notrab.dev>",
     "Franco Aguzzi <frankind.eth@gmail.com>"
@@ -16,9 +21,9 @@
     "test:watch": "vitest watch"
   },
   "type": "module",
-  "main": "./dist/index.js",
+  "main": "index.js",
   "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/index",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -42,5 +47,7 @@
     "vite": "5.1.7",
     "vitest": "1.4.0"
   },
-  "files": ["dist"]
+  "files": [
+    "dist"
+  ]
 }
