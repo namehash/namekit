@@ -35,6 +35,5 @@ const config = {
       },
     },
   },
-  serializers: [BigIntSerializer],
 };
 export default config;
