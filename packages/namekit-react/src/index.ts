@@ -14,4 +14,5 @@ export * from "./components/Link";
 export * from "./components/Tooltip";
 
 export * from "./components/DomainExpirationWarning";
+export * from "./components/DomainOwnershipBadge";
 export * from "./components/DomainCard";
