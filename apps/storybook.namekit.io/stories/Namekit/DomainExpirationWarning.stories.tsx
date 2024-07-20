@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { DomainExpirationWarning } from "@namehash/namekit-react";
-import { DomainStatus, getMockedDomainCard } from "./utils";
+import {
+  DomainStatus,
+  getMockedDomainCard,
+  MOCKED_DOMAIN_CARD_IS_OWNER_ADDRESS,
+} from "./utils";
 import { buildAddress } from "@namehash/ens-utils";
 
 const meta: Meta<typeof DomainExpirationWarning> = {
@@ -20,6 +24,7 @@ export default meta;
 type Story = StoryObj<typeof DomainExpirationWarning>;
 
 export const DomainFarFromExpiring: Story = {
+  name: "Hidden (domain far from expiring)",
   args: {
     domain: getMockedDomainCard({ domainStatus: DomainStatus.Normal }),
   },
@@ -40,18 +45,18 @@ export const IconAndTextForADomainExpiringSoon: Story = {
 
 export const OnlyIconForADomainExpired: Story = {
   args: {
-    viewerAddress: buildAddress("0x1a199654959140E5c1A2F4135fAA7Ba2748939C5"),
+    viewerAddress: buildAddress(MOCKED_DOMAIN_CARD_IS_OWNER_ADDRESS),
     domain: getMockedDomainCard({
       domainStatus: DomainStatus.Expired,
     }),
-    onlyIcon: false,
+    onlyIcon: true,
   },
 };
 
 export const IconAndTextForADomainExpired: Story = {
   args: {
     onlyIcon: false,
-    viewerAddress: buildAddress("0x1a199654959140E5c1A2F4135fAA7Ba2748939C5"),
+    viewerAddress: buildAddress(MOCKED_DOMAIN_CARD_IS_OWNER_ADDRESS),
     domain: getMockedDomainCard({
       domainStatus: DomainStatus.Expired,
     }),
@@ -60,7 +65,7 @@ export const IconAndTextForADomainExpired: Story = {
 
 export const OnlyIconForADomainExpiredWhenDisplayingForDomainOwner: Story = {
   args: {
-    viewerAddress: buildAddress("0x1a199654959140E5c1A2F4135fAA7Ba2748939C5"),
+    viewerAddress: buildAddress(MOCKED_DOMAIN_CARD_IS_OWNER_ADDRESS),
     domain: getMockedDomainCard({ domainStatus: DomainStatus.Expired }),
   },
 };
@@ -68,7 +73,7 @@ export const OnlyIconForADomainExpiredWhenDisplayingForDomainOwner: Story = {
 export const IconAndTextForADomainExpiredWhenDisplayingForDomainOwner: Story = {
   args: {
     onlyIcon: false,
-    viewerAddress: buildAddress("0x1a199654959140E5c1A2F4135fAA7Ba2748939C5"),
+    viewerAddress: buildAddress(MOCKED_DOMAIN_CARD_IS_OWNER_ADDRESS),
     domain: getMockedDomainCard({ domainStatus: DomainStatus.Expired }),
   },
 };
