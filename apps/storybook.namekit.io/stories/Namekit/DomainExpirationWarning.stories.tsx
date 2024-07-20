@@ -4,6 +4,7 @@ import {
   DomainStatus,
   getMockedDomainCard,
   MOCKED_DOMAIN_CARD_IS_OWNER_ADDRESS,
+  MOCKED_DOMAIN_CARD_NON_OWNER_ADDRESS,
 } from "./utils";
 import { buildAddress } from "@namehash/ens-utils";
 
@@ -45,7 +46,7 @@ export const IconAndTextForADomainExpiringSoon: Story = {
 
 export const OnlyIconForADomainExpired: Story = {
   args: {
-    viewerAddress: buildAddress(MOCKED_DOMAIN_CARD_IS_OWNER_ADDRESS),
+    viewerAddress: buildAddress(MOCKED_DOMAIN_CARD_NON_OWNER_ADDRESS),
     domain: getMockedDomainCard({
       domainStatus: DomainStatus.Expired,
     }),
@@ -56,7 +57,7 @@ export const OnlyIconForADomainExpired: Story = {
 export const IconAndTextForADomainExpired: Story = {
   args: {
     onlyIcon: false,
-    viewerAddress: buildAddress(MOCKED_DOMAIN_CARD_IS_OWNER_ADDRESS),
+    viewerAddress: buildAddress(MOCKED_DOMAIN_CARD_NON_OWNER_ADDRESS),
     domain: getMockedDomainCard({
       domainStatus: DomainStatus.Expired,
     }),

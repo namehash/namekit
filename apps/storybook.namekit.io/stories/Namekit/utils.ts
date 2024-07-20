@@ -77,8 +77,10 @@ export const getENSnameFor = (variant: ENSNameVariant): ENSName => {
   }
 };
 
-export const MOCKED_DOMAIN_CARD_IS_OWNER_ADDRESS =
+export const MOCKED_DOMAIN_CARD_IS_OWNER_ADDRESS: `0x${string}` =
   "0x1a199654959140E5c1A2F4135fAA7Ba2748939C6";
+export const MOCKED_DOMAIN_CARD_NON_OWNER_ADDRESS =
+  MOCKED_DOMAIN_CARD_IS_OWNER_ADDRESS.replace("5", "6") as `0x${string}`;
 
 export const getMockedDomainCard = ({
   domainStatus,
@@ -90,8 +92,8 @@ export const getMockedDomainCard = ({
   normalization?: Normalization;
 }): DomainCard => {
   const address = isOwner
-    ? (MOCKED_DOMAIN_CARD_IS_OWNER_ADDRESS as `0x${string}`)
-    : (MOCKED_DOMAIN_CARD_IS_OWNER_ADDRESS.replace("5", "6") as `0x${string}`);
+    ? MOCKED_DOMAIN_CARD_IS_OWNER_ADDRESS
+    : MOCKED_DOMAIN_CARD_NON_OWNER_ADDRESS;
 
   let registrationObj: Registration = REGISTRATION_OF_NORMAL_EXPIRATION_STATUS;
   let ownerProps: DomainCardOwnerProps = {
