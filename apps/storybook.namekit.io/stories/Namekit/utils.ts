@@ -8,9 +8,10 @@ import {
   buildENSName,
   now,
   subtractSeconds,
-  parseName,
-  getKnownPotentialNFTRefs,
-  buildChainId,
+  getDomainName,
+  buildNFTRefFromENSName,
+  ENSName,
+  MAINNET,
 } from "@namehash/ens-utils";
 import { Normalization } from "@namehash/nameguard";
 
@@ -61,7 +62,7 @@ export enum ENSNameVariant {
   Unknown = "Unknown",
 }
 
-export const getENSnameFor = (variant: ENSNameVariant) => {
+export const getENSnameFor = (variant: ENSNameVariant): ENSName => {
   switch (variant) {
     case ENSNameVariant.NormalizedWithAvatar:
       return buildENSName("lightwalker.eth");
@@ -112,50 +113,23 @@ export const getMockedDomainCard = ({
       break;
   }
 
-  let name = getENSnameFor(ENSNameVariant.NormalizedWithAvatar);
+  let ensName = getENSnameFor(ENSNameVariant.NormalizedWithAvatar);
   switch (normalization) {
     case Normalization.unnormalized:
-      name = getENSnameFor(ENSNameVariant.Unnormalized);
+      ensName = getENSnameFor(ENSNameVariant.Unnormalized);
       break;
     case Normalization.unknown:
-      name = getENSnameFor(ENSNameVariant.Unknown);
+      ensName = getENSnameFor(ENSNameVariant.Unknown);
       break;
   }
 
-  // TODO: make this nft and parsedName getters work
-  // const nft = getKnownPotentialNFTRefs({
-  //   name,
-  //   chain: buildChainId(1),
-  // });
-  //const parsedName = parseName(name);
+  const nft = buildNFTRefFromENSName(ensName, MAINNET, false);
+  const parsedName = getDomainName(ensName.name);
 
   return {
     name,
-    nft: {
-      contract: {
-        chain: {
-          chainId: 1,
-        },
-        address: {
-          address: "0x57f1887a8bf19b14fc0df6fd9b2acc9af6e5f6c2",
-        },
-      },
-      token: {
-        tokenId: 1n,
-      },
-    },
-    parsedName: {
-      namehash:
-        "0x5c1f4e4189d173a562af8d27771e2a1394ccbfa466f0e72b429dd317afce4c06",
-      slug: "lightwalker.eth",
-      displayName: "lightwalker.eth",
-      normalizedName: "lightwalker.eth",
-      labelName: "lightwalker",
-      labelHash:
-        "c965e9bd2f3c07c8da17699e3e0a6abe39294dc6749ea2b239761d8ebcd7009b",
-      unwrappedTokenId: 1n,
-      wrappedTokenId: 1n,
-    },
+    nft,
+    parsedName,
     registration: registrationObj,
     nameGeneratorMetadata: null,
     onWatchlist: false,

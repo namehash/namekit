@@ -316,12 +316,7 @@ export const premiumPeriodEndsIn = (
     releasedEpoch,
     TEMPORARY_PREMIUM_PERIOD,
   );
-  console.log({
-    relativeTimestamp: formatTimestampAsDistanceToNow(
-      temporaryPremiumEndTimestamp,
-    ),
-    timestamp: temporaryPremiumEndTimestamp,
-  });
+
   return {
     relativeTimestamp: formatTimestampAsDistanceToNow(
       temporaryPremiumEndTimestamp,

@@ -289,6 +289,9 @@ importers:
       '@storybook/blocks':
         specifier: ^8.1.8
         version: 8.1.10(@types/react-dom@18.3.0)(@types/react@18.3.3)(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)
+      '@storybook/builder-vite':
+        specifier: 8.2.5
+        version: 8.2.5(storybook@8.1.10)(typescript@5.5.3)(vite@5.1.7)
       '@storybook/react':
         specifier: ^8.1.8
         version: 8.1.8(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)(typescript@5.5.3)
@@ -341,6 +344,9 @@ importers:
         specifier: 2.9.3
         version: 2.9.3(typescript@5.3.3)
     devDependencies:
+      '@types/node':
+        specifier: 20.14.11
+        version: 20.14.11
       tsup:
         specifier: 8.0.2
         version: 8.0.2(typescript@5.3.3)
@@ -349,10 +355,10 @@ importers:
         version: 5.3.3
       vite:
         specifier: 5.1.7
-        version: 5.1.7(@types/node@20.12.12)
+        version: 5.1.7(@types/node@20.14.11)
       vitest:
         specifier: 1.4.0
-        version: 1.4.0(@types/node@20.12.12)
+        version: 1.4.0(@types/node@20.14.11)
 
   packages/ens-webfont: {}
 
@@ -4138,6 +4144,38 @@ packages:
       - supports-color
     dev: true
 
+  /@storybook/builder-vite@8.2.5(storybook@8.1.10)(typescript@5.5.3)(vite@5.1.7):
+    resolution: {integrity: sha512-5CiJY+vJKt8FpEK0MVAXrIj4UDahi4fxPoUYcxawaYHTCpspaxFtLrHuNQkDbyDSjBednIMOIAm8ei2pha3Z6Q==}
+    peerDependencies:
+      '@preact/preset-vite': '*'
+      storybook: ^8.2.5
+      typescript: '>= 4.3.x'
+      vite: ^4.0.0 || ^5.0.0
+      vite-plugin-glimmerx: '*'
+    peerDependenciesMeta:
+      '@preact/preset-vite':
+        optional: true
+      typescript:
+        optional: true
+      vite-plugin-glimmerx:
+        optional: true
+    dependencies:
+      '@storybook/csf-plugin': 8.2.5(storybook@8.1.10)
+      '@types/find-cache-dir': 3.2.1
+      browser-assert: 1.2.1
+      es-module-lexer: 1.5.3
+      express: 4.19.2
+      find-cache-dir: 3.3.2
+      fs-extra: 11.2.0
+      magic-string: 0.30.10
+      storybook: 8.1.10(react-dom@18.3.1)(react@18.3.1)
+      ts-dedent: 2.2.0
+      typescript: 5.5.3
+      vite: 5.1.7(@types/node@20.12.12)
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
   /@storybook/channels@8.1.10:
     resolution: {integrity: sha512-CxZE4XrQoe+F+S2mo8Z9HTvFZKfKHIIiwYfoXKCryVp2U/z7ZKrely2PbfxWsrQvF3H0+oegfYYhYRHRiM21Zw==}
     dependencies:
@@ -4430,6 +4468,15 @@ packages:
       unplugin: 1.10.1
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /@storybook/csf-plugin@8.2.5(storybook@8.1.10):
+    resolution: {integrity: sha512-YpkvfDbKyilI54QMz/NyHGOlXxVeE+3LTKLx4GV/JrnGW+EtqQTYNaWWnTsesX0AsUICBAvxqyO9HtFtRjeL+Q==}
+    peerDependencies:
+      storybook: ^8.2.5
+    dependencies:
+      storybook: 8.1.10(react-dom@18.3.1)(react@18.3.1)
+      unplugin: 1.10.1
     dev: true
 
   /@storybook/csf-tools@8.1.10:
@@ -12069,6 +12116,27 @@ packages:
       - terser
     dev: true
 
+  /vite-node@1.4.0(@types/node@20.14.11):
+    resolution: {integrity: sha512-VZDAseqjrHgNd4Kh8icYHWzTKSCZMhia7GyHfhtzLW33fZlG9SwsB6CEhgyVOWkJfJ2pFLrp/Gj1FSfAiqH9Lw==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    hasBin: true
+    dependencies:
+      cac: 6.7.14
+      debug: 4.3.4
+      pathe: 1.1.2
+      picocolors: 1.0.1
+      vite: 5.1.7(@types/node@20.14.11)
+    transitivePeerDependencies:
+      - '@types/node'
+      - less
+      - lightningcss
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+    dev: true
+
   /vite-node@1.6.0(@types/node@20.12.7):
     resolution: {integrity: sha512-de6HJgzC+TFzOu0NTC4RAIsyf/DY/ibWDYQUcuEA84EMHhcefTUGkjFHKKEJhQN4A+6I0u++kr3l36ZF2d7XRw==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -12162,6 +12230,42 @@ packages:
       fsevents: 2.3.3
     dev: true
 
+  /vite@5.1.7(@types/node@20.14.11):
+    resolution: {integrity: sha512-sgnEEFTZYMui/sTlH1/XEnVNHMujOahPLGMxn1+5sIT45Xjng1Ec1K78jRP15dSmVgg5WBin9yO81j3o9OxofA==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': ^18.0.0 || >=20.0.0
+      less: '*'
+      lightningcss: ^1.21.0
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      lightningcss:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      '@types/node': 20.14.11
+      esbuild: 0.19.12
+      postcss: 8.4.39
+      rollup: 4.17.2
+    optionalDependencies:
+      fsevents: 2.3.3
+    dev: true
+
   /vitest@1.4.0(@types/node@20.12.12):
     resolution: {integrity: sha512-gujzn0g7fmwf83/WzrDTnncZt2UiXP41mHuFYFrdwaLRVQ6JYQEiME2IfEjU3vcFL3VKa75XhI3lFgn+hfVsQw==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -12207,6 +12311,62 @@ packages:
       tinypool: 0.8.4
       vite: 5.1.7(@types/node@20.12.12)
       vite-node: 1.4.0(@types/node@20.12.12)
+      why-is-node-running: 2.2.2
+    transitivePeerDependencies:
+      - less
+      - lightningcss
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+    dev: true
+
+  /vitest@1.4.0(@types/node@20.14.11):
+    resolution: {integrity: sha512-gujzn0g7fmwf83/WzrDTnncZt2UiXP41mHuFYFrdwaLRVQ6JYQEiME2IfEjU3vcFL3VKa75XhI3lFgn+hfVsQw==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    hasBin: true
+    peerDependencies:
+      '@edge-runtime/vm': '*'
+      '@types/node': ^18.0.0 || >=20.0.0
+      '@vitest/browser': 1.4.0
+      '@vitest/ui': 1.4.0
+      happy-dom: '*'
+      jsdom: '*'
+    peerDependenciesMeta:
+      '@edge-runtime/vm':
+        optional: true
+      '@types/node':
+        optional: true
+      '@vitest/browser':
+        optional: true
+      '@vitest/ui':
+        optional: true
+      happy-dom:
+        optional: true
+      jsdom:
+        optional: true
+    dependencies:
+      '@types/node': 20.14.11
+      '@vitest/expect': 1.4.0
+      '@vitest/runner': 1.4.0
+      '@vitest/snapshot': 1.4.0
+      '@vitest/spy': 1.4.0
+      '@vitest/utils': 1.4.0
+      acorn-walk: 8.3.2
+      chai: 4.4.1
+      debug: 4.3.4
+      execa: 8.0.1
+      local-pkg: 0.5.0
+      magic-string: 0.30.10
+      pathe: 1.1.2
+      picocolors: 1.0.1
+      std-env: 3.7.0
+      strip-literal: 2.1.0
+      tinybench: 2.8.0
+      tinypool: 0.8.4
+      vite: 5.1.7(@types/node@20.14.11)
+      vite-node: 1.4.0(@types/node@20.14.11)
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less

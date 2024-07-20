@@ -1,9 +1,11 @@
 import { Registration } from "./registration";
-import { ENSName } from "./ensname";
+import { ENSName, MIN_ETH_REGISTRABLE_LABEL_LENGTH } from "./ensname";
 import { Timestamp, addSeconds } from "./time";
 import { NFTRef } from "./nft";
 import { GRACE_PERIOD } from "./ethregistrar";
 import { Address, buildAddress, isAddressEqual } from "./address";
+import { hexToBigInt, keccak256, labelhash as labelHash, namehash } from "viem";
+import { ens_beautify, ens_normalize } from "@adraffy/ens-normalize";
 
 /**
  * Object containing properties necessary for domain name processing.
@@ -135,4 +137,204 @@ export const getUserOwnership = (
   }
 
   return UserOwnershipOfDomain.notOwner;
+};
+
+export enum ParseNameErrorCode {
+  Empty = "Empty",
+  TooShort = "TooShort",
+  UnsupportedTLD = "UnsupportedTLD",
+  UnsupportedSubdomain = "UnsupportedSubdomain",
+  MalformedName = "MalformedName",
+  MalformedLabelHash = "MalformedLabelHash",
+}
+
+type ParseNameErrorDetails = {
+  normalizedName: string | null;
+  displayName: string | null;
+};
+export class ParseNameError extends Error {
+  public readonly errorCode: ParseNameErrorCode;
+  public readonly errorDetails: ParseNameErrorDetails | null;
+
+  constructor(
+    message: string,
+    errorCode: ParseNameErrorCode,
+    errorDetails: ParseNameErrorDetails | null,
+  ) {
+    super(message);
+
+    this.errorCode = errorCode;
+    this.errorDetails = errorDetails;
+  }
+}
+
+export const DEFAULT_TLD = "eth";
+
+export const DefaultParseNameError = new ParseNameError(
+  "Empty name",
+  ParseNameErrorCode.Empty,
+  null,
+);
+
+export const hasMissingNameFormat = (label: string) =>
+  new RegExp("\\[([0123456789abcdef]*)\\]").test(label) && label.length === 66;
+
+const labelhash = (label: string) => labelHash(label);
+
+const getPrefixes = (input: string): string[] => {
+  const prefixes: string[] = [];
+
+  for (let i = 1; i <= input.length; i++) {
+    prefixes.push(input.slice(0, i));
+  }
+
+  return prefixes;
+};
+
+const keccak = (input: Buffer | string) => {
+  let out = null;
+  if (Buffer.isBuffer(input)) {
+    out = keccak256(input);
+  } else {
+    out = labelhash(input);
+  }
+  return out.slice(2); // cut 0x
+};
+
+const initialNode =
+  "0000000000000000000000000000000000000000000000000000000000000000";
+
+export const namehashFromMissingName = (inputName: string): string => {
+  let node = initialNode;
+
+  const split = inputName.split(".");
+  const labels = [split[0].slice(1, -1), keccak(split[1])];
+
+  for (let i = labels.length - 1; i >= 0; i--) {
+    const labelSha = labels[i];
+    node = keccak(Buffer.from(node + labelSha, "hex"));
+  }
+  return "0x" + node;
+};
+
+/**
+ * Parse and heal input string to a DomainName.
+ * @param input User input or slug.
+ * @return Object containing properties necessary for DomainName for any supported name.
+ * @throws {ParseNameError}, when input is unsupported or cannot be healed.
+ */
+export const getDomainName = (input = ""): DomainName => {
+  const cleanedInput = input.replace(/ /g, "");
+
+  if (cleanedInput.length === 0) {
+    throw new ParseNameError("Empty name", ParseNameErrorCode.Empty, null);
+  }
+
+  const inputLabels = cleanedInput.split(".");
+
+  let curatedLabels: string[] = [];
+
+  if (inputLabels.length < 2) {
+    curatedLabels = [...inputLabels, DEFAULT_TLD];
+  } else {
+    curatedLabels = inputLabels;
+  }
+
+  // auto-fill top level domain
+  if (
+    getPrefixes(DEFAULT_TLD).some(
+      (prefix) => curatedLabels[curatedLabels.length - 1] === prefix,
+    ) ||
+    curatedLabels[curatedLabels.length - 1] === ""
+  ) {
+    curatedLabels = [...curatedLabels.slice(0, -1), DEFAULT_TLD];
+  }
+
+  if (curatedLabels[curatedLabels.length - 1] !== DEFAULT_TLD) {
+    throw new ParseNameError(
+      "Unsupported top level name",
+      ParseNameErrorCode.UnsupportedTLD,
+      null,
+    );
+  }
+
+  if (curatedLabels.length > 2) {
+    throw new ParseNameError(
+      "Unsupported subdomain",
+      ParseNameErrorCode.UnsupportedSubdomain,
+      null,
+    );
+  }
+
+  const firstCuratedLabel = curatedLabels[0].toLowerCase();
+
+  // handle undiscovered name format, like [0x00...].eth
+  if (firstCuratedLabel.startsWith("[") && firstCuratedLabel.endsWith("]")) {
+    if (hasMissingNameFormat(firstCuratedLabel)) {
+      const searchedName = curatedLabels.join(".").toLowerCase();
+      const namehash = namehashFromMissingName(searchedName);
+      const labelHash = "0x" + firstCuratedLabel.slice(1, -1);
+
+      return {
+        namehash,
+        slug: searchedName,
+        displayName: searchedName,
+        normalizedName: null,
+        labelName: firstCuratedLabel,
+        labelHash,
+
+        // Below values are guaranteed to be 0x strings
+        unwrappedTokenId: hexToBigInt(labelHash as `0x${string}`),
+        wrappedTokenId: hexToBigInt(namehash as `0x${string}`),
+      };
+    } else {
+      throw new ParseNameError(
+        "Invalid labelhash",
+        ParseNameErrorCode.MalformedLabelHash,
+        null,
+      );
+    }
+  } else {
+    const searchedName = curatedLabels.join(".");
+
+    let normalizedName = null;
+    try {
+      normalizedName = ens_normalize(searchedName);
+    } catch (e) {
+      throw new ParseNameError(
+        "Invalid ENS name",
+        ParseNameErrorCode.MalformedName,
+        null,
+      );
+    }
+
+    const normalizedLabel = normalizedName.split(".")[0];
+    if (normalizedLabel.length < MIN_ETH_REGISTRABLE_LABEL_LENGTH) {
+      throw new ParseNameError(
+        "Name is too short",
+        ParseNameErrorCode.TooShort,
+        {
+          normalizedName,
+          displayName: ens_beautify(normalizedName),
+        },
+      );
+    }
+
+    const nh = namehash(normalizedName);
+    const labelHash = labelhash(normalizedLabel);
+    const displayName = ens_beautify(normalizedName);
+
+    return {
+      namehash: nh,
+      slug: normalizedName,
+      displayName,
+      normalizedName,
+      labelName: normalizedLabel,
+      labelHash,
+
+      // Below values are guaranteed to be 0x strings
+      unwrappedTokenId: hexToBigInt(labelHash as `0x${string}`),
+      wrappedTokenId: hexToBigInt(nh as `0x${string}`),
+    };
+  }
 };

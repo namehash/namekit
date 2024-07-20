@@ -43,8 +43,8 @@ export const OnlyIconForADomainExpired: Story = {
     viewerAddress: buildAddress("0x1a199654959140E5c1A2F4135fAA7Ba2748939C5"),
     domain: getMockedDomainCard({
       domainStatus: DomainStatus.Expired,
-      onlyIcon: false,
     }),
+    onlyIcon: false,
   },
 };
 
@@ -54,7 +54,6 @@ export const IconAndTextForADomainExpired: Story = {
     viewerAddress: buildAddress("0x1a199654959140E5c1A2F4135fAA7Ba2748939C5"),
     domain: getMockedDomainCard({
       domainStatus: DomainStatus.Expired,
-      onlyIcon: false,
     }),
   },
 };

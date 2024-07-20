@@ -19,7 +19,6 @@ const config = {
   stories: [
     "../stories/**/*.mdx",
     "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
-    // "../../../packages/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
   addons: [
     getAbsolutePath("@storybook/addon-onboarding"),
@@ -30,7 +29,11 @@ const config = {
   ],
   framework: {
     name: getAbsolutePath("@storybook/react-vite"),
-    options: {},
+    options: {
+      builder: {
+        viteConfigPath: './.storybook/customVite.config.js',
+      },
+    },
   },
   serializers: [BigIntSerializer],
 };

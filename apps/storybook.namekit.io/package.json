@@ -12,6 +12,7 @@
     "@storybook/addon-links": "^8.1.1",
     "@storybook/addon-onboarding": "^8.1.1",
     "@storybook/blocks": "^8.1.8",
+    "@storybook/builder-vite": "8.2.5",
     "@storybook/react": "^8.1.8",
     "@storybook/react-vite": "^8.1.8",
     "@storybook/test": "^8.1.8",
@@ -22,11 +23,11 @@
     "storybook": "^8.1.1"
   },
   "dependencies": {
-    "@namehash/ens-webfont": "workspace:*",
-    "@namehash/namekit-react": "workspace:*",
-    "@namehash/nameguard-react": "workspace:*",
-    "@namehash/nameguard": "workspace:*",
     "@namehash/ens-utils": "workspace:*",
+    "@namehash/ens-webfont": "workspace:*",
+    "@namehash/nameguard": "workspace:*",
+    "@namehash/nameguard-react": "workspace:*",
+    "@namehash/namekit-react": "workspace:*",
     "react-dom": "^18.3.1"
   }
 }
