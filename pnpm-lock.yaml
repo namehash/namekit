@@ -179,9 +179,9 @@ importers:
       '@namehash/ens-webfont':
         specifier: 0.0.3
         version: 0.0.3
-      '@namehash/utils':
-        specifier: ^0.0.1
-        version: 0.0.1
+      '@namehash/seo':
+        specifier: workspace:*
+        version: link:../../internal/seo
       '@vercel/analytics':
         specifier: 1.2.2
         version: 1.2.2(next@14.2.2)(react@18.3.1)
@@ -346,10 +346,10 @@ importers:
         version: 5.3.3
       vite:
         specifier: 5.1.7
-        version: 5.1.7(@types/node@20.12.7)
+        version: 5.1.7(@types/node@20.12.12)
       vitest:
         specifier: 1.4.0
-        version: 1.4.0
+        version: 1.4.0(@types/node@20.12.12)
 
   packages/ens-webfont: {}
 
@@ -2984,7 +2984,7 @@ packages:
       magic-string: 0.27.0
       react-docgen-typescript: 2.2.2(typescript@5.5.3)
       typescript: 5.5.3
-      vite: 5.1.7(@types/node@20.12.7)
+      vite: 5.1.7(@types/node@20.12.12)
     dev: true
 
   /@jridgewell/gen-mapping@0.3.5:
@@ -3045,11 +3045,6 @@ packages:
 
   /@namehash/ens-webfont@0.0.3:
     resolution: {integrity: sha512-2SNBgWkqd8Oe76EZ+b9pdIVTfwn3w0iNk8fI9ESQXYO1xyTPOvZL34avI64nrGmBZSZMsNyFdfc4xHXoVY1lIg==}
-    dev: false
-
-  /@namehash/utils@0.0.1:
-    resolution: {integrity: sha512-7ZJhx2ZVaLnHTdSxxw/PlyYjQiP0yvaFaLTPKjm1+nHzAlqbeMWhYUSGdLlZvRCCaiywuw2PzAuzTEwgzPHOZw==}
-    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
     dev: false
 
   /@ndelangen/get-tarball@3.0.9:
@@ -4065,7 +4060,7 @@ packages:
       magic-string: 0.30.10
       ts-dedent: 2.2.0
       typescript: 5.5.3
-      vite: 5.1.7(@types/node@20.12.7)
+      vite: 5.1.7(@types/node@20.12.12)
     transitivePeerDependencies:
       - encoding
       - prettier
@@ -4609,7 +4604,7 @@ packages:
       react-dom: 18.3.1(react@18.3.1)
       resolve: 1.22.8
       tsconfig-paths: 4.2.0
-      vite: 5.1.7(@types/node@20.12.7)
+      vite: 5.1.7(@types/node@20.12.12)
     transitivePeerDependencies:
       - '@preact/preset-vite'
       - encoding
@@ -11978,27 +11973,6 @@ packages:
       - zod
     dev: false
 
-  /vite-node@1.4.0:
-    resolution: {integrity: sha512-VZDAseqjrHgNd4Kh8icYHWzTKSCZMhia7GyHfhtzLW33fZlG9SwsB6CEhgyVOWkJfJ2pFLrp/Gj1FSfAiqH9Lw==}
-    engines: {node: ^18.0.0 || >=20.0.0}
-    hasBin: true
-    dependencies:
-      cac: 6.7.14
-      debug: 4.3.4
-      pathe: 1.1.2
-      picocolors: 1.0.1
-      vite: 5.1.7(@types/node@20.12.7)
-    transitivePeerDependencies:
-      - '@types/node'
-      - less
-      - lightningcss
-      - sass
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
-    dev: true
-
   /vite-node@1.4.0(@types/node@20.12.12):
     resolution: {integrity: sha512-VZDAseqjrHgNd4Kh8icYHWzTKSCZMhia7GyHfhtzLW33fZlG9SwsB6CEhgyVOWkJfJ2pFLrp/Gj1FSfAiqH9Lw==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -12111,61 +12085,6 @@ packages:
       rollup: 4.17.2
     optionalDependencies:
       fsevents: 2.3.3
-    dev: true
-
-  /vitest@1.4.0:
-    resolution: {integrity: sha512-gujzn0g7fmwf83/WzrDTnncZt2UiXP41mHuFYFrdwaLRVQ6JYQEiME2IfEjU3vcFL3VKa75XhI3lFgn+hfVsQw==}
-    engines: {node: ^18.0.0 || >=20.0.0}
-    hasBin: true
-    peerDependencies:
-      '@edge-runtime/vm': '*'
-      '@types/node': ^18.0.0 || >=20.0.0
-      '@vitest/browser': 1.4.0
-      '@vitest/ui': 1.4.0
-      happy-dom: '*'
-      jsdom: '*'
-    peerDependenciesMeta:
-      '@edge-runtime/vm':
-        optional: true
-      '@types/node':
-        optional: true
-      '@vitest/browser':
-        optional: true
-      '@vitest/ui':
-        optional: true
-      happy-dom:
-        optional: true
-      jsdom:
-        optional: true
-    dependencies:
-      '@vitest/expect': 1.4.0
-      '@vitest/runner': 1.4.0
-      '@vitest/snapshot': 1.4.0
-      '@vitest/spy': 1.4.0
-      '@vitest/utils': 1.4.0
-      acorn-walk: 8.3.2
-      chai: 4.4.1
-      debug: 4.3.4
-      execa: 8.0.1
-      local-pkg: 0.5.0
-      magic-string: 0.30.10
-      pathe: 1.1.2
-      picocolors: 1.0.1
-      std-env: 3.7.0
-      strip-literal: 2.1.0
-      tinybench: 2.8.0
-      tinypool: 0.8.4
-      vite: 5.1.7(@types/node@20.12.7)
-      vite-node: 1.4.0
-      why-is-node-running: 2.2.2
-    transitivePeerDependencies:
-      - less
-      - lightningcss
-      - sass
-      - stylus
-      - sugarss
-      - supports-color
-      - terser
     dev: true
 
   /vitest@1.4.0(@types/node@20.12.12):

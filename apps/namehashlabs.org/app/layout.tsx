@@ -2,7 +2,7 @@ import "./globals.css";
 import "@namehash/ens-webfont";
 
 import type { Metadata } from "next";
-import { Metadata as NamehashMetadata } from "@namehash/utils";
+import { Metadata as NamehashMetadata } from "@namehash/seo";
 import { Inter } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
@@ -23,7 +23,6 @@ const keywords = ["ens", "web3", "eth", "nameguard", "namekit", "namehash"];
 
 export const metadata: Metadata = {
   ...NamehashMetadata.defaultMetdata,
-  metadataBase: new URL("https://namehashlabs.org"),
   alternates: {
     canonical: "/",
   },
@@ -37,7 +36,6 @@ export const metadata: Metadata = {
     ...NamehashMetadata.defaultMetdata.openGraph,
     title,
     description,
-    url: new URL("https://namehashlabs.org"),
     siteName: "NameHash Labs",
   },
   twitter: {
