@@ -3,7 +3,7 @@ name: Deploy NameGuard to AWS as a serverless lambda
 on:
   push:
     branches:
-      - ci-cd-lambda-nameguard-v2 #temporary for testing
+      - sebastianbana/sc-25420/resolve-errors-in-ci-for-nameguard-lambda #temporary for testing
       - main
 
 env:
@@ -34,7 +34,7 @@ jobs:
           git config --global user.email ''
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE}}
           aws-region: us-east-1
