@@ -24,12 +24,12 @@ export function splitCharacters(text: string): string[] {
   return [...text];
 }
 
-export function isEmojiSequence(text: string): boolean {
-  return EMOJI_SEQUENCES.has(text);
+export function isEmojiSequence(grapheme: string): boolean {
+  return EMOJI_SEQUENCES.has(grapheme);
 }
 
-export function isEmojiZwjSequence(text: string): boolean {
-  return EMOJI_ZWJ_SEQUENCES.has(text);
+export function isEmojiZwjSequence(grapheme: string): boolean {
+  return EMOJI_ZWJ_SEQUENCES.has(grapheme);
 }
 
 export function isEmojiChar(char: string): boolean {
@@ -47,8 +47,8 @@ export function isEmojiChar(char: string): boolean {
   return false;
 }
 
-export function isEmoji(text: string): boolean {
-  return isEmojiSequence(text) || isEmojiZwjSequence(text) || isEmojiChar(text);
+export function isEmoji(grapheme: string): boolean {
+  return isEmojiSequence(grapheme) || isEmojiZwjSequence(grapheme) || isEmojiChar(grapheme);
 }
 
 /**

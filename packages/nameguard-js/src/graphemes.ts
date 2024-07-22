@@ -1,4 +1,4 @@
-import { splitGraphemes as splitGraphemesInternal } from "text-segmentation";
+import { splitGraphemes as unicodeStandardGraphemeSplit } from "text-segmentation";
 import { splitCharacters, isEmoji } from "./utils";
 
 const HANGUL_JAMO = new Set([
@@ -509,7 +509,7 @@ const INVISIBLE_CHARACTER_JOINERS = new Set([
 /**
  * Splits the input string into what users perceive as "characters", called graphemes.
  *
- * This function does not try to be fully compliant with the Unicode grapheme splitting algorithm.
+ * This function extends the official Unicode grapheme splitting algorithm with additional features.
  * It matches the algorithm used by NameGuard which introduces user-friendly features like Hangul and invisible character splitting.
  *
  * Splitting is performed using the [text-segmentation](https://github.com/niklasvh/text-segmentation) library with added special Hangul treatment.
@@ -518,12 +518,16 @@ const INVISIBLE_CHARACTER_JOINERS = new Set([
  * See splitGraphemes.test.ts for examples.
  * Invisible characters are also split into separate graphemes.
  *
+ * This implementation is safe to use in all modern web browsers,
+ * unlike the related browser API for splitting graphemes according to the Unicode standard,
+ * which isn't supported by all browsers today.
+ *
  * @param name - normalized domain name to split into graphemes
  * @returns - list of graphemes derived from the input
  */
 export function splitGraphemes(name: string): string[] {
   // initial split
-  let graphemes = splitGraphemesInternal(name);
+  let graphemes = unicodeStandardGraphemeSplit(name);
 
   // break up invisible characters
   let graphemesWithSplitInvisibles = [];
