@@ -4,8 +4,8 @@ version = "0.1.4"
 description = "Security \"x-ray\" for ENS names"
 authors = ["NameHash Team <devops@namehash.io>"]
 maintainers = ["NameHash Team <devops@namehash.io>"]
-homepage = "https://github.com/namehash/nameguard"
-repository = "https://github.com/namehash/nameguard"
+homepage = "https://github.com/namehash/namekit"
+repository = "https://github.com/namehash/namekit"
 readme = "README.md"
 license = "LICENSE"
 packages = [{ include = "nameguard" }]
@@ -15,7 +15,7 @@ packages = [{ include = "nameguard" }]
 python = ">=3.9,<3.13"
 ens-label-inspector = "^0.2.9"
 fastapi = "^0.104.0"
-mangum = {version = "^0.17.0", optional = true}
+mangum = { version = "^0.17.0", optional = true }
 web3 = "6.11.1"
 hexbytes = "^0.3.1"
 httpx = "^0.25.0"
@@ -29,7 +29,7 @@ lambda = ["mangum"]
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.0"
 flake8 = "^6.1.0"
-uvicorn = {extras = ["standard"], version = "^0.23.2"}
+uvicorn = { extras = ["standard"], version = "^0.23.2" }
 pytest-asyncio = "^0.21.1"
 pytest-cov = "^4.1.0"
 pytest-retry = "^1.5.0"
@@ -43,7 +43,7 @@ target-version = "py39"
 
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401"] # imported but unused
-"tests/*.py" = ["E741"] # ambiguous variable name
+"tests/*.py" = ["E741"]  # ambiguous variable name
 
 
 [tool.ruff.lint.flake8-quotes]

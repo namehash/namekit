@@ -1,4 +1,4 @@
-import "whatwg-fetch";
+import fetch from "cross-fetch";
 import { isEthereumAddress, isTokenId, isKeccak256Hash } from "./utils";
 
 const ETH_TLD = "eth";
@@ -437,7 +437,7 @@ export interface SecurePrimaryNameResult {
 class NameGuardError extends Error {
   constructor(
     public status: number,
-    message?: string
+    message?: string,
   ) {
     super(message);
   }
@@ -510,7 +510,7 @@ export class NameGuard {
    */
   public inspectName(
     name: string,
-    options?: InspectNameOptions
+    options?: InspectNameOptions,
   ): Promise<NameGuardReport> {
     const network_name = options?.network || this.network;
 
@@ -536,11 +536,11 @@ export class NameGuard {
    */
   public bulkInspectNames(
     names: string[],
-    options?: InspectNameOptions
+    options?: InspectNameOptions,
   ): Promise<BulkConsolidatedNameGuardReport> {
     if (names.length > MAX_BULK_INSPECTION_NAMES) {
       throw new Error(
-        `Bulk inspection of more than ${MAX_BULK_INSPECTION_NAMES} names at a time is not supported.`
+        `Bulk inspection of more than ${MAX_BULK_INSPECTION_NAMES} names at a time is not supported.`,
       );
     }
 
@@ -567,7 +567,7 @@ export class NameGuard {
    */
   public async inspectNamehash(
     namehash: string,
-    options?: InspectNamehashOptions
+    options?: InspectNamehashOptions,
   ): Promise<NameGuardReport> {
     if (!isKeccak256Hash(namehash)) {
       throw new Error("Invalid Keccak256 hash format for namehash.");
@@ -577,7 +577,7 @@ export class NameGuard {
 
     const url = new URL(
       `inspect-namehash/${network}/${namehash}`,
-      this.endpoint
+      this.endpoint,
     );
 
     const response = await fetch(url);
@@ -585,7 +585,7 @@ export class NameGuard {
     if (!response.ok) {
       throw new NameGuardError(
         response.status,
-        `Failed to inspect namehash ${namehash} using the network ${network}.`
+        `Failed to inspect namehash ${namehash} using the network ${network}.`,
       );
     }
 
@@ -622,7 +622,7 @@ export class NameGuard {
    */
   public async inspectLabelhash(
     labelhash: string,
-    options?: InspectLabelhashOptions
+    options?: InspectLabelhashOptions,
   ): Promise<NameGuardReport> {
     if (!isKeccak256Hash(labelhash)) {
       throw new Error("Invalid Keccak256 hash format for labelhash.");
@@ -664,11 +664,11 @@ export class NameGuard {
    */
   public async getSecurePrimaryName(
     address: string,
-    options?: SecurePrimaryNameOptions
+    options?: SecurePrimaryNameOptions,
   ): Promise<SecurePrimaryNameResult> {
     if (!isEthereumAddress(address)) {
       throw new Error(
-        `The provided address: "${address}" is not in a valid Ethereum address format.`
+        `The provided address: "${address}" is not in a valid Ethereum address format.`,
       );
     }
 
@@ -699,23 +699,23 @@ export class NameGuard {
     contract_address: string,
     token_id: string,
     fields: FieldsWithRequiredTitle,
-    options?: FakeEthNameOptions
+    options?: FakeEthNameOptions,
   ): Promise<FakeEthNameCheckResult> {
     if (!isEthereumAddress(contract_address)) {
       throw new Error(
-        `The provided address: "${contract_address}" is not in a valid Ethereum address format.`
+        `The provided address: "${contract_address}" is not in a valid Ethereum address format.`,
       );
     }
 
     if (!isTokenId(token_id)) {
       throw new Error(
-        `The provided token_id: "${token_id}" is not in a valid token id format.`
+        `The provided token_id: "${token_id}" is not in a valid token id format.`,
       );
     }
 
     if (!fields || !fields.title || typeof fields.title !== "string") {
       throw new Error(
-        "The 'fields' object must be provided and contain a 'title' key with a string value."
+        "The 'fields' object must be provided and contain a 'title' key with a string value.",
       );
     }
 
@@ -741,7 +741,7 @@ export class NameGuard {
     path: string,
     method: string = "GET",
     body: object = {},
-    headers: object = {}
+    headers: object = {},
   ): Promise<any> {
     const url = new URL(path, this.endpoint);
 
@@ -763,7 +763,7 @@ export class NameGuard {
     if (!response.ok) {
       throw new NameGuardError(
         response.status,
-        `Failed to perform request to ${path}.`
+        `Failed to perform request to ${path}.`,
       );
     }
 
