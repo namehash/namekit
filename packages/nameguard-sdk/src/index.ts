@@ -428,7 +428,7 @@ export interface SecurePrimaryNameResult {
    * NameGuard report for the `primary_name`.
    *
    * * `null` if `primary_name_status` is `no_primary_name` (primary name is not found)
-   * * `null` if `SecurePrimaryNameOptions.computeNameGuardReport` is `false`
+   * * `null` if `SecurePrimaryNameOptions.computeNameGuardReport` is `false` or not provided
    */
   nameguard_result: NameGuardReport | null;
 }
@@ -446,33 +446,29 @@ class NameGuardError extends Error {
 const DEFAULT_ENDPOINT = "https://api.nameguard.io";
 const DEFAULT_NETWORK: Network = "mainnet";
 const DEFAULT_INSPECT_LABELHASH_PARENT = ETH_TLD;
+export const DEFAULT_COMPUTE_NAMEGUARD_REPORT = false;
 const MAX_BULK_INSPECTION_NAMES = 250;
 
-interface NameGuardOptions {
+export interface NameGuardOptions {
   endpoint?: string;
   network?: Network;
 }
 
 interface InspectNameOptions {
-  network?: Network;
 }
 
 interface InspectNamehashOptions {
-  network?: Network;
 }
 
 interface InspectLabelhashOptions {
-  network?: Network;
   parent?: string;
 }
 
 export interface SecurePrimaryNameOptions {
-  network?: Network;
   computeNameGuardReport?: boolean;
 }
 
 interface FakeEthNameOptions {
-  network?: Network;
 }
 
 interface FieldsWithRequiredTitle extends Record<string, string> {
@@ -500,7 +496,7 @@ export class NameGuard {
    *   3. A consolidated inspection result of all graphemes in `name`.
    *
    * This function will attempt automated labelhash resolution through the ENS Subgraph,
-   * using the network specified in `options.network_name`.
+   * using the network specified in the NameGuard instance.
    *
    * @param {string} name The name for NameGuard to inspect.
    * @param {InspectNameOptions} options The options for the inspection.
@@ -512,7 +508,7 @@ export class NameGuard {
     name: string,
     options?: InspectNameOptions,
   ): Promise<NameGuardReport> {
-    const network_name = options?.network || this.network;
+    const network_name = this.network;
 
     return this.rawRequest("inspect-name", "POST", { name, network_name });
   }
@@ -528,7 +524,7 @@ export class NameGuard {
    *      are possible (and completely safe) that help to accelerate responses in many cases.
    *
    * This function will attempt automated labelhash resolution through the ENS Subgraph,
-   * using the network specified in `options.network_name`.
+   * using the network specified in the NameGuard instance.
    *
    * @param {string[]} names The list of names for NameGuard to inspect.
    * @param {InspectNameOptions} options The options for the inspection.
@@ -544,7 +540,7 @@ export class NameGuard {
       );
     }
 
-    const network_name = options?.network || this.network;
+    const network_name = this.network;
 
     return this.rawRequest("bulk-inspect-names", "POST", {
       names,
@@ -573,7 +569,7 @@ export class NameGuard {
       throw new Error("Invalid Keccak256 hash format for namehash.");
     }
 
-    const network = options?.network || this.network;
+    const network = this.network;
 
     const url = new URL(
       `inspect-namehash/${network}/${namehash}`,
@@ -607,7 +603,7 @@ export class NameGuard {
    *
    * NameGuard always inspects names, rather than labelhashes. So this function will first attempt
    * to resolve the "childmost" label associated with the provided labelhash through the ENS Subgraph,
-   * using the network specified in `options.network_name`.
+   * using the network specified in the NameGuard instance.
    *
    * If this label resolution fails the resulting `NameGuardReport` will be equivalent to requesting
    * a `NameGuardReport` for the name "[{labelhash}].{parent}" which will contain (at least) one label
@@ -672,9 +668,10 @@ export class NameGuard {
       );
     }
 
-    const network_name = options?.network || this.network;
-    const computeNameGuardReport = options?.computeNameGuardReport || true;
+    const network_name = this.network;
+    const computeNameGuardReport = options?.computeNameGuardReport || DEFAULT_COMPUTE_NAMEGUARD_REPORT;
 
+    // TODO: We need to add a `computeNameGuardReport` parameter to the API.
     let response = await this.rawRequest(`secure-primary-name/${network_name}/${address}`);
 
     if (!computeNameGuardReport) {
@@ -719,7 +716,7 @@ export class NameGuard {
       );
     }
 
-    const network_name = options?.network || this.network;
+    const network_name = this.network;
 
     return this.rawRequest("fake-eth-name-check", "POST", {
       network_name,

@@ -20,28 +20,34 @@ function graphemeHasCombiningMarks(grapheme: string): boolean {
   );
 }
 
-const ALLOWLISTED_NON_CONFUSABLES_REGEX = /^[a-z0-9_$-]+$/;
+const ALLOWLISTED_NON_CONFUSABLE_GRAPHEME_REGEX = /^[a-z0-9_$-]$/;
 
 /**
- * Checks if a string is an allowlisted non-confusable string:
- * 
- * * consists of lowercase letters (a-z), digits (0-9), underscore (_), dollar sign ($), and hyphen (-)
+ * Checks if a grapheme is an allowlisted non-confusable grapheme.
  *
- * @param str - The string to check.
- * @returns `true` if the string is allowlisted, `false` otherwise.
+ * An allowlisted non-confusable grapheme consists of a single character
+ * that is a lowercase letter (a-z), digit (0-9), underscore (_), dollar sign ($), or hyphen (-).
+ * This is an optimization for the most commonly used graphemes.
+ *
+ * @param grapheme - The grapheme to check.
+ * @returns `true` if the grapheme is allowlisted, `false` otherwise.
  */
-function isGraphemeAllowlisted(str: string): boolean {
-  return ALLOWLISTED_NON_CONFUSABLES_REGEX.test(str);
+function isGraphemeAllowlisted(grapheme: string): boolean {
+  return ALLOWLISTED_NON_CONFUSABLE_GRAPHEME_REGEX.test(grapheme);
 }
 
 export function isGraphemeConfusable(grapheme: string): boolean {
   if (grapheme.length === 0) {
-    // empty strings are not confusable
+    // When analyzing a string for confusability,
+    // the result is the logical AND of the confusability
+    // of each grapheme in the string.
+    // An empty string should be the neutral element for this operation,
+    // i.e. an empty string is not confusable.
     return false;
   }
 
   if (isGraphemeAllowlisted(grapheme)) {
-    // allowlisted strings are not confusable
+    // allowlisted graphemes are not confusable
     return false;
   }
 
@@ -98,12 +104,16 @@ function getCanonicalGrapheme(grapheme: string): string | null {
  * Returns the canonical form of a grapheme using a fallback mechanism
  * which tries returning the canonical form of the first character
  * if the canonical form of the full grapheme is not known.
- * 
+ *
  * @param grapheme - The grapheme to get the canonical form of.
  * @returns The canonical form of the grapheme, or null if the canonical form is not known.
  */
 export function getCanonical(grapheme: string): string | null {
   if (grapheme.length === 0) {
+    // When computing the canonical form of a string,
+    // the result is the concatenation of the canonical forms of each grapheme in the string.
+    // An empty string should be the neutral element for this operation,
+    // i.e. the canonical form of an empty string is the empty string.
     return grapheme;
   }
   const canonical = getCanonicalGrapheme(grapheme);
@@ -134,7 +144,7 @@ export interface ConfusableAnalysis {
 
 /**
  * Analyzes a grapheme for confusability.
- * 
+ *
  * @param grapheme - The grapheme to analyze.
  * @returns An object containing the confusability analysis results.
  */

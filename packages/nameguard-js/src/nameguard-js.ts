@@ -3,14 +3,13 @@ import {
   NameGuard,
   SecurePrimaryNameOptions,
   SecurePrimaryNameResult,
-  Network,
+  NameGuardOptions,
+  DEFAULT_COMPUTE_NAMEGUARD_REPORT,
 } from "@namehash/nameguard";
 import { securePrimaryName as securePrimaryNameImpl } from "./securePrimaryName";
 
-export interface NameGuardJSOptions {
-  endpoint?: string;
-  network?: Network;
-  publicClient?: PublicClient;
+export interface NameGuardJSOptions extends NameGuardOptions {
+  publicClient: PublicClient;
 }
 
 class NameGuardJS extends NameGuard {
@@ -18,25 +17,36 @@ class NameGuardJS extends NameGuard {
 
   constructor(options: NameGuardJSOptions) {
     super(options);
-    if (options.publicClient === undefined) {
-      throw new Error("publicClient is required");
-    }
+
     this.publicClient = options.publicClient;
+
+    // Validate that the public client is connected to the correct network
+    const chainId = this.publicClient.chain?.id;
+    if (this.network === "mainnet" && chainId !== 1) {
+      throw new Error(
+        `Network mismatch: expected mainnet (chain id 1), but got chain id ${chainId}.`
+      );
+    } else if (this.network === "sepolia" && chainId !== 11155111) {
+      throw new Error(
+        `Network mismatch: expected sepolia (chain id 11155111), but got chain id ${chainId}.`
+      );
+    } else if (this.network !== "mainnet" && this.network !== "sepolia") {
+      throw new Error(`Unsupported network: ${this.network}.`);
+    }
   }
 
   public override getSecurePrimaryName(
     address: string,
     options?: SecurePrimaryNameOptions
   ): Promise<SecurePrimaryNameResult> {
-    const computeNameGuardReport = options?.computeNameGuardReport || false;
-    const network_name = options?.network || this.network;
-    if (network_name !== this.network || computeNameGuardReport) {
+    const computeNameGuardReport = options?.computeNameGuardReport || DEFAULT_COMPUTE_NAMEGUARD_REPORT;
+    if (computeNameGuardReport) {
       return super.getSecurePrimaryName(address, options);
     }
     return securePrimaryNameImpl(address, this.publicClient);
   }
 }
 
-export function createClient(options: NameGuardJSOptions): NameGuardJS {
+export function createClient(options: NameGuardJSOptions): NameGuard {
   return new NameGuardJS(options);
 }
