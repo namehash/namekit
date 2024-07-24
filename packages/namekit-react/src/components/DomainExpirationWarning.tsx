@@ -14,7 +14,6 @@ import {
   Address,
 } from "@namehash/ens-utils";
 import { ClockIcon, ClockUrgency } from "./icons/ClockIcon";
-import { Normalization } from "@namehash/nameguard";
 import React, { useEffect, useState } from "react";
 import { Tooltip } from "./Tooltip";
 import cc from "classcat";
@@ -139,7 +138,7 @@ export const DomainExpirationWarning = ({
                 <p>{formatTimestamp(expirationDate)}</p>
               </Tooltip>
               <p>
-                {domainName.normalization === Normalization.normalized
+                {domainName.normalization === "normalized"
                   ? `and renews for ${prettyNamePrice} / year`
                   : ""}
               </p>
@@ -172,7 +171,7 @@ export const DomainExpirationWarning = ({
               <p>{formatTimestamp(expirationDate)}</p>
             </Tooltip>
             <p>
-              {domainName.normalization === Normalization.normalized
+              {domainName.normalization === "normalized"
                 ? `and renews for ${prettyNamePrice} / year`
                 : ""}
             </p>

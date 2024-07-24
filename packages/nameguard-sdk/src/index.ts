@@ -1,21 +1,8 @@
 import fetch from "cross-fetch";
+import { Normalization } from "@namehash/ens-utils";
 import { isEthereumAddress, isTokenId, isKeccak256Hash } from "./utils";
 
 const ETH_TLD = "eth";
-
-/**
- * The ENSIP-15 normalization status of a name/label.
- *
- * If a label is in the format "[labelhash]" then the `Normalization` of the label is considered to be `unknown`.
- * If a name contains any label that is `unnormalized` then the `Normalization` of the entire name is considered to be `unnormalized`.
- * If a name contains no `unnormalized` labels but 1 or more `unknown` labels then the entire name is considered to be `unknown`.
- * A name is `normalized` if and only if all of its labels are `normalized`.
- */
-export enum Normalization {
-  normalized = "normalized" /** `normalized`: The name or label is normalized. */,
-  unnormalized = "unnormalized" /** `unnormalized`: The name or label is not normalized. */,
-  unknown = "unknown" /** `unknown`: The name or label is unknown because it cannot be looked up from its hash. */,
-}
 
 /**
  * The ENSIP-15 normalization status of a grapheme.

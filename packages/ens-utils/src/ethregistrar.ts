@@ -3,7 +3,6 @@ import {
   ETH_TLD,
   charCount,
   MIN_ETH_REGISTRABLE_LABEL_LENGTH,
-  getNormalizationStatus,
 } from "./ensname";
 import { NFTRef, TokenId, buildNFTRef, buildTokenId } from "./nft";
 import { namehash, labelhash } from "viem/ens";
@@ -405,8 +404,7 @@ const AvailableNamePriceUSD = (
   domainRegistration: Registration | null = null,
   additionalFee: Price | null = null,
 ): Price | null => {
-  console.log(domainName.normalization, domainName.labels);
-  if (domainName.normalization !== getNormalizationStatus(domainName.labels)) {
+  if (domainName.normalization !== "normalized") {
     return null;
   }
 
