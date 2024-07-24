@@ -364,19 +364,22 @@ export interface ConsolidatedNameGuardReport extends ConsolidatedReport {
  * NameGuard report that contains the full results of all `checks` on all `labels` in a name.
  */
 export interface AbstractNameGuardReport extends ConsolidatedNameGuardReport {
+  /* Whether or not the name was inspected. */
+  inspected: boolean;
+
   /* The results of all checks performed by NameGuard on `name`. */
   checks: CheckResult[];
 
   /** Details of the inspection of all labels in `name`.
     *
-    * `null` if `name` is uninspected
+    * `undefined` if `name` was uninspected and this is an `UninspectedNameGuardReport`.
   */
   labels?: LabelGuardReport[];
 
   /**
    * The name considered to be the canonical form of the analyzed `name`.
    *
-   * `null` if and only if the canonical form of `name` is considered to be undefined or `name` is uninspected.
+   * `undefined` if and only if the canonical form of `name` is considered to be undefined or `name` was uninspected and this is an ``UninspectedNameGuardReport`.
    *
    * If a label is represented as `[labelhash]` in `name`,
    * the `canonical_name` will also contain the label represented as `[labelhash]`.
@@ -389,15 +392,17 @@ export interface AbstractNameGuardReport extends ConsolidatedNameGuardReport {
 
 export interface InspectedNameGuardReport extends AbstractNameGuardReport {
     labels: LabelGuardReport[];
+    inspected: true;
 }
 
 /**
  * NameGuard report for a name that was exceptionally long and was not inspected for performance reasons.
- * Fields `label` and canonical_name` are nulls, `rating` is `alert`, `highest_risk` is `uninspected`, `risk_count` is `1`.
+ * Fields `label` and canonical_name` are undefined, `rating` is `alert`, `highest_risk` is `uninspected`, `risk_count` is `1`.
  */
 export interface UninspectedNameGuardReport extends AbstractNameGuardReport {
     labels: undefined;
     canonical_name: undefined;
+    inspected: false;
 }
 
 export type NameGuardReport = InspectedNameGuardReport | UninspectedNameGuardReport;
