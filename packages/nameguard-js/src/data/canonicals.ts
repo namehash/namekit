@@ -20,6 +20,7 @@ export interface GraphemeCanonical {
 
 /**
  * Map containing graphemes and their canonical forms.
+ * This data is taken from the NameHash ens-label-inspector Python package.
  */
 export const GRAPHEME_CANONICALS: Map<string, GraphemeCanonical> =
   new Map(
