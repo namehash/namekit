@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.6.2",
+    "@namehash/ens-utils": "workspace:*",
     "tsup": "^7.2.0",
     "typescript": "^5.2.2",
     "vitest": "1.4.0"
