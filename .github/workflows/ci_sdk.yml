@@ -52,7 +52,7 @@ jobs:
           sleep 5
 
       - name: Local api healthcheck
-        run: curl http://0.0.0.0:8000/v1-beta/inspect-name/mainnet/test.eth
+        run: curl http://0.0.0.0:8000/inspect-name/mainnet/test.eth
 
       - name: Run tests
         env:

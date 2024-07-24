@@ -15,6 +15,7 @@ describe("NameGuard", () => {
     const data = await nameguard.inspectName("notrab.eth");
 
     expect(data.name).toBe("notrab.eth");
+    expect(data.inspected).toBe(true);
   });
 
   it("should fetch the consolidated NameGuard reports of multiple names", async () => {
