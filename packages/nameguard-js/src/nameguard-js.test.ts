@@ -5,6 +5,12 @@ import { createClient } from "./nameguard-js";
 
 const PROVIDER_URI_MAINNET = process.env.PROVIDER_URI_MAINNET;
 const PROVIDER_URI_SEPOLIA = process.env.PROVIDER_URI_SEPOLIA;
+
+/**
+ * This is a fake endpoint that will not work.
+ * If a client created with this endpoint tries to make an API request, it will throw an error.
+ * This is used to prove that the secure primary name is computed locally.
+ */
 const INVALID_NAMEGUARD_API_ENDPOINT = "http://localhost:1234";
 
 describe("NameGuardJS", () => {
@@ -56,7 +62,6 @@ describe("NameGuardJS", () => {
 
     expect(() => {
       createClient({
-        endpoint: INVALID_NAMEGUARD_API_ENDPOINT,
         network: "mainnet",
         publicClient: sepoliaClient,
       });
@@ -71,7 +76,6 @@ describe("NameGuardJS", () => {
 
     expect(() => {
       createClient({
-        endpoint: INVALID_NAMEGUARD_API_ENDPOINT,
         network: "sepolia",
         publicClient: mainnetClient,
       });
@@ -86,7 +90,6 @@ describe("NameGuardJS", () => {
 
     expect(() => {
       createClient({
-        endpoint: INVALID_NAMEGUARD_API_ENDPOINT,
         network: "mainnet",
         publicClient: mainnetClient,
       });
@@ -101,7 +104,6 @@ describe("NameGuardJS", () => {
 
     expect(() => {
       createClient({
-        endpoint: INVALID_NAMEGUARD_API_ENDPOINT,
         network: "sepolia",
         publicClient: sepoliaClient,
       });
