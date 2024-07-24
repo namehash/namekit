@@ -1,10 +1,13 @@
 "use client";
 
-import { ENSName, buildENSName } from "@namehash/ens-utils";
+import {
+  ENSName,
+  buildENSName,
+  getNormalizationStatus,
+} from "@namehash/ens-utils";
 import {
   CheckResultCode,
   ConsolidatedNameGuardReport,
-  Normalization,
   Rating,
 } from "@namehash/nameguard";
 import { RatingIconSize } from "@namehash/nameguard-react";
@@ -391,7 +394,9 @@ const getExampleReportData = (rating: Rating): ConsolidatedNameGuardReport => {
         name: "lightwalker.eth",
         namehash:
           "0x5c1f4e4189d173a562af8d27771e2a1394ccbfa466f0e72b429dd317afce4c06",
-        normalization: Normalization.normalized,
+        normalization: getNormalizationStatus(
+          buildENSName("lightwalker.eth").labels,
+        ),
         title: "Looks Good",
         subtitle: "All security checks passed!",
         beautiful_name: "lightwalker.eth",
@@ -409,7 +414,9 @@ const getExampleReportData = (rating: Rating): ConsolidatedNameGuardReport => {
         name: "thisìsaveryveryveryveryveryverylongname.eth",
         namehash:
           "0x368edb7de4b5ad933a67148a18a7e65e1310a160ff4dce43c68ff563b8439a14",
-        normalization: Normalization.normalized,
+        normalization: getNormalizationStatus(
+          buildENSName("thisìsaveryveryveryveryveryverylongname.eth").labels,
+        ),
         title: "Some Risk",
         subtitle: "Review risks before proceeding",
         beautiful_name: "thisìsaveryveryveryveryveryverylongname.eth",
@@ -427,7 +434,7 @@ const getExampleReportData = (rating: Rating): ConsolidatedNameGuardReport => {
         name: "‍420.eth",
         namehash:
           "0x61ce4b1e75e224233d08821593eaa0615e29bd984bbd39fc2830257ceecfcb40",
-        normalization: Normalization.unnormalized,
+        normalization: getNormalizationStatus(buildENSName("‍420.eth").labels),
         title: "High Risk",
         subtitle: "Better not to use this name",
         beautiful_name: "",

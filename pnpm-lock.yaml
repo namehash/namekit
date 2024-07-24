@@ -466,6 +466,9 @@ importers:
         specifier: 4.0.0
         version: 4.0.0
     devDependencies:
+      '@namehash/ens-utils':
+        specifier: workspace:*
+        version: link:../ens-utils
       '@types/node':
         specifier: ^20.6.2
         version: 20.12.12
