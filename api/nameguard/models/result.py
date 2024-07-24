@@ -247,6 +247,11 @@ class NameGuardReport(ConsolidatedNameGuardReport):
         examples=['vitalik.eth'],
     )
 
+    inspected: Literal[True] = Field(
+        description='Whether the name was inspected.',
+        examples=[True],
+    )
+
 
 class UninspectedNameGuardReport(NameGuardReport):
     """
@@ -260,6 +265,7 @@ class UninspectedNameGuardReport(NameGuardReport):
     )
     labels: Literal[None]
     canonical_name: Literal[None]
+    inspected: Literal[False]
 
 
 class BulkNameGuardBulkReport(BaseModel):

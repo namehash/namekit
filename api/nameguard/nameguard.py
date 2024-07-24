@@ -159,6 +159,7 @@ def consolidated_report_from_uninspected_name(name: str) -> UninspectedNameGuard
         checks=Uninspected_name_checks,
         labels=None,
         canonical_name=None,
+        inspected=False,
     )
 
 
@@ -350,6 +351,7 @@ class NameGuard:
                     labels_graphemes_checks,
                 )
             ],
+            inspected=True,
         )
 
     async def bulk_inspect_names(self, network_name: NetworkName, names: list[str]) -> BulkNameGuardBulkReport:
