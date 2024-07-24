@@ -1,8 +1,9 @@
 import {
   ENSName,
-  MIN_ETH_REGISTRABLE_LABEL_LENGTH,
   ETH_TLD,
   charCount,
+  MIN_ETH_REGISTRABLE_LABEL_LENGTH,
+  getNormalizationStatus,
 } from "./ensname";
 import { NFTRef, TokenId, buildNFTRef, buildTokenId } from "./nft";
 import { namehash, labelhash } from "viem/ens";
@@ -10,8 +11,8 @@ import { buildAddress } from "./address";
 import { ChainId, MAINNET } from "./chain";
 import { ContractRef, buildContractRef } from "./contract";
 import {
-  PrimaryRegistrationStatus,
   Registration,
+  PrimaryRegistrationStatus,
   SecondaryRegistrationStatus,
 } from "./registration";
 import {
@@ -31,7 +32,6 @@ import {
   multiplyPriceByNumber,
   subtractPrices,
 } from "./price";
-import { DomainName } from "./domain";
 import { Currency } from "./currency";
 
 export interface Registrar {
@@ -213,19 +213,19 @@ export interface PriceDescription {
 }
 
 export const getPriceDescription = (
-  registration: Registration,
-  parsedName: DomainName,
+  domainRegistration: Registration,
+  domainName: ENSName,
 ): PriceDescription | null => {
   const isExpired =
-    registration.primaryStatus === PrimaryRegistrationStatus.Expired;
+    domainRegistration.primaryStatus === PrimaryRegistrationStatus.Expired;
   const wasRecentlyReleased =
-    registration.secondaryStatus ===
+    domainRegistration.secondaryStatus ===
     SecondaryRegistrationStatus.RecentlyReleased;
   const isRegistered =
-    registration.primaryStatus === PrimaryRegistrationStatus.Active;
+    domainRegistration.primaryStatus === PrimaryRegistrationStatus.Active;
 
   if (!(isExpired && wasRecentlyReleased) && isRegistered) return null;
-  const domainBasePrice = AvailableNameTimelessPriceUSD(parsedName);
+  const domainBasePrice = AvailableNameTimelessPriceUSD(domainName);
 
   if (!domainBasePrice) return null;
   else {
@@ -235,7 +235,8 @@ export const getPriceDescription = (
     });
     const pricePerYearDescription = `${domainPrice} / year`;
 
-    const premiumEndsIn = premiumPeriodEndsIn(registration)?.relativeTimestamp;
+    const premiumEndsIn =
+      premiumPeriodEndsIn(domainRegistration)?.relativeTimestamp;
 
     if (premiumEndsIn) {
       const premiumEndMessage = premiumEndsIn
@@ -252,7 +253,7 @@ export const getPriceDescription = (
         descriptiveTextEnd: ".",
       };
     } else {
-      const domainLabelLength = parsedName.labelName.length;
+      const domainLabelLength = domainName.name.length;
 
       return domainLabelLength <
         DOMAIN_HAS_SPECIAL_PRICE_IF_LENGTH_EQUAL_OR_LESS_THAN
@@ -267,12 +268,12 @@ export const getPriceDescription = (
 };
 
 export const nameCurrentTemporaryPremium = (
-  registration: Registration,
+  domainRegistration: Registration,
 ): Price | null => {
-  if (registration.expirationTimestamp) {
+  if (domainRegistration.expirationTimestamp) {
     return temporaryPremiumPriceAtTimestamp(
       now(),
-      registration.expirationTimestamp,
+      domainRegistration.expirationTimestamp,
     );
   } else {
     return null;
@@ -287,16 +288,16 @@ export interface PremiumPeriodEndsIn {
 
 /**
  * Determines if a domain is in its premium period and returns the end timestamp and a human-readable distance to it.
- * @param domainCard: DomainCard
+ * @param domainRegistration: the domain registration object
  * @returns PremiumPeriodEndsIn | null
  */
 export const premiumPeriodEndsIn = (
-  registration: Registration,
+  domainRegistration: Registration,
 ): PremiumPeriodEndsIn | null => {
   const isExpired =
-    registration.primaryStatus === PrimaryRegistrationStatus.Expired;
+    domainRegistration.primaryStatus === PrimaryRegistrationStatus.Expired;
   const wasRecentlyReleased =
-    registration.secondaryStatus ===
+    domainRegistration.secondaryStatus ===
     SecondaryRegistrationStatus.RecentlyReleased;
 
   /*
@@ -309,9 +310,12 @@ export const premiumPeriodEndsIn = (
     the domain was never registered before. Considering that the domain is Expired,
     it means that it was registered before. It is just a type safety check.
   */
-  if (!registration.expiryTimestamp) return null;
+  if (!domainRegistration.expiryTimestamp) return null;
 
-  const releasedEpoch = addSeconds(registration.expiryTimestamp, GRACE_PERIOD);
+  const releasedEpoch = addSeconds(
+    domainRegistration.expiryTimestamp,
+    GRACE_PERIOD,
+  );
   const temporaryPremiumEndTimestamp = addSeconds(
     releasedEpoch,
     TEMPORARY_PREMIUM_PERIOD,
@@ -396,12 +400,15 @@ export function temporaryPremiumPriceAtTimestamp(
   safe to be used across the platform, and are then, the ones being exported.
 */
 const AvailableNamePriceUSD = (
-  parsedName: DomainName,
+  domainName: ENSName,
   registerForYears = DEFAULT_REGISTRATION_YEARS,
-  registration: Registration | null = null,
+  domainRegistration: Registration | null = null,
   additionalFee: Price | null = null,
 ): Price | null => {
-  if (!parsedName.normalizedName) return null;
+  console.log(domainName.normalization, domainName.labels);
+  if (domainName.normalization !== getNormalizationStatus(domainName.labels)) {
+    return null;
+  }
 
   const defaultPrice: Readonly<Price> = {
     value: 500n,
@@ -417,8 +424,8 @@ const AvailableNamePriceUSD = (
       currency: Currency.Usd,
     },
   };
-  const basePrice = shortNamePremium[parsedName.labelName.length]
-    ? shortNamePremium[parsedName.labelName.length]
+  const basePrice = shortNamePremium[domainName.name.length]
+    ? shortNamePremium[domainName.name.length]
     : defaultPrice;
 
   const namePriceForYears = multiplyPriceByNumber(
@@ -430,8 +437,8 @@ const AvailableNamePriceUSD = (
     ? addPrices([additionalFee, namePriceForYears])
     : namePriceForYears;
 
-  if (registration) {
-    const premiumPrice = nameCurrentTemporaryPremium(registration);
+  if (domainRegistration) {
+    const premiumPrice = nameCurrentTemporaryPremium(domainRegistration);
 
     return premiumPrice
       ? addPrices([premiumPrice, namehashPrice])
@@ -450,7 +457,7 @@ const DEFAULT_REGISTRATION_YEARS = 1;
   a name will cost at the end of a premium period, etc..
 */
 export const AvailableNameTimelessPriceUSD = (
-  domainName: DomainName,
+  domainName: ENSName,
   registerForYears = DEFAULT_REGISTRATION_YEARS,
 ) => {
   return AvailableNamePriceUSD(domainName, registerForYears);

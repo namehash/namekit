@@ -1,5 +1,9 @@
 import { join, dirname } from "path";
-
+declare global {
+  interface BigInt {
+    toJSON: () => string;
+  }
+}
 
 BigInt.prototype.toJSON = function () {
   return this.toString();
@@ -30,7 +34,7 @@ const config = {
     name: getAbsolutePath("@storybook/react-vite"),
     options: {
       builder: {
-        viteConfigPath: './.storybook/customVite.config.js',
+        viteConfigPath: "./.storybook/customVite.config.js",
       },
     },
   },
