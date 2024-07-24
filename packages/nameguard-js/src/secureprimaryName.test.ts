@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { createPublicClient, http } from "viem";
 import { mainnet } from "viem/chains";
-import { LocalSecurePrimaryNameResult } from "@namehash/nameguard";
+import { SecurePrimaryNameResult } from "@namehash/nameguard";
 import { securePrimaryName } from "./securePrimaryName";
 
 const PROVIDER_URI_MAINNET = process.env.PROVIDER_URI_MAINNET;
@@ -174,7 +174,7 @@ describe("secure primary name", () => {
           'hello<world>!.eth',
       ],
     ];
-    const promises: Promise<LocalSecurePrimaryNameResult>[] = [];
+    const promises: Promise<SecurePrimaryNameResult>[] = [];
     for (const test of tests) {
       const address = test[0] as string;
       promises.push(securePrimaryName(address, client));

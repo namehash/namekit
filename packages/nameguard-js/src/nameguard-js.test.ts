@@ -4,6 +4,8 @@ import { mainnet, sepolia } from "viem/chains";
 import { createClient } from "./nameguard-js";
 
 const PROVIDER_URI_MAINNET = process.env.PROVIDER_URI_MAINNET;
+const PROVIDER_URI_SEPOLIA = process.env.PROVIDER_URI_SEPOLIA;
+const INVALID_NAMEGUARD_API_ENDPOINT = "http://localhost:1234";
 
 describe("NameGuardJS", () => {
   it("should compute secure primary name", async () => {
@@ -14,7 +16,7 @@ describe("NameGuardJS", () => {
 
     const localNameguard = createClient({
       // not a real endpoint, will error if used
-      endpoint: "http://localhost:1234",
+      endpoint: INVALID_NAMEGUARD_API_ENDPOINT,
       publicClient,
     });
 
@@ -33,7 +35,7 @@ describe("NameGuardJS", () => {
 
     const localNameguard = createClient({
       // not a real endpoint, will error if used
-      endpoint: "http://localhost:1234",
+      endpoint: INVALID_NAMEGUARD_API_ENDPOINT,
       publicClient
     });
 
@@ -49,12 +51,12 @@ describe("NameGuardJS", () => {
   it("should throw an error for network mismatch on mainnet", () => {
     const sepoliaClient = createPublicClient({
       chain: sepolia,
-      transport: http(),
+      transport: http(PROVIDER_URI_SEPOLIA),
     });
 
     expect(() => {
       createClient({
-        endpoint: "http://localhost:1234",
+        endpoint: INVALID_NAMEGUARD_API_ENDPOINT,
         network: "mainnet",
         publicClient: sepoliaClient,
       });
@@ -69,7 +71,7 @@ describe("NameGuardJS", () => {
 
     expect(() => {
       createClient({
-        endpoint: "http://localhost:1234",
+        endpoint: INVALID_NAMEGUARD_API_ENDPOINT,
         network: "sepolia",
         publicClient: mainnetClient,
       });
@@ -84,7 +86,7 @@ describe("NameGuardJS", () => {
 
     expect(() => {
       createClient({
-        endpoint: "http://localhost:1234",
+        endpoint: INVALID_NAMEGUARD_API_ENDPOINT,
         network: "mainnet",
         publicClient: mainnetClient,
       });
@@ -94,12 +96,12 @@ describe("NameGuardJS", () => {
   it("should not throw an error for correct network on sepolia", () => {
     const sepoliaClient = createPublicClient({
       chain: sepolia,
-      transport: http(PROVIDER_URI_MAINNET),
+      transport: http(PROVIDER_URI_SEPOLIA),
     });
 
     expect(() => {
       createClient({
-        endpoint: "http://localhost:1234",
+        endpoint: INVALID_NAMEGUARD_API_ENDPOINT,
         network: "sepolia",
         publicClient: sepoliaClient,
       });

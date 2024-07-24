@@ -1,7 +1,5 @@
 # NameGuard JS
 
-Remove `private` from `package.json`.
-
 ## Running Tests
 
 1. Set the environment variables documented in `.example.env`.
