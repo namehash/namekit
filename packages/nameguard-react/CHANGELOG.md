@@ -1,5 +1,20 @@
 # @namehash/nameguard-react
 
+## 0.2.0
+
+### Minor Changes
+
+- 6f59606: update license and included files
+
+### Patch Changes
+
+- Updated dependencies [20f8676]
+- Updated dependencies [6f59606]
+- Updated dependencies [5a22ad2]
+  - @namehash/nameguard@0.1.0
+  - @namehash/ens-webfont@0.3.0
+  - @namehash/ens-utils@1.13.0
+
 ## 0.1.0
 
 ### Minor Changes
