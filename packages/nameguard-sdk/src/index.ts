@@ -462,7 +462,7 @@ const DEFAULT_NETWORK: Network = "mainnet";
 const DEFAULT_INSPECT_LABELHASH_PARENT = ETH_TLD;
 export const DEFAULT_COMPUTE_NAMEGUARD_REPORT = false;
 const MAX_BULK_INSPECTION_NAMES = 250;
-const MAX_INSPECTED_NAME_CHARACTERS = 200;  // includes label separators
+export const MAX_INSPECTED_NAME_CHARACTERS = 200;  // includes label separators
 const MAX_INSPECTED_NAME_UNKNOWN_LABELS = 5;
 
 export interface NameGuardOptions {

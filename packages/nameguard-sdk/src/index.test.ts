@@ -22,7 +22,6 @@ describe("NameGuard", () => {
     const name = "a".repeat(MAX_INSPECTED_NAME_CHARACTERS+1);
     const data = await nameguard.inspectName(name);
 
-    console.log(data);
     expect(data.name).toBe(name);
     expect(data.inspected).toBe(false);
   });
