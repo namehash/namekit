@@ -102,7 +102,9 @@ export enum UserOwnershipOfDomain {
 /**
  * Returns the ownership status of a domain in comparison to a given address
  * @param domainCard DomainCard object
- * @param addressToCompareOwnership Address to compare ownership
+ * @param addressToCompareOwnership The address to compare ownership represents the address
+ * of the user who is viewing the domain, or the address of the application wants to check
+ * the ownership when getting to know the ownership of a domain.
  * @returns UserOwnershipOfDomain
  */
 export const getUserOwnership = (

@@ -11,6 +11,12 @@ import cc from "classcat";
 interface DomainOwnershipBadgeProps {
   domain: DomainCard | null; // when null we show the skeleton
   onClickHandler?: () => void;
+
+  /*
+    The address to compare ownership represents the address
+    of the user who is viewing the domain, or the address of the application 
+    wants to check the ownership when getting to know the ownership of a domain.
+  */
   addressToCompareOwnership: Address | null;
 }
 
