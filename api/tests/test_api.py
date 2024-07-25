@@ -8,7 +8,7 @@ import os
 from dotenv import load_dotenv
 
 from nameguard.models import FakeEthNameCheckStatus
-from nameguard.utils import labelhash_from_label
+from nameguard.utils import labelhash_from_label, MAX_INSPECTED_NAME_CHARACTERS, MAX_NUMBER_OF_NAMES_IN_BULK
 
 load_dotenv()  # run lambda api tests if LAMBDA_ROOT_URL is set
 running_lambda_tests = bool(os.environ.get('LAMBDA_ROOT_URL'))
@@ -230,14 +230,14 @@ def test_bulk_inspect_name_post(test_client):
         ]
     )
 
-    # more than 250 names
+    # more than MAX_NUMBER_OF_NAMES_IN_BULK names
     response = test_client.post('/bulk-inspect-names', json={'names': names * 126})
     assert response.status_code == 422
 
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 def test_bulk_inspect_name_post_stress(test_client):
-    names = [f'[{labelhash_from_label(str(i))[2:]}].eth' for i in range(250)]
+    names = [f'[{labelhash_from_label(str(i))[2:]}].eth' for i in range(MAX_NUMBER_OF_NAMES_IN_BULK)]
     print(names)
     response = test_client.post('/bulk-inspect-names', json={'names': names, 'network_name': 'mainnet'})
     assert response.status_code == 200
@@ -1272,7 +1272,9 @@ def test_fake_eth_name_check_fields_missing_title(test_client, contract_address,
 
 
 def test_inspect_name_post_long(test_client):
-    name = '≡ƒÿ║' * 50
+    name = '≡ƒÿ║' * 50  # equal to MAX_INSPECTED_NAME_CHARACTERS
+    assert len(name) == MAX_INSPECTED_NAME_CHARACTERS
+
     response = test_client.post('/inspect-name', json={'name': name, 'network_name': 'mainnet'})
     assert response.status_code == 200
     res_json = response.json()
@@ -1281,8 +1283,10 @@ def test_inspect_name_post_long(test_client):
 
 
 def test_bulk_inspect_name_post_long(test_client):
-    name = '≡ƒÿ║' * 50
-    names = [name] * 250
+    name = '≡ƒÿ║' * 50  # equal to MAX_INSPECTED_NAME_CHARACTERS
+    assert len(name) == MAX_INSPECTED_NAME_CHARACTERS
+
+    names = [name] * MAX_NUMBER_OF_NAMES_IN_BULK
     response = test_client.post('/bulk-inspect-names', json={'names': names, 'network_name': 'mainnet'})
     assert response.status_code == 200
     res_json = response.json()
@@ -1291,8 +1295,10 @@ def test_bulk_inspect_name_post_long(test_client):
 
 
 def test_bulk_inspect_name_post_too_long(test_client):
-    name = '≡ƒÿ║' * 51
-    names = [name] * 250
+    name = '≡ƒÿ║' * 51  # more than MAX_INSPECTED_NAME_CHARACTERS
+    assert len(name) > MAX_INSPECTED_NAME_CHARACTERS
+
+    names = [name] * MAX_NUMBER_OF_NAMES_IN_BULK
     response = test_client.post('/bulk-inspect-names', json={'names': names, 'network_name': 'mainnet'})
     assert response.status_code == 200
     res_json = response.json()
@@ -1303,8 +1309,10 @@ def test_bulk_inspect_name_post_too_long(test_client):
 
 
 def test_bulk_inspect_name_post_too_long_normalized(test_client):
-    name = 'abcd' * 51
-    names = [name] * 250
+    name = 'abcd' * 51  # more than MAX_INSPECTED_NAME_CHARACTERS
+    assert len(name) > MAX_INSPECTED_NAME_CHARACTERS
+
+    names = [name] * MAX_NUMBER_OF_NAMES_IN_BULK
     response = test_client.post('/bulk-inspect-names', json={'names': names, 'network_name': 'mainnet'})
     assert response.status_code == 200
     res_json = response.json()

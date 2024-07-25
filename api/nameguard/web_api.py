@@ -18,6 +18,7 @@ from nameguard.utils import (
     namehash_from_labelhash,
     validate_token_id,
     validate_ethereum_address,
+    MAX_NUMBER_OF_NAMES_IN_BULK,
 )
 from nameguard.models import (
     NameGuardReport,
@@ -64,8 +65,7 @@ These documentation pages focus specifically on the NameGuard API. For informati
 * uninspected name - any name that fails any of the following requirements:
   1. The count of unknown labels (distinct or non-distinct) must not exceed `MAX_INSPECTED_NAME_UNKNOWN_LABELS`.
   2. The count of characters in the name (after potential resolving of unknown labels) must not exceed the limit `MAX_INSPECTED_NAME_CHARACTERS`.
-If length of the name (after optional resolving of unknown labels) exceeds the limit `MAX_INSPECTED_NAME_CHARACTERS`.
-If name is uninspected the UninspectedNameGuardReport is returned (NameGuardReport with rating ALERT, highest risk `uninspected`, risk count 1, canonical_name None, labels None). 
+If name is uninspected an UninspectedNameGuardReport is returned. 
 
 """,
     servers=[
@@ -217,7 +217,7 @@ async def inspect_name_post(request: InspectNameRequest) -> NameGuardReport:
 
 
 class BulkInspectNamesRequest(BaseModel):
-    names: list[str] = Field(max_length=250, examples=[['vitalìk.eth', 'nick.eth']])
+    names: list[str] = Field(max_length=MAX_NUMBER_OF_NAMES_IN_BULK, examples=[['vitalìk.eth', 'nick.eth']])
     network_name: NetworkName
 
 

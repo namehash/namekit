@@ -6,7 +6,11 @@ from nameguard.models import Rating, Check, CheckStatus, Normalization, GenericC
 from nameguard.nameguard import NameGuard
 from nameguard.exceptions import NamehashNotFoundInSubgraph, NotAGrapheme
 from nameguard.endpoints import Endpoints
-from nameguard.utils import MAX_INSPECTED_NAME_CHARACTERS, MAX_INSPECTED_NAME_UNKNOWN_LABELS
+from nameguard.utils import (
+    MAX_INSPECTED_NAME_CHARACTERS,
+    MAX_INSPECTED_NAME_UNKNOWN_LABELS,
+    MAX_NUMBER_OF_NAMES_IN_BULK,
+)
 
 
 @pytest.fixture(scope='module')
@@ -677,5 +681,5 @@ async def test_stress_inspect_name(nameguard: NameGuard):
 
 @pytest.mark.asyncio
 async def test_stress_bulk_inspect_name(nameguard: NameGuard):
-    result = await nameguard.bulk_inspect_names('mainnet', ['≡ƒÿ║' * 10000] * 250)
+    result = await nameguard.bulk_inspect_names('mainnet', ['≡ƒÿ║' * 10000] * MAX_NUMBER_OF_NAMES_IN_BULK)
     assert all([x.highest_risk.check.name == 'UNINSPECTED' for x in result.results])

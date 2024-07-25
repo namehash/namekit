@@ -9,6 +9,7 @@ from nameguard.models import Rating, GenericCheckResult, Check
 
 MAX_INSPECTED_NAME_CHARACTERS = 200  # maximum number of characters to inspect in a name including labels and separators
 MAX_INSPECTED_NAME_UNKNOWN_LABELS = 5  # each unknown label in a name is distinctly counted, even if there are multiple instances of the same unknown label in a name.
+MAX_NUMBER_OF_NAMES_IN_BULK = 250  # maximum number of names to inspect in a single bulk inspection request
 
 
 def compute_canonical_from_list(canonicals: list[Optional[str]], sep='') -> Optional[str]:
