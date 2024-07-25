@@ -2,4 +2,4 @@
 "@namehash/nameguard": minor
 ---
 
-introduced uninspected NameGuard reports
+Introduced uninspected NameGuard reports for performance optimization of exceptionally long names.
