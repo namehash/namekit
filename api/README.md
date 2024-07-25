@@ -1,6 +1,6 @@
 # NameGuard Python
 
-![Tests](https://github.com/namehash/nameguard/actions/workflows/ci_api.yml/badge.svg?branch=main)
+![Tests](https://github.com/namehash/namekit/actions/workflows/ci_api.yml/badge.svg?branch=main)
 ![Coverage](coverage_badge.svg)
 
 This repository contains the core logic for NameGuard, a python library, web API server, and AWS Lambda handler.
