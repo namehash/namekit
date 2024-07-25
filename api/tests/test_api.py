@@ -232,7 +232,9 @@ def test_bulk_inspect_name_post(test_client):
     )
 
     # more than MAX_NUMBER_OF_NAMES_IN_BULK names
-    response = test_client.post('/bulk-inspect-names', json={'names': names * 126})
+    names_to_inspect = names * 126
+    assert len(names_to_inspect) > MAX_NUMBER_OF_NAMES_IN_BULK
+    response = test_client.post('/bulk-inspect-names', json={'names': names_to_inspect})
     assert response.status_code == 422
 
 

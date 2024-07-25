@@ -58,4 +58,5 @@ jobs:
         env:
           PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
           PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}
-        run: NAMEGUARD_TEST_ENDPOINT=http://0.0.0.0:8000 pnpm test -r
+          NAMEGUARD_API_URI: http://0.0.0.0:8000
+        run: pnpm test -r
