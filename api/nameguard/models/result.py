@@ -213,6 +213,11 @@ class ConsolidatedNameGuardReport(ConsolidatedReport):
 
     normalization: Normalization
 
+    inspected: bool = Field(
+        description='Whether the name was inspected.',
+        examples=[True],
+    )
+
     @computed_field(description='Beautified version of `name`.')
     @property
     def beautiful_name(self) -> Optional[str]:

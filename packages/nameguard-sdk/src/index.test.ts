@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 
-import { createClient } from ".";
+import { createClient, MAX_INSPECTED_NAME_CHARACTERS } from ".";
 
 const nameguard = createClient({
   // undefined will default to the production endpoint
@@ -16,6 +16,15 @@ describe("NameGuard", () => {
 
     expect(data.name).toBe("notrab.eth");
     expect(data.inspected).toBe(true);
+  });
+
+  it("should fetch the UninspectedNameGuard report for a name that is too long", async () => {
+    const name = "a".repeat(MAX_INSPECTED_NAME_CHARACTERS+1);
+    const data = await nameguard.inspectName(name);
+
+    console.log(data);
+    expect(data.name).toBe(name);
+    expect(data.inspected).toBe(false);
   });
 
   it("should fetch the consolidated NameGuard reports of multiple names", async () => {

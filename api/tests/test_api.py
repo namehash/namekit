@@ -1279,6 +1279,7 @@ def test_inspect_name_post_long(test_client):
     assert response.status_code == 200
     res_json = response.json()
     assert res_json['highest_risk']['check'] == 'normalized'
+    assert res_json['inspected']
     pprint(res_json)
 
 
@@ -1292,6 +1293,7 @@ def test_bulk_inspect_name_post_long(test_client):
     res_json = response.json()
     for x in res_json['results']:
         assert x['highest_risk']['check'] == 'normalized'
+        assert x['inspected']
 
 
 def test_bulk_inspect_name_post_too_long(test_client):
@@ -1306,6 +1308,7 @@ def test_bulk_inspect_name_post_too_long(test_client):
     for x in res_json['results']:
         assert x['highest_risk']['check'] == 'uninspected'
         assert x['normalization'] == 'unnormalized'
+        assert not x['inspected']
 
 
 def test_bulk_inspect_name_post_too_long_normalized(test_client):
