@@ -119,6 +119,7 @@ def consolidated_report_from_simple_name(name: str) -> ConsolidatedNameGuardRepo
         rating=Rating.PASS,
         risk_count=0,
         highest_risk=None,
+        inspected=True,
     )
 
 
