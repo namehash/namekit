@@ -225,6 +225,7 @@ def test_bulk_inspect_name_post(test_client):
                 'beautiful_name',
                 'subtitle',
                 'title',
+                'inspected',
             }
             for r in res_json['results']
         ]
