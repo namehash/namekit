@@ -75,9 +75,9 @@ function icon(
 /**
  * A component that displays a check result code as an icon with a tooltip.
  * @param {CheckResultCode} code - The CheckResultCode status to display.
- * @param {boolean} isInteractive - Wether to display a Tooltip and a color effect on icon hover or not.
  * @param {function} onClick - The onClick handler for the icon click.
  * @param {boolean} isInteractive - Wether to display a Tooltip and a color effect on icon hover or not.
+ * @param {string} className - A list of classes to include in the icon Ui component.
  */
 export function CheckResultCodeIcon({
   code,

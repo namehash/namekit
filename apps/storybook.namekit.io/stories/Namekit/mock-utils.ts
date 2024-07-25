@@ -1,7 +1,6 @@
 import {
   Registration,
   getDomainRegistration,
-  getRegistrationForActiveDomain,
   addSeconds,
   buildDuration,
   buildENSName,
@@ -11,12 +10,22 @@ import {
   buildAddress,
 } from "@namehash/ens-utils";
 
-export const REGISTRATION_OF_EXPIRING_SOON_DOMAIN: Readonly<Timestamp> =
+export const EXPIRATION_TIME_OF_EXPIRING_SOON_DOMAIN: Readonly<Timestamp> =
   addSeconds(now(), buildDuration(4000n));
 
-export const REGISTRATION_OF_EXPIRED_DOMAIN: Readonly<Timestamp> = now();
+export const EXPIRATION_TIME_OF_EXPIRED_DOMAIN: Readonly<Timestamp> = now();
+
+export const EXPIRATION_TIME_OF_ACTIVE_DOMAIN: Readonly<Timestamp> = addSeconds(
+  now(),
+  buildDuration(8000n),
+);
+
+export const EXPIRATION_TIME_OF_RECENTLY_RELEASED_DOMAIN: Readonly<Timestamp> =
+  addSeconds(now(), buildDuration(1000n));
 
 export enum DomainStatus {
+  RecentlyReleased,
+  NeverRegistered,
   ExpiringSoon,
   Expired,
   Active,
@@ -28,12 +37,16 @@ export const getMockedRegistration = ({
   domainStatus: DomainStatus;
 }): Registration => {
   switch (domainStatus) {
+    case DomainStatus.NeverRegistered:
+      return getDomainRegistration(null);
+    case DomainStatus.RecentlyReleased:
+      return getDomainRegistration(EXPIRATION_TIME_OF_RECENTLY_RELEASED_DOMAIN);
     case DomainStatus.Active:
-      return getRegistrationForActiveDomain();
+      return getDomainRegistration(EXPIRATION_TIME_OF_ACTIVE_DOMAIN);
     case DomainStatus.ExpiringSoon:
-      return getDomainRegistration(REGISTRATION_OF_EXPIRING_SOON_DOMAIN);
+      return getDomainRegistration(EXPIRATION_TIME_OF_EXPIRING_SOON_DOMAIN);
     case DomainStatus.Expired:
-      return getDomainRegistration(REGISTRATION_OF_EXPIRED_DOMAIN);
+      return getDomainRegistration(EXPIRATION_TIME_OF_EXPIRED_DOMAIN);
   }
 };
 
@@ -65,23 +78,13 @@ export const getENSNameForVariant = ({
 
 export const MOCKED_0xString_1: `0x${string}` =
   "0x1a199654959140E5c1A2F4135fAA7Ba2748939C6";
-export const MOCKED_0xString_2 = MOCKED_0xString_1.replace(
-  "5",
-  "6",
-) as `0x${string}`;
-export const MOCKED_0xString_3 = MOCKED_0xString_2.replace(
-  "6",
-  "4",
-) as `0x${string}`;
+
+export const MOCKED_0xString_2: `0x${string}` =
+  "0x1a111654151140E5c1A2F4135fAA7Ba2748139C6";
+
+export const MOCKED_0xString_3: `0x${string}` =
+  "0x1a199354959140E5c1A2F4135fAA7Ba2748939C3";
+
 export const MOCKED_ADDRESS_1 = buildAddress(MOCKED_0xString_1);
 export const MOCKED_ADDRESS_2 = buildAddress(MOCKED_0xString_2);
 export const MOCKED_ADDRESS_3 = buildAddress(MOCKED_0xString_3);
-
-export type DomainCardOwnerProps = {
-  ownerAddress: `0x${string}` | null;
-  managerAddress: `0x${string}` | null;
-  /** Former owner address is only set when the domain is in Grace Period */
-  formerOwnerAddress: `0x${string}` | null;
-  /** Former manager address is only set when the domain is in Grace Period */
-  formerManagerAddress: `0x${string}` | null;
-};

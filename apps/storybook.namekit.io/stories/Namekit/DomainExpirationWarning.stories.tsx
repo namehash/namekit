@@ -18,7 +18,7 @@ const meta: Meta<typeof DomainExpirationWarning> = {
   },
   args: {
     formerDomainOwnerAddress: MOCKED_ADDRESS_1,
-    addressToCompareOwnership: MOCKED_ADDRESS_2,
+    currentUserAddress: MOCKED_ADDRESS_2,
     currentDomainOwnerAddress: MOCKED_ADDRESS_3,
     domainRegistration: getMockedRegistration({
       domainStatus: DomainStatus.Active,
@@ -60,7 +60,7 @@ export const IconAndTextForADomainExpiringSoon: Story = {
 export const OnlyIconForADomainExpired: Story = {
   args: {
     onlyIcon: true,
-    addressToCompareOwnership: MOCKED_ADDRESS_1,
+    currentUserAddress: MOCKED_ADDRESS_1,
     formerDomainOwnerAddress: MOCKED_ADDRESS_2,
     domainRegistration: getMockedRegistration({
       domainStatus: DomainStatus.Expired,
@@ -71,7 +71,7 @@ export const OnlyIconForADomainExpired: Story = {
 export const IconAndTextForADomainExpired: Story = {
   args: {
     onlyIcon: false,
-    addressToCompareOwnership: MOCKED_ADDRESS_1,
+    currentUserAddress: MOCKED_ADDRESS_1,
     formerDomainOwnerAddress: MOCKED_ADDRESS_2,
     domainRegistration: getMockedRegistration({
       domainStatus: DomainStatus.Expired,
@@ -82,7 +82,7 @@ export const IconAndTextForADomainExpired: Story = {
 export const OnlyIconForADomainExpiredWhenDisplayingForDomainOwner: Story = {
   args: {
     onlyIcon: true,
-    addressToCompareOwnership: MOCKED_ADDRESS_1,
+    currentUserAddress: MOCKED_ADDRESS_1,
     formerDomainOwnerAddress: MOCKED_ADDRESS_1,
     domainRegistration: getMockedRegistration({
       domainStatus: DomainStatus.Expired,
@@ -93,7 +93,7 @@ export const OnlyIconForADomainExpiredWhenDisplayingForDomainOwner: Story = {
 export const IconAndTextForADomainExpiredWhenDisplayingForDomainOwner: Story = {
   args: {
     onlyIcon: false,
-    addressToCompareOwnership: MOCKED_ADDRESS_1,
+    currentUserAddress: MOCKED_ADDRESS_1,
     formerDomainOwnerAddress: MOCKED_ADDRESS_1,
     domainRegistration: getMockedRegistration({
       domainStatus: DomainStatus.Expired,
@@ -104,7 +104,7 @@ export const IconAndTextForADomainExpiredWhenDisplayingForDomainOwner: Story = {
 export const OnIconClickHandler: Story = {
   args: {
     onIconClickHandler: () => alert("Icon was clicked!"),
-    addressToCompareOwnership: MOCKED_ADDRESS_1,
+    currentUserAddress: MOCKED_ADDRESS_1,
     formerDomainOwnerAddress: MOCKED_ADDRESS_2,
     domainRegistration: getMockedRegistration({
       domainStatus: DomainStatus.Expired,
@@ -117,7 +117,7 @@ export const OnIconClickHandlerEvenInTextMode: Story = {
   args: {
     onlyIcon: false,
     onIconClickHandler: () => alert("Icon was clicked!"),
-    addressToCompareOwnership: MOCKED_ADDRESS_1,
+    currentUserAddress: MOCKED_ADDRESS_1,
     formerDomainOwnerAddress: MOCKED_ADDRESS_2,
     domainRegistration: getMockedRegistration({
       domainStatus: DomainStatus.Expired,

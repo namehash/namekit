@@ -6,7 +6,7 @@ import {
   domainExpirationTimestamp,
   domainReleaseTimestamp,
   UserOwnershipOfDomain,
-  getUserOwnership,
+  getCurrentUserOwnership,
   formatTimestamp,
   formattedPrice,
   Registration,
@@ -40,19 +40,19 @@ interface DomainExpirationWarningProps {
   /* 
     Below address is the one used in domain's ownership
     determination, where depending on the match between
-    the "addressToCompareOwnership", "currentDomainOwnerAddress"
+    the "currentUserAddress", "currentDomainOwnerAddress"
     and the "formerDomainOwnerAddress", different Ui elements
     are displayed alongside with text information about
     the specific domain's ownership status.
   */
-  addressToCompareOwnership: Address | null;
+  currentUserAddress: Address | null;
   onIconClickHandler?: () => void;
   onlyIcon?: boolean;
 }
 
 export const DomainExpirationWarning = ({
   formerDomainOwnerAddress,
-  addressToCompareOwnership,
+  currentUserAddress,
   currentDomainOwnerAddress,
   domainRegistration,
   domainName,
@@ -64,25 +64,21 @@ export const DomainExpirationWarning = ({
 
   useEffect(() => {
     if (
-      addressToCompareOwnership === null ||
-      (!addressToCompareOwnership && !formerDomainOwnerAddress)
+      currentUserAddress === null ||
+      (!currentUserAddress && !formerDomainOwnerAddress)
     ) {
       setUserOwnershipOfDomain(null);
       return;
     }
 
-    const userOwnership = getUserOwnership(
+    const userOwnership = getCurrentUserOwnership(
       formerDomainOwnerAddress,
       currentDomainOwnerAddress,
-      addressToCompareOwnership,
+      currentUserAddress,
     );
 
     setUserOwnershipOfDomain(userOwnership);
-  }, [
-    formerDomainOwnerAddress,
-    currentDomainOwnerAddress,
-    addressToCompareOwnership,
-  ]);
+  }, [formerDomainOwnerAddress, currentDomainOwnerAddress, currentUserAddress]);
 
   if (domainName === null || domainRegistration === null) return <></>;
 

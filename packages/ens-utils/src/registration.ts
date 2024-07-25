@@ -25,8 +25,21 @@ export type Registration = {
 };
 
 export const getDomainRegistration = (
-  expiryTimestamp: Timestamp,
+  /*
+    When null, a domain is considered to be not registered.
+  */
+  expiryTimestamp: Timestamp | null,
 ): Registration => {
+  if (!expiryTimestamp) {
+    return {
+      primaryStatus: PrimaryRegistrationStatus.NeverRegistered,
+      secondaryStatus: null,
+      registrationTimestamp: null,
+      expirationTimestamp: null,
+      expiryTimestamp: null,
+    };
+  }
+
   const primaryStatus = getPrimaryRegistrationStatus(expiryTimestamp);
   const secondaryStatus = getSecondaryRegistrationStatus(expiryTimestamp);
   return {
@@ -35,16 +48,6 @@ export const getDomainRegistration = (
     secondaryStatus,
     registrationTimestamp: null,
     expirationTimestamp: expiryTimestamp,
-  };
-};
-
-export const getRegistrationForActiveDomain = (): Registration => {
-  return {
-    primaryStatus: PrimaryRegistrationStatus.NeverRegistered,
-    secondaryStatus: null,
-    registrationTimestamp: null,
-    expirationTimestamp: null,
-    expiryTimestamp: null,
   };
 };
 

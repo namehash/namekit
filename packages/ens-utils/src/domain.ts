@@ -52,24 +52,24 @@ export enum UserOwnershipOfDomain {
 }
 
 /**
- * Returns the ownership status of a domain in comparison to a given address
+ * Returns the ownership status of a domain in comparison to the current user's address
  * @param formerDomainOwnerAddress Address of former domain owner (last owner before Grace Period)
  * @param currentDomainOwnerAddress Address of current domain owner
- * @param addressToCompareOwnership Address to compare ownership
+ * @param currentUserAddress Address of the current user.
  * @returns UserOwnershipOfDomain
  */
-export const getUserOwnership = (
+export const getCurrentUserOwnership = (
   formerDomainOwnerAddress: Address | null,
   currentDomainOwnerAddress: Address | null,
-  addressToCompareOwnership: Address | null,
+  currentUserAddress: Address | null,
 ): UserOwnershipOfDomain => {
   if (!currentDomainOwnerAddress && !formerDomainOwnerAddress)
     return UserOwnershipOfDomain.noOwner;
 
-  if (addressToCompareOwnership) {
+  if (currentUserAddress) {
     const isFormerOwner =
       formerDomainOwnerAddress &&
-      isAddressEqual(formerDomainOwnerAddress, addressToCompareOwnership);
+      isAddressEqual(formerDomainOwnerAddress, currentUserAddress);
 
     if (isFormerOwner) {
       return UserOwnershipOfDomain.formerOwner;
@@ -77,7 +77,7 @@ export const getUserOwnership = (
 
     const isOwner =
       currentDomainOwnerAddress &&
-      isAddressEqual(addressToCompareOwnership, currentDomainOwnerAddress);
+      isAddressEqual(currentUserAddress, currentDomainOwnerAddress);
 
     if (isOwner) {
       return UserOwnershipOfDomain.activeOwner;
