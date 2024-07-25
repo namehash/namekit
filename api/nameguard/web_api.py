@@ -61,7 +61,9 @@ These documentation pages focus specifically on the NameGuard API. For informati
 
 ## Glossary
 
-* uninspected name - if labels are going to be resolved then we count unknown labels and check if the number exceeds the limit `MAX_INSPECTED_NAME_UNKNOWN_LABELS`. Unknown names are resolved.
+* uninspected name - any name that fails any of the following requirements:
+  1. The count of unknown labels (distinct or non-distinct) must not exceed `MAX_INSPECTED_NAME_UNKNOWN_LABELS`.
+  2. The count of characters in the name (after potential resolving of unknown labels) must not exceed the limit `MAX_INSPECTED_NAME_CHARACTERS`.
 If length of the name (after optional resolving of unknown labels) exceeds the limit `MAX_INSPECTED_NAME_CHARACTERS`.
 If name is uninspected the UninspectedNameGuardReport is returned (NameGuardReport with rating ALERT, highest risk `uninspected`, risk count 1, canonical_name None, labels None). 
 
