@@ -1,58 +1,40 @@
 import {
-  DomainCard,
-  PrimaryRegistrationStatus,
   Registration,
-  SecondaryRegistrationStatus,
+  getDomainRegistration,
+  getRegistrationForActiveDomain,
   addSeconds,
   buildDuration,
   buildENSName,
   now,
-  subtractSeconds,
-  getDomainName,
-  buildNFTRefFromENSName,
   ENSName,
-  MAINNET,
+  Timestamp,
+  buildAddress,
 } from "@namehash/ens-utils";
-import { Normalization } from "@namehash/nameguard";
 
-export const REGISTRATION_OF_EXPIRING_SOON_DOMAIN: Readonly<Registration> = {
-  registrationTimestamp: subtractSeconds(now(), buildDuration(1000n)),
-  expirationTimestamp: addSeconds(now(), buildDuration(4000n)),
-  expiryTimestamp: null,
-  primaryStatus: PrimaryRegistrationStatus.Active,
-  secondaryStatus: SecondaryRegistrationStatus.ExpiringSoon,
-};
+export const REGISTRATION_OF_EXPIRING_SOON_DOMAIN: Readonly<Timestamp> =
+  addSeconds(now(), buildDuration(4000n));
 
-export const REGISTRATION_OF_EXPIRED_DOMAIN: Readonly<Registration> = {
-  registrationTimestamp: subtractSeconds(now(), buildDuration(1000n)),
-  expirationTimestamp: addSeconds(now(), buildDuration(4000n)),
-  expiryTimestamp: null,
-  primaryStatus: PrimaryRegistrationStatus.Expired,
-  secondaryStatus: SecondaryRegistrationStatus.GracePeriod,
-};
-
-export const REGISTRATION_OF_NORMAL_EXPIRATION_STATUS: Readonly<Registration> =
-  {
-    registrationTimestamp: null,
-    expirationTimestamp: null,
-    expiryTimestamp: null,
-    primaryStatus: PrimaryRegistrationStatus.Active,
-    secondaryStatus: null,
-  };
+export const REGISTRATION_OF_EXPIRED_DOMAIN: Readonly<Timestamp> = now();
 
 export enum DomainStatus {
   ExpiringSoon,
   Expired,
-  Normal,
+  Active,
 }
 
-export type DomainCardOwnerProps = {
-  ownerAddress: `0x${string}` | null;
-  managerAddress: `0x${string}` | null;
-  /** Former owner address is only set when the domain is in Grace Period */
-  formerOwnerAddress: `0x${string}` | null;
-  /** Former manager address is only set when the domain is in Grace Period */
-  formerManagerAddress: `0x${string}` | null;
+export const getMockedRegistration = ({
+  domainStatus,
+}: {
+  domainStatus: DomainStatus;
+}): Registration => {
+  switch (domainStatus) {
+    case DomainStatus.Active:
+      return getRegistrationForActiveDomain();
+    case DomainStatus.ExpiringSoon:
+      return getDomainRegistration(REGISTRATION_OF_EXPIRING_SOON_DOMAIN);
+    case DomainStatus.Expired:
+      return getDomainRegistration(REGISTRATION_OF_EXPIRED_DOMAIN);
+  }
 };
 
 export enum ENSNameVariant {
@@ -62,7 +44,11 @@ export enum ENSNameVariant {
   Unknown = "Unknown",
 }
 
-export const getENSnameFor = (variant: ENSNameVariant): ENSName => {
+export const getENSNameForVariant = ({
+  variant,
+}: {
+  variant: ENSNameVariant;
+}): ENSName => {
   switch (variant) {
     case ENSNameVariant.NormalizedWithAvatar:
       return buildENSName("lightwalker.eth");
@@ -77,67 +63,25 @@ export const getENSnameFor = (variant: ENSNameVariant): ENSName => {
   }
 };
 
-export const MOCKED_DOMAIN_CARD_IS_OWNER_ADDRESS: `0x${string}` =
+export const MOCKED_0xString_1: `0x${string}` =
   "0x1a199654959140E5c1A2F4135fAA7Ba2748939C6";
-export const MOCKED_DOMAIN_CARD_NON_OWNER_ADDRESS =
-  MOCKED_DOMAIN_CARD_IS_OWNER_ADDRESS.replace("5", "6") as `0x${string}`;
+export const MOCKED_0xString_2 = MOCKED_0xString_1.replace(
+  "5",
+  "6",
+) as `0x${string}`;
+export const MOCKED_0xString_3 = MOCKED_0xString_2.replace(
+  "6",
+  "4",
+) as `0x${string}`;
+export const MOCKED_ADDRESS_1 = buildAddress(MOCKED_0xString_1);
+export const MOCKED_ADDRESS_2 = buildAddress(MOCKED_0xString_2);
+export const MOCKED_ADDRESS_3 = buildAddress(MOCKED_0xString_3);
 
-export const getMockedDomainCard = ({
-  domainStatus,
-  isOwner = true,
-  normalization = Normalization.normalized,
-}: {
-  isOwner?: boolean;
-  domainStatus: DomainStatus;
-  normalization?: Normalization;
-}): DomainCard => {
-  const address = isOwner
-    ? MOCKED_DOMAIN_CARD_IS_OWNER_ADDRESS
-    : MOCKED_DOMAIN_CARD_NON_OWNER_ADDRESS;
-
-  let registrationObj: Registration = REGISTRATION_OF_NORMAL_EXPIRATION_STATUS;
-  let ownerProps: DomainCardOwnerProps = {
-    ownerAddress: address,
-    managerAddress: address,
-    formerOwnerAddress: null,
-    formerManagerAddress: null,
-  };
-
-  switch (domainStatus) {
-    case DomainStatus.ExpiringSoon:
-      registrationObj = REGISTRATION_OF_EXPIRING_SOON_DOMAIN;
-      break;
-    case DomainStatus.Expired:
-      registrationObj = REGISTRATION_OF_EXPIRED_DOMAIN;
-      ownerProps = {
-        ownerAddress: null,
-        managerAddress: null,
-        formerOwnerAddress: address,
-        formerManagerAddress: address,
-      };
-      break;
-  }
-
-  let ensName = getENSnameFor(ENSNameVariant.NormalizedWithAvatar);
-  switch (normalization) {
-    case Normalization.unnormalized:
-      ensName = getENSnameFor(ENSNameVariant.Unnormalized);
-      break;
-    case Normalization.unknown:
-      ensName = getENSnameFor(ENSNameVariant.Unknown);
-      break;
-  }
-
-  const nft = buildNFTRefFromENSName(ensName, MAINNET, false);
-  const parsedName = getDomainName(ensName.name);
-
-  return {
-    name,
-    nft,
-    parsedName,
-    registration: registrationObj,
-    nameGeneratorMetadata: null,
-    onWatchlist: false,
-    ...ownerProps,
-  };
+export type DomainCardOwnerProps = {
+  ownerAddress: `0x${string}` | null;
+  managerAddress: `0x${string}` | null;
+  /** Former owner address is only set when the domain is in Grace Period */
+  formerOwnerAddress: `0x${string}` | null;
+  /** Former manager address is only set when the domain is in Grace Period */
+  formerManagerAddress: `0x${string}` | null;
 };
