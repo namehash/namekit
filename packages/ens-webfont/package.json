@@ -4,7 +4,8 @@
   "main": "index.css",
   "files": [
     "index.css",
-    "Unifont.otf"
+    "Unifont.otf",
+    "LICENSE"
   ],
   "scripts": {},
   "publishConfig": {
