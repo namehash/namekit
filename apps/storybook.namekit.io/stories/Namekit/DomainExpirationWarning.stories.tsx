@@ -8,7 +8,7 @@ import {
   MOCKED_ADDRESS_1,
   MOCKED_ADDRESS_2,
   MOCKED_ADDRESS_3,
-} from "./utils";
+} from "./mock-utils";
 
 const meta: Meta<typeof DomainExpirationWarning> = {
   component: DomainExpirationWarning,

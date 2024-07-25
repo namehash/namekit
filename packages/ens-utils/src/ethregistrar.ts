@@ -252,7 +252,7 @@ export const getPriceDescription = (
         descriptiveTextEnd: ".",
       };
     } else {
-      const domainLabelLength = domainName.name.length;
+      const domainLabelLength = charCount(domainName.name);
 
       return domainLabelLength <
         DOMAIN_HAS_SPECIAL_PRICE_IF_LENGTH_EQUAL_OR_LESS_THAN
@@ -422,8 +422,8 @@ const AvailableNamePriceUSD = (
       currency: Currency.Usd,
     },
   };
-  const basePrice = shortNamePremium[domainName.name.length]
-    ? shortNamePremium[domainName.name.length]
+  const basePrice = shortNamePremium[charCount(domainName.name)]
+    ? shortNamePremium[charCount(domainName.name)]
     : defaultPrice;
 
   const namePriceForYears = multiplyPriceByNumber(
