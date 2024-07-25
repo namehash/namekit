@@ -1,7 +1,6 @@
 import React from "react";
 import { DisplayedName } from "../DisplayedName/DisplayedName";
 import { ENSName } from "@namehash/ens-utils";
-import { Normalization } from "@namehash/nameguard";
 
 type Props = {
   name: ENSName;
@@ -9,8 +8,7 @@ type Props = {
 
 export function ReportFormattedDisplayName({ name }: Props) {
   const displayNameDifferentThanBeautifiedName =
-    name.normalization === Normalization.normalized &&
-    name.displayName !== name.name;
+    name.normalization === "normalized" && name.displayName !== name.name;
 
   if (displayNameDifferentThanBeautifiedName)
     return (
