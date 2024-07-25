@@ -1,6 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 import { nameguard } from "@namehash/nameguard";
-import { ImpersonationReport } from "../../components/ImpersonationReport";
+import { ImpersonationReport } from "@/app/components/ImpersonationReport";
 import { Avatar } from "@/app/components/Avatar";
 
 export default async function Page({

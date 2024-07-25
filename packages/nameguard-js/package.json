@@ -1,0 +1,42 @@
+{
+  "name": "@namehash/nameguard-js",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch --clean=false",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@types/node": "^20.6.2",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2",
+    "vitest": "1.4.0"
+  },
+  "dependencies": {
+    "@namehash/nameguard": "workspace:*",
+    "@namehash/ens-utils": "workspace:*",
+    "@adraffy/ens-normalize": "1.10.1",
+    "text-segmentation": "1.0.3",
+    "viem": "2.9.3",
+    "whatwg-fetch": "3.6.19"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
