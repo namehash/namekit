@@ -3,6 +3,10 @@ import "@namehash/namekit-react/styles.css";
 
 import "../global.css";
 
+BigInt.prototype.toJSON = function () {
+  return this.toString();
+};
+
 /** @type { import('@storybook/react').Preview } */
 const preview = {
   parameters: {
