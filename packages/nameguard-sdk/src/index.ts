@@ -356,17 +356,17 @@ export interface ConsolidatedNameGuardReport extends ConsolidatedReport {
   /* The ENSIP-15 normalization status of `name` */
   normalization: Normalization;
 
-  /** Beautified version of `name` */
+  /* Beautified version of `name` */
   beautiful_name: string;
+
+  /* Whether or not the name was inspected. */
+  inspected: boolean;
 }
 
 /**
  * NameGuard report that contains the full results of all `checks` on all `labels` in a name.
  */
 export interface AbstractNameGuardReport extends ConsolidatedNameGuardReport {
-  /* Whether or not the name was inspected. */
-  inspected: boolean;
-
   /* The results of all checks performed by NameGuard on `name`. */
   checks: CheckResult[];
 

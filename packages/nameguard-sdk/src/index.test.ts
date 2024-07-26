@@ -33,6 +33,7 @@ describe("NameGuard", () => {
     ]);
 
     expect(data.results?.length).toBe(2);
+    expect(data.results?.[0].inspected).toBe(true);
   });
 
   it("should throw an error if invalid namehash provided", async () => {
