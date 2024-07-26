@@ -127,6 +127,23 @@ The NameKit monorepo contains multiple packages and apps.
         </a>
       </td>
     </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/sol-444444?logo=ethereum&logoColor=white">
+          <img src="https://img.shields.io/badge/sol-444444?logo=ethereum&logoColor=white" alt="Solidity" width="auto" height="17">
+        </picture>
+      </td>
+      <td style="white-space: nowrap;">
+        <a href="https://github.com/namehash/namekit-contracts">namekit-contracts</a>
+      </td>
+      <td>
+        Earn revenue for helping ENS grow.
+      </td>
+      <td>
+        -
+      </td>
+    </tr>
   </tbody>
 </table>
 
@@ -218,6 +235,81 @@ The NameKit monorepo contains multiple packages and apps.
           <picture>
             <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fens-webfont?style=flat&color=444444">
             <img src="https://img.shields.io/npm/v/%40namehash%2Fens-webfont?style=flat&color=444444" alt="NPM Version" width="auto" height="17">
+          </picture>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/py-444444?logo=python&logoColor=white">
+          <img src="https://img.shields.io/badge/py-444444?logo=python&logoColor=white" alt="Python" width="auto" height="17">
+        </picture>
+      </td>
+      <td style="white-space: nowrap;">
+        <a href="https://github.com/namehash/ens-normalize-python">ens-normalize-python</a>
+      </td>
+      <td>Python implementation of ENSIP-15 (ENS Normalize).</td>
+      <td>
+        <a href="https://pypi.org/project/ens-normalize/">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/pypi/v/ens-normalize?style=flat&color=444444">
+            <img src="https://img.shields.io/pypi/v/ens-normalize?style=flat&color=444444" alt="PyPI Version" width="auto" height="17">
+          </picture>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/py-444444?logo=python&logoColor=white">
+          <img src="https://img.shields.io/badge/py-444444?logo=python&logoColor=white" alt="Python" width="auto" height="17">
+        </picture>
+      </td>
+      <td style="white-space: nowrap;">
+        <a href="https://github.com/namehash/ens-font-data">ens-font-data</a>
+      </td>
+      <td>Metadata for graphemes that may appear in ENS names.</td>
+      <td>
+        -
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/py-444444?logo=python&logoColor=white">
+          <img src="https://img.shields.io/badge/py-444444?logo=python&logoColor=white" alt="Python" width="auto" height="17">
+        </picture>
+      </td>
+      <td style="white-space: nowrap;">
+        <a href="https://github.com/namehash/ens-label-inspector">ens-label-inspector</a>
+      </td>
+      <td>Detailed inspection of labels in ENS names.</td>
+      <td>
+        <a href="https://pypi.org/project/ens-label-inspector/">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/pypi/v/ens-label-inspector?style=flat&color=444444">
+            <img src="https://img.shields.io/pypi/v/ens-label-inspector?style=flat&color=444444" alt="PyPI Version" width="auto" height="17">
+          </picture>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/py-444444?logo=python&logoColor=white">
+          <img src="https://img.shields.io/badge/py-444444?logo=python&logoColor=white" alt="Python" width="auto" height="17">
+        </picture>
+      </td>
+      <td style="white-space: nowrap;">
+        <a href="api">nameguard</a>
+      </td>
+      <td>Identify and prevent malicious use of ENS names.</td>
+      <td>
+        <a href="https://pypi.org/project/nameguard/">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/pypi/v/nameguard?style=flat&color=444444">
+            <img src="https://img.shields.io/pypi/v/nameguard?style=flat&color=444444" alt="PyPI Version" width="auto" height="17">
           </picture>
         </a>
       </td>
