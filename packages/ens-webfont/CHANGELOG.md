@@ -1,5 +1,11 @@
 # @namehash/ens-webfont
 
+## 0.4.0
+
+### Minor Changes
+
+- 6ac5668: Publish changes
+
 ## 0.3.0
 
 ### Minor Changes

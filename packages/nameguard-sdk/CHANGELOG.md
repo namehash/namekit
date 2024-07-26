@@ -1,5 +1,11 @@
 # @namehash/nameguard
 
+## 0.2.0
+
+### Minor Changes
+
+- 6ac5668: Publish changes
+
 ## 0.1.0
 
 ### Minor Changes
