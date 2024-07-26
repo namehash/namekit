@@ -7,7 +7,7 @@ Easily integrate rich ENS user journeys into your wallet, app, or game.
 
 ## Project Status
 
-🏗️ NameKit is currently an alpha preview. Expect APIs and interfaces to experience breaking changes.
+🏗️ NameKit is currently an alpha preview under active development. Expect APIs and interfaces to experience breaking changes.
 
 ## Project Directory
 
