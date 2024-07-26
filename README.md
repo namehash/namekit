@@ -58,13 +58,20 @@ The NameKit monorepo contains multiple packages and apps.
 <table>
   <thead>
     <tr>
-      <th align="left">Package&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th> <!-- adding spaces to make GitHub stop breaking package names across multiple lines -->
+      <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to stop language images from getting smashed --></th>
+      <th align="left">Package&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop breaking package names across multiple lines --></th>
       <th align="left">Summary</th>
       <th align="left">Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop distorting NPM version shields --></th>
     </tr>
   </thead>
   <tbody>
     <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white">
+          <img src="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white" alt="TypeScript" width="auto" height="17">
+        </picture>
+      </td>
       <td style="white-space: nowrap;">
         <a href="packages/namekit-core">namekit-core</a>
       </td>
@@ -74,6 +81,12 @@ The NameKit monorepo contains multiple packages and apps.
       </td>
     </tr>
     <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/tsx-444444?logo=react&logoColor=white">
+          <img src="https://img.shields.io/badge/tsx-444444?logo=typescript&logoColor=white" alt="React" width="auto" height="17">
+        </picture>
+      </td>
       <td style="white-space: nowrap;">
         <a href="packages/namekit-react">namekit-react</a>
       </td>
@@ -88,6 +101,12 @@ The NameKit monorepo contains multiple packages and apps.
       </td>
     </tr>
     <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white">
+          <img src="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white" alt="TypeScript" width="auto" height="17">
+        </picture>
+      </td>
       <td style="white-space: nowrap;">
         <a href="packages/ens-utils">ens-utils</a>
         <br>
@@ -116,13 +135,20 @@ The NameKit monorepo contains multiple packages and apps.
 <table>
   <thead>
     <tr>
-      <th align="left">Package&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th> <!-- adding spaces to make GitHub stop breaking package names across multiple lines -->
+      <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to stop language images from getting smashed --></th>
+      <th align="left">Package&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop breaking package names across multiple lines --></th>
       <th align="left">Summary</th>
       <th align="left">Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop distorting NPM version shields --></th>
     </tr>
   </thead>
   <tbody>
     <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white">
+          <img src="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white" alt="TypeScript" width="auto" height="17">
+        </picture>
+      </td>
       <td style="white-space: nowrap;">
         <a href="packages/nameguard-sdk">nameguard-sdk</a>
       </td>
@@ -137,6 +163,12 @@ The NameKit monorepo contains multiple packages and apps.
       </td>
     </tr>
     <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white">
+          <img src="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white" alt="TypeScript" width="auto" height="17">
+        </picture>
+      </td>
       <td style="white-space: nowrap;">
         <a href="packages/nameguard-js">nameguard-js</a>
       </td>
@@ -151,6 +183,12 @@ The NameKit monorepo contains multiple packages and apps.
       </td>
     </tr>
     <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/tsx-444444?logo=react&logoColor=white">
+          <img src="https://img.shields.io/badge/tsx-444444?logo=typescript&logoColor=white" alt="React" width="auto" height="17">
+        </picture>
+      </td>
       <td style="white-space: nowrap;">
         <a href="packages/nameguard-react">nameguard-react</a>
       </td>
@@ -165,6 +203,12 @@ The NameKit monorepo contains multiple packages and apps.
       </td>
     </tr>
     <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/css-444444?logo=css3&logoColor=white">
+          <img src="https://img.shields.io/badge/css-444444?logo=css3&logoColor=white" alt="CSS" width="auto" height="17">
+        </picture>
+      </td>
       <td style="white-space: nowrap;">
         <a href="packages/ens-webfont">ens-webfont</a>
       </td>
