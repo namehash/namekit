@@ -62,7 +62,7 @@ The NameKit monorepo contains multiple packages and apps.
     <tr>
       <th style="text-align: left;">Package&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th> <!-- adding spaces to make GitHub stop breaking package names across multiple lines -->
       <th style="text-align: left;">Summary</th>
-      <th style="text-align: left;">Version</th>
+      <th style="text-align: left;">Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop distorting NPM version shields --></th>
     </tr>
   </thead>
   <tbody>
@@ -75,7 +75,7 @@ The NameKit monorepo contains multiple packages and apps.
         <a href="https://www.npmjs.com/package/@namehash/ens-utils">
           <picture>
             <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fens-utils?style=flat&color=444444">
-            <img src="https://img.shields.io/npm/v/%40namehash%2Fens-utils?style=flat&color=444444" alt="NPM Version">
+            <img src="https://img.shields.io/npm/v/%40namehash%2Fens-utils?style=flat&color=444444" alt="NPM Version" width="auto" height="17">
           </picture>
         </a>
       </td>
@@ -89,7 +89,7 @@ The NameKit monorepo contains multiple packages and apps.
         <a href="https://www.npmjs.com/package/@namehash/ens-webfont">
           <picture>
             <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fens-webfont?style=flat&color=444444">
-            <img src="https://img.shields.io/npm/v/%40namehash%2Fens-webfont?style=flat&color=444444" alt="NPM Version">
+            <img src="https://img.shields.io/npm/v/%40namehash%2Fens-webfont?style=flat&color=444444" alt="NPM Version" width="auto" height="17">
           </picture>
         </a>
       </td>
@@ -103,7 +103,7 @@ The NameKit monorepo contains multiple packages and apps.
         <a href="https://www.npmjs.com/package/@namehash/nameguard-js">
           <picture>
             <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fnameguard-js?style=flat&color=444444">
-            <img src="https://img.shields.io/npm/v/%40namehash%2Fnameguard-js?style=flat&color=444444" alt="NPM Version">
+            <img src="https://img.shields.io/npm/v/%40namehash%2Fnameguard-js?style=flat&color=444444" alt="NPM Version" width="auto" height="17">
           </picture>
         </a>
       </td>
@@ -117,7 +117,7 @@ The NameKit monorepo contains multiple packages and apps.
         <a href="https://www.npmjs.com/package/@namehash/nameguard-react">
           <picture>
             <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fnameguard-react?style=flat&color=444444">
-            <img src="https://img.shields.io/npm/v/%40namehash%2Fnameguard-react?style=flat&color=444444" alt="NPM Version">
+            <img src="https://img.shields.io/npm/v/%40namehash%2Fnameguard-react?style=flat&color=444444" alt="NPM Version" width="auto" height="17">
           </picture>
         </a>
       </td>
@@ -131,7 +131,7 @@ The NameKit monorepo contains multiple packages and apps.
         <a href="https://www.npmjs.com/package/@namehash/nameguard">
           <picture>
             <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fnameguard?style=flat&color=444444">
-            <img src="https://img.shields.io/npm/v/%40namehash%2Fnameguard?style=flat&color=444444" alt="NPM Version">
+            <img src="https://img.shields.io/npm/v/%40namehash%2Fnameguard?style=flat&color=444444" alt="NPM Version" width="auto" height="17">
           </picture>
         </a>
       </td>
@@ -145,7 +145,7 @@ The NameKit monorepo contains multiple packages and apps.
         <a href="https://www.npmjs.com/package/@namehash/namekit-react">
           <picture>
             <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fnamekit-react?style=flat&color=444444">
-            <img src="https://img.shields.io/npm/v/%40namehash%2Fnamekit-react?style=flat&color=444444" alt="NPM Version">
+            <img src="https://img.shields.io/npm/v/%40namehash%2Fnamekit-react?style=flat&color=444444" alt="NPM Version" width="auto" height="17">
           </picture>
         </a>
       </td>
