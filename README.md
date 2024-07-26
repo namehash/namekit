@@ -66,9 +66,18 @@ The NameKit monorepo contains multiple packages and apps.
   <tbody>
     <tr>
       <td style="white-space: nowrap;">
+        <a href="packages/namekit-core">namekit-core</a>
+      </td>
+      <td>Core logic and data types for NameKit. Simplify interactions with ENS.</td>
+      <td>
+        <b><i>Coming Soon!</i></b>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap;">
         <a href="packages/ens-utils">ens-utils</a>
       </td>
-      <td>General utilities for building on ENS.</td>
+      <td>General utilities for building on ENS. <b><i>Deprecated.</i></b></td>
       <td>
         <a href="https://www.npmjs.com/package/@namehash/ens-utils">
           <picture>
