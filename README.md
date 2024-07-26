@@ -58,95 +58,99 @@ The NameKit monorepo contains multiple packages and apps.
 
 <!-- PACKAGES TABLE -->
 <table>
-  <tr>
-    <th style="text-align: left;">Package&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th> <!-- adding spaces to make GitHub stop breaking package names across multiple lines -->
-    <th style="text-align: left;">Summary</th>
-    <th style="text-align: left;">Version</th>
-  </tr>
-  <tr>
-    <td style="white-space: nowrap;">
-      <a href="packages/ens-utils">ens-utils</a>
-    </td>
-    <td>General utilities for building on ENS.</td>
-    <td>
-      <a href="https://www.npmjs.com/package/@namehash/ens-utils">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fens-utils?style=flat&color=444444">
-          <img src="https://img.shields.io/npm/v/%40namehash%2Fens-utils?style=flat&color=444444" alt="NPM Version">
-        </picture>
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td style="white-space: nowrap;">
-      <a href="packages/ens-webfont">ens-webfont</a>
-    </td>
-    <td>Increase rendering support for emojis and other special graphemes that may appear in ENS names.</td>
-    <td>
-      <a href="https://www.npmjs.com/package/@namehash/ens-webfont">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fens-webfont?style=flat&color=444444">
-          <img src="https://img.shields.io/npm/v/%40namehash%2Fens-webfont?style=flat&color=444444" alt="NPM Version">
-        </picture>
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td style="white-space: nowrap;">
-      <a href="packages/nameguard-js">nameguard-js</a>
-    </td>
-    <td>A JavaScript implementation of NameGuard. Currently implements securePrimaryName with more coming soon.</td>
-    <td>
-      <a href="https://www.npmjs.com/package/@namehash/nameguard-js">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fnameguard-js?style=flat&color=444444">
-          <img src="https://img.shields.io/npm/v/%40namehash%2Fnameguard-js?style=flat&color=444444" alt="NPM Version">
-        </picture>
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td style="white-space: nowrap;">
-      <a href="packages/nameguard-react">nameguard-react</a>
-    </td>
-    <td>React UI components for building on NameGuard.</td>
-    <td>
-      <a href="https://www.npmjs.com/package/@namehash/nameguard-react">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fnameguard-react?style=flat&color=444444">
-          <img src="https://img.shields.io/npm/v/%40namehash%2Fnameguard-react?style=flat&color=444444" alt="NPM Version">
-        </picture>
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td style="white-space: nowrap;">
-      <a href="packages/nameguard-sdk">nameguard-sdk</a>
-    </td>
-    <td>A lightweight JavaScript client for the NameGuard API.</td>
-    <td>
-      <a href="https://www.npmjs.com/package/@namehash/nameguard">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fnameguard?style=flat&color=444444">
-          <img src="https://img.shields.io/npm/v/%40namehash%2Fnameguard?style=flat&color=444444" alt="NPM Version">
-        </picture>
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td style="white-space: nowrap;">
-      <a href="packages/namekit-react">namekit-react</a>
-    </td>
-    <td>React UI components for building on NameKit.</td>
-    <td>
-      <a href="https://www.npmjs.com/package/@namehash/namekit-react">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fnamekit-react?style=flat&color=444444">
-          <img src="https://img.shields.io/npm/v/%40namehash%2Fnamekit-react?style=flat&color=444444" alt="NPM Version">
-        </picture>
-      </a>
-    </td>
-  </tr>
+  <thead>
+    <tr>
+      <th style="text-align: left;">Package&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th> <!-- adding spaces to make GitHub stop breaking package names across multiple lines -->
+      <th style="text-align: left;">Summary</th>
+      <th style="text-align: left;">Version</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="white-space: nowrap;">
+        <a href="packages/ens-utils">ens-utils</a>
+      </td>
+      <td>General utilities for building on ENS.</td>
+      <td>
+        <a href="https://www.npmjs.com/package/@namehash/ens-utils">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fens-utils?style=flat&color=444444">
+            <img src="https://img.shields.io/npm/v/%40namehash%2Fens-utils?style=flat&color=444444" alt="NPM Version">
+          </picture>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap;">
+        <a href="packages/ens-webfont">ens-webfont</a>
+      </td>
+      <td>Increase rendering support for emojis and other special graphemes that may appear in ENS names.</td>
+      <td>
+        <a href="https://www.npmjs.com/package/@namehash/ens-webfont">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fens-webfont?style=flat&color=444444">
+            <img src="https://img.shields.io/npm/v/%40namehash%2Fens-webfont?style=flat&color=444444" alt="NPM Version">
+          </picture>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap;">
+        <a href="packages/nameguard-js">nameguard-js</a>
+      </td>
+      <td>A JavaScript implementation of NameGuard. Currently implements securePrimaryName with more coming soon.</td>
+      <td>
+        <a href="https://www.npmjs.com/package/@namehash/nameguard-js">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fnameguard-js?style=flat&color=444444">
+            <img src="https://img.shields.io/npm/v/%40namehash%2Fnameguard-js?style=flat&color=444444" alt="NPM Version">
+          </picture>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap;">
+        <a href="packages/nameguard-react">nameguard-react</a>
+      </td>
+      <td>React UI components for building on NameGuard.</td>
+      <td>
+        <a href="https://www.npmjs.com/package/@namehash/nameguard-react">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fnameguard-react?style=flat&color=444444">
+            <img src="https://img.shields.io/npm/v/%40namehash%2Fnameguard-react?style=flat&color=444444" alt="NPM Version">
+          </picture>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap;">
+        <a href="packages/nameguard-sdk">nameguard-sdk</a>
+      </td>
+      <td>A lightweight JavaScript client for the NameGuard API.</td>
+      <td>
+        <a href="https://www.npmjs.com/package/@namehash/nameguard">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fnameguard?style=flat&color=444444">
+            <img src="https://img.shields.io/npm/v/%40namehash%2Fnameguard?style=flat&color=444444" alt="NPM Version">
+          </picture>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td style="white-space: nowrap;">
+        <a href="packages/namekit-react">namekit-react</a>
+      </td>
+      <td>React UI components for building on NameKit.</td>
+      <td>
+        <a href="https://www.npmjs.com/package/@namehash/namekit-react">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fnamekit-react?style=flat&color=444444">
+            <img src="https://img.shields.io/npm/v/%40namehash%2Fnamekit-react?style=flat&color=444444" alt="NPM Version">
+          </picture>
+        </a>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 ## Local Development
