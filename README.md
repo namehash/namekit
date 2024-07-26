@@ -1,4 +1,16 @@
-# NameKit
+<br>
+<br>
+
+<!-- LOGO -->
+
+<p align="center">
+  <a href="https://namekit.io">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset=".github/logo-dark.svg">
+      <img alt="NameKit" src=".github/logo-light.svg" width="auto" height="60">
+    </picture>
+  </a>
+</p>
 
 <!-- TAGLINE -->
 <p align="center">
@@ -9,26 +21,26 @@
 <p align="center">
   <a href="LICENSE">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/github/license/namehash/namekit">
-      <img src="https://img.shields.io/github/license/namehash/namekit" alt="MIT License">
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/github/license/namehash/namekit?color=444444">
+      <img src="https://img.shields.io/github/license/namehash/namekit?color=444444" alt="MIT License">
     </picture>
   </a>
   <a href="https://github.com/namehash/namekit/actions/workflows/ci_sdk.yml?query=branch%3Amain">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_sdk.yml?logo=typescript&logoColor=ffffff">
-      <img src="https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_sdk.yml?logo=typescript&logoColor=ffffff" alt="TypeScript Build Status">
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_sdk.yml?logo=typescript&logoColor=ffffff&color=444444">
+      <img src="https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_sdk.yml?logo=typescript&logoColor=ffffff&color=444444" alt="TypeScript Build Status">
     </picture>
   </a>
   <a href="https://github.com/namehash/namekit/actions/workflows/ci_api.yml?query=branch%3Amain">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_api.yml?logo=python&logoColor=ffffff">
-      <img src="https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_api.yml?logo=python&logoColor=ffffff" alt="Python Build Status">
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_api.yml?logo=python&logoColor=ffffff&color=444444">
+      <img src="https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_api.yml?logo=python&logoColor=ffffff&color=444444" alt="Python Build Status">
     </picture>
   </a>
   <a href="#project-status">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/status-alpha-FFFF00">
-      <img src="https://img.shields.io/badge/status-alpha-FFFF00" alt="status: alpha">
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/status-alpha-444444">
+      <img src="https://img.shields.io/badge/status-alpha-444444" alt="status: alpha">
     </picture>
   </a>
 </p>
