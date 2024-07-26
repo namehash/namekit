@@ -3,14 +3,19 @@
 Easily integrate rich ENS user journeys into your wallet, app, or game.
 
 <!-- PROJECT SHIELDS -->
-[![TypeScript Build Status](https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_sdk.yml?logo=typescript&logoColor=ffffff)](https://github.com/namehash/namekit/actions/workflows/ci_sdk.yml?query=branch%3Amain) [![Python Build Status](https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_api.yml?logo=python&logoColor=ffffff)](https://github.com/namehash/namekit/actions/workflows/ci_api.yml?query=branch%3Amain) ![maturity: alpha](https://img.shields.io/badge/maturity-alpha-FFFF00?logo=rocket&logoColor=ffffff)
+[![TypeScript Build Status](https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_sdk.yml?logo=typescript&logoColor=ffffff)](https://github.com/namehash/namekit/actions/workflows/ci_sdk.yml?query=branch%3Amain) [![Python Build Status](https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_api.yml?logo=python&logoColor=ffffff)](https://github.com/namehash/namekit/actions/workflows/ci_api.yml?query=branch%3Amain) [![status: alpha](https://img.shields.io/badge/status-alpha-FFFF00?logo=rocket&logoColor=ffffff)](#project-status)
 
-## Monorepo Directory
+## Project Status
+
+🏗️ NameKit is currently an alpha preview. Expect APIs and interfaces to experience breaking changes.
+
+## Project Directory
 
 The NameKit monorepo contains multiple packages and apps.
 
 ### Packages
 
+<!-- PACKAGES TABLE -->
 | Package                                     | Summary                                                                                                 | Published Version                                                                                                                                                 |
 |---------------------------------------------|---------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [ens-utils](packages/ens-utils)             | General utilities for building on ENS.                                                                  | [![ NPM Version ]( https://img.shields.io/npm/v/%40namehash%2Fens-utils?style=flat&color=2282c2 )](https://www.npmjs.com/package/@namehash/ens-utils)             |
