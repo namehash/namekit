@@ -76,13 +76,14 @@ The NameKit monorepo contains multiple packages and apps.
     <tr>
       <td style="white-space: nowrap;">
         <a href="packages/ens-utils">ens-utils</a>
-      </td>
-      <td>
-        General utilities for building on ENS.
+        <br>
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/deprecated-e1e1e1">
           <img src="https://img.shields.io/badge/deprecated-e1e1e1" alt="deprecated" width="auto" height="17">
         </picture>
+      </td>
+      <td>
+        General utilities for building on ENS.
       </td>
       <td>
         <a href="https://www.npmjs.com/package/@namehash/ens-utils">
