@@ -3,7 +3,7 @@
 Easily integrate rich ENS user journeys into your wallet, app, or game.
 
 <!-- PROJECT SHIELDS -->
-[![TypeScript Build Status](https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_sdk.yml?logo=typescript&logoColor=ffffff)](https://github.com/namehash/namekit/actions/workflows/ci_sdk.yml?query=branch%3Amain) [![Python Build Status](https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_api.yml?logo=python&logoColor=ffffff)](https://github.com/namehash/namekit/actions/workflows/ci_api.yml?query=branch%3Amain) [![status: alpha](https://img.shields.io/badge/status-alpha-FFFF00?logo=rocket&logoColor=ffffff)](#project-status)
+[![MIT License](https://img.shields.io/github/license/namehash/namekit)](LICENSE) [![TypeScript Build Status](https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_sdk.yml?logo=typescript&logoColor=ffffff)](https://github.com/namehash/namekit/actions/workflows/ci_sdk.yml?query=branch%3Amain) [![Python Build Status](https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_api.yml?logo=python&logoColor=ffffff)](https://github.com/namehash/namekit/actions/workflows/ci_api.yml?query=branch%3Amain) [![status: alpha](https://img.shields.io/badge/status-alpha-FFFF00)](#project-status)
 
 ## Project Status
 
@@ -13,7 +13,8 @@ Easily integrate rich ENS user journeys into your wallet, app, or game.
 
 The NameKit monorepo contains multiple packages and apps.
 
-### Packages
+
+### TypeScript Packages
 
 <!-- PACKAGES TABLE -->
 | Package                                     | Summary                                                                                                 | Published Version                                                                                                                                                 |
