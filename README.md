@@ -2,7 +2,8 @@
 
 Easily integrate rich ENS user journeys into your wallet, app, or game.
 
-![status: alpha](https://img.shields.io/badge/status-%F0%9F%9A%A7%20alpha-FFFF00)
+<!-- PROJECT SHIELDS -->
+[![TypeScript Build Status](https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_sdk.yml?logo=typescript&logoColor=ffffff)](https://github.com/namehash/namekit/actions/workflows/ci_sdk.yml?query=branch%3Amain) [![Python Build Status](https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_api.yml?logo=python&logoColor=ffffff)](https://github.com/namehash/namekit/actions/workflows/ci_api.yml?query=branch%3Amain) ![maturity: alpha](https://img.shields.io/badge/maturity-alpha-FFFF00?logo=rocket&logoColor=ffffff)
 
 ## Monorepo Directory
 
