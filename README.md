@@ -2,20 +2,22 @@
 
 Easily integrate rich ENS user journeys into your wallet, app, or game.
 
+![status: alpha](https://img.shields.io/badge/status-%F0%9F%9A%A7%20alpha-FFFF00)
+
 ## Monorepo Directory
 
 The NameKit monorepo contains multiple packages and apps.
 
 ### Packages
 
-| Package                                     | Summary                                                                                                 | Status                                                                    | Published Version                                                                                                                                                 |
-|---------------------------------------------|---------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [ens-utils](packages/ens-utils)             | General utilities for building on ENS.                                                                  | <a>![alpha](https://img.shields.io/badge/%F0%9F%9A%A7%20alpha-FFFF00)</a> | [![ NPM Version ]( https://img.shields.io/npm/v/%40namehash%2Fens-utils?style=flat&color=2282c2 )](https://www.npmjs.com/package/@namehash/ens-utils)             |
-| [ens-webfont](packages/ens-webfont)         | Increase rendering support for emojis and other special graphemes that may appear in ENS names.         | <a>![alpha](https://img.shields.io/badge/%F0%9F%9A%A7%20alpha-FFFF00)</a> | [![ NPM Version ]( https://img.shields.io/npm/v/%40namehash%2Fens-webfont?style=flat&color=2282c2 )](https://www.npmjs.com/package/@namehash/ens-webfont)         |
-| [nameguard-js](packages/nameguard-js)       | A JavaScript implementation of NameGuard. Currently implements securePrimaryName with more coming soon. | <a>![alpha](https://img.shields.io/badge/%F0%9F%9A%A7%20alpha-FFFF00)</a> | [![ NPM Version ]( https://img.shields.io/npm/v/%40namehash%2Fnameguard-js?style=flat&color=2282c2 )](https://www.npmjs.com/package/@namehash/nameguard-js)       |
-| [nameguard-react](packages/nameguard-react) | React UI components for building on NameGuard.                                                          | <a>![alpha](https://img.shields.io/badge/%F0%9F%9A%A7%20alpha-FFFF00)</a> | [![ NPM Version ]( https://img.shields.io/npm/v/%40namehash%2Fnameguard-react?style=flat&color=2282c2 )](https://www.npmjs.com/package/@namehash/nameguard-react) |
-| [nameguard-sdk](packages/nameguard-sdk)     | A lightweight JavaScript client for the NameGuard API.                                                  | <a>![alpha](https://img.shields.io/badge/%F0%9F%9A%A7%20alpha-FFFF00)</a> | [![ NPM Version ]( https://img.shields.io/npm/v/%40namehash%2Fnameguard?style=flat&color=2282c2 )](https://www.npmjs.com/package/@namehash/nameguard-sdk)         |
-| [namekit-react](packages/namekit-react)     | React UI components for building on NameKit.                                                            | <a>![alpha](https://img.shields.io/badge/%F0%9F%9A%A7%20alpha-FFFF00)</a> | [![ NPM Version ]( https://img.shields.io/npm/v/%40namehash%2Fnamekit-react?style=flat&color=2282c2 )](https://www.npmjs.com/package/@namehash/namekit-react)     |
+| Package                                     | Summary                                                                                                 | Published Version                                                                                                                                                 |
+|---------------------------------------------|---------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [ens-utils](packages/ens-utils)             | General utilities for building on ENS.                                                                  | [![ NPM Version ]( https://img.shields.io/npm/v/%40namehash%2Fens-utils?style=flat&color=2282c2 )](https://www.npmjs.com/package/@namehash/ens-utils)             |
+| [ens-webfont](packages/ens-webfont)         | Increase rendering support for emojis and other special graphemes that may appear in ENS names.         | [![ NPM Version ]( https://img.shields.io/npm/v/%40namehash%2Fens-webfont?style=flat&color=2282c2 )](https://www.npmjs.com/package/@namehash/ens-webfont)         |
+| [nameguard-js](packages/nameguard-js)       | A JavaScript implementation of NameGuard. Currently implements securePrimaryName with more coming soon. | [![ NPM Version ]( https://img.shields.io/npm/v/%40namehash%2Fnameguard-js?style=flat&color=2282c2 )](https://www.npmjs.com/package/@namehash/nameguard-js)       |
+| [nameguard-react](packages/nameguard-react) | React UI components for building on NameGuard.                                                          | [![ NPM Version ]( https://img.shields.io/npm/v/%40namehash%2Fnameguard-react?style=flat&color=2282c2 )](https://www.npmjs.com/package/@namehash/nameguard-react) |
+| [nameguard-sdk](packages/nameguard-sdk)     | A lightweight JavaScript client for the NameGuard API.                                                  | [![ NPM Version ]( https://img.shields.io/npm/v/%40namehash%2Fnameguard?style=flat&color=2282c2 )](https://www.npmjs.com/package/@namehash/nameguard-sdk)         |
+| [namekit-react](packages/namekit-react)     | React UI components for building on NameKit.                                                            | [![ NPM Version ]( https://img.shields.io/npm/v/%40namehash%2Fnamekit-react?style=flat&color=2282c2 )](https://www.npmjs.com/package/@namehash/namekit-react)     |
 
 ## Local Development
 
