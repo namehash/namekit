@@ -68,7 +68,7 @@ The NameKit monorepo contains multiple packages and apps.
       <td style="white-space: nowrap;">
         <a href="packages/namekit-core">namekit-core</a>
       </td>
-      <td>Core logic and data types for NameKit. Simplify interactions with ENS.</td>
+      <td>Core logic and data types for NameKit. Simplify your interactions with ENS.</td>
       <td>
         <b><i>Coming Soon!</i></b>
       </td>
@@ -77,7 +77,13 @@ The NameKit monorepo contains multiple packages and apps.
       <td style="white-space: nowrap;">
         <a href="packages/ens-utils">ens-utils</a>
       </td>
-      <td>General utilities for building on ENS. <b><i>Deprecated.</i></b></td>
+      <td>
+        General utilities for building on ENS.
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/deprecated-e1e1e1">
+          <img src="https://img.shields.io/badge/deprecated-e1e1e1" alt="deprecated" width="auto" height="17">
+        </picture>
+      </td>
       <td>
         <a href="https://www.npmjs.com/package/@namehash/ens-utils">
           <picture>
