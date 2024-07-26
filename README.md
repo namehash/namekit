@@ -2,9 +2,9 @@
 
 Easily integrate rich ENS user journeys into your wallet, app, or game.
 
-## Directory
+## Monorepo Directory
 
-The NameKit monorepo contains multiple packages and apps:
+The NameKit monorepo contains multiple packages and apps.
 
 ### Packages
 
