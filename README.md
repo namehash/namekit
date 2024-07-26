@@ -53,10 +53,8 @@
 
 The NameKit monorepo contains multiple packages and apps.
 
+### NameKit Packages
 
-### TypeScript Packages
-
-<!-- PACKAGES TABLE -->
 <table>
   <thead>
     <tr>
@@ -80,6 +78,34 @@ The NameKit monorepo contains multiple packages and apps.
         </a>
       </td>
     </tr>
+    <tr>
+      <td style="white-space: nowrap;">
+        <a href="packages/namekit-react">namekit-react</a>
+      </td>
+      <td>React UI components for building on NameKit.</td>
+      <td>
+        <a href="https://www.npmjs.com/package/@namehash/namekit-react">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fnamekit-react?style=flat&color=444444">
+            <img src="https://img.shields.io/npm/v/%40namehash%2Fnamekit-react?style=flat&color=444444" alt="NPM Version" width="auto" height="17">
+          </picture>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### NameGuard Packages
+
+<table>
+  <thead>
+    <tr>
+      <th align="left">Package&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th> <!-- adding spaces to make GitHub stop breaking package names across multiple lines -->
+      <th align="left">Summary</th>
+      <th align="left">Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop distorting NPM version shields --></th>
+    </tr>
+  </thead>
+  <tbody>
     <tr>
       <td style="white-space: nowrap;">
         <a href="packages/ens-webfont">ens-webfont</a>
@@ -132,20 +158,6 @@ The NameKit monorepo contains multiple packages and apps.
           <picture>
             <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fnameguard?style=flat&color=444444">
             <img src="https://img.shields.io/npm/v/%40namehash%2Fnameguard?style=flat&color=444444" alt="NPM Version" width="auto" height="17">
-          </picture>
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td style="white-space: nowrap;">
-        <a href="packages/namekit-react">namekit-react</a>
-      </td>
-      <td>React UI components for building on NameKit.</td>
-      <td>
-        <a href="https://www.npmjs.com/package/@namehash/namekit-react">
-          <picture>
-            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fnamekit-react?style=flat&color=444444">
-            <img src="https://img.shields.io/npm/v/%40namehash%2Fnamekit-react?style=flat&color=444444" alt="NPM Version" width="auto" height="17">
           </picture>
         </a>
       </td>
