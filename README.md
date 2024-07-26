@@ -59,9 +59,9 @@ The NameKit monorepo contains multiple packages and apps.
 <!-- PACKAGES TABLE -->
 <table>
   <tr>
-    <th style="white-space: nowrap;">Package&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th> <!-- adding spaces to make GitHub stop breaking package names across multiple lines -->
-    <th>Summary</th>
-    <th>Published Version</th>
+    <th style="text-align: left;">Package&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th> <!-- adding spaces to make GitHub stop breaking package names across multiple lines -->
+    <th style="text-align: left;">Summary</th>
+    <th style="text-align: left;">Version</th>
   </tr>
   <tr>
     <td style="white-space: nowrap;">
