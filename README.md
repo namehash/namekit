@@ -59,12 +59,14 @@ The NameKit monorepo contains multiple packages and apps.
 <!-- PACKAGES TABLE -->
 <table>
   <tr>
-    <th style="width: 25%;">Package</th>
-    <th style="width: 60%;">Summary</th>
-    <th style="width: 15%;">Published Version</th>
+    <th style="white-space: nowrap;">Package</th>
+    <th>Summary</th>
+    <th>Published Version</th>
   </tr>
   <tr>
-    <td><a href="packages/ens-utils">ens-utils</a></td>
+    <td style="white-space: nowrap;">
+      <a href="packages/ens-utils">ens-utils</a>
+    </td>
     <td>General utilities for building on ENS.</td>
     <td>
       <a href="https://www.npmjs.com/package/@namehash/ens-utils">
@@ -76,7 +78,9 @@ The NameKit monorepo contains multiple packages and apps.
     </td>
   </tr>
   <tr>
-    <td><a href="packages/ens-webfont">ens-webfont</a></td>
+    <td style="white-space: nowrap;">
+      <a href="packages/ens-webfont">ens-webfont</a>
+    </td>
     <td>Increase rendering support for emojis and other special graphemes that may appear in ENS names.</td>
     <td>
       <a href="https://www.npmjs.com/package/@namehash/ens-webfont">
@@ -88,7 +92,9 @@ The NameKit monorepo contains multiple packages and apps.
     </td>
   </tr>
   <tr>
-    <td><a href="packages/nameguard-js">nameguard-js</a></td>
+    <td style="white-space: nowrap;">
+      <a href="packages/nameguard-js">nameguard-js</a>
+    </td>
     <td>A JavaScript implementation of NameGuard. Currently implements securePrimaryName with more coming soon.</td>
     <td>
       <a href="https://www.npmjs.com/package/@namehash/nameguard-js">
@@ -100,7 +106,9 @@ The NameKit monorepo contains multiple packages and apps.
     </td>
   </tr>
   <tr>
-    <td><a href="packages/nameguard-react">nameguard-react</a></td>
+    <td style="white-space: nowrap;">
+      <a href="packages/nameguard-react">nameguard-react</a>
+    </td>
     <td>React UI components for building on NameGuard.</td>
     <td>
       <a href="https://www.npmjs.com/package/@namehash/nameguard-react">
@@ -112,7 +120,9 @@ The NameKit monorepo contains multiple packages and apps.
     </td>
   </tr>
   <tr>
-    <td><a href="packages/nameguard-sdk">nameguard-sdk</a></td>
+    <td style="white-space: nowrap;">
+      <a href="packages/nameguard-sdk">nameguard-sdk</a>
+    </td>
     <td>A lightweight JavaScript client for the NameGuard API.</td>
     <td>
       <a href="https://www.npmjs.com/package/@namehash/nameguard">
@@ -124,7 +134,9 @@ The NameKit monorepo contains multiple packages and apps.
     </td>
   </tr>
   <tr>
-    <td><a href="packages/namekit-react">namekit-react</a></td>
+    <td style="white-space: nowrap;">
+      <a href="packages/namekit-react">namekit-react</a>
+    </td>
     <td>React UI components for building on NameKit.</td>
     <td>
       <a href="https://www.npmjs.com/package/@namehash/namekit-react">
