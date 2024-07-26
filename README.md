@@ -1,4 +1,4 @@
-# Namekit
+# NameKit
 
 Easily integrate rich ENS user journeys into your wallet, app, or game.
 
