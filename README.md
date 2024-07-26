@@ -1,5 +1,22 @@
 # Namekit
 
+Easily integrate rich ENS user journeys into your wallet, app, or game.
+
+## Directory
+
+The NameKit monorepo contains multiple packages and apps:
+
+### Packages
+
+| Package                                                | Summary                                                                                                 | Status                                                             | Published Version                                                                                                                                                 |
+|--------------------------------------------------------|---------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [ens-utils](/tree/main/packages/ens-utils)             | General utilities for building on ENS.                                                                  | ![alpha](https://img.shields.io/badge/%F0%9F%9A%A7%20alpha-FFFF00) | [![ NPM Version ]( https://img.shields.io/npm/v/%40namehash%2Fens-utils?style=flat&color=2282c2 )](https://www.npmjs.com/package/@namehash/ens-utils)             |
+| [ens-webfont](/tree/main/packages/ens-webfont)         | Increase rendering support for emojis and other special graphemes that may appear in ENS names.         | ![alpha](https://img.shields.io/badge/%F0%9F%9A%A7%20alpha-FFFF00) | [![ NPM Version ]( https://img.shields.io/npm/v/%40namehash%2Fens-webfont?style=flat&color=2282c2 )](https://www.npmjs.com/package/@namehash/ens-webfont)         |
+| [nameguard-js](/tree/main/packages/nameguard-js)       | A JavaScript implementation of NameGuard. Currently implements securePrimaryName with more coming soon. | ![alpha](https://img.shields.io/badge/%F0%9F%9A%A7%20alpha-FFFF00) | [![ NPM Version ]( https://img.shields.io/npm/v/%40namehash%2Fnameguard-js?style=flat&color=2282c2 )](https://www.npmjs.com/package/@namehash/nameguard-js)       |
+| [nameguard-react](/tree/main/packages/nameguard-react) | React UI components for building on NameGuard.                                                          | ![alpha](https://img.shields.io/badge/%F0%9F%9A%A7%20alpha-FFFF00) | [![ NPM Version ]( https://img.shields.io/npm/v/%40namehash%2Fnameguard-react?style=flat&color=2282c2 )](https://www.npmjs.com/package/@namehash/nameguard-react) |
+| [nameguard-sdk](/tree/main/packages/nameguard-sdk)     | A lightweight JavaScript client for the NameGuard API.                                                  | ![alpha](https://img.shields.io/badge/%F0%9F%9A%A7%20alpha-FFFF00) | [![ NPM Version ]( https://img.shields.io/npm/v/%40namehash%2Fnameguard?style=flat&color=2282c2 )](https://www.npmjs.com/package/@namehash/nameguard-sdk)         |
+| [namekit-react](/tree/main/packages/namekit-react)     | React UI components for building on NameKit.                                                            | ![alpha](https://img.shields.io/badge/%F0%9F%9A%A7%20alpha-FFFF00) | [![ NPM Version ]( https://img.shields.io/npm/v/%40namehash%2Fnamekit-react?style=flat&color=2282c2 )](https://www.npmjs.com/package/@namehash/namekit-react)     |
+
 NameKit contains multiple projects, including [NameGuard](./nameguard.md).
 
 ## Local Development
