@@ -60,9 +60,9 @@ The NameKit monorepo contains multiple packages and apps.
 <table>
   <thead>
     <tr>
-      <th style="text-align: left;">Package&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th> <!-- adding spaces to make GitHub stop breaking package names across multiple lines -->
-      <th style="text-align: left;">Summary</th>
-      <th style="text-align: left;">Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop distorting NPM version shields --></th>
+      <th align="left">Package&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th> <!-- adding spaces to make GitHub stop breaking package names across multiple lines -->
+      <th align="left">Summary</th>
+      <th align="left">Version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop distorting NPM version shields --></th>
     </tr>
   </thead>
   <tbody>
