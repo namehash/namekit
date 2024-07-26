@@ -59,8 +59,8 @@ The NameKit monorepo contains multiple packages and apps.
 <!-- PACKAGES TABLE -->
 <table>
   <tr>
-    <th style="width: 20%;">Package</th>
-    <th style="width: 65%;">Summary</th>
+    <th style="width: 25%;">Package</th>
+    <th style="width: 60%;">Summary</th>
     <th style="width: 15%;">Published Version</th>
   </tr>
   <tr>
