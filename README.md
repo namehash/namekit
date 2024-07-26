@@ -1,9 +1,37 @@
 # NameKit
 
-Easily integrate rich ENS user journeys into your wallet, app, or game.
+<!-- TAGLINE -->
+<p align="center">
+  Easily integrate rich ENS user journeys into your wallet, app, or game.
+<p>
 
 <!-- PROJECT SHIELDS -->
-[![MIT License](https://img.shields.io/github/license/namehash/namekit)](LICENSE) [![TypeScript Build Status](https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_sdk.yml?logo=typescript&logoColor=ffffff)](https://github.com/namehash/namekit/actions/workflows/ci_sdk.yml?query=branch%3Amain) [![Python Build Status](https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_api.yml?logo=python&logoColor=ffffff)](https://github.com/namehash/namekit/actions/workflows/ci_api.yml?query=branch%3Amain) [![status: alpha](https://img.shields.io/badge/status-alpha-FFFF00)](#project-status)
+<p align="center">
+  <a href="LICENSE">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/github/license/namehash/namekit">
+      <img src="https://img.shields.io/github/license/namehash/namekit" alt="MIT License">
+    </picture>
+  </a>
+  <a href="https://github.com/namehash/namekit/actions/workflows/ci_sdk.yml?query=branch%3Amain">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_sdk.yml?logo=typescript&logoColor=ffffff">
+      <img src="https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_sdk.yml?logo=typescript&logoColor=ffffff" alt="TypeScript Build Status">
+    </picture>
+  </a>
+  <a href="https://github.com/namehash/namekit/actions/workflows/ci_api.yml?query=branch%3Amain">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_api.yml?logo=python&logoColor=ffffff">
+      <img src="https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_api.yml?logo=python&logoColor=ffffff" alt="Python Build Status">
+    </picture>
+  </a>
+  <a href="#project-status">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/status-alpha-FFFF00">
+      <img src="https://img.shields.io/badge/status-alpha-FFFF00" alt="status: alpha">
+    </picture>
+  </a>
+</p>
 
 ## Project Status
 
