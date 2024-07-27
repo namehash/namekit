@@ -350,6 +350,26 @@ The NameKit monorepo contains multiple packages and apps.
     <tr>
       <td>
         <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white">
+          <img src="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white" alt="TypeScript" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        ens-node
+        <br>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/coming%20soon-e1e1e1">
+          <img src="https://img.shields.io/badge/coming%20soon-e1e1e1" alt="coming soon" width="auto" height="17">
+        </picture>
+      </td>
+      <td>Backend for NameKit. Simplify and enhance your integration with ENS.</td>
+      <td>
+        -
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
           <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/next.js-444444?logo=next.js&logoColor=white">
           <img src="https://img.shields.io/badge/next.js-444444?logo=next.js&logoColor=white" alt="Next.js" width="auto" height="17">
         </picture>
