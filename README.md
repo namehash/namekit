@@ -115,7 +115,7 @@ The NameKit monorepo contains multiple packages and apps.
         <picture>
           <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/deprecated-e1e1e1">
           <img src="https://img.shields.io/badge/deprecated-e1e1e1" alt="deprecated" width="auto" height="17">
-        </picture>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop breaking package names across multiple lines -->
+        </picture>
       </td>
       <td>
         General utilities for building on ENS.
