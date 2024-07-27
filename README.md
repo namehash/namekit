@@ -61,7 +61,7 @@ The NameKit monorepo contains multiple packages and apps.
   <thead>
     <tr>
       <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to stop language images from getting smashed --></th>
-      <th align="left">Source Code<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop breaking package names across multiple lines --></th>
+      <th align="left">Source Code</th>
       <th align="left">Summary</th>
       <th align="left">Deployment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop distorting deployment shields --></th>
     </tr>
@@ -155,7 +155,7 @@ The NameKit monorepo contains multiple packages and apps.
   <thead>
     <tr>
       <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to stop language images from getting smashed --></th>
-      <th align="left">Source Code<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop breaking package names across multiple lines --></th>
+      <th align="left">Source Code</th>
       <th align="left">Summary</th>
       <th align="left">Deployment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop distorting deployment shields --></th>
     </tr>
@@ -325,7 +325,7 @@ The NameKit monorepo contains multiple packages and apps.
   <thead>
     <tr>
       <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to stop language images from getting smashed --></th>
-      <th align="left">Source Code<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop breaking app names across multiple lines --></th>
+      <th align="left">Source Code</th>
       <th align="left">Summary</th>
       <th align="left">✨ Try it out! ✨</th>
     </tr>
