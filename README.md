@@ -75,11 +75,16 @@ The NameKit monorepo contains multiple packages and apps.
         </picture>
       </td>
       <td>
-        <a href="packages/namekit-core">namekit-core</a>
+        namekit-core
+        <br>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/coming%20soon-e1e1e1">
+          <img src="https://img.shields.io/badge/coming%20soon-e1e1e1" alt="coming soon" width="auto" height="17">
+        </picture>
       </td>
-      <td>Core logic and data types for NameKit. Simplify your interactions with ENS.</td>
+      <td>Core logic and data types for NameKit. Simplify and enhance your integration with ENS.</td>
       <td>
-        <b><i>Coming Soon!</i></b>
+        -
       </td>
     </tr>
     <tr>
