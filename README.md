@@ -343,7 +343,7 @@ The NameKit monorepo contains multiple packages and apps.
       </td>
       <td>Official website for NameGuard.</td>
       <td>
-        <a href="https://nameguard.io">Preview</a>
+        <a href="https://nameguard.io">Preview</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop breaking header for this column across multiple lines -->
       </td>
     </tr>
     <tr>
