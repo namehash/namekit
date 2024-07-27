@@ -143,7 +143,18 @@ The NameKit monorepo contains multiple packages and apps.
         Earn revenue for helping ENS grow.
       </td>
       <td>
-        -
+        <a href="https://etherscan.io/address/0x232332263e6e4bd8a134b238975e2200c8b7dac1#code">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/mainnet-444444?logo=ethereum&logoColor=white&labelColor=4f4f4f">
+            <img src="https://img.shields.io/badge/mainnet-444444?logo=ethereum&logoColor=white&labelColor=4f4f4f" alt="Ethereum Mainnet" width="auto" height="17">
+          </picture>
+        </a><br>
+        <a href="https://sepolia.etherscan.io/address/0x1cf7735B2e2641274f6d038701c561010D2fCf46#code">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/sepolia-444444?logo=ethereum&logoColor=white&labelColor=4f4f4f">
+            <img src="https://img.shields.io/badge/sepolia-444444?logo=ethereum&logoColor=white&labelColor=4f4f4f" alt="Ethereum Sepolia" width="auto" height="17">
+          </picture>
+        </a>
       </td>
     </tr>
   </tbody>
