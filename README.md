@@ -74,7 +74,7 @@ The NameKit monorepo contains multiple packages and apps.
           <img src="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white" alt="TypeScript" width="auto" height="17">
         </picture>
       </td>
-      <td style="white-space: nowrap;">
+      <td>
         <a href="packages/namekit-core">namekit-core</a>
       </td>
       <td>Core logic and data types for NameKit. Simplify your interactions with ENS.</td>
@@ -89,7 +89,7 @@ The NameKit monorepo contains multiple packages and apps.
           <img src="https://img.shields.io/badge/tsx-444444?logo=typescript&logoColor=white" alt="React" width="auto" height="17">
         </picture>
       </td>
-      <td style="white-space: nowrap;">
+      <td>
         <a href="packages/namekit-react">namekit-react</a>
       </td>
       <td>React UI components for building on NameKit.</td>
@@ -109,7 +109,7 @@ The NameKit monorepo contains multiple packages and apps.
           <img src="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white" alt="TypeScript" width="auto" height="17">
         </picture>
       </td>
-      <td style="white-space: nowrap;">
+      <td>
         <a href="packages/ens-utils">ens-utils</a>
         <br>
         <picture>
@@ -136,7 +136,7 @@ The NameKit monorepo contains multiple packages and apps.
           <img src="https://img.shields.io/badge/sol-444444?logo=ethereum&logoColor=white" alt="Solidity" width="auto" height="17">
         </picture>
       </td>
-      <td style="white-space: nowrap;">
+      <td>
         <a href="https://github.com/namehash/namekit-contracts">namekit-contracts</a>
       </td>
       <td>
@@ -168,7 +168,7 @@ The NameKit monorepo contains multiple packages and apps.
           <img src="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white" alt="TypeScript" width="auto" height="17">
         </picture>
       </td>
-      <td style="white-space: nowrap;">
+      <td>
         <a href="packages/nameguard-sdk">nameguard-sdk</a>
       </td>
       <td>A lightweight JavaScript client for the NameGuard API.</td>
@@ -188,7 +188,7 @@ The NameKit monorepo contains multiple packages and apps.
           <img src="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white" alt="TypeScript" width="auto" height="17">
         </picture>
       </td>
-      <td style="white-space: nowrap;">
+      <td>
         <a href="packages/nameguard-js">nameguard-js</a>
       </td>
       <td>A JavaScript implementation of NameGuard. Currently implements securePrimaryName with more coming soon.</td>
@@ -208,7 +208,7 @@ The NameKit monorepo contains multiple packages and apps.
           <img src="https://img.shields.io/badge/tsx-444444?logo=typescript&logoColor=white" alt="React" width="auto" height="17">
         </picture>
       </td>
-      <td style="white-space: nowrap;">
+      <td>
         <a href="packages/nameguard-react">nameguard-react</a>
       </td>
       <td>React UI components for building on NameGuard.</td>
@@ -228,7 +228,7 @@ The NameKit monorepo contains multiple packages and apps.
           <img src="https://img.shields.io/badge/css-444444?logo=css3&logoColor=white" alt="CSS" width="auto" height="17">
         </picture>
       </td>
-      <td style="white-space: nowrap;">
+      <td>
         <a href="packages/ens-webfont">ens-webfont</a>
       </td>
       <td>Increase rendering support for emojis and other special graphemes that may appear in ENS names.</td>
@@ -248,7 +248,7 @@ The NameKit monorepo contains multiple packages and apps.
           <img src="https://img.shields.io/badge/py-444444?logo=python&logoColor=white" alt="Python" width="auto" height="17">
         </picture>
       </td>
-      <td style="white-space: nowrap;">
+      <td>
         <a href="https://github.com/namehash/ens-normalize-python">ens-normalize-python</a>
       </td>
       <td>Python implementation of ENSIP-15 (ENS Normalize).</td>
@@ -268,7 +268,7 @@ The NameKit monorepo contains multiple packages and apps.
           <img src="https://img.shields.io/badge/py-444444?logo=python&logoColor=white" alt="Python" width="auto" height="17">
         </picture>
       </td>
-      <td style="white-space: nowrap;">
+      <td>
         <a href="https://github.com/namehash/ens-font-data">ens-font-data</a>
       </td>
       <td>Metadata for graphemes that may appear in ENS names.</td>
@@ -283,7 +283,7 @@ The NameKit monorepo contains multiple packages and apps.
           <img src="https://img.shields.io/badge/py-444444?logo=python&logoColor=white" alt="Python" width="auto" height="17">
         </picture>
       </td>
-      <td style="white-space: nowrap;">
+      <td>
         <a href="https://github.com/namehash/ens-label-inspector">ens-label-inspector</a>
       </td>
       <td>Detailed inspection of labels in ENS names.</td>
@@ -303,7 +303,7 @@ The NameKit monorepo contains multiple packages and apps.
           <img src="https://img.shields.io/badge/py-444444?logo=python&logoColor=white" alt="Python" width="auto" height="17">
         </picture>
       </td>
-      <td style="white-space: nowrap;">
+      <td>
         <a href="api">nameguard</a>
       </td>
       <td>Identify and prevent malicious use of ENS names.</td>
@@ -338,7 +338,7 @@ The NameKit monorepo contains multiple packages and apps.
           <img src="https://img.shields.io/badge/next.js-444444?logo=next.js&logoColor=white" alt="Next.js" width="auto" height="17">
         </picture>
       </td>
-      <td style="white-space: nowrap;">
+      <td>
         <a href="apps/nameguard.io/">nameguard.io</a>
       </td>
       <td>Official website for NameGuard.</td>
@@ -353,7 +353,7 @@ The NameKit monorepo contains multiple packages and apps.
           <img src="https://img.shields.io/badge/next.js-444444?logo=next.js&logoColor=white" alt="Next.js" width="auto" height="17">
         </picture>
       </td>
-      <td style="white-space: nowrap;">
+      <td>
         <a href="apps/examples.nameguard.io/">examples.nameguard.io</a>
       </td>
       <td>Examples for using nameguard-sdk, nameguard-js, and nameguard-react.</td>
@@ -368,7 +368,7 @@ The NameKit monorepo contains multiple packages and apps.
           <img src="https://img.shields.io/badge/tsx-444444?logo=storybook&logoColor=white" alt="Storybook" width="auto" height="17">
         </picture>
       </td>
-      <td style="white-space: nowrap;">
+      <td>
         <a href="apps/storybook.namekit.io/">storybook.namekit.io</a>
       </td>
       <td>Explore UI components included in namekit-react, nameguard-react, and ens-webfont.</td>
@@ -383,7 +383,7 @@ The NameKit monorepo contains multiple packages and apps.
           <img src="https://img.shields.io/badge/mdx-444444?logo=mintlify&logoColor=white" alt="Mintlify" width="auto" height="17">
         </picture>
       </td>
-      <td style="white-space: nowrap;">
+      <td>
         <a href="apps/docs.nameguard.io/">docs.nameguard.io</a>
       </td>
       <td>Documentation for all NameGuard packages.</td>
@@ -398,7 +398,7 @@ The NameKit monorepo contains multiple packages and apps.
           <img src="https://img.shields.io/badge/next.js-444444?logo=next.js&logoColor=white" alt="Next.js" width="auto" height="17">
         </picture>
       </td>
-      <td style="white-space: nowrap;">
+      <td>
         <a href="apps/namehashlabs.org/">namehashlabs.org</a>
       </td>
       <td>Official website for NameHash Labs.</td>
