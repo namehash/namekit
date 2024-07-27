@@ -9,8 +9,7 @@ import {
   getCurrentUserOwnership,
   formatTimestamp,
   formattedPrice,
-  Registration,
-  ENSName,
+  type DomainCard,
   Address,
 } from "@namehash/ens-utils";
 import { ClockIcon, ClockUrgency } from "./icons/ClockIcon";
@@ -19,43 +18,15 @@ import { Tooltip } from "./Tooltip";
 import cc from "classcat";
 
 interface DomainExpirationWarningProps {
-  domainName: ENSName | null; // when null we show the skeleton
-  domainRegistration: Registration | null;
-  /* 
-    If domain is in Grace Period, the address that used to own 
-    the domain is considered as the former owner of the domain
-
-    More reference documentation can be found in:
-    https://support.ens.domains/en/articles/8046877-name-lifecycle
-  */
-  formerDomainOwnerAddress: Address | null;
-  /* 
-    If domain is Registered or Expired, there is one
-    address that is considered the owner of the domain
-
-    More reference documentation can be found in:
-    https://support.ens.domains/en/articles/8046877-name-lifecycle
-  */
-  currentDomainOwnerAddress: Address | null;
-  /* 
-    Below address is the one used in domain's ownership
-    determination, where depending on the match between
-    the "currentUserAddress", "currentDomainOwnerAddress"
-    and the "formerDomainOwnerAddress", different Ui elements
-    are displayed alongside with text information about
-    the specific domain's ownership status.
-  */
+  domain: DomainCard | null; // when null we show the skeleton
   currentUserAddress: Address | null;
   onIconClickHandler?: () => void;
   onlyIcon?: boolean;
 }
 
 export const DomainExpirationWarning = ({
-  formerDomainOwnerAddress,
+  domain,
   currentUserAddress,
-  currentDomainOwnerAddress,
-  domainRegistration,
-  domainName,
   onIconClickHandler,
   onlyIcon = true,
 }: DomainExpirationWarningProps) => {
@@ -63,24 +34,17 @@ export const DomainExpirationWarning = ({
     useState<UserOwnershipOfDomain | null>(null);
 
   useEffect(() => {
-    if (
-      currentUserAddress === null ||
-      (!currentUserAddress && !formerDomainOwnerAddress)
-    ) {
+    if (domain && currentUserAddress === null) {
       setUserOwnershipOfDomain(null);
       return;
     }
 
-    const userOwnership = getCurrentUserOwnership(
-      formerDomainOwnerAddress,
-      currentDomainOwnerAddress,
-      currentUserAddress,
-    );
+    const userOwnership = getCurrentUserOwnership(domain, currentUserAddress);
 
     setUserOwnershipOfDomain(userOwnership);
-  }, [formerDomainOwnerAddress, currentDomainOwnerAddress, currentUserAddress]);
+  }, [domain, currentUserAddress]);
 
-  if (domainName === null || domainRegistration === null) return <></>;
+  if (domain === null) return <></>;
 
   const icon = !onIconClickHandler ? (
     <ClockIcon
@@ -105,14 +69,14 @@ export const DomainExpirationWarning = ({
   );
 
   if (
-    domainRegistration.primaryStatus === PrimaryRegistrationStatus.Active &&
-    domainRegistration.secondaryStatus ===
+    domain.registration.primaryStatus === PrimaryRegistrationStatus.Active &&
+    domain.registration.secondaryStatus ===
       SecondaryRegistrationStatus.ExpiringSoon
   ) {
-    const expirationDate = domainExpirationTimestamp(domainRegistration);
+    const expirationDate = domainExpirationTimestamp(domain.registration);
     if (expirationDate === null) return <></>;
 
-    const namePrice = AvailableNameTimelessPriceUSD(domainName);
+    const namePrice = AvailableNameTimelessPriceUSD(domain.name);
     const prettyNamePrice = namePrice
       ? formattedPrice({
           price: namePrice,
@@ -134,7 +98,7 @@ export const DomainExpirationWarning = ({
                 <p>{formatTimestamp(expirationDate)}</p>
               </Tooltip>
               <p>
-                {domainName.normalization === "normalized"
+                {domain.name.normalization === "normalized"
                   ? `and renews for ${prettyNamePrice} / year`
                   : ""}
               </p>
@@ -167,7 +131,7 @@ export const DomainExpirationWarning = ({
               <p>{formatTimestamp(expirationDate)}</p>
             </Tooltip>
             <p>
-              {domainName.normalization === "normalized"
+              {domain.name.normalization === "normalized"
                 ? `and renews for ${prettyNamePrice} / year`
                 : ""}
             </p>
@@ -177,11 +141,11 @@ export const DomainExpirationWarning = ({
   }
 
   if (
-    domainRegistration.primaryStatus === PrimaryRegistrationStatus.Expired &&
-    domainRegistration.secondaryStatus ===
+    domain.registration.primaryStatus === PrimaryRegistrationStatus.Expired &&
+    domain.registration.secondaryStatus ===
       SecondaryRegistrationStatus.GracePeriod
   ) {
-    const releaseDate = domainReleaseTimestamp(domainRegistration);
+    const releaseDate = domainReleaseTimestamp(domain.registration);
 
     if (releaseDate === null) return <></>;
 

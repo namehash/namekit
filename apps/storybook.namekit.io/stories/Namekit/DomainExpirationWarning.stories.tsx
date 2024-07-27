@@ -1,13 +1,9 @@
-import type { Meta, StoryObj } from "@storybook/react";
 import { DomainExpirationWarning } from "@namehash/namekit-react";
+import type { Meta, StoryObj } from "@storybook/react";
 import {
   DomainStatus,
-  ENSNameVariant,
-  getENSNameForVariant,
-  getMockedRegistration,
-  MOCKED_ADDRESS_1,
-  MOCKED_ADDRESS_2,
-  MOCKED_ADDRESS_3,
+  getMockedDomainCard,
+  getMockedDomainOwner,
 } from "./mock-utils";
 
 const meta: Meta<typeof DomainExpirationWarning> = {
@@ -17,16 +13,10 @@ const meta: Meta<typeof DomainExpirationWarning> = {
     layout: "centered",
   },
   args: {
-    formerDomainOwnerAddress: MOCKED_ADDRESS_1,
-    currentUserAddress: MOCKED_ADDRESS_2,
-    currentDomainOwnerAddress: MOCKED_ADDRESS_3,
-    domainRegistration: getMockedRegistration({
-      domainStatus: DomainStatus.Active,
+    currentUserAddress: getMockedDomainOwner({ isOwner: false }),
+    domain: getMockedDomainCard({
+      domainStatus: DomainStatus.NeverRegistered,
     }),
-    domainName: getENSNameForVariant({
-      variant: ENSNameVariant.NormalizedWithAvatar,
-    }),
-    onIconClickHandler: () => {},
     onlyIcon: false,
   },
 };
@@ -42,7 +32,7 @@ export const DomainFarFromExpiring: Story = {
 export const OnlyIconForADomainExpiringSoon: Story = {
   args: {
     onlyIcon: true,
-    domainRegistration: getMockedRegistration({
+    domain: getMockedDomainCard({
       domainStatus: DomainStatus.ExpiringSoon,
     }),
   },
@@ -51,7 +41,7 @@ export const OnlyIconForADomainExpiringSoon: Story = {
 export const IconAndTextForADomainExpiringSoon: Story = {
   args: {
     onlyIcon: false,
-    domainRegistration: getMockedRegistration({
+    domain: getMockedDomainCard({
       domainStatus: DomainStatus.ExpiringSoon,
     }),
   },
@@ -60,10 +50,10 @@ export const IconAndTextForADomainExpiringSoon: Story = {
 export const OnlyIconForADomainExpired: Story = {
   args: {
     onlyIcon: true,
-    currentUserAddress: MOCKED_ADDRESS_1,
-    formerDomainOwnerAddress: MOCKED_ADDRESS_2,
-    domainRegistration: getMockedRegistration({
+    currentUserAddress: getMockedDomainOwner({ isOwner: false }),
+    domain: getMockedDomainCard({
       domainStatus: DomainStatus.Expired,
+      isOwner: true,
     }),
   },
 };
@@ -71,10 +61,10 @@ export const OnlyIconForADomainExpired: Story = {
 export const IconAndTextForADomainExpired: Story = {
   args: {
     onlyIcon: false,
-    currentUserAddress: MOCKED_ADDRESS_1,
-    formerDomainOwnerAddress: MOCKED_ADDRESS_2,
-    domainRegistration: getMockedRegistration({
+    currentUserAddress: getMockedDomainOwner({ isOwner: false }),
+    domain: getMockedDomainCard({
       domainStatus: DomainStatus.Expired,
+      isOwner: true,
     }),
   },
 };
@@ -82,9 +72,8 @@ export const IconAndTextForADomainExpired: Story = {
 export const OnlyIconForADomainExpiredWhenDisplayingForDomainOwner: Story = {
   args: {
     onlyIcon: true,
-    currentUserAddress: MOCKED_ADDRESS_1,
-    formerDomainOwnerAddress: MOCKED_ADDRESS_1,
-    domainRegistration: getMockedRegistration({
+    currentUserAddress: getMockedDomainOwner({ isOwner: false }),
+    domain: getMockedDomainCard({
       domainStatus: DomainStatus.Expired,
     }),
   },
@@ -93,9 +82,8 @@ export const OnlyIconForADomainExpiredWhenDisplayingForDomainOwner: Story = {
 export const IconAndTextForADomainExpiredWhenDisplayingForDomainOwner: Story = {
   args: {
     onlyIcon: false,
-    currentUserAddress: MOCKED_ADDRESS_1,
-    formerDomainOwnerAddress: MOCKED_ADDRESS_1,
-    domainRegistration: getMockedRegistration({
+    currentUserAddress: getMockedDomainOwner({ isOwner: false }),
+    domain: getMockedDomainCard({
       domainStatus: DomainStatus.Expired,
     }),
   },
@@ -104,10 +92,10 @@ export const IconAndTextForADomainExpiredWhenDisplayingForDomainOwner: Story = {
 export const OnIconClickHandler: Story = {
   args: {
     onIconClickHandler: () => alert("Icon was clicked!"),
-    currentUserAddress: MOCKED_ADDRESS_1,
-    formerDomainOwnerAddress: MOCKED_ADDRESS_2,
-    domainRegistration: getMockedRegistration({
+    currentUserAddress: getMockedDomainOwner({ isOwner: true }),
+    domain: getMockedDomainCard({
       domainStatus: DomainStatus.Expired,
+      isOwner: true,
     }),
     onlyIcon: true,
   },
@@ -117,10 +105,10 @@ export const OnIconClickHandlerEvenInTextMode: Story = {
   args: {
     onlyIcon: false,
     onIconClickHandler: () => alert("Icon was clicked!"),
-    currentUserAddress: MOCKED_ADDRESS_1,
-    formerDomainOwnerAddress: MOCKED_ADDRESS_2,
-    domainRegistration: getMockedRegistration({
+    currentUserAddress: getMockedDomainOwner({ isOwner: true }),
+    domain: getMockedDomainCard({
       domainStatus: DomainStatus.Expired,
+      isOwner: true,
     }),
   },
 };

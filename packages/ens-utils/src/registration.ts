@@ -66,6 +66,7 @@ const getSecondaryRegistrationStatus = (
   expiryTimestamp: Timestamp,
 ): SecondaryRegistrationStatus | null => {
   const nowTime = now();
+
   if (nowTime.time < expiryTimestamp.time) {
     return nowTime.time > expiryTimestamp.time - GRACE_PERIOD.seconds
       ? SecondaryRegistrationStatus.ExpiringSoon

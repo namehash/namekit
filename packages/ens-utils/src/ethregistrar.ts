@@ -32,6 +32,7 @@ import {
   subtractPrices,
 } from "./price";
 import { Currency } from "./currency";
+import { DomainCard } from "./domain";
 
 export interface Registrar {
   contract: ContractRef;
@@ -212,19 +213,20 @@ export interface PriceDescription {
 }
 
 export const getPriceDescription = (
-  domainRegistration: Registration,
-  domainName: ENSName,
+  domain: DomainCard | null,
 ): PriceDescription | null => {
+  if (!domain) return null;
+
   const isExpired =
-    domainRegistration.primaryStatus === PrimaryRegistrationStatus.Expired;
+    domain.registration.primaryStatus === PrimaryRegistrationStatus.Expired;
   const wasRecentlyReleased =
-    domainRegistration.secondaryStatus ===
+    domain.registration.secondaryStatus ===
     SecondaryRegistrationStatus.RecentlyReleased;
   const isRegistered =
-    domainRegistration.primaryStatus === PrimaryRegistrationStatus.Active;
+    domain.registration.primaryStatus === PrimaryRegistrationStatus.Active;
 
   if (!(isExpired && wasRecentlyReleased) && isRegistered) return null;
-  const domainBasePrice = AvailableNameTimelessPriceUSD(domainName);
+  const domainBasePrice = AvailableNameTimelessPriceUSD(domain.name);
 
   if (!domainBasePrice) return null;
   else {
@@ -234,8 +236,9 @@ export const getPriceDescription = (
     });
     const pricePerYearDescription = `${domainPrice} / year`;
 
-    const premiumEndsIn =
-      premiumPeriodEndsIn(domainRegistration)?.relativeTimestamp;
+    const premiumEndsIn = premiumPeriodEndsIn(
+      domain.registration,
+    )?.relativeTimestamp;
 
     if (premiumEndsIn) {
       const premiumEndMessage = premiumEndsIn
@@ -252,7 +255,7 @@ export const getPriceDescription = (
         descriptiveTextEnd: ".",
       };
     } else {
-      const domainLabelLength = charCount(domainName.name);
+      const domainLabelLength = charCount(domain.name.name);
 
       return domainLabelLength <
         DOMAIN_HAS_SPECIAL_PRICE_IF_LENGTH_EQUAL_OR_LESS_THAN
