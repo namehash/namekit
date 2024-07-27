@@ -1,3 +1,5 @@
+<!-- VERTICAL WHITESPACE -->
+
 <br>
 <br>
 
@@ -312,6 +314,96 @@ The NameKit monorepo contains multiple packages and apps.
             <img src="https://img.shields.io/pypi/v/nameguard?style=flat&color=444444" alt="PyPI Version" width="auto" height="17">
           </picture>
         </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### Apps
+
+<table>
+  <thead>
+    <tr>
+      <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to stop language images from getting smashed --></th>
+      <th align="left">App&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop breaking package names across multiple lines --></th>
+      <th align="left">Summary</th>
+      <th align="left">✨ Try it out! ✨</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/next.js-444444?logo=next.js&logoColor=white">
+          <img src="https://img.shields.io/badge/next.js-444444?logo=next.js&logoColor=white" alt="Next.js" width="auto" height="17">
+        </picture>
+      </td>
+      <td style="white-space: nowrap;">
+        <a href="apps/nameguard.io/">nameguard.io</a>
+      </td>
+      <td>Official website for NameGuard.</td>
+      <td>
+        <a href="https://nameguard.io">Preview</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/next.js-444444?logo=next.js&logoColor=white">
+          <img src="https://img.shields.io/badge/next.js-444444?logo=next.js&logoColor=white" alt="Next.js" width="auto" height="17">
+        </picture>
+      </td>
+      <td style="white-space: nowrap;">
+        <a href="apps/examples.nameguard.io/">examples.nameguard.io</a>
+      </td>
+      <td>Examples for using nameguard-sdk, nameguard-js, and nameguard-react.</td>
+      <td>
+        <a href="https://examples.nameguard.io">Preview</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/tsx-444444?logo=storybook&logoColor=white">
+          <img src="https://img.shields.io/badge/tsx-444444?logo=storybook&logoColor=white" alt="Storybook" width="auto" height="17">
+        </picture>
+      </td>
+      <td style="white-space: nowrap;">
+        <a href="apps/storybook.namekit.io/">storybook.namekit.io</a>
+      </td>
+      <td>Explore UI components included in namekit-react, nameguard-react, and ens-webfont.</td>
+      <td>
+        <a href="https://storybook.namekit.io">Preview</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/mdx-444444?logo=mintlify&logoColor=white">
+          <img src="https://img.shields.io/badge/mdx-444444?logo=mintlify&logoColor=white" alt="Mintlify" width="auto" height="17">
+        </picture>
+      </td>
+      <td style="white-space: nowrap;">
+        <a href="apps/docs.nameguard.io/">docs.nameguard.io</a>
+      </td>
+      <td>Documentation for all NameGuard packages.</td>
+      <td>
+        <a href="https://docs.nameguard.io">Preview</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/next.js-444444?logo=next.js&logoColor=white">
+          <img src="https://img.shields.io/badge/next.js-444444?logo=next.js&logoColor=white" alt="Next.js" width="auto" height="17">
+        </picture>
+      </td>
+      <td style="white-space: nowrap;">
+        <a href="apps/namehashlabs.org/">namehashlabs.org</a>
+      </td>
+      <td>Official website for NameHash Labs.</td>
+      <td>
+        <a href="https://namehashlabs.org">Preview</a>
       </td>
     </tr>
   </tbody>
