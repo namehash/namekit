@@ -1,0 +1,23 @@
+name: ENS Utils Tests
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "packages/ens-utils/**"
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: "pnpm"
+      - run: pnpm install
+      - run: pnpm build
+      - run: pnpm test -r --filter ./packages/ens-utils
