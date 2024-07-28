@@ -1,5 +1,11 @@
 # @namehash/ens-utils
 
+## 1.15.0
+
+### Minor Changes
+
+- 88131ce: Update package descriptions and licenses
+
 ## 1.14.0
 
 ### Minor Changes

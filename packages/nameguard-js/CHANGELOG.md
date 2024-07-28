@@ -1,5 +1,17 @@
 # @namehash/nameguard-js
 
+## 0.4.0
+
+### Minor Changes
+
+- 88131ce: Update package descriptions and licenses
+
+### Patch Changes
+
+- Updated dependencies [88131ce]
+  - @namehash/nameguard@0.3.0
+  - @namehash/ens-utils@1.15.0
+
 ## 0.3.0
 
 ### Minor Changes

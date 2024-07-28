@@ -1,5 +1,11 @@
 # @namehash/ens-webfont
 
+## 0.5.0
+
+### Minor Changes
+
+- 88131ce: Update package descriptions and licenses
+
 ## 0.4.0
 
 ### Minor Changes
