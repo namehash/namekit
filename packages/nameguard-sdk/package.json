@@ -1,6 +1,6 @@
 {
   "name": "@namehash/nameguard",
-  "description": "NameGuard is designed to inspect and prevent malicious use of Ethereum Name Service (ENS) names. It provides a comprehensive set of functionalities to check the normalization status of names, labels, and graphemes, conduct various safety checks on ENS names, and verify the authenticity of .eth names in NFTs.",
+  "description": "A lightweight JavaScript client for the NameGuard API.",
   "version": "0.3.0",
   "license": "MIT",
   "repository": {

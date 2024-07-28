@@ -1,6 +1,6 @@
 {
   "name": "@namehash/nameguard-react",
-  "description": "React components for Namehash Nameguard.",
+  "description": "React UI components for building on NameGuard.",
   "version": "0.4.0",
   "license": "MIT",
   "repository": {
