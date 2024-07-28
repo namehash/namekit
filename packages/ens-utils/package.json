@@ -1,9 +1,13 @@
 {
   "name": "@namehash/ens-utils",
-  "description": "",
+  "description": "A collection of utilities for working with ENS.",
   "version": "1.14.0",
   "license": "MIT",
-  "repository": "namehash/ens-utils",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/namehash/namekit.git",
+    "directory": "packages/ens-utils"
+  },
   "keywords": [
     "ens",
     "ethereum",

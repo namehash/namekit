@@ -1,6 +1,13 @@
 {
   "name": "@namehash/namekit-react",
+  "description": "Namehash Namekit React Components.",
   "version": "0.3.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/namehash/namekit.git",
+    "directory": "packages/namekit-react"
+  },
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch"

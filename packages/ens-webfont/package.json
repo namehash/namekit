@@ -1,13 +1,19 @@
 {
   "name": "@namehash/ens-webfont",
+  "description": "A webfont for correctly formatting ENS names on the web.",
   "version": "0.4.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/namehash/namekit.git",
+    "directory": "packages/ens-webfont"
+  },
   "main": "index.css",
   "files": [
     "index.css",
     "Unifont.otf",
     "LICENSE"
   ],
-  "scripts": {},
   "publishConfig": {
     "access": "public"
   }
