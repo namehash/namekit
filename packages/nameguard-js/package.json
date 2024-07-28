@@ -1,6 +1,19 @@
 {
   "name": "@namehash/nameguard-js",
+  "description": "Nameguard for ENS without the need of an API.",
   "version": "0.3.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/namehash/namekit.git",
+    "directory": "packages/nameguard-js"
+  },
+  "keywords": [
+    "ENS",
+    "NameKit",
+    "NameHash",
+    "NameGuard"
+  ],
   "type": "module",
   "exports": {
     ".": {
