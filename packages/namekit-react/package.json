@@ -1,6 +1,6 @@
 {
   "name": "@namehash/namekit-react",
-  "description": "Namehash Namekit React Components.",
+  "description": "Namehash NameKit React Components.",
   "version": "0.4.0",
   "license": "MIT",
   "repository": {
@@ -8,6 +8,7 @@
     "url": "git+https://github.com/namehash/namekit.git",
     "directory": "packages/namekit-react"
   },
+  "homepage": "https://github.com/namehash/namekit/tree/main/packages/namekit-react",
   "keywords": [
     "ENS",
     "NameKit",

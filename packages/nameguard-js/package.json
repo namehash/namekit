@@ -8,6 +8,7 @@
     "url": "git+https://github.com/namehash/namekit.git",
     "directory": "packages/nameguard-js"
   },
+  "homepage": "https://github.com/namehash/namekit/tree/main/packages/nameguard-js",
   "keywords": [
     "ENS",
     "NameKit",

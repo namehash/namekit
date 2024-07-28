@@ -8,15 +8,11 @@
     "url": "git+https://github.com/namehash/namekit.git",
     "directory": "packages/ens-utils"
   },
+  "homepage": "https://github.com/namehash/namekit/tree/main/packages/ens-utils",
   "keywords": [
     "ENS",
     "NameKit",
-    "NameHash",
-    "ENS Utils"
-  ],
-  "contributors": [
-    "Jamie Barton <jamie@notrab.dev>",
-    "Franco Aguzzi <frankind.eth@gmail.com>"
+    "NameHash"
   ],
   "scripts": {
     "build": "tsup",
