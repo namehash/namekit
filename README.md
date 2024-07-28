@@ -466,6 +466,9 @@ If you're developing locally, you can watch changes and run tests automatically 
 
 We use [changesets](https://github.com/changesets/changesets) to manage our releases.
 
+> [!NOTE]
+> If you're making changes to any of the [`packages/*`](/packages), you should create a changeset.
+
 1. Run `pnpm changeset`
 2. Choose the packages you want to release
 3. Add a summary of the changes
