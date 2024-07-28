@@ -10,6 +10,7 @@ import {
   isValidDNSTld,
   labelsEqual,
   tryNormalize,
+  Normalization,
 } from "./ensname";
 
 describe("labelsEqual", () => {
@@ -151,31 +152,31 @@ describe("getNormalizationStatus", () => {
   it("empty labels", () => {
     const result = getNormalizationStatus([]);
 
-    expect(result).toBe("normalized");
+    expect(result).toBe(Normalization.Normalized);
   });
 
   it("empty label values", () => {
     const result = getNormalizationStatus([""]);
 
-    expect(result).toBe("normalized");
+    expect(result).toBe(Normalization.Normalized);
   });
 
   it("normalized values", () => {
     const result = getNormalizationStatus(["abc", "eth"]);
 
-    expect(result).toBe("normalized");
+    expect(result).toBe(Normalization.Normalized);
   });
 
   it("unnormalized values", () => {
     const result = getNormalizationStatus(["invalid|name", "eth"]);
 
-    expect(result).toBe("unnormalized");
+    expect(result).toBe(Normalization.Unnormalized);
   });
 
   it("normalizable values", () => {
     const result = getNormalizationStatus(["ABC", "ETH"]);
 
-    expect(result).toBe("unnormalized");
+    expect(result).toBe(Normalization.Unnormalized);
   });
 
   it("unknown labels", () => {
@@ -184,7 +185,7 @@ describe("getNormalizationStatus", () => {
       "eth",
     ]);
 
-    expect(result).toBe("unknown");
+    expect(result).toBe(Normalization.Unknown);
   });
 
   it("unnormalized and unknown values", () => {
@@ -194,13 +195,13 @@ describe("getNormalizationStatus", () => {
       "eth",
     ]);
 
-    expect(result).toBe("unnormalized");
+    expect(result).toBe(Normalization.Unnormalized);
   });
 
   it("empty labels mid name", () => {
     const result = getNormalizationStatus(["abc", "", "123", "eth"]);
 
-    expect(result).toBe("unnormalized");
+    expect(result).toBe(Normalization.Unnormalized);
   });
 });
 
