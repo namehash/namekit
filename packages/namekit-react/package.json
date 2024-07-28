@@ -8,6 +8,11 @@
     "url": "git+https://github.com/namehash/namekit.git",
     "directory": "packages/namekit-react"
   },
+  "keywords": [
+    "ENS",
+    "NameKit",
+    "NameHash"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch"

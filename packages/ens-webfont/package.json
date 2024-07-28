@@ -8,6 +8,13 @@
     "url": "git+https://github.com/namehash/namekit.git",
     "directory": "packages/ens-webfont"
   },
+  "keywords": [
+    "ENS",
+    "NameKit",
+    "NameHash",
+    "ENS Webfont",
+    "Font"
+  ],
   "main": "index.css",
   "files": [
     "index.css",

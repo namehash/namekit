@@ -9,10 +9,10 @@
     "directory": "packages/ens-utils"
   },
   "keywords": [
-    "ens",
-    "ethereum",
-    "namehash",
-    "ens-utils"
+    "ENS",
+    "NameKit",
+    "NameHash",
+    "ENS Utils"
   ],
   "contributors": [
     "Jamie Barton <jamie@notrab.dev>",

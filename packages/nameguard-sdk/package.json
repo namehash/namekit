@@ -8,6 +8,13 @@
     "url": "git+https://github.com/namehash/namekit.git",
     "directory": "packages/nameguard-sdk"
   },
+  "keywords": [
+    "ENS",
+    "NameKit",
+    "NameHash",
+    "NameGuard",
+    "NFT"
+  ],
   "type": "module",
   "exports": {
     ".": {
