@@ -123,7 +123,7 @@ The NameKit monorepo contains multiple packages and apps.
         </picture>
       </td>
       <td>
-        General utilities for building on ENS.
+        A collection of utilities for working with ENS.
       </td>
       <td>
         <a href="https://www.npmjs.com/package/@namehash/ens-utils">
@@ -247,7 +247,7 @@ The NameKit monorepo contains multiple packages and apps.
       <td>
         <a href="packages/ens-webfont">ens-webfont</a>
       </td>
-      <td>Increase rendering support for emojis and other special graphemes that may appear in ENS names.</td>
+      <td>A webfont to improve rendering of graphemes that might appear in normalizable ENS names on the web.</td>
       <td>
         <a href="https://www.npmjs.com/package/@namehash/ens-webfont">
           <picture>

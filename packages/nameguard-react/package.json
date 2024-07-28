@@ -1,6 +1,6 @@
 {
   "name": "@namehash/nameguard-react",
-  "description": "React components for Namehash Nameguard.",
+  "description": "React UI components for building on NameGuard.",
   "version": "0.4.0",
   "license": "MIT",
   "repository": {
@@ -8,6 +8,7 @@
     "url": "git+https://github.com/namehash/namekit.git",
     "directory": "packages/nameguard-react"
   },
+  "homepage": "https://github.com/namehash/namekit/tree/main/packages/nameguard-react",
   "keywords": [
     "ENS",
     "NameKit",
