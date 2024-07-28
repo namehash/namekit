@@ -1,5 +1,11 @@
 # @namehash/ens-utils
 
+## 1.15.1
+
+### Patch Changes
+
+- cb6f36c: Refine package descriptions and homepage
+
 ## 1.15.0
 
 ### Minor Changes

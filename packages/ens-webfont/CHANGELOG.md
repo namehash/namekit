@@ -1,5 +1,11 @@
 # @namehash/ens-webfont
 
+## 0.5.1
+
+### Patch Changes
+
+- cb6f36c: Refine package descriptions and homepage
+
 ## 0.5.0
 
 ### Minor Changes

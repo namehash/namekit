@@ -1,5 +1,15 @@
 # @namehash/nameguard-react
 
+## 0.4.1
+
+### Patch Changes
+
+- cb6f36c: Refine package descriptions and homepage
+- Updated dependencies [cb6f36c]
+  - @namehash/nameguard@0.3.1
+  - @namehash/ens-webfont@0.5.1
+  - @namehash/ens-utils@1.15.1
+
 ## 0.4.0
 
 ### Minor Changes
