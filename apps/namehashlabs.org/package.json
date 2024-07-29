@@ -1,0 +1,46 @@
+{
+  "name": "namehashlabs.org",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@adraffy/ens-normalize": "1.10.1",
+    "@calcom/embed-react": "1.4.0",
+    "@heroicons/react": "2.1.3",
+    "@namehash/ens-webfont": "0.0.3",
+    "@namehash/seo": "workspace:*",
+    "@vercel/analytics": "1.2.2",
+    "@vercel/speed-insights": "1.0.10",
+    "classcat": "5.0.5",
+    "fast-average-color": "9.4.0",
+    "lottie-react": "2.4.0",
+    "next": "14.2.2",
+    "react": "18",
+    "react-dom": "18",
+    "react-tooltip": "5.26.3",
+    "react-wrap-balancer": "1.1.0",
+    "swiper": "11.1.1",
+    "yup": "1.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.12.7",
+    "@types/react": "18.2.79",
+    "@types/react-dom": "18.2.25",
+    "autoprefixer": "10.4.19",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.2",
+    "postcss": "8.4.38",
+    "tailwindcss": "3.4.3",
+    "typescript": "5.4.5",
+    "vitest": "^1.6.0"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}

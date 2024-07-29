@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   release:
-    name: Release
+    name: Release Packages
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -32,10 +32,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Build packages
+        run: pnpm turbo run build --filter='./packages/*'
+
       - name: Create Release PR or Publish to NPM
         id: changesets
         uses: changesets/action@v1
         with:
+          commit: "chore(release): version packages"
+          title: "chore(release): version packages"
           publish: pnpm release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

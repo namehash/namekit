@@ -1,5 +1,7 @@
 # @namehash/nameguard-react
 
+![NPM Version](https://img.shields.io/npm/v/@namehash/nameguard-react)
+
 ## Install
 
 ```bash
@@ -77,3 +79,13 @@ When creating components, you should use the Tailwind prefix `ng-` for all class
 ```tsx
 <p className="ng-text-red-500">Hello world</p>
 ```
+
+## Contact Us
+
+Visit our [website](https://namehashlabs.org/) and get in contact.
+
+## License
+
+Licensed under the MIT License, Copyright &copy; 2023-present [NameHash Labs](https://namehashlabs.org).
+
+See [LICENSE](./LICENSE) for more information.
