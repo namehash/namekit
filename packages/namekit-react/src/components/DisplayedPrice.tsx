@@ -5,12 +5,10 @@ import {
   PriceCurrencyFormat,
 } from "@namehash/ens-utils";
 
-import React from "react";
+import React, { useEffect } from "react";
 import {
   CurrencySymbol,
   CurrencySymbolPosition,
-  PriceDisplayPosition,
-  PriceDisplaySize,
   CurrencySymbology,
   AltPriceDisplayFormat,
 } from "./CurrencySymbol";
@@ -18,6 +16,17 @@ import {
 import cc from "classcat";
 import { Tooltip } from "./Tooltip";
 
+export enum PriceDisplaySize {
+  Micro = "nk-text-xs md:nk-text-sm nk-font-normal",
+  Small = "nk-text-sm nk-font-semibold",
+  Medium = "nk-text-xl nk-font-semibold",
+  Large = "nk-text-2xl nk-font-bold",
+}
+
+export enum PriceDisplayPosition {
+  Right = "nk-flex nk-inline-flex nk-items-end nk-space-x-2",
+  Bottom = "nk-flex nk-flex-col nk-text-right nk-items-end nk-space-y-1",
+}
 interface DisplayedPriceProps {
   // The price to be displayed
   price: Price;
@@ -31,10 +40,10 @@ interface DisplayedPriceProps {
   currencySymbology?: CurrencySymbology;
   // The place to display the currency symbology
   symbolPosition?: CurrencySymbolPosition;
-  // The size of the alternative price display
-  altPriceDisplaySize?: PriceDisplaySize;
   // The size of the price display
   priceTextDisplaySize?: PriceDisplaySize;
+  // The size of the alternative price to display, which must be smaller than the price display size
+  altPriceDisplaySize?: PriceDisplaySize;
   // The place to display the alternative price when displayed as text
   altPriceDisplayPosition?: PriceDisplayPosition;
   // Wether or not to display the name of the currency in a tooltip when its symbol is hovered
@@ -53,6 +62,41 @@ export const DisplayedPrice = ({
   altPriceDisplayPosition = PriceDisplayPosition.Right,
   altPriceDisplayFormat = AltPriceDisplayFormat.Tooltip,
 }: DisplayedPriceProps) => {
+  // Below useEffect checks wether the alternative price display size is smaller than the price display size
+  useEffect(() => {
+    switch (altPriceDisplaySize) {
+      case PriceDisplaySize.Micro:
+        break;
+      case PriceDisplaySize.Small:
+        if (priceTextDisplaySize === PriceDisplaySize.Micro) {
+          throw new Error(
+            "The size of the alternative price must be equal or smaller than the price display size.",
+          );
+        }
+        break;
+      case PriceDisplaySize.Medium:
+        if (
+          priceTextDisplaySize === PriceDisplaySize.Micro ||
+          priceTextDisplaySize === PriceDisplaySize.Small
+        ) {
+          throw new Error(
+            "The size of the alternative price must be equal or smaller than the price display size.",
+          );
+        }
+        break;
+      case PriceDisplaySize.Large:
+        if (
+          priceTextDisplaySize === PriceDisplaySize.Micro ||
+          priceTextDisplaySize === PriceDisplaySize.Small ||
+          priceTextDisplaySize === PriceDisplaySize.Medium
+        ) {
+          throw new Error(
+            "The size of the alternative price must be equal or smaller than the price display size.",
+          );
+        }
+    }
+  }, []);
+
   const triggerElm = (
     <div
       role={onTextClick ? "button" : undefined}
@@ -108,7 +152,7 @@ export const DisplayedPrice = ({
     const altPriceDisplayElm = (
       <div
         className={cc([
-          "nk-text-gray-500 nk-text-xs sm:nk-text-sm nk-inline-flex nk-items-end nk-justify-end nk-tabular-nums nk-leading-none nk-mb-0.5",
+          "nk-text-gray-500 nk-inline-flex nk-items-end nk-justify-end nk-tabular-nums nk-leading-none",
           altPriceDisplaySize,
           {
             "nk-cursor-text": !onTextClick,

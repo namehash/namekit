@@ -4,7 +4,12 @@
   "version": "1.12.0",
   "license": "MIT",
   "repository": "namehash/ens-utils",
-  "keywords": ["ens", "ethereum", "namehash", "ens-utils"],
+  "keywords": [
+    "ens",
+    "ethereum",
+    "namehash",
+    "ens-utils"
+  ],
   "contributors": [
     "Jamie Barton <jamie@notrab.dev>",
     "Franco Aguzzi <frankind.eth@gmail.com>"
@@ -37,10 +42,13 @@
     "viem": "2.9.3"
   },
   "devDependencies": {
+    "@types/node": "20.14.12",
     "tsup": "8.0.2",
     "typescript": "5.3.3",
     "vite": "5.1.7",
     "vitest": "1.4.0"
   },
-  "files": ["dist"]
+  "files": [
+    "dist"
+  ]
 }

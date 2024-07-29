@@ -1,15 +1,10 @@
 import React from "react";
 import { Tooltip } from "./Tooltip";
-import {
-  getPriceDescription,
-  Registration,
-  DomainName,
-} from "@namehash/ens-utils";
+import { getPriceDescription, DomainCard } from "@namehash/ens-utils";
 import { InfoIcon } from "./icons/InfoIcon";
 
 interface RegistrationPriceInfoProps {
-  parsedName: DomainName;
-  registration: Registration;
+  domain: DomainCard;
   // Wether to display the icon with a tooltip or the icon with a text
   displayIconWithTooltip?: RegistrationPriceInfoDisplayingFormat;
 }
@@ -21,10 +16,9 @@ export enum RegistrationPriceInfoDisplayingFormat {
 
 export const RegistrationPriceInfo = ({
   displayIconWithTooltip = RegistrationPriceInfoDisplayingFormat.IconWithTooltip,
-  registration,
-  parsedName,
+  domain,
 }: RegistrationPriceInfoProps) => {
-  const priceDescription = getPriceDescription(registration, parsedName);
+  const priceDescription = getPriceDescription(domain);
 
   if (!priceDescription) return <></>;
 

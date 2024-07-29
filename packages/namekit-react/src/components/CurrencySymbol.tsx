@@ -6,27 +6,16 @@ import { UsdcSymbol } from "./icons/UsdcSymbol";
 import { WethSymbol } from "./icons/WethSymbol";
 import { DaiSymbol } from "./icons/DaiSymbol";
 import React from "react";
+import { PriceDisplaySize } from "./DisplayedPrice";
 
 export enum AltPriceDisplayFormat {
   Tooltip,
   Text,
 }
 
-export enum PriceDisplaySize {
-  Micro = "nk-text-xs md:nk-text-sm nk-font-normal",
-  Small = "nk-text-sm nk-font-semibold",
-  Medium = "nk-text-xl nk-font-semibold",
-  Large = "nk-text-xl nk-font-semibold md:nk-text-2xl md:nk-font-bold",
-}
-
 export enum CurrencySymbolPosition {
   Left = "nk-mr-1.5",
   Right = "nk-ml-1.5",
-}
-
-export enum PriceDisplayPosition {
-  Right = "nk-flex nk-inline-flex nk-items-end nk-space-x-2",
-  Bottom = "nk-flex nk-flex-col nk-text-right nk-items-end nk-space-y-1",
 }
 
 export enum CurrencySymbology {
@@ -42,11 +31,16 @@ interface CurrencySymbolProps {
   describeCurrencyInTooltip: boolean;
 }
 
+export enum CurrencySymbolSize {
+  Small = "nk-w-4",
+  Large = "nk-w-5",
+}
+
 const SymbolSize: Record<PriceDisplaySize, string> = {
-  [PriceDisplaySize.Micro]: "nk-w-4",
-  [PriceDisplaySize.Small]: "nk-w-4",
-  [PriceDisplaySize.Medium]: "nk-w-5",
-  [PriceDisplaySize.Large]: "nk-w-5",
+  [PriceDisplaySize.Micro]: CurrencySymbolSize.Small,
+  [PriceDisplaySize.Small]: CurrencySymbolSize.Small,
+  [PriceDisplaySize.Medium]: CurrencySymbolSize.Large,
+  [PriceDisplaySize.Large]: CurrencySymbolSize.Large,
 };
 
 export const CurrencySymbol = ({

@@ -30,7 +30,7 @@ import {
   formattedPrice,
   subtractPrices,
 } from "./price";
-import { DomainName } from "./domain";
+import { DomainCard, DomainName } from "./domain";
 import { Currency } from "./currency";
 
 export interface Registrar {
@@ -212,19 +212,18 @@ export interface PriceDescription {
 }
 
 export const getPriceDescription = (
-  registration: Registration,
-  parsedName: DomainName,
+  domain: DomainCard,
 ): PriceDescription | null => {
   const isExpired =
-    registration.primaryStatus === PrimaryRegistrationStatus.Expired;
+    domain.registration.primaryStatus === PrimaryRegistrationStatus.Expired;
   const wasRecentlyReleased =
-    registration.secondaryStatus ===
+    domain.registration.secondaryStatus ===
     SecondaryRegistrationStatus.RecentlyReleased;
   const isRegistered =
-    registration.primaryStatus === PrimaryRegistrationStatus.Active;
+    domain.registration.primaryStatus === PrimaryRegistrationStatus.Active;
 
   if (!(isExpired && wasRecentlyReleased) && isRegistered) return null;
-  const domainBasePrice = AvailableNameTimelessPriceUSD(parsedName);
+  const domainBasePrice = AvailableNameTimelessPriceUSD(domain.parsedName);
 
   if (!domainBasePrice) return null;
   else {
@@ -234,7 +233,9 @@ export const getPriceDescription = (
     });
     const pricePerYearDescription = `${domainPrice} / year`;
 
-    const premiumEndsIn = premiumPeriodEndsIn(registration)?.relativeTimestamp;
+    const premiumEndsIn = premiumPeriodEndsIn(
+      domain.registration,
+    )?.relativeTimestamp;
 
     if (premiumEndsIn) {
       const premiumEndMessage = premiumEndsIn
@@ -251,11 +252,8 @@ export const getPriceDescription = (
         descriptiveTextEnd: ".",
       };
     } else {
-      const domainLabelLength = parsedName.labelName.length;
-      console.log(
-        domainLabelLength,
-        DOMAIN_HAS_SPECIAL_PRICE_IF_LENGTH_EQUAL_OR_LESS_THAN,
-      );
+      const domainLabelLength = domain.parsedName.labelName.length;
+
       return domainLabelLength <
         DOMAIN_HAS_SPECIAL_PRICE_IF_LENGTH_EQUAL_OR_LESS_THAN
         ? {

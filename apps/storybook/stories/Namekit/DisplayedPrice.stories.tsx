@@ -13,36 +13,31 @@ const meta: Meta<typeof DisplayedPrice> = {
   component: DisplayedPrice,
   title: "Namekit/DisplayedPrice",
   argTypes: {
-    symbolFillColor: { control: "color" },
     price: {
       control: "object",
     },
-    size: {
-      options: PriceDisplaySize,
+    priceTextDisplaySize: {
+      options: Object.keys(PriceDisplaySize),
       control: { type: "select" },
     },
     altPriceDisplayFormat: {
-      options: AltPriceDisplayFormat,
+      options: Object.keys(AltPriceDisplayFormat),
       control: { type: "select" },
     },
     symbolPosition: {
-      options: CurrencySymbolPosition,
+      options: Object.keys(CurrencySymbolPosition),
       control: { type: "select" },
     },
     currencySymbology: {
-      options: CurrencySymbology,
+      options: Object.keys(CurrencySymbology),
       control: { type: "select" },
     },
     altPriceDisplaySize: {
-      options: PriceDisplaySize,
+      options: Object.keys(PriceDisplaySize),
       control: { type: "select" },
     },
     altPriceDisplayPosition: {
-      options: PriceDisplayPosition,
-      control: { type: "select" },
-    },
-    priceTextDisplaySize: {
-      options: PriceDisplaySize,
+      options: Object.keys(PriceDisplayPosition),
       control: { type: "select" },
     },
   },
@@ -112,7 +107,8 @@ export const AlternativePriceDisplayedAsTextNextToPrice: Story = {
       currency: Currency.Eth,
       value: 1000000000000000000n,
     },
-    priceTextDisplaySize: PriceDisplaySize.Large,
+    priceTextDisplaySize: PriceDisplaySize.Medium,
+    altPriceDisplaySize: PriceDisplaySize.Small,
     altPriceDisplayPosition: PriceDisplayPosition.Right,
     altPriceDisplayFormat: AltPriceDisplayFormat.Text,
   },
@@ -127,6 +123,8 @@ export const AlternativePriceDisplayedAsTextInBottom: Story = {
       currency: Currency.Eth,
       value: 1000000000000000000n,
     },
+    priceTextDisplaySize: PriceDisplaySize.Medium,
+    altPriceDisplaySize: PriceDisplaySize.Small,
     altPriceDisplayPosition: PriceDisplayPosition.Bottom,
     altPriceDisplayFormat: AltPriceDisplayFormat.Text,
   },
@@ -195,6 +193,7 @@ export const DisplaySymbologyAtLeft: Story = {
       value: 1000000000000000000n,
     },
     symbolPosition: CurrencySymbolPosition.Left,
+    priceTextDisplaySize: PriceDisplaySize.Micro,
   },
 };
 export const DisplaySymbologyAtRight: Story = {
@@ -208,6 +207,7 @@ export const DisplaySymbologyAtRight: Story = {
       value: 1000000000000000000n,
     },
     symbolPosition: CurrencySymbolPosition.Right,
+    priceTextDisplaySize: PriceDisplaySize.Micro,
   },
 };
 export const DisplaySymbolSymbologyForETH: Story = {
@@ -262,7 +262,8 @@ export const DisplayAcronymSymbologyForUSD: Story = {
     currencySymbology: CurrencySymbology.Acronym,
   },
 };
-export const LargeAltPriceDisplaySize: Story = {
+export const LargeLargeDisplaySizes: Story = {
+  name: "[Prices sizes combinations] Large & Large",
   args: {
     price: {
       currency: Currency.Usd,
@@ -273,10 +274,12 @@ export const LargeAltPriceDisplaySize: Story = {
       value: 1000000000000000000n,
     },
     altPriceDisplayFormat: AltPriceDisplayFormat.Text,
+    priceTextDisplaySize: PriceDisplaySize.Large,
     altPriceDisplaySize: PriceDisplaySize.Large,
   },
 };
-export const MediumAltPriceDisplaySize: Story = {
+export const LargeMediumDisplaySizes: Story = {
+  name: "[Prices sizes combinations] Large & Medium",
   args: {
     price: {
       currency: Currency.Usd,
@@ -287,10 +290,12 @@ export const MediumAltPriceDisplaySize: Story = {
       value: 1000000000000000000n,
     },
     altPriceDisplayFormat: AltPriceDisplayFormat.Text,
+    priceTextDisplaySize: PriceDisplaySize.Large,
     altPriceDisplaySize: PriceDisplaySize.Medium,
   },
 };
-export const SmallAltPriceDisplaySize: Story = {
+export const LargeSmallDisplaySizes: Story = {
+  name: "[Prices sizes combinations] Large & Small",
   args: {
     price: {
       currency: Currency.Usd,
@@ -301,10 +306,12 @@ export const SmallAltPriceDisplaySize: Story = {
       value: 1000000000000000000n,
     },
     altPriceDisplayFormat: AltPriceDisplayFormat.Text,
+    priceTextDisplaySize: PriceDisplaySize.Large,
     altPriceDisplaySize: PriceDisplaySize.Small,
   },
 };
-export const MicroAltPriceDisplaySize: Story = {
+export const LargeMicroDisplaySizes: Story = {
+  name: "[Prices sizes combinations] Large & Micro",
   args: {
     price: {
       currency: Currency.Usd,
@@ -315,6 +322,103 @@ export const MicroAltPriceDisplaySize: Story = {
       value: 1000000000000000000n,
     },
     altPriceDisplayFormat: AltPriceDisplayFormat.Text,
+    priceTextDisplaySize: PriceDisplaySize.Large,
+    altPriceDisplaySize: PriceDisplaySize.Micro,
+  },
+};
+export const MediumMediumDisplaySizes: Story = {
+  name: "[Prices sizes combinations] Medium & Medium",
+  args: {
+    price: {
+      currency: Currency.Usd,
+      value: 198900n,
+    },
+    altPrice: {
+      currency: Currency.Eth,
+      value: 1000000000000000000n,
+    },
+    altPriceDisplayFormat: AltPriceDisplayFormat.Text,
+    priceTextDisplaySize: PriceDisplaySize.Medium,
+    altPriceDisplaySize: PriceDisplaySize.Medium,
+  },
+};
+export const MediumSmallDisplaySizes: Story = {
+  name: "[Prices sizes combinations] Medium & Small",
+  args: {
+    price: {
+      currency: Currency.Usd,
+      value: 198900n,
+    },
+    altPrice: {
+      currency: Currency.Eth,
+      value: 1000000000000000000n,
+    },
+    altPriceDisplayFormat: AltPriceDisplayFormat.Text,
+    priceTextDisplaySize: PriceDisplaySize.Medium,
+    altPriceDisplaySize: PriceDisplaySize.Small,
+  },
+};
+export const MediumMicroDisplaySizes: Story = {
+  name: "[Prices sizes combinations] Medium & Micro",
+  args: {
+    price: {
+      currency: Currency.Usd,
+      value: 198900n,
+    },
+    altPrice: {
+      currency: Currency.Eth,
+      value: 1000000000000000000n,
+    },
+    altPriceDisplayFormat: AltPriceDisplayFormat.Text,
+    priceTextDisplaySize: PriceDisplaySize.Medium,
+    altPriceDisplaySize: PriceDisplaySize.Micro,
+  },
+};
+export const SmallSmallDisplaySizes: Story = {
+  name: "[Prices sizes combinations] Small & Small",
+  args: {
+    price: {
+      currency: Currency.Usd,
+      value: 198900n,
+    },
+    altPrice: {
+      currency: Currency.Eth,
+      value: 1000000000000000000n,
+    },
+    altPriceDisplayFormat: AltPriceDisplayFormat.Text,
+    priceTextDisplaySize: PriceDisplaySize.Small,
+    altPriceDisplaySize: PriceDisplaySize.Small,
+  },
+};
+export const SmallMicroDisplaySizes: Story = {
+  name: "[Prices sizes combinations] Small & Micro",
+  args: {
+    price: {
+      currency: Currency.Usd,
+      value: 198900n,
+    },
+    altPrice: {
+      currency: Currency.Eth,
+      value: 1000000000000000000n,
+    },
+    altPriceDisplayFormat: AltPriceDisplayFormat.Text,
+    priceTextDisplaySize: PriceDisplaySize.Small,
+    altPriceDisplaySize: PriceDisplaySize.Micro,
+  },
+};
+export const MicroMicroDisplaySizes: Story = {
+  name: "[Prices sizes combinations] Micro & Micro",
+  args: {
+    price: {
+      currency: Currency.Usd,
+      value: 198900n,
+    },
+    altPrice: {
+      currency: Currency.Eth,
+      value: 1000000000000000000n,
+    },
+    altPriceDisplayFormat: AltPriceDisplayFormat.Text,
+    priceTextDisplaySize: PriceDisplaySize.Micro,
     altPriceDisplaySize: PriceDisplaySize.Micro,
   },
 };
