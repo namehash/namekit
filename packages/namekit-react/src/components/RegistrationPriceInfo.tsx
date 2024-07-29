@@ -25,9 +25,7 @@ export const RegistrationPriceInfo = ({
   const priceDescriptionElm = (
     <div className="nk-font-normal nk-inline">
       <p className="nk-inline">{priceDescription.descriptiveTextBeginning}</p>
-      <p className="nk-font-medium nk-inline">
-        {priceDescription.pricePerYearDescription}
-      </p>
+      <p className="nk-inline">{priceDescription.pricePerYearDescription}</p>
       <p className="nk-inline">{priceDescription.descriptiveTextEnd}</p>
     </div>
   );

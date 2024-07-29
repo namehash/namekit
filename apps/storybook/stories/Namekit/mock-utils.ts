@@ -13,6 +13,8 @@ import {
   type Normalization,
   getDomainRegistration,
   buildNFTRefFromENSName,
+  subtractSeconds,
+  GRACE_PERIOD,
 } from "@namehash/ens-utils";
 
 export type DomainCardOwnerProps = {
@@ -35,7 +37,7 @@ export const EXPIRATION_TIME_OF_ACTIVE_DOMAIN: Readonly<Timestamp> = addSeconds(
 );
 
 export const EXPIRATION_TIME_OF_RECENTLY_RELEASED_DOMAIN: Readonly<Timestamp> =
-  now();
+  subtractSeconds(now(), GRACE_PERIOD);
 
 export enum DomainStatus {
   RecentlyReleased,
