@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  ENSName,
-  buildENSName,
-  getNormalizationStatus,
-} from "@namehash/ens-utils";
+import { ENSName, buildENSName } from "@namehash/ens-utils";
 import {
   CheckResultCode,
   ConsolidatedNameGuardReport,
@@ -376,30 +372,32 @@ export default function ReportDocsPage() {
   );
 }
 
-const getExampleReportName = (rating?: Rating): ENSName => {
-  if (!rating) {
-    return buildENSName(getExampleReportData(Rating.pass).name);
+const getExampleReportName = (rating: Rating = Rating.pass): ENSName => {
+  switch (rating) {
+    case Rating.pass:
+      return buildENSName("lightwalker.eth");
+    case Rating.warn:
+      return buildENSName("thisìsaveryveryveryveryveryverylongname.eth");
+    case Rating.alert:
+      return buildENSName("‍420.eth");
   }
-
-  return buildENSName(getExampleReportData(rating).name);
 };
 
 const getExampleReportData = (rating: Rating): ConsolidatedNameGuardReport => {
+  const name = getExampleReportName(rating);
+
   switch (rating) {
     case Rating.pass:
       return {
         rating: Rating.pass,
         risk_count: 0,
         highest_risk: null,
-        name: "lightwalker.eth",
-        namehash:
-          "0x5c1f4e4189d173a562af8d27771e2a1394ccbfa466f0e72b429dd317afce4c06",
-        normalization: getNormalizationStatus(
-          buildENSName("lightwalker.eth").labels,
-        ),
+        name: name.name,
+        namehash: name.node,
+        normalization: name.normalization,
         title: "Looks Good",
         subtitle: "All security checks passed!",
-        beautiful_name: "lightwalker.eth",
+        beautiful_name: name.displayName,
       };
     case Rating.warn:
       return {
@@ -411,15 +409,12 @@ const getExampleReportData = (rating: Rating): ConsolidatedNameGuardReport => {
           message: "May be confusable",
           check_name: "Character Recognition",
         },
-        name: "thisìsaveryveryveryveryveryverylongname.eth",
-        namehash:
-          "0x368edb7de4b5ad933a67148a18a7e65e1310a160ff4dce43c68ff563b8439a14",
-        normalization: getNormalizationStatus(
-          buildENSName("thisìsaveryveryveryveryveryverylongname.eth").labels,
-        ),
+        name: name.name,
+        namehash: name.node,
+        normalization: name.normalization,
         title: "Some Risk",
         subtitle: "Review risks before proceeding",
-        beautiful_name: "thisìsaveryveryveryveryveryverylongname.eth",
+        beautiful_name: name.displayName,
       };
     case Rating.alert:
       return {
@@ -431,13 +426,12 @@ const getExampleReportData = (rating: Rating): ConsolidatedNameGuardReport => {
           message: "Contains invisible characters",
           check_name: "Character Visibility",
         },
-        name: "‍420.eth",
-        namehash:
-          "0x61ce4b1e75e224233d08821593eaa0615e29bd984bbd39fc2830257ceecfcb40",
-        normalization: getNormalizationStatus(buildENSName("‍420.eth").labels),
+        name: name.name,
+        namehash: name.node,
+        normalization: name.normalization,
         title: "High Risk",
         subtitle: "Better not to use this name",
-        beautiful_name: "",
+        beautiful_name: name.displayName,
       };
   }
 };

@@ -1,7 +1,7 @@
 import React, { Fragment, useMemo } from "react";
 import useSWR from "swr";
 import { type NameGuardReport, nameguard, Rating } from "@namehash/nameguard";
-import { parseName } from "@namehash/ens-utils";
+import { parseName, Normalization } from "@namehash/ens-utils";
 import { Toaster } from "sonner";
 
 import { type Settings } from "../../stores/settings";
@@ -61,7 +61,7 @@ export const Report = ({
   }, [name, settings]);
 
   const normalizationUnknown =
-    parsedName.outputName.normalization === "unknown" ?? true;
+    parsedName.outputName.normalization === Normalization.Unknown ?? true;
 
   const showEmptyState = parsedName.outputName.name.length === 0 ?? true;
 

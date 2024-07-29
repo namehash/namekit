@@ -1,6 +1,20 @@
 {
   "name": "@namehash/nameguard-js",
-  "version": "0.3.0",
+  "description": "A JavaScript implementation of NameGuard. Currently implements securePrimaryName with more coming soon.",
+  "version": "0.4.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/namehash/namekit.git",
+    "directory": "packages/nameguard-js"
+  },
+  "homepage": "https://github.com/namehash/namekit/tree/main/packages/nameguard-js",
+  "keywords": [
+    "ENS",
+    "NameKit",
+    "NameHash",
+    "NameGuard"
+  ],
   "type": "module",
   "exports": {
     ".": {

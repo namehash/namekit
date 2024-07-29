@@ -3,8 +3,10 @@ name: Deploy NameGuard to AWS as a serverless lambda
 on:
   push:
     branches:
-      - ci-cd-lambda-nameguard-v2 #temporary for testing
       - main
+    paths:
+      - 'api/**'
+      - '.github/workflows/nameguard_api_cicd.yml'
 
 env:
   NODE_VERSION: "18.16.0"

@@ -312,7 +312,7 @@ export interface LabelGuardReport extends ConsolidatedReport {
   /**
    * A list of `ConsolidatedGraphemeGuardReport` values for each grapheme contained within `label`.
    *
-   * `null` if and only if `normalization` is `unknown`.
+   * `null` if and only if `normalization` is `Normalization.Unknown`.
    */
   graphemes: ConsolidatedGraphemeGuardReport[] | null;
 
@@ -323,7 +323,7 @@ export interface LabelGuardReport extends ConsolidatedReport {
    *
    * If not `null`, it is guaranteed that the `canonical_label` is normalized.
    *
-   * If `normalization` is `unknown`, then `canonical_label` will be `[labelhash]`.
+   * If `normalization` is `Normalization.Unknown`, then `canonical_label` will be `[labelhash]`.
    */
   canonical_label: string | null;
 }
@@ -375,7 +375,7 @@ export interface NameGuardReport extends ConsolidatedNameGuardReport {
    * the `canonical_name` will also contain the label represented as `[labelhash]`.
    *
    * `canonical_name` is guaranteed to be normalized with the exception of the case
-   * where `normalization` is `unknown` and one or more labels are represented as `[labelhash]`.
+   * where `normalization` is `Normalization.Unknown` and one or more labels are represented as `[labelhash]`.
    */
   canonical_name: string | null;
 }

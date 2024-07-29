@@ -1,18 +1,18 @@
 {
   "name": "@namehash/ens-utils",
-  "description": "",
-  "version": "1.14.0",
+  "description": "A collection of utilities for working with ENS. [DEPRECATED]",
+  "version": "1.15.1",
   "license": "MIT",
-  "repository": "namehash/ens-utils",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/namehash/namekit.git",
+    "directory": "packages/ens-utils"
+  },
+  "homepage": "https://github.com/namehash/namekit/tree/main/packages/ens-utils",
   "keywords": [
-    "ens",
-    "ethereum",
-    "namehash",
-    "ens-utils"
-  ],
-  "contributors": [
-    "Jamie Barton <jamie@notrab.dev>",
-    "Franco Aguzzi <frankind.eth@gmail.com>"
+    "ENS",
+    "NameKit",
+    "NameHash"
   ],
   "scripts": {
     "build": "tsup",

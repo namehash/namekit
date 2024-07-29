@@ -1,5 +1,5 @@
 import { TruncatedText } from "../TruncatedText/TruncatedText";
-import { ENSName } from "@namehash/ens-utils";
+import { ENSName, Normalization } from "@namehash/ens-utils";
 import React from "react";
 import cc from "classcat";
 
@@ -28,7 +28,8 @@ export function DisplayedName({
 }: DisplayedNameProps) {
   const showUnnormalizedName =
     displayRawName ||
-    (displayUnnormalizedNames && name.normalization === "unnormalized");
+    (displayUnnormalizedNames &&
+      name.normalization === Normalization.Unnormalized);
   const displayName = showUnnormalizedName ? name.name : name.displayName;
 
   return (
