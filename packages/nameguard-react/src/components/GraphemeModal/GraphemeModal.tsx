@@ -9,7 +9,7 @@ import { RatingIcon, RatingIconSize } from "../Report/RatingIcon";
 import { RatedBox } from "../RatedBox/RatedBox";
 import { ConfusableList } from "./ConfusableList";
 import { LoadingSkeleton } from "./LoadingSkeleton";
-import { Tooltip } from "@namehash/namekit-react";
+import { Tooltip } from "../Tooltip/Tooltip";
 
 export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
   const { isGraphemeModalOpen, closeGraphemeModal, currentGrapheme } =

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Tooltip } from "@namehash/namekit-react";
+import { Tooltip } from "../Tooltip/Tooltip";
 import cc from "classcat";
 
 interface TruncatedTextProps {

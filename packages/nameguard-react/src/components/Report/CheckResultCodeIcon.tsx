@@ -1,5 +1,5 @@
 import React from "react";
-import { Tooltip } from "@namehash/namekit-react";
+import { Tooltip } from "../Tooltip/Tooltip";
 import { CheckResultCode } from "@namehash/nameguard";
 import { CheckResultCodePassIcon } from "../icons/CheckResultCodePassIcon";
 import { CheckResultCodeWarnIcon } from "../icons/CheckResultCodeWarnIcon";
