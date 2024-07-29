@@ -1,0 +1,37 @@
+name: API NameGuard Release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        working-directory: ./api
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+
+      - name: Build package
+        working-directory: ./api
+        run: python -m build
+
+      - name: Publish package
+        uses: pypa/gh-action-pypi-publish@release/v1.8
+        with:
+          packages-dir: api/dist/
+          user: __token__
+          password: ${{ secrets.PYPI_TOKEN }}
