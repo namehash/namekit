@@ -1,3 +1,17 @@
+/*
+  This Tooltip component is a duplicate of @namehash/nameguard-react
+  Tooltip component. This duplicate will, in the near future, be the
+  only Tooltip component in the NameKit libraries. The duplicate is
+  necessary for the moment so that it is included in main branch while 
+  @namehash/nameguard-react still has its Tooltip: why is that?
+
+  So any imports of @namehash/nameguard-react Tooltip component
+  do not break once this change is merged into main! Once this duplicate
+  is in main, NameHash Labs will remove the Tooltip component from
+  @namehash/nameguard-react and update the imports to use this component
+  instead, the @namehash/namekit-react Tooltip.
+*/
+
 import React, { useState } from "react";
 import { Float, type FloatProps } from "@headlessui-float/react";
 import { Popover } from "@headlessui/react";

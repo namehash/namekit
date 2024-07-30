@@ -1,3 +1,17 @@
+/*
+  This TruncatedText component is a duplicate of @namehash/nameguard-react
+  TruncatedText component. This duplicate will, in the near future, be the
+  only TruncatedText component in the NameKit libraries. The duplicate is
+  necessary for the moment so that it is included in main branch while 
+  @namehash/nameguard-react still has its TruncatedText: why is that?
+
+  So any imports of @namehash/nameguard-react TruncatedText component
+  do not break once this change is merged into main! Once this duplicate
+  is in main, NameHash Labs will remove the TruncatedText component from
+  @namehash/nameguard-react and update the imports to use this component
+  instead, the @namehash/namekit-react TruncatedText.
+*/
+
 import React, { useEffect, useState, useRef } from "react";
 import { Tooltip } from "./Tooltip";
 import cc from "classcat";

@@ -1,3 +1,17 @@
+/*
+  This DisplayedName component is a duplicate of @namehash/nameguard-react
+  DisplayedName component. This duplicate will, in the near future, be the
+  only DisplayedName component in the NameKit libraries. The duplicate is
+  necessary for the moment so that it is included in main branch while 
+  @namehash/nameguard-react still has its DisplayedName: why is that?
+
+  So any imports of @namehash/nameguard-react DisplayedName component
+  do not break once this change is merged into main! Once this duplicate
+  is in main, NameHash Labs will remove the DisplayedName component from
+  @namehash/nameguard-react and update the imports to use this component
+  instead, the @namehash/namekit-react DisplayedName.
+*/
+
 import { TruncatedText } from "./TruncatedText";
 import { Normalization } from "@namehash/nameguard";
 import { ENSName } from "@namehash/ens-utils";
