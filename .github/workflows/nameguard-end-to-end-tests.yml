@@ -5,49 +5,47 @@ on:
     branches:
       - main
     paths:
-      - "packages/nameguard-sdk"
-      - "api/nameguard"
+      - "packages/nameguard-sdk/**"
+      - "api/nameguard/**"
   pull_request:
     branches:
       - main
     paths:
-      - "packages/nameguard-sdk"
-      - "api/nameguard"
+      - "packages/nameguard-sdk/**"
+      - "api/nameguard/**"
 
 jobs:
   check_changes:
     runs-on: ubuntu-latest
     outputs:
-      run_workflow: ${{ steps.check.outputs.run_workflow }}
+      api_changed: ${{ steps.check.outputs.api_changed }}
+      sdk_changed: ${{ steps.check.outputs.sdk_changed }}
     steps:
       - uses: actions/checkout@v3
-      - name: Check if end to end testing is required
+      - name: Check for changes
         id: check
         run: |
           git fetch origin ${{ github.base_ref }}
-          API_CHANGED=$(git diff --name-only origin/${{ github.base_ref }} HEAD | grep "^api/" | wc -l)
+          API_CHANGED=$(git diff --name-only origin/${{ github.base_ref }} HEAD | grep "^api/nameguard/" | wc -l)
           SDK_CHANGED=$(git diff --name-only origin/${{ github.base_ref }} HEAD | grep "^packages/nameguard-sdk/" | wc -l)
-          if [ $API_CHANGED -gt 0 ] && [ $SDK_CHANGED -gt 0 ]; then
-            echo "run_workflow=true" >> $GITHUB_OUTPUT
-          else
-            echo "run_workflow=false" >> $GITHUB_OUTPUT
-          fi
+          echo "api_changed=$API_CHANGED" >> $GITHUB_OUTPUT
+          echo "sdk_changed=$SDK_CHANGED" >> $GITHUB_OUTPUT
 
   test:
     needs: check_changes
-    if: needs.check_changes.outputs.run_workflow == 'true'
+    if: needs.check_changes.outputs.api_changed > 0 || needs.check_changes.outputs.sdk_changed > 0
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: "lts/*"
+          cache: "pnpm"
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v3
         with:
           version: 8
           run_install: true
@@ -69,19 +67,22 @@ jobs:
         run: pnpm build
 
       - name: Setup local nameguard api
+        if: needs.check_changes.outputs.api_changed > 0
         working-directory: ./api
         env:
           PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
           PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}
         run: |
-          # "&" to run server in the background
           poetry run uvicorn nameguard.web_api:app --host 0.0.0.0 --port 8000 &
           sleep 5
+
       - name: Local api healthcheck
+        if: needs.check_changes.outputs.api_changed > 0
         run: curl http://0.0.0.0:8000/v1-beta/inspect-name/mainnet/test.eth
 
       - name: Run tests
         env:
           PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
           PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}
-        run: NAMEGUARD_TEST_ENDPOINT=http://0.0.0.0:8000 pnpm test --filter ./packages/nameguard-sdk
+          NAMEGUARD_TEST_ENDPOINT: ${{ needs.check_changes.outputs.api_changed > 0 && 'http://0.0.0.0:8000' || '' }}
+        run: pnpm test --filter ./packages/nameguard-sdk
