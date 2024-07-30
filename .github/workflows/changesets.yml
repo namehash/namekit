@@ -32,6 +32,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Build packages
+        run: pnpm turbo run build --filter='./packages/*'
+
       - name: Create Release PR or Publish to NPM
         id: changesets
         uses: changesets/action@v1

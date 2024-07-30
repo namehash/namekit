@@ -12,6 +12,8 @@
     "@headlessui/react": "1.7.17",
     "@namehash/nameguard": "workspace:*",
     "@namehash/nameguard-react": "workspace:*",
+    "@namehash/nameguard-js": "workspace:*",
+    "viem": "^2.9.3",
     "classcat": "5.0.4",
     "next": "14.1.0",
     "react": "^18",
