@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Button, Link } from "@namehash/namekit-react";
 
 import { NameHashLabsLogo, CalButton } from "../1 - atoms";
 import MobileMenu from "./mobile-menu";
@@ -16,19 +16,17 @@ export const Header = () => {
         <div className="flex items-center justify-center gap-3">
           <Link
             href="/ens-referral-program"
-            className="hidden md:block mr-[18px] hover:underline transition text-sm font-medium"
+            className="hidden md:block mr-4 !text-sm font-medium"
           >
             ENS Referral Program
           </Link>
-          <Link
-            href="/careers"
-            className="hidden md:inline px-[16px] py-[9px] bg-white text-black border border-gray-300 rounded-[8px] text-sm leading-5 font-medium hover:bg-gray-50 transition-colors duration-200"
-            style={{
-              boxShadow: "0px 1px 2px 0px rgba(0, 0, 0, 0.05)",
-            }}
-          >
-            Open positions
+
+          <Link className="hidden md:block" href="/careers">
+            <Button variant="secondary" size="medium">
+              Open positions
+            </Button>
           </Link>
+
           <CalButton className="hidden md:inline px-[16px] py-[9px] bg-black text-white border border-black rounded-[8px] text-sm leading-5 font-medium hover:bg-gray-800 transition-colors duration-200">
             Schedule a call
           </CalButton>
