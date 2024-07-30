@@ -2,6 +2,7 @@ import { PreSectionText, SectionText, SectionTitle } from "../1 - atoms";
 import { OpenSourceIcon } from "../1 - atoms/icons/open-source-icon";
 import { LockIcon } from "../1 - atoms/icons/lock-icon";
 import { EnsIcon } from "../1 - atoms/icons/ens-icon-gray";
+import { Link } from "@namehash/namekit-react";
 
 export const OurPrinciplesSection = () => {
   return (
@@ -45,13 +46,13 @@ const principles: PrinciplesProps[] = [
     description: (
       <>
         Everything we create will be{" "}
-        <a
+        <Link
           href="https://github.com/namehash/"
           target="_blank"
-          className="underline hover:text-black transition-colors duration-200 cursor-pointer"
+          className="!text-black !text-lg font-normal"
         >
           open sourced
-        </a>
+        </Link>
         , ensuring that our technology is accessible and adaptable.
       </>
     ),
@@ -62,13 +63,13 @@ const principles: PrinciplesProps[] = [
     description: (
       <>
         All our work will be released freely under the{" "}
-        <a
+        <Link
           href="https://en.wikipedia.org/wiki/MIT_License"
           target="_blank"
-          className="underline hover:text-black transition-colors duration-200 cursor-pointer"
+          className="!text-black !text-lg font-normal"
         >
           MIT license
-        </a>
+        </Link>
         . This license ensures the freedom to use, modify, and redistribute.
       </>
     ),
@@ -80,13 +81,13 @@ const principles: PrinciplesProps[] = [
       <>
         We are exclusively committed to the ENS namespace. We also agree to
         uphold all articles in the{" "}
-        <a
+        <Link
           href="https://docs.ens.domains/v/governance/ens-dao-constitution"
           target="_blank"
-          className="underline hover:text-black transition-colors duration-200 cursor-pointer"
+          className="!text-black !text-lg font-normal"
         >
           ENS DAO constitution
-        </a>
+        </Link>
         .
       </>
     ),
@@ -97,13 +98,13 @@ const principles: PrinciplesProps[] = [
     description: (
       <>
         We support the{" "}
-        <a
+        <Link
           href="https://docs.ens.domains/ens-improvement-proposals/"
           target="_blank"
-          className="underline hover:text-black transition-colors duration-200 cursor-pointer"
+          className="!text-black !text-lg font-normal"
         >
           ENSIP process
-        </a>{" "}
+        </Link>{" "}
         and the goal of strong interoperable standards for the ENS protocol.
       </>
     ),
