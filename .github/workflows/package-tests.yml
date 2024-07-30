@@ -40,7 +40,7 @@ jobs:
           - "ens-utils"
           - "nameguard-js"
           - "nameguard-react"
-          # - "nameguard-sdk" # defer to end-to-end tests for now
+          - "nameguard-sdk" # defer to end-to-end tests for now
           - "namekit-react"
     steps:
       - uses: actions/checkout@v4
