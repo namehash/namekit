@@ -26,6 +26,7 @@
     "@namehash/namekit-react": "workspace:*",
     "@namehash/nameguard-react": "workspace:*",
     "@namehash/nameguard": "workspace:*",
+    "@namehash/ens-utils": "workspace:*",
     "react-dom": "^18.3.1"
   }
 }

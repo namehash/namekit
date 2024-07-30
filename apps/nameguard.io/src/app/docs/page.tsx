@@ -19,9 +19,6 @@ export default function DocsPage() {
         <Link className="hover:underline" href={"/docs/report"}>
           {"<ReportIcon /> and <ReportBadge />"}
         </Link>
-        <Link className="hover:underline" href={"/docs/displayed-name"}>
-          {"<TruncatedText /> and <DisplayedName />"}
-        </Link>
       </nav>
     </div>
   );
