@@ -48,6 +48,7 @@ describe("NameGuard", () => {
   it("should analyze a primary name", async () => {
     const data = await nameguard.getSecurePrimaryName(
       "0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5",
+      { computeNameGuardReport: true },
     );
 
     expect(data.display_name).toBe("nick.eth");
@@ -66,6 +67,7 @@ describe("NameGuard", () => {
   it("getSecurePrimaryName: normalized - unlikely impersonation", async () => {
     const data = await nameguard.getSecurePrimaryName(
       "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
+      { computeNameGuardReport: true },
     );
 
     expect(data.primary_name_status).toBe("normalized");
@@ -80,6 +82,7 @@ describe("NameGuard", () => {
   it("getSecurePrimaryName: normalized - potential impersonation", async () => {
     const data = await nameguard.getSecurePrimaryName(
       "0x8Ae0e6dd8eACe27045d9e017C8Cf6dAa9D08C776",
+      { computeNameGuardReport: true },
     );
 
     expect(data.primary_name_status).toBe("normalized");
@@ -94,6 +97,7 @@ describe("NameGuard", () => {
   it("getSecurePrimaryName: normalized - unlikely impersonation - offchain name", async () => {
     const data = await nameguard.getSecurePrimaryName(
       "0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd",
+      { computeNameGuardReport: true },
     );
 
     expect(data.primary_name_status).toBe("normalized");
@@ -108,6 +112,7 @@ describe("NameGuard", () => {
   it("getSecurePrimaryName: no primary name", async () => {
     const data = await nameguard.getSecurePrimaryName(
       "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96046",
+      { computeNameGuardReport: true },
     );
 
     expect(data.primary_name_status).toBe("no_primary_name");
@@ -120,6 +125,7 @@ describe("NameGuard", () => {
   it("getSecurePrimaryName: unnormalized", async () => {
     const data = await nameguard.getSecurePrimaryName(
       "0xfA9A134f997b3d48e122d043E12d04E909b11073",
+      { computeNameGuardReport: true },
     );
 
     expect(data.primary_name_status).toBe("unnormalized");
@@ -134,6 +140,7 @@ describe("NameGuard", () => {
   it("getSecurePrimaryName: unnormalized with canonical", async () => {
     const data = await nameguard.getSecurePrimaryName(
       "0xaf738F6C83d7D2C46723b727Ce794F9c79Cc47E6",
+      { computeNameGuardReport: true },
     );
 
     expect(data.primary_name_status).toBe("unnormalized");
@@ -148,6 +155,7 @@ describe("NameGuard", () => {
   it("getSecurePrimaryName: unnormalized but normalizable", async () => {
     const data = await nameguard.getSecurePrimaryName(
       "0xf537a27F31d7A014c5b8008a0069c61f827fA7A1",
+      { computeNameGuardReport: true },
     );
 
     expect(data.primary_name_status).toBe("unnormalized");
@@ -162,6 +170,7 @@ describe("NameGuard", () => {
   it("getSecurePrimaryName: normalized with different display_name", async () => {
     const data = await nameguard.getSecurePrimaryName(
       "0x7c7160A23b32402ad24ED5a617b8a83f434642d4",
+      { computeNameGuardReport: true },
     );
 
     expect(data.primary_name_status).toBe("normalized");
@@ -176,6 +185,7 @@ describe("NameGuard", () => {
   it("getSecurePrimaryName: attempted code injection with primary name", async () => {
     const data = await nameguard.getSecurePrimaryName(
       "0x744Ec0A91D420c257aE3eE471B79B1A6a0312E36",
+      { computeNameGuardReport: true },
     );
 
     expect(data.primary_name_status).toBe("unnormalized");

@@ -3,7 +3,7 @@ import "@namehash/namekit-react/styles.css";
 import "@namehash/ens-webfont";
 
 import type { Metadata } from "next";
-import { Metadata as NamehashMetadata } from "@namehash/utils";
+import { Metadata as NamehashMetadata } from "@namehash/seo";
 import { Inter } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
