@@ -84,7 +84,7 @@ const AdditionalSupportersContainer = () => {
         target="_blank"
         href="https://snapshot.org/#/ens.eth/proposal/0x6ba81cd2997288cc49ae1b95921ec8f107e8ffb9733321d53d488e2b30710b86"
       >
-        <Button className="flex !items-center">
+        <Button className="">
           View more
           <ArrowTopRightOnSquareIcon className="text-white w-4 h-4" />
         </Button>

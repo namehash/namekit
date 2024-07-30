@@ -99,7 +99,7 @@ const Product = ({
                   <Button>
                     {buttonLabel || "Learn more"}
                     {!withoutExternalLinkIconInCTA && (
-                      <ExternalLinkIcon className="ml-3 w-5 h-5" />
+                      <ExternalLinkIcon className="w-5 h-5" />
                     )}
                   </Button>
                 </a>
