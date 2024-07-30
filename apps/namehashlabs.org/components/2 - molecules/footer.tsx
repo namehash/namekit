@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@namehash/namekit-react";
 import {
   EmailIcon,
   FarcasterIcon,
@@ -69,18 +69,16 @@ export const Footer = (props: React.HTMLAttributes<HTMLDivElement>) => {
               <ul className="flex flex-col">
                 {footerProducts.map((product) => {
                   return (
-                    <li
-                      key={product.name}
-                      className="my-2 text-sm font-light text-gray-500 hover:underline transition"
-                    >
-                      <a
+                    <li key={product.name} className="my-2">
+                      <Link
                         target={
                           product.href.startsWith("/") ? "_self" : "_blank"
                         }
                         href={product.href}
+                        className="!text-gray-500 !text-sm !font-light"
                       >
                         {product.name}
-                      </a>
+                      </Link>
                     </li>
                   );
                 })}
@@ -91,18 +89,17 @@ export const Footer = (props: React.HTMLAttributes<HTMLDivElement>) => {
               <ul className="flex flex-col">
                 {footerResources.map((resource) => {
                   return (
-                    <li
-                      key={resource.name}
-                      className="my-2 text-sm font-light text-gray-500 hover:underline transition"
-                    >
-                      <a
+                    <li key={resource.name} className="my-2">
+                      <Link
+                        key={resource.name}
                         target={
                           resource.href.startsWith("/") ? "_self" : "_blank"
                         }
+                        className="!text-sm !text-gray-500 !font-light"
                         href={resource.href}
                       >
                         {resource.name}
-                      </a>
+                      </Link>
                     </li>
                   );
                 })}
@@ -117,41 +114,41 @@ export const Footer = (props: React.HTMLAttributes<HTMLDivElement>) => {
           </p>
 
           <div className="flex gap-3">
-            <a
+            <Link
               href="https://twitter.com/NamehashLabs"
               target="_blank"
               aria-label="Twitter"
             >
               <TwitterIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200" />
-            </a>
+            </Link>
 
-            <a
+            <Link
               href="https://github.com/namehash"
               target="_blank"
               aria-label="Github"
             >
               <GithubIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200" />
-            </a>
+            </Link>
 
-            <a
+            <Link
               href="https://warpcast.com/namehash"
               target="_blank"
               aria-label="Farcaster"
             >
               <FarcasterIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200" />
-            </a>
+            </Link>
 
-            <a
+            <Link
               href="https://t.me/namehash"
               target="_blank"
               aria-label="Telegram"
             >
               <TelegramIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200" />
-            </a>
+            </Link>
 
-            <a href="mailto:hello@namehashlabs.org" aria-label="Email">
+            <Link href="mailto:hello@namehashlabs.org" aria-label="Email">
               <EmailIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200" />
-            </a>
+            </Link>
           </div>
 
           <div className="flex space-x-1 not-italic font-normal text-gray-500 text-sm xSmall:font-light">
@@ -160,10 +157,7 @@ export const Footer = (props: React.HTMLAttributes<HTMLDivElement>) => {
               <span className="text-[#EF4444] mx-1">{"❤️"}</span>
               by
             </span>
-            <Link
-              className="text-black underline xSmall:underline-offset-[4px] xSmall:transition-all xSmall:duration-200 xSmall:hover:underline-offset-[2px]"
-              href="/"
-            >
+            <Link className="!text-sm" href="/">
               NameHash Labs
             </Link>
           </div>
