@@ -1,6 +1,7 @@
 import { Balancer } from "react-wrap-balancer";
 import { EnsLogoColored } from "../1 - atoms/icons/ens-logo-colored";
 import { GitcoinLogo } from "../1 - atoms/icons/gitcoin-logo";
+import { Button } from "@namehash/namekit-react";
 
 export const FinancialSupportSection = () => {
   return (
@@ -22,21 +23,19 @@ export const FinancialSupportSection = () => {
           <Balancer>Our work has received generous support from:</Balancer>
         </div>
         <div className="flex gap-3 items-center justify-center">
-          <a
-            target="_blank"
-            aria-label="ENS"
-            href="https://ensdao.org/"
-            className="py-[9px] px-[25px] bg-white cursor-pointer hover:bg-gray-50 transition-colors duration-200 rounded-[8px] border border-gray-200"
-          >
-            <EnsLogoColored className="w-full" />
+          <a target="_blank" aria-label="ENS" href="https://ensdao.org/">
+            <Button variant="secondary" size="large">
+              <EnsLogoColored className="w-full h-7" />
+            </Button>
           </a>
           <a
             target="_blank"
             aria-label="GitCoin"
             href="https://www.gitcoin.co/"
-            className="py-[9px] px-[25px] bg-white cursor-pointer hover:bg-gray-50 transition-colors duration-200 rounded-[8px] border border-gray-200"
           >
-            <GitcoinLogo className="w-full" />
+            <Button variant="secondary" size="large">
+              <GitcoinLogo className="w-full h-7" />
+            </Button>
           </a>
         </div>
       </div>
