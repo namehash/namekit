@@ -51,15 +51,18 @@ jobs:
           run_install: true
 
       - name: Install poetry
+        if: needs.check_changes.outputs.api_changed > 0
         run: pipx install poetry
 
       - name: Set up Python
+        if: needs.check_changes.outputs.api_changed > 0
         uses: actions/setup-python@v4
         with:
           python-version: 3.11
           cache: "poetry"
 
       - name: Install dependencies
+        if: needs.check_changes.outputs.api_changed > 0
         working-directory: ./api
         run: poetry install --with dev
 
