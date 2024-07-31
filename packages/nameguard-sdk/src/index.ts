@@ -379,7 +379,7 @@ export interface AbstractNameGuardReport extends ConsolidatedNameGuardReport {
   /**
    * The name considered to be the canonical form of the analyzed `name`.
    *
-   * `undefined` if and only if the canonical form of `name` is considered to be undefined or inspected` field is `false`.
+   * `undefined` if and only if the canonical form of `name` is considered to be undefined (contains characters without canonical characters) or inspected` field is `false`.
    *
    * If a label is represented as `[labelhash]` in `name`,
    * the `canonical_name` will also contain the label represented as `[labelhash]`.
