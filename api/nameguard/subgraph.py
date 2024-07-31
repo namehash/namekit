@@ -32,8 +32,6 @@ query resolveNamehash($nameHash: String) {
 }
 """
 
-api_key = os.environ.get('SUBGRAPH_API_KEY')
-
 headers = {'Content-Type': 'application/json'}
 
 

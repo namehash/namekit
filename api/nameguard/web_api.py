@@ -65,7 +65,7 @@ These documentation pages focus specifically on the NameGuard API. For informati
 * uninspected name - any name that fails any of the following requirements:
   1. The count of unknown labels (distinct or non-distinct) must not exceed `MAX_INSPECTED_NAME_UNKNOWN_LABELS`.
   2. The count of characters in the name (after potential resolving of unknown labels) must not exceed the limit `MAX_INSPECTED_NAME_CHARACTERS`.
-If name is uninspected an UninspectedNameGuardReport is returned. 
+If name is uninspected a `NameGuardReport` with `inspected` field equal to `false` is returned. 
 
 """,
     servers=[
@@ -138,7 +138,7 @@ async def inspect_name_get(
     """
     ## Inspects a single name with NameGuard.
 
-    If the `name` is uninspected returns `UninspectedNameGuardReport`; else returns a `NameGuardReport` including:
+    If the `name` is uninspected returns `NameGuardReport` with `inspected` field equal to `false`; else returns a `NameGuardReport` including:
     1. The details of all checks performed on `name` that consolidates all checks performed on labels and graphemes in `name`.
     2. The details of all labels in `name`.
     3. A consolidated inspection result of all graphemes in `name`.
@@ -188,7 +188,7 @@ async def inspect_name_post(request: InspectNameRequest) -> NameGuardReport:
     """
     ## Inspects a single name with NameGuard.
 
-    If the `name` is uninspected returns `UninspectedNameGuardReport`; else returns a `NameGuardReport` including:
+    If the `name` is uninspected returns `NameGuardReport` with `inspected` field equal to `false`; else returns a `NameGuardReport` including:
     1. The details of all checks performed on `request.name` that consolidates all checks performed on labels and graphemes in `request.name`.
     2. The details of all labels in `request.name`.
     3. A consolidated inspection result of all graphemes in `request.name`.
@@ -233,7 +233,7 @@ async def bulk_inspect_names(request: BulkInspectNamesRequest) -> BulkNameGuardB
     """
     ## Inspects up to 250 names at a time with NameGuard.
 
-    Provides `UninspectedNameGuardReport` if the `name` is uninspected; else returns a `ConsolidatedNameGuardReport` for each name provided in `request.names`, including:
+    Provides `NameGuardReport` with `inspected` field equal to `false` if the `name` is uninspected; else returns a `ConsolidatedNameGuardReport` for each name provided in `request.names`, including:
     1. The details of all checks performed on a name that consolidates all checks performed on labels and graphemes in this name.
 
     Each `ConsolidatedNameGuardReport` returned represents an equivalent set of checks as a `NameGuardReport`. However:
@@ -296,7 +296,7 @@ async def inspect_namehash_get(
     NameGuard will attempt to resolve the name associated with the `namehash` through the ENS Subgraph,
     using the network specified in `network_name`.
 
-    If this resolution succeeds then NameGuard will return a `NameGuardReport` for the name. If the resolved `name` is uninspected then NameGuard will return `UninspectedNameGuardReport`.
+    If this resolution succeeds then NameGuard will return a `NameGuardReport` for the name. If the resolved `name` is uninspected then NameGuard will return `NameGuardReport` with `inspected` field equal to `false`.
 
     If this resolution fails then NameGuard will return an error.
     """
@@ -329,7 +329,7 @@ async def inspect_namehash_post(request: InspectNamehashRequest) -> NameGuardRep
     NameGuard will attempt to resolve the name associated with the `request.namehash` through the ENS Subgraph,
     using the network specified in `request.network_name`.
 
-    If this resolution succeeds then NameGuard will return a `NameGuardReport` for the name. If the resolved `name` is uninspected then NameGuard will return `UninspectedNameGuardReport`.
+    If this resolution succeeds then NameGuard will return a `NameGuardReport` for the name. If the resolved `name` is uninspected then NameGuard will return `NameGuardReport` with `inspected` field equal to `false`.
 
     If this resolution fails then NameGuard will return an error.
     """
@@ -387,7 +387,7 @@ async def inspect_labelhash_get(
     1. The labelhash of the "childmost" label of a name.
     2. The complete parent name of the "childmost" label.
 
-    Returns `UninspectedNameGuardReport` if the resolved name is uninspected.
+    Returns `NameGuardReport` with `inspected` field equal to `false` if the resolved name is uninspected.
 
     NameGuard always inspects names, rather than labelhashes. So this endpoint will first attempt
     to resolve the "childmost" label associated with the provided labelhash through the ENS Subgraph,
@@ -453,7 +453,7 @@ async def inspect_labelhash_post(request: InspectLabelhashRequest) -> NameGuardR
     1. The labelhash of the "childmost" label of a name.
     2. The complete parent name of the "childmost" label.
 
-    Returns `UninspectedNameGuardReport` if the resolved name is uninspected.
+    Returns `NameGuardReport` with `inspected` field equal to `false` if the resolved name is uninspected.
 
     NameGuard always inspects names, rather than labelhashes. So this endpoint will first attempt
     to resolve the "childmost" label associated with the provided labelhash through the ENS Subgraph,
