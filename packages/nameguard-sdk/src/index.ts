@@ -372,14 +372,14 @@ export interface AbstractNameGuardReport extends ConsolidatedNameGuardReport {
 
   /** Details of the inspection of all labels in `name`.
     *
-    * `undefined` if `name` was uninspected and this is an `UninspectedNameGuardReport`.
+    * `undefined` if `inspected` field is `false`.
   */
   labels?: LabelGuardReport[];
 
   /**
    * The name considered to be the canonical form of the analyzed `name`.
    *
-   * `undefined` if and only if the canonical form of `name` is considered to be undefined or `name` was uninspected and this is an ``UninspectedNameGuardReport`.
+   * `undefined` if and only if the canonical form of `name` is considered to be undefined or inspected` field is `false`.
    *
    * If a label is represented as `[labelhash]` in `name`,
    * the `canonical_name` will also contain the label represented as `[labelhash]`.
@@ -397,14 +397,18 @@ export interface InspectedNameGuardReport extends AbstractNameGuardReport {
 
 /**
  * NameGuard report for a name that was exceptionally long and was not inspected for performance reasons.
- * Fields `label` and canonical_name` are undefined, `rating` is `alert`, `highest_risk` is `uninspected`, `risk_count` is `1`.
  */
 export interface UninspectedNameGuardReport extends AbstractNameGuardReport {
     labels: undefined;
     canonical_name: undefined;
     inspected: false;
+    rating: Rating.alert;
+    risk_count: 1;
 }
 
+/**
+ * InspectedNameGuardReport if `inspected` field is `true`, else UninspectedNameGuardReport.
+ */
 export type NameGuardReport = InspectedNameGuardReport | UninspectedNameGuardReport;
 
 export interface BulkConsolidatedNameGuardReport {
@@ -462,8 +466,8 @@ const DEFAULT_NETWORK: Network = "mainnet";
 const DEFAULT_INSPECT_LABELHASH_PARENT = ETH_TLD;
 export const DEFAULT_COMPUTE_NAMEGUARD_REPORT = false;
 const MAX_BULK_INSPECTION_NAMES = 250;
-export const MAX_INSPECTED_NAME_CHARACTERS = 200;  // includes label separators
-const MAX_INSPECTED_NAME_UNKNOWN_LABELS = 5;
+export const MAX_INSPECTED_NAME_CHARACTERS = 200;  /* includes label separators */
+const MAX_INSPECTED_NAME_UNKNOWN_LABELS = 5;  /* includes duplicated unknown labels */
 
 export interface NameGuardOptions {
   endpoint?: string;
