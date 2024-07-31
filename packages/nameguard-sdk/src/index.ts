@@ -359,7 +359,7 @@ export interface ConsolidatedNameGuardReport extends ConsolidatedReport {
   /* Beautified version of `name` */
   beautiful_name: string;
 
-  /* Whether or not the name was inspected. */
+  /* Whether or not the name was inspected. If `false` then the name was exceptionally long and was not inspected for performance reasons */
   inspected: boolean;
 }
 
