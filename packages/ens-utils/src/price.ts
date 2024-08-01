@@ -1,5 +1,9 @@
-import { Currency, PriceCurrencyFormat } from "./currency";
-import { approxScaleBigInt } from "./number";
+import {
+  Currency,
+  parseStringToCurrency,
+  PriceCurrencyFormat,
+} from "./currency";
+import { approxScaleBigInt, stringToBigInt } from "./number";
 
 export interface Price {
   // TODO: consider adding a constraint where value is never negative
@@ -194,4 +198,26 @@ export const convertCurrencyWithRates = (
   const exchangedValuePrice = numberAsPrice(exchangedValue, toCurrency);
 
   return exchangedValuePrice;
+};
+
+export const buildPrice = (
+  value: bigint | string,
+  currency: Currency | string,
+): Price => {
+  let priceValue: bigint;
+  let priceCurrency: Currency;
+
+  if (typeof value === "string") {
+    priceValue = stringToBigInt(value);
+  } else {
+    priceValue = value;
+  }
+
+  if (typeof currency === "string") {
+    priceCurrency = parseStringToCurrency(currency);
+  } else {
+    priceCurrency = currency;
+  }
+
+  return { value: priceValue, currency: priceCurrency };
 };

@@ -3,17 +3,13 @@ import {
   MIN_ETH_REGISTRABLE_LABEL_LENGTH,
   ETH_TLD,
   charCount,
+  getDomainLabelFromENSName,
 } from "./ensname";
 import { NFTRef, TokenId, buildNFTRef, buildTokenId } from "./nft";
 import { namehash, labelhash } from "viem/ens";
 import { buildAddress } from "./address";
 import { ChainId, MAINNET } from "./chain";
 import { ContractRef, buildContractRef } from "./contract";
-import {
-  PrimaryRegistrationStatus,
-  Registration,
-  SecondaryRegistrationStatus,
-} from "./registration";
 import {
   Duration,
   SECONDS_PER_DAY,
@@ -31,7 +27,6 @@ import {
   multiplyPriceByNumber,
   subtractPrices,
 } from "./price";
-import { DomainName } from "./domain";
 import { Currency } from "./currency";
 
 export interface Registrar {
@@ -191,6 +186,8 @@ export const TEMPORARY_PREMIUM_PERIOD: Readonly<Duration> = buildDuration(
 
 export const DOMAIN_HAS_SPECIAL_PRICE_IF_LENGTH_EQUAL_OR_LESS_THAN = 5;
 
+// PRICE TEXT DESCRIPTION ⬇️
+
 /*
   This interface defines data that is used to display the price of a domain
   in the Ui. The reason we are separating this text in different fields is because:
@@ -212,9 +209,15 @@ export interface PriceDescription {
   descriptiveTextEnd: string;
 }
 
+/**
+ * Returns a PriceDescription object that contains the price of a domain and a descriptive text.
+ * @param registration Domain registration data
+ * @param ensName Domain name, labelhash, namehash, normalization, etc. data
+ * @returns PriceDescription | null
+ */
 export const getPriceDescription = (
   registration: Registration,
-  parsedName: DomainName,
+  ensName: ENSName,
 ): PriceDescription | null => {
   const isExpired =
     registration.primaryStatus === PrimaryRegistrationStatus.Expired;
@@ -225,7 +228,7 @@ export const getPriceDescription = (
     registration.primaryStatus === PrimaryRegistrationStatus.Active;
 
   if (!(isExpired && wasRecentlyReleased) && isRegistered) return null;
-  const domainBasePrice = AvailableNameTimelessPriceUSD(parsedName);
+  const domainBasePrice = AvailableNameTimelessPriceUSD(ensName);
 
   if (!domainBasePrice) return null;
   else {
@@ -241,18 +244,21 @@ export const getPriceDescription = (
       const premiumEndMessage = premiumEndsIn
         ? ` Temporary premium ends ${premiumEndsIn}.`
         : null;
-      const basePriceMessage = domainBasePrice
-        ? " Discounts continuously until dropping to "
-        : null;
 
       return {
         pricePerYearDescription,
         descriptiveTextBeginning:
-          "Recently released." + premiumEndMessage + basePriceMessage,
+          "Recently released." +
+          premiumEndMessage +
+          " Discounts continuously until dropping to ",
         descriptiveTextEnd: ".",
       };
     } else {
-      const domainLabelLength = parsedName.labelName.length;
+      const ensNameLabel = getDomainLabelFromENSName(ensName);
+
+      if (ensNameLabel === null) return null;
+
+      const domainLabelLength = charCount(ensNameLabel);
 
       return domainLabelLength <
         DOMAIN_HAS_SPECIAL_PRICE_IF_LENGTH_EQUAL_OR_LESS_THAN
@@ -266,18 +272,7 @@ export const getPriceDescription = (
   }
 };
 
-export const nameCurrentTemporaryPremium = (
-  registration: Registration,
-): Price | null => {
-  if (registration.expirationTimestamp) {
-    return temporaryPremiumPriceAtTimestamp(
-      now(),
-      registration.expirationTimestamp,
-    );
-  } else {
-    return null;
-  }
-};
+// PREMIUM PERIOD TEXT REPORT ⬇️
 
 /* Interface for premium period end details */
 export interface PremiumPeriodEndsIn {
@@ -288,7 +283,8 @@ export interface PremiumPeriodEndsIn {
 /**
  * Determines if a domain is in its premium period and returns the end timestamp and a human-readable distance to it.
  * @param domainCard: DomainCard
- * @returns PremiumPeriodEndsIn | null
+ * @returns PremiumPeriodEndsIn | null. Null if the domain is not in its premium period
+ *                                      (to be, it should be expired and recently released).
  */
 export const premiumPeriodEndsIn = (
   registration: Registration,
@@ -316,12 +312,7 @@ export const premiumPeriodEndsIn = (
     releasedEpoch,
     TEMPORARY_PREMIUM_PERIOD,
   );
-  console.log({
-    relativeTimestamp: formatTimestampAsDistanceToNow(
-      temporaryPremiumEndTimestamp,
-    ),
-    timestamp: temporaryPremiumEndTimestamp,
-  });
+
   return {
     relativeTimestamp: formatTimestampAsDistanceToNow(
       temporaryPremiumEndTimestamp,
@@ -329,6 +320,8 @@ export const premiumPeriodEndsIn = (
     timestamp: temporaryPremiumEndTimestamp,
   };
 };
+
+// REGISTRATION PRICE ⬇️
 
 /**
  * At the moment a .eth name expires, this recently released temporary premium is added to its price.
@@ -361,6 +354,11 @@ export const PREMIUM_OFFSET = approxScalePrice(
   PREMIUM_DECAY ** Number(TEMPORARY_PREMIUM_DAYS),
 );
 
+/**
+ * @param atTimestamp Timestamp. The moment to calculate the temporary premium price.
+ * @param expirationTimestamp Timestamp. The moment a name expires.
+ * @returns Price. The temporary premium price at the moment of `atTimestamp`.
+ */
 export function temporaryPremiumPriceAtTimestamp(
   atTimestamp: Timestamp,
   expirationTimestamp: Timestamp,
@@ -394,6 +392,34 @@ export function temporaryPremiumPriceAtTimestamp(
   return offsetDecayedPrice;
 }
 
+export const registrationCurrentTemporaryPremium = (
+  registration: Registration,
+): Price | null => {
+  if (registration.expirationTimestamp) {
+    return temporaryPremiumPriceAtTimestamp(
+      now(),
+      registration.expirationTimestamp,
+    );
+  } else {
+    return null;
+  }
+};
+
+const DEFAULT_NAME_PRICE: Readonly<Price> = {
+  value: 500n,
+  currency: Currency.Usd,
+};
+const SHORT_NAME_PREMIUM_PRICE: Record<number, Readonly<Price>> = {
+  [MIN_ETH_REGISTRABLE_LABEL_LENGTH]: {
+    value: 64000n,
+    currency: Currency.Usd,
+  },
+  4: {
+    value: 16000n,
+    currency: Currency.Usd,
+  },
+};
+
 /*
   This is an "internal" helper function only. It can't be directly used anywhere else because
   it is too easy to accidently not include the registration object when it should be passed.
@@ -401,49 +427,35 @@ export function temporaryPremiumPriceAtTimestamp(
   safe to be used across the platform, and are then, the ones being exported.
 */
 const AvailableNamePriceUSD = (
-  parsedName: DomainName,
+  ensName: ENSName,
   registerForYears = DEFAULT_REGISTRATION_YEARS,
   registration: Registration | null = null,
   additionalFee: Price | null = null,
 ): Price | null => {
-  if (!parsedName.normalizedName) return null;
+  const ensNameLabel = getDomainLabelFromENSName(ensName);
 
-  const defaultPrice: Readonly<Price> = {
-    value: 500n,
-    currency: Currency.Usd,
-  };
-  const shortNamePremium: Record<number, Readonly<Price>> = {
-    [MIN_ETH_REGISTRABLE_LABEL_LENGTH]: {
-      value: 64000n,
-      currency: Currency.Usd,
-    },
-    4: {
-      value: 16000n,
-      currency: Currency.Usd,
-    },
-  };
-  const basePrice = shortNamePremium[parsedName.labelName.length]
-    ? shortNamePremium[parsedName.labelName.length]
-    : defaultPrice;
+  if (ensNameLabel === null) return null;
+
+  const basePrice = SHORT_NAME_PREMIUM_PRICE[charCount(ensNameLabel)]
+    ? SHORT_NAME_PREMIUM_PRICE[charCount(ensNameLabel)]
+    : DEFAULT_NAME_PRICE;
 
   const namePriceForYears = multiplyPriceByNumber(
     basePrice,
     Number(registerForYears),
   );
 
-  const namehashPrice = additionalFee
+  const resultPrice = additionalFee
     ? addPrices([additionalFee, namePriceForYears])
     : namePriceForYears;
 
   if (registration) {
-    const premiumPrice = nameCurrentTemporaryPremium(registration);
+    const premiumPrice = registrationCurrentTemporaryPremium(registration);
 
-    return premiumPrice
-      ? addPrices([premiumPrice, namehashPrice])
-      : namehashPrice;
+    return premiumPrice ? addPrices([premiumPrice, resultPrice]) : resultPrice;
   }
 
-  return namehashPrice;
+  return resultPrice;
 };
 
 const DEFAULT_REGISTRATION_YEARS = 1;
@@ -455,8 +467,125 @@ const DEFAULT_REGISTRATION_YEARS = 1;
   a name will cost at the end of a premium period, etc..
 */
 export const AvailableNameTimelessPriceUSD = (
-  domainName: DomainName,
+  ensName: ENSName,
   registerForYears = DEFAULT_REGISTRATION_YEARS,
 ) => {
-  return AvailableNamePriceUSD(domainName, registerForYears);
+  return AvailableNamePriceUSD(ensName, registerForYears);
 };
+
+// REGISTRATION STATUSES ⬇️
+
+export enum PrimaryRegistrationStatus {
+  Active = "Active",
+  Expired = "Expired",
+  NeverRegistered = "NeverRegistered",
+}
+
+export enum SecondaryRegistrationStatus {
+  ExpiringSoon = "ExpiringSoon",
+  FullyReleased = "FullyReleased",
+  GracePeriod = "GracePeriod",
+  RecentlyReleased = "RecentlyReleased",
+}
+
+export type Registration = {
+  // Below timestamps are counted in seconds
+  registrationTimestamp: Timestamp | null;
+  expirationTimestamp: Timestamp | null;
+  expiryTimestamp: Timestamp | null;
+
+  primaryStatus: PrimaryRegistrationStatus;
+  secondaryStatus: SecondaryRegistrationStatus | null;
+};
+
+export const getDomainRegistration = (
+  /*
+    When null, a domain is considered to be not registered.
+  */
+  expiryTimestamp: Timestamp | null,
+): Registration => {
+  if (!expiryTimestamp) {
+    return {
+      primaryStatus: PrimaryRegistrationStatus.NeverRegistered,
+      secondaryStatus: null,
+      registrationTimestamp: null,
+      expirationTimestamp: null,
+      expiryTimestamp: null,
+    };
+  }
+
+  const primaryStatus = getPrimaryRegistrationStatus(expiryTimestamp);
+  const secondaryStatus = getSecondaryRegistrationStatus(expiryTimestamp);
+  return {
+    expiryTimestamp,
+    primaryStatus,
+    secondaryStatus,
+    registrationTimestamp: null,
+    expirationTimestamp: expiryTimestamp,
+  };
+};
+
+const getPrimaryRegistrationStatus = (
+  expiryTimestamp: Timestamp,
+): PrimaryRegistrationStatus => {
+  const nowTime = now();
+  return nowTime.time < expiryTimestamp.time
+    ? PrimaryRegistrationStatus.Active
+    : PrimaryRegistrationStatus.Expired;
+};
+
+const getSecondaryRegistrationStatus = (
+  expiryTimestamp: Timestamp,
+): SecondaryRegistrationStatus | null => {
+  const nowTime = now();
+
+  if (nowTime.time < expiryTimestamp.time) {
+    return nowTime.time > expiryTimestamp.time - GRACE_PERIOD.seconds
+      ? SecondaryRegistrationStatus.ExpiringSoon
+      : null;
+  } else {
+    if (
+      expiryTimestamp.time +
+        GRACE_PERIOD.seconds +
+        TEMPORARY_PREMIUM_PERIOD.seconds <
+      nowTime.time
+    )
+      return SecondaryRegistrationStatus.FullyReleased;
+    else if (expiryTimestamp.time + GRACE_PERIOD.seconds > nowTime.time)
+      return SecondaryRegistrationStatus.GracePeriod;
+    else return SecondaryRegistrationStatus.RecentlyReleased;
+  }
+};
+
+// EXPIRATION STATUS ⬇️
+
+/**
+ * Returns the expiration timestamp of a domain
+ * @param domainRegistration Registration object from domain
+ * @returns Timestamp | null
+ */
+export function domainExpirationTimestamp(
+  domainRegistration: Registration,
+): Timestamp | null {
+  if (domainRegistration.expirationTimestamp) {
+    return domainRegistration.expirationTimestamp;
+  }
+  return null;
+}
+
+// RELEASE STATUS ⬇️
+
+/**
+ * Returns the release timestamp of a domain, which is 90 days after expiration when the Grace Period ends
+ * @param domainRegistration Registration object from domain
+ * @returns Timestamp | null
+ */
+export function domainReleaseTimestamp(
+  domainRegistration: Registration,
+): Timestamp | null {
+  const expirationTimestamp = domainExpirationTimestamp(domainRegistration);
+  if (expirationTimestamp === null) return null;
+
+  const releaseTimestamp = addSeconds(expirationTimestamp, GRACE_PERIOD);
+  return releaseTimestamp;
+}

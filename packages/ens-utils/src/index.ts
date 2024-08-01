@@ -10,5 +10,5 @@ export * from "./nft";
 export * from "./number";
 export * from "./time";
 export * from "./domain";
-export * from "./registration";
+export * from "./transaction";
 export * from "./price";
