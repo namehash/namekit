@@ -83,21 +83,6 @@ export interface ENSName {
   node: `0x${string}`;
 }
 
-export const getDomainLabelFromENSName = (ensName: ENSName): string | null => {
-  if (ensName.labels.length !== 2) return null;
-
-  if (ensName.labels[1] !== ETH_TLD) return null;
-
-  // NOTE: now we know we have a direct subname of ".eth"
-
-  const subnameLength = charCount(ensName.labels[0]);
-
-  // ensure this subname is even possible to register
-  if (subnameLength < MIN_ETH_REGISTRABLE_LABEL_LENGTH) return null;
-
-  return ensName.labels[0];
-};
-
 /**
  * Compares two sets of labels for deep equality
  * @param labels1 the first set of labels
