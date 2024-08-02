@@ -5,7 +5,7 @@ import {
   labelhash,
   normalizeEncodedLabelhash,
 } from "./hashutils";
-import { namehash } from "viem";
+import { keccak256, namehash } from "viem";
 
 export const LABEL_SEPARATOR = ".";
 export const ETH_TLD = "eth";
@@ -358,3 +358,68 @@ export function getRegistrationPotential(name: ENSName): RegistrationPotential {
 export function charCount(label: string) {
   return [...label].length;
 }
+
+export enum ParseNameErrorCode {
+  Empty = "Empty",
+  TooShort = "TooShort",
+  UnsupportedTLD = "UnsupportedTLD",
+  UnsupportedSubdomain = "UnsupportedSubdomain",
+  MalformedName = "MalformedName",
+  MalformedLabelHash = "MalformedLabelHash"
+}
+
+export type ParseNameErrorDetails = {
+  normalizedName: string | null;
+  displayName: string | null;
+};
+
+export class ParseNameError extends Error {
+  public readonly errorCode: ParseNameErrorCode;
+  public readonly errorDetails: ParseNameErrorDetails | null;
+
+  constructor(
+    message: string,
+    errorCode: ParseNameErrorCode,
+    errorDetails: ParseNameErrorDetails | null
+  ) {
+    super(message);
+
+    this.errorCode = errorCode;
+    this.errorDetails = errorDetails;
+  }
+}
+
+export const DEFAULT_TLD = ETH_TLD;
+
+export const DefaultParseNameError = new ParseNameError(
+  "Empty name",
+  ParseNameErrorCode.Empty,
+  null
+);
+
+export const hasMissingNameFormat = (label: string) => new RegExp("\\[([0123456789abcdef]*)\\]").test(label) && label.length === 66;
+
+export const keccak = (input: Buffer | string) => {
+  let out = null;
+  if (Buffer.isBuffer(input)) {
+    out = keccak256(input);
+  } else {
+    out = labelhash(input);
+  }
+  return out.slice(2); // cut 0x
+};
+
+export const initialNode = "0000000000000000000000000000000000000000000000000000000000000000";
+
+export const namehashFromMissingName = (inputName: string): string => {
+  let node = initialNode;
+
+  const split = inputName.split(".");
+  const labels = [split[0].slice(1, -1), keccak(split[1])];
+
+  for (let i = labels.length - 1; i >= 0; i--) {
+    const labelSha = labels[i];
+    node = keccak(Buffer.from(node + labelSha, "hex"));
+  }
+  return "0x" + node;
+};

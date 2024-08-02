@@ -1,7 +1,6 @@
 import { NFTRef } from "./nft";
 import { ENSName } from "./ensname";
 import { Address, isAddressEqual } from "./address";
-import { keccak256, labelhash as labelHash } from "viem";
 import { Registration } from "./ethregistrar";
 
 export interface DomainCard {
@@ -46,7 +45,7 @@ export const UserOwnershipOfDomain = {
    */
   FormerOwner: "FormerOwner",
 
-  /* 
+  /*
    * The user is the owner of the domain that has an active registration (not
    * in grace period).
    */
@@ -59,7 +58,7 @@ export type UserOwnershipOfDomain =
 /**
  * Returns the `UserOwnershipOfDomain` relation between a `DomainCard` and the
  * `Address` of the current user.
- * 
+ *
  * @param domain The `DomainCard` to check the `UserOwnershipOfDomain`
  *               relationship with.
  * @param currentUserAddress `Address` of the current user, or `null` if there
@@ -71,91 +70,25 @@ export const getCurrentUserOwnership = (
   domain: DomainCard,
   currentUserAddress: Address | null,
 ): UserOwnershipOfDomain => {
-
   if (!domain.ownerAddress && !domain.formerOwnerAddress) {
     return UserOwnershipOfDomain.NoOwner;
   }
 
   if (currentUserAddress) {
-
-    if (domain.ownerAddress &&
-        isAddressEqual(domain.ownerAddress, currentUserAddress)) {
+    if (
+      domain.ownerAddress &&
+      isAddressEqual(domain.ownerAddress, currentUserAddress)
+    ) {
       return UserOwnershipOfDomain.ActiveOwner;
     }
 
-    if (domain.formerOwnerAddress &&
-        isAddressEqual(domain.formerOwnerAddress, currentUserAddress)) {
+    if (
+      domain.formerOwnerAddress &&
+      isAddressEqual(domain.formerOwnerAddress, currentUserAddress)
+    ) {
       return UserOwnershipOfDomain.FormerOwner;
     }
   }
 
   return UserOwnershipOfDomain.NotOwner;
-};
-
-export enum ParseNameErrorCode {
-  Empty = "Empty",
-  TooShort = "TooShort",
-  UnsupportedTLD = "UnsupportedTLD",
-  UnsupportedSubdomain = "UnsupportedSubdomain",
-  MalformedName = "MalformedName",
-  MalformedLabelHash = "MalformedLabelHash",
-}
-
-type ParseNameErrorDetails = {
-  normalizedName: string | null;
-  displayName: string | null;
-};
-export class ParseNameError extends Error {
-  public readonly errorCode: ParseNameErrorCode;
-  public readonly errorDetails: ParseNameErrorDetails | null;
-
-  constructor(
-    message: string,
-    errorCode: ParseNameErrorCode,
-    errorDetails: ParseNameErrorDetails | null,
-  ) {
-    super(message);
-
-    this.errorCode = errorCode;
-    this.errorDetails = errorDetails;
-  }
-}
-
-export const DEFAULT_TLD = "eth";
-
-export const DefaultParseNameError = new ParseNameError(
-  "Empty name",
-  ParseNameErrorCode.Empty,
-  null,
-);
-
-export const hasMissingNameFormat = (label: string) =>
-  new RegExp("\\[([0123456789abcdef]*)\\]").test(label) && label.length === 66;
-
-const labelhash = (label: string) => labelHash(label);
-
-const keccak = (input: Buffer | string) => {
-  let out = null;
-  if (Buffer.isBuffer(input)) {
-    out = keccak256(input);
-  } else {
-    out = labelhash(input);
-  }
-  return out.slice(2); // cut 0x
-};
-
-const initialNode =
-  "0000000000000000000000000000000000000000000000000000000000000000";
-
-export const namehashFromMissingName = (inputName: string): string => {
-  let node = initialNode;
-
-  const split = inputName.split(".");
-  const labels = [split[0].slice(1, -1), keccak(split[1])];
-
-  for (let i = labels.length - 1; i >= 0; i--) {
-    const labelSha = labels[i];
-    node = keccak(Buffer.from(node + labelSha, "hex"));
-  }
-  return "0x" + node;
 };
