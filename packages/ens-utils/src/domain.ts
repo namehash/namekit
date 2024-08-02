@@ -57,33 +57,36 @@ export type UserOwnershipOfDomain =
   (typeof UserOwnershipOfDomain)[keyof typeof UserOwnershipOfDomain];
 
 /**
- * Returns the ownership relation between a domain and the current user.
+ * Returns the `UserOwnershipOfDomain` relation between a `DomainCard` and the
+ * `Address` of the current user.
  * 
- * @param domain The `DomainCard` to check the ownership relationship with.
- * @param currentUserAddress Address of the current user.
- *                           If null, returns UserOwnershipOfDomain.NoOwner or UserOwnershipOfDomain.NotOwner
- * @returns The appropriate `UserOwnershipOfDomain` value given `domain` and `currentUserAddress`.
+ * @param domain The `DomainCard` to check the `UserOwnershipOfDomain`
+ *               relationship with.
+ * @param currentUserAddress `Address` of the current user, or `null` if there
+ *                           is no current user signed in.
+ * @returns The appropriate `UserOwnershipOfDomain` value given the provided
+ *          `domain` and `currentUserAddress`.
  */
 export const getCurrentUserOwnership = (
   domain: DomainCard,
   currentUserAddress: Address | null,
 ): UserOwnershipOfDomain => {
 
-  if (currentUserAddress && domain.formerOwnerAddress) {
-    if (isAddressEqual(domain.formerOwnerAddress, currentUserAddress)) {
-      return UserOwnershipOfDomain.FormerOwner;
-    }
-
-    const isOwner =
-    domain.ownerAddress && isAddressEqual(currentUserAddress, domain.ownerAddress);
-
-    if (isOwner) {
-      return UserOwnershipOfDomain.ActiveOwner;
-    }
+  if (!domain.ownerAddress && !domain.formerOwnerAddress) {
+    return UserOwnershipOfDomain.NoOwner;
   }
 
-  if (!domain.ownerAddress) {
-    return UserOwnershipOfDomain.NoOwner;
+  if (currentUserAddress) {
+
+    if (domain.ownerAddress &&
+        isAddressEqual(domain.ownerAddress, currentUserAddress)) {
+      return UserOwnershipOfDomain.ActiveOwner;
+    }
+
+    if (domain.formerOwnerAddress &&
+        isAddressEqual(domain.formerOwnerAddress, currentUserAddress)) {
+      return UserOwnershipOfDomain.FormerOwner;
+    }
   }
 
   return UserOwnershipOfDomain.NotOwner;
