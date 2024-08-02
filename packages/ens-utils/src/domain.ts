@@ -57,11 +57,12 @@ export type UserOwnershipOfDomain =
   (typeof UserOwnershipOfDomain)[keyof typeof UserOwnershipOfDomain];
 
 /**
- * Returns the ownership status of a domain in comparison to the current user's address
+ * Returns the ownership relation between a domain and the current user.
+ * 
  * @param domain Domain that is being checked. If null, returns UserOwnershipOfDomain.NoOwner
  * @param currentUserAddress Address of the current user.
  *                           If null, returns UserOwnershipOfDomain.NoOwner or UserOwnershipOfDomain.NotOwner
- * @returns UserOwnershipOfDomain
+ * @returns The appropriate `UserOwnershipOfDomain` value given `domain` and `currentUserAddress`.
  */
 export const getCurrentUserOwnership = (
   domain: DomainCard | null,
