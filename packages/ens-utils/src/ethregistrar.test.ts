@@ -1,10 +1,10 @@
 import { describe, it, expect } from "vitest";
 import {
-  Registrar,
   UNWRAPPED_MAINNET_ETH_REGISTRAR,
   WRAPPED_MAINNET_ETH_REGISTRAR,
-  buildNFTRefFromENSName,
 } from "./ethregistrar";
+import { buildNFTRefFromENSName } from "./registrar";
+import { Registrar } from "./registrar";
 import { ENSName, buildENSName } from "./ensname";
 import { MAINNET, SEPOLIA } from "./chain";
 import { buildNFTRef } from "./nft";
@@ -84,7 +84,7 @@ describe("getPriceDescription", () => {
       - pricePerYearDescription is a string that represents: Price + "/ year" (e.g. "$5.99 / year").
 
     In order to return a PriceDescription object, the getPriceDescription function
-    makes usage of premiumEndsIn function and DOMAIN_HAS_SPECIAL_PRICE_IF_LENGTH_EQUAL_OR_LESS_THAN
+    makes usage of premiumEndsIn function and DOMAIN_HAS_SPECIAL_PRICE_IF_LENGTH_LESS_THAN
     constant, defining by condition the descriptiveTextBeginning, pricePerYear and descriptiveTextEnd.
 
     For every PriceDescription response, the domain price is get from AvailableNameTimelessPriceUSD.

@@ -4,10 +4,10 @@ import {
   ETH_TLD,
   charCount,
 } from "./ensname";
-import { NFTRef, TokenId, buildNFTRef, buildTokenId } from "./nft";
+import { TokenId, buildTokenId } from "./nft";
 import { namehash, labelhash } from "viem/ens";
 import { buildAddress } from "./address";
-import { ChainId, MAINNET } from "./chain";
+import { MAINNET } from "./chain";
 import { ContractRef, buildContractRef } from "./contract";
 import {
   Duration,
@@ -29,13 +29,7 @@ import {
   subtractPrices,
 } from "./price";
 import { Currency } from "./currency";
-
-export interface Registrar {
-  contract: ContractRef;
-
-  getTokenId(name: ENSName, isWrapped: boolean): TokenId;
-  isClaimable(name: ENSName, isWrapped: boolean): boolean;
-}
+import { KNOWN_REGISTRARS, Registrar } from "./registrar";
 
 // known registrars
 export const WRAPPED_MAINNET_ETH_REGISTRAR_CONTRACT = buildContractRef(
@@ -112,69 +106,8 @@ export const WRAPPED_MAINNET_ETH_REGISTRAR = new NameWrapper(
 export const UNWRAPPED_MAINNET_ETH_REGISTRAR =
   new ClassicETHRegistrarController(UNWRAPPED_MAINNET_ETH_REGISTRAR_CONTRACT);
 
-export const KNOWN_REGISTRARS = [
-  WRAPPED_MAINNET_ETH_REGISTRAR,
-  UNWRAPPED_MAINNET_ETH_REGISTRAR,
-];
-
-export function getPotentialKnownRegistrars(
-  name: ENSName,
-  chain: ChainId,
-  isWrapped: boolean,
-): Registrar[] {
-  return KNOWN_REGISTRARS.filter(
-    (registrar) =>
-      registrar.contract.chain.chainId === chain.chainId &&
-      registrar.isClaimable(name, isWrapped),
-  );
-}
-
-/**
- * Identifies the registrar for the provided name, if known.
- *
- * @param name the name to evaluate.
- * @param chainId the id of the chain the name is managed on.
- * @param isWrapped if the name is wrapped or not.
- * @returns the requested registrar
- */
-export function getKnownRegistrar(
-  name: ENSName,
-  chain: ChainId,
-  isWrapped: boolean,
-): Registrar {
-  const registrars = getPotentialKnownRegistrars(name, chain, isWrapped);
-  if (registrars.length > 1) {
-    throw new Error(
-      `Multiple potential registrars found for name: "${name.name}" on chainId: ${chain.chainId} when isWrapped: ${isWrapped}`,
-    );
-  } else if (registrars.length === 0) {
-    throw new Error(
-      `No known registrars found for name: "${name.name}" on chainId: ${chain.chainId} when isWrapped: ${isWrapped}`,
-    );
-  } else {
-    return registrars[0];
-  }
-}
-
-export function getKnownPotentialNFTRefs(
-  name: ENSName,
-  chain: ChainId,
-): NFTRef[] {
-  const wrappedNFT = buildNFTRefFromENSName(name, chain, true);
-  const unwrappedNFT = buildNFTRefFromENSName(name, chain, false);
-  return [wrappedNFT, unwrappedNFT].filter((nft) => nft !== null);
-}
-
-export function buildNFTRefFromENSName(
-  name: ENSName,
-  chain: ChainId,
-  isWrapped: boolean,
-): NFTRef {
-  const registrar = getKnownRegistrar(name, chain, isWrapped);
-  const token = registrar.getTokenId(name, isWrapped);
-
-  return buildNFTRef(registrar.contract, token);
-}
+KNOWN_REGISTRARS.push(WRAPPED_MAINNET_ETH_REGISTRAR);
+KNOWN_REGISTRARS.push(UNWRAPPED_MAINNET_ETH_REGISTRAR);
 
 export const GRACE_PERIOD: Readonly<Duration> = buildDuration(
   90n * SECONDS_PER_DAY.seconds,
