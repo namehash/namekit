@@ -22,7 +22,9 @@ import {
   Price,
   addPrices,
   approxScalePrice,
+  buildPrice,
   formattedPrice,
+  isEqualPrice,
   multiplyPriceByNumber,
   subtractPrices,
 } from "./price";
@@ -183,8 +185,6 @@ export const TEMPORARY_PREMIUM_PERIOD: Readonly<Duration> = buildDuration(
   TEMPORARY_PREMIUM_DAYS * SECONDS_PER_DAY.seconds,
 );
 
-export const DOMAIN_HAS_SPECIAL_PRICE_IF_LENGTH_EQUAL_OR_LESS_THAN = 5;
-
 // PRICE TEXT DESCRIPTION ⬇️
 
 /*
@@ -253,20 +253,22 @@ export const getPriceDescription = (
         descriptiveTextEnd: ".",
       };
     } else {
-      const ensNameLabel = getDomainLabelFromENSName(ensName);
+      const basePrice = getEth2LDBasePrice(ensName);
+      if (basePrice === null)
+        return null;
 
-      if (ensNameLabel === null) return null;
+      if (isEqualPrice(basePrice, DEFAULT_BASE_PRICE)) {
+        // domain has standard pricing so no need to provide a special price description
+        return null;
+      }
 
-      const domainLabelLength = charCount(ensNameLabel);
+      const labelLength = charCount(ensName.labels[0]);
 
-      return domainLabelLength <
-        DOMAIN_HAS_SPECIAL_PRICE_IF_LENGTH_EQUAL_OR_LESS_THAN
-        ? {
-            pricePerYearDescription,
-            descriptiveTextBeginning: `${domainLabelLength}-character names are `,
-            descriptiveTextEnd: " to register.",
-          }
-        : null;
+      return {
+        pricePerYearDescription,
+        descriptiveTextBeginning: `${labelLength}-character names are `,
+        descriptiveTextEnd: " to register.",
+      };
     }
   }
 };
@@ -404,20 +406,38 @@ export const registrationCurrentTemporaryPremium = (
   }
 };
 
-const DEFAULT_NAME_PRICE: Readonly<Price> = {
-  value: 500n,
-  currency: Currency.Usd,
-};
-const SHORT_NAME_PREMIUM_PRICE: Record<number, Readonly<Price>> = {
-  [MIN_ETH_REGISTRABLE_LABEL_LENGTH]: {
-    value: 64000n,
-    currency: Currency.Usd,
-  },
-  4: {
-    value: 16000n,
-    currency: Currency.Usd,
-  },
-};
+/**
+ * $5.00 USD
+ */
+const DEFAULT_BASE_PRICE: Readonly<Price> = buildPrice(500n, Currency.Usd);
+
+/**
+ * $640.00 USD
+ */
+const THREE_CHAR_BASE_PRICE: Readonly<Price> = buildPrice(64000n, Currency.Usd);
+
+/**
+ * $160.00 USD
+ */
+const FOUR_CHAR_BASE_PRICE: Readonly<Price> = buildPrice(16000n, Currency.Usd);
+
+const getEth2LDBasePrice = (ensName: ENSName): Price | null => {
+  const label = getEth2LDSubname(ensName);
+
+  if (label === null)
+    return null;
+
+  const labelLength = charCount(label);
+
+  switch (labelLength) {
+    case 3:
+      return THREE_CHAR_BASE_PRICE;
+    case 4:
+      return FOUR_CHAR_BASE_PRICE;
+    default:
+      return DEFAULT_BASE_PRICE;
+  }
+}
 
 /*
   This is an "internal" helper function only. It can't be directly used anywhere else because
@@ -431,13 +451,8 @@ const AvailableNamePriceUSD = (
   registration: Registration | null = null,
   additionalFee: Price | null = null,
 ): Price | null => {
-  const ensNameLabel = getDomainLabelFromENSName(ensName);
-
-  if (ensNameLabel === null) return null;
-
-  const basePrice = SHORT_NAME_PREMIUM_PRICE[charCount(ensNameLabel)]
-    ? SHORT_NAME_PREMIUM_PRICE[charCount(ensNameLabel)]
-    : DEFAULT_NAME_PRICE;
+  const basePrice = getEth2LDBasePrice(ensName);
+  if (basePrice === null) return null;
 
   const namePriceForYears = multiplyPriceByNumber(
     basePrice,
@@ -589,7 +604,7 @@ export function domainReleaseTimestamp(
   return releaseTimestamp;
 }
 
-export const getDomainLabelFromENSName = (ensName: ENSName): string | null => {
+const getEth2LDSubname = (ensName: ENSName): string | null => {
   if (ensName.labels.length !== 2) return null;
 
   if (ensName.labels[1] !== ETH_TLD) return null;

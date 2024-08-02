@@ -18,6 +18,10 @@ export interface Price {
   currency: Currency;
 }
 
+export const isEqualPrice = (price1: Price, price2: Price): boolean => {
+  return price1.currency === price2.currency && price1.value === price2.value;
+}
+
 export const priceAsNumber = (price: Price): number => {
   return (
     Number(price.value) /
