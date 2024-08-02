@@ -25,20 +25,34 @@ export interface DomainCard {
   formerManagerAddress: Address | null;
 }
 
-/* Defines the ownership of a domain for a given address */
+/*
+ * Defines the ownership relation between a domain and a user.
+ */
 export const UserOwnershipOfDomain = {
-  /* NoOwner: If domain has no owner */
+  /*
+   * The domain has no `ActiveOwner` or `FormerOwner`.
+   */
   NoOwner: "NoOwner",
 
-  /* NotOwner: If domain has an owner but user is not the owner */
+  /*
+   * The domain has an `ActiveOwner` or a `FormerOwner` but they are not the
+   * user.
+   */
   NotOwner: "NotOwner",
 
-  /* FormerOwner: If user is owner of the domain and domain is in Grace Period */
+  /*
+   * The user was previously the `ActiveOwner` of the domain, however the
+   * registration of the domain is now in grace period.
+   */
   FormerOwner: "FormerOwner",
 
-  /* ActiveOwner: If user is owner of the domain and domain is not in Grace Period */
+  /* 
+   * The user is the owner of the domain that has an active registration (not
+   * in grace period).
+   */
   ActiveOwner: "ActiveOwner",
 };
+
 export type UserOwnershipOfDomain =
   (typeof UserOwnershipOfDomain)[keyof typeof UserOwnershipOfDomain];
 
