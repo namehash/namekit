@@ -59,38 +59,30 @@ export type UserOwnershipOfDomain =
 /**
  * Returns the ownership relation between a domain and the current user.
  * 
- * @param domain Domain that is being checked. If null, returns UserOwnershipOfDomain.NoOwner
+ * @param domain The `DomainCard` to check the ownership relationship with.
  * @param currentUserAddress Address of the current user.
  *                           If null, returns UserOwnershipOfDomain.NoOwner or UserOwnershipOfDomain.NotOwner
  * @returns The appropriate `UserOwnershipOfDomain` value given `domain` and `currentUserAddress`.
  */
 export const getCurrentUserOwnership = (
-  domain: DomainCard | null,
+  domain: DomainCard,
   currentUserAddress: Address | null,
 ): UserOwnershipOfDomain => {
-  const formerDomainOwnerAddress =
-    domain && domain.formerOwnerAddress ? domain.formerOwnerAddress : null;
-  const ownerAddress =
-    domain && domain.ownerAddress ? domain.ownerAddress : null;
 
-  if (currentUserAddress && formerDomainOwnerAddress) {
-    const isFormerOwner =
-      formerDomainOwnerAddress &&
-      isAddressEqual(formerDomainOwnerAddress, currentUserAddress);
-
-    if (isFormerOwner) {
+  if (currentUserAddress && domain.formerOwnerAddress) {
+    if (isAddressEqual(domain.formerOwnerAddress, currentUserAddress)) {
       return UserOwnershipOfDomain.FormerOwner;
     }
 
     const isOwner =
-      ownerAddress && isAddressEqual(currentUserAddress, ownerAddress);
+    domain.ownerAddress && isAddressEqual(currentUserAddress, domain.ownerAddress);
 
     if (isOwner) {
       return UserOwnershipOfDomain.ActiveOwner;
     }
   }
 
-  if (!ownerAddress) {
+  if (!domain.ownerAddress) {
     return UserOwnershipOfDomain.NoOwner;
   }
 
