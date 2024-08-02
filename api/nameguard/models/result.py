@@ -41,7 +41,7 @@ class GraphemeNormalization(str, Enum):
 
 class ConsolidatedReport(BaseModel):
     """
-    The risk summary of a name, label, or grapheme.
+    The consolidated inspection results of all the risks and limitations found within a name, label, or grapheme.
     """
 
     rating: Rating = Field(examples=[Rating.WARN])
@@ -198,23 +198,33 @@ class LabelGuardReport(ConsolidatedReport):
 
 class ConsolidatedNameGuardReport(ConsolidatedReport):
     """
-    Name analysis result without information about individual checks and labels.
+    The consolidated inspection results of all the risks and limitations NameGuard found within a name.
+
+    Generated through a detailed inspection of all labels and graphemes within `name`.
+
+    A `ConsolidatedNameGuardReport` consolidates the results of all `checks` on all labels and graphemes in a
+    `NameGuardReport` into a `ConsolidatedReport` without the need to explicitly return all
+    the details of the `NameGuardReport`.
     """
 
     name: str = Field(
-        description='The analyzed name. Can contain labelhashes when some labels are unknown.',
+        description='The name that NameGuard inspected. Some labels in this name may be represented as "[labelhash]" '
+        'if and only if all of the following is true:\n'
+        '\n'
+        '1. The query sent to NameGuard when requesting the report represented the label as a "[labelhash]".\n'
+        '2. The decoded label of "[labelhash]" was not found within the ENS Subgraph for the specified `network`.',
         examples=['vitalìk.eth', '[af498306bb191650e8614d574b3687c104bc1cd7e07c522954326752c6882770].eth'],
     )
 
     namehash: str = Field(
-        description='The namehash of the name in hex format prefixed with `0x`.',
+        description='The ENSIP-1 namehash of the name in hex format prefixed with 0x.',
         examples=['0xd48fd5598e605861cbd8e45419b41b83739bff52eaef0e283181bbe0a43a5b32'],
     )
 
     normalization: Normalization
 
     inspected: bool = Field(
-        description='Whether the name was inspected. If `false` then the name was exceptionally long and was not inspected for performance reasons.',
+        description='Whether or not the name was inspected. If `false` then the name was exceptionally long and was not inspected for performance reasons',
         examples=[True],
     )
 
@@ -234,11 +244,11 @@ class ConsolidatedNameGuardReport(ConsolidatedReport):
 
 class NameGuardReport(ConsolidatedNameGuardReport):
     """
-    Full name analysis result with information about individual checks and labels.
+    NameGuard report that contains the full results of all `checks` on all `labels` in a name.
     """
 
     checks: list[GenericCheckResult] = Field(
-        description='A list of checks that were performed on the name.',
+        description='The results of all checks performed by NameGuard on `name`.',
     )
 
     labels: Optional[list[LabelGuardReport]] = Field(
@@ -255,7 +265,7 @@ class NameGuardReport(ConsolidatedNameGuardReport):
 
 class UninspectedNameGuardReport(NameGuardReport):
     """
-    Uninspected name analysis result without information about checks and labels.
+    Uninspected name analysis result without information about checks, labels, or canonical name.
     """
 
     risk_count: Literal[1] = Field(description='The number of checks that have a status of `alert` or `warn`.')
