@@ -272,7 +272,7 @@ export const getPriceDescription = (
   }
 };
 
-// PREMIUM PERIOD TEXT REPORT ⬇️
+// PREMIUM PERIOD TEXT DESCRIPTION ⬇️
 
 /* Interface for premium period end details */
 export interface PremiumPeriodEndsIn {
@@ -473,7 +473,7 @@ export const AvailableNameTimelessPriceUSD = (
   return AvailableNamePriceUSD(ensName, registerForYears);
 };
 
-// REGISTRATION STATUSES ⬇️
+// REGISTRATION STATUS ⬇️
 
 export enum PrimaryRegistrationStatus {
   Active = "Active",
