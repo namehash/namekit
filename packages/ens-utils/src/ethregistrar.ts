@@ -3,18 +3,16 @@ import {
   MIN_ETH_REGISTRABLE_LABEL_LENGTH,
   ETH_TLD,
   charCount,
+  buildENSName,
 } from "./ensname";
-import { TokenId, buildTokenId } from "./nft";
-import { namehash, labelhash } from "viem/ens";
-import { buildAddress } from "./address";
-import { MAINNET } from "./chain";
-import { ContractRef, buildContractRef } from "./contract";
+import { buildContractRef, ContractRef } from "./contract";
 import {
   Duration,
   SECONDS_PER_DAY,
   Timestamp,
   addSeconds,
   buildDuration,
+  buildTimePeriod,
   formatTimestampAsDistanceToNow,
   now,
 } from "./time";
@@ -24,236 +22,332 @@ import {
   approxScalePrice,
   buildPrice,
   formattedPrice,
-  isEqualPrice,
-  multiplyPriceByNumber,
   subtractPrices,
 } from "./price";
 import { Currency } from "./currency";
-import { KNOWN_REGISTRARS, Registrar } from "./registrar";
+import {
+  PrimaryRegistrationStatus,
+  RegistrarChargeType,
+  RegistrarUnsupportedNameError,
+  Registration,
+  scaleAnnualPrice,
+  SecondaryRegistrationStatus,
+  RegistrarCharge,
+  RegistrarTemporaryFee,
+  RegistrarBaseFee,
+  RegistrarSpecialNameFee,
+  RegistrationPriceQuote,
+  RegistrarAction,
+  RenewalPriceQuote,
+  OnchainRegistrar,
+} from "./registrar";
+import { MAINNET } from "./chain";
+import { buildAddress } from "./address";
 
-// known registrars
-export const WRAPPED_MAINNET_ETH_REGISTRAR_CONTRACT = buildContractRef(
-  MAINNET,
-  buildAddress("0xD4416b13d2b3a9aBae7AcD5D6C2BbDBE25686401"),
-);
-export const UNWRAPPED_MAINNET_ETH_REGISTRAR_CONTRACT = buildContractRef(
-  MAINNET,
-  buildAddress("0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85"),
-);
+export class EthRegistrar implements OnchainRegistrar {
+  protected readonly registrarContract: ContractRef;
 
-export class NameWrapper implements Registrar {
-  constructor(public contract: ContractRef) {
-    this.contract = contract;
+  public constructor(registrarContract: ContractRef) {
+    this.registrarContract = registrarContract;
   }
 
-  getTokenId(name: ENSName, isWrapped: boolean): TokenId {
-    if (!this.isClaimable(name, isWrapped)) {
-      throw new Error(
-        `Wrapped tokenId for name: "${name.name}" is not claimable by registrar: ${this.contract.address} on chainId: ${this.contract.chain.chainId}`,
+  public getManagedSubname = (name: ENSName): ENSName | null => {
+    // must have exactly 2 labels to be a direct subname of ".eth"
+    if (name.labels.length !== 2) return null;
+
+    // last label must be "eth"
+    if (name.labels[1] !== ETH_TLD) return null;
+
+    // NOTE: now we know we have a direct subname of ".eth"
+
+    // first label must be of sufficient length
+    const subnameLength = charCount(name.labels[0]);
+    if (subnameLength < MIN_ETH_REGISTRABLE_LABEL_LENGTH) return null;
+
+    // TODO: also add a check for a maximum length limit as enforced by max block size, etc?
+
+    return buildENSName(name.labels[0]);
+  };
+
+  public getValidatedSubname = (name: ENSName): ENSName => {
+    const subname = this.getManagedSubname(name);
+    if (subname === null)
+      throw new RegistrarUnsupportedNameError(
+        "Name is not directly managed by the .ETH registrar",
+        name,
       );
-    }
-    return buildTokenId(BigInt(namehash(name.name)));
+
+    return subname;
+  };
+
+  public getOnchainRegistrar(): ContractRef {
+    return this.registrarContract;
   }
 
-  isClaimable(name: ENSName, isWrapped: boolean): boolean {
-    if (!isWrapped) return false;
+  public canRegister(
+    name: ENSName,
+    atTimestamp: Timestamp,
+    duration: Duration,
+    existingRegistration?: Registration,
+  ): boolean {
+    if (!this.getManagedSubname(name)) {
+      // name is not directly managed by this registrar
+      return false;
+    }
 
-    if (name.labels.length >= 2) {
-      if (name.labels[1] === ETH_TLD) {
-        // first label must be of sufficient length
-        if (charCount(name.labels[0]) < MIN_ETH_REGISTRABLE_LABEL_LENGTH)
-          return false;
+    if (existingRegistration) {
+      const releaseTimestamp = getDomainReleaseTimestamp(existingRegistration);
+
+      if (releaseTimestamp && releaseTimestamp.time > atTimestamp.time) {
+        // if the name is not yet released, we can't register it
+        // TODO: check for possible off-by-1 errors in the logic above
+        return false;
       }
     }
 
-    // TODO: refine this. For example, there's a maximum length limit, etc.
+    if (duration.seconds < 1n) {
+      // TODO: enforce that `duration` is the minimum duration allowed for a registration
+      // TODO: need to put the right constant here.
+      return false;
+    }
+
     return true;
   }
-}
 
-export class ClassicETHRegistrarController implements Registrar {
-  constructor(public contract: ContractRef) {
-    this.contract = contract;
-  }
-
-  getTokenId(name: ENSName, isWrapped: boolean): TokenId {
-    if (!this.isClaimable(name, isWrapped)) {
+  public getRegistrationPriceQuote(
+    name: ENSName,
+    atTimestamp: Timestamp,
+    duration: Duration,
+    existingRegistration?: Registration,
+  ): RegistrationPriceQuote {
+    if (!this.canRegister(name, atTimestamp, duration, existingRegistration)) {
+      // TODO: refine the way we handle these exception cases.
       throw new Error(
-        `Unwrapped tokenId for name: "${name.name}" is not claimable by registrar: ${this.contract.address} on chainId: ${this.contract.chain.chainId}`,
+        `Cannot build registration price quote for name: "${name.name}".`,
       );
     }
-    return buildTokenId(BigInt(labelhash(name.labels[0])));
+
+    const rentalPeriod = buildTimePeriod(
+      atTimestamp,
+      addSeconds(atTimestamp, duration),
+    );
+
+    let charges = this.getDurationCharges(name, duration);
+
+    let temporaryPremium: RegistrarTemporaryFee | null = null;
+
+    if (existingRegistration) {
+      temporaryPremium = this.getTemporaryPremiumCharge(
+        name,
+        existingRegistration,
+        atTimestamp,
+      );
+      if (temporaryPremium) {
+        charges = [...charges, temporaryPremium];
+      }
+    }
+
+    const totalPrice = addPrices(charges.map((charge) => charge.price));
+
+    return {
+      action: RegistrarAction.Register,
+      rentalPeriod,
+      charges,
+      totalPrice,
+    };
   }
 
-  isClaimable(name: ENSName, isWrapped: boolean): boolean {
-    // name must be unwrapped
-    if (isWrapped) return false;
+  public canRenew(
+    name: ENSName,
+    atTimestamp: Timestamp,
+    duration: Duration,
+    existingRegistration: Registration,
+  ): boolean {
+    if (!this.getManagedSubname(name)) {
+      // name is not directly managed by this registrar
+      return false;
+    }
 
-    // must have exactly 2 labels to be a direct subname of ".eth"
-    if (name.labels.length !== 2) return false;
+    if (existingRegistration) {
+      if (
+        existingRegistration.registrationTimestamp &&
+        atTimestamp.time < existingRegistration.registrationTimestamp.time
+      ) {
+        // if the renewal is requested before the registration, we can't renew it
+        // TODO: check for possible off-by-1 errors in the logic above
+        return false;
+      }
 
-    // last label must be "eth"
-    if (name.labels[1] !== ETH_TLD) return false;
+      const releaseTimestamp = getDomainReleaseTimestamp(existingRegistration);
 
-    // first label must be of sufficient length
-    return charCount(name.labels[0]) >= MIN_ETH_REGISTRABLE_LABEL_LENGTH;
+      if (releaseTimestamp && releaseTimestamp.time > atTimestamp.time) {
+        // if the name is released, we can't renew it anymore
+        // TODO: check for possible off-by-1 errors in the logic above
+        return false;
+      }
+    }
+
+    if (duration.seconds < 1n) {
+      // always need to renew for at least 1 second
+      return false;
+    }
+
+    return true;
   }
+
+  public getRenewalPriceQuote(
+    name: ENSName,
+    atTimestamp: Timestamp,
+    duration: Duration,
+    existingRegistration: Registration,
+  ): RenewalPriceQuote {
+    if (!this.canRenew(name, atTimestamp, duration, existingRegistration)) {
+      throw new Error(
+        `Cannot build renewal price quote for name: "${name.name}".`,
+      );
+    }
+
+    if (!existingRegistration.expirationTimestamp) {
+      throw new Error(`Invariant violation`); // TODO: refine message... just making the type system happy.
+    }
+
+    // TODO: review for possible off-by-1 errors
+    const newExpiration = addSeconds(
+      existingRegistration.expirationTimestamp,
+      duration,
+    );
+    const rentalPeriod = buildTimePeriod(
+      existingRegistration.expirationTimestamp,
+      newExpiration,
+    );
+
+    const charges = this.getDurationCharges(name, duration);
+    const totalPrice = addPrices(charges.map((charge) => charge.price));
+
+    return {
+      action: RegistrarAction.Renew,
+      rentalPeriod,
+      charges,
+      totalPrice,
+    };
+  }
+
+  protected getAnnualCharges(name: ENSName): RegistrarCharge[] {
+    let baseRate: Price;
+    let hasSpecialNameFee: boolean;
+
+    const subname = this.getValidatedSubname(name);
+    const subnameLength = charCount(subname.name);
+
+    if (subnameLength === 3) {
+      baseRate = THREE_CHAR_BASE_PRICE;
+      hasSpecialNameFee = true;
+    } else if (subnameLength === 4) {
+      baseRate = FOUR_CHAR_BASE_PRICE;
+      hasSpecialNameFee = true;
+    } else {
+      baseRate = DEFAULT_BASE_PRICE;
+      hasSpecialNameFee = false;
+    }
+
+    if (!hasSpecialNameFee) {
+      const baseFee: RegistrarBaseFee = {
+        type: RegistrarChargeType.BaseFee,
+        price: baseRate,
+      };
+
+      return [baseFee];
+    }
+
+    const priceStr = formattedPrice({
+      price: baseRate,
+      withPrefix: true,
+    });
+
+    // TODO NOTE FOR FRANCO: The approach here means we don't put special
+    // formatting on the price at a UI-level anymore for now. It's not worth the
+    // added complexity right now.
+    const specialNameFee: RegistrarSpecialNameFee = {
+      type: RegistrarChargeType.SpecialNameFee,
+      price: baseRate,
+      reason: `${subnameLength}-character names are ${priceStr} / year to register.`,
+    };
+
+    return [specialNameFee];
+  }
+
+  protected getDurationCharges = (
+    name: ENSName,
+    duration: Duration,
+  ): RegistrarCharge[] => {
+    const rentalCharges = this.getAnnualCharges(name);
+    const scaledCharges = rentalCharges.map((charge) => {
+      return {
+        ...charge,
+        price: scaleAnnualPrice(charge.price, duration),
+      };
+    });
+
+    return scaledCharges;
+  };
+
+  protected getTemporaryPremiumCharge = (
+    name: ENSName,
+    existingRegistration: Registration,
+    atTimestamp: Timestamp,
+  ): RegistrarTemporaryFee | null => {
+    if (!existingRegistration.expirationTimestamp) return null;
+
+    const temporaryPremiumPrice = getTemporaryPremiumPriceAtTimestamp(
+      existingRegistration,
+      atTimestamp,
+    );
+    if (!temporaryPremiumPrice) return null;
+
+    const begin = addSeconds(
+      existingRegistration.expirationTimestamp,
+      GRACE_PERIOD,
+    );
+    const end = addSeconds(begin, TEMPORARY_PREMIUM_PERIOD);
+    const premiumPeriod = buildTimePeriod(begin, end);
+
+    const standardAnnualCharges = this.getAnnualCharges(name);
+    const standardAnnualPrice = addPrices(
+      standardAnnualCharges.map((charge) => charge.price),
+    );
+
+    const priceStr = formattedPrice({
+      price: standardAnnualPrice,
+      withPrefix: true,
+    });
+
+    const premiumEndsIn = formatTimestampAsDistanceToNow(premiumPeriod.end);
+
+    // TODO NOTE FOR FRANCO: The approach here means we don't put special
+    // formatting on the price at a UI-level anymore for now. It's not worth the
+    // added complexity right now.
+    const temporaryPremiumReason = `Recently released. Temporary premium ends ${premiumEndsIn}. Discounts continuously until dropping to ${priceStr} / year.`;
+
+    const temporaryFee: RegistrarTemporaryFee = {
+      type: RegistrarChargeType.TemporaryFee,
+      price: temporaryPremiumPrice,
+      reason: temporaryPremiumReason,
+      validity: premiumPeriod, // NOTE: This provides the exact `Timestamp` when the temporary premium is scheduled to begin and end.
+    };
+
+    return temporaryFee;
+  };
 }
-
-export const WRAPPED_MAINNET_ETH_REGISTRAR = new NameWrapper(
-  WRAPPED_MAINNET_ETH_REGISTRAR_CONTRACT,
-);
-export const UNWRAPPED_MAINNET_ETH_REGISTRAR =
-  new ClassicETHRegistrarController(UNWRAPPED_MAINNET_ETH_REGISTRAR_CONTRACT);
-
-KNOWN_REGISTRARS.push(WRAPPED_MAINNET_ETH_REGISTRAR);
-KNOWN_REGISTRARS.push(UNWRAPPED_MAINNET_ETH_REGISTRAR);
 
 export const GRACE_PERIOD: Readonly<Duration> = buildDuration(
   90n * SECONDS_PER_DAY.seconds,
 );
+
 export const TEMPORARY_PREMIUM_DAYS = 21n;
 
 export const TEMPORARY_PREMIUM_PERIOD: Readonly<Duration> = buildDuration(
   TEMPORARY_PREMIUM_DAYS * SECONDS_PER_DAY.seconds,
 );
-
-// PRICE TEXT DESCRIPTION ⬇️
-
-/*
-  This interface defines data that is used to display the price of a domain
-  in the Ui. The reason we are separating this text in different fields is because:
-
-  1. We want to be able to display different texts depending on wether the price of
-  the domain is a premium price or not. In each one of these cases, the text displayed
-  is different.
-  2. Since the design for this data displaying is differently defined for the price field
-  and the descriptive text, we separate it so we can render these two fields separately in the
-  HTML that will be created inside the component. e.g. the price field is bold and the descriptive
-  text is not. Please refer to this Figma artboard for more details: https:/*www.figma.com/file/lZ8HZaBcfx1xfrgx7WOsB0/Namehash?type=design&node-id=12959-119258&mode=design&t=laEDaXW0rg9nIVn7-0
-*/
-export interface PriceDescription {
-  /* descriptiveTextBeginning references the text that is displayed before the price */
-  descriptiveTextBeginning: string;
-  /* pricePerYear is a string that represents: Price + "/ year" (e.g. "$5.99 / year") */
-  pricePerYearDescription: string;
-  /* descriptiveTextBeginning references the text that is displayed after the price */
-  descriptiveTextEnd: string;
-}
-
-/**
- * Returns a PriceDescription object that contains the price of a domain and a descriptive text.
- * @param registration Domain registration data
- * @param ensName Domain name, labelhash, namehash, normalization, etc. data
- * @returns PriceDescription | null
- */
-export const getPriceDescription = (
-  registration: Registration,
-  ensName: ENSName,
-): PriceDescription | null => {
-  const isExpired =
-    registration.primaryStatus === PrimaryRegistrationStatus.Expired;
-  const wasRecentlyReleased =
-    registration.secondaryStatus ===
-    SecondaryRegistrationStatus.RecentlyReleased;
-  const isRegistered =
-    registration.primaryStatus === PrimaryRegistrationStatus.Active;
-
-  if (!(isExpired && wasRecentlyReleased) && isRegistered) return null;
-  const domainBasePrice = AvailableNameTimelessPriceUSD(ensName);
-
-  if (!domainBasePrice) return null;
-  else {
-    const domainPrice = formattedPrice({
-      price: domainBasePrice,
-      withPrefix: true,
-    });
-    const pricePerYearDescription = `${domainPrice} / year`;
-
-    const premiumEndsIn = premiumPeriodEndsIn(registration)?.relativeTimestamp;
-
-    if (premiumEndsIn) {
-      const premiumEndMessage = premiumEndsIn
-        ? ` Temporary premium ends ${premiumEndsIn}.`
-        : null;
-
-      return {
-        pricePerYearDescription,
-        descriptiveTextBeginning:
-          "Recently released." +
-          premiumEndMessage +
-          " Discounts continuously until dropping to ",
-        descriptiveTextEnd: ".",
-      };
-    } else {
-      const basePrice = getEth2LDBasePrice(ensName);
-      if (basePrice === null)
-        return null;
-
-      if (isEqualPrice(basePrice, DEFAULT_BASE_PRICE)) {
-        // domain has standard pricing so no need to provide a special price description
-        return null;
-      }
-
-      const labelLength = charCount(ensName.labels[0]);
-
-      return {
-        pricePerYearDescription,
-        descriptiveTextBeginning: `${labelLength}-character names are `,
-        descriptiveTextEnd: " to register.",
-      };
-    }
-  }
-};
-
-// PREMIUM PERIOD TEXT REPORT ⬇️
-
-/* Interface for premium period end details */
-export interface PremiumPeriodEndsIn {
-  relativeTimestamp: string;
-  timestamp: Timestamp;
-}
-
-/**
- * Determines if a domain is in its premium period and returns the end timestamp and a human-readable distance to it.
- * @param domainCard: DomainCard
- * @returns PremiumPeriodEndsIn | null. Null if the domain is not in its premium period
- *                                      (to be, it should be expired and recently released).
- */
-export const premiumPeriodEndsIn = (
-  registration: Registration,
-): PremiumPeriodEndsIn | null => {
-  const isExpired =
-    registration.primaryStatus === PrimaryRegistrationStatus.Expired;
-  const wasRecentlyReleased =
-    registration.secondaryStatus ===
-    SecondaryRegistrationStatus.RecentlyReleased;
-
-  /*
-    A domain will only have a premium price if it has Expired and it was Recently Released
-  */
-  if (!isExpired || !wasRecentlyReleased) return null;
-
-  /*
-    This conditional should always be true because expiryTimestamp will only be null when
-    the domain was never registered before. Considering that the domain is Expired,
-    it means that it was registered before. It is just a type safety check.
-  */
-  if (!registration.expiryTimestamp) return null;
-
-  const releasedEpoch = addSeconds(registration.expiryTimestamp, GRACE_PERIOD);
-  const temporaryPremiumEndTimestamp = addSeconds(
-    releasedEpoch,
-    TEMPORARY_PREMIUM_PERIOD,
-  );
-
-  return {
-    relativeTimestamp: formatTimestampAsDistanceToNow(
-      temporaryPremiumEndTimestamp,
-    ),
-    timestamp: temporaryPremiumEndTimestamp,
-  };
-};
 
 // REGISTRATION PRICE ⬇️
 
@@ -289,22 +383,25 @@ export const PREMIUM_OFFSET = approxScalePrice(
 );
 
 /**
+ * @param registration The registration to calculate the temporary premium price for.
  * @param atTimestamp Timestamp. The moment to calculate the temporary premium price.
- * @param expirationTimestamp Timestamp. The moment a name expires.
- * @returns Price. The temporary premium price at the moment of `atTimestamp`.
+ * @returns Price. The temporary premium price at the moment of `atTimestamp` or `null` if there is no
+ *          known temporary premium `atTimestamp`.
  */
-export function temporaryPremiumPriceAtTimestamp(
+const getTemporaryPremiumPriceAtTimestamp = (
+  registration: Registration,
   atTimestamp: Timestamp,
-  expirationTimestamp: Timestamp,
-): Price {
-  const releasedTimestamp = addSeconds(expirationTimestamp, GRACE_PERIOD);
+): Price | null => {
+  if (!registration.expirationTimestamp) return null;
+
+  const releasedTimestamp = addSeconds(
+    registration.expirationTimestamp,
+    GRACE_PERIOD,
+  );
   const secondsSinceRelease = atTimestamp.time - releasedTimestamp.time;
   if (secondsSinceRelease < 0) {
     /* if as of the moment of `atTimestamp` a name hasn't expired yet then there is no temporaryPremium */
-    return {
-      value: 0n,
-      currency: Currency.Usd,
-    };
+    return null;
   }
 
   const fractionalDaysSinceRelease =
@@ -315,28 +412,12 @@ export function temporaryPremiumPriceAtTimestamp(
   const decayedPrice = approxScalePrice(PREMIUM_START_PRICE, decayFactor);
   const offsetDecayedPrice = subtractPrices(decayedPrice, PREMIUM_OFFSET);
 
-  /* the temporary premium can never be less than $0.00 */
   if (offsetDecayedPrice.value < 0n) {
-    return {
-      value: 0n,
-      currency: Currency.Usd,
-    };
+    /* the temporary premium can never be less than $0.00 */
+    return null;
   }
 
   return offsetDecayedPrice;
-}
-
-export const registrationCurrentTemporaryPremium = (
-  registration: Registration,
-): Price | null => {
-  if (registration.expirationTimestamp) {
-    return temporaryPremiumPriceAtTimestamp(
-      now(),
-      registration.expirationTimestamp,
-    );
-  } else {
-    return null;
-  }
 };
 
 /**
@@ -353,97 +434,6 @@ const THREE_CHAR_BASE_PRICE: Readonly<Price> = buildPrice(64000n, Currency.Usd);
  * $160.00 USD
  */
 const FOUR_CHAR_BASE_PRICE: Readonly<Price> = buildPrice(16000n, Currency.Usd);
-
-const getEth2LDBasePrice = (ensName: ENSName): Price | null => {
-  const label = getEth2LDSubname(ensName);
-
-  if (label === null)
-    return null;
-
-  const labelLength = charCount(label);
-
-  switch (labelLength) {
-    case 3:
-      return THREE_CHAR_BASE_PRICE;
-    case 4:
-      return FOUR_CHAR_BASE_PRICE;
-    default:
-      return DEFAULT_BASE_PRICE;
-  }
-}
-
-/*
-  This is an "internal" helper function only. It can't be directly used anywhere else because
-  it is too easy to accidently not include the registration object when it should be passed.
-  Three different functions are created right below this one, which are the ones that are
-  safe to be used across the platform, and are then, the ones being exported.
-*/
-const AvailableNamePriceUSD = (
-  ensName: ENSName,
-  registerForYears = DEFAULT_REGISTRATION_YEARS,
-  registration: Registration | null = null,
-  additionalFee: Price | null = null,
-): Price | null => {
-  const basePrice = getEth2LDBasePrice(ensName);
-  if (basePrice === null) return null;
-
-  const namePriceForYears = multiplyPriceByNumber(
-    basePrice,
-    Number(registerForYears),
-  );
-
-  const resultPrice = additionalFee
-    ? addPrices([additionalFee, namePriceForYears])
-    : namePriceForYears;
-
-  if (registration) {
-    const premiumPrice = registrationCurrentTemporaryPremium(registration);
-
-    return premiumPrice ? addPrices([premiumPrice, resultPrice]) : resultPrice;
-  }
-
-  return resultPrice;
-};
-
-const DEFAULT_REGISTRATION_YEARS = 1;
-
-/*
-  Below function returns the "timeless" price for a name, that takes no consideration
-  of the current status of the name. This is useful for various cases, including in
-  generating messages that communicate how much a name costs to renew, how much
-  a name will cost at the end of a premium period, etc..
-*/
-export const AvailableNameTimelessPriceUSD = (
-  ensName: ENSName,
-  registerForYears = DEFAULT_REGISTRATION_YEARS,
-) => {
-  return AvailableNamePriceUSD(ensName, registerForYears);
-};
-
-// REGISTRATION STATUSES ⬇️
-
-export enum PrimaryRegistrationStatus {
-  Active = "Active",
-  Expired = "Expired",
-  NeverRegistered = "NeverRegistered",
-}
-
-export enum SecondaryRegistrationStatus {
-  ExpiringSoon = "ExpiringSoon",
-  FullyReleased = "FullyReleased",
-  GracePeriod = "GracePeriod",
-  RecentlyReleased = "RecentlyReleased",
-}
-
-export type Registration = {
-  // Below timestamps are counted in seconds
-  registrationTimestamp: Timestamp | null;
-  expirationTimestamp: Timestamp | null;
-  expiryTimestamp: Timestamp | null;
-
-  primaryStatus: PrimaryRegistrationStatus;
-  secondaryStatus: SecondaryRegistrationStatus | null;
-};
 
 export const getDomainRegistration = (
   /*
@@ -504,22 +494,6 @@ const getSecondaryRegistrationStatus = (
   }
 };
 
-// EXPIRATION STATUS ⬇️
-
-/**
- * Returns the expiration timestamp of a domain
- * @param domainRegistration Registration object from domain
- * @returns Timestamp | null
- */
-export function domainExpirationTimestamp(
-  domainRegistration: Registration,
-): Timestamp | null {
-  if (domainRegistration.expirationTimestamp) {
-    return domainRegistration.expirationTimestamp;
-  }
-  return null;
-}
-
 // RELEASE STATUS ⬇️
 
 /**
@@ -527,26 +501,30 @@ export function domainExpirationTimestamp(
  * @param domainRegistration Registration object from domain
  * @returns Timestamp | null
  */
-export function domainReleaseTimestamp(
+export function getDomainReleaseTimestamp(
   domainRegistration: Registration,
 ): Timestamp | null {
-  const expirationTimestamp = domainExpirationTimestamp(domainRegistration);
-  if (expirationTimestamp === null) return null;
+  if (!domainRegistration.expirationTimestamp) return null;
 
-  const releaseTimestamp = addSeconds(expirationTimestamp, GRACE_PERIOD);
-  return releaseTimestamp;
+  return addSeconds(domainRegistration.expirationTimestamp, GRACE_PERIOD);
 }
 
-const getEth2LDSubname = (ensName: ENSName): string | null => {
-  if (ensName.labels.length !== 2) return null;
+export const MAINNET_WRAPPING_ETH_REGISTRAR_CONTROLLER_CONTRACT =
+  buildContractRef(
+    MAINNET,
+    buildAddress("0x253553366Da8546fC250F225fe3d25d0C782303b"),
+  );
 
-  if (ensName.labels[1] !== ETH_TLD) return null;
+export const MAINNET_CLASSIC_ETH_REGISTRAR_CONTROLLER_CONTRACT =
+  buildContractRef(
+    MAINNET,
+    buildAddress("0x283af0b28c62c092c9727f1ee09c02ca627eb7f5"),
+  );
 
-  // NOTE: now we know we have a direct subname of ".eth"
-  const subnameLength = charCount(ensName.labels[0]);
+export const MAINNET_WRAPPING_ETH_REGISTRAR_CONTROLLER = new EthRegistrar(
+  MAINNET_WRAPPING_ETH_REGISTRAR_CONTROLLER_CONTRACT,
+);
 
-  // ensure this subname is even possible to register
-  if (subnameLength < MIN_ETH_REGISTRABLE_LABEL_LENGTH) return null;
-
-  return ensName.labels[0];
-};
+export const MAINNET_CLASSIC_ETH_REGISTRAR_CONTROLLER = new EthRegistrar(
+  MAINNET_CLASSIC_ETH_REGISTRAR_CONTROLLER_CONTRACT,
+);

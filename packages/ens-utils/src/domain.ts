@@ -1,7 +1,7 @@
 import { NFTRef } from "./nft";
 import { ENSName } from "./ensname";
 import { Address, isAddressEqual } from "./address";
-import { Registration } from "./ethregistrar";
+import { Registration } from "./registrar";
 
 export interface DomainCard {
   name: ENSName;
