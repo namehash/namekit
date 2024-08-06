@@ -90,14 +90,14 @@ const Product = ({
             <SectionText className="lg:text-start text-center w-full">
               <Balancer>{subtitle}</Balancer>
             </SectionText>
-            {buttonUrl && (
+            {buttonUrl && buttonLabel && (
               <div className="flex lg:justify-start justify-center">
                 <a
                   href={buttonUrl}
                   target={withoutExternalLinkIconInCTA ? undefined : "_blank"}
                 >
                   <Button>
-                    {buttonLabel || "Learn more"}
+                    {buttonLabel}
                     {!withoutExternalLinkIconInCTA && (
                       <ExternalLinkIcon className="w-5 h-5" />
                     )}
@@ -148,6 +148,7 @@ const products: ProductProps[] = [
       title: "Improved economics for building on ENS",
       icon: <ChartBarSquareIcon className="h-5 w-5 text-gray-500" />,
     },
+    buttonLabel: "Learn more",
     illustration: (
       <Image
         quality={100}
@@ -169,6 +170,7 @@ const products: ProductProps[] = [
       title: "Incentive program to help ENS grow",
       icon: <ChartBarSquareIcon className="h-5 w-5 text-gray-500" />,
     },
+    buttonLabel: "Learn more",
     illustration: (
       <Image
         quality={100}
