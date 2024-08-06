@@ -14,12 +14,11 @@ export const Header = () => {
         </Link>
 
         <div className="flex items-center justify-center gap-3">
-          <Link
-            href="/ens-referral-program"
-            className="hidden md:block mr-4 !text-sm font-medium"
-          >
-            ENS Referral Program
-          </Link>
+          <a href="/ens-referral-program" className="hidden md:block">
+            <Button variant="ghost" size="medium">
+              ENS Referral Program
+            </Button>
+          </a>
 
           <a className="hidden md:block" href="/careers">
             <Button variant="secondary" size="medium">
