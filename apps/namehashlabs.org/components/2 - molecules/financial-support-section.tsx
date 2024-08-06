@@ -1,5 +1,5 @@
 import { Balancer } from "react-wrap-balancer";
-import { EnsLogoColored } from "../1 - atoms/icons/ens-logo-colored";
+import { EnsDAOLogoColored } from "../1 - atoms/icons/ens-logo-colored";
 import { GitcoinLogo } from "../1 - atoms/icons/gitcoin-logo";
 import { Button } from "@namehash/namekit-react";
 
@@ -25,7 +25,7 @@ export const FinancialSupportSection = () => {
         <div className="flex gap-3 items-center justify-center">
           <a target="_blank" aria-label="ENS" href="https://ensdao.org/">
             <Button variant="secondary" size="large">
-              <EnsLogoColored className="w-full h-7" />
+              <EnsDAOLogoColored className="w-full h-7" />
             </Button>
           </a>
           <a
