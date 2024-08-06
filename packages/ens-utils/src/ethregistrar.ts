@@ -44,6 +44,13 @@ import {
 import { MAINNET } from "./chain";
 import { buildAddress } from "./address";
 
+/*
+  The ETH Registrar is the registrar for the .eth TLD, 
+  it allows for trustless decentralized names to be issued 
+  as tokens on the Ethereum Blockchain. Registration is done 
+  through smart-contracts, and name ownership is secured by the 
+  Ethereum blockchain.
+*/
 export class EthRegistrar implements OnchainRegistrar {
   protected readonly registrarContract: ContractRef;
 
