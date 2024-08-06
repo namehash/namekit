@@ -546,16 +546,6 @@ export const isOverlappingTimePeriod = (
 };
 
 /**
- * Returns the `Duration` of a `TimePeriod`.
- *
- * @param period The `TimePeriod` to measure.
- * @returns The `Duration` of the `TimePeriod`.
- */
-export const timePeriodDuration = (period: TimePeriod): Duration => {
-  return absoluteTimestampDistance(period.begin, period.end);
-};
-
-/**
  * Identifies if an `IndefiniteTimePeriod` includes all time before or after
  * its boundary `Timestamp`.
  */

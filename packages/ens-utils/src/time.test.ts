@@ -20,7 +20,7 @@ import {
   DAYS_PER_YEAR,
   isOverlappingTimePeriod,
   absoluteTimestampDistance,
-  timePeriodDuration,
+  buildDurationFromTimePeriod,
   buildIndefiniteTimePeriod,
   IndefiniteTimePeriodType,
   isTimestampOverlappingIndefiniteTimePeriod,
@@ -951,7 +951,7 @@ describe("isOverlappingTimePeriod() function", () => {
   });
 });
 
-describe("timePeriodDuration() function", () => {
+describe("buildDurationFromTimePeriod() function", () => {
   it("zero duration", () => {
     const date1 = new Date("2024-01-01T00:00:00Z");
     const timestamp1 = buildTimestampFromDate(date1);
@@ -961,7 +961,7 @@ describe("timePeriodDuration() function", () => {
 
     const period = buildTimePeriod(timestamp1, timestamp2);
 
-    const result = timePeriodDuration(period).seconds;
+    const result = buildDurationFromTimePeriod(period).seconds;
     const expectedResult = 0n;
 
     expect(result).toStrictEqual(expectedResult);
@@ -976,7 +976,7 @@ describe("timePeriodDuration() function", () => {
 
     const period = buildTimePeriod(timestamp1, timestamp2);
 
-    const result = timePeriodDuration(period).seconds;
+    const result = buildDurationFromTimePeriod(period).seconds;
     const expectedResult = 5n;
 
     expect(result).toStrictEqual(expectedResult);
