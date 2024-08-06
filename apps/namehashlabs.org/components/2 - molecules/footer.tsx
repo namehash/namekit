@@ -75,7 +75,8 @@ export const Footer = (props: React.HTMLAttributes<HTMLDivElement>) => {
                           product.href.startsWith("/") ? "_self" : "_blank"
                         }
                         href={product.href}
-                        className="!text-gray-500 !text-sm !font-light"
+                        variant="secondary"
+                        size="small"
                       >
                         {product.name}
                       </Link>
@@ -95,7 +96,8 @@ export const Footer = (props: React.HTMLAttributes<HTMLDivElement>) => {
                         target={
                           resource.href.startsWith("/") ? "_self" : "_blank"
                         }
-                        className="!text-sm !text-gray-500 !font-light"
+                        variant="secondary"
+                        size="small"
                         href={resource.href}
                       >
                         {resource.name}
@@ -157,7 +159,12 @@ export const Footer = (props: React.HTMLAttributes<HTMLDivElement>) => {
               <span className="text-[#EF4444] mx-1">{"❤️"}</span>
               by
             </span>
-            <Link className="!text-sm" href="/">
+            <Link
+              variant="underline"
+              size="small"
+              className="!text-black"
+              href="/"
+            >
               NameHash Labs
             </Link>
           </div>
