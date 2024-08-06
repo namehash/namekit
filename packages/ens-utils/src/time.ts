@@ -30,6 +30,11 @@ export const buildDuration = (
   };
 };
 
+// TODO: write unit tests and document
+export const buildDurationFromTimePeriod = (timePeriod: TimePeriod): Duration => {
+  return buildDuration(timePeriod.end.time - timePeriod.begin.time);
+}
+
 /**
  * Scales a Duration by the given scalar.
  * 
