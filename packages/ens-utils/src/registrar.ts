@@ -10,7 +10,7 @@ import { Duration, SECONDS_PER_YEAR, TimePeriod, Timestamp } from "./time";
 export enum PrimaryRegistrationStatus {
   Active = "Active",
   Expired = "Expired",
-  NeverRegistered = "NeverRegistered"
+  NeverRegistered = "NeverRegistered",
 }
 
 // TODO: make more generic to support non .eth 2nd level domains
@@ -18,7 +18,7 @@ export enum SecondaryRegistrationStatus {
   ExpiringSoon = "ExpiringSoon",
   FullyReleased = "FullyReleased",
   GracePeriod = "GracePeriod",
-  RecentlyReleased = "RecentlyReleased"
+  RecentlyReleased = "RecentlyReleased",
 }
 
 // TODO: make more generic to support non .eth 2nd level domains
@@ -43,7 +43,8 @@ export const RegistrarAction = {
   Renew: "renew",
 } as const;
 
-export type RegistrarAction = (typeof RegistrarAction)[keyof typeof RegistrarAction];
+export type RegistrarAction =
+  (typeof RegistrarAction)[keyof typeof RegistrarAction];
 
 /**
  * The type of registrar charge that is being applied to the domain.
@@ -62,14 +63,14 @@ export const RegistrarChargeType = {
   ServiceFee: "service-fee",
 } as const;
 
-export type RegistrarChargeType = (typeof RegistrarChargeType)[keyof typeof RegistrarChargeType];
+export type RegistrarChargeType =
+  (typeof RegistrarChargeType)[keyof typeof RegistrarChargeType];
 
 /**
  * A single distinct charge that must be paid to a `Registrar` to register or
  * renew a domain.
  */
 export interface AbstractRegistrarCharge {
-
   /**
    * The type of `RegistrarCharge` that is being applied by the `Registrar` to
    * rent the domain.
@@ -90,7 +91,7 @@ export interface AbstractRegistrarCharge {
 
   /**
    * The period of time that the `RegistrarCharge` is valid for.
-   * 
+   *
    * If `null`, the `RegistrarCharge` is not guaranteed to be time-limited.
    */
   validity?: TimePeriod;
@@ -124,14 +125,17 @@ export interface RegistrarServiceFee extends AbstractRegistrarCharge {
   validity?: undefined;
 }
 
-export type RegistrarCharge = RegistrarBaseFee | RegistrarSpecialNameFee | RegistrarTemporaryFee | RegistrarServiceFee;
+export type RegistrarCharge =
+  | RegistrarBaseFee
+  | RegistrarSpecialNameFee
+  | RegistrarTemporaryFee
+  | RegistrarServiceFee;
 
 /**
  * A price quote from a `Registrar` to register or renew a domain for a given
  * period of time.
  */
 export interface AbstractRegistrarPriceQuote {
-
   /**
    * The action associated with this `RegistrarPriceQuote`.
    */
@@ -145,14 +149,14 @@ export interface AbstractRegistrarPriceQuote {
   /**
    * The set of distinct `RegistrarCharge` values that must be paid to the
    * `Registrar` to rent the domain for the period of `rentalPeriod`.
-   * 
+   *
    * May be empty if the domain is free to rent for `rentalPeriod`.
    */
   charges: RegistrarCharge[];
 
   /**
    * The total price to rent the domain for the period of `rentalPeriod`.
-   * 
+   *
    * This is the sum of `charges` in the unit of currency that should be paid
    * to the registrar.
    */
@@ -167,6 +171,18 @@ export interface RenewalPriceQuote extends AbstractRegistrarPriceQuote {
   action: typeof RegistrarAction.Renew;
 }
 
+/*
+  Top-Level Domains (TLDs), like .eth and .test, are owned by smart contracts 
+  called registrars, which specify rules governing the allocation of their names. 
+  Enabling seamless interoperability with the DNS (Domain Name System).
+
+  The source of truth for a name and its subdomains does not always have to be on-chain 
+  or on Ethereum L1 at all. By leveraging EIP-3668, the Cross Chain Interoperability 
+  Protocol (or CCIP Read for short), we can load information by hitting a so called 
+  "Gateway". Within the context of ENS, this enables us, to read names, addresses, 
+  records, and more from other chains, or even off-chain. This is where the 
+  concept of "on-chain registrars" and "off-chain registrars" comes into play. 
+*/
 export interface Registrar {
   getManagedSubname(name: ENSName): ENSName | null;
 
@@ -175,29 +191,50 @@ export interface Registrar {
 
   getOnchainRegistrar(): ContractRef | null;
 
-  canRegister(name: ENSName, atTimestamp: Timestamp, duration: Duration, existingRegistration?: Registration): boolean;
-  getRegistrationPriceQuote(name: ENSName, atTimestamp: Timestamp, duration: Duration, existingRegistration?: Registration): RegistrationPriceQuote;
-  
-  canRenew(name: ENSName, atTimestamp: Timestamp, duration: Duration, existingRegistration: Registration): boolean;
-  getRenewalPriceQuote(name: ENSName, atTimestamp: Timestamp, duration: Duration, existingRegistration: Registration): RenewalPriceQuote;
+  canRegister(
+    name: ENSName,
+    atTimestamp: Timestamp,
+    duration: Duration,
+    existingRegistration?: Registration,
+  ): boolean;
+  getRegistrationPriceQuote(
+    name: ENSName,
+    atTimestamp: Timestamp,
+    duration: Duration,
+    existingRegistration?: Registration,
+  ): RegistrationPriceQuote;
+
+  canRenew(
+    name: ENSName,
+    atTimestamp: Timestamp,
+    duration: Duration,
+    existingRegistration: Registration,
+  ): boolean;
+  getRenewalPriceQuote(
+    name: ENSName,
+    atTimestamp: Timestamp,
+    duration: Duration,
+    existingRegistration: Registration,
+  ): RenewalPriceQuote;
 }
 
+// Allows for trustless on-chain name registration
 export interface OnchainRegistrar extends Registrar {
   getOnchainRegistrar(): ContractRef;
 }
 
+// Allows for trustless off-chain name registration
 export interface OffchainRegistrar extends Registrar {
   getOnchainRegistrar(): null;
 }
 
 /**
- * Identifies that a name was passed to a `Registrar` function that was not relevant for that `Registrar`.
- * 
- * @param message a reason why `name` was NOT relevant for `Registrar`.
- * @param label the `ENSName` value that was NOT relevant.
+ * Identifies that a name was passed to a `Registrar` function that is not managed by that `Registrar`.
+ *
+ * @param message a reason why `name` is NOT managed by `Registrar`.
+ * @param label the `ENSName` value that is NOT managed by `Registrar`.
  */
 export class RegistrarUnsupportedNameError extends Error {
-
   public constructor(message: string, name: ENSName) {
     super(`RegistrarUnsupportedNameError for name "${name.name}": ${message}`);
     this.name = "RegistrarUnsupportedNameError";
@@ -207,11 +244,11 @@ export class RegistrarUnsupportedNameError extends Error {
 
 export const scaleAnnualPrice = (annualPrice: Price, duration: Duration) => {
   // Small performance optimization if no scaling is needed
-  if (duration.seconds === SECONDS_PER_YEAR.seconds)
-    return annualPrice;
+  if (duration.seconds === SECONDS_PER_YEAR.seconds) return annualPrice;
 
   // TODO: verify we're doing this division of bigints correctly
-  const scaledRate = Number(duration.seconds) / Number(SECONDS_PER_YEAR.seconds);
+  const scaledRate =
+    Number(duration.seconds) / Number(SECONDS_PER_YEAR.seconds);
 
   return approxScalePrice(annualPrice, scaledRate);
-}
+};
