@@ -13,7 +13,8 @@ export const HeadlineBanner = () => {
       <Link
         target="_blank"
         href="https://twitter.com/NamehashLabs"
-        className="!text-white !text-sm"
+        variant="underline"
+        size="small"
       >
         <p className="hidden sm:block">Follow us on Twitter</p>
         <p className="block sm:hidden w-max">Follow us</p>
