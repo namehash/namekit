@@ -49,7 +49,9 @@ const principles: PrinciplesProps[] = [
         <Link
           href="https://github.com/namehash/"
           target="_blank"
-          className="!text-black !text-lg font-normal"
+          className="!text-black"
+          variant="underline"
+          size="large"
         >
           open sourced
         </Link>
@@ -66,7 +68,9 @@ const principles: PrinciplesProps[] = [
         <Link
           href="https://en.wikipedia.org/wiki/MIT_License"
           target="_blank"
-          className="!text-black !text-lg font-normal"
+          size="large"
+          className="!text-black"
+          variant="underline"
         >
           MIT license
         </Link>
@@ -84,7 +88,9 @@ const principles: PrinciplesProps[] = [
         <Link
           href="https://docs.ens.domains/v/governance/ens-dao-constitution"
           target="_blank"
-          className="!text-black !text-lg font-normal"
+          size="large"
+          className="!text-black"
+          variant="underline"
         >
           ENS DAO constitution
         </Link>
@@ -101,7 +107,9 @@ const principles: PrinciplesProps[] = [
         <Link
           href="https://docs.ens.domains/ens-improvement-proposals/"
           target="_blank"
-          className="!text-black !text-lg font-normal"
+          className="!text-black"
+          size="large"
+          variant="underline"
         >
           ENSIP process
         </Link>{" "}
