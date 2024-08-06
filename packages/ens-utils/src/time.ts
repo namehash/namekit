@@ -1,11 +1,10 @@
 import { formatDistanceStrict } from "date-fns";
-import { enUS } from 'date-fns/locale';
+import { enUS } from "date-fns/locale";
 
 /**
  * A Duration represents a length of time in seconds.
  */
 export interface Duration {
-
   /**
    * The number of seconds in the Duration.
    * Must be non-negative.
@@ -15,29 +14,31 @@ export interface Duration {
 
 /**
  * Builds a Duration.
- * 
+ *
  * @param seconds - The number of seconds in the Duration.
  * @returns The resulting Duration.
  */
-export const buildDuration = (
-  seconds: bigint
-): Duration => {
+export const buildDuration = (seconds: bigint): Duration => {
   if (seconds < 0n)
-    throw new Error(`Error in buildDuration. seconds ${seconds}} is less than 0.`);
+    throw new Error(
+      `Error in buildDuration. seconds ${seconds}} is less than 0.`,
+    );
 
   return {
-    seconds
+    seconds,
   };
 };
 
 // TODO: write unit tests and document
-export const buildDurationFromTimePeriod = (timePeriod: TimePeriod): Duration => {
+export const buildDurationFromTimePeriod = (
+  timePeriod: TimePeriod,
+): Duration => {
   return buildDuration(timePeriod.end.time - timePeriod.begin.time);
-}
+};
 
 /**
  * Scales a Duration by the given scalar.
- * 
+ *
  * @param duration The Duration to scale.
  * @param scalar The scalar to scale the Duration by.
  * @returns The scaled Duration.
@@ -46,27 +47,30 @@ export const buildDurationFromTimePeriod = (timePeriod: TimePeriod): Duration =>
  */
 export const scaleDuration = (
   duration: Duration,
-  scalar: bigint | number
+  scalar: bigint | number,
 ): Duration => {
-  
   let newSeconds: bigint;
 
-  if (typeof scalar === 'number') {
+  if (typeof scalar === "number") {
     try {
       newSeconds = BigInt(Number(duration.seconds) * scalar);
     } catch (error) {
-      throw new Error(`Error in scaleDuration. scalar ${scalar}} is not a valid number.`);
+      throw new Error(
+        `Error in scaleDuration. scalar ${scalar}} is not a valid number.`,
+      );
     }
   } else {
     newSeconds = duration.seconds * scalar;
   }
 
   if (newSeconds < 0n) {
-    throw new Error(`Error in scaleDuration. scalar ${scalar}} must be a non-negative number.`);
+    throw new Error(
+      `Error in scaleDuration. scalar ${scalar}} must be a non-negative number.`,
+    );
   }
 
   return buildDuration(newSeconds);
-}
+};
 
 export const MILLISECONDS_PER_SECOND = 1000n;
 
@@ -104,7 +108,6 @@ export const SECONDS_PER_YEAR = scaleDuration(SECONDS_PER_DAY, DAYS_PER_YEAR);
  * A moment in time measured in seconds.
  */
 export interface Timestamp {
-
   /**
    * A Unix timestamp measured in seconds.
    * May be negative to represent a time before the Unix epoch.
@@ -116,23 +119,20 @@ export interface Timestamp {
  * A moment in time measured in milliseconds.
  */
 export interface TimestampMs {
-
   /**
-  * A Unix timestamp measured in milliseconds.
-  * May be negative to represent a time before the Unix epoch.
-  */
+   * A Unix timestamp measured in milliseconds.
+   * May be negative to represent a time before the Unix epoch.
+   */
   timeMs: bigint;
 }
 
 /**
  * Builds a Timestamp.
- * 
+ *
  * @param secondsSinceUnixEpoch The number of seconds since the Unix epoch.
  * @returns The resulting Timestamp.
  */
-export const buildTimestamp = (
-  secondsSinceUnixEpoch: bigint,
-): Timestamp => {
+export const buildTimestamp = (secondsSinceUnixEpoch: bigint): Timestamp => {
   return {
     time: secondsSinceUnixEpoch,
   };
@@ -140,7 +140,7 @@ export const buildTimestamp = (
 
 /**
  * Builds a TimestampMs.
- * 
+ *
  * @param millisecondsSinceUnixEpoch The number of milliseconds since the Unix epoch.
  * @returns The resulting TimestampMs.
  */
@@ -154,9 +154,9 @@ export const buildTimestampMs = (
 
 /**
  * Converts a TimestampMs to a Timestamp.
- * 
+ *
  * Fractional seconds are truncated.
- * 
+ *
  * @param ms The TimestampMs to convert.
  * @returns The converted Timestamp.
  */
@@ -166,65 +166,57 @@ export const timestampMsToTimestamp = (ms: TimestampMs): Timestamp => {
 
 /**
  * Converts a Timestamp to a TimestampMs.
- * 
+ *
  * @param seconds The Timestamp to convert.
  * @returns The converted TimestampMs.
  */
 export const timestampToTimestampMs = (seconds: Timestamp): TimestampMs => {
   return buildTimestampMs(seconds.time * MILLISECONDS_PER_SECOND);
-}
+};
 
 /**
  * Builds a Timestamp from a Date.
- * 
+ *
  * @param timestamp The Timestamp to convert.
  * @returns The converted Date object.
  */
-export const buildDateFromTimestamp = (
-  timestamp: Timestamp
-): Date => {
+export const buildDateFromTimestamp = (timestamp: Timestamp): Date => {
   return buildDateFromTimestampMs(timestampToTimestampMs(timestamp));
 };
 
 /**
  * Builds a TimestampMs from a Date.
- * 
+ *
  * @param timestamp The TimestampMs to convert.
  * @returns The converted Date object.
  */
-export const buildDateFromTimestampMs = (
-  timestamp: TimestampMs
-): Date => {
+export const buildDateFromTimestampMs = (timestamp: TimestampMs): Date => {
   return new Date(Number(timestamp.timeMs));
 };
 
 /**
  * Converts a Date to a TimestampMs.
- * 
+ *
  * @param date The Date to convert.
  * @returns The converted TimestampMs.
  */
-export const buildTimestampMsFromDate = (
-  date: Date
-): TimestampMs => {
+export const buildTimestampMsFromDate = (date: Date): TimestampMs => {
   return buildTimestampMs(BigInt(date.getTime()));
-}
+};
 
 /**
  * Converts a Date to a Timestamp.
- * 
+ *
  * @param date The Date to convert.
  * @returns The converted Timestamp.
  */
-export const buildTimestampFromDate = (
-  date: Date
-): Timestamp => {
+export const buildTimestampFromDate = (date: Date): Timestamp => {
   return timestampMsToTimestamp(buildTimestampMsFromDate(date));
-}
+};
 
 /**
  * Returns the current time in milliseconds.
- * 
+ *
  * @returns - The current TimestampMs in millisceonds.
  */
 export const nowMs = (): TimestampMs => {
@@ -233,7 +225,7 @@ export const nowMs = (): TimestampMs => {
 
 /**
  * Returns the current time in seconds.
- * 
+ *
  * @returns - The current Timestamp in seconds.
  */
 export const now = (): Timestamp => {
@@ -242,28 +234,50 @@ export const now = (): Timestamp => {
 
 /**
  * Builds a new Timestamp that is incremented by the provided Duration.
- * 
+ *
  * @param timestamp - The Timestamp to increment.
  * @param seconds - The Duration to increment the Timestamp by.
  * @returns A new Timestamp that is the result of incrementing the provided Timestamp by the provided Duration.
  */
-export const addSeconds = (timestamp: Timestamp, seconds: Duration): Timestamp => {
+export const addSeconds = (
+  timestamp: Timestamp,
+  seconds: Duration,
+): Timestamp => {
   return buildTimestamp(timestamp.time + seconds.seconds);
-}
+};
 
 /**
  * Builds a new Timestamp that is decrremented by the provided Duration.
- * 
+ *
  * @param timestamp - The Timestamp to decrement.
  * @param seconds - The Duration to decrement the Timestamp by.
  * @returns A new Timestamp that is the result of decrementing the provided Timestamp by the provided Duration.
  */
-export const subtractSeconds = (timestamp: Timestamp, seconds: Duration): Timestamp => {
+export const subtractSeconds = (
+  timestamp: Timestamp,
+  seconds: Duration,
+): Timestamp => {
   return buildTimestamp(timestamp.time - seconds.seconds);
-}
+};
+
+/**
+ * Returns the absolute distance between two Timestamps as a Duration.
+ *
+ * @param timestamp1 - The first Timestamp.
+ * @param timestamp2 - The second Timestamp.
+ * @returns The absolute distance between the two Timestamps as a Duration.
+ */
+export const absoluteTimestampDistance = (
+  timestamp1: Timestamp,
+  timestamp2: Timestamp,
+): Duration => {
+  const distance = timestamp1.time - timestamp2.time;
+  const absDistance = distance < 0 ? -distance : distance;
+
+  return buildDuration(absDistance);
+};
 
 export interface FormatTimestampOptions {
-
   /**
    * Optional. Identifies if the output should show the date and time, or only date.
    * If not provided, the output will show the date and time.
@@ -288,7 +302,7 @@ export interface FormatTimestampOptions {
 
 const getSystemTimeZone = (): string => {
   return Intl.DateTimeFormat().resolvedOptions().timeZone;
-}
+};
 
 const DEFAULT_LOCALE = "en-US";
 
@@ -309,8 +323,10 @@ const DEFAULT_LOCALE = "en-US";
     formatTimestamp(timestamp, { showDateOnly: true });
     // "Jan 1, 2024" (assuming the system time zone is UTC)
  */
-export const formatTimestamp = (timestamp: Timestamp, options?: FormatTimestampOptions): string => {
-
+export const formatTimestamp = (
+  timestamp: Timestamp,
+  options?: FormatTimestampOptions,
+): string => {
   const date = buildDateFromTimestamp(timestamp);
 
   let timeZone: string;
@@ -324,24 +340,24 @@ export const formatTimestamp = (timestamp: Timestamp, options?: FormatTimestampO
   if (!options || options.showDateOnly === undefined || !options.showDateOnly) {
     // show date and time by default
     formatOptions = {
-      day: 'numeric',       // Single-digit day
-      month: 'short',       // Three-letter month
-      year: 'numeric',      // Four-digit year
-      hour: 'numeric',      // Single-digit hour
-      minute: 'numeric',    // Two-digit minute
+      day: "numeric", // Single-digit day
+      month: "short", // Three-letter month
+      year: "numeric", // Four-digit year
+      hour: "numeric", // Single-digit hour
+      minute: "numeric", // Two-digit minute
       timeZone: timeZone,
     };
   } else {
     // show date only
     formatOptions = {
-      day: 'numeric',       // Single-digit day
-      month: 'short',       // Three-letter month
-      year: 'numeric',      // Four-digit year
+      day: "numeric", // Single-digit day
+      month: "short", // Three-letter month
+      year: "numeric", // Four-digit year
       timeZone: timeZone,
     };
   }
 
-  let locale : string;
+  let locale: string;
   if (!options || !options.locale) {
     locale = DEFAULT_LOCALE;
   } else {
@@ -370,11 +386,11 @@ export const formatTimestamp = (timestamp: Timestamp, options?: FormatTimestampO
  * | 1 ... 29 days      | in [1..29] days     |
  * | 1 ... 11 months    | in [1..11] months   |
  * | 1 ... N years      | in [1..N] years     |
- * 
+ *
  * Plurals are used as needed in the output.
  * The output locale is always en-US.
  * Distances are rounded down to the nearest whole unit.
- * 
+ *
  * @param timestamp The Timestamp to format.
  * @param baseTimestamp The Timestamp to use as the base for the distance calculation.
  * @returns The distance between the given Timestamps in words.
@@ -417,11 +433,11 @@ export const formatTimestampAsDistance = (
  * | 1 ... 29 days      | in [1..29] days     |
  * | 1 ... 11 months    | in [1..11] months   |
  * | 1 ... N years      | in [1..N] years     |
- * 
+ *
  * Plurals are used as needed in the output.
  * The output locale is always en-US.
  * Distances are rounded down to the nearest whole unit.
- * 
+ *
  * @param timestamp The Timestamp to format.
  * @returns The distance between the given Timestamp and now in words.
  *
@@ -439,7 +455,6 @@ export const formatTimestampAsDistanceToNow = (
  * A TimePeriod may be a single point in time if the begin and end Timestamps are equal.
  */
 export interface TimePeriod {
-
   /**
    * The beginning of the TimePeriod.
    */
@@ -454,7 +469,7 @@ export interface TimePeriod {
 
 /**
  * Builds a TimePeriod.
- * 
+ *
  * @param begin - The beginning of the TimePeriod.
  * @param end - The end of the TimePeriod.
  * @returns The resulting TimePeriod.
@@ -462,23 +477,169 @@ export interface TimePeriod {
  */
 export const buildTimePeriod = (
   begin: Timestamp,
-  end: Timestamp
+  end: Timestamp,
 ): TimePeriod => {
   if (begin.time > end.time)
-    throw new Error(`Error in buildTimePeriod. begin ${buildDateFromTimestamp(begin)}} comes after end ${buildDateFromTimestamp(end)}.`);
+    throw new Error(
+      `Error in buildTimePeriod. begin ${buildDateFromTimestamp(begin)}} comes after end ${buildDateFromTimestamp(end)}.`,
+    );
   return {
     begin,
-    end
+    end,
   };
 };
 
 /**
  * Identifies if the given Timestamp is within the given TimePeriod (inclusive).
- * 
+ *
  * @param period - The TimePeriod to check.
  * @param timestamp - The Timestamp to check.
  * @returns true if the Timestamp is within the TimePeriod, otherwise false.
  */
-export const isOverlappingTimestamp = (period: TimePeriod, timestamp: Timestamp): boolean => {
-  return period.begin.time <= timestamp.time && timestamp.time <= period.end.time;
+export const isOverlappingTimestamp = (
+  period: TimePeriod,
+  timestamp: Timestamp,
+): boolean => {
+  return (
+    period.begin.time <= timestamp.time && timestamp.time <= period.end.time
+  );
+};
+
+/**
+ * Identifies if the given TimePeriods overlap (inclusive).
+ *
+ * @param period1 The first TimePeriod to check.
+ * @param period2 The second TimePeriod to check.
+ * @returns true if the TimePeriods overlap, otherwise false.
+ */
+export const isOverlappingTimePeriod = (
+  period1: TimePeriod,
+  period2: TimePeriod,
+): boolean => {
+  return (
+    isOverlappingTimestamp(period1, period2.begin) ||
+    isOverlappingTimestamp(period1, period2.end)
+  );
+};
+
+/**
+ * Returns the Duration of a TimePeriod.
+ *
+ * @param period The TimePeriod to measure.
+ * @returns The Duration of the TimePeriod.
+ */
+export const timePeriodDuration = (period: TimePeriod): Duration => {
+  return absoluteTimestampDistance(period.begin, period.end);
+};
+
+/**
+ * Identifies if an IndefiniteTimePeriod includes all time before or after its boundary Timestamp.
+ */
+export const IndefiniteTimePeriodType = {
+  /**
+   * The IndefiniteTimePeriod includes all time before the boundary and the boundary itself.
+   */
+  IndefinitePast: "indefinite-past",
+
+  /**
+   * The IndefiniteTimePeriod includes the boundary itself and all time after the boundary.
+   */
+  IndefiniteFuture: "indefinite-future",
+} as const;
+
+export type IndefiniteTimePeriodType =
+  (typeof IndefiniteTimePeriodType)[keyof typeof IndefiniteTimePeriodType];
+
+/**
+ * An IndefiniteTimePeriod represents a range of time between a definite Timestamp and all time before or after it.
+ * All IndefiniteTimePeriod are inclusive, meaning that the boundary Timestamp is included in the range.
+ */
+export interface IndefiniteTimePeriod {
+  /**
+   * The definite moment that the IndefiniteTimePeriod begins or ends.
+   */
+  boundary: Timestamp;
+
+  /**
+   * The type of IndefiniteTimePeriod.
+   * If `IndefinitePast`, the IndefiniteTimePeriod includes all time before the boundary and the boundary itself.
+   * If `IndefiniteFuture`, the IndefiniteTimePeriod includes the boundary itself and all time after the boundary.
+   */
+  type: IndefiniteTimePeriodType;
 }
+
+/**
+ * Builds an IndefiniteTimePeriod.
+ *
+ * @param boundary The definite moment that the IndefiniteTimePeriod begins or ends.
+ * @param type The type of IndefiniteTimePeriod.
+ * @returns The resulting IndefiniteTimePeriod.
+ */
+export const buildIndefiniteTimePeriod = (
+  boundary: Timestamp,
+  type: IndefiniteTimePeriodType,
+): IndefiniteTimePeriod => {
+  return {
+    boundary,
+    type,
+  };
+};
+
+/**
+ * Identifies if the IndefiniteTimePeriod overlaps with the Timestamp (inclusive).
+ *
+ * @param indefinitePeriod The IndefiniteTimePeriod to check.
+ * @param timestamp The Timestamp to check.
+ * @returns true if the Timestamp is within the IndefiniteTimePeriod, otherwise false.
+ */
+export const isTimestampOverlappingIndefiniteTimePeriod = (
+  indefinitePeriod: IndefiniteTimePeriod,
+  timestamp: Timestamp,
+): boolean => {
+  if (indefinitePeriod.type === IndefiniteTimePeriodType.IndefinitePast) {
+    return timestamp.time <= indefinitePeriod.boundary.time;
+  } else {
+    return timestamp.time >= indefinitePeriod.boundary.time;
+  }
+};
+
+/**
+ * Identifies if the IndefiniteTimePeriod overlaps with the TimePeriod (inclusive).
+ *
+ * @param indefinitePeriod The IndefiniteTimePeriod to check.
+ * @param period The TimePeriod to check.
+ * @returns true if the TimePeriod is within the IndefiniteTimePeriod, otherwise false.
+ */
+export const isTimePeriodOverlappingIndefiniteTimePeriod = (
+  indefinitePeriod: IndefiniteTimePeriod,
+  period: TimePeriod,
+): boolean => {
+  return (
+    isTimestampOverlappingIndefiniteTimePeriod(
+      indefinitePeriod,
+      period.begin,
+    ) ||
+    isTimestampOverlappingIndefiniteTimePeriod(indefinitePeriod, period.end)
+  );
+};
+
+/**
+ * Identifies if the IndefiniteTimePeriods overlap (inclusive).
+ * @param period1 The first IndefiniteTimePeriod to check.
+ * @param period2 The second IndefiniteTimePeriod to check.
+ * @returns true if the IndefiniteTimePeriods overlap, otherwise false.
+ */
+export const isOverlappingIndefiniteTimePeriod = (
+  period1: IndefiniteTimePeriod,
+  period2: IndefiniteTimePeriod,
+): boolean => {
+  // overlap is eventually guaranteed if both IndefiniteTimePeriods are of the same type
+  if (period1.type === period2.type) {
+    return true;
+  }
+
+  // since the IndefiniteTimePeriods are of different types it is guaranteed that either
+  // they both overlap or neither overlap. therefore we only need to check if either of
+  // the IndefiniteTimePeriods overlaps the boundary of the other.
+  return isTimestampOverlappingIndefiniteTimePeriod(period1, period2.boundary);
+};
