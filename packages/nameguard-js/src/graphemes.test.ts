@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { splitGraphemes, countGraphemes } from "./graphemes";
-import jsonNamehashExamples from "../utils/normalized_graphemes.json";
+import jsonNamehashExamples from "./data/normalized_graphemes.json";
 
 const grapehemeTestInputs = [
   "",
