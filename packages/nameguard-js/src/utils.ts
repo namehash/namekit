@@ -69,7 +69,7 @@ export function isEmojiZwjSequence(grapheme: string): boolean {
  * @returns `true` if the character is an emoji character, `false` otherwise.
  */
 export function isEmojiChar(char: string): boolean {
-  if (charCount(char) != 1) {
+  if (!isCharacter(char)) {
     return false;
   }
   const cp = char.codePointAt(0)!;
