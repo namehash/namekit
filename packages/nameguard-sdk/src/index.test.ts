@@ -4,7 +4,7 @@ import { createClient } from ".";
 
 const nameguard = createClient({
   // undefined will default to the production endpoint
-  endpoint: process.env.NAMEGUARD_TEST_ENDPOINT,
+  nameguardEndpoint: process.env.NAMEGUARD_TEST_ENDPOINT,
 });
 
 describe("NameGuard", () => {

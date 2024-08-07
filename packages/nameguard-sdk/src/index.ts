@@ -437,7 +437,7 @@ export const DEFAULT_COMPUTE_NAMEGUARD_REPORT = false;
 const MAX_BULK_INSPECTION_NAMES = 250;
 
 export interface NameGuardOptions {
-  endpoint?: string;
+  nameguardEndpoint?: string;
   network?: Network;
 }
 
@@ -463,15 +463,15 @@ interface FieldsWithRequiredTitle extends Record<string, string> {
 }
 
 export class NameGuard {
-  private endpoint: URL;
+  private nameguardEndpoint: URL;
   protected network: Network;
   private abortController: AbortController;
 
   constructor({
-    endpoint = DEFAULT_ENDPOINT,
+    nameguardEndpoint = DEFAULT_ENDPOINT,
     network = DEFAULT_NETWORK,
   }: NameGuardOptions = {}) {
-    this.endpoint = new URL(endpoint);
+    this.nameguardEndpoint = new URL(nameguardEndpoint);
     this.network = network;
     this.abortController = new AbortController();
   }
@@ -560,7 +560,7 @@ export class NameGuard {
 
     const url = new URL(
       `inspect-namehash/${network}/${namehash}`,
-      this.endpoint,
+      this.nameguardEndpoint,
     );
 
     const response = await fetch(url);
@@ -727,7 +727,7 @@ export class NameGuard {
     body: object = {},
     headers: object = {},
   ): Promise<any> {
-    const url = new URL(path, this.endpoint);
+    const url = new URL(path, this.nameguardEndpoint);
 
     const options: RequestInit = {
       method,

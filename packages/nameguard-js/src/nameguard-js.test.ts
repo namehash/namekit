@@ -22,7 +22,7 @@ describe("NameGuardJS", () => {
 
     const localNameguard = createClient({
       // not a real endpoint, will error if used
-      endpoint: INVALID_NAMEGUARD_API_ENDPOINT,
+      nameguardEndpoint: INVALID_NAMEGUARD_API_ENDPOINT,
       publicClient,
     });
 
@@ -41,7 +41,7 @@ describe("NameGuardJS", () => {
 
     const localNameguard = createClient({
       // not a real endpoint, will error if used
-      endpoint: INVALID_NAMEGUARD_API_ENDPOINT,
+      nameguardEndpoint: INVALID_NAMEGUARD_API_ENDPOINT,
       publicClient
     });
 
