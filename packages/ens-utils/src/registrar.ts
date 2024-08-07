@@ -1,4 +1,6 @@
-import { ContractRef } from "./contract";
+import { buildAddress } from "./address";
+import { MAINNET } from "./chain";
+import { buildContractRef, ContractRef } from "./contract";
 import { ENSName } from "./ensname";
 import { NFTIssuer } from "./nft";
 import { approxScalePrice, Price } from "./price";
@@ -171,25 +173,81 @@ export interface RenewalPriceQuote extends AbstractRegistrarPriceQuote {
   action: typeof RegistrarAction.Renew;
 }
 
-/*
-  Top-Level Domains (TLDs), like .eth and .test, are owned by smart contracts 
-  called registrars, which specify rules governing the allocation of their names. 
-  Enabling seamless interoperability with the DNS (Domain Name System).
-
-  The source of truth for a name and its subdomains does not always have to be on-chain 
-  or on Ethereum L1 at all. By leveraging EIP-3668, the Cross Chain Interoperability 
-  Protocol (or CCIP Read for short), we can load information by hitting a so called 
-  "Gateway". Within the context of ENS, this enables us, to read names, addresses, 
-  records, and more from other chains, or even off-chain. This is where the 
-  concept of "on-chain registrars" and "off-chain registrars" comes into play. 
-*/
+/**
+ * A `Registrar` in NameKit aims to provide a standardized "common denominator"
+ * interface for interacting with one of the smart contracts responsible for
+ * issuing subdomains in ENS.
+ * 
+ * ENS enables a `Registrar` to be configured at any level of the ENS domain
+ * hierarchy. For example, ENS has a `Registrar` for the overall ENS root.
+ * Beneath the root, ENS has a `Registrar` for the `.eth` TLD. Beneath `.eth`,
+ * there is the `Registrar` for `uni.eth`, and so on.
+ * 
+ * NOTE: ENS enables an infinite set of possible registrar implementations.
+ * NameKit aims for `Registrar` to support the registrar implementations that
+ * are most popular within the ENS community, however some registrar
+ * implementations may include policies that fall outside the range of what a
+ * `Registrar` in NameKit is capable of modeling. If this happens, please
+ * contact the team at NameHash Labs to discuss how we might better support
+ * your registrar of interest.
+ */
 export interface Registrar {
+
+  /**
+   * @returns the name that this `Registrar` issues subnames for.
+   */
+  getName(): ENSName;
+
+  /**
+   * Checks if the provided `name` is a subname issued by this `Registrar`.
+   * 
+   * @param name the name to check if it is issued by this `Registrar`.
+   * @returns the subname of `name` that is issued by this `Registrar`, or
+   *          `null` if `name` is not a subname issued by this `Registrar`.
+   * @example
+   * // in the case that `getName()` for the `Registrar` is "cb.id"
+   * getManagedSubname(buildENSName("abc.cb.id")) => buildENSName("abc")
+   * @example
+   * // in the case that `getName()` for the `Registrar` is "eth"
+   * getManagedSubname(buildENSName("abc.cb.id")) => null
+   */
   getManagedSubname(name: ENSName): ENSName | null;
 
-  // NOTE: Throws RegistrarUnsupportedNameError if name is not supported by this registrar
+  /**
+   * Gets the subname of `name` that is issued by this `Registrar`.
+   * 
+   * @param name the name to get the issued subname of that was issued by this
+   *             `Registrar`.
+   * @returns the subname of `name` that is issued by this `Registrar`.
+   * @throws `RegistrarUnsupportedNameError` if `name` is not a subname issued
+   *         by this `Registrar`.
+   */
   getValidatedSubname(name: ENSName): ENSName;
 
-  getOnchainRegistrar(): ContractRef | null;
+  /**
+   * Gets the `ContractRef` for where the registrar being modeled by this
+   * `Registrar` is found onchain.
+   * 
+   * NOTE: The returned `ContractRef` may not be the only contract with the
+   * ability to serve as a subname registrar for `getName()`.
+   * 
+   * @returns the requested `ContractRef`.
+   */
+  getContractRef(): ContractRef;
+
+  /**
+   * Gets the `ContractRef` of the registry that this `Registrar` records
+   *          subdomain registrations in.
+   * 
+   * If a `Registrar` issues subnames onchain then generally this returns
+   * `MAINNET_ENS_REGISTRY_WITH_FALLBACK_CONTRACT`.
+   * 
+   * If the `Registrar` issues subnames offchain then this returns `null`.
+   * 
+   * @returns the requested `ContractRef` or `null` if the `Registrar` issues
+   *          subnames offchain.
+   */
+  getOnchainRegistry(): ContractRef | null;
 
   canRegister(
     name: ENSName,
@@ -197,6 +255,7 @@ export interface Registrar {
     duration: Duration,
     existingRegistration?: Registration,
   ): boolean;
+
   getRegistrationPriceQuote(
     name: ENSName,
     atTimestamp: Timestamp,
@@ -210,6 +269,7 @@ export interface Registrar {
     duration: Duration,
     existingRegistration: Registration,
   ): boolean;
+
   getRenewalPriceQuote(
     name: ENSName,
     atTimestamp: Timestamp,
@@ -218,23 +278,43 @@ export interface Registrar {
   ): RenewalPriceQuote;
 }
 
+/**
+ * Models a `Registrar` that issues subdomains into an onchain registry.
+ * 
+ * An `OnchainRegistrar` may live on Ethereum L1 or elsewhere on an L2, etc.
+ */
 export interface OnchainRegistrar extends Registrar {
-  getOnchainRegistrar(): ContractRef;
-}
-
-export interface OffchainRegistrar extends Registrar {
-  getOnchainRegistrar(): null;
+  getOnchainRegistry(): ContractRef;
 }
 
 /**
- * Identifies that a name was passed to a `Registrar` function that is not managed by that `Registrar`.
+ * Models a `Registrar` that issues subdomains into an offchain registry
+ * through the use of ENSIP-10 (also known as "Wildcard Resolution").
+ * 
+ * Subdomains issued into an offchain registry as generally refered to as
+ * "offchain subnames".
+ * 
+ * See https://docs.ens.domains/ensip/10 for more info.
+ * 
+ * Generally an `OffchainRegistrar` also makes use of the Cross Chain
+ * Interoperability Protocol (also known as EIP-3668 or CCIP-Read for short) to
+ * provide offchain management of resolver records for the offchain subnames it
+ * issues.
+ */
+export interface OffchainRegistrar extends Registrar {
+  getOnchainRegistry(): null;
+}
+
+/**
+ * Identifies that a name was passed to a `Registrar` function that is not
+ * issuable by that `Registrar`.
  *
- * @param message a reason why `name` is NOT managed by `Registrar`.
- * @param label the `ENSName` value that is NOT managed by `Registrar`.
+ * @param message a reason why `name` is NOT issuable by `Registrar`.
+ * @param label the `ENSName` value that is NOT issuable by `Registrar`.
  */
 export class RegistrarUnsupportedNameError extends Error {
-  public constructor(message: string, name: ENSName) {
-    super(`RegistrarUnsupportedNameError for name "${name.name}": ${message}`);
+  public constructor(message: string, unsupportedName: ENSName) {
+    super(`RegistrarUnsupportedNameError for name "${unsupportedName.name}": ${message}`);
     this.name = "RegistrarUnsupportedNameError";
     Error.captureStackTrace(this, this.constructor);
   }
@@ -250,3 +330,27 @@ export const scaleAnnualPrice = (annualPrice: Price, duration: Duration) => {
 
   return approxScalePrice(annualPrice, scaledRate);
 };
+
+/**
+ * This is the current ENS registry.
+ * 
+ * Given the lookup of a node for a name in this registry, this contract
+ * first attempts to find the data for that node in its own internal registry.
+ * If that internal lookup fails, this contract then attempts to lookup the
+ * same request in `MAINNET_OLD_ENS_REGISTRY` as a fallback in the case that
+ * the requested node hasn't been migrated to this (new) registry yet.
+ */
+export const MAINNET_ENS_REGISTRY_WITH_FALLBACK_CONTRACT =
+  buildContractRef(
+    MAINNET,
+    buildAddress("0x00000000000c2e074ec69a0dfb2997ba6c7d2e1e"),
+  );
+
+/**
+ * This is the old ENS registry. No new subnames should be issued here.
+ */
+export const MAINNET_OLD_ENS_REGISTRY =
+  buildContractRef(
+    MAINNET,
+    buildAddress("0x314159265dD8dbb310642f98f50C066173C1259b"),
+  );

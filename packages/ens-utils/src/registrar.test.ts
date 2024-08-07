@@ -2,76 +2,61 @@ import { describe, expect, it } from "vitest";
 import { scaleAnnualPrice } from "./registrar";
 import { buildPrice } from "./price";
 import { Currency } from "./currency";
-import { buildDuration, SECONDS_PER_YEAR } from "./time";
+import { scaleDuration, SECONDS_PER_YEAR } from "./time";
 
 describe("scaleAnnualPrice() function", (t) => {
   it("should scale a one year price to a half an year price", () => {
-    const price = buildPrice(100n, Currency.Usd);
+    const annualPrice = buildPrice(100n, Currency.Usd);
     const years = 0.5;
-    const secondsPerYearAsNumber = Number(SECONDS_PER_YEAR.seconds);
-    const duration = BigInt(secondsPerYearAsNumber * years);
-    const secondsPerYears = buildDuration(duration);
+    const duration = scaleDuration(SECONDS_PER_YEAR, years);
+    const result = scaleAnnualPrice(annualPrice, duration);
 
-    const expectedResult = {
-      value: BigInt(Number(price.value) * years),
-      currency: "USD",
-    };
-
-    const result = scaleAnnualPrice(price, secondsPerYears);
+    const expectedResult = buildPrice(50n, Currency.Usd);
 
     expect(result).toEqual(expectedResult);
   });
+
   it("should scale a one year price to an one and a half an year price", () => {
-    const price = buildPrice(100n, Currency.Usd);
+    const annualPrice = buildPrice(100n, Currency.Usd);
     const years = 1.5;
-    const secondsPerYearAsNumber = Number(SECONDS_PER_YEAR.seconds);
-    const duration = BigInt(secondsPerYearAsNumber * years);
-    const secondsPerYears = buildDuration(duration);
+    const duration = scaleDuration(SECONDS_PER_YEAR, years);
+    const result = scaleAnnualPrice(annualPrice, duration);
 
-    const expectedResult = {
-      value: BigInt(Number(price.value) * years),
-      currency: "USD",
-    };
-
-    const result = scaleAnnualPrice(price, secondsPerYears);
+    const expectedResult = buildPrice(150n, Currency.Usd);
 
     expect(result).toEqual(expectedResult);
   });
+
   it("should scale a one year price to a two years price", () => {
-    const price = buildPrice(100n, Currency.Usd);
+    const annualPrice = buildPrice(100n, Currency.Usd);
     const years = 2n;
-    const secondsPerYears = buildDuration(SECONDS_PER_YEAR.seconds * years);
+    const duration = scaleDuration(SECONDS_PER_YEAR, years);
+    const result = scaleAnnualPrice(annualPrice, duration);
 
-    const expectedResult = {
-      value: price.value * years,
-      currency: "USD",
-    };
-
-    const result = scaleAnnualPrice(price, secondsPerYears);
+    const expectedResult = buildPrice(200n, Currency.Usd);
 
     expect(result).toEqual(expectedResult);
   });
+
   it("should scale a one year price to a five years price", () => {
-    const price = buildPrice(100n, Currency.Usd);
+    const annualPrice = buildPrice(100n, Currency.Usd);
     const years = 5n;
-    const secondsPerYears = buildDuration(SECONDS_PER_YEAR.seconds * years);
+    const duration = scaleDuration(SECONDS_PER_YEAR, years);
+    const result = scaleAnnualPrice(annualPrice, duration);
 
-    const expectedResult = {
-      value: price.value * years,
-      currency: "USD",
-    };
-
-    const result = scaleAnnualPrice(price, secondsPerYears);
+    const expectedResult = buildPrice(500n, Currency.Usd);
 
     expect(result).toEqual(expectedResult);
   });
-  it("should not scale the price if the duration is the same as current price duration", () => {
-    const price = buildPrice(100n, Currency.Usd);
+
+  it("should scale a one year price to a one years price", () => {
+    const annualPrice = buildPrice(100n, Currency.Usd);
     const years = 1n;
-    const secondsPerYears = buildDuration(SECONDS_PER_YEAR.seconds * years);
+    const duration = scaleDuration(SECONDS_PER_YEAR, years);
+    const result = scaleAnnualPrice(annualPrice, duration);
 
-    const result = scaleAnnualPrice(price, secondsPerYears);
+    const expectedResult = buildPrice(100n, Currency.Usd);
 
-    expect(result).toEqual(result);
+    expect(result).toEqual(expectedResult);
   });
 });

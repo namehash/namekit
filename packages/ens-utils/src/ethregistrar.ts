@@ -40,22 +40,30 @@ import {
   RegistrarAction,
   RenewalPriceQuote,
   OnchainRegistrar,
+  MAINNET_ENS_REGISTRY_WITH_FALLBACK_CONTRACT,
 } from "./registrar";
 import { MAINNET } from "./chain";
 import { buildAddress } from "./address";
 
-/*
-  The ETH Registrar is the registrar for the .eth TLD, 
-  it allows for trustless decentralized names to be issued 
-  as tokens on the Ethereum Blockchain. Registration is done 
-  through smart-contracts, and name ownership is secured by the 
-  Ethereum blockchain.
-*/
+/**
+ * The `EthRegistrar` models the policy implmentations shared by both of
+ * the `OnchainRegistrar` contracts that actively issue subnames for the .eth
+ * TLD (as of July 2024).
+ *  
+ * These registrars enable trustless decentralized subnames to be issued 
+ * as NFTs on Ethereum L1.
+ */
 export class EthRegistrar implements OnchainRegistrar {
+  public static readonly Name = buildENSName(ETH_TLD);
+  
   protected readonly registrarContract: ContractRef;
 
   public constructor(registrarContract: ContractRef) {
     this.registrarContract = registrarContract;
+  }
+
+  public getName = (): ENSName => {
+    return EthRegistrar.Name;
   }
 
   public getManagedSubname = (name: ENSName): ENSName | null => {
@@ -87,8 +95,12 @@ export class EthRegistrar implements OnchainRegistrar {
     return subname;
   };
 
-  public getOnchainRegistrar(): ContractRef {
+  public getContractRef(): ContractRef {
     return this.registrarContract;
+  }
+
+  public getOnchainRegistry(): ContractRef {
+    return MAINNET_ENS_REGISTRY_WITH_FALLBACK_CONTRACT;
   }
 
   public canRegister(
