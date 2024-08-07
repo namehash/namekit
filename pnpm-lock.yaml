@@ -109,6 +109,9 @@ importers:
       '@namehash/nameguard-react':
         specifier: workspace:*
         version: link:../../packages/nameguard-react
+      '@namehash/namekit-react':
+        specifier: workspace:*
+        version: link:../../packages/namekit-react
       '@namehash/seo':
         specifier: workspace:*
         version: link:../../internal/seo
@@ -142,7 +145,7 @@ importers:
     devDependencies:
       '@types/node':
         specifier: latest
-        version: 22.0.0
+        version: 22.1.0
       '@types/react':
         specifier: latest
         version: 18.3.3
@@ -151,7 +154,7 @@ importers:
         version: 18.3.0
       autoprefixer:
         specifier: latest
-        version: 10.4.19(postcss@8.4.40)
+        version: 10.4.19(postcss@8.4.41)
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -160,7 +163,7 @@ importers:
         version: 14.2.3(eslint@8.56.0)(typescript@5.5.4)
       postcss:
         specifier: latest
-        version: 8.4.40
+        version: 8.4.41
       tailwind-scrollbar-hide:
         specifier: 1.1.7
         version: 1.1.7
@@ -5221,10 +5224,10 @@ packages:
       undici-types: 5.26.5
     dev: true
 
-  /@types/node@22.0.0:
-    resolution: {integrity: sha512-VT7KSYudcPOzP5Q0wfbowyNLaVR8QWUdw+088uFWwfvpY6uCWaXpqV6ieLAu9WBcnTa7H4Z5RLK8I5t2FuOcqw==}
+  /@types/node@22.1.0:
+    resolution: {integrity: sha512-AOmuRF0R2/5j1knA3c6G3HOk523Ga+l+ZXltX8SF1+5oqcXijjfTd8fY3XRZqSihEu9XhtQnKYLmkFaoxgsJHw==}
     dependencies:
-      undici-types: 6.11.1
+      undici-types: 6.13.0
     dev: true
 
   /@types/normalize-package-data@2.4.4:
@@ -6000,7 +6003,7 @@ packages:
       postcss-value-parser: 4.2.0
     dev: true
 
-  /autoprefixer@10.4.19(postcss@8.4.40):
+  /autoprefixer@10.4.19(postcss@8.4.41):
     resolution: {integrity: sha512-BaENR2+zBZ8xXhM4pUaKUxlVdxZ0EZhjvbopwnXmxRUfqDmwSpC2lAi/QXvx7NRdPCo1WKEcEF6mV64si1z4Ew==}
     engines: {node: ^10 || ^12 || >=14}
     hasBin: true
@@ -6012,7 +6015,7 @@ packages:
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.1
-      postcss: 8.4.40
+      postcss: 8.4.41
       postcss-value-parser: 4.2.0
     dev: true
 
@@ -10212,15 +10215,6 @@ packages:
       source-map-js: 1.2.0
     dev: true
 
-  /postcss@8.4.40:
-    resolution: {integrity: sha512-YF2kKIUzAofPMpfH6hOi2cGnv/HrUlfucspc7pDyvv7kGdqXrfj8SCl/t8owkEgKEuu8ZcRjSOxFxVLqwChZ2Q==}
-    engines: {node: ^10 || ^12 || >=14}
-    dependencies:
-      nanoid: 3.3.7
-      picocolors: 1.0.1
-      source-map-js: 1.2.0
-    dev: true
-
   /postcss@8.4.41:
     resolution: {integrity: sha512-TesUflQ0WKZqAvg52PWL6kHgLKP6xB6heTOdoYM0Wt2UHyxNa4K25EZZMgKns3BH1RLVbZCREPpLY0rhnNoHVQ==}
     engines: {node: ^10 || ^12 || >=14}
@@ -12095,8 +12089,8 @@ packages:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
     dev: true
 
-  /undici-types@6.11.1:
-    resolution: {integrity: sha512-mIDEX2ek50x0OlRgxryxsenE5XaQD4on5U2inY7RApK3SOJpofyw7uW2AyfMKkhAxXIceo2DeWGVGwyvng1GNQ==}
+  /undici-types@6.13.0:
+    resolution: {integrity: sha512-xtFJHudx8S2DSoujjMd1WeWvn7KKWFRESZTMeL1RptAYERu29D6jphMjjY+vn96jvN3kVPDNxU/E13VTaXj6jg==}
     dev: true
 
   /unicode-canonical-property-names-ecmascript@2.0.0:
