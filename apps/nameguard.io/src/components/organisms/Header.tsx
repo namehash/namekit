@@ -6,6 +6,7 @@ import { GithubIcon, NGSearchIcon } from "@/components/atoms";
 import { NGSearch } from "@/components/molecules";
 import MobileMenu from "./MobileMenu";
 import { CalButton } from "../atoms";
+import { Button } from "@namehash/namekit-react";
 
 export const Header = () => {
   return (
@@ -34,33 +35,32 @@ export const Header = () => {
         <div className="flex flex-row items-center justify-between md:gap-5 h-[40px]">
           <div className="hidden items-center justify-center lg:flex gap-1">
             <a
-              className="px-[10px] py-[9px] not-italic text-black font-medium text-sm leading-5 rounded-md sm:hover:bg-gray-100"
               href="https://api.nameguard.io/docs"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Docs
+              <Button variant="ghost" size="small">
+                Docs
+              </Button>
             </a>
+
             <a
-              className="rounded-md sm:hover:bg-gray-100"
               href="https://github.com/namehash/nameguard"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <div className="flex flex-row justify-between items-center gap-2 py-[7px] px-[10px]">
+              <Button variant="ghost" size="small">
                 <GithubIcon className="hidden md:block text-[#0F172A] fill-current" />
-                <p className="not-italic text-black font-medium text-sm leading-5">
-                  Github
-                </p>
-              </div>
+                Github
+              </Button>
             </a>
-            <Link
-              className="px-[10px] py-[9px] not-italic text-black font-medium text-sm leading-5 rounded-md gt_mobile:hover:bg-gray-100"
-              href="/contact"
-              rel="noopener noreferrer"
-            >
-              Contact
-            </Link>
+
+            <a href="/contact" rel="noopener noreferrer">
+              <Button variant="ghost" size="small">
+                Contact
+              </Button>
+            </a>
+
             <CalButton className="px-4 py-2 text-sm rounded-md font-medium bg-black text-white hover:bg-gray-800 transition-all duration-300 whitespace-nowrap">
               Discuss an integration
             </CalButton>

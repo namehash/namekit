@@ -1,6 +1,8 @@
 import "./globals.css";
 import "@namehash/ens-webfont";
 import "@namehash/nameguard-react/styles.css";
+import "@namehash/namekit-react/styles.css";
+
 import type { Metadata } from "next";
 import { Metadata as NamehashMetadata } from "@namehash/seo";
 import { Inter } from "next/font/google";
