@@ -183,12 +183,12 @@ describe("secure primary name", () => {
     for (let i = 0; i < results.length; i++) {
       const r = results[i];
       const test = tests[i];
-      const impersonationStatus = test[1] as string | null;
+      const impersonationEstimate = test[1] as string | null;
       const primaryNameStatus = test[2] as string;
       const primaryName = test[3] as string;
       const displayName = test[4] as string;
       expect(r.display_name).toBe(displayName);
-      expect(r.impersonation_status).toBe(impersonationStatus);
+      expect(r.impersonation_estimate).toBe(impersonationEstimate);
       expect(r.primary_name_status).toBe(primaryNameStatus);
       expect(r.primary_name).toBe(primaryName);
     }

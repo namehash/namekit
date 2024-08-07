@@ -316,9 +316,9 @@ class SecurePrimaryNameStatus(str, Enum):
     UNNORMALIZED = 'unnormalized'
 
 
-class ImpersonationStatus(str, Enum):
+class ImpersonationEstimate(str, Enum):
     """
-    The predicted impersonation status of an ENS name.
+    The predicted impersonation estimate of an ENS name.
 
     * `unlikely`: The ENS name is unlikely to be impersonating.
     * `potential`: The ENS name is potentially impersonating.
@@ -335,8 +335,8 @@ class SecurePrimaryNameResult(BaseModel):
 
     primary_name_status: SecurePrimaryNameStatus
 
-    impersonation_status: Optional[ImpersonationStatus] = Field(
-        description='Impersonation status of the `primary_name`.\n' '* `null` if `primary_name` is `null`',
+    impersonation_estimate: Optional[ImpersonationEstimate] = Field(
+        description='Impersonation estimate of the `primary_name`.\n' '* `null` if `primary_name` is `null`',
     )
 
     primary_name: Optional[str] = Field(

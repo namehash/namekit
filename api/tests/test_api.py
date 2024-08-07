@@ -600,7 +600,7 @@ def test_inspect_grapheme_multi(test_client):
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.parametrize(
-    'address, impersonation_status, primary_name_status, primary_name, display_name, canonical_name, impersonation_risk, name',
+    'address, impersonation_estimate, primary_name_status, primary_name, display_name, canonical_name, impersonation_risk, name',
     [
         (
             '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045',
@@ -768,7 +768,7 @@ def test_inspect_grapheme_multi(test_client):
 def test_primary_name(
     test_client,
     address,
-    impersonation_status,
+    impersonation_estimate,
     primary_name_status,
     primary_name,
     display_name,
@@ -780,7 +780,7 @@ def test_primary_name(
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
-    assert res_json['impersonation_status'] == impersonation_status
+    assert res_json['impersonation_estimate'] == impersonation_estimate
     assert res_json['primary_name_status'] == primary_name_status
     assert res_json['primary_name'] == primary_name
     assert res_json['display_name'] == display_name
@@ -803,7 +803,7 @@ def test_primary_name_get(test_client):
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
-    assert res_json['impersonation_status'] == 'unlikely'
+    assert res_json['impersonation_estimate'] == 'unlikely'
     assert res_json['primary_name_status'] == 'normalized'
     assert res_json['primary_name'] == 'vitalik.eth'
     assert res_json['display_name'] == 'vitalik.eth'
@@ -816,7 +816,7 @@ def test_primary_name_get_uppercase(test_client):
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
-    assert res_json['impersonation_status'] == 'unlikely'
+    assert res_json['impersonation_estimate'] == 'unlikely'
     assert res_json['primary_name_status'] == 'normalized'
     assert res_json['primary_name'] == 'vitalik.eth'
     assert res_json['display_name'] == 'vitalik.eth'
@@ -829,7 +829,7 @@ def test_primary_name_get_offchain(test_client):
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
-    assert res_json['impersonation_status'] == 'unlikely'
+    assert res_json['impersonation_estimate'] == 'unlikely'
     assert res_json['primary_name_status'] == 'normalized'
     assert res_json['primary_name'] == 'exampleprimary.cb.id'
     assert res_json['display_name'] == 'exampleprimary.cb.id'
@@ -842,7 +842,7 @@ def test_primary_name_get_no_primary_name(test_client):
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
-    assert res_json['impersonation_status'] is None
+    assert res_json['impersonation_estimate'] is None
     assert res_json['primary_name_status'] == 'no_primary_name'
     assert res_json['primary_name'] is None
     assert res_json['display_name'] == 'Unnamed d8da'
@@ -855,7 +855,7 @@ def test_primary_name_get_unnormalized(test_client):
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
-    assert res_json['impersonation_status'] is None
+    assert res_json['impersonation_estimate'] is None
     assert res_json['primary_name_status'] == 'unnormalized'
     assert res_json['primary_name'] is None
     assert res_json['display_name'] == 'Unnamed fa9a'
@@ -882,7 +882,7 @@ def test_primary_name_get_emoji(test_client):
     assert response.status_code == 200
     res_json = response.json()
 
-    assert res_json['impersonation_status'] == 'potential'
+    assert res_json['impersonation_estimate'] == 'potential'
     assert res_json['primary_name_status'] == 'normalized'
     assert res_json['primary_name'] == '👩🏿\u200d🦱.eth'
     assert res_json['display_name'] == '👩🏿\u200d🦱.eth'

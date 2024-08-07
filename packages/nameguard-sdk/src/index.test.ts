@@ -71,7 +71,7 @@ describe("NameGuard", () => {
     );
 
     expect(data.primary_name_status).toBe("normalized");
-    expect(data.impersonation_status).toBe("unlikely");
+    expect(data.impersonation_estimate).toBe("unlikely");
     expect(data.primary_name).toBe("vitalik.eth");
     expect(data.display_name).toBe("vitalik.eth");
     expect(data.nameguard_result).not.toBeNull();
@@ -86,7 +86,7 @@ describe("NameGuard", () => {
     );
 
     expect(data.primary_name_status).toBe("normalized");
-    expect(data.impersonation_status).toBe("potential");
+    expect(data.impersonation_estimate).toBe("potential");
     expect(data.primary_name).toBe("vitalìk.eth");
     expect(data.display_name).toBe("vitalìk.eth");
     expect(data.nameguard_result).not.toBeNull();
@@ -101,7 +101,7 @@ describe("NameGuard", () => {
     );
 
     expect(data.primary_name_status).toBe("normalized");
-    expect(data.impersonation_status).toBe("unlikely");
+    expect(data.impersonation_estimate).toBe("unlikely");
     expect(data.primary_name).toBe("exampleprimary.cb.id");
     expect(data.display_name).toBe("exampleprimary.cb.id");
     expect(data.nameguard_result).not.toBeNull();
@@ -116,7 +116,7 @@ describe("NameGuard", () => {
     );
 
     expect(data.primary_name_status).toBe("no_primary_name");
-    expect(data.impersonation_status).toBeNull();
+    expect(data.impersonation_estimate).toBeNull();
     expect(data.primary_name).toBeNull();
     expect(data.display_name).toBe("Unnamed d8da");
     expect(data.nameguard_result).toBeNull();
@@ -129,7 +129,7 @@ describe("NameGuard", () => {
     );
 
     expect(data.primary_name_status).toBe("unnormalized");
-    expect(data.impersonation_status).toBeNull();
+    expect(data.impersonation_estimate).toBeNull();
     expect(data.primary_name).toBeNull();
     expect(data.display_name).toBe("Unnamed fa9a");
     expect(data.nameguard_result).not.toBeNull();
@@ -144,7 +144,7 @@ describe("NameGuard", () => {
     );
 
     expect(data.primary_name_status).toBe("unnormalized");
-    expect(data.impersonation_status).toBeNull();
+    expect(data.impersonation_estimate).toBeNull();
     expect(data.primary_name).toBeNull();
     expect(data.display_name).toBe("Unnamed af73");
     expect(data.nameguard_result).not.toBeNull();
@@ -159,7 +159,7 @@ describe("NameGuard", () => {
     );
 
     expect(data.primary_name_status).toBe("unnormalized");
-    expect(data.impersonation_status).toBeNull();
+    expect(data.impersonation_estimate).toBeNull();
     expect(data.primary_name).toBeNull();
     expect(data.display_name).toBe("Unnamed f537");
     expect(data.nameguard_result).not.toBeNull();
@@ -174,7 +174,7 @@ describe("NameGuard", () => {
     );
 
     expect(data.primary_name_status).toBe("normalized");
-    expect(data.impersonation_status).toBe("unlikely");
+    expect(data.impersonation_estimate).toBe("unlikely");
     expect(data.primary_name).toBe("vincξnt.eth");
     expect(data.display_name).toBe("vincΞnt.eth");
     expect(data.nameguard_result).not.toBeNull();
@@ -189,7 +189,7 @@ describe("NameGuard", () => {
     );
 
     expect(data.primary_name_status).toBe("unnormalized");
-    expect(data.impersonation_status).toBeNull();
+    expect(data.impersonation_estimate).toBeNull();
     expect(data.primary_name).toBeNull();
     expect(data.display_name).toBe("Unnamed 744e");
     expect(data.nameguard_result).not.toBeNull();

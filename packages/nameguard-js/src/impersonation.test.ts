@@ -1,24 +1,24 @@
 import { describe, it, expect } from "vitest";
-import { computeImpersonationStatus } from "./impersonation";
+import { computeImpersonationEstimate } from "./impersonation";
 
 describe("Impersonation", () => {
-  it("should return impersonation status", () => {
-    expect(computeImpersonationStatus("nick.eth")).toBe("unlikely");
-    expect(computeImpersonationStatus("nićk.eth")).toBe("potential");
-    expect(computeImpersonationStatus("vitalik.eth")).toBe("unlikely");
-    expect(computeImpersonationStatus("vitalìk.eth")).toBe("potential");
-    expect(computeImpersonationStatus("٧٣٧.eth")).toBe("unlikely");
-    expect(computeImpersonationStatus("exampleprimary.cb.id")).toBe("unlikely");
-    expect(computeImpersonationStatus("888‍‍.eth")).toBe("potential");
-    expect(computeImpersonationStatus("‍‍❤‍‍.eth")).toBe("potential");
-    expect(computeImpersonationStatus("٠٠۱.eth")).toBe("potential");
-    expect(computeImpersonationStatus("۸۸۷۵۴۲.eth")).toBe("potential");
-    expect(computeImpersonationStatus("୨୨୨୨୨.eth")).toBe("potential");
-    expect(computeImpersonationStatus("┣▇▇▇═─.eth")).toBe("potential");
-    expect(computeImpersonationStatus("сбер.eth")).toBe("potential");
-    expect(computeImpersonationStatus("vitȧlik.eth")).toBe("potential");
-    expect(computeImpersonationStatus("vıtalik.eth")).toBe("potential");
-    expect(computeImpersonationStatus("vincξnt.eth")).toBe("unlikely");
-    expect(computeImpersonationStatus("hello<world>!.eth")).toBe("potential");
+  it("should return impersonation estimate", () => {
+    expect(computeImpersonationEstimate("nick.eth")).toBe("unlikely");
+    expect(computeImpersonationEstimate("nićk.eth")).toBe("potential");
+    expect(computeImpersonationEstimate("vitalik.eth")).toBe("unlikely");
+    expect(computeImpersonationEstimate("vitalìk.eth")).toBe("potential");
+    expect(computeImpersonationEstimate("٧٣٧.eth")).toBe("unlikely");
+    expect(computeImpersonationEstimate("exampleprimary.cb.id")).toBe("unlikely");
+    expect(computeImpersonationEstimate("888‍‍.eth")).toBe("potential");
+    expect(computeImpersonationEstimate("‍‍❤‍‍.eth")).toBe("potential");
+    expect(computeImpersonationEstimate("٠٠۱.eth")).toBe("potential");
+    expect(computeImpersonationEstimate("۸۸۷۵۴۲.eth")).toBe("potential");
+    expect(computeImpersonationEstimate("୨୨୨୨୨.eth")).toBe("potential");
+    expect(computeImpersonationEstimate("┣▇▇▇═─.eth")).toBe("potential");
+    expect(computeImpersonationEstimate("сбер.eth")).toBe("potential");
+    expect(computeImpersonationEstimate("vitȧlik.eth")).toBe("potential");
+    expect(computeImpersonationEstimate("vıtalik.eth")).toBe("potential");
+    expect(computeImpersonationEstimate("vincξnt.eth")).toBe("unlikely");
+    expect(computeImpersonationEstimate("hello<world>!.eth")).toBe("potential");
   });
 });

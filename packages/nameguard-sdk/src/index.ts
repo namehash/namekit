@@ -89,7 +89,7 @@ export type SecurePrimaryNameStatus =
   | "no_primary_name" /** The ENS primary name was not found. */
   | "unnormalized" /** The ENS primary name was found, but it is not normalized. */;
 
-export type ImpersonationStatus =
+export type ImpersonationEstimate =
   | "unlikely" /** The name is unlikely to be impersonating. */
   | "potential"; /** The name is potentially impersonating. */
 
@@ -391,11 +391,11 @@ export interface SecurePrimaryNameResult {
   primary_name_status: SecurePrimaryNameStatus;
 
   /**
-   * Impersonation status of the `primary_name`.
+   * Impersonation estimate of the `primary_name`.
    *
    * `null` if `primary_name` is `null`.
    */
-  impersonation_status: ImpersonationStatus | null;
+  impersonation_estimate: ImpersonationEstimate | null;
 
   /**
    * Primary ENS name for the Ethereum address.
@@ -639,7 +639,7 @@ export class NameGuard {
    * 1. The Ethereum Provider configured in the NameGuard instance.
    * 2. For ENS names using CCIP-Read: requests to externally defined gateway servers.
    *
-   * Returns `display_name` to be shown to users and estimates `impersonation_status`
+   * Returns `display_name` to be shown to users and estimates `impersonation_estimate`
    *
    * @param {string} address An Ethereum address.
    * @param {SecurePrimaryNameOptions} options The options for the secure primary name.

@@ -28,7 +28,7 @@ from nameguard.models import (
     SecurePrimaryNameStatus,
     FakeEthNameCheckStatus,
     FakeEthNameCheckResult,
-    ImpersonationStatus,
+    ImpersonationEstimate,
     ConsolidatedNameGuardReport,
     Rating,
     ConfusableGuardReport,
@@ -393,30 +393,30 @@ class NameGuard:
         nameguard_result = None
         if domain is None:
             status = SecurePrimaryNameStatus.NO_PRIMARY_NAME
-            impersonation_status = None
+            impersonation_estimate = None
         else:
             nameguard_result = await self.inspect_name(network_name, domain)
 
             if nameguard_result.normalization == Normalization.UNNORMALIZED:
                 status = SecurePrimaryNameStatus.UNNORMALIZED
-                impersonation_status = None
+                impersonation_estimate = None
             else:
                 display_name = nameguard_result.beautiful_name
                 status = SecurePrimaryNameStatus.NORMALIZED
                 primary_name = domain
 
-                impersonation_status = (
-                    ImpersonationStatus.UNLIKELY
+                impersonation_estimate = (
+                    ImpersonationEstimate.UNLIKELY
                     if any(
                         check.check == 'impersonation_risk' and check.status == CheckStatus.PASS
                         for check in nameguard_result.checks
                     )
-                    else ImpersonationStatus.POTENTIAL
+                    else ImpersonationEstimate.POTENTIAL
                 )
 
         return SecurePrimaryNameResult(
             primary_name=primary_name,
-            impersonation_status=impersonation_status,
+            impersonation_estimate=impersonation_estimate,
             display_name=display_name,
             primary_name_status=status,
             nameguard_result=nameguard_result,
