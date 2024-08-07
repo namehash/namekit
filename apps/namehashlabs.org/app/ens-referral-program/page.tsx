@@ -7,6 +7,7 @@ import { ExternalLinkIcon } from "@/components/1 - atoms";
 import { FigmaIcon } from "@/components/1 - atoms/icons/figma-icon";
 import { GithubIcon } from "@/components/1 - atoms/icons/github-icon";
 import { ProductComponent } from "@/components/2 - molecules/product-component";
+import { Button } from "@namehash/namekit-react";
 
 const description =
   "Join the discussion about an ENS Referral Program and help ENS grow.";
@@ -96,7 +97,6 @@ const Item = ({
   icon,
   title,
   text,
-  isInverted,
   buttonUrl,
   buttonText,
   greenLabelText,
@@ -128,13 +128,11 @@ const Item = ({
         <p className="text-lg leading-7 font-light text-gray-500">{text}</p>
       </div>
       {!!buttonUrl && (
-        <a
-          className="px-4 py-2 flex items-center justify-center gap-3 border border-gray-200 rounded-[8px] hover:bg-gray-50 transition-colors duration-200"
-          target="_blank"
-          href={buttonUrl}
-        >
-          {buttonText}
-          <ExternalLinkIcon className="text-black w-5 h-5" />
+        <a target="_blank" href={buttonUrl}>
+          <Button variant="secondary" size="medium">
+            {buttonText}
+            <ExternalLinkIcon className="text-black w-5 h-5" />
+          </Button>
         </a>
       )}
     </div>
