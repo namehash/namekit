@@ -218,12 +218,10 @@ export interface Registrar {
   ): RenewalPriceQuote;
 }
 
-// Allows for trustless on-chain name registration
 export interface OnchainRegistrar extends Registrar {
   getOnchainRegistrar(): ContractRef;
 }
 
-// Allows for trustless off-chain name registration
 export interface OffchainRegistrar extends Registrar {
   getOnchainRegistrar(): null;
 }
