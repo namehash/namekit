@@ -5,6 +5,7 @@ import { SecurePrimaryNameResult } from "@namehash/nameguard";
 import { securePrimaryName } from "./securePrimaryName";
 
 const PROVIDER_URI_MAINNET = process.env.PROVIDER_URI_MAINNET;
+const TEST_TIMEOUT = 30000;
 
 describe("secure primary name", () => {
   it("should detect impersonation", async () => {
@@ -192,5 +193,5 @@ describe("secure primary name", () => {
       expect(r.primary_name_status).toBe(primaryNameStatus);
       expect(r.primary_name).toBe(primaryName);
     }
-  }, 30000);
+  }, TEST_TIMEOUT);
 });
