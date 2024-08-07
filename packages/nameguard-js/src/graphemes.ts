@@ -79,6 +79,17 @@ export function splitGraphemes(name: string): string[] {
   return graphemes;
 }
 
+/**
+ * Counts the number of graphemes in a given string.
+ *
+ * This function uses the `splitGraphemes` function to split the input string
+ * into its constituent graphemes and then returns the count of these graphemes.
+ * The count will include all characters, including invisible characters
+ * and label separators.
+ *
+ * @param name - The input string to count graphemes from.
+ * @returns The number of graphemes in the input string.
+ */
 export function countGraphemes(name: string): number {
   return splitGraphemes(name).length;
 }
