@@ -1,9 +1,9 @@
 import {
   ENSName,
-  MIN_ETH_REGISTRABLE_LABEL_LENGTH,
   ETH_TLD,
   charCount,
   getDomainLabelFromENSName,
+  MIN_ETH_REGISTRABLE_LABEL_LENGTH,
 } from "./ensname";
 import { NFTRef, TokenId, buildNFTRef, buildTokenId } from "./nft";
 import { namehash, labelhash } from "viem/ens";
@@ -301,13 +301,16 @@ export const premiumPeriodEndsIn = (
   if (!isExpired || !wasRecentlyReleased) return null;
 
   /*
-    This conditional should always be true because expiryTimestamp will only be null when
+    This conditional should always be true because expirationTimestamp will only be null when
     the domain was never registered before. Considering that the domain is Expired,
     it means that it was registered before. It is just a type safety check.
   */
-  if (!registration.expiryTimestamp) return null;
+  if (!registration.expirationTimestamp) return null;
 
-  const releasedEpoch = addSeconds(registration.expiryTimestamp, GRACE_PERIOD);
+  const releasedEpoch = addSeconds(
+    registration.expirationTimestamp,
+    GRACE_PERIOD,
+  );
   const temporaryPremiumEndTimestamp = addSeconds(
     releasedEpoch,
     TEMPORARY_PREMIUM_PERIOD,
@@ -492,7 +495,6 @@ export type Registration = {
   // Below timestamps are counted in seconds
   registrationTimestamp: Timestamp | null;
   expirationTimestamp: Timestamp | null;
-  expiryTimestamp: Timestamp | null;
 
   primaryStatus: PrimaryRegistrationStatus;
   secondaryStatus: SecondaryRegistrationStatus | null;
@@ -502,56 +504,54 @@ export const getDomainRegistration = (
   /*
     When null, a domain is considered to be not registered.
   */
-  expiryTimestamp: Timestamp | null,
+  expirationTimestamp: Timestamp | null,
 ): Registration => {
-  if (!expiryTimestamp) {
+  if (!expirationTimestamp) {
     return {
-      primaryStatus: PrimaryRegistrationStatus.NeverRegistered,
       secondaryStatus: null,
-      registrationTimestamp: null,
       expirationTimestamp: null,
-      expiryTimestamp: null,
+      registrationTimestamp: null,
+      primaryStatus: PrimaryRegistrationStatus.NeverRegistered,
     };
   }
 
-  const primaryStatus = getPrimaryRegistrationStatus(expiryTimestamp);
-  const secondaryStatus = getSecondaryRegistrationStatus(expiryTimestamp);
+  const primaryStatus = getPrimaryRegistrationStatus(expirationTimestamp);
+  const secondaryStatus = getSecondaryRegistrationStatus(expirationTimestamp);
   return {
-    expiryTimestamp,
     primaryStatus,
     secondaryStatus,
+    expirationTimestamp,
     registrationTimestamp: null,
-    expirationTimestamp: expiryTimestamp,
   };
 };
 
 const getPrimaryRegistrationStatus = (
-  expiryTimestamp: Timestamp,
+  expirationTimestamp: Timestamp,
 ): PrimaryRegistrationStatus => {
   const nowTime = now();
-  return nowTime.time < expiryTimestamp.time
+  return nowTime.time < expirationTimestamp.time
     ? PrimaryRegistrationStatus.Active
     : PrimaryRegistrationStatus.Expired;
 };
 
 const getSecondaryRegistrationStatus = (
-  expiryTimestamp: Timestamp,
+  expirationTimestamp: Timestamp,
 ): SecondaryRegistrationStatus | null => {
   const nowTime = now();
 
-  if (nowTime.time < expiryTimestamp.time) {
-    return nowTime.time > expiryTimestamp.time - GRACE_PERIOD.seconds
+  if (nowTime.time < expirationTimestamp.time) {
+    return nowTime.time > expirationTimestamp.time - GRACE_PERIOD.seconds
       ? SecondaryRegistrationStatus.ExpiringSoon
       : null;
   } else {
     if (
-      expiryTimestamp.time +
+      expirationTimestamp.time +
         GRACE_PERIOD.seconds +
         TEMPORARY_PREMIUM_PERIOD.seconds <
       nowTime.time
     )
       return SecondaryRegistrationStatus.FullyReleased;
-    else if (expiryTimestamp.time + GRACE_PERIOD.seconds > nowTime.time)
+    else if (expirationTimestamp.time + GRACE_PERIOD.seconds > nowTime.time)
       return SecondaryRegistrationStatus.GracePeriod;
     else return SecondaryRegistrationStatus.RecentlyReleased;
   }
