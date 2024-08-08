@@ -334,42 +334,106 @@ describe("formatTimestamp() function", () => {
     expect(result).toStrictEqual("Feb 1, 2024");
   });
 
-  // // TODO: build a more generic version of this unit test that works in any system default time zone
-  // // NOTE: commenting this out as it is currently system dependent. Verified it works in my current time zone.
-  // it("showDateOnly - system default time zone", () => {
-  //   const date = new Date("2024-01-31T23:59:59Z");
-  //   const timestamp = buildTimestampFromDate(date);
-  //   const options : FormatTimestampOptions = {
-  //     showDateOnly: true,
-  //   }
+  it("showDateOnly - Greenwich time zone", () => {
+    const date = new Date("2024-01-31T23:59:59Z");
+    const timestamp = buildTimestampFromDate(date);
+    const options: FormatTimestampOptions = {
+      showDateOnly: true,
+      timeZone: "GMT",
+    };
 
-  //   const result = formatTimestamp(timestamp, options);
+    const result = formatTimestamp(timestamp, options);
 
-  //   expect(result).toStrictEqual("Feb 1, 2024");
-  // });
+    expect(result).toStrictEqual("Jan 31, 2024");
+  });
 
-  // // TODO: build a more generic version of this unit test that works in any system default time zone.
-  // // NOTE: commenting this out as it is currently system dependent. Verified it works in my current time zone.
-  // it("no options", () => {
-  //   const date = new Date("2024-01-31T23:59:59Z");
-  //   const timestamp = buildTimestampFromDate(date);
+  it("showDateOnly - Brazil time zone", () => {
+    const date = new Date("2024-01-31T23:59:59Z");
+    const timestamp = buildTimestampFromDate(date);
+    const options: FormatTimestampOptions = {
+      showDateOnly: true,
+      timeZone: "America/Sao_Paulo",
+    };
 
-  //   const result = formatTimestamp(timestamp);
+    const result = formatTimestamp(timestamp, options);
 
-  //   expect(result).toStrictEqual("Feb 1, 2024, 3:59 AM");
-  // });
+    expect(result).toStrictEqual("Jan 31, 2024");
+  });
 
-  // // TODO: build a more generic version of this unit test that works in any system default time zone.
-  // // NOTE: commenting this out as it is currently system dependent. Verified it works in my current time zone.
-  // it("empty options", () => {
-  //   const date = new Date("2024-01-31T23:59:59Z");
-  //   const timestamp = buildTimestampFromDate(date);
-  //   const options : FormatTimestampOptions = {};
+  it("showDateOnly - United Kingdom time zone", () => {
+    const date = new Date("2024-01-31T23:59:59Z");
+    const timestamp = buildTimestampFromDate(date);
+    const options: FormatTimestampOptions = {
+      showDateOnly: true,
+      timeZone: "Europe/London",
+    };
 
-  //   const result = formatTimestamp(timestamp, options);
+    const result = formatTimestamp(timestamp, options);
 
-  //   expect(result).toStrictEqual("Feb 1, 2024, 3:59 AM");
-  // });
+    expect(result).toStrictEqual("Jan 31, 2024");
+  });
+
+  it("showDateOnly - United States of America time zone", () => {
+    const date = new Date("2024-01-31T23:59:59Z");
+    const timestamp = buildTimestampFromDate(date);
+    const options: FormatTimestampOptions = {
+      showDateOnly: true,
+      timeZone: "America/Chicago",
+    };
+
+    const result = formatTimestamp(timestamp, options);
+
+    expect(result).toStrictEqual("Jan 31, 2024");
+  });
+
+  it("showDateOnly - United States of America time zone", () => {
+    const date = new Date("2024-01-31T23:59:59Z");
+    const timestamp = buildTimestampFromDate(date);
+    const options: FormatTimestampOptions = {
+      showDateOnly: true,
+      timeZone: "America/Chicago",
+    };
+
+    const result = formatTimestamp(timestamp, options);
+
+    expect(result).toStrictEqual("Jan 31, 2024");
+  });
+
+  it("show full timestamp description - United States of America time zone", () => {
+    const date = new Date("2024-01-31T23:59:59Z");
+    const timestamp = buildTimestampFromDate(date);
+    const options: FormatTimestampOptions = {
+      timeZone: "America/Chicago",
+    };
+
+    const result = formatTimestamp(timestamp, options);
+
+    expect(result).toStrictEqual("Jan 31, 2024, 5:59 PM");
+  });
+
+  it("show full timestamp description - United Kingdom time zone", () => {
+    const date = new Date("2024-01-31T23:59:59Z");
+    const timestamp = buildTimestampFromDate(date);
+    const options: FormatTimestampOptions = {
+      timeZone: "Europe/London",
+    };
+
+    const result = formatTimestamp(timestamp, options);
+
+    expect(result).toStrictEqual("Jan 31, 2024, 11:59 PM");
+  });
+
+  it("show full timestamp description - Brazil time zone", () => {
+    const date = new Date("2024-01-31T23:59:59Z");
+    const timestamp = buildTimestampFromDate(date);
+    const options: FormatTimestampOptions = {
+      timeZone: "America/Sao_Paulo",
+    };
+
+    const result = formatTimestamp(timestamp, options);
+
+    expect(result).toStrictEqual("Jan 31, 2024, 8:59 PM");
+  });
 
   it("invalid timezone", () => {
     const date = new Date("2024-01-31T12:00:00Z");
