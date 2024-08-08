@@ -49,7 +49,7 @@ describe("scaleAnnualPrice() function", (t) => {
     expect(result).toEqual(expectedResult);
   });
 
-  it("should scale a one year price to a one years price", () => {
+  it("should scale a one year price to a one year price", () => {
     const annualPrice = buildPrice(100n, Currency.Usd);
     const years = 1n;
     const duration = scaleDuration(SECONDS_PER_YEAR, years);
