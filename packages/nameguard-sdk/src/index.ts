@@ -401,8 +401,8 @@ export interface InspectedNameGuardReport extends AbstractNameGuardReport {
  * NameGuard report for a name that was exceptionally long and was not inspected for performance reasons.
  */
 export interface UninspectedNameGuardReport extends AbstractNameGuardReport {
-    labels: undefined;
-    canonical_name: undefined;
+    labels?: undefined;
+    canonical_name?: undefined;
     inspected: false;
     rating: Rating.alert;
     risk_count: 1;
