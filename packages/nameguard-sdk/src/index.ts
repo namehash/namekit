@@ -342,7 +342,7 @@ export interface LabelGuardReport extends ConsolidatedReport {
  * the details of the `NameGuardReport`.
  */
 export interface ConsolidatedNameGuardReport extends ConsolidatedReport {
-  /* The name that NameGuard inspected. Some labels in this name may be represented as "[labelhash]"
+  /** The name that NameGuard inspected. Some labels in this name may be represented as "[labelhash]"
    * if and only if all of the following is true:
    *
    * 1. The query sent to NameGuard when requesting the report represented the label as a "[labelhash]".
@@ -350,16 +350,16 @@ export interface ConsolidatedNameGuardReport extends ConsolidatedReport {
    */
   name: string;
 
-  /* The ENSIP-1 namehash of the name in hex format prefixed with 0x. */
+  /** The ENSIP-1 namehash of the name in hex format prefixed with 0x. */
   namehash: string;
 
-  /* The ENSIP-15 normalization status of `name` */
+  /** The ENSIP-15 normalization status of `name` */
   normalization: Normalization;
 
-  /* Beautified version of `name` */
+  /** Beautified version of `name` */
   beautiful_name: string;
 
-  /* Whether or not the name was inspected. If `false` then the name was exceptionally long and was not inspected for performance reasons */
+  /** Whether or not the name was inspected. If `false` then the name was exceptionally long and was not inspected for performance reasons */
   inspected: boolean;
 }
 
@@ -367,7 +367,7 @@ export interface ConsolidatedNameGuardReport extends ConsolidatedReport {
  * NameGuard report that contains the full results of all `checks` on all `labels` in a name.
  */
 export interface AbstractNameGuardReport extends ConsolidatedNameGuardReport {
-  /* The results of all checks performed by NameGuard on `name`. */
+  /** The results of all checks performed by NameGuard on `name`. */
   checks: CheckResult[];
 
   /** Details of the inspection of all labels in `name`.
