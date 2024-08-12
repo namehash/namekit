@@ -8,6 +8,7 @@ export * from "./hashutils";
 export * from "./nameparser";
 export * from "./nft";
 export * from "./number";
-export * from "./price";
 export * from "./time";
+export * from "./domain";
 export * from "./transaction";
+export * from "./price";
