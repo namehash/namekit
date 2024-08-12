@@ -265,7 +265,7 @@ class NameGuardReport(ConsolidatedNameGuardReport):
 
 class UninspectedNameGuardReport(NameGuardReport):
     """
-    Uninspected name analysis result without information about checks, labels, or canonical name.
+    Uninspected name analysis result. Contains a single failed check identifying the name was uninspected for performance reasons. The result of other checks, including results of label analysis or canonical name are not returned.
     """
 
     risk_count: Literal[1] = Field(description='The number of checks that have a status of `alert` or `warn`.')
