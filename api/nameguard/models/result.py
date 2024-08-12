@@ -252,7 +252,7 @@ class NameGuardReport(ConsolidatedNameGuardReport):
     )
 
     labels: Optional[list[LabelGuardReport]] = Field(
-        description='The analyzed labels of the name.\n' '* `null` if `inspected` field is false',
+        description='The analyzed labels of the name.\n' '* `null` if and only if `inspected` field is false',
     )
 
     canonical_name: Optional[str] = Field(

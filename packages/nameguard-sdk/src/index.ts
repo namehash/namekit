@@ -372,16 +372,16 @@ export interface AbstractNameGuardReport extends ConsolidatedNameGuardReport {
 
   /** Details of the inspection of all labels in `name`.
     *
-    * defined if and only if inspected is true.
+    * defined if and only if `inspected` is `true`.
   */
   labels?: LabelGuardReport[];
 
   /**
    * The name considered to be the canonical form of the analyzed `name`.
    *
-   * defined if and only if all of the following are true:
-   * - inspected is true,
-   * - the canonical form of name is considered to be defined (all characters in name have defined canonical forms).
+   * defined if and only if all of the following are `true`:
+   * - `inspected` is `true`,
+   * - the canonical form of `name` is considered to be defined (all characters in `name` have defined canonical forms).
    *
    * If a label is represented as `[labelhash]` in `name`,
    * the `canonical_name` will also contain the label represented as `[labelhash]`.
@@ -409,7 +409,7 @@ export interface UninspectedNameGuardReport extends AbstractNameGuardReport {
 }
 
 /**
- * InspectedNameGuardReport if `inspected` field is `true`, else UninspectedNameGuardReport.
+ * `InspectedNameGuardReport` if `inspected` field is `true`, else `UninspectedNameGuardReport`.
  */
 export type NameGuardReport = InspectedNameGuardReport | UninspectedNameGuardReport;
 
@@ -468,8 +468,12 @@ const DEFAULT_NETWORK: Network = "mainnet";
 const DEFAULT_INSPECT_LABELHASH_PARENT = ETH_TLD;
 export const DEFAULT_COMPUTE_NAMEGUARD_REPORT = false;
 const MAX_BULK_INSPECTION_NAMES = 250;
-export const MAX_INSPECTED_NAME_CHARACTERS = 200;  /* includes label separators */
-const MAX_INSPECTED_NAME_UNKNOWN_LABELS = 5;  /* includes duplicated unknown labels */
+
+/** includes label separators */
+export const MAX_INSPECTED_NAME_CHARACTERS = 200;
+
+/** includes duplicated unknown labels */
+const MAX_INSPECTED_NAME_UNKNOWN_LABELS = 5;
 
 export interface NameGuardOptions {
   endpoint?: string;
@@ -514,8 +518,8 @@ export class NameGuard {
   /**
    * Inspects a single name with NameGuard.
    *
-   * If `name` includes unknown labels then this function will attempt automated labelhash resolution through the ENS Subgraph,
-   * using the network specified in the NameGuard instance. Therefore the returned `name` may not match the provided `name`, but is guaranteed to have a matching `namehash`.
+   * If `name` includes unknown labels then this function will attempt automated labelhash resolution through the ENS Subgraph
+   * using the network specified in the `NameGuard` instance. Therefore the returned `name` may not match the provided `name`, but is guaranteed to have a matching `namehash`.
    *
    * @param {string} name The name for NameGuard to inspect.
    * @param {InspectNameOptions} options The options for the inspection.
@@ -583,7 +587,7 @@ export class NameGuard {
    * @param {InspectNamehashOptions} options The options for the inspection.
    * @returns {Promise<NameGuardReport>} A promise that resolves with the `NameGuardReport` of the name. Check the `inspected` field of the result to determine if the result is an `InspectedNameGuardReport` or an `UninspectedNameGuardReport` for performance reasons in the case that the provided `name` was exceptionally long.
    * @throws {NameGuardError} If the inspection fails due to network issues, server errors, or if the namehash cannot be resolved to a name.
-   * @throws {Error} If the provided namehash is not in a valid Keccak256 hash format.
+   * @throws {Error} If the provided `namehash` is not in a valid Keccak256 hash format.
    */
 
   public async inspectNamehash(
