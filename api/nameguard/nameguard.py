@@ -2,8 +2,10 @@ import os
 import re
 from typing import Union
 
+from nameguard.models.checks import UNINSPECTED_CHECK_RESULT
+from nameguard.models.result import UninspectedNameGuardReport
 from nameguard.our_ens import OurENS
-from ens_normalize import is_ens_normalized, ens_cure, DisallowedSequence
+from ens_normalize import is_ens_normalized, ens_cure, DisallowedSequence, ens_process
 
 import requests
 from label_inspector.inspector import Inspector
@@ -44,6 +46,8 @@ from nameguard.utils import (
     label_is_labelhash,
     compute_canonical_from_list,
     is_labelhash_eth,
+    MAX_INSPECTED_NAME_CHARACTERS,
+    labelhash_in_name,
 )
 from nameguard.exceptions import ProviderUnavailable, NotAGrapheme, MissingTitle
 from nameguard.logging import logger
@@ -115,6 +119,48 @@ def consolidated_report_from_simple_name(name: str) -> ConsolidatedNameGuardRepo
         rating=Rating.PASS,
         risk_count=0,
         highest_risk=None,
+        inspected=True,
+    )
+
+
+Uninspected_name_checks = [
+    UNINSPECTED_CHECK_RESULT,
+    checks.dna.normalized.UNINSPECTED_SKIP_CHECK_RESULT,
+    checks.dna.punycode.UNINSPECTED_SKIP_CHECK_RESULT,
+    checks.grapheme.confusables.UNINSPECTED_SKIP_CHECK_RESULT,
+    checks.grapheme.font_support.UNINSPECTED_SKIP_CHECK_RESULT,
+    checks.grapheme.invisible.UNINSPECTED_SKIP_CHECK_RESULT,
+    checks.grapheme.typing_difficulty.UNINSPECTED_SKIP_CHECK_RESULT,
+    checks.label.mixed_scripts.UNINSPECTED_SKIP_CHECK_RESULT,
+    checks.label.namewrapper.UNINSPECTED_SKIP_CHECK_RESULT,
+    checks.label.unknown.UNINSPECTED_SKIP_CHECK_RESULT,
+    checks.name.decentralized_name.UNINSPECTED_SKIP_CHECK_RESULT,
+    checks.name.impersonation_risk.UNINSPECTED_SKIP_CHECK_RESULT,
+    checks.name.namewrapper_fuses.UNINSPECTED_SKIP_CHECK_RESULT,
+]
+
+
+def consolidated_report_from_uninspected_name(name: str) -> UninspectedNameGuardReport:
+    res = ens_process(name, do_normalize=True, do_beautify=True)
+    beautified = res.beautified
+    normalized = name == res.normalized
+
+    return UninspectedNameGuardReport(
+        name=name,
+        namehash=namehash_from_name(name),
+        normalization=Normalization.UNKNOWN
+        if labelhash_in_name(name)
+        else Normalization.NORMALIZED
+        if normalized
+        else Normalization.UNNORMALIZED,
+        rating=Rating.ALERT,
+        risk_count=1,
+        highest_risk=UNINSPECTED_CHECK_RESULT,
+        beautiful_name=beautified,  # TODO computed twice
+        checks=Uninspected_name_checks,
+        labels=None,
+        canonical_name=None,
+        inspected=False,
     )
 
 
@@ -147,9 +193,16 @@ class NameGuard:
         Inspect a name. A name is a sequence of labels separated by dots.
         A label can be a labelhash or a string.
         If a labelhash is encountered and `resolve_labelhashes` is `True`, a lookup will be performed.
+        Returns UninspectedNameGuardReport if name was exceptionally long and was not inspected for performance reasons.
         """
+
+        logger.debug(f"[inspect_name] name: '{name}'")
+
         if resolve_labelhashes:
-            name = await resolve_all_labelhashes_in_name_querying_labelhashes(network_name, name)
+            resolved_name = await resolve_all_labelhashes_in_name_querying_labelhashes(network_name, name)
+            if resolved_name is None:
+                return consolidated_report_from_uninspected_name(name)
+            name = resolved_name
         return self.inspect_name_sync(name, bulk_mode)
 
     def inspect_name_sync(
@@ -162,6 +215,9 @@ class NameGuard:
         """
 
         logger.debug(f"[inspect_name] name: '{name}'")
+
+        if len(name) > MAX_INSPECTED_NAME_CHARACTERS:
+            return consolidated_report_from_uninspected_name(name)
 
         if bulk_mode and simple_name(name):
             return consolidated_report_from_simple_name(name)
@@ -296,6 +352,7 @@ class NameGuard:
                     labels_graphemes_checks,
                 )
             ],
+            inspected=True,
         )
 
     async def bulk_inspect_names(self, network_name: NetworkName, names: list[str]) -> BulkNameGuardBulkReport:
@@ -397,7 +454,10 @@ class NameGuard:
         else:
             nameguard_result = await self.inspect_name(network_name, domain)
 
-            if nameguard_result.normalization == Normalization.UNNORMALIZED:
+            if nameguard_result.highest_risk and nameguard_result.highest_risk.check.name == Check.UNINSPECTED.name:
+                status = SecurePrimaryNameStatus.UNINSPECTED
+                impersonation_status = None
+            elif nameguard_result.normalization == Normalization.UNNORMALIZED:
                 status = SecurePrimaryNameStatus.UNNORMALIZED
                 impersonation_status = None
             else:
@@ -435,7 +495,7 @@ class NameGuard:
         """
         contract_address = contract_address.lower()
 
-        res_json = await get_nft_metadata(contract_address, token_id)
+        res_json = await get_nft_metadata(network_name, contract_address, token_id)
 
         token_type = res_json['id']['tokenMetadata']['tokenType']
 

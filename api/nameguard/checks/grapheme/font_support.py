@@ -1,6 +1,5 @@
 from label_inspector.models import InspectorGraphemeWithConfusablesResult as Grapheme
-from nameguard.models import CheckStatus, Check, GenericCheckResult, GraphemeCheckResult
-
+from nameguard.models import CheckStatus, Check, GenericCheckResult, GraphemeCheckResult, UNINSPECTED_SKIP_MESSAGE
 
 STATUS = CheckStatus.WARN
 
@@ -36,3 +35,11 @@ def check_grapheme(grapheme: Grapheme) -> GenericCheckResult:
             _name_message=MESSAGE_PASS if passed else MESSAGE_FAIL,
             _title=TITLE_PASS if passed else TITLE_FAIL,
         )
+
+
+UNINSPECTED_SKIP_CHECK_RESULT = GraphemeCheckResult(
+    check=Check.FONT_SUPPORT,
+    status=CheckStatus.SKIP,
+    _name_message=UNINSPECTED_SKIP_MESSAGE,
+    _title=TITLE_SKIP,
+)
