@@ -15,9 +15,9 @@ export interface Duration {
 /**
  * Builds a `Duration`.
  *
- * @param seconds The non-negative number of seconds in the `Duration`.
- * @returns The resulting `Duration`.
- * @throws `Error` if `seconds` is negative.
+ * @param {bigint} seconds - The non-negative number of seconds in the `Duration`.
+ * @returns {Duration} The resulting `Duration`.
+ * @throws {Error} if `seconds` is negative.
  */
 export const buildDuration = (seconds: bigint): Duration => {
   if (seconds < 0n)
@@ -34,9 +34,9 @@ export const buildDuration = (seconds: bigint): Duration => {
 /**
  * Builds a `Duration` from a `TimePeriod`.
  *
- * @param timePeriod The `TimePeriod` to convert into a `Duration`.
- * @returns A `Duration` representing the distance in time between the end and
- *          beginning of the provided `TimePeriod`.
+ * @param {TimePeriod} timePeriod - The `TimePeriod` to convert into a `Duration`.
+ * @returns {Duration} The distance in time between the end and beginning of
+ *                     the provided `TimePeriod`.
  */
 export const buildDurationFromTimePeriod = (
   timePeriod: TimePeriod,
@@ -47,11 +47,11 @@ export const buildDurationFromTimePeriod = (
 /**
  * Scales a `Duration` by the given `scalar`.
  *
- * @param duration The `Duration` to scale.
- * @param scalar The scalar to scale the `Duration` by.
- * @returns The scaled `Duration`.
- * @throws `Error` if `scalar` is negative.
- * @throws `Error` if `scalar` is of type `number` and cannot be converted to `bigint`.
+ * @param {Duration} duration - The `Duration` to scale.
+ * @param {(bigint | number)} scalar - The scalar to scale the `Duration` by.
+ * @returns {Duration} The scaled `Duration`.
+ * @throws {Error} if `scalar` is negative.
+ * @throws {Error} if `scalar` is of type `number` and cannot be converted to `bigint`.
  */
 export const scaleDuration = (
   duration: Duration,
@@ -137,8 +137,8 @@ export interface TimestampMs {
 /**
  * Builds a `Timestamp`.
  *
- * @param secondsSinceUnixEpoch The number of seconds since the Unix epoch.
- * @returns The resulting `Timestamp`.
+ * @param {bigint} secondsSinceUnixEpoch - The number of seconds since the Unix epoch.
+ * @returns {Timestamp} The resulting `Timestamp`.
  */
 export const buildTimestamp = (secondsSinceUnixEpoch: bigint): Timestamp => {
   return {
@@ -149,8 +149,8 @@ export const buildTimestamp = (secondsSinceUnixEpoch: bigint): Timestamp => {
 /**
  * Builds a `TimestampMs`.
  *
- * @param millisecondsSinceUnixEpoch The number of milliseconds since the Unix epoch.
- * @returns The resulting `TimestampMs`.
+ * @param {bigint} millisecondsSinceUnixEpoch - The number of milliseconds since the Unix epoch.
+ * @returns {TimestampMs} The resulting `TimestampMs`.
  */
 export const buildTimestampMs = (
   millisecondsSinceUnixEpoch: bigint,
@@ -165,8 +165,8 @@ export const buildTimestampMs = (
  *
  * Fractional seconds are truncated.
  *
- * @param ms The `TimestampMs` to convert.
- * @returns The converted `Timestamp`.
+ * @param {TimestampMs} ms - The `TimestampMs` to convert.
+ * @returns {Timestamp} The converted `Timestamp`.
  */
 export const timestampMsToTimestamp = (ms: TimestampMs): Timestamp => {
   return buildTimestamp(ms.timeMs / MILLISECONDS_PER_SECOND);
@@ -175,8 +175,8 @@ export const timestampMsToTimestamp = (ms: TimestampMs): Timestamp => {
 /**
  * Converts a `Timestamp` to a `TimestampMs`.
  *
- * @param seconds The `Timestamp` to convert.
- * @returns The converted `TimestampMs`.
+ * @param {Timestamp} seconds - The `Timestamp` to convert.
+ * @returns {TimestampMs} The converted `TimestampMs`.
  */
 export const timestampToTimestampMs = (seconds: Timestamp): TimestampMs => {
   return buildTimestampMs(seconds.time * MILLISECONDS_PER_SECOND);
@@ -185,8 +185,8 @@ export const timestampToTimestampMs = (seconds: Timestamp): TimestampMs => {
 /**
  * Builds a `Date` from a `Timestamp`.
  *
- * @param timestamp The `Timestamp` to convert.
- * @returns The converted `Date` object.
+ * @param {Timestamp} timestamp - The `Timestamp` to convert.
+ * @returns {Date} The converted `Date` object.
  */
 export const buildDateFromTimestamp = (timestamp: Timestamp): Date => {
   return buildDateFromTimestampMs(timestampToTimestampMs(timestamp));
@@ -195,8 +195,8 @@ export const buildDateFromTimestamp = (timestamp: Timestamp): Date => {
 /**
  * Builds a `Date` from a `TimestampMs`.
  *
- * @param timestamp The `TimestampMs` to convert.
- * @returns The converted `Date` object.
+ * @param {TimestampMs} timestamp - The `TimestampMs` to convert.
+ * @returns {Date} The converted `Date` object.
  */
 export const buildDateFromTimestampMs = (timestamp: TimestampMs): Date => {
   return new Date(Number(timestamp.timeMs));
@@ -205,8 +205,8 @@ export const buildDateFromTimestampMs = (timestamp: TimestampMs): Date => {
 /**
  * Converts a `Date` to a `TimestampMs`.
  *
- * @param date The `Date` to convert.
- * @returns The converted `TimestampMs`.
+ * @param {Date} date - The `Date` to convert.
+ * @returns {TimestampMs} The converted `TimestampMs`.
  */
 export const buildTimestampMsFromDate = (date: Date): TimestampMs => {
   return buildTimestampMs(BigInt(date.getTime()));
@@ -215,8 +215,8 @@ export const buildTimestampMsFromDate = (date: Date): TimestampMs => {
 /**
  * Converts a `Date` to a `Timestamp`.
  *
- * @param date The `Date` to convert.
- * @returns The converted `Timestamp`.
+ * @param {Date} date - The `Date` to convert.
+ * @returns {Timestamp} The converted `Timestamp`.
  */
 export const buildTimestampFromDate = (date: Date): Timestamp => {
   return timestampMsToTimestamp(buildTimestampMsFromDate(date));
@@ -225,7 +225,7 @@ export const buildTimestampFromDate = (date: Date): Timestamp => {
 /**
  * Returns the current time in milliseconds.
  *
- * @returns The current `TimestampMs` in millisceonds.
+ * @returns {TimestampMs} The current `TimestampMs` in millisceonds.
  */
 export const nowMs = (): TimestampMs => {
   return buildTimestampMs(BigInt(Date.now()));
@@ -234,7 +234,7 @@ export const nowMs = (): TimestampMs => {
 /**
  * Returns the current time in seconds.
  *
- * @returns The current `Timestamp` in seconds.
+ * @returns {Timestamp} The current `Timestamp` in seconds.
  */
 export const now = (): Timestamp => {
   return timestampMsToTimestamp(nowMs());
@@ -243,10 +243,10 @@ export const now = (): Timestamp => {
 /**
  * Builds a new `Timestamp` that is incremented by the provided `Duration`.
  *
- * @param timestamp The `Timestamp` to increment.
- * @param seconds The `Duration` to increment the `Timestamp` by.
- * @returns A new `Timestamp` that is the result of incrementing the provided
- *          `Timestamp` by the provided `Duration`.
+ * @param {Timestamp} timestamp - The `Timestamp` to increment.
+ * @param {Duration} seconds - The `Duration` to increment the `Timestamp` by.
+ * @returns {Timestamp} A new `Timestamp` that is the result of incrementing
+ *                      the provided `Timestamp` by the provided `Duration`.
  */
 export const addSeconds = (
   timestamp: Timestamp,
@@ -258,10 +258,10 @@ export const addSeconds = (
 /**
  * Builds a new `Timestamp` that is decrremented by the provided `Duration`.
  *
- * @param timestamp The `Timestamp` to decrement.
- * @param seconds The `Duration` to decrement the `Timestamp` by.
- * @returns A new `Timestamp` that is the result of decrementing the provided
- *          `Timestamp` by the provided `Duration`.
+ * @param {Timestamp} timestamp - The `Timestamp` to decrement.
+ * @param {Duration} seconds - The `Duration` to decrement the `Timestamp` by.
+ * @returns {Timestamp} A new `Timestamp` that is the result of decrementing
+ *                      the provided `Timestamp` by the provided `Duration`.
  */
 export const subtractSeconds = (
   timestamp: Timestamp,
@@ -274,10 +274,10 @@ export const subtractSeconds = (
  * Returns the absolute distance between two `Timestamp` values as a
  * `Duration`.
  *
- * @param timestamp1 The first `Timestamp`.
- * @param timestamp2 The second `Timestamp`.
- * @returns The absolute distance between the two `Timestamp` values as a
- *          `Duration`.
+ * @param {Timestamp} timestamp1 - The first `Timestamp`.
+ * @param {Timestamp} timestamp2 - The second `Timestamp`.
+ * @returns {Duration} The absolute distance between the two `Timestamp` values
+ *                     as a `Duration`.
  */
 export const absoluteTimestampDistance = (
   timestamp1: Timestamp,
@@ -322,21 +322,22 @@ const DEFAULT_LOCALE = "en-US";
 /**
  * Formats a `Timestamp` as `string`.
  * 
- * @param timestamp The `Timestamp` to format.
- * @param options Optional. The options for how to format the `Timestamp`.
- * @returns The formatted `Timestamp`.
- * @throws `RangeError` if `options.timeZone` is provided but is not a valid
+ * @param {Timestamp} timestamp - The `Timestamp` to format.
+ * @param {FormatTimestampOptions} [options] - Optional. The options for how to
+ *                                             format the `Timestamp`.
+ * @returns {Timestamp} The formatted `Timestamp`.
+ * @throws {RangeError} if `options.timeZone` is provided but is not a valid
  *         IANA time zone identifier.
- * @throws `RangeError` if `options.locales` is provided but is not a
+ * @throws {RangeError} if `options.locales` is provided but is not a
  *         syntactically valid.
- * @example date and time
-    const timestamp = buildTimestampFromDate(new Date("2024-01-01T01:01:01Z"));
-    formatTimestamp(timestamp);
-    // "Jan 1, 2024, 1:01 AM" (assuming the system time zone is UTC)
- * @example date only
-    const timestamp = buildTimestampFromDate(new Date("2024-01-01T01:01:01Z"));
-    formatTimestamp(timestamp, { showDateOnly: true });
-    // "Jan 1, 2024" (assuming the system time zone is UTC)
+ * @example <caption>date and time</caption>
+ *  const timestamp = buildTimestampFromDate(new Date("2024-01-01T01:01:01Z"));
+ *  formatTimestamp(timestamp);
+ *  // "Jan 1, 2024, 1:01 AM" (assuming the system time zone is UTC)
+ * @example <caption>date only</caption>
+ *  const timestamp = buildTimestampFromDate(new Date("2024-01-01T01:01:01Z"));
+ *  formatTimestamp(timestamp, { showDateOnly: true });
+ *  // "Jan 1, 2024" (assuming the system time zone is UTC)
  */
 export const formatTimestamp = (
   timestamp: Timestamp,
@@ -406,10 +407,10 @@ export const formatTimestamp = (
  * The output locale is always en-US.
  * Distances are rounded down to the nearest whole unit.
  *
- * @param timestamp The `Timestamp` to format.
- * @param baseTimestamp The `Timestamp` to use as the base for the distance
- *                      calculation.
- * @returns The distance between the given `Timestamp` values in words.
+ * @param {Timestamp} timestamp - The `Timestamp` to format.
+ * @param {Timestamp} baseTimestamp - The `Timestamp` to use as the base for
+ *                                    the distance calculation.
+ * @returns {string} The distance between the given `Timestamp` values in words.
  *
  */
 export const formatTimestampAsDistance = (
@@ -454,8 +455,8 @@ export const formatTimestampAsDistance = (
  * The output locale is always en-US.
  * Distances are rounded down to the nearest whole unit.
  *
- * @param timestamp The `Timestamp` to format.
- * @returns The distance between the given `Timestamp` and now in words.
+ * @param {Timestamp} timestamp - The `Timestamp` to format.
+ * @returns {string} The distance between the given `Timestamp` and now in words.
  *
  */
 export const formatTimestampAsDistanceToNow = (
@@ -472,7 +473,7 @@ export const formatTimestampAsDistanceToNow = (
  * - All `TimePeriod` are inclusive, meaning that the beginning and end
  *   `Timestamp` values are always included in the range.
  * - The begin `Timestamp` is always before or the same as the end `Timestamp`.
- * - A `TimePeriod` may be a single point in time if the begin and end
+ * - A `TimePeriod` is a single point in time if the begin and end
  *   `Timestamp` values are equal.
  */
 export interface TimePeriod {
@@ -491,10 +492,10 @@ export interface TimePeriod {
 /**
  * Builds a `TimePeriod`.
  *
- * @param begin The beginning of the `TimePeriod`.
- * @param end The end of the `TimePeriod`.
- * @returns The resulting `TimePeriod`.
- * @throws `Error` if `begin` is after `end`.
+ * @param {Timestamp} begin - The beginning of the `TimePeriod`.
+ * @param {Timestamp} end - The end of the `TimePeriod`.
+ * @returns {TimePeriod} The resulting `TimePeriod`.
+ * @throws {Error} if `begin` is after `end`.
  */
 export const buildTimePeriod = (
   begin: Timestamp,
@@ -514,10 +515,10 @@ export const buildTimePeriod = (
  * Identifies if the given `Timestamp` is within the given `TimePeriod`
  * (inclusive).
  *
- * @param period The `TimePeriod` to check.
- * @param timestamp The `Timestamp` to check.
- * @returns `true` if the `Timestamp` is within the `TimePeriod`, otherwise
- *          `false`.
+ * @param {TimePeriod} period - The `TimePeriod` to check.
+ * @param {Timestamp} timestamp - The `Timestamp` to check.
+ * @returns {boolean} `true` if the `Timestamp` is within the `TimePeriod`,
+ *                    otherwise `false`.
  */
 export const isOverlappingTimestamp = (
   period: TimePeriod,
@@ -531,9 +532,10 @@ export const isOverlappingTimestamp = (
 /**
  * Identifies if the given `TimePeriod` values overlap (inclusive).
  *
- * @param period1 The first `TimePeriod` to check.
- * @param period2 The second `TimePeriod` to check.
- * @returns `true` if the `TimePeriod` values overlap, otherwise `false`.
+ * @param {TimePeriod} period1 - The first `TimePeriod` to check.
+ * @param {TimePeriod} period2 - The second `TimePeriod` to check.
+ * @returns {boolean} `true` if the `TimePeriod` values overlap, otherwise
+ *                    `false`.
  */
 export const isOverlappingTimePeriod = (
   period1: TimePeriod,
@@ -592,9 +594,10 @@ export interface IndefiniteTimePeriod {
 /**
  * Builds an `IndefiniteTimePeriod`.
  *
- * @param boundary The definite moment that the `IndefiniteTimePeriod` begins or ends.
- * @param type The type of `IndefiniteTimePeriod`.
- * @returns The resulting `IndefiniteTimePeriod`.
+ * @param {Timestamp} boundary - The definite moment that the
+ *                               `IndefiniteTimePeriod` begins or ends.
+ * @param {IndefiniteTimePeriodType} type - The type of `IndefiniteTimePeriod`.
+ * @returns {IndefiniteTimePeriod} The resulting `IndefiniteTimePeriod`.
  */
 export const buildIndefiniteTimePeriod = (
   boundary: Timestamp,
@@ -607,13 +610,13 @@ export const buildIndefiniteTimePeriod = (
 };
 
 /**
- * Identifies if the `IndefiniteTimePeriod` overlaps with the `Timestamp`
- * (inclusive).
+ * Identifies if the `IndefiniteTimePeriod` has any overlap with the
+ * `Timestamp` (inclusive).
  *
- * @param indefinitePeriod The `IndefiniteTimePeriod` to check.
- * @param timestamp The `Timestamp` to check.
- * @returns `true` if the `Timestamp` is within the `IndefiniteTimePeriod`,
- *          otherwise `false`.
+ * @param {IndefiniteTimePeriod} indefinitePeriod - The `IndefiniteTimePeriod` to check.
+ * @param {Timestamp} timestamp - The `Timestamp` to check.
+ * @returns {boolean} `true` if `timestamp` is within the `indefinitePeriod`,
+ *                    otherwise `false`.
  */
 export const isTimestampOverlappingIndefiniteTimePeriod = (
   indefinitePeriod: IndefiniteTimePeriod,
@@ -627,13 +630,14 @@ export const isTimestampOverlappingIndefiniteTimePeriod = (
 };
 
 /**
- * Identifies if the `IndefiniteTimePeriod` overlaps with the `TimePeriod`
- * (inclusive).
+ * Identifies if the `IndefiniteTimePeriod` has any overlap with the
+ * `TimePeriod` (inclusive).
  *
- * @param indefinitePeriod The `IndefiniteTimePeriod` to check.
- * @param period The `TimePeriod` to check.
- * @returns `true` if the `TimePeriod` is within the `IndefiniteTimePeriod`,
- *          otherwise `false`.
+ * @param {IndefiniteTimePeriod} indefinitePeriod - The `IndefiniteTimePeriod`
+ *                                                  to check.
+ * @param {TimePeriod} period - The `TimePeriod` to check.
+ * @returns {boolean} `true` if `period` is within the
+ *                    `indefinitePeriod`, otherwise `false`.
  */
 export const isTimePeriodOverlappingIndefiniteTimePeriod = (
   indefinitePeriod: IndefiniteTimePeriod,
@@ -649,11 +653,12 @@ export const isTimePeriodOverlappingIndefiniteTimePeriod = (
 };
 
 /**
- * Identifies if the `IndefiniteTimePeriod` values overlap (inclusive).
+ * Identifies if the `IndefiniteTimePeriod` values have any overlap (inclusive).
  *
- * @param period1 The first `IndefiniteTimePeriod` to check.
- * @param period2 The second `IndefiniteTimePeriod` to check.
- * @returns `true` if the `IndefiniteTimePeriods` overlap, otherwise `false`.
+ * @param {IndefiniteTimePeriod} period1 The first `IndefiniteTimePeriod` to check.
+ * @param {IndefiniteTimePeriod} period2 The second `IndefiniteTimePeriod` to check.
+ * @returns {boolean} `true` if `period1` has any overlap with `period2`,
+ *                    otherwise `false`.
  */
 export const isOverlappingIndefiniteTimePeriod = (
   period1: IndefiniteTimePeriod,
