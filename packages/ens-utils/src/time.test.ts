@@ -207,13 +207,11 @@ describe("subtractSeconds() function", () => {
 
 describe("absoluteTimestampDistance() function", () => {
   it("same Timestamp", () => {
-    const date1 = new Date("2024-01-01T00:00:00Z");
-    const timestamp1 = buildTimestampFromDate(date1);
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date);
+    const timestamp2 = buildTimestampFromDate(date);
 
-    const date2 = new Date("2024-01-01T00:00:00Z");
-    const timestamp2 = buildTimestampFromDate(date2);
-
-    const result = absoluteTimestampDistance(timestamp1, timestamp1).seconds;
+    const result = absoluteTimestampDistance(timestamp1, timestamp2).seconds;
     const expectedResult = 0n;
 
     expect(result).toStrictEqual(expectedResult);
