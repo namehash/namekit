@@ -1,13 +1,18 @@
 "use client";
 
-import { PreSectionText, SectionText, SectionTitle } from "../1 - atoms";
+import {
+  ExternalLinkIcon,
+  PreSectionText,
+  SectionText,
+  SectionTitle,
+} from "../1 - atoms";
 import { Balancer } from "react-wrap-balancer";
 import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { Profile, getCachedProfile } from "@/data/ensProfiles";
 import { AvatarSize, UltimateENSAvatar } from ".";
 import { getNameHashLabsAvatarCallbacks } from "@/lib/client/nh-labs-avatar";
-import { Button } from "@namehash/namekit-react";
+import { Button, IconButton } from "@namehash/namekit-react";
 
 export const OurSuportersSection = () => {
   return (
@@ -84,10 +89,12 @@ const AdditionalSupportersContainer = () => {
         target="_blank"
         href="https://snapshot.org/#/ens.eth/proposal/0x6ba81cd2997288cc49ae1b95921ec8f107e8ffb9733321d53d488e2b30710b86"
       >
-        <Button className="">
+        <IconButton
+          iconPosition="right"
+          icon={<ExternalLinkIcon className="text-white w-5 h-5" />}
+        >
           View more
-          <ArrowTopRightOnSquareIcon className="text-white w-4 h-4" />
-        </Button>
+        </IconButton>
       </a>
     </div>
   );
