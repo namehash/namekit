@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { scaleAnnualPrice } from "./registrar";
-import { buildPrice } from "./price";
+import { buildPrice, scaleAnnualPrice } from "./price";
 import { Currency } from "./currency";
 import { scaleDuration, SECONDS_PER_YEAR } from "./time";
 
