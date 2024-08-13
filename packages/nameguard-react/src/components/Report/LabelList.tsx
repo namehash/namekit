@@ -8,7 +8,7 @@ type LabelListProps = {
 };
 
 export function LabelList({ items = [] }: LabelListProps) {
-  const rawLabels = items.map((i) => i.label) ?? [];
+  const rawLabels = items?.map((i) => i.label) ?? [];
 
   return items?.map((label, index) => (
     <LabelListItem
