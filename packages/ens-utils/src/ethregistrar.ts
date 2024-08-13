@@ -39,9 +39,9 @@ import {
   RegistrationPriceQuote,
   RegistrarAction,
   RenewalPriceQuote,
-  OnchainRegistrar,
-  MAINNET_ENS_REGISTRY_WITH_FALLBACK_CONTRACT,
+  Registrar,
 } from "./registrar";
+import { MAINNET_ENS_REGISTRY, Registry } from "./registry";
 import { scaleAnnualPrice } from "./price";
 import { MAINNET } from "./chain";
 import { buildAddress } from "./address";
@@ -54,13 +54,15 @@ import { buildAddress } from "./address";
  * These registrars enable trustless decentralized subnames to be issued 
  * as NFTs on Ethereum L1.
  */
-export class EthRegistrar implements OnchainRegistrar {
+export class EthRegistrar implements Registrar {
   public static readonly Name = buildENSName(ETH_TLD);
   
   protected readonly registrarContract: ContractRef;
+  protected readonly registry: Registry;
 
-  public constructor(registrarContract: ContractRef) {
+  public constructor(registrarContract: ContractRef, registry: Registry) {
     this.registrarContract = registrarContract;
+    this.registry = registry;
   }
 
   public getName = (): ENSName => {
@@ -100,8 +102,8 @@ export class EthRegistrar implements OnchainRegistrar {
     return this.registrarContract;
   }
 
-  public getOnchainRegistry(): ContractRef {
-    return MAINNET_ENS_REGISTRY_WITH_FALLBACK_CONTRACT;
+  public getRegistry(): Registry {
+    return this.registry;
   }
 
   public canRegister(
@@ -633,8 +635,10 @@ export const MAINNET_CLASSIC_ETH_REGISTRAR_CONTROLLER_CONTRACT =
 
 export const MAINNET_WRAPPING_ETH_REGISTRAR_CONTROLLER = new EthRegistrar(
   MAINNET_WRAPPING_ETH_REGISTRAR_CONTROLLER_CONTRACT,
+  MAINNET_ENS_REGISTRY
 );
 
 export const MAINNET_CLASSIC_ETH_REGISTRAR_CONTROLLER = new EthRegistrar(
   MAINNET_CLASSIC_ETH_REGISTRAR_CONTROLLER_CONTRACT,
+  MAINNET_ENS_REGISTRY
 );
