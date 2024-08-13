@@ -15,6 +15,7 @@ import {
   buildTimePeriod,
   formatTimestampAsDistanceToNow,
   now,
+  scaleDuration,
 } from "./time";
 import {
   Price,
@@ -124,11 +125,8 @@ export class EthRegistrar implements OnchainRegistrar {
       }
     }
 
-    if (duration.seconds < 1n) {
-      // TODO: enforce that `duration` is the minimum duration allowed for a registration
-      // TODO: need to put the right constant here.
+    if (!isValidRegistrationDuration(duration))
       return false;
-    }
 
     return true;
   }
@@ -357,25 +355,109 @@ export class EthRegistrar implements OnchainRegistrar {
 }
 
 /**
+ * The minimum days a .eth name can be registered for.
+ * 
+ * This value is enforced by EthRegistrarController contracts.
+ */
+export const MIN_REGISTRATION_PERIOD_DAYS = 28n;
+
+/**
+ * The minimum Duration a .eth name can be registered for.
+ * 
+ * This value is enforced by EthRegistrarController contracts.
+ * 
+ * 28 days or 2,419,200 seconds.
+ */
+export const MIN_REGISTRATION_PERIOD: Readonly<Duration> = scaleDuration(SECONDS_PER_DAY, MIN_REGISTRATION_PERIOD_DAYS);
+
+/**
+ * The minimum Duration a .eth name can be renewed for.
+ * 
  * 1 second.
+ * 
+ * This value is enforced by EthRegistrarController contracts.
  */
 export const MIN_RENEWAL_DURATION: Readonly<Duration> = buildDuration(1n);
 
 /**
- * 90 days.
+ * The maximum days before the registration of a .eth name expires when we
+ * consider it helpful to provide a more visible notice that the name expires
+ * soon and should be renewed as soon as possible to avoid loss.
+ * 
+ * This is an arbitrary value we selected for UX purposes. It is not an ENS
+ * standard and is not enforced by any EthRegistrarController contracts.
  */
-export const GRACE_PERIOD: Readonly<Duration> = buildDuration(
-  90n * SECONDS_PER_DAY.seconds,
-);
-
-export const TEMPORARY_PREMIUM_DAYS = 21n;
+export const MAX_EXPIRING_SOON_PERIOD_DAYS = 90n;
 
 /**
- * 21 days.
+ * The Duration before the registration of a .eth name expires when we
+ * consider it helpful to provide a more visible notice that the name expires
+ * soon and should be renewed as soon as possible to avoid loss.
+ * 
+ * This is an arbitrary value we selected for UX purposes. It is not an ENS
+ * standard and is not enforced by any EthRegistrarController contracts.
+ * 
+ * 90 days or 7,776,000 seconds.
  */
-export const TEMPORARY_PREMIUM_PERIOD: Readonly<Duration> = buildDuration(
-  TEMPORARY_PREMIUM_DAYS * SECONDS_PER_DAY.seconds,
-);
+export const MAX_EXPIRING_SOON_PERIOD: Readonly<Duration> = scaleDuration(SECONDS_PER_DAY, MAX_EXPIRING_SOON_PERIOD_DAYS);
+
+/**
+ * The number of days an expired registration of a .eth name is in a grace
+ * period prior to being released to the public.
+ * 
+ * This value is enforced by EthRegistrarController contracts.
+ */
+export const GRACE_PERIOD_DAYS = 90n;
+
+/**
+ * The Duration an expired registration of a .eth name is in a grace period
+ * prior to being released to the public.
+ * 
+ * This value is enforced by EthRegistrarController contracts.
+ * 
+ * 90 days or 7,776,000 seconds.
+ */
+export const GRACE_PERIOD: Readonly<Duration> = scaleDuration(SECONDS_PER_DAY, GRACE_PERIOD_DAYS);
+
+/**
+ * The number of days a recently released .eth name has a temporary premium
+ * price applied.
+ * 
+ * This value is enforced by EthRegistrarController contracts.
+ */
+export const TEMPORARY_PREMIUM_PERIOD_DAYS = 21n;
+
+/**
+ * The Duration a recently released .eth name has a temporary premium price applied.
+ * 
+ * This value is enforced by EthRegistrarController contracts.
+ * 
+ * 21 days or 1,814,400 seconds.
+ */
+export const TEMPORARY_PREMIUM_PERIOD: Readonly<Duration> = scaleDuration(SECONDS_PER_DAY, TEMPORARY_PREMIUM_PERIOD_DAYS);
+
+/**
+ * Identifies if the provided `duration` of registration would be accepted by
+ * EthRegistrarController contracts.
+ * 
+ * @param duration The registration duration to evaluate.
+ * @returns true if the provided `duration` is valid, false otherwise.
+ */
+const isValidRegistrationDuration = (duration: Duration): boolean => {
+  return duration.seconds >= MIN_REGISTRATION_PERIOD.seconds;
+}
+
+/**
+ * Validates that the provided `duration` of registration would be accepted by
+ * EthRegistrarController contracts.
+ * 
+ * @param duration The registration duration to evaluate.
+ * @throws Error if the provided `duration` is not valid.
+ */
+const validateRegistrationDuration = (duration: Duration): void => {
+  if (!isValidRegistrationDuration(duration))
+    throw new Error(`Invalid registration duration: ${duration.seconds} seconds. Minimum registration period is ${MIN_REGISTRATION_PERIOD_DAYS} days or ${MIN_REGISTRATION_PERIOD.seconds} seconds.`);
+}
 
 // REGISTRATION PRICE ⬇️
 
@@ -383,7 +465,7 @@ export const TEMPORARY_PREMIUM_PERIOD: Readonly<Duration> = buildDuration(
  * At the moment a .eth name expires, this recently released temporary premium is added to its price.
  * NOTE: The actual recently released temporary premium added subtracts `PREMIUM_OFFSET`.
  */
-export const PREMIUM_START_PRICE: Price = {
+const PREMIUM_START_PRICE: Price = {
   value: 10000000000n /* $100,000,000.00 (100 million USD) */,
   currency: Currency.Usd,
 };
@@ -405,9 +487,9 @@ const PREMIUM_DECAY = 0.5;
  * Solution:
  *  Subtract this value from the decayed temporary premium to get the actual temporary premium.
  */
-export const PREMIUM_OFFSET = approxScalePrice(
+const PREMIUM_OFFSET = approxScalePrice(
   PREMIUM_START_PRICE,
-  PREMIUM_DECAY ** Number(TEMPORARY_PREMIUM_DAYS),
+  PREMIUM_DECAY ** Number(TEMPORARY_PREMIUM_PERIOD_DAYS),
 );
 
 /**
