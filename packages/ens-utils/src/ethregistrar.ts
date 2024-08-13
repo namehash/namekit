@@ -31,7 +31,6 @@ import {
   RegistrarChargeType,
   RegistrarUnsupportedNameError,
   Registration,
-  scaleAnnualPrice,
   SecondaryRegistrationStatus,
   RegistrarCharge,
   RegistrarTemporaryFee,
@@ -43,6 +42,7 @@ import {
   OnchainRegistrar,
   MAINNET_ENS_REGISTRY_WITH_FALLBACK_CONTRACT,
 } from "./registrar";
+import { scaleAnnualPrice } from "./price";
 import { MAINNET } from "./chain";
 import { buildAddress } from "./address";
 

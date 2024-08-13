@@ -3,8 +3,8 @@ import { MAINNET } from "./chain";
 import { buildContractRef, ContractRef } from "./contract";
 import { ENSName } from "./ensname";
 import { NFTIssuer } from "./nft";
-import { approxScalePrice, Price } from "./price";
-import { Duration, SECONDS_PER_YEAR, TimePeriod, Timestamp } from "./time";
+import { Price } from "./price";
+import { Duration, TimePeriod, Timestamp } from "./time";
 
 // REGISTRATION STATUSES ⬇️
 
@@ -319,17 +319,6 @@ export class RegistrarUnsupportedNameError extends Error {
     Error.captureStackTrace(this, this.constructor);
   }
 }
-
-export const scaleAnnualPrice = (annualPrice: Price, duration: Duration) => {
-  // Small performance optimization if no scaling is needed
-  if (duration.seconds === SECONDS_PER_YEAR.seconds) return annualPrice;
-
-  // TODO: verify we're doing this division of bigints correctly
-  const scaledRate =
-    Number(duration.seconds) / Number(SECONDS_PER_YEAR.seconds);
-
-  return approxScalePrice(annualPrice, scaledRate);
-};
 
 /**
  * This is the current ENS registry.

@@ -4,6 +4,7 @@ import {
   PriceCurrencyFormat,
 } from "./currency";
 import { approxScaleBigInt, stringToBigInt } from "./number";
+import { Duration, SECONDS_PER_YEAR } from "./time";
 
 export interface Price {
   // TODO: consider adding a constraint where value is never negative
@@ -224,4 +225,15 @@ export const buildPrice = (
   }
 
   return { value: priceValue, currency: priceCurrency };
+};
+
+export const scaleAnnualPrice = (annualPrice: Price, duration: Duration) => {
+  // Small performance optimization if no scaling is needed
+  if (duration.seconds === SECONDS_PER_YEAR.seconds) return annualPrice;
+
+  // TODO: verify we're doing this division of bigints correctly
+  const scaledRate = Number(duration.seconds) / Number(SECONDS_PER_YEAR.seconds);
+
+  // TODO: verify we're using an appropriate number of digits of precision
+  return approxScalePrice(annualPrice, scaledRate);
 };
