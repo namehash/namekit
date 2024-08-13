@@ -1,4 +1,11 @@
-import { describe, it } from "vitest";
+import { describe, expect, it } from "vitest";
+import { buildENSName, ENSName } from "./ensname";
+import { buildNFTRef, buildNFTRefFromENSName, NFTIssuer } from "./nft";
+import { MAINNET, SEPOLIA } from "./chain";
+import {
+  MAINNET_ETH_BASE_REGISTRAR_IMPLEMENTATION,
+  MAINNET_NAMEWRAPPER,
+} from "./ethregistrar";
 
 // TODO: add a lot more unit tests here
 
@@ -76,5 +83,68 @@ describe("getPriceDescription", () => {
     */
     it("should return $0 price for a domain that `atTimestamp` there is no temporaryPremium", () => {});
     it("should return a temporaryPremium for a domain that `atTimestamp` there is temporaryPremium", () => {});
+  });
+});
+
+function testNFTRefFromIssuer(
+  name: ENSName,
+  issuer: NFTIssuer,
+  isWrapped: boolean,
+): void {
+  const expectedToken = issuer.getTokenId(name, isWrapped);
+  const expectedNFT = buildNFTRef(issuer.getContractRef(), expectedToken);
+  const result = buildNFTRefFromENSName(
+    name,
+    issuer.getContractRef().chain,
+    isWrapped,
+  );
+  expect(result).toStrictEqual(expectedNFT);
+}
+
+describe("buildNFTRefFromENSName", () => {
+  it("unrecognized registrar", () => {
+    expect(() =>
+      buildNFTRefFromENSName(buildENSName("foo.eth"), SEPOLIA, false),
+    ).toThrow();
+  });
+
+  it("unwrapped non-.eth TLD", () => {
+    expect(() =>
+      buildNFTRefFromENSName(buildENSName("foo.com"), MAINNET, false),
+    ).toThrow();
+  });
+
+  it("wrapped non-.eth TLD", () => {
+    const name = buildENSName("foo.com");
+    const registrar = MAINNET_NAMEWRAPPER;
+    const isWrapped = true;
+    testNFTRefFromIssuer(name, registrar, isWrapped);
+  });
+
+  it("unwrapped subname of a .eth subname", () => {
+    expect(() =>
+      buildNFTRefFromENSName(buildENSName("x.foo.eth"), MAINNET, false),
+    ).toThrow();
+  });
+
+  it("wrapped subname of a .eth subname", () => {
+    const name = buildENSName("x.foo.eth");
+    const registrar = MAINNET_NAMEWRAPPER;
+    const isWrapped = true;
+    testNFTRefFromIssuer(name, registrar, isWrapped);
+  });
+
+  it("unwrapped direct subname of .eth", () => {
+    const name = buildENSName("foo.eth");
+    const registrar = MAINNET_ETH_BASE_REGISTRAR_IMPLEMENTATION;
+    const isWrapped = false;
+    testNFTRefFromIssuer(name, registrar, isWrapped);
+  });
+
+  it("wrapped direct subname of .eth", () => {
+    const name = buildENSName("foo.eth");
+    const registrar = MAINNET_NAMEWRAPPER;
+    const isWrapped = true;
+    testNFTRefFromIssuer(name, registrar, isWrapped);
   });
 });

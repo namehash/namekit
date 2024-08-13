@@ -45,24 +45,27 @@ import { MAINNET_ENS_REGISTRY, Registry } from "./registry";
 import { scaleAnnualPrice } from "./price";
 import { ChainId, MAINNET } from "./chain";
 import { buildAddress } from "./address";
+import { buildTokenId, KNOWN_NFT_ISSUERS, NFTIssuer, TokenId } from "./nft";
+import { labelhash, namehash } from "viem";
 
 /**
  * The `EthRegistrar` models the policy implmentations shared by both of
  * the registrar controller contracts that actively issue subnames for the .eth
  * TLD (as of July 2024).
- *  
- * These registrars enable trustless decentralized subnames to be issued 
+ *
+ * These registrars enable trustless decentralized subnames to be issued
  * as NFTs on Ethereum L1.
  */
 export class EthRegistrar implements Registrar {
   public static readonly Name = buildENSName(ETH_TLD);
-  
+
   protected readonly registrar: ContractRef;
   protected readonly registry: Registry;
+  protected readonly nftIssuer: NFTIssuer;
 
   /**
    * Builds a new `EthRegistrar` instance using the provided configuration.
-   * 
+   *
    * @param chain The chain to use for the `EthRegistrar`.
    * @param useNameWrapper If `true`, this `EthRegistrar` will use the
    *                       NameWrapper on the selected `chain`.
@@ -71,11 +74,12 @@ export class EthRegistrar implements Registrar {
   public constructor(chain: ChainId = MAINNET, useNameWrapper: boolean = true) {
     this.registrar = getRegistrarForChain(chain, useNameWrapper);
     this.registry = getRegistryForChain(chain);
+    this.nftIssuer = getNFTIssuerForChain(chain, useNameWrapper);
   }
 
   public getName = (): ENSName => {
     return EthRegistrar.Name;
-  }
+  };
 
   public getManagedSubname = (name: ENSName): ENSName | null => {
     // must have exactly 2 labels to be a direct subname of ".eth"
@@ -114,6 +118,10 @@ export class EthRegistrar implements Registrar {
     return this.registry;
   }
 
+  public getNFTIssuer(): NFTIssuer {
+    return this.nftIssuer;
+  }
+
   public canRegister(
     name: ENSName,
     atTimestamp: Timestamp,
@@ -135,8 +143,7 @@ export class EthRegistrar implements Registrar {
       }
     }
 
-    if (!isValidRegistrationDuration(duration))
-      return false;
+    if (!isValidRegistrationDuration(duration)) return false;
 
     return true;
   }
@@ -214,8 +221,7 @@ export class EthRegistrar implements Registrar {
       }
     }
 
-    if (duration.seconds < MIN_RENEWAL_DURATION.seconds)
-      return false;
+    if (duration.seconds < MIN_RENEWAL_DURATION.seconds) return false;
 
     return true;
   }
@@ -366,25 +372,28 @@ export class EthRegistrar implements Registrar {
 
 /**
  * The minimum days a .eth name can be registered for.
- * 
+ *
  * This value is enforced by EthRegistrarController contracts.
  */
 export const MIN_REGISTRATION_PERIOD_DAYS = 28n;
 
 /**
  * The minimum Duration a .eth name can be registered for.
- * 
+ *
  * This value is enforced by EthRegistrarController contracts.
- * 
+ *
  * 28 days or 2,419,200 seconds.
  */
-export const MIN_REGISTRATION_PERIOD: Readonly<Duration> = scaleDuration(SECONDS_PER_DAY, MIN_REGISTRATION_PERIOD_DAYS);
+export const MIN_REGISTRATION_PERIOD: Readonly<Duration> = scaleDuration(
+  SECONDS_PER_DAY,
+  MIN_REGISTRATION_PERIOD_DAYS,
+);
 
 /**
  * The minimum Duration a .eth name can be renewed for.
- * 
+ *
  * 1 second.
- * 
+ *
  * This value is enforced by EthRegistrarController contracts.
  */
 export const MIN_RENEWAL_DURATION: Readonly<Duration> = buildDuration(1n);
@@ -393,7 +402,7 @@ export const MIN_RENEWAL_DURATION: Readonly<Duration> = buildDuration(1n);
  * The maximum days before the registration of a .eth name expires when we
  * consider it helpful to provide a more visible notice that the name expires
  * soon and should be renewed as soon as possible to avoid loss.
- * 
+ *
  * This is an arbitrary value we selected for UX purposes. It is not an ENS
  * standard and is not enforced by any EthRegistrarController contracts.
  */
@@ -403,18 +412,21 @@ export const MAX_EXPIRING_SOON_PERIOD_DAYS = 90n;
  * The Duration before the registration of a .eth name expires when we
  * consider it helpful to provide a more visible notice that the name expires
  * soon and should be renewed as soon as possible to avoid loss.
- * 
+ *
  * This is an arbitrary value we selected for UX purposes. It is not an ENS
  * standard and is not enforced by any EthRegistrarController contracts.
- * 
+ *
  * 90 days or 7,776,000 seconds.
  */
-export const MAX_EXPIRING_SOON_PERIOD: Readonly<Duration> = scaleDuration(SECONDS_PER_DAY, MAX_EXPIRING_SOON_PERIOD_DAYS);
+export const MAX_EXPIRING_SOON_PERIOD: Readonly<Duration> = scaleDuration(
+  SECONDS_PER_DAY,
+  MAX_EXPIRING_SOON_PERIOD_DAYS,
+);
 
 /**
  * The number of days an expired registration of a .eth name is in a grace
  * period prior to being released to the public.
- * 
+ *
  * This value is enforced by EthRegistrarController contracts.
  */
 export const GRACE_PERIOD_DAYS = 90n;
@@ -422,52 +434,60 @@ export const GRACE_PERIOD_DAYS = 90n;
 /**
  * The Duration an expired registration of a .eth name is in a grace period
  * prior to being released to the public.
- * 
+ *
  * This value is enforced by EthRegistrarController contracts.
- * 
+ *
  * 90 days or 7,776,000 seconds.
  */
-export const GRACE_PERIOD: Readonly<Duration> = scaleDuration(SECONDS_PER_DAY, GRACE_PERIOD_DAYS);
+export const GRACE_PERIOD: Readonly<Duration> = scaleDuration(
+  SECONDS_PER_DAY,
+  GRACE_PERIOD_DAYS,
+);
 
 /**
  * The number of days a recently released .eth name has a temporary premium
  * price applied.
- * 
+ *
  * This value is enforced by EthRegistrarController contracts.
  */
 export const TEMPORARY_PREMIUM_PERIOD_DAYS = 21n;
 
 /**
  * The Duration a recently released .eth name has a temporary premium price applied.
- * 
+ *
  * This value is enforced by EthRegistrarController contracts.
- * 
+ *
  * 21 days or 1,814,400 seconds.
  */
-export const TEMPORARY_PREMIUM_PERIOD: Readonly<Duration> = scaleDuration(SECONDS_PER_DAY, TEMPORARY_PREMIUM_PERIOD_DAYS);
+export const TEMPORARY_PREMIUM_PERIOD: Readonly<Duration> = scaleDuration(
+  SECONDS_PER_DAY,
+  TEMPORARY_PREMIUM_PERIOD_DAYS,
+);
 
 /**
  * Identifies if the provided `duration` of registration would be accepted by
  * EthRegistrarController contracts.
- * 
+ *
  * @param duration The registration duration to evaluate.
  * @returns true if the provided `duration` is valid, false otherwise.
  */
 const isValidRegistrationDuration = (duration: Duration): boolean => {
   return duration.seconds >= MIN_REGISTRATION_PERIOD.seconds;
-}
+};
 
 /**
  * Validates that the provided `duration` of registration would be accepted by
  * EthRegistrarController contracts.
- * 
+ *
  * @param duration The registration duration to evaluate.
  * @throws Error if the provided `duration` is not valid.
  */
 const validateRegistrationDuration = (duration: Duration): void => {
   if (!isValidRegistrationDuration(duration))
-    throw new Error(`Invalid registration duration: ${duration.seconds} seconds. Minimum registration period is ${MIN_REGISTRATION_PERIOD_DAYS} days or ${MIN_REGISTRATION_PERIOD.seconds} seconds.`);
-}
+    throw new Error(
+      `Invalid registration duration: ${duration.seconds} seconds. Minimum registration period is ${MIN_REGISTRATION_PERIOD_DAYS} days or ${MIN_REGISTRATION_PERIOD.seconds} seconds.`,
+    );
+};
 
 // REGISTRATION PRICE ⬇️
 
@@ -629,19 +649,20 @@ export function getDomainReleaseTimestamp(
   return addSeconds(domainRegistration.expirationTimestamp, GRACE_PERIOD);
 }
 
-const MAINNET_WRAPPING_ETH_REGISTRAR_CONTROLLER_CONTRACT =
-  buildContractRef(
-    MAINNET,
-    buildAddress("0x253553366Da8546fC250F225fe3d25d0C782303b"),
-  );
+const MAINNET_WRAPPING_ETH_REGISTRAR_CONTROLLER_CONTRACT = buildContractRef(
+  MAINNET,
+  buildAddress("0x253553366Da8546fC250F225fe3d25d0C782303b"),
+);
 
-const MAINNET_CLASSIC_ETH_REGISTRAR_CONTROLLER_CONTRACT =
-  buildContractRef(
-    MAINNET,
-    buildAddress("0x283af0b28c62c092c9727f1ee09c02ca627eb7f5"),
-  );
+const MAINNET_CLASSIC_ETH_REGISTRAR_CONTROLLER_CONTRACT = buildContractRef(
+  MAINNET,
+  buildAddress("0x283af0b28c62c092c9727f1ee09c02ca627eb7f5"),
+);
 
-export const getRegistrarForChain = (chain: ChainId, useNameWrapper: boolean): ContractRef => {
+export const getRegistrarForChain = (
+  chain: ChainId,
+  useNameWrapper: boolean,
+): ContractRef => {
   switch (chain.chainId) {
     case MAINNET.chainId:
       if (useNameWrapper) {
@@ -652,7 +673,7 @@ export const getRegistrarForChain = (chain: ChainId, useNameWrapper: boolean): C
     default:
       throw new Error(`Unsupported chainId: ${chain.chainId}`);
   }
-}
+};
 
 export const getRegistryForChain = (chain: ChainId): Registry => {
   switch (chain.chainId) {
@@ -661,4 +682,112 @@ export const getRegistryForChain = (chain: ChainId): Registry => {
     default:
       throw new Error(`Unsupported chainId: ${chain.chainId}`);
   }
+};
+
+export class ETHBaseRegistrarImplementation implements NFTIssuer {
+  protected readonly contract: ContractRef;
+
+  public constructor(contract: ContractRef) {
+    this.contract = contract;
+  }
+
+  public getContractRef(): ContractRef {
+    return this.contract;
+  }
+
+  public getTokenId(name: ENSName, isWrapped: boolean): TokenId {
+    if (!this.isClaimable(name, isWrapped)) {
+      throw new Error(
+        `Unwrapped tokenId for name: "${name.name}" is not claimable by registrar: ${this.contract.address.address} on chainId: ${this.contract.chain.chainId}`,
+      );
+    }
+    return buildTokenId(BigInt(labelhash(name.labels[0])));
+  }
+
+  public isClaimable(name: ENSName, isWrapped: boolean): boolean {
+    // name must be unwrapped
+    if (isWrapped) return false;
+
+    // must have exactly 2 labels to be a direct subname of ".eth"
+    if (name.labels.length !== 2) return false;
+
+    // last label must be "eth"
+    if (name.labels[1] !== ETH_TLD) return false;
+
+    // NOTE: now we know we have a direct subname of ".eth"
+    // first label must be of sufficient length
+    const subnameLength = charCount(name.labels[0]);
+    if (subnameLength < MIN_ETH_REGISTRABLE_LABEL_LENGTH) return false;
+
+    // TODO: also add a check for a maximum length limit as enforced by max block size, etc?
+    return true;
+  }
 }
+
+export class NameWrapper implements NFTIssuer {
+  protected readonly contract: ContractRef;
+
+  public constructor(contract: ContractRef) {
+    this.contract = contract;
+  }
+
+  public getContractRef(): ContractRef {
+    return this.contract;
+  }
+
+  public getTokenId(name: ENSName, isWrapped: boolean): TokenId {
+    if (!this.isClaimable(name, isWrapped)) {
+      throw new Error(
+        `Wrapped tokenId for name: "${name.name}" is not claimable by registrar: ${this.contract.address.address} on chainId: ${this.contract.chain.chainId}`,
+      );
+    }
+    return buildTokenId(BigInt(namehash(name.name)));
+  }
+
+  public isClaimable(name: ENSName, isWrapped: boolean): boolean {
+    // TODO: build a more sophisticated implementation of this function
+    // for now, we just assume that all wrapped names are claimable by the NameWrapper
+    return isWrapped;
+  }
+}
+
+// known `NFTIssuer` contracts
+
+export const MAINNET_NAMEWRAPPER_CONTRACT = buildContractRef(
+  MAINNET,
+  buildAddress("0xD4416b13d2b3a9aBae7AcD5D6C2BbDBE25686401"),
+);
+
+export const MAINNET_NAMEWRAPPER = new NameWrapper(
+  MAINNET_NAMEWRAPPER_CONTRACT,
+);
+
+export const MAINNET_ETH_BASE_REGISTRAR_IMPLEMENTATION_CONTRACT =
+  buildContractRef(
+    MAINNET,
+    buildAddress("0x57f1887a8BF19b14fC0dF6Fd9B2acc9Af147eA85"),
+  );
+
+export const MAINNET_ETH_BASE_REGISTRAR_IMPLEMENTATION =
+  new ETHBaseRegistrarImplementation(
+    MAINNET_ETH_BASE_REGISTRAR_IMPLEMENTATION_CONTRACT,
+  );
+
+KNOWN_NFT_ISSUERS.push(MAINNET_NAMEWRAPPER);
+KNOWN_NFT_ISSUERS.push(MAINNET_ETH_BASE_REGISTRAR_IMPLEMENTATION);
+
+export const getNFTIssuerForChain = (
+  chain: ChainId,
+  useNameWrapper: boolean,
+): NFTIssuer => {
+  switch (chain.chainId) {
+    case MAINNET.chainId:
+      if (useNameWrapper) {
+        return MAINNET_NAMEWRAPPER;
+      } else {
+        return MAINNET_ETH_BASE_REGISTRAR_IMPLEMENTATION;
+      }
+    default:
+      throw new Error(`Unsupported chainId: ${chain.chainId}`);
+  }
+};

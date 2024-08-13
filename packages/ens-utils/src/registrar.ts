@@ -176,12 +176,12 @@ export interface RenewalPriceQuote extends AbstractRegistrarPriceQuote {
  * A `Registrar` in NameKit aims to provide a standardized "common denominator"
  * interface for interacting with one of the smart contracts responsible for
  * issuing subdomains into a `Registry`.
- * 
+ *
  * ENS enables a `Registrar` to be configured at any level of the ENS domain
  * hierarchy. For example, ENS has a `Registrar` for the overall ENS root.
  * Beneath the root, ENS has a `Registrar` for the `.eth` TLD. Beneath `.eth`,
  * there is the `Registrar` for `uni.eth`, and so on.
- * 
+ *
  * NOTE: ENS enables an infinite set of possible registrar implementations.
  * NameKit aims for `Registrar` to support the registrar implementations that
  * are most popular within the ENS community, however some registrar
@@ -191,7 +191,6 @@ export interface RenewalPriceQuote extends AbstractRegistrarPriceQuote {
  * your registrar of interest.
  */
 export interface Registrar {
-
   /**
    * @returns the name that this `Registrar` issues subnames for.
    */
@@ -199,7 +198,7 @@ export interface Registrar {
 
   /**
    * Checks if the provided `name` is a subname issued by this `Registrar`.
-   * 
+   *
    * @param name the name to check if it is issued by this `Registrar`.
    * @returns the subname of `name` that is issued by this `Registrar`, or
    *          `null` if `name` is not a subname issued by this `Registrar`.
@@ -214,7 +213,7 @@ export interface Registrar {
 
   /**
    * Gets the subname of `name` that is issued by this `Registrar`.
-   * 
+   *
    * @param name the name to get the issued subname of that was issued by this
    *             `Registrar`.
    * @returns the subname of `name` that is issued by this `Registrar`.
@@ -226,10 +225,10 @@ export interface Registrar {
   /**
    * Gets the `ContractRef` for where the registrar being modeled by this
    * `Registrar` is found onchain.
-   * 
+   *
    * NOTE: The returned `ContractRef` may not be the only contract with the
    * ability to serve as a subname registrar for `getName()`.
-   * 
+   *
    * @returns the requested `ContractRef`.
    */
   getContractRef(): ContractRef;
@@ -237,11 +236,21 @@ export interface Registrar {
   /**
    * Gets the `Registry` where this `Registrar` records subdomain
    * registrations.
-   * 
+   *
    * @returns the `Registry` where this `Registrar` records subdomain
    *          registrations.
    */
   getRegistry(): Registry;
+
+  /**
+   * Gets the `NFTIssuer` (if any) that provides `NFTRef` for subdomain
+   * registrations.
+   *
+   * @returns the `NFTIssuer` that provides `NFTRef` for subdomain
+   *          registrations, or `null` if this `Registrar` does not issue
+   *         `NFTRef` for subdomain registrations.
+   */
+  getNFTIssuer(): NFTIssuer | null;
 
   canRegister(
     name: ENSName,
@@ -281,7 +290,9 @@ export interface Registrar {
  */
 export class RegistrarUnsupportedNameError extends Error {
   public constructor(message: string, unsupportedName: ENSName) {
-    super(`RegistrarUnsupportedNameError for name "${unsupportedName.name}": ${message}`);
+    super(
+      `RegistrarUnsupportedNameError for name "${unsupportedName.name}": ${message}`,
+    );
     this.name = "RegistrarUnsupportedNameError";
     Error.captureStackTrace(this, this.constructor);
   }
