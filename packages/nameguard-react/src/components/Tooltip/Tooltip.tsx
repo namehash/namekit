@@ -14,7 +14,7 @@ export function Tooltip({
   placement = "top",
 
   /*
-    Props are applied to the Float component, 
+    Props are applied to the Float component,
     which is a wrapper for the tooltip "children".
   */
   ...props
@@ -25,7 +25,7 @@ export function Tooltip({
   const handleClose = () => setOpen(false);
 
   return (
-    <Popover className="flex items-center justify-center">
+    <Popover className="flex items-center">
       <Float
         show={open}
         placement={placement}
