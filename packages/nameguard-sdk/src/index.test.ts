@@ -1,10 +1,10 @@
 import { describe, it, expect } from "vitest";
 
-import { createClient } from ".";
+import { createClient, MAX_INSPECTED_NAME_CHARACTERS } from ".";
 
 const nameguard = createClient({
   // undefined will default to the production endpoint
-  endpoint: process.env.NAMEGUARD_TEST_ENDPOINT,
+  endpoint: process.env.NAMEGUARD_API_URI,
 });
 
 describe("NameGuard", () => {
@@ -15,6 +15,15 @@ describe("NameGuard", () => {
     const data = await nameguard.inspectName("notrab.eth");
 
     expect(data.name).toBe("notrab.eth");
+    expect(data.inspected).toBe(true);
+  });
+
+  it("should fetch the UninspectedNameGuard report for a name that is too long", async () => {
+    const name = "a".repeat(MAX_INSPECTED_NAME_CHARACTERS+1);
+    const data = await nameguard.inspectName(name);
+
+    expect(data.name).toBe(name);
+    expect(data.inspected).toBe(false);
   });
 
   it("should fetch the consolidated NameGuard reports of multiple names", async () => {
@@ -24,6 +33,7 @@ describe("NameGuard", () => {
     ]);
 
     expect(data.results?.length).toBe(2);
+    expect(data.results?.[0].inspected).toBe(true);
   });
 
   it("should throw an error if invalid namehash provided", async () => {

@@ -1,5 +1,5 @@
 from typing import Optional
-from nameguard.models import CheckStatus, Check, GenericCheckResult, NameCheckResult
+from nameguard.models import CheckStatus, Check, GenericCheckResult, NameCheckResult, UNINSPECTED_SKIP_MESSAGE
 from label_inspector.models import InspectorResult
 
 STATUS = CheckStatus.WARN
@@ -8,6 +8,7 @@ STATUS = CheckStatus.WARN
 TITLE_PASS = 'Decentralization'
 TITLE_FAIL = 'Decentralization'
 TITLE_FAIL_UNKNOWN = 'Decentralization'
+TITLE_SKIP = 'Decentralization'
 
 MESSAGE_PASS = 'Ownership is decentralized'
 MESSAGE_FAIL = 'Ownership is not decentralized'
@@ -100,3 +101,11 @@ def check_name(labels: list[Optional[InspectorResult]]) -> GenericCheckResult:
             _name_message=MESSAGE_FAIL_UNKNOWN,
             _title=TITLE_FAIL_UNKNOWN,
         )
+
+
+UNINSPECTED_SKIP_CHECK_RESULT = NameCheckResult(
+    check=Check.DECENTRALIZED_NAME,
+    status=CheckStatus.SKIP,
+    _name_message=UNINSPECTED_SKIP_MESSAGE,
+    _title=TITLE_SKIP,
+)

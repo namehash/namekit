@@ -1,6 +1,6 @@
 from typing import Optional
 from label_inspector.models import InspectorResult as Label
-from nameguard.models import CheckStatus, Check, LabelCheckResult, NameCheckResult
+from nameguard.models import CheckStatus, Check, LabelCheckResult, NameCheckResult, UNINSPECTED_SKIP_MESSAGE
 from label_inspector.common.punycode import puny_analysis, PunycodeCompatibility
 
 STATUS = CheckStatus.WARN
@@ -56,3 +56,11 @@ def check_name(labels: list[Optional[Label]]) -> NameCheckResult:
         _name_message=N_MESSAGE_PASS if passed else N_MESSAGE_FAIL,
         _title=TITLE_PASS if passed else TITLE_FAIL,
     )
+
+
+UNINSPECTED_SKIP_CHECK_RESULT = NameCheckResult(
+    check=Check.PUNYCODE_COMPATIBLE_NAME,
+    status=CheckStatus.SKIP,
+    _name_message=UNINSPECTED_SKIP_MESSAGE,
+    _title=TITLE_SKIP,
+)

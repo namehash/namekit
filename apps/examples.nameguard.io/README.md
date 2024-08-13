@@ -25,4 +25,4 @@ npm run dev
 
 ## Run on CodeSandbox
 
-[![Develop with Codesandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/namehash/nameguard/tree/main/examples/with-nextjs)
+[![Develop with Codesandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/namehash/namekit/tree/main/apps/examples.nameguard.io)
