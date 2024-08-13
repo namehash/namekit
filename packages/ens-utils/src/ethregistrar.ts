@@ -43,12 +43,12 @@ import {
 } from "./registrar";
 import { MAINNET_ENS_REGISTRY, Registry } from "./registry";
 import { scaleAnnualPrice } from "./price";
-import { MAINNET } from "./chain";
+import { ChainId, MAINNET } from "./chain";
 import { buildAddress } from "./address";
 
 /**
  * The `EthRegistrar` models the policy implmentations shared by both of
- * the `OnchainRegistrar` contracts that actively issue subnames for the .eth
+ * the registrar controller contracts that actively issue subnames for the .eth
  * TLD (as of July 2024).
  *  
  * These registrars enable trustless decentralized subnames to be issued 
@@ -57,12 +57,20 @@ import { buildAddress } from "./address";
 export class EthRegistrar implements Registrar {
   public static readonly Name = buildENSName(ETH_TLD);
   
-  protected readonly registrarContract: ContractRef;
+  protected readonly registrar: ContractRef;
   protected readonly registry: Registry;
 
-  public constructor(registrarContract: ContractRef, registry: Registry) {
-    this.registrarContract = registrarContract;
-    this.registry = registry;
+  /**
+   * Builds a new `EthRegistrar` instance using the provided configuration.
+   * 
+   * @param chain The chain to use for the `EthRegistrar`.
+   * @param useNameWrapper If `true`, this `EthRegistrar` will use the
+   *                       NameWrapper on the selected `chain`.
+   * @throws `Error` if the provided configuration is not supported.
+   */
+  public constructor(chain: ChainId = MAINNET, useNameWrapper: boolean = true) {
+    this.registrar = getRegistrarForChain(chain, useNameWrapper);
+    this.registry = getRegistryForChain(chain);
   }
 
   public getName = (): ENSName => {
@@ -99,7 +107,7 @@ export class EthRegistrar implements Registrar {
   };
 
   public getContractRef(): ContractRef {
-    return this.registrarContract;
+    return this.registrar;
   }
 
   public getRegistry(): Registry {
@@ -621,24 +629,36 @@ export function getDomainReleaseTimestamp(
   return addSeconds(domainRegistration.expirationTimestamp, GRACE_PERIOD);
 }
 
-export const MAINNET_WRAPPING_ETH_REGISTRAR_CONTROLLER_CONTRACT =
+const MAINNET_WRAPPING_ETH_REGISTRAR_CONTROLLER_CONTRACT =
   buildContractRef(
     MAINNET,
     buildAddress("0x253553366Da8546fC250F225fe3d25d0C782303b"),
   );
 
-export const MAINNET_CLASSIC_ETH_REGISTRAR_CONTROLLER_CONTRACT =
+const MAINNET_CLASSIC_ETH_REGISTRAR_CONTROLLER_CONTRACT =
   buildContractRef(
     MAINNET,
     buildAddress("0x283af0b28c62c092c9727f1ee09c02ca627eb7f5"),
   );
 
-export const MAINNET_WRAPPING_ETH_REGISTRAR_CONTROLLER = new EthRegistrar(
-  MAINNET_WRAPPING_ETH_REGISTRAR_CONTROLLER_CONTRACT,
-  MAINNET_ENS_REGISTRY
-);
+export const getRegistrarForChain = (chain: ChainId, useNameWrapper: boolean): ContractRef => {
+  switch (chain.chainId) {
+    case MAINNET.chainId:
+      if (useNameWrapper) {
+        return MAINNET_WRAPPING_ETH_REGISTRAR_CONTROLLER_CONTRACT;
+      } else {
+        return MAINNET_CLASSIC_ETH_REGISTRAR_CONTROLLER_CONTRACT;
+      }
+    default:
+      throw new Error(`Unsupported chainId: ${chain.chainId}`);
+  }
+}
 
-export const MAINNET_CLASSIC_ETH_REGISTRAR_CONTROLLER = new EthRegistrar(
-  MAINNET_CLASSIC_ETH_REGISTRAR_CONTROLLER_CONTRACT,
-  MAINNET_ENS_REGISTRY
-);
+export const getRegistryForChain = (chain: ChainId): Registry => {
+  switch (chain.chainId) {
+    case MAINNET.chainId:
+      return MAINNET_ENS_REGISTRY;
+    default:
+      throw new Error(`Unsupported chainId: ${chain.chainId}`);
+  }
+}
