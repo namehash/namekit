@@ -206,10 +206,8 @@ export class EthRegistrar implements OnchainRegistrar {
       }
     }
 
-    if (duration.seconds < 1n) {
-      // always need to renew for at least 1 second
+    if (duration.seconds < MIN_RENEWAL_DURATION.seconds)
       return false;
-    }
 
     return true;
   }
@@ -358,12 +356,23 @@ export class EthRegistrar implements OnchainRegistrar {
   };
 }
 
+/**
+ * 1 second.
+ */
+export const MIN_RENEWAL_DURATION: Readonly<Duration> = buildDuration(1n);
+
+/**
+ * 90 days.
+ */
 export const GRACE_PERIOD: Readonly<Duration> = buildDuration(
   90n * SECONDS_PER_DAY.seconds,
 );
 
 export const TEMPORARY_PREMIUM_DAYS = 21n;
 
+/**
+ * 21 days.
+ */
 export const TEMPORARY_PREMIUM_PERIOD: Readonly<Duration> = buildDuration(
   TEMPORARY_PREMIUM_DAYS * SECONDS_PER_DAY.seconds,
 );
