@@ -45,9 +45,8 @@ jobs:
           cache: "pnpm"
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v4
         with:
-          version: 8
           run_install: true
 
       - name: Install poetry
@@ -75,17 +74,21 @@ jobs:
         env:
           PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
           PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}
+          ALCHEMY_URI_MAINNET: ${{ secrets.ALCHEMY_URI_MAINNET }}
+          ALCHEMY_URI_SEPOLIA: ${{ secrets.ALCHEMY_URI_SEPOLIA }}
+          ENS_SUBGRAPH_URL_MAINNET: ${{ secrets.ENS_SUBGRAPH_URL_MAINNET }}
+          ENS_SUBGRAPH_URL_SEPOLIA: ${{ secrets.ENS_SUBGRAPH_URL_SEPOLIA }}
         run: |
           poetry run uvicorn nameguard.web_api:app --host 0.0.0.0 --port 8000 &
           sleep 5
 
       - name: Local api healthcheck
         if: needs.check_changes.outputs.api_changed > 0
-        run: curl http://0.0.0.0:8000/v1-beta/inspect-name/mainnet/test.eth
+        run: curl http://0.0.0.0:8000/inspect-name/mainnet/test.eth
 
       - name: Run tests
         env:
           PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
           PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}
-          NAMEGUARD_TEST_ENDPOINT: ${{ needs.check_changes.outputs.api_changed > 0 && 'http://0.0.0.0:8000' || '' }}
+          NAMEGUARD_API_URI: ${{ needs.check_changes.outputs.api_changed > 0 && 'http://0.0.0.0:8000' || '' }}
         run: pnpm test --filter ./packages/nameguard-sdk
