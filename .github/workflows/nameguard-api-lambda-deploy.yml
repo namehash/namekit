@@ -3,7 +3,6 @@ name: NameGuard API - Lambda Deploy
 on:
   push:
     branches:
-      - ci-cd-lambda-nameguard-v2 #temporary for testing
       - main
 
 env:
