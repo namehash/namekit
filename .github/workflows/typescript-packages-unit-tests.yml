@@ -1,4 +1,4 @@
-name: Package Tests
+name: TypeScript Packages - Unit Tests
 
 on:
   push:

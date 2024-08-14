@@ -1,4 +1,4 @@
-name: NameGuard End to End Tests
+name: NameGuard - End-to-End Tests
 
 on:
   push:
