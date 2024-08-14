@@ -1,4 +1,4 @@
-name: Release
+name: TypeScript Packages - NPM Release
 
 on:
   push:
