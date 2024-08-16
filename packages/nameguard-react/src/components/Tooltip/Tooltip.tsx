@@ -1,3 +1,17 @@
+/*
+  This Tooltip component is a duplicate of @namehash/namekit-react
+  Tooltip component. This duplicate will, in the near future, be 
+  replaced by @namehash/namekit-react Tooltip component. The duplicate is
+  necessary for the moment so any imports of @namehash/nameguard-react Tooltip
+  component do not break once the migration is done! Once this duplicate
+  is in main, NameHash Labs will remove this Tooltip component from
+  @namehash/nameguard-react and update the imports to use only the
+  new component instead, the @namehash/namekit-react Tooltip.
+
+  A ShortCut story was created to track this migration:
+  https://app.shortcut.com/ps-web3/story/25607/remove-namehash-nameguard-react-tooltip-component
+*/
+
 import React, { useState } from "react";
 import { Float, type FloatProps } from "@headlessui-float/react";
 import { Popover } from "@headlessui/react";

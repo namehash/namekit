@@ -69,7 +69,7 @@ export const CustomMaxTooltipWidth: Story = {
     children: (
       <>
         See it! The tooltip content is limited to 400px width. You can set the
-        maxTooltipWidth to any number you want to limit the text content display
+        maxTooltipWidth to the desired value to limit the text content display
         width!
       </>
     ),
