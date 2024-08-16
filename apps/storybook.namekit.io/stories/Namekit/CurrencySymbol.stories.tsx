@@ -1,67 +1,67 @@
 import { Currency } from "@namehash/ens-utils";
-import { PriceDisplaySize, CurrencySymbol } from "@namehash/namekit-react";
+import { CurrencySymbol, CurrencySymbolSize } from "@namehash/namekit-react";
 import type { Meta, StoryObj } from "@storybook/react";
 
 export const ETH: Story = {
   args: {
     currency: Currency.Eth,
-    size: PriceDisplaySize.Large,
+    size: CurrencySymbolSize.Large,
   },
 };
 export const USD: Story = {
   args: {
     currency: Currency.Usd,
-    size: PriceDisplaySize.Large,
+    size: CurrencySymbolSize.Large,
   },
 };
 export const USDC: Story = {
   args: {
     currency: Currency.Usdc,
-    size: PriceDisplaySize.Large,
+    size: CurrencySymbolSize.Large,
   },
 };
 export const WETH: Story = {
   args: {
     currency: Currency.Weth,
-    size: PriceDisplaySize.Large,
+    size: CurrencySymbolSize.Large,
   },
 };
 export const DAI: Story = {
   args: {
     currency: Currency.Dai,
-    size: PriceDisplaySize.Large,
+    size: CurrencySymbolSize.Large,
   },
 };
 export const SmallSize: Story = {
   args: {
-    size: PriceDisplaySize.Small,
+    size: CurrencySymbolSize.Small,
     currency: Currency.Eth,
   },
 };
 export const LargeSize: Story = {
   args: {
-    size: PriceDisplaySize.Large,
+    size: CurrencySymbolSize.Large,
     currency: Currency.Eth,
   },
 };
 export const WithCustomSymbolColor: Story = {
   args: {
     symbolFillColor: "#007bff",
-    size: PriceDisplaySize.Large,
+    size: CurrencySymbolSize.Large,
     currency: Currency.Eth,
   },
 };
 export const ShowingTooltipDescription: Story = {
   args: {
     describeCurrencyInTooltip: true,
-    size: PriceDisplaySize.Large,
+    size: CurrencySymbolSize.Large,
     currency: Currency.Eth,
   },
 };
 export const NotShowingTooltipDescription: Story = {
   args: {
     describeCurrencyInTooltip: false,
-    size: PriceDisplaySize.Large,
+    size: CurrencySymbolSize.Large,
     currency: Currency.Eth,
   },
 };
@@ -82,8 +82,8 @@ const meta: Meta<typeof CurrencySymbol> = {
       control: { type: "select" },
     },
     size: {
-      options: Object.keys(PriceDisplaySize),
-      mapping: PriceDisplaySize,
+      options: Object.keys(CurrencySymbolSize),
+      mapping: CurrencySymbolSize,
       control: { type: "select" },
     },
     describeCurrencyInTooltip: { control: { type: "boolean" } },
