@@ -53,9 +53,9 @@ export const DefaultMaxTooltipWidth: Story = {
     trigger: <>Tooltip Trigger</>,
     children: (
       <>
-        The default max tooltip width is the largest positive number possible so
-        it is really up to you to decider when to limit the text content,
-        horizontally! Note: see example below to understand how to do it 😉
+        The default max tooltip width is positive infinity so
+        it is up to you to set an explicit max width limit,
+        See the "Custom Max Tooltip Width" story for an example of setting a max width.
       </>
     ),
   },
