@@ -39,7 +39,7 @@ export function Tooltip({
   const handleClose = () => setOpen(false);
 
   return (
-    <Popover className="flex items-center justify-center">
+    <Popover className="flex items-center">
       <Float
         show={open}
         placement={placement}
