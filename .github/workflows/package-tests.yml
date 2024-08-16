@@ -1,0 +1,39 @@
+name: Package Tests
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/**"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "packages/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package:
+          - "ens-utils"
+          - "nameguard-js"
+          - "nameguard-react"
+          - "nameguard-sdk"
+          - "namekit-react"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+
+      - name: Install Dependencies
+        run: pnpm install
+
+      - name: Build ${{ matrix.package }}
+        run: pnpm --filter ./packages/${{ matrix.package }} build
+
+      - name: Test ${{ matrix.package }}
+        run: pnpm --filter ./packages/${{ matrix.package }} test
