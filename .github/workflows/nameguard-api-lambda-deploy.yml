@@ -1,4 +1,4 @@
-name: API NameGuard Deploy
+name: NameGuard API - Lambda Deploy
 
 on:
   push:
