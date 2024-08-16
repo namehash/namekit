@@ -419,6 +419,9 @@ importers:
       '@namehash/nameguard':
         specifier: workspace:*
         version: link:../nameguard-sdk
+      '@namehash/namekit-react':
+        specifier: workspace:*
+        version: link:../namekit-react
       classcat:
         specifier: 5.0.4
         version: 5.0.4

@@ -12,7 +12,7 @@ interface LinkComponent extends React.FC<LinkProps> {
   ExternalIcon: typeof ExternalIcon;
 }
 
-const linkBaseClasses = "nk-transition";
+const linkBaseClasses = "nk-transition cursor-pointer";
 
 const variantClasses = {
   primary:
@@ -23,6 +23,7 @@ const variantClasses = {
 };
 
 const sizeClasses = {
+  xsmall: "nk-text-xs",
   small: "nk-text-sm",
   medium: "nk-text-base",
   large: "nk-text-lg",
