@@ -74,7 +74,8 @@ export const CurrencySymbol = ({
       symbol = <EthSymbol className={size} fill={symbolFillColor} />;
       break;
     default:
-      throw new Error(`Error creating CurrencySymbol: unrecognized Currency: "${currency}".`);
+      // TODO: We haven't created symbols for `Currency.Gas` yet.
+      throw new Error(`Error creating CurrencySymbol: unsupported Currency: "${currency}".`);
   }
 
   if (!describeCurrencyInTooltip) return symbol;
