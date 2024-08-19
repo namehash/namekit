@@ -1,16 +1,16 @@
 import React from "react";
-import type { NameGuardReport } from "@namehash/nameguard";
+import type { LabelGuardReport } from "@namehash/nameguard";
 
 import { LabelListItem } from "./LabelListItem";
 
 type LabelListProps = {
-  items?: NameGuardReport["labels"];
+  items: LabelGuardReport[];
 };
 
 export function LabelList({ items = [] }: LabelListProps) {
-  const rawLabels = items?.map((i) => i.label) ?? [];
+  const rawLabels = items.map((i) => i.label);
 
-  return items?.map((label, index) => (
+  return items.map((label, index) => (
     <LabelListItem
       key={index}
       index={index}
