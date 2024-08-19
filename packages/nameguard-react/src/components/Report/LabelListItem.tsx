@@ -3,6 +3,7 @@ import React, { Fragment } from "react";
 import { GraphemeList } from "./GraphemeList";
 import { NoGraphemesWarning } from "./NoGraphemesWarning";
 import { CheckResultCode, NameGuardReport, Rating } from "@namehash/nameguard";
+import { Normalization } from "@namehash/ens-utils";
 import { checkResultCodeTextColor } from "../../utils/text";
 import { RatingIcon } from "./RatingIcon";
 
@@ -17,7 +18,7 @@ export const LabelListItem = ({
   rawLabels,
   index,
 }: LabelListItemProps) => {
-  const unknown = item.normalization === "unknown";
+  const unknown = item.normalization === Normalization.Unknown;
   const empty = item.label === "";
 
   return (
@@ -41,8 +42,8 @@ export const LabelListItem = ({
             </Fragment>
           ))}
         </div>
-        {(item.normalization === "unnormalized" ||
-          item.normalization === "unknown") && (
+        {(item.normalization === Normalization.Unnormalized ||
+          item.normalization === Normalization.Unknown) && (
           <div className="flex items-center space-x-2">
             <RatingIcon rating={Rating.alert} />
             <span
@@ -51,7 +52,7 @@ export const LabelListItem = ({
                 checkResultCodeTextColor(CheckResultCode.alert),
               ])}
             >
-              {item.normalization === "unnormalized"
+              {item.normalization === Normalization.Unnormalized
                 ? "Not ENS Normalized"
                 : "Not found"}
             </span>

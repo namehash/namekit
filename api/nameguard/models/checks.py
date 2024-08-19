@@ -6,6 +6,8 @@ from nameguard.generic_utils import capitalize_words
 import nameguard.context
 from nameguard.endpoints import Endpoints
 
+UNINSPECTED_SKIP_MESSAGE = 'Name is exceptionally long and was not inspected'
+
 
 class CheckStatus(int, Enum):
     """
@@ -83,6 +85,7 @@ class Check(str, Enum):
     * `punycode_compatible_name`: A name is compatible with Punycode.
     * `namewrapper_fuses`: The NameWrapper configuration of a name is safe.
     * `decentralized_name`: A name is decentralized.
+    * `uninspected`: A name is exceptionally long and will not be inspected by NameGuard for performance reasons.
     """
 
     # Common
@@ -106,6 +109,8 @@ class Check(str, Enum):
     NAMEWRAPPER_FUSES = 'namewrapper_fuses'
     DECENTRALIZED_NAME = 'decentralized_name'
 
+    UNINSPECTED = 'uninspected'
+
     @property
     def human_readable_name(self):
         mapping = {
@@ -122,6 +127,7 @@ class Check(str, Enum):
             self.PUNYCODE_COMPATIBLE_NAME: 'DNS Compatible Name',
             self.NAMEWRAPPER_FUSES: 'NameWrapper Fuses',
             self.DECENTRALIZED_NAME: 'Decentralized Name',
+            self.UNINSPECTED: 'Uninspected Name',
         }
         if self in mapping:
             return mapping[self]
@@ -300,3 +306,14 @@ class NameCheckResult(GenericCheckResult):
     @property
     def _context(self):
         return 'name'
+
+    def __hash__(self):
+        return hash((self.check, self.status))
+
+
+UNINSPECTED_CHECK_RESULT = NameCheckResult(
+    check=Check.UNINSPECTED,
+    status=CheckStatus.ALERT,
+    _name_message='Name is exceptionally long and was not inspected',
+    _title='Uninspected',
+)

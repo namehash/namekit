@@ -19,10 +19,18 @@ export const MIN_ETH_REGISTRABLE_LABEL_LENGTH = 3;
  * If a name contains no `unnormalized` labels but 1 or more `unknown` labels then the entire name is considered to be `unknown`.
  * A name is `normalized` if and only if all of its labels are `normalized`.
  */
-export type Normalization =
-  | "normalized" /** `normalized`: The name or label is normalized. */
-  | "unnormalized" /** `unnormalized`: The name or label is not normalized. */
-  | "unknown" /** `unknown`: The name or label is unknown because it cannot be looked up from its hash. */;
+export const Normalization = {
+  /** `normalized`: The name or label is normalized. */
+  Normalized: 'normalized',
+
+  /** `unnormalized`: The name or label is not normalized. */
+  Unnormalized: 'unnormalized',
+
+  /** `unknown`: The name or label is unknown because it cannot be looked up from its hash. */
+  Unknown: 'unknown',
+} as const;
+
+export type Normalization = (typeof Normalization)[keyof typeof Normalization];
 
 export type NamespaceRoot =
   | "ens" /** For now: Only given to names ending in "eth" and the ENS root */
@@ -173,12 +181,12 @@ export function getNormalizationStatus(labels: string[]): Normalization {
 
   if (foundUnnormalizedLabel) {
     // if any single label is unnormalized, the whole name is unnormalized
-    return "unnormalized";
+    return Normalization.Unnormalized;
   } else if (foundUnknownLabel) {
     // if any label was unknown, the whole name is unknown
-    return "unknown";
+    return Normalization.Unknown;
   } else {
-    return "normalized";
+    return Normalization.Normalized;
   }
 }
 
@@ -297,7 +305,7 @@ export function getRegistrationPotential(name: ENSName): RegistrationPotential {
       }
 
       switch (name.normalization) {
-        case "normalized":
+        case Normalization.Normalized:
           if (name.labels.length == 2) {
             // we can say with confidence these names could be registered
             return "registerable";
@@ -305,9 +313,9 @@ export function getRegistrationPotential(name: ENSName): RegistrationPotential {
             // TODO: we would need to check status of namewrapper fuses to see if the ability to issue subnames is burned
             return "unknown";
           }
-        case "unnormalized":
+        case Normalization.Unnormalized:
           return "invalid";
-        case "unknown":
+        case Normalization.Unknown:
           return "unknown";
       }
     case "dns":

@@ -1,6 +1,20 @@
 {
   "name": "@namehash/nameguard-react",
-  "version": "0.1.0",
+  "description": "React UI components for building on NameGuard.",
+  "version": "0.4.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/namehash/namekit.git",
+    "directory": "packages/nameguard-react"
+  },
+  "homepage": "https://github.com/namehash/namekit/tree/main/packages/nameguard-react",
+  "keywords": [
+    "ENS",
+    "NameKit",
+    "NameHash",
+    "NameGuard"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch --clean=false",

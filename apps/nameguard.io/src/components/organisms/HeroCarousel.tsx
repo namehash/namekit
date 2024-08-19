@@ -50,9 +50,9 @@ export async function HeroCarousel() {
       */}
       {data?.results?.map((report, index) => (
         <ReportModalNameBadge
+          data={report}
           key={`carousel-item-${index}`}
           ensName={ensNames[index]}
-          data={report}
         />
       ))}
       {/* 
@@ -62,9 +62,9 @@ export async function HeroCarousel() {
       */}
       {data?.results?.map((report, index) => (
         <ReportModalNameBadge
+          data={report}
           key={`carousel-item-${index}`}
           ensName={ensNames[index]}
-          data={report}
         />
       ))}
     </div>

@@ -1,6 +1,19 @@
 {
   "name": "@namehash/namekit-react",
-  "version": "0.1.0",
+  "description": "React UI components for building on NameKit.",
+  "version": "0.4.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/namehash/namekit.git",
+    "directory": "packages/namekit-react"
+  },
+  "homepage": "https://github.com/namehash/namekit/tree/main/packages/namekit-react",
+  "keywords": [
+    "ENS",
+    "NameKit",
+    "NameHash"
+  ],
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch"
@@ -23,6 +36,8 @@
     }
   },
   "dependencies": {
+    "@headlessui-float/react": "0.11.4",
+    "@headlessui/react": "1.7.17",
     "@namehash/ens-webfont": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"

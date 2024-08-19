@@ -6,6 +6,7 @@ from .checks import (
     Rating,
     Check,
     CheckStatus,
+    UNINSPECTED_SKIP_MESSAGE,
 )
 
 from .result import (
@@ -13,6 +14,7 @@ from .result import (
     ConsolidatedNameGuardReport,
     LabelGuardReport,
     ConsolidatedGraphemeGuardReport,
+    UninspectedNameGuardReport,
     BulkNameGuardBulkReport,
     ConsolidatedReport,
     Normalization,

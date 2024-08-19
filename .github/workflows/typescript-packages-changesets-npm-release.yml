@@ -1,0 +1,49 @@
+name: TypeScript Packages - Changesets - NPM Release
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/**"
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  release:
+    name: Release Packages
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build packages
+        run: pnpm turbo run build --filter='./packages/*'
+
+      - name: Create Release PR or Publish to NPM
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          commit: "chore(release): version packages"
+          title: "chore(release): version packages"
+          publish: pnpm release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

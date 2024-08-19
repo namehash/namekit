@@ -100,6 +100,8 @@ See the [NameGuard Python README](./api/README.md) for more details.
 
 12. **NameWrapper fuses**: Checks that the NameWrapper configuration of a name is safe.
 
+13. **Uninspected Name**: Checks if the name is exceptionally long and would not be inspected by NameGuard for performance reasons.
+
 ## License
 
 Licensed under the MIT License, Copyright © 2023-present [NameHash Labs](https://namehashlabs.org).
