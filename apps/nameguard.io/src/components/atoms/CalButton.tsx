@@ -3,11 +3,9 @@
 import { useEffect } from "react";
 // @ts-ignore
 import { getCalApi } from "@calcom/embed-react";
+import { Button, ButtonProps } from "@namehash/namekit-react";
 
-export const CalButton = ({
-  children,
-  ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
+export const CalButton = ({ children, ...props }: ButtonProps) => {
   useEffect(() => {
     (async function () {
       const cal = await getCalApi();
@@ -20,12 +18,12 @@ export const CalButton = ({
   }, []);
 
   return (
-    <button
+    <Button
       data-cal-link="namehashlabs/nameguard"
       data-cal-config='{"layout":"month_view"}'
       {...props}
     >
       {children}
-    </button>
+    </Button>
   );
 };

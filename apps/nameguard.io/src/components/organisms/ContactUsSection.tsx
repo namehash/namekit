@@ -27,9 +27,11 @@ export const ContactSection = () => {
             Schedule a call with us to discuss an integration with NameGuard
           </p>
         </div>
-        <CalButton className="px-[25px] py-[13px] rounded-[8px] bg-white flex hover:bg-gray-100 transition-colors duration-200 w-full justify-center lg:w-auto">
-          Schedule a call
-        </CalButton>
+        <div className="w-full md:w-auto">
+          <CalButton variant="secondary" className="!w-full">
+            Schedule a call
+          </CalButton>
+        </div>
       </div>
       <div className="w-full flex flex-col lg:flex-row m-auto gap-10 max-w-7xl">
         <div className="lg:w-1/2 w-full flex flex-col gap-3 items-start">

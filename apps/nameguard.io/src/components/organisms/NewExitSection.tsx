@@ -13,7 +13,7 @@ export function NewExitSection() {
               </h1>
               <p className="text-center text-gray-500 not-italic text-lg leading-7 font-normal sm:font-light lg:leading-8">
                 Search for any ENS name to generate a report. Share NameGuard
-                reports with frENS.{" "}
+                reports with frENS.
               </p>
             </div>
             <NGSearch />
@@ -32,9 +32,7 @@ export function NewExitSection() {
                   Our team is here to assist you.
                 </p>
               </div>
-              <CalButton className="max-h-12 flex justify-center items-center px-[25px] py-[13px] rounded-lg border border-gray-300 bg-white z-10 shadow-sm transition hover:bg-gray-100 cursor-pointer text-black not-italic font-medium text-base leading-6">
-                Schedule a call
-              </CalButton>
+              <CalButton variant="secondary">Schedule a call</CalButton>
             </div>
           </div>
         </div>

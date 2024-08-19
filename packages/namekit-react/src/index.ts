@@ -4,6 +4,7 @@ import "./styles.css";
 
 export { DomainCard } from "./components/DomainCard";
 export { Button } from "./components/Button";
+export { ButtonProps } from "./components/Button";
 export { IconButton } from "./components/IconButton";
 export { Heading } from "./components/Heading";
 export { Text } from "./components/Text";

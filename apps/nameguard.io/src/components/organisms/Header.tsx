@@ -39,9 +39,7 @@ export const Header = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Button variant="ghost" size="small">
-                Docs
-              </Button>
+              <Button variant="ghost">Docs</Button>
             </a>
 
             <a
@@ -51,7 +49,6 @@ export const Header = () => {
             >
               <IconButton
                 variant="ghost"
-                size="small"
                 icon={
                   <GithubIcon className="hidden md:block text-[#0F172A] fill-current" />
                 }
@@ -61,14 +58,10 @@ export const Header = () => {
             </a>
 
             <a href="/contact">
-              <Button variant="ghost" size="small">
-                Contact
-              </Button>
+              <Button variant="ghost">Contact</Button>
             </a>
 
-            <CalButton className="px-4 py-2 text-sm rounded-md font-medium bg-black text-white hover:bg-gray-800 transition-all duration-300 whitespace-nowrap">
-              Discuss an integration
-            </CalButton>
+            <CalButton>Discuss an integration</CalButton>
           </div>
 
           <div className="flex lg:hidden justify-center align-center p-[7px]">
