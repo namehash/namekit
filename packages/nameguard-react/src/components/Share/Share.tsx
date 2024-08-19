@@ -8,7 +8,7 @@ import {
 
 import { toast } from "sonner";
 
-import { IconButton, Button } from "@namehash/namekit-react";
+import { IconButton } from "@namehash/namekit-react";
 
 import cc from "classcat";
 import { Tooltip } from "../Tooltip/Tooltip";
