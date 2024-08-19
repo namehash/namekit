@@ -29,7 +29,7 @@ export function Tooltip({
   const handleClose = () => setOpen(false);
 
   return (
-    <Popover className="nk-flex nk-items-center nk-justify-center">
+    <Popover className="nk-flex nk-items-center">
       <Float
         show={open}
         placement={placement}
