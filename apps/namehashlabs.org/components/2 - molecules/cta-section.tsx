@@ -84,11 +84,7 @@ const Cta = ({
             {buttonText}
           </a>
         ) : (
-          <CalButton
-            className={`text-base leading-6 font-medium px-[25px] py-[13px] rounded-[8px] ${buttonStyle}`}
-          >
-            {buttonText}
-          </CalButton>
+          <CalButton>{buttonText}</CalButton>
         )}
       </div>
       <div

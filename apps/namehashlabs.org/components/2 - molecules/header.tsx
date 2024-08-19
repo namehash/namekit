@@ -26,9 +26,10 @@ export const Header = () => {
             </Button>
           </a>
 
-          <CalButton className="hidden md:inline px-[16px] py-[9px] bg-black text-white border border-black rounded-[8px] text-sm leading-5 font-medium hover:bg-gray-800 transition-colors duration-200">
-            Schedule a call
-          </CalButton>
+          <div className="hidden md:inline">
+            <CalButton>Schedule a call</CalButton>
+          </div>
+
           <MobileMenu />
         </div>
       </div>

@@ -38,8 +38,8 @@ const MobileMenu = () => {
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex flex-col h-full">
-          <div className="flex w-full justify-between items-center p-4">
+        <div className="flex flex-col h-full p-4">
+          <div className="flex w-full justify-between items-center">
             <Link
               href="/"
               aria-label="Home page"
@@ -59,7 +59,7 @@ const MobileMenu = () => {
             </button>
           </div>
 
-          <nav className="flex flex-col justify-center flex-grow gap-1 mx-2">
+          <nav className="flex flex-col justify-center flex-grow gap-1">
             <Link
               className="block text-base leading-6 font-medium py-2 text-white hover:bg-opacity-10 hover:bg-white transition-color duration-300 px-3 rounded-[8px]"
               href="/"
@@ -90,11 +90,8 @@ const MobileMenu = () => {
             >
               Open positions
             </Link>
-
-            <CalButton className="block text-base leading-6 font-medium py-2 text-white hover:bg-opacity-10 hover:bg-white transition-color duration-300 px-3 rounded-[8px] text-left">
-              Schedule a call
-            </CalButton>
           </nav>
+          <CalButton variant="secondary">Schedule a call</CalButton>
         </div>
       </div>
     </div>
