@@ -8,16 +8,36 @@ import { DaiSymbol } from "./DaiSymbol";
 import React from "react";
 
 interface CurrencySymbolProps {
-  currency: Currency;
-  size: CurrencySymbolSize;
-  /*
-   * symbolFillColor: specifies, as a hex code, the symbol color to be set
+  /**
+   * The `Currency` to display the symbol for.
    */
-  symbolFillColor?: string;
-  /*
-   * describeCurrencyInTooltip: wether to display the currency name in a tooltip or not
+  currency: Currency;
+
+  /**
+   * The size of the `CurrencySymbol`.
+   * 
+   * Defaults to `CurrencySymbolSize.Small`.
+   */
+  size: CurrencySymbolSize;
+
+  /**
+   * If `true`, hovering over the `CurrencySymbol` will display the
+   * name of `currency` in a `Tooltip`. If `false` then the `CurrencySymbol`
+   * won't have any `Tooltip`.
+   * 
+   * Defaults to `true`.
    */
   describeCurrencyInTooltip: boolean;
+  
+  /**
+   * Optional. Defines a custom color for the `CurrencySymbol` that overrides
+   * the default symbol color for `currency`.
+   * 
+   * If defined, must be formatted as a hex color code.
+   * 
+   * If undefined, defaults to the default symbol color for `currency`.
+   */
+  symbolFillColor?: string;
 }
 
 export enum CurrencySymbolSize {
@@ -26,9 +46,9 @@ export enum CurrencySymbolSize {
 }
 
 export const CurrencySymbol = ({
-  size,
   currency,
-  describeCurrencyInTooltip,
+  size = CurrencySymbolSize.Small,
+  describeCurrencyInTooltip = true,
   symbolFillColor = undefined,
 }: CurrencySymbolProps) => {
   let symbol: JSX.Element | null = null;
