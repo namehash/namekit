@@ -264,6 +264,9 @@ importers:
 
   apps/storybook.namekit.io:
     dependencies:
+      '@namehash/ens-utils':
+        specifier: workspace:*
+        version: link:../../packages/ens-utils
       '@namehash/ens-webfont':
         specifier: workspace:*
         version: link:../../packages/ens-webfont
@@ -499,6 +502,9 @@ importers:
       '@headlessui/react':
         specifier: 1.7.17
         version: 1.7.17(react-dom@18.3.1)(react@18.3.1)
+      '@namehash/ens-utils':
+        specifier: workspace:*
+        version: link:../ens-utils
       '@namehash/ens-webfont':
         specifier: workspace:*
         version: link:../ens-webfont
