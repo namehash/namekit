@@ -1,14 +1,13 @@
-name: Tests
-
+name: NameGuard API - Unit Tests
 on:
   push:
     branches: [main]
     paths:
-      - 'api/**'
+      - "api/**"
   pull_request:
     branches: [main]
     paths:
-      - 'api/**'
+      - "api/**"
 
 env:
   PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
@@ -18,19 +17,17 @@ env:
   ENS_SUBGRAPH_URL_MAINNET: ${{ secrets.ENS_SUBGRAPH_URL_MAINNET }}
   ENS_SUBGRAPH_URL_SEPOLIA: ${{ secrets.ENS_SUBGRAPH_URL_SEPOLIA }}
 
-
 jobs:
   test:
     runs-on: ${{ matrix.os }}
-
     strategy:
       matrix:
         os: [ubuntu-latest]
         python-version: [3.9, 3.11]
 
     steps:
-      - uses: actions/checkout@v3
-      
+      - uses: actions/checkout@v4
+
       - name: Install poetry
         run: pipx install poetry
 
@@ -92,5 +89,5 @@ jobs:
         with:
           author_name: github-actions
           author_email: actions@github.com
-          message: 'Update coverage badge'
-          add: 'api/coverage_badge.svg'
+          message: "Update coverage badge"
+          add: "api/coverage_badge.svg"

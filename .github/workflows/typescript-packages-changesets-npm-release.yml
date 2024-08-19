@@ -1,9 +1,11 @@
-name: Release
+name: TypeScript Packages - Changesets - NPM Release
 
 on:
   push:
     branches:
       - main
+    paths:
+      - "packages/**"
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
