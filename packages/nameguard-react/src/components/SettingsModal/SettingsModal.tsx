@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { Button } from "@namehash/namekit-react";
+import { Button, IconButton } from "@namehash/namekit-react";
 
 import { useSettingsStore, type Settings } from "../../stores/settings";
 
@@ -52,13 +52,14 @@ export const SettingsModal = () => {
                     Search settings
                   </Dialog.Title>
                   <div className="flex items-center right-0 inset-y-0 absolute pr-6 z-20">
-                    <Button
+                    <IconButton
+                      icon={
+                        <XMarkIcon className="w-6 h-6 fill-current text-black md:text-gray-400" />
+                      }
                       onClick={closeModal}
                       variant="ghost"
                       className="!p-2"
-                    >
-                      <XMarkIcon className="w-6 h-6 fill-current text-black md:text-gray-400" />
-                    </Button>
+                    />
                   </div>
                 </div>
 

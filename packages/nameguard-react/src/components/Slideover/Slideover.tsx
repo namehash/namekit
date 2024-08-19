@@ -1,7 +1,7 @@
 import React, { forwardRef, Fragment, type Ref, ReactNode } from "react";
 import { Transition } from "@headlessui/react";
 import { ChevronDoubleRightIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { Button } from "@namehash/namekit-react";
+import { Button, IconButton } from "@namehash/namekit-react";
 
 type SlideoverProps = {
   title: string;
@@ -45,10 +45,17 @@ export const Slideover = forwardRef(
                 <div className="h-[56px] md:h-[68px] flex items-center justify-center shadow px-6 py-5 flex-none relative bg-white z-40">
                   <h2 className="font-medium text-lg">{title}</h2>
                   <div className="flex items-center right-0 md:left-0 md:right-auto inset-y-0 absolute pr-3 md:pr-0 md:pl-3 z-20">
-                    <Button className="!p-2" variant="ghost" onClick={onClose}>
-                      <ChevronDoubleRightIcon className="hidden md:block w-6 h-6 fill-current text-black" />
-                      <XMarkIcon className="md:hidden w-6 h-6 fill-current text-black md:text-gray-400" />
-                    </Button>
+                    <IconButton
+                      icon={
+                        <>
+                          <ChevronDoubleRightIcon className="hidden md:block w-6 h-6 fill-current text-black" />
+                          <XMarkIcon className="md:hidden w-6 h-6 fill-current text-black md:text-gray-400" />
+                        </>
+                      }
+                      className="!p-2"
+                      variant="ghost"
+                      onClick={onClose}
+                    />
                   </div>
                 </div>
 

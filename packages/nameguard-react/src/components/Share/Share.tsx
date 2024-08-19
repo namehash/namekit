@@ -124,13 +124,14 @@ export function Share({ name }: ShareProps) {
                       Share NameGuard report
                     </Dialog.Title>
                     <div className="flex items-center right-0 inset-y-0 absolute pr-6 z-20">
-                      <Button
+                      <IconButton
+                        icon={
+                          <XMarkIcon className="w-6 h-6 fill-current text-gray-400" />
+                        }
                         onClick={() => setIsOpen(false)}
                         variant="ghost"
                         className="!p-2"
-                      >
-                        <XMarkIcon className="w-6 h-6 fill-current text-gray-400" />
-                      </Button>
+                      />
                     </div>
                   </div>
 

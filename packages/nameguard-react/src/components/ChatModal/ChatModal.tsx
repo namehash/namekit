@@ -1,5 +1,5 @@
 import React, { forwardRef, type Ref } from "react";
-import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";
+import { ArrowUpRightIcon } from "@heroicons/react/24/solid";
 
 import { AvatarIcons } from "./Avatars";
 import { Slideover } from "../Slideover/Slideover";
@@ -40,9 +40,7 @@ export const ChatModal = forwardRef(
             >
               <IconButton
                 iconPosition="right"
-                icon={
-                  <ArrowTopRightOnSquareIcon className="w-5 h-5 fill-current" />
-                }
+                icon={<ArrowUpRightIcon className="w-5 h-5 fill-current" />}
               >
                 Open XMTP.chat
               </IconButton>
