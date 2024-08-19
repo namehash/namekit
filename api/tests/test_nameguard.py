@@ -6,6 +6,11 @@ from nameguard.models import Rating, Check, CheckStatus, Normalization, GenericC
 from nameguard.nameguard import NameGuard
 from nameguard.exceptions import NamehashNotFoundInSubgraph, NotAGrapheme
 from nameguard.endpoints import Endpoints
+from nameguard.utils import (
+    MAX_INSPECTED_NAME_CHARACTERS,
+    MAX_INSPECTED_NAME_UNKNOWN_LABELS,
+    MAX_NUMBER_OF_NAMES_IN_BULK,
+)
 
 
 @pytest.fixture(scope='module')
@@ -164,9 +169,14 @@ async def test_bulk_stress(nameguard: NameGuard):
 @pytest.mark.parametrize('label_length', [3, 10, 62, 63, 64, 200, 240, 252, 253, 254, 255, 256, 300])
 @pytest.mark.asyncio
 async def test_bulk_simple_name(nameguard: NameGuard, label_length):
-    result = await nameguard.inspect_name('mainnet', ('a' * label_length) + '.eth')
-    result_bulk = await nameguard.inspect_name('mainnet', ('a' * label_length) + '.eth', bulk_mode=True)
+    name = ('a' * label_length) + '.eth'
+    result = await nameguard.inspect_name('mainnet', name)
+    result_bulk = await nameguard.inspect_name('mainnet', name, bulk_mode=True)
 
+    if len(name) > MAX_INSPECTED_NAME_CHARACTERS:
+        assert result.highest_risk.check.name == 'UNINSPECTED'
+
+    assert result.highest_risk == result_bulk.highest_risk
     assert result.namehash == result_bulk.namehash
     assert result.normalization == result_bulk.normalization
     assert result.rating == result_bulk.rating
@@ -327,6 +337,24 @@ async def test_unknown_label(nameguard: NameGuard):
     assert r.rating is Rating.ALERT
     assert r.highest_risk.check is Check.UNKNOWN_LABEL
     assert r.canonical_name == '[56d7ba27aed5cd36fc16684baeb86f73d6d0c60b6501487725bcfc9056378075].eth'
+
+
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
+@pytest.mark.asyncio
+async def test_max_unknown_labels(nameguard: NameGuard):
+    r = await nameguard.inspect_name(
+        'mainnet',
+        '[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].' * MAX_INSPECTED_NAME_UNKNOWN_LABELS
+        + 'eth',
+    )
+    assert r.highest_risk.check is not Check.UNINSPECTED
+
+    r = await nameguard.inspect_name(
+        'mainnet',
+        '[5d5727cb0fb76e4944eafb88ec9a3cf0b3c9025a4b2f947729137c5d7f84f68f].' * (MAX_INSPECTED_NAME_UNKNOWN_LABELS + 1)
+        + 'eth',
+    )
+    assert r.highest_risk.check is Check.UNINSPECTED
 
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
@@ -640,13 +668,18 @@ async def test_dynamic_check_order(nameguard: NameGuard):
 
 
 @pytest.mark.asyncio
-async def test_stress_ens_cure(nameguard: NameGuard):
+async def test_stress_inspect_name(nameguard: NameGuard):
     # with omit_cure=False takes 1 minute
     result = await nameguard.inspect_name('mainnet', '⎛⎝⎞⎠' * 1000)
-    assert result.rating is Rating.ALERT
+
+    assert result.highest_risk.check.name == 'UNINSPECTED'
+    assert result.checks[0] == result.highest_risk
+    for check in result.checks[1:]:
+        assert check.status is CheckStatus.SKIP
+        assert check.rating is Rating.PASS
 
 
-def test_sync_inspect(nameguard: NameGuard):
-    result = nameguard.inspect_name_sync('nick.eth')
-    assert result.rating is Rating.PASS
-    assert all(check.rating is Rating.PASS for check in result.checks)
+@pytest.mark.asyncio
+async def test_stress_bulk_inspect_name(nameguard: NameGuard):
+    result = await nameguard.bulk_inspect_names('mainnet', ['≡ƒÿ║' * 10000] * MAX_NUMBER_OF_NAMES_IN_BULK)
+    assert all([x.highest_risk.check.name == 'UNINSPECTED' for x in result.results])

@@ -51,6 +51,9 @@ const messages = [
   {
     address: "0x4735F0ce83c1d328045a7737a7Dd53504714DFA5",
   },
+  {
+    address: "0xf4A4D9C75dA65d507cfcd5ff0aCB73D40D3A3bCB",
+  },
 ] as const;
 
 export default function RootLayout({

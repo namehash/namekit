@@ -38,7 +38,7 @@ def set_monkeypatch(monkeypatch):
                 result = await original_get_nft_metadata(contract_address, token_id)
                 json.dump(
                     result,
-                    open(f'data/NEW-get_nft_metadata__{contract_address}__{token_id}.json', 'w'),
+                    open(f'{TESTS_DATA_PATH}/NEW-get_nft_metadata__{contract_address}__{token_id}.json', 'w'),
                     indent=2,
                     ensure_ascii=False,
                 )
@@ -53,7 +53,9 @@ def set_monkeypatch(monkeypatch):
                 return json.load(open(f'{TESTS_DATA_PATH}/name__{address}.json'))
             except FileNotFoundError:
                 result = original_name(self, address)
-                json.dump(result, open(f'data/NEW-name__{address}.json', 'w'), indent=2, ensure_ascii=False)
+                json.dump(
+                    result, open(f'{TESTS_DATA_PATH}/NEW-name__{address}.json', 'w'), indent=2, ensure_ascii=False
+                )
                 raise
 
         # monkeypatch.setattr('nameguard.our_ens.OurENS.name', mock_name)
@@ -77,7 +79,9 @@ def set_monkeypatch(monkeypatch):
                 h = hashlib.md5(
                     json.dumps((network_name, query, variables), sort_keys=True).encode('utf-8')
                 ).hexdigest()
-                json.dump(result, open(f'data/NEW-call_subgraph__{h}.json', 'w'), indent=2, ensure_ascii=False)
+                json.dump(
+                    result, open(f'{TESTS_DATA_PATH}/NEW-call_subgraph__{h}.json', 'w'), indent=2, ensure_ascii=False
+                )
                 raise
 
         monkeypatch.setattr('nameguard.subgraph.call_subgraph', mock_call_subgraph)
