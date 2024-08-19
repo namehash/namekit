@@ -7,6 +7,11 @@ import { EthSymbol } from "./EthSymbol";
 import { DaiSymbol } from "./DaiSymbol";
 import React from "react";
 
+export enum CurrencySymbolSize {
+  Small = "nk-w-4",
+  Large = "nk-w-5",
+}
+
 interface CurrencySymbolProps {
   /**
    * The `Currency` to display the symbol for.
@@ -38,11 +43,6 @@ interface CurrencySymbolProps {
    * If undefined, defaults to the default symbol color for `currency`.
    */
   symbolFillColor?: string;
-}
-
-export enum CurrencySymbolSize {
-  Small = "nk-w-4",
-  Large = "nk-w-5",
 }
 
 export const CurrencySymbol = ({
