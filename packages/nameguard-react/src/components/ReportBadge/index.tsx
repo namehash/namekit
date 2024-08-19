@@ -3,13 +3,10 @@ import { type ConsolidatedNameGuardReport } from "@namehash/nameguard";
 import React, { useEffect } from "react";
 import cc from "classcat";
 
+import { Link } from "@namehash/namekit-react";
+
 import { ReportIcon } from "../ReportIcon/index";
-import {
-  RatingLoadingIcon,
-  RatingIconSize,
-  Tooltip,
-  DisplayedName,
-} from "../..";
+import { RatingLoadingIcon, RatingIconSize, DisplayedName } from "../..";
 import { UnknownReportIcon } from "../UnknownReportIcon/UnknownReportIcon";
 import { ENSName } from "@namehash/ens-utils";
 
@@ -84,14 +81,9 @@ export function ReportBadge({
           size={RatingIconSize.micro}
           className="cursor-pointer"
         >
-          <div className="text-sm text-white">
-            <button
-              className="appearance-none underline font-medium"
-              onClick={onClickHandler}
-            >
-              Inspect name for details
-            </button>
-          </div>
+          <Link onClick={onClickHandler} variant="underline" size="small">
+            Inspect name for details
+          </Link>
         </UnknownReportIcon>
       ) : !data ? (
         // Loading Rating

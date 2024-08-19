@@ -8,6 +8,8 @@ import {
 import cc from "classcat";
 import { ENSName } from "@namehash/ens-utils";
 
+import { Link } from "@namehash/namekit-react";
+
 import { Tooltip } from "../Tooltip/Tooltip";
 import { RatingLoadingIcon } from "../icons/RatingLoadingIcon";
 import { RatingIcon, RatingIconSize } from "../Report/RatingIcon";
@@ -70,14 +72,9 @@ export function ReportIcon({
         onClick={onClickHandler}
         className="cursor-pointer"
       >
-        <div className="text-sm text-white">
-          <button
-            className="appearance-none underline font-medium"
-            onClick={onClickHandler}
-          >
-            Inspect name for details
-          </button>
-        </div>
+        <Link onClick={onClickHandler} variant="underline" size="small">
+          Inspect name for details
+        </Link>
       </UnknownReportIcon>
     );
   }
@@ -145,14 +142,9 @@ export function ReportIcon({
             {highest_risk?.message || subtitle}
           </div>
 
-          <div className="text-sm text-white">
-            <button
-              className="appearance-none underline font-medium"
-              onClick={onClickHandler}
-            >
-              Inspect name for details
-            </button>
-          </div>
+          <Link onClick={onClickHandler} variant="underline" size="small">
+            Inspect name for details
+          </Link>
         </div>
       </div>
     </Tooltip>
