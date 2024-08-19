@@ -51,7 +51,7 @@ export const CurrencySymbol = ({
   describeCurrencyInTooltip = true,
   symbolFillColor = undefined,
 }: CurrencySymbolProps) => {
-  let symbol: JSX.Element | null = null;
+  let symbol: JSX.Element;
 
   switch (currency) {
     case Currency.Usd:
@@ -73,6 +73,8 @@ export const CurrencySymbol = ({
     case Currency.Eth:
       symbol = <EthSymbol className={size} fill={symbolFillColor} />;
       break;
+    default:
+      throw new Error(`Error creating CurrencySymbol: unrecognized Currency: "${currency}".`);
   }
 
   if (!describeCurrencyInTooltip) return symbol;
