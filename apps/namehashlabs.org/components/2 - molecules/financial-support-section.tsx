@@ -1,5 +1,5 @@
 import { Balancer } from "react-wrap-balancer";
-import { EnsDAOLogoColored } from "../1 - atoms/icons/ens-logo-colored";
+import { EnsDAOLogoColored } from "../1 - atoms/icons/ens-dao-logo-colored";
 import { GitcoinLogo } from "../1 - atoms/icons/gitcoin-logo";
 import { Button } from "@namehash/namekit-react";
 

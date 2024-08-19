@@ -97,6 +97,7 @@ const Product = ({
                   target={withoutExternalLinkIconInCTA ? undefined : "_blank"}
                 >
                   <IconButton
+                    iconPosition="right"
                     icon={
                       !withoutExternalLinkIconInCTA && (
                         <ExternalLinkIcon className="w-5 h-5" />

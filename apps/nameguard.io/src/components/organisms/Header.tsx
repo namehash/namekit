@@ -6,7 +6,7 @@ import { GithubIcon, NGSearchIcon } from "@/components/atoms";
 import { NGSearch } from "@/components/molecules";
 import MobileMenu from "./MobileMenu";
 import { CalButton } from "../atoms";
-import { Button } from "@namehash/namekit-react";
+import { Button, IconButton } from "@namehash/namekit-react";
 
 export const Header = () => {
   return (
@@ -49,13 +49,18 @@ export const Header = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Button variant="ghost" size="small">
-                <GithubIcon className="hidden md:block text-[#0F172A] fill-current" />
+              <IconButton
+                variant="ghost"
+                size="small"
+                icon={
+                  <GithubIcon className="hidden md:block text-[#0F172A] fill-current" />
+                }
+              >
                 Github
-              </Button>
+              </IconButton>
             </a>
 
-            <a href="/contact" rel="noopener noreferrer">
+            <a href="/contact">
               <Button variant="ghost" size="small">
                 Contact
               </Button>

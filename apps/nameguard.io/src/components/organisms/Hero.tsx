@@ -35,11 +35,7 @@ export function Hero() {
             href="https://api.nameguard.io/docs"
             className="hidden lg:block relative z-10"
           >
-            <Button
-              className="hidden lg:block nk-bg-blue-100"
-              variant="primary"
-              size="large"
-            >
+            <Button variant="primary" size="large">
               View the docs
             </Button>
           </a>

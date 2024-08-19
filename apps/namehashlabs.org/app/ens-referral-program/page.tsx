@@ -7,7 +7,7 @@ import { ExternalLinkIcon } from "@/components/1 - atoms";
 import { FigmaIcon } from "@/components/1 - atoms/icons/figma-icon";
 import { GithubIcon } from "@/components/1 - atoms/icons/github-icon";
 import { ProductComponent } from "@/components/2 - molecules/product-component";
-import { Button } from "@namehash/namekit-react";
+import { IconButton } from "@namehash/namekit-react";
 
 const description =
   "Join the discussion about an ENS Referral Program and help ENS grow.";
@@ -129,10 +129,14 @@ const Item = ({
       </div>
       {!!buttonUrl && (
         <a target="_blank" href={buttonUrl}>
-          <Button variant="secondary" size="medium">
+          <IconButton
+            iconPosition="right"
+            icon={<ExternalLinkIcon className="text-black w-5 h-5" />}
+            variant="secondary"
+            size="medium"
+          >
             {buttonText}
-            <ExternalLinkIcon className="text-black w-5 h-5" />
-          </Button>
+          </IconButton>
         </a>
       )}
     </div>
