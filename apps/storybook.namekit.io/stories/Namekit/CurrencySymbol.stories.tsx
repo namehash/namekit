@@ -90,16 +90,6 @@ const meta: Meta<typeof CurrencySymbol> = {
   },
 };
 
-declare global {
-  interface BigInt {
-    toJSON(): string;
-  }
-}
-
-BigInt.prototype.toJSON = function () {
-  return `${this.toString()}n`;
-};
-
 export default meta;
 
 type Story = StoryObj<typeof CurrencySymbol>;
