@@ -2,6 +2,8 @@ import React, { forwardRef, type Ref } from "react";
 import useSWR from "swr";
 import { type GraphemeGuardReport, nameguard } from "@namehash/nameguard";
 
+import { Link } from "@namehash/namekit-react";
+
 import { useGraphemeModalStore } from "../../stores/grapheme";
 import { Slideover } from "../Slideover/Slideover";
 import { CheckResultCard } from "../Report/CheckResultCard";
@@ -17,7 +19,7 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
 
   const { data, isLoading } = useSWR<GraphemeGuardReport>(
     currentGrapheme,
-    (g: string) => nameguard.inspectGrapheme(g)
+    (g: string) => nameguard.inspectGrapheme(g),
   );
 
   const totalCodepoints = data?.codepoints?.length ?? 0;
@@ -111,9 +113,13 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
                   <Tooltip
                     placement="left"
                     trigger={
-                      <p className="text-black underline text-sm leading-6 cursor-default">
+                      <Link
+                        variant="underline"
+                        className="!cursor-default"
+                        size="small"
+                      >
                         Why it matters?
-                      </p>
+                      </Link>
                     }
                   >
                     <div className="max-w-[480px]">
