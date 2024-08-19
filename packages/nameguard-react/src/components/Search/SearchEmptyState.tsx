@@ -26,7 +26,7 @@ const examples = [
   "unknоwn.eth",
   "john🇺🇸",
   "7️⃣7️⃣7️⃣.eth",
-  "testingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtestingtesting.eth",
+  "extremelylongnamethatgoesonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandon.eth",
 ].map((name) => buildENSName(name));
 
 export const SearchEmptyState = () => {
