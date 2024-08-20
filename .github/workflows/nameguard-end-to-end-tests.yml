@@ -7,12 +7,14 @@ on:
     paths:
       - "packages/nameguard-sdk/**"
       - "api/nameguard/**"
+      - ".github/workflows/nameguard-end-to-end-tests.yml"
   pull_request:
     branches:
       - main
     paths:
       - "packages/nameguard-sdk/**"
       - "api/nameguard/**"
+      - ".github/workflows/nameguard-end-to-end-tests.yml"
 
 jobs:
   check_changes:
@@ -38,16 +40,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: true
+
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "lts/*"
           cache: "pnpm"
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          run_install: true
 
       - name: Install poetry
         if: needs.check_changes.outputs.api_changed > 0

@@ -12,7 +12,7 @@ from nameguard.models import (
 
 STATUS = CheckStatus.ALERT
 
-# title: Normalized
+# title:  Normalized
 TITLE_PASS = 'Normalization'
 TITLE_FAIL = 'Normalization'
 TITLE_SKIP = 'Normalization'
