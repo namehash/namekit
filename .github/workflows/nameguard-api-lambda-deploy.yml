@@ -1,4 +1,4 @@
-name: Deploy NameGuard to AWS as a serverless lambda
+name: NameGuard API - Lambda Deploy
 
 on:
   push:

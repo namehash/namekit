@@ -1,5 +1,5 @@
 from typing import Optional
-from nameguard.models import CheckStatus, Check, GenericCheckResult, NameCheckResult
+from nameguard.models import CheckStatus, Check, GenericCheckResult, NameCheckResult, UNINSPECTED_SKIP_MESSAGE
 from nameguard.context import endpoint_name
 from nameguard.endpoints import Endpoints
 from label_inspector.models import InspectorResult
@@ -64,3 +64,11 @@ def check_name(labels: list[Optional[InspectorResult]]) -> GenericCheckResult:
         _name_message=message,
         _title=TITLE_PASS if passed else TITLE_FAIL,
     )
+
+
+UNINSPECTED_SKIP_CHECK_RESULT = NameCheckResult(
+    check=Check.IMPERSONATION_RISK,
+    status=CheckStatus.SKIP,
+    _name_message=UNINSPECTED_SKIP_MESSAGE,
+    _title=TITLE_SKIP,
+)

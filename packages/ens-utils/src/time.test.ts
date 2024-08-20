@@ -1,6 +1,32 @@
 import { describe, it, expect } from "vitest";
-
-import { addSeconds, buildTimePeriod, buildTimestamp, buildTimestampMs, buildDateFromTimestamp, timestampMsToTimestamp, now, buildTimestampFromDate, buildDuration, isOverlappingTimestamp, subtractSeconds, formatTimestamp, FormatTimestampOptions, formatTimestampAsDistance, formatTimestampAsDistanceToNow, scaleDuration, SECONDS_PER_DAY, DAYS_PER_YEAR } from "./time";
+import {
+  addSeconds,
+  buildTimePeriod,
+  buildTimestamp,
+  buildTimestampMs,
+  buildDateFromTimestamp,
+  timestampMsToTimestamp,
+  now,
+  buildTimestampFromDate,
+  buildDuration,
+  isOverlappingTimestamp,
+  subtractSeconds,
+  formatTimestamp,
+  FormatTimestampOptions,
+  formatTimestampAsDistance,
+  formatTimestampAsDistanceToNow,
+  scaleDuration,
+  SECONDS_PER_DAY,
+  DAYS_PER_YEAR,
+  isOverlappingTimePeriod,
+  absoluteTimestampDistance,
+  buildDurationFromTimePeriod,
+  buildIndefiniteTimePeriod,
+  IndefiniteTimePeriodType,
+  isTimestampOverlappingIndefiniteTimePeriod,
+  isTimePeriodOverlappingIndefiniteTimePeriod,
+  isOverlappingIndefiniteTimePeriod,
+} from "./time";
 
 describe("timestampMsToTimestamp() function", () => {
   it("Correctly returns 0s for less than 1000ms params", () => {
@@ -24,9 +50,7 @@ describe("timestampMsToTimestamp() function", () => {
 
 describe("buildDateFromTimestamp() function", () => {
   it("produces expected output", () => {
-    const tests = [
-      { seconds: 0n, expectedDate: new Date(0) },
-    ];
+    const tests = [{ seconds: 0n, expectedDate: new Date(0) }];
 
     tests.forEach(({ seconds, expectedDate }) => {
       const timestamp = buildTimestamp(seconds);
@@ -36,113 +60,107 @@ describe("buildDateFromTimestamp() function", () => {
 });
 
 describe("buildDuration() function", () => {
-    
   it("zero second duration", () => {
-
     const seconds = 0n;
     const duration = buildDuration(seconds);
-    
+
     expect(duration.seconds).toStrictEqual(seconds);
   });
 
   it("one second duration", () => {
     const seconds = 1n;
     const duration = buildDuration(seconds);
-    
+
     expect(duration.seconds).toStrictEqual(seconds);
   });
 
   it("negative one second duration", () => {
     const seconds = -1n;
 
-    expect(() => {buildDuration(seconds)}).toThrow();
+    expect(() => {
+      buildDuration(seconds);
+    }).toThrow();
   });
 });
 
 describe("scaleDuration() function", () => {
-    
   it("throws when scaled by a negative number", () => {
-
     const seconds = 1000n;
     const duration = buildDuration(seconds);
     const scalar = -1;
-    
-    expect(() => {scaleDuration(duration, scalar)}).toThrow();
+
+    expect(() => {
+      scaleDuration(duration, scalar);
+    }).toThrow();
   });
 
   it("throws when scaled by an invalid number", () => {
-
     const seconds = 1000n;
     const duration = buildDuration(seconds);
     const scalar = Infinity;
-    
-    expect(() => {scaleDuration(duration, scalar)}).toThrow();
+
+    expect(() => {
+      scaleDuration(duration, scalar);
+    }).toThrow();
   });
 
   it("scale by 0n", () => {
-
     const seconds = 1000n;
     const duration = buildDuration(seconds);
     const scalar = 0n;
     const result = scaleDuration(duration, scalar);
-    
+
     expect(result.seconds).toStrictEqual(0n);
   });
 
   it("scale by 0", () => {
-
     const seconds = 1000n;
     const duration = buildDuration(seconds);
     const scalar = 0;
     const result = scaleDuration(duration, scalar);
-    
+
     expect(result.seconds).toStrictEqual(0n);
   });
 
   it("scale by 1000n", () => {
-
     const seconds = 1000n;
     const duration = buildDuration(seconds);
     const scalar = 1000n;
     const result = scaleDuration(duration, scalar);
-    
+
     expect(result.seconds).toStrictEqual(1000000n);
   });
 
   it("scale by 1000", () => {
-
     const seconds = 1000n;
     const duration = buildDuration(seconds);
     const scalar = 1000;
     const result = scaleDuration(duration, scalar);
-    
+
     expect(result.seconds).toStrictEqual(1000000n);
   });
 
   it("scale by fractional scalar", () => {
-
     const duration = SECONDS_PER_DAY;
     const scalar = DAYS_PER_YEAR;
     const result = scaleDuration(duration, scalar);
-    
+
     expect(result.seconds).toStrictEqual(31556952n);
   });
-
 });
 
 describe("addSeconds() function", () => {
-    
   it("add zero duration", () => {
-      const date = new Date("2024-01-02T03:04:05Z");
-      const timestamp = buildTimestampFromDate(date);
+    const date = new Date("2024-01-02T03:04:05Z");
+    const timestamp = buildTimestampFromDate(date);
 
-      const duration = buildDuration(0n);
-      const result = addSeconds(timestamp, duration);
+    const duration = buildDuration(0n);
+    const result = addSeconds(timestamp, duration);
 
-      const resultDate = buildDateFromTimestamp(result);
-      const expectedDate = date;
+    const resultDate = buildDateFromTimestamp(result);
+    const expectedDate = date;
 
-      expect(resultDate).toStrictEqual(expectedDate);
+    expect(resultDate).toStrictEqual(expectedDate);
   });
 
   it("add non-zero duration", () => {
@@ -160,18 +178,17 @@ describe("addSeconds() function", () => {
 });
 
 describe("subtractSeconds() function", () => {
-    
   it("subtract zero duration", () => {
-      const date = new Date("2024-01-02T03:04:05Z");
-      const timestamp = buildTimestampFromDate(date);
+    const date = new Date("2024-01-02T03:04:05Z");
+    const timestamp = buildTimestampFromDate(date);
 
-      const duration = buildDuration(0n);
-      const result = subtractSeconds(timestamp, duration);
+    const duration = buildDuration(0n);
+    const result = subtractSeconds(timestamp, duration);
 
-      const resultDate = buildDateFromTimestamp(result);
-      const expectedDate = date;
+    const resultDate = buildDateFromTimestamp(result);
+    const expectedDate = date;
 
-      expect(resultDate).toStrictEqual(expectedDate);
+    expect(resultDate).toStrictEqual(expectedDate);
   });
 
   it("subtract non-zero duration", () => {
@@ -188,28 +205,66 @@ describe("subtractSeconds() function", () => {
   });
 });
 
+describe("absoluteTimestampDistance() function", () => {
+  it("same Timestamp", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date);
+    const timestamp2 = buildTimestampFromDate(date);
+
+    const result = absoluteTimestampDistance(timestamp1, timestamp2).seconds;
+    const expectedResult = 0n;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("1 second before", () => {
+    const date1 = new Date("2024-01-01T00:00:01Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+
+    const date2 = new Date("2024-01-01T00:00:00Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+
+    const result = absoluteTimestampDistance(timestamp1, timestamp2).seconds;
+    const expectedResult = 1n;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("1 second after", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+
+    const date2 = new Date("2024-01-01T00:00:01Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+
+    const result = absoluteTimestampDistance(timestamp1, timestamp2).seconds;
+    const expectedResult = 1n;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+});
+
 describe("formatTimestamp() function", () => {
-    
   it("showDateOnly - UTC - 1 digit day", () => {
-      const date = new Date("2024-01-02T23:59:59Z");
-      const timestamp = buildTimestampFromDate(date);
-      const options : FormatTimestampOptions = {
-        timeZone: "UTC",
-        showDateOnly: true,
-      }
+    const date = new Date("2024-01-02T23:59:59Z");
+    const timestamp = buildTimestampFromDate(date);
+    const options: FormatTimestampOptions = {
+      timeZone: "UTC",
+      showDateOnly: true,
+    };
 
-      const result = formatTimestamp(timestamp, options);
+    const result = formatTimestamp(timestamp, options);
 
-      expect(result).toStrictEqual("Jan 2, 2024");
+    expect(result).toStrictEqual("Jan 2, 2024");
   });
 
   it("showDateOnly - UTC - 2 digit day", () => {
     const date = new Date("2024-01-31T23:59:59Z");
     const timestamp = buildTimestampFromDate(date);
-    const options : FormatTimestampOptions = {
+    const options: FormatTimestampOptions = {
       timeZone: "UTC",
       showDateOnly: true,
-    }
+    };
 
     const result = formatTimestamp(timestamp, options);
 
@@ -219,9 +274,9 @@ describe("formatTimestamp() function", () => {
   it("UTC - 2 digit hour and minute PM", () => {
     const date = new Date("2024-01-31T23:59:59Z");
     const timestamp = buildTimestampFromDate(date);
-    const options : FormatTimestampOptions = {
+    const options: FormatTimestampOptions = {
       timeZone: "UTC",
-    }
+    };
 
     const result = formatTimestamp(timestamp, options);
 
@@ -231,9 +286,9 @@ describe("formatTimestamp() function", () => {
   it("UTC - 1 digit hour and minute AM", () => {
     const date = new Date("2024-01-31T01:01:01Z");
     const timestamp = buildTimestampFromDate(date);
-    const options : FormatTimestampOptions = {
+    const options: FormatTimestampOptions = {
       timeZone: "UTC",
-    }
+    };
 
     const result = formatTimestamp(timestamp, options);
 
@@ -243,9 +298,9 @@ describe("formatTimestamp() function", () => {
   it("UTC - midnight", () => {
     const date = new Date("2024-01-31T00:00:00Z");
     const timestamp = buildTimestampFromDate(date);
-    const options : FormatTimestampOptions = {
+    const options: FormatTimestampOptions = {
       timeZone: "UTC",
-    }
+    };
 
     const result = formatTimestamp(timestamp, options);
 
@@ -255,9 +310,9 @@ describe("formatTimestamp() function", () => {
   it("UTC - noon", () => {
     const date = new Date("2024-01-31T12:00:00Z");
     const timestamp = buildTimestampFromDate(date);
-    const options : FormatTimestampOptions = {
+    const options: FormatTimestampOptions = {
       timeZone: "UTC",
-    }
+    };
 
     const result = formatTimestamp(timestamp, options);
 
@@ -267,10 +322,10 @@ describe("formatTimestamp() function", () => {
   it("showDateOnly - custom time zone", () => {
     const date = new Date("2024-01-31T23:59:59Z");
     const timestamp = buildTimestampFromDate(date);
-    const options : FormatTimestampOptions = {
+    const options: FormatTimestampOptions = {
       showDateOnly: true,
       timeZone: "Asia/Dubai",
-    }
+    };
 
     const result = formatTimestamp(timestamp, options);
 
@@ -314,39 +369,145 @@ describe("formatTimestamp() function", () => {
   //   expect(result).toStrictEqual("Feb 1, 2024, 3:59 AM");
   // });
 
+  it("showDateOnly - GMT time zone", () => {
+    const date = new Date("2024-01-31T23:59:59Z");
+    const timestamp = buildTimestampFromDate(date);
+    const options: FormatTimestampOptions = {
+      showDateOnly: true,
+      timeZone: "GMT",
+    };
+
+    const result = formatTimestamp(timestamp, options);
+
+    expect(result).toStrictEqual("Jan 31, 2024");
+  });
+
+  it("showDateOnly - Sao Paulo time zone", () => {
+    const date = new Date("2024-01-31T23:59:59Z");
+    const timestamp = buildTimestampFromDate(date);
+    const options: FormatTimestampOptions = {
+      showDateOnly: true,
+      timeZone: "America/Sao_Paulo",
+    };
+
+    const result = formatTimestamp(timestamp, options);
+
+    expect(result).toStrictEqual("Jan 31, 2024");
+  });
+
+  it("showDateOnly - London time zone", () => {
+    const date = new Date("2024-01-31T23:59:59Z");
+    const timestamp = buildTimestampFromDate(date);
+    const options: FormatTimestampOptions = {
+      showDateOnly: true,
+      timeZone: "Europe/London",
+    };
+
+    const result = formatTimestamp(timestamp, options);
+
+    expect(result).toStrictEqual("Jan 31, 2024");
+  });
+
+  it("showDateOnly - Chicago time zone", () => {
+    const date = new Date("2024-01-31T23:59:59Z");
+    const timestamp = buildTimestampFromDate(date);
+    const options: FormatTimestampOptions = {
+      showDateOnly: true,
+      timeZone: "America/Chicago",
+    };
+
+    const result = formatTimestamp(timestamp, options);
+
+    expect(result).toStrictEqual("Jan 31, 2024");
+  });
+
+  it("showDateOnly - Chicago time zone", () => {
+    const date = new Date("2024-01-31T23:59:59Z");
+    const timestamp = buildTimestampFromDate(date);
+    const options: FormatTimestampOptions = {
+      showDateOnly: true,
+      timeZone: "America/Chicago",
+    };
+
+    const result = formatTimestamp(timestamp, options);
+
+    expect(result).toStrictEqual("Jan 31, 2024");
+  });
+
+  it("show full timestamp description - Chicago time zone", () => {
+    const date = new Date("2024-01-31T23:59:59Z");
+    const timestamp = buildTimestampFromDate(date);
+    const options: FormatTimestampOptions = {
+      timeZone: "America/Chicago",
+    };
+
+    const result = formatTimestamp(timestamp, options);
+
+    expect(result).toStrictEqual("Jan 31, 2024, 5:59 PM");
+  });
+
+  it("show full timestamp description - London time zone", () => {
+    const date = new Date("2024-01-31T23:59:59Z");
+    const timestamp = buildTimestampFromDate(date);
+    const options: FormatTimestampOptions = {
+      timeZone: "Europe/London",
+    };
+
+    const result = formatTimestamp(timestamp, options);
+
+    expect(result).toStrictEqual("Jan 31, 2024, 11:59 PM");
+  });
+
+  it("show full timestamp description - Sao Paulo time zone", () => {
+    const date = new Date("2024-01-31T23:59:59Z");
+    const timestamp = buildTimestampFromDate(date);
+    const options: FormatTimestampOptions = {
+      timeZone: "America/Sao_Paulo",
+    };
+
+    const result = formatTimestamp(timestamp, options);
+
+    expect(result).toStrictEqual("Jan 31, 2024, 8:59 PM");
+  });
+
   it("invalid timezone", () => {
     const date = new Date("2024-01-31T12:00:00Z");
     const timestamp = buildTimestampFromDate(date);
-    const options : FormatTimestampOptions = {
+    const options: FormatTimestampOptions = {
       timeZone: "invalid",
-    }
+    };
 
-    expect(() => {formatTimestamp(timestamp, options)}).toThrow();
+    expect(() => {
+      formatTimestamp(timestamp, options);
+    }).toThrow();
   });
 
   it("syntactically invalid locale", () => {
     const date = new Date("2024-01-31T12:00:00Z");
     const timestamp = buildTimestampFromDate(date);
-    const options : FormatTimestampOptions = {
+    const options: FormatTimestampOptions = {
       locale: "x",
-    }
+    };
 
-    expect(() => {formatTimestamp(timestamp, options)}).toThrow();
+    expect(() => {
+      formatTimestamp(timestamp, options);
+    }).toThrow();
   });
 
   it("japanese locale", () => {
     const date = new Date("2024-01-01T01:01:01Z");
     const timestamp = buildTimestampFromDate(date);
 
-    const result = formatTimestamp(timestamp, {timeZone: "UTC", locale: "ja-JP"});
+    const result = formatTimestamp(timestamp, {
+      timeZone: "UTC",
+      locale: "ja-JP",
+    });
 
     expect(result).toStrictEqual("2024年1月1日 1:01");
   });
-
 });
 
 describe("formatTimestampAsDistance() function", () => {
-
   it("plural years in past", () => {
     const date = new Date("2024-01-01T00:00:00Z");
     const timestamp = buildTimestampFromDate(date);
@@ -456,7 +617,7 @@ describe("formatTimestampAsDistance() function", () => {
 
     expect(result).toStrictEqual("59 minutes ago");
   });
-  
+
   it("singular minute in past", () => {
     const date = new Date("2024-01-01T00:00:00Z");
     const timestamp = buildTimestampFromDate(date);
@@ -489,16 +650,16 @@ describe("formatTimestampAsDistance() function", () => {
 
     expect(result).toStrictEqual("1 second ago");
   });
-    
+
   it("zero distance", () => {
-      const date = new Date("2024-01-01T00:00:00Z");
-      const timestamp = buildTimestampFromDate(date);
-      const baseDate = new Date("2024-01-01T00:00:00Z");
-      const baseTimestamp = buildTimestampFromDate(baseDate);
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+    const baseDate = new Date("2024-01-01T00:00:00Z");
+    const baseTimestamp = buildTimestampFromDate(baseDate);
 
-      const result = formatTimestampAsDistance(timestamp, baseTimestamp);
+    const result = formatTimestampAsDistance(timestamp, baseTimestamp);
 
-      expect(result).toStrictEqual("now");
+    expect(result).toStrictEqual("now");
   });
 
   it("singular second in future", () => {
@@ -643,11 +804,9 @@ describe("formatTimestampAsDistance() function", () => {
 
     expect(result).toStrictEqual("in 1001 years");
   });
-
 });
 
 describe("formatTimestampAsDistanceToNow() function", () => {
-    
   it("now", () => {
     const result = formatTimestampAsDistanceToNow(now());
 
@@ -656,18 +815,17 @@ describe("formatTimestampAsDistanceToNow() function", () => {
 });
 
 describe("buildTimePeriod() function", () => {
-    
   it("begin equals end", () => {
-      const date = new Date("2024-01-02T03:04:05Z");
-      const timestamp = buildTimestampFromDate(date);
+    const date = new Date("2024-01-02T03:04:05Z");
+    const timestamp = buildTimestampFromDate(date);
 
-      const begin = timestamp;
-      const end = timestamp;
+    const begin = timestamp;
+    const end = timestamp;
 
-      const period = buildTimePeriod(begin, end);
+    const period = buildTimePeriod(begin, end);
 
-      expect(period.begin).toStrictEqual(begin);
-      expect(period.end).toStrictEqual(end);
+    expect(period.begin).toStrictEqual(begin);
+    expect(period.end).toStrictEqual(end);
   });
 
   it("end after beginning", () => {
@@ -690,12 +848,13 @@ describe("buildTimePeriod() function", () => {
     const begin = addSeconds(timestamp, buildDuration(1n));
     const end = timestamp;
 
-    expect(() => {buildTimePeriod(begin, end)}).toThrow();
+    expect(() => {
+      buildTimePeriod(begin, end);
+    }).toThrow();
   });
 });
 
 describe("isOverlappingTimestamp() function", () => {
-    
   it("overlapping zero duration TimePeriod", () => {
     const date = new Date("2024-01-02T03:04:05Z");
     const timestamp = buildTimestampFromDate(date);
@@ -776,6 +935,794 @@ describe("isOverlappingTimestamp() function", () => {
     const period = buildTimePeriod(periodBegin, periodEnd);
     const result = isOverlappingTimestamp(period, timestamp);
     const expectedResult = false;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+});
+
+describe("isOverlappingTimePeriod() function", () => {
+  it("overlapping zero duration TimePeriods", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const period1Begin = timestamp;
+    const period1End = timestamp;
+    const period1 = buildTimePeriod(period1Begin, period1End);
+
+    const period2Begin = timestamp;
+    const period2End = timestamp;
+    const period2 = buildTimePeriod(period2Begin, period2End);
+
+    const result = isOverlappingTimePeriod(period1, period2);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("1 second before TimePeriod", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const period1Begin = timestamp;
+    const period1End = timestamp;
+    const period1 = buildTimePeriod(period1Begin, period1End);
+
+    const period2Begin = addSeconds(timestamp, buildDuration(1n));
+    const period2End = addSeconds(timestamp, buildDuration(2n));
+    const period2 = buildTimePeriod(period2Begin, period2End);
+
+    const result = isOverlappingTimePeriod(period1, period2);
+    const expectedResult = false;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("exactly at TimePeriod begin", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const period1Begin = timestamp;
+    const period1End = timestamp;
+    const period1 = buildTimePeriod(period1Begin, period1End);
+
+    const period2Begin = timestamp;
+    const period2End = addSeconds(timestamp, buildDuration(1n));
+    const period2 = buildTimePeriod(period2Begin, period2End);
+
+    const result = isOverlappingTimePeriod(period1, period2);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("during TimePeriod", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const period1Begin = timestamp;
+    const period1End = addSeconds(timestamp, buildDuration(3n));
+    const period1 = buildTimePeriod(period1Begin, period1End);
+
+    const period2Begin = addSeconds(timestamp, buildDuration(1n));
+    const period2End = addSeconds(timestamp, buildDuration(2n));
+    const period2 = buildTimePeriod(period2Begin, period2End);
+
+    const result = isOverlappingTimePeriod(period1, period2);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("exactly at TimePeriod end", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const period1Begin = timestamp;
+    const period1End = addSeconds(timestamp, buildDuration(3n));
+    const period1 = buildTimePeriod(period1Begin, period1End);
+
+    const period2Begin = addSeconds(timestamp, buildDuration(3n));
+    const period2End = addSeconds(timestamp, buildDuration(4n));
+    const period2 = buildTimePeriod(period2Begin, period2End);
+
+    const result = isOverlappingTimePeriod(period1, period2);
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("1 second after TimePeriod", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const period1Begin = timestamp;
+    const period1End = addSeconds(timestamp, buildDuration(3n));
+    const period1 = buildTimePeriod(period1Begin, period1End);
+
+    const period2Begin = addSeconds(timestamp, buildDuration(4n));
+    const period2End = addSeconds(timestamp, buildDuration(5n));
+    const period2 = buildTimePeriod(period2Begin, period2End);
+
+    const result = isOverlappingTimePeriod(period1, period2);
+    const expectedResult = false;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+});
+
+describe("buildDurationFromTimePeriod() function", () => {
+  it("zero duration", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+
+    const date2 = new Date("2024-01-01T00:00:00Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+
+    const period = buildTimePeriod(timestamp1, timestamp2);
+
+    const result = buildDurationFromTimePeriod(period).seconds;
+    const expectedResult = 0n;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("positive duration", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+
+    const date2 = new Date("2024-01-01T00:00:05Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+
+    const period = buildTimePeriod(timestamp1, timestamp2);
+
+    const result = buildDurationFromTimePeriod(period).seconds;
+    const expectedResult = 5n;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+});
+
+describe("isTimestampOverlappingIndefiniteTimePeriod() function", () => {
+  it("IndefinitePast 1 second before", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const boundary = addSeconds(timestamp, buildDuration(1n));
+
+    const period = buildIndefiniteTimePeriod(
+      boundary,
+      IndefiniteTimePeriodType.IndefinitePast,
+    );
+
+    const result = isTimestampOverlappingIndefiniteTimePeriod(
+      period,
+      timestamp,
+    );
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefinitePast at boundary", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const boundary = timestamp;
+
+    const period = buildIndefiniteTimePeriod(
+      boundary,
+      IndefiniteTimePeriodType.IndefinitePast,
+    );
+
+    const result = isTimestampOverlappingIndefiniteTimePeriod(
+      period,
+      timestamp,
+    );
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefinitePast 1 second after", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const boundary = subtractSeconds(timestamp, buildDuration(1n));
+
+    const period = buildIndefiniteTimePeriod(
+      boundary,
+      IndefiniteTimePeriodType.IndefinitePast,
+    );
+
+    const result = isTimestampOverlappingIndefiniteTimePeriod(
+      period,
+      timestamp,
+    );
+    const expectedResult = false;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefiniteFuture 1 second before", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const boundary = addSeconds(timestamp, buildDuration(1n));
+
+    const period = buildIndefiniteTimePeriod(
+      boundary,
+      IndefiniteTimePeriodType.IndefiniteFuture,
+    );
+
+    const result = isTimestampOverlappingIndefiniteTimePeriod(
+      period,
+      timestamp,
+    );
+    const expectedResult = false;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefiniteFuture at boundary", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const boundary = timestamp;
+
+    const period = buildIndefiniteTimePeriod(
+      boundary,
+      IndefiniteTimePeriodType.IndefiniteFuture,
+    );
+
+    const result = isTimestampOverlappingIndefiniteTimePeriod(
+      period,
+      timestamp,
+    );
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefiniteFuture 1 second after", () => {
+    const date = new Date("2024-01-01T00:00:00Z");
+    const timestamp = buildTimestampFromDate(date);
+
+    const boundary = subtractSeconds(timestamp, buildDuration(1n));
+
+    const period = buildIndefiniteTimePeriod(
+      boundary,
+      IndefiniteTimePeriodType.IndefiniteFuture,
+    );
+
+    const result = isTimestampOverlappingIndefiniteTimePeriod(
+      period,
+      timestamp,
+    );
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+});
+
+describe("isTimePeriodOverlappingIndefiniteTimePeriod() function", () => {
+  it("IndefinitePast - boundary fully before definite time period", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const date2 = new Date("2024-01-01T00:00:03Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+    const definitePeriod = buildTimePeriod(timestamp1, timestamp2);
+
+    const boundary = subtractSeconds(timestamp1, buildDuration(1n));
+    const indefinitePeriod = buildIndefiniteTimePeriod(
+      boundary,
+      IndefiniteTimePeriodType.IndefinitePast,
+    );
+
+    const result = isTimePeriodOverlappingIndefiniteTimePeriod(
+      indefinitePeriod,
+      definitePeriod,
+    );
+    const expectedResult = false;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefinitePast - boundary at definite time period begins", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const date2 = new Date("2024-01-01T00:00:03Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+    const definitePeriod = buildTimePeriod(timestamp1, timestamp2);
+
+    const boundary = timestamp1;
+    const indefinitePeriod = buildIndefiniteTimePeriod(
+      boundary,
+      IndefiniteTimePeriodType.IndefinitePast,
+    );
+
+    const result = isTimePeriodOverlappingIndefiniteTimePeriod(
+      indefinitePeriod,
+      definitePeriod,
+    );
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefinitePast - boundary during definite time period", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const date2 = new Date("2024-01-01T00:00:03Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+    const definitePeriod = buildTimePeriod(timestamp1, timestamp2);
+
+    const boundary = subtractSeconds(timestamp2, buildDuration(1n));
+    const indefinitePeriod = buildIndefiniteTimePeriod(
+      boundary,
+      IndefiniteTimePeriodType.IndefinitePast,
+    );
+
+    const result = isTimePeriodOverlappingIndefiniteTimePeriod(
+      indefinitePeriod,
+      definitePeriod,
+    );
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefinitePast - boundary at definite time period ends", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const date2 = new Date("2024-01-01T00:00:03Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+    const definitePeriod = buildTimePeriod(timestamp1, timestamp2);
+
+    const boundary = timestamp2;
+    const indefinitePeriod = buildIndefiniteTimePeriod(
+      boundary,
+      IndefiniteTimePeriodType.IndefinitePast,
+    );
+
+    const result = isTimePeriodOverlappingIndefiniteTimePeriod(
+      indefinitePeriod,
+      definitePeriod,
+    );
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefinitePast - boundary fully after definite time period", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const date2 = new Date("2024-01-01T00:00:03Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+    const definitePeriod = buildTimePeriod(timestamp1, timestamp2);
+
+    const boundary = addSeconds(timestamp2, buildDuration(1n));
+    const indefinitePeriod = buildIndefiniteTimePeriod(
+      boundary,
+      IndefiniteTimePeriodType.IndefinitePast,
+    );
+
+    const result = isTimePeriodOverlappingIndefiniteTimePeriod(
+      indefinitePeriod,
+      definitePeriod,
+    );
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefiniteFuture - boundary fully before definite time period", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const date2 = new Date("2024-01-01T00:00:03Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+    const definitePeriod = buildTimePeriod(timestamp1, timestamp2);
+
+    const boundary = subtractSeconds(timestamp1, buildDuration(1n));
+    const indefinitePeriod = buildIndefiniteTimePeriod(
+      boundary,
+      IndefiniteTimePeriodType.IndefiniteFuture,
+    );
+
+    const result = isTimePeriodOverlappingIndefiniteTimePeriod(
+      indefinitePeriod,
+      definitePeriod,
+    );
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefiniteFuture - boundary at definite time period begins", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const date2 = new Date("2024-01-01T00:00:03Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+    const definitePeriod = buildTimePeriod(timestamp1, timestamp2);
+
+    const boundary = timestamp1;
+    const indefinitePeriod = buildIndefiniteTimePeriod(
+      boundary,
+      IndefiniteTimePeriodType.IndefiniteFuture,
+    );
+
+    const result = isTimePeriodOverlappingIndefiniteTimePeriod(
+      indefinitePeriod,
+      definitePeriod,
+    );
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefiniteFuture - boundary during definite time period", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const date2 = new Date("2024-01-01T00:00:03Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+    const definitePeriod = buildTimePeriod(timestamp1, timestamp2);
+
+    const boundary = subtractSeconds(timestamp2, buildDuration(1n));
+    const indefinitePeriod = buildIndefiniteTimePeriod(
+      boundary,
+      IndefiniteTimePeriodType.IndefiniteFuture,
+    );
+
+    const result = isTimePeriodOverlappingIndefiniteTimePeriod(
+      indefinitePeriod,
+      definitePeriod,
+    );
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefiniteFuture - boundary at definite time period ends", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const date2 = new Date("2024-01-01T00:00:03Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+    const definitePeriod = buildTimePeriod(timestamp1, timestamp2);
+
+    const boundary = timestamp2;
+    const indefinitePeriod = buildIndefiniteTimePeriod(
+      boundary,
+      IndefiniteTimePeriodType.IndefiniteFuture,
+    );
+
+    const result = isTimePeriodOverlappingIndefiniteTimePeriod(
+      indefinitePeriod,
+      definitePeriod,
+    );
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefiniteFuture - boundary fully after definite time period", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const date2 = new Date("2024-01-01T00:00:03Z");
+    const timestamp2 = buildTimestampFromDate(date2);
+    const definitePeriod = buildTimePeriod(timestamp1, timestamp2);
+
+    const boundary = addSeconds(timestamp2, buildDuration(1n));
+    const indefinitePeriod = buildIndefiniteTimePeriod(
+      boundary,
+      IndefiniteTimePeriodType.IndefiniteFuture,
+    );
+
+    const result = isTimePeriodOverlappingIndefiniteTimePeriod(
+      indefinitePeriod,
+      definitePeriod,
+    );
+    const expectedResult = false;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+});
+
+describe("isOverlappingIndefiniteTimePeriod() function", () => {
+  it("IndefinitePast < IndefinitePast", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = addSeconds(timestamp1, buildDuration(1n));
+
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(
+      boundary1,
+      IndefiniteTimePeriodType.IndefinitePast,
+    );
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(
+      boundary2,
+      IndefiniteTimePeriodType.IndefinitePast,
+    );
+
+    const result = isOverlappingIndefiniteTimePeriod(
+      indefinitePeriod1,
+      indefinitePeriod2,
+    );
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefinitePast === IndefinitePast", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = timestamp1;
+
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(
+      boundary1,
+      IndefiniteTimePeriodType.IndefinitePast,
+    );
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(
+      boundary2,
+      IndefiniteTimePeriodType.IndefinitePast,
+    );
+
+    const result = isOverlappingIndefiniteTimePeriod(
+      indefinitePeriod1,
+      indefinitePeriod2,
+    );
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefinitePast > IndefinitePast", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = subtractSeconds(timestamp1, buildDuration(1n));
+
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(
+      boundary1,
+      IndefiniteTimePeriodType.IndefinitePast,
+    );
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(
+      boundary2,
+      IndefiniteTimePeriodType.IndefinitePast,
+    );
+
+    const result = isOverlappingIndefiniteTimePeriod(
+      indefinitePeriod1,
+      indefinitePeriod2,
+    );
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefinitePast < IndefiniteFuture", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = addSeconds(timestamp1, buildDuration(1n));
+
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(
+      boundary1,
+      IndefiniteTimePeriodType.IndefinitePast,
+    );
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(
+      boundary2,
+      IndefiniteTimePeriodType.IndefiniteFuture,
+    );
+
+    const result = isOverlappingIndefiniteTimePeriod(
+      indefinitePeriod1,
+      indefinitePeriod2,
+    );
+    const expectedResult = false;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefinitePast === IndefiniteFuture", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = timestamp1;
+
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(
+      boundary1,
+      IndefiniteTimePeriodType.IndefinitePast,
+    );
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(
+      boundary2,
+      IndefiniteTimePeriodType.IndefiniteFuture,
+    );
+
+    const result = isOverlappingIndefiniteTimePeriod(
+      indefinitePeriod1,
+      indefinitePeriod2,
+    );
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefinitePast > IndefiniteFuture", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = subtractSeconds(timestamp1, buildDuration(1n));
+
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(
+      boundary1,
+      IndefiniteTimePeriodType.IndefinitePast,
+    );
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(
+      boundary2,
+      IndefiniteTimePeriodType.IndefiniteFuture,
+    );
+
+    const result = isOverlappingIndefiniteTimePeriod(
+      indefinitePeriod1,
+      indefinitePeriod2,
+    );
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefiniteFuture < IndefinitePast", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = addSeconds(timestamp1, buildDuration(1n));
+
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(
+      boundary1,
+      IndefiniteTimePeriodType.IndefiniteFuture,
+    );
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(
+      boundary2,
+      IndefiniteTimePeriodType.IndefinitePast,
+    );
+
+    const result = isOverlappingIndefiniteTimePeriod(
+      indefinitePeriod1,
+      indefinitePeriod2,
+    );
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefiniteFuture === IndefinitePast", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = timestamp1;
+
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(
+      boundary1,
+      IndefiniteTimePeriodType.IndefiniteFuture,
+    );
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(
+      boundary2,
+      IndefiniteTimePeriodType.IndefinitePast,
+    );
+
+    const result = isOverlappingIndefiniteTimePeriod(
+      indefinitePeriod1,
+      indefinitePeriod2,
+    );
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefiniteFuture > IndefinitePast", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = subtractSeconds(timestamp1, buildDuration(1n));
+
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(
+      boundary1,
+      IndefiniteTimePeriodType.IndefiniteFuture,
+    );
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(
+      boundary2,
+      IndefiniteTimePeriodType.IndefinitePast,
+    );
+
+    const result = isOverlappingIndefiniteTimePeriod(
+      indefinitePeriod1,
+      indefinitePeriod2,
+    );
+    const expectedResult = false;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefiniteFuture < IndefiniteFuture", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = addSeconds(timestamp1, buildDuration(1n));
+
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(
+      boundary1,
+      IndefiniteTimePeriodType.IndefiniteFuture,
+    );
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(
+      boundary2,
+      IndefiniteTimePeriodType.IndefiniteFuture,
+    );
+
+    const result = isOverlappingIndefiniteTimePeriod(
+      indefinitePeriod1,
+      indefinitePeriod2,
+    );
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefiniteFuture === IndefiniteFuture", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = timestamp1;
+
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(
+      boundary1,
+      IndefiniteTimePeriodType.IndefiniteFuture,
+    );
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(
+      boundary2,
+      IndefiniteTimePeriodType.IndefiniteFuture,
+    );
+
+    const result = isOverlappingIndefiniteTimePeriod(
+      indefinitePeriod1,
+      indefinitePeriod2,
+    );
+    const expectedResult = true;
+
+    expect(result).toStrictEqual(expectedResult);
+  });
+
+  it("IndefiniteFuture > IndefiniteFuture", () => {
+    const date1 = new Date("2024-01-01T00:00:00Z");
+    const timestamp1 = buildTimestampFromDate(date1);
+    const boundary1 = timestamp1;
+
+    const boundary2 = subtractSeconds(timestamp1, buildDuration(1n));
+
+    const indefinitePeriod1 = buildIndefiniteTimePeriod(
+      boundary1,
+      IndefiniteTimePeriodType.IndefiniteFuture,
+    );
+    const indefinitePeriod2 = buildIndefiniteTimePeriod(
+      boundary2,
+      IndefiniteTimePeriodType.IndefiniteFuture,
+    );
+
+    const result = isOverlappingIndefiniteTimePeriod(
+      indefinitePeriod1,
+      indefinitePeriod2,
+    );
+    const expectedResult = true;
 
     expect(result).toStrictEqual(expectedResult);
   });
