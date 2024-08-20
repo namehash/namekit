@@ -7,12 +7,14 @@ on:
     paths:
       - "packages/nameguard-sdk/**"
       - "api/nameguard/**"
+      - ".github/workflows/nameguard-end-to-end-tests.yml"
   pull_request:
     branches:
       - main
     paths:
       - "packages/nameguard-sdk/**"
       - "api/nameguard/**"
+      - ".github/workflows/nameguard-end-to-end-tests.yml"
 
 jobs:
   check_changes:
