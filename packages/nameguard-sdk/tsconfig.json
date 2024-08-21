@@ -9,7 +9,13 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "declaration": true,
+    "declarationMap": true,
+    "paths": {
+      "@namehash/nameguard": ["../nameguard-sdk/src"],
+      "@namehash/ens-utils": ["../ens-utils/src"]
+    },
   },
   "exclude": ["node_modules"]
 }
