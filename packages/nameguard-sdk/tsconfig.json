@@ -13,7 +13,6 @@
     "declaration": true,
     "declarationMap": true,
     "paths": {
-      "@namehash/nameguard": ["../nameguard-sdk/src"],
       "@namehash/ens-utils": ["../ens-utils/src"]
     },
   },
