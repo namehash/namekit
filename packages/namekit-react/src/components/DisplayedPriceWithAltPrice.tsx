@@ -5,18 +5,36 @@ import {
   PriceSymbology,
 } from "@namehash/ens-utils";
 import {
-  AltPriceDisplayFormat,
-  CurrencySymbolPosition,
   DisplayedPrice,
-  parsePriceDisplaySizeToCurrencySymbolSize,
-  PriceDisplayPosition,
   PriceDisplaySize,
+  CurrencySymbolPosition,
+  parsePriceDisplaySizeToCurrencySymbolSize,
 } from "./DisplayedPrice";
 import { useEffect } from "react";
 import { CurrencySymbol } from "./CurrencySymbol/CurrencySymbol";
 import { Tooltip } from "./Tooltip";
 import React from "react";
 import cc from "classcat";
+
+export const AltPriceDisplayFormat = {
+  /**
+   * Display the alternative price as a tooltip.
+   */
+  Tooltip: "tooltip",
+  /**
+   * Display the alternative price as a text.
+   */
+  Text: "text",
+} as const;
+export type AltPriceDisplayFormat =
+  (typeof AltPriceDisplayFormat)[keyof typeof AltPriceDisplayFormat];
+
+export const PriceDisplayPosition = {
+  Right: "nk-flex nk-inline-flex nk-items-end nk-space-x-2",
+  Bottom: "nk-flex nk-flex-col nk-text-right nk-items-end nk-space-y-1",
+} as const;
+export type PriceDisplayPosition =
+  (typeof PriceDisplayPosition)[keyof typeof PriceDisplayPosition];
 
 interface DisplayedPriceWithAltPriceProps {
   // The price to be displayed
@@ -91,6 +109,12 @@ export const DisplayedPriceWithAltPrice = ({
     }
   }, []);
 
+  const displayAltPriceAsText =
+    altPriceDisplayFormat === AltPriceDisplayFormat.Text;
+  const displayAltPriceInTooltip =
+    altPriceDisplayFormat === AltPriceDisplayFormat.Tooltip;
+  const displayCurrencySymbol = currencySymbology === PriceSymbology.Symbol;
+
   const triggerElm = (
     <DisplayedPrice
       currencySymbology={currencySymbology}
@@ -99,17 +123,13 @@ export const DisplayedPriceWithAltPrice = ({
       onTextClick={onTextClick}
       price={price}
       withSymbol={
-        (currencySymbology === PriceSymbology.Symbol &&
-          altPriceDisplayFormat === AltPriceDisplayFormat.Tooltip &&
-          !altPrice) ||
-        (currencySymbology === PriceSymbology.Symbol &&
-          altPriceDisplayFormat === AltPriceDisplayFormat.Text)
+        (displayCurrencySymbol && displayAltPriceInTooltip && !altPrice) ||
+        (displayCurrencySymbol && displayAltPriceAsText)
       }
     />
   );
 
-  if (!altPrice && altPriceDisplayFormat === AltPriceDisplayFormat.Tooltip)
-    return triggerElm;
+  if (!altPrice && displayAltPriceInTooltip) return triggerElm;
   else if (altPrice) {
     const altPriceDisplayElm = (
       <DisplayedPrice
@@ -122,7 +142,7 @@ export const DisplayedPriceWithAltPrice = ({
       />
     );
 
-    if (altPriceDisplayFormat === AltPriceDisplayFormat.Text) {
+    if (displayAltPriceAsText) {
       return (
         <div className={altPriceDisplayPosition}>
           {triggerElm}
@@ -139,17 +159,17 @@ export const DisplayedPriceWithAltPrice = ({
             priceTextDisplaySize,
           ])}
         >
-          {currencySymbology === PriceSymbology.Symbol && (
+          {displayCurrencySymbol && (
             <div
               className={cc([
                 {
-                  "nk-mr-0.5 nk-order-1 nk-mb-[2px]":
+                  "nk-mr-1 nk-order-1 nk-mb-[2px]":
                     symbolPosition === CurrencySymbolPosition.Left &&
                     price.currency !== Currency.Usd,
-                  "nk-mr-1.5 nk-order-1":
+                  "nk-mr-1 nk-order-1":
                     symbolPosition === CurrencySymbolPosition.Left &&
                     price.currency === Currency.Usd,
-                  "nk-ml-1.5 nk-order-3":
+                  "nk-ml-1 nk-order-3":
                     symbolPosition === CurrencySymbolPosition.Right,
                 },
               ])}
@@ -174,7 +194,7 @@ export const DisplayedPriceWithAltPrice = ({
                     role={onAltPriceTextClick ? "button" : undefined}
                     className="nk-bg-gray-900 focus:nk-outline-none nk-relative nk-h-full nk-rounded-md"
                   >
-                    <div className="nk-text-[12px] nk-text-white sm:nk-text-[14px] nk-inline-flex nk-items-center nk-space-x-0.5 nk-tabular-nums">
+                    <div className="nk-text-[12px] nk-text-white sm:nk-text-[14px] nk-inline-flex nk-items-center nk-space-x-1 nk-tabular-nums">
                       <p
                         className={
                           onAltPriceTextClick
@@ -185,8 +205,7 @@ export const DisplayedPriceWithAltPrice = ({
                         {formattedPrice({
                           price: altPrice,
                           symbology: currencySymbology,
-                          withPrefix:
-                            currencySymbology === PriceSymbology.Symbol,
+                          withPrefix: displayCurrencySymbol,
                           withSufix:
                             currencySymbology === PriceSymbology.Acronym,
                         })}

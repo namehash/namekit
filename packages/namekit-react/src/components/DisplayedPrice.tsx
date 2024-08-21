@@ -11,29 +11,35 @@ import {
   CurrencySymbolSize,
 } from "./CurrencySymbol/CurrencySymbol";
 import cc from "classcat";
+import { Tooltip } from "./Tooltip";
 
-export enum PriceDisplaySize {
-  Micro = "nk-text-[12px] md:nk-text-[14px] nk-font-normal",
-  Small = "nk-text-[14px] nk-font-semibold",
-  Medium = "nk-text-[20px] nk-font-semibold",
-  Large = "nk-text-[24px] nk-font-bold",
-}
+export const CurrencySymbolPosition = {
+  /**
+   * Display the currency symbol to the left of the price. (e.g. $1.00)
+   */
+  Left: "nk-mr-1.5",
+  /**
+   * Display the currency symbol to the right of the price. (e.g. 1.00$)
+   */
+  Right: "nk-ml-1.5",
+} as const;
+export type CurrencySymbolPosition =
+  (typeof CurrencySymbolPosition)[keyof typeof CurrencySymbolPosition];
 
-export enum AltPriceDisplayFormat {
-  Tooltip,
-  Text,
-}
+export const PriceDisplaySize = {
+  Micro: "nk-text-[12px] md:nk-text-[14px] nk-font-normal",
+  Small: "nk-text-[14px] nk-font-semibold",
+  Medium: "nk-text-[20px] nk-font-semibold",
+  Large: "nk-text-[24px] nk-font-bold",
+} as const;
+export type PriceDisplaySize =
+  (typeof PriceDisplaySize)[keyof typeof PriceDisplaySize];
 
-export enum CurrencySymbolPosition {
-  Left = "nk-mr-1.5",
-  Right = "nk-ml-1.5",
-}
-
-export enum PriceDisplayPosition {
-  Right = "nk-flex nk-inline-flex nk-items-end nk-space-x-2",
-  Bottom = "nk-flex nk-flex-col nk-text-right nk-items-end nk-space-y-1",
-}
-
+/**
+ * A map of the `PriceDisplaySize` to the `CurrencySymbolSize`.
+ * @param priceDisplaySize: PriceDisplaySize
+ * @returns CurrencySymbolSize
+ */
 export const parsePriceDisplaySizeToCurrencySymbolSize = (
   priceDisplaySize: PriceDisplaySize,
 ): CurrencySymbolSize => {
@@ -95,11 +101,10 @@ export const DisplayedPrice = ({
         className={cc([
           "nk-leading-none",
           {
-            "nk-mb-[1px]": price.currency !== Currency.Usd,
             "nk-mr-1": price.currency === Currency.Usd,
-            "nk-order-1 nk-mr-0.5":
+            "nk-order-1 nk-mr-1":
               symbolPosition === CurrencySymbolPosition.Left,
-            "nk-mr-1.5 nk-order-3":
+            "nk-mr-1 nk-order-3":
               symbolPosition === CurrencySymbolPosition.Right,
             "nk-hidden":
               !withSymbol || currencySymbology === PriceSymbology.Acronym,
@@ -115,9 +120,24 @@ export const DisplayedPrice = ({
       </div>
 
       {currencySymbology === PriceSymbology.Acronym && (
-        <p className="nk-ml-1 nk-order-2">
-          {PriceCurrencyFormat[price.currency].Acronym}
-        </p>
+        <>
+          {describeCurrencyInTooltip ? (
+            <div className="nk-ml-1 nk-order-2">
+              <Tooltip
+                trigger={<p>{PriceCurrencyFormat[price.currency].Acronym}</p>}
+              >
+                {
+                  PriceCurrencyFormat[price.currency]
+                    .ExtendedCurrencyNameSingular
+                }
+              </Tooltip>
+            </div>
+          ) : (
+            <p className="nk-ml-1 nk-order-2">
+              {PriceCurrencyFormat[price.currency].Acronym}
+            </p>
+          )}
+        </>
       )}
     </div>
   );

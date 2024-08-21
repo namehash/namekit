@@ -1,17 +1,19 @@
 import { PriceCurrencyFormat, Currency } from "@namehash/ens-utils";
 import { Tooltip } from "../Tooltip";
 
-import { UsdcSymbol } from "./UsdcSymbol";
-import { WethSymbol } from "./WethSymbol";
-import { EthSymbol } from "./EthSymbol";
-import { DaiSymbol } from "./DaiSymbol";
+import { UsdcSymbol } from "./icons/UsdcSymbol";
+import { WethSymbol } from "./icons/WethSymbol";
+import { EthSymbol } from "./icons/EthSymbol";
+import { DaiSymbol } from "./icons/DaiSymbol";
 import React from "react";
 import cc from "classcat";
 
-export enum CurrencySymbolSize {
-  Small = "nk-w-4",
-  Large = "nk-w-5",
-}
+export const CurrencySymbolSize = {
+  Small: "nk-w-4",
+  Large: "nk-w-5",
+} as const;
+export type CurrencySymbolSize =
+  (typeof CurrencySymbolSize)[keyof typeof CurrencySymbolSize];
 
 interface CurrencySymbolProps {
   /**

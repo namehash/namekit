@@ -128,10 +128,18 @@ export const multiplyPriceByNumber = (price1: Price, price2: number): Price => {
   };
 };
 
-export enum PriceSymbology {
-  Acronym = "Acronym",
-  Symbol = "Symbol",
-}
+export const PriceSymbology = {
+  /**
+   * The price will be displayed with the currency's acronym (e.g. USD).
+   */
+  Acronym: "Acronym",
+  /**
+   * The price will be displayed with the currency's symbol (e.g. $).
+   */
+  Symbol: "Symbol",
+} as const;
+export type PriceSymbology =
+  (typeof PriceSymbology)[keyof typeof PriceSymbology];
 
 export const formattedPrice = ({
   price,
