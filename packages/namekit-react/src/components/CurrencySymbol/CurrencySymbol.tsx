@@ -6,6 +6,7 @@ import { WethSymbol } from "./WethSymbol";
 import { EthSymbol } from "./EthSymbol";
 import { DaiSymbol } from "./DaiSymbol";
 import React from "react";
+import cc from "classcat";
 
 export enum CurrencySymbolSize {
   Small = "nk-w-4",
@@ -20,7 +21,7 @@ interface CurrencySymbolProps {
 
   /**
    * The size of the `CurrencySymbol`.
-   * 
+   *
    * Defaults to `CurrencySymbolSize.Small`.
    */
   size: CurrencySymbolSize;
@@ -29,20 +30,24 @@ interface CurrencySymbolProps {
    * If `true`, hovering over the `CurrencySymbol` will display the
    * name of `currency` in a `Tooltip`. If `false` then the `CurrencySymbol`
    * won't have any `Tooltip`.
-   * 
+   *
    * Defaults to `true`.
    */
   describeCurrencyInTooltip: boolean;
-  
+
   /**
    * Optional. Defines a custom color for the `CurrencySymbol` that overrides
    * the default symbol color for `currency`.
-   * 
+   *
    * If defined, must be formatted as a hex color code.
-   * 
+   *
    * If undefined, defaults to the default symbol color for `currency`.
    */
   symbolFillColor?: string;
+  /**
+   * Optional. Additional classes to apply to the `CurrencySymbol`.
+   */
+  additionalClasses?: string;
 }
 
 export const CurrencySymbol = ({
@@ -50,13 +55,17 @@ export const CurrencySymbol = ({
   size = CurrencySymbolSize.Small,
   describeCurrencyInTooltip = true,
   symbolFillColor = undefined,
+  additionalClasses = "",
 }: CurrencySymbolProps) => {
   let symbol: JSX.Element;
 
   switch (currency) {
     case Currency.Usd:
       symbol = (
-        <p className="nk--mr-1" style={{ color: symbolFillColor }}>
+        <p
+          className={cc(["nk--mr-1", additionalClasses])}
+          style={{ color: symbolFillColor }}
+        >
           $
         </p>
       );
@@ -75,7 +84,9 @@ export const CurrencySymbol = ({
       break;
     default:
       // TODO: We haven't created symbols for `Currency.Gas` yet.
-      throw new Error(`Error creating CurrencySymbol: unsupported Currency: "${currency}".`);
+      throw new Error(
+        `Error creating CurrencySymbol: unsupported Currency: "${currency}".`,
+      );
   }
 
   if (!describeCurrencyInTooltip) return symbol;
