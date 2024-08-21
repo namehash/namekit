@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "./src",
+    // "rootDir": "./src",
     "jsx": "react",
     "module": "ES2020",
     "moduleResolution": "node",
