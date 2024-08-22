@@ -3,10 +3,6 @@
   "extends": "@namekit/tsconfig/base.json",
   "compilerOptions": {
     "target": "ES2020",
-    "module": "ES2020",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "module": "ES2020"
   }
 }

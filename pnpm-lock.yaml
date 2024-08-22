@@ -388,6 +388,9 @@ importers:
         specifier: 3.6.19
         version: 3.6.19
     devDependencies:
+      '@namekit/tsconfig':
+        specifier: workspace:*
+        version: link:../../internal/tsconfig
       '@types/node':
         specifier: ^20.6.2
         version: 20.12.12
