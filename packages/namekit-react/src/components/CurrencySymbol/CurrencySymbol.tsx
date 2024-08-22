@@ -1,21 +1,26 @@
 import { PriceCurrencyFormat, Currency } from "@namehash/ens-utils";
 import { Tooltip } from "../Tooltip";
 
+import { UsdSymbol } from "./icons/UsdSymbol";
 import { UsdcSymbol } from "./icons/UsdcSymbol";
 import { WethSymbol } from "./icons/WethSymbol";
 import { EthSymbol } from "./icons/EthSymbol";
 import { DaiSymbol } from "./icons/DaiSymbol";
 import React from "react";
-import cc from "classcat";
 
+/**
+ * The size of the `CurrencySymbol`.
+ * This is defined as a mapping from a `CurrencySymbolSize` to a number.
+ * This number represents the size a `CurrencySymbol` should be displayed at, in pixels.
+ */
 export const CurrencySymbolSize = {
-  Small: "nk-w-4",
-  Large: "nk-w-5",
+  Small: 16,
+  Large: 20,
 } as const;
 export type CurrencySymbolSize =
   (typeof CurrencySymbolSize)[keyof typeof CurrencySymbolSize];
 
-interface CurrencySymbolProps {
+interface CurrencySymbolProps extends React.ComponentProps<React.ElementType> {
   /**
    * The `Currency` to display the symbol for.
    */
@@ -26,7 +31,7 @@ interface CurrencySymbolProps {
    *
    * Defaults to `CurrencySymbolSize.Small`.
    */
-  size: CurrencySymbolSize;
+  size?: CurrencySymbolSize;
 
   /**
    * If `true`, hovering over the `CurrencySymbol` will display the
@@ -36,53 +41,61 @@ interface CurrencySymbolProps {
    * Defaults to `true`.
    */
   describeCurrencyInTooltip: boolean;
-
-  /**
-   * Optional. Defines a custom color for the `CurrencySymbol` that overrides
-   * the default symbol color for `currency`.
-   *
-   * If defined, must be formatted as a hex color code.
-   *
-   * If undefined, defaults to the default symbol color for `currency`.
-   */
-  symbolFillColor?: string;
-  /**
-   * Optional. Additional classes to apply to the `CurrencySymbol`.
-   */
-  additionalClasses?: string;
 }
 
 export const CurrencySymbol = ({
-  currency,
   size = CurrencySymbolSize.Small,
   describeCurrencyInTooltip = true,
-  symbolFillColor = undefined,
-  additionalClasses = "",
-}: CurrencySymbolProps) => {
+  currency,
+  ...props
+}: CurrencySymbolProps): JSX.Element => {
   let symbol: JSX.Element;
 
   switch (currency) {
     case Currency.Usd:
       symbol = (
-        <p
-          className={cc(["nk--mr-1", additionalClasses])}
-          style={{ color: symbolFillColor }}
+        <span
+          aria-label={`${PriceCurrencyFormat[Currency.Usd].ExtendedCurrencyNameSingular} symbol`}
         >
-          $
-        </p>
+          <UsdSymbol {...props} />
+        </span>
       );
       break;
     case Currency.Usdc:
-      symbol = <UsdcSymbol className={size} fill={symbolFillColor} />;
+      symbol = (
+        <span
+          aria-label={`${PriceCurrencyFormat[Currency.Usdc].ExtendedCurrencyNameSingular} symbol`}
+        >
+          <UsdcSymbol {...props} width={size} height={size} />
+        </span>
+      );
       break;
     case Currency.Dai:
-      symbol = <DaiSymbol className={size} fill={symbolFillColor} />;
+      symbol = (
+        <span
+          aria-label={`${PriceCurrencyFormat[Currency.Dai].ExtendedCurrencyNameSingular} symbol`}
+        >
+          <DaiSymbol {...props} width={size} height={size} />
+        </span>
+      );
       break;
     case Currency.Weth:
-      symbol = <WethSymbol className={size} fill={symbolFillColor} />;
+      symbol = (
+        <span
+          aria-label={`${PriceCurrencyFormat[Currency.Weth].ExtendedCurrencyNameSingular} symbol`}
+        >
+          <WethSymbol {...props} width={size} height={size} />
+        </span>
+      );
       break;
     case Currency.Eth:
-      symbol = <EthSymbol className={size} fill={symbolFillColor} />;
+      symbol = (
+        <span
+          aria-label={`${PriceCurrencyFormat[Currency.Eth].ExtendedCurrencyNameSingular} symbol`}
+        >
+          <EthSymbol {...props} width={size} height={size} />
+        </span>
+      );
       break;
     default:
       // TODO: We haven't created symbols for `Currency.Gas` yet.

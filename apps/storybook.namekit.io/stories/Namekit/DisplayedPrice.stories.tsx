@@ -5,6 +5,7 @@ import {
   CurrencySymbolPosition,
 } from "@namehash/namekit-react";
 import type { Meta, StoryObj } from "@storybook/react";
+import React from "react";
 
 const meta: Meta<typeof DisplayedPrice> = {
   component: DisplayedPrice,
@@ -24,6 +25,9 @@ const meta: Meta<typeof DisplayedPrice> = {
     currencySymbology: {
       options: Object.keys(PriceSymbology),
       control: { type: "select" },
+    },
+    tooltipTriggerToDisplayPriceInTooltip: {
+      control: "text",
     },
   },
 };
@@ -59,6 +63,29 @@ export const EthPriceWithAcronym: Story = {
     currencySymbology: PriceSymbology.Acronym,
   },
 };
+export const EthPriceWithSymbolInATooltip: Story = {
+  args: {
+    price: {
+      currency: Currency.Eth,
+      value: 1000000000000000000n,
+    },
+    tooltipTriggerToDisplayPriceInTooltip: (
+      <p className="nk-border nk-border-black">My custom trigger</p>
+    ),
+  },
+};
+export const EthPriceWithAcronymInATooltip: Story = {
+  args: {
+    price: {
+      currency: Currency.Eth,
+      value: 1000000000000000000n,
+    },
+    currencySymbology: PriceSymbology.Acronym,
+    tooltipTriggerToDisplayPriceInTooltip: (
+      <p className="nk-underline">My custom trigger</p>
+    ),
+  },
+};
 export const EthPriceWithSymbolWithoutCurrencyTooltip: Story = {
   args: {
     price: {
@@ -86,7 +113,7 @@ export const UsdPrice: Story = {
     },
   },
 };
-export const LargePriceDisplaySize: Story = {
+export const LargePriceDisplaySizeForUSD: Story = {
   args: {
     price: {
       currency: Currency.Usd,
@@ -95,7 +122,16 @@ export const LargePriceDisplaySize: Story = {
     displaySize: PriceDisplaySize.Large,
   },
 };
-export const MediumPriceDisplaySize: Story = {
+export const LargePriceDisplaySizeForWETH: Story = {
+  args: {
+    price: {
+      currency: Currency.Weth,
+      value: 198900n,
+    },
+    displaySize: PriceDisplaySize.Large,
+  },
+};
+export const MediumPriceDisplaySizeForUSD: Story = {
   args: {
     price: {
       currency: Currency.Usd,
@@ -104,7 +140,16 @@ export const MediumPriceDisplaySize: Story = {
     displaySize: PriceDisplaySize.Medium,
   },
 };
-export const SmallPriceDisplaySize: Story = {
+export const MediumPriceDisplaySizeForWETH: Story = {
+  args: {
+    price: {
+      currency: Currency.Weth,
+      value: 198900n,
+    },
+    displaySize: PriceDisplaySize.Medium,
+  },
+};
+export const SmallPriceDisplaySizeForUSD: Story = {
   args: {
     price: {
       currency: Currency.Usd,
@@ -113,10 +158,28 @@ export const SmallPriceDisplaySize: Story = {
     displaySize: PriceDisplaySize.Small,
   },
 };
-export const MicroPriceDisplaySize: Story = {
+export const SmallPriceDisplaySizeForWETH: Story = {
+  args: {
+    price: {
+      currency: Currency.Weth,
+      value: 198900n,
+    },
+    displaySize: PriceDisplaySize.Small,
+  },
+};
+export const MicroPriceDisplaySizeForUSD: Story = {
   args: {
     price: {
       currency: Currency.Usd,
+      value: 198900n,
+    },
+    displaySize: PriceDisplaySize.Micro,
+  },
+};
+export const MicroPriceDisplaySizeForWETH: Story = {
+  args: {
+    price: {
+      currency: Currency.Weth,
       value: 198900n,
     },
     displaySize: PriceDisplaySize.Micro,
@@ -232,15 +295,6 @@ export const DisplayAcronymSymbologyForWETH: Story = {
     currencySymbology: PriceSymbology.Acronym,
   },
 };
-export const WithOnClickHandler: Story = {
-  args: {
-    price: {
-      currency: Currency.Usd,
-      value: 198900n,
-    },
-    onTextClick: () => alert("Price clicked"),
-  },
-};
 export const EthMinDisplayPrice: Story = {
   args: {
     price: {
@@ -319,5 +373,25 @@ export const WethMaxDisplayPrice: Story = {
       currency: Currency.Weth,
       value: 1000000000000000000000000n,
     },
+  },
+};
+export const PrimaryPriceAndTooltipPrice: Story = {
+  name: "[Prices combination] Text price + Tooltip price",
+  args: {
+    price: {
+      currency: Currency.Usd,
+      value: 198900n,
+    },
+    displaySize: PriceDisplaySize.Large,
+    tooltipTriggerToDisplayPriceInTooltip: (
+      <DisplayedPrice
+        price={{
+          currency: Currency.Eth,
+          value: 1000000000000000000n,
+        }}
+        describeCurrencyInTooltip={false}
+        displaySize={PriceDisplaySize.Large}
+      />
+    ),
   },
 };

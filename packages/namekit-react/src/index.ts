@@ -16,4 +16,3 @@ export * from "./components/Link";
 export * from "./components/Tooltip";
 export * from "./components/CurrencySymbol/CurrencySymbol";
 export * from "./components/DisplayedPrice";
-export * from "./components/DisplayedPriceWithAltPrice";

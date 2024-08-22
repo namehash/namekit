@@ -36,11 +36,17 @@ export type PriceDisplaySize =
   (typeof PriceDisplaySize)[keyof typeof PriceDisplaySize];
 
 /**
- * A map of the `PriceDisplaySize` to the `CurrencySymbolSize`.
- * @param priceDisplaySize: PriceDisplaySize
- * @returns CurrencySymbolSize
+ * A mapping from a `PriceDisplaySize` to a `CurrencySymbolSize`.
+ * This is useful for determining the size of the currency symbol to display
+ * for a given price display size. e.g. as needed in DisplayedPrice, when a
+ * currency symbol is displayed alongside a price and the user can define
+ * the size of the price display. This way both price display size and
+ * currency symbol size can be controlled by the same prop, always
+ * guaranteeing that they are displayed with aligned sizes.
+ * @param priceDisplaySize: PriceDisplaySize. The size of the price display.
+ * @returns CurrencySymbolSize. The size of the currency symbol to display.
  */
-export const parsePriceDisplaySizeToCurrencySymbolSize = (
+export const getCurrencySymbolSize = (
   priceDisplaySize: PriceDisplaySize,
 ): CurrencySymbolSize => {
   switch (priceDisplaySize) {
@@ -53,71 +59,68 @@ export const parsePriceDisplaySizeToCurrencySymbolSize = (
   }
 };
 
-interface DisplayedPriceProps {
+export interface DisplayedPriceProps {
   // The price to be displayed
   price: Price;
-  // The onClick event handler for the price text
-  onTextClick?: () => void;
   // Wether to display a currency symbology as its acronym or symbol
   currencySymbology?: PriceSymbology;
-  // The place to display the currency symbology
+  /**
+   * The position of the currency symbol relative to the price.
+   * Defaults to `CurrencySymbolPosition.Left`.
+   *
+   * If `CurrencySymbolPosition.Left`, the currency symbol will be displayed to the left of the price.
+   * If `CurrencySymbolPosition.Right`, the currency symbol will be displayed to the right of the price.
+   */
   symbolPosition?: CurrencySymbolPosition;
   // The size of the price display
   displaySize?: PriceDisplaySize;
   // Wether or not to display the name of the currency in a tooltip when its symbol is hovered
   describeCurrencyInTooltip?: boolean;
-  // Wether to display the currency symbology
-  withSymbol?: boolean;
+  // Whenever below prop is defined, the price is displayed inside a Tooltip which is triggered by the below content
+  tooltipTriggerToDisplayPriceInTooltip?: React.ReactNode;
 }
 
 export const DisplayedPrice = ({
   price,
-  onTextClick,
   describeCurrencyInTooltip = true,
-  symbolPosition = CurrencySymbolPosition.Left,
-  currencySymbology = PriceSymbology.Symbol,
   displaySize = PriceDisplaySize.Small,
-  withSymbol = true,
+  tooltipTriggerToDisplayPriceInTooltip,
+  currencySymbology = PriceSymbology.Symbol,
+  symbolPosition = CurrencySymbolPosition.Left,
 }: DisplayedPriceProps) => {
   const priceDisplaySizeAsCurrencyDisplaySize =
-    parsePriceDisplaySizeToCurrencySymbolSize(displaySize);
+    getCurrencySymbolSize(displaySize);
 
-  return (
+  const displayedPrice = (
     <div
-      role={onTextClick ? "button" : undefined}
-      onClick={onTextClick ? onTextClick : undefined}
       className={cc([
         "nk-min-w-max nk-inline-flex nk-justify-center nk-items-end nk-tabular-nums nk-leading-none",
         displaySize,
-        {
-          "!nk-cursor-text": !onTextClick,
-          "!nk-cursor-pointer": onTextClick,
-        },
       ])}
     >
       <p className="nk-order-2 nk-leading-none">{formattedPrice({ price })}</p>
 
-      <div
-        className={cc([
-          "nk-leading-none",
-          {
-            "nk-mr-1": price.currency === Currency.Usd,
-            "nk-order-1 nk-mr-1":
-              symbolPosition === CurrencySymbolPosition.Left,
-            "nk-mr-1 nk-order-3":
-              symbolPosition === CurrencySymbolPosition.Right,
-            "nk-hidden":
-              !withSymbol || currencySymbology === PriceSymbology.Acronym,
-          },
-        ])}
-      >
-        <CurrencySymbol
-          additionalClasses={onTextClick ? "nk-cursor-pointer" : ""}
-          describeCurrencyInTooltip={describeCurrencyInTooltip}
-          size={priceDisplaySizeAsCurrencyDisplaySize}
-          currency={price.currency}
-        />
-      </div>
+      {currencySymbology === PriceSymbology.Symbol && (
+        <div
+          className={cc([
+            "nk-leading-none",
+            {
+              "nk-mr-1": price.currency === Currency.Usd,
+              "nk-order-1 nk-mr-1":
+                symbolPosition === CurrencySymbolPosition.Left,
+              "nk-mr-1 nk-order-3":
+                symbolPosition === CurrencySymbolPosition.Right,
+            },
+          ])}
+        >
+          <CurrencySymbol
+            currency={price.currency}
+            size={priceDisplaySizeAsCurrencyDisplaySize}
+            describeCurrencyInTooltip={describeCurrencyInTooltip}
+            className={price.currency === Currency.Usd ? "nk--mr-1" : ""}
+          />
+        </div>
+      )}
 
       {currencySymbology === PriceSymbology.Acronym && (
         <>
@@ -141,4 +144,35 @@ export const DisplayedPrice = ({
       )}
     </div>
   );
+
+  const displayedPriceInATooltip = (
+    <div className={cc(["nk-inline-flex nk-items-center", displaySize])}>
+      <div className="nk-order-2 nk-leading-none">
+        <Tooltip trigger={tooltipTriggerToDisplayPriceInTooltip}>
+          <>
+            {price ? (
+              <div className="nk-bg-gray-900 focus:nk-outline-none nk-relative nk-h-full nk-rounded-md">
+                <div className="nk-text-[12px] nk-text-white sm:nk-text-[14px] nk-inline-flex nk-items-center nk-space-x-1 nk-tabular-nums nk-leading-none">
+                  <p>
+                    {formattedPrice({
+                      price: price,
+                      symbology: currencySymbology,
+                      withPrefix: currencySymbology === PriceSymbology.Symbol,
+                      withSufix: currencySymbology === PriceSymbology.Acronym,
+                    })}
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <></>
+            )}
+          </>
+        </Tooltip>
+      </div>
+    </div>
+  );
+
+  return tooltipTriggerToDisplayPriceInTooltip
+    ? displayedPriceInATooltip
+    : displayedPrice;
 };

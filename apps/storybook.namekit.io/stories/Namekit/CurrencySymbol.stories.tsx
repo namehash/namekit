@@ -46,7 +46,7 @@ export const LargeSize: Story = {
 };
 export const WithCustomSymbolColor: Story = {
   args: {
-    symbolFillColor: "#007bff",
+    fill: "#007bff",
     size: CurrencySymbolSize.Large,
     currency: Currency.Eth,
   },
@@ -70,7 +70,7 @@ const meta: Meta<typeof CurrencySymbol> = {
   component: CurrencySymbol,
   title: "Namekit/CurrencySymbol",
   argTypes: {
-    symbolFillColor: { control: "color" },
+    fill: { control: "color" },
     currency: {
       options: [
         Currency.Eth,
