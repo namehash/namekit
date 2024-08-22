@@ -42,6 +42,7 @@
     "cross-fetch": "4.0.0"
   },
   "devDependencies": {
+    "@namekit/tsconfig": "workspace:*",
     "@types/node": "^20.6.2",
     "tsup": "^7.2.0",
     "typescript": "^5.2.2",
