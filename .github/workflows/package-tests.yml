@@ -1,0 +1,64 @@
+name: Package Tests
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/**"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "packages/**"
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - "ens-utils"
+          - "nameguard-sdk"
+          - "nameguard-js"
+          - "nameguard-react"
+          - "namekit-react"
+
+    name: Test ${{ matrix.package }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build
+        run: pnpm --filter ./packages/${{ matrix.package }} build
+
+      - name: Test
+        run: pnpm --filter ./packages/${{ matrix.package }} test
