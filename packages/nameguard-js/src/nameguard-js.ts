@@ -36,7 +36,7 @@ class NameGuardJS extends NameGuard {
     }
 
     console.log({ chainId });
-    console.log({ network });
+    console.log({ network: this.network });
   }
 
   public override getSecurePrimaryName(
