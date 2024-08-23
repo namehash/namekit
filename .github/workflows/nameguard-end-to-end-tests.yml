@@ -89,17 +89,17 @@ jobs:
         run: curl http://0.0.0.0:8000/inspect-name/mainnet/test.eth
 
       - name: Set NAMEGUARD_API_URI
+        id: set_api_uri
         run: |
           if [ "${{ needs.check_changes.outputs.api_changed }}" -gt 0 ]; then
-            echo "NAMEGUARD_API_URI=http://0.0.0.0:8000" >> $GITHUB_ENV
+            echo "NAMEGUARD_API_URI=http://0.0.0.0:8000" >> $GITHUB_OUTPUT
           else
-            echo "NAMEGUARD_API_URI=${{ secrets.PRODUCTION_NAMEGUARD_API_URI }}" >> $GITHUB_ENV
+            echo "NAMEGUARD_API_URI=${{ secrets.PRODUCTION_NAMEGUARD_API_URI }}" >> $GITHUB_OUTPUT
           fi
-          echo "Set NAMEGUARD_API_URI to: $NAMEGUARD_API_URI"
 
       - name: Debug Environment
         run: |
-          echo "NAMEGUARD_API_URI: $NAMEGUARD_API_URI"
+          echo "NAMEGUARD_API_URI: ${{ steps.set_api_uri.outputs.NAMEGUARD_API_URI }}"
           echo "All environment variables:"
           env
 
@@ -107,6 +107,7 @@ jobs:
         env:
           PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
           PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}
+          NAMEGUARD_API_URI: ${{ steps.set_api_uri.outputs.NAMEGUARD_API_URI }}
         run: |
           echo "Using NAMEGUARD_API_URI: $NAMEGUARD_API_URI"
-          NAMEGUARD_API_URI="$NAMEGUARD_API_URI" pnpm test --filter ./packages/nameguard-sdk
+          pnpm test --filter ./packages/nameguard-sdk

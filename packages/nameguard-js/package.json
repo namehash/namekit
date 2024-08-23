@@ -34,7 +34,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch --clean=false",
-    "test": "NAMEGUARD_API_URI=$NAMEGUARD_API_URI vitest"
+    "test": "vitest"
   },
   "devDependencies": {
     "@namekit/tsconfig": "workspace:*",
