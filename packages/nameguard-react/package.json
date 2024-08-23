@@ -45,7 +45,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sonner": "1.2.3",
-    "swr": "2.2.4",
+    "swr": "2.2.5",
     "zustand": "4.4.5"
   },
   "devDependencies": {
