@@ -16,7 +16,7 @@
     "@namehash/ens-webfont": "0.0.3",
     "@namehash/seo": "workspace:*",
     "@vercel/analytics": "1.2.2",
-    "@vercel/speed-insights": "1.0.10",
+    "@vercel/speed-insights": "1.0.12",
     "classcat": "5.0.5",
     "fast-average-color": "9.4.0",
     "lottie-react": "2.4.0",
