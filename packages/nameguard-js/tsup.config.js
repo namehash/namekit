@@ -8,5 +8,5 @@ export default defineConfig({
   clean: true,
   bundle: true,
   dts: true,
-  external: ["@namehash/nameguard"],
+  external: ["@namehash/nameguard", "@namehash/ens-utils"],
 });

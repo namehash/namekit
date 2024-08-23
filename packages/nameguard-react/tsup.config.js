@@ -9,5 +9,5 @@ export default defineConfig({
   clean: true,
   skipNodeModulesBundle: true,
   dts: true,
-  external: ["node_modules"],
+  external: ["@namehash/nameguard"],
 });
