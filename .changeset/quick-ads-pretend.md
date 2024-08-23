@@ -3,4 +3,4 @@
 "@namehash/ens-utils": minor
 ---
 
-Create DisplayedPrice and DisplayedPriceWithAltPrice components and PriceSymbology enum
+Create DisplayedPrice and DisplayedPriceWithSymbol components + new price utilities

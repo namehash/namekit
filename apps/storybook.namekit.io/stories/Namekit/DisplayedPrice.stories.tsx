@@ -1,10 +1,6 @@
-import { Currency, PriceSymbology } from "@namehash/ens-utils";
-import {
-  DisplayedPrice,
-  PriceDisplaySize,
-  CurrencySymbolPosition,
-} from "@namehash/namekit-react";
+import { DisplayedPrice, PriceDisplaySize } from "@namehash/namekit-react";
 import type { Meta, StoryObj } from "@storybook/react";
+import { Currency } from "@namehash/ens-utils";
 import React from "react";
 
 const meta: Meta<typeof DisplayedPrice> = {
@@ -16,14 +12,6 @@ const meta: Meta<typeof DisplayedPrice> = {
     },
     displaySize: {
       options: Object.keys(PriceDisplaySize),
-      control: { type: "select" },
-    },
-    symbolPosition: {
-      options: Object.keys(CurrencySymbolPosition),
-      control: { type: "select" },
-    },
-    currencySymbology: {
-      options: Object.keys(PriceSymbology),
       control: { type: "select" },
     },
     tooltipTriggerToDisplayPriceInTooltip: {
@@ -46,7 +34,7 @@ export default meta;
 
 type Story = StoryObj<typeof DisplayedPrice>;
 
-export const EthPriceWithSymbol: Story = {
+export const EthPrice: Story = {
   args: {
     price: {
       currency: Currency.Eth,
@@ -54,55 +42,15 @@ export const EthPriceWithSymbol: Story = {
     },
   },
 };
-export const EthPriceWithAcronym: Story = {
+export const EthPriceInATooltip: Story = {
   args: {
     price: {
       currency: Currency.Eth,
       value: 1000000000000000000n,
     },
-    currencySymbology: PriceSymbology.Acronym,
-  },
-};
-export const EthPriceWithSymbolInATooltip: Story = {
-  args: {
-    price: {
-      currency: Currency.Eth,
-      value: 1000000000000000000n,
-    },
-    tooltipTriggerToDisplayPriceInTooltip: (
-      <p className="nk-border nk-border-black">My custom trigger</p>
-    ),
-  },
-};
-export const EthPriceWithAcronymInATooltip: Story = {
-  args: {
-    price: {
-      currency: Currency.Eth,
-      value: 1000000000000000000n,
-    },
-    currencySymbology: PriceSymbology.Acronym,
     tooltipTriggerToDisplayPriceInTooltip: (
       <p className="nk-underline">My custom trigger</p>
     ),
-  },
-};
-export const EthPriceWithSymbolWithoutCurrencyTooltip: Story = {
-  args: {
-    price: {
-      currency: Currency.Eth,
-      value: 1000000000000000000n,
-    },
-    describeCurrencyInTooltip: false,
-  },
-};
-export const EthPriceWithAcronymWithoutCurrencyTooltip: Story = {
-  args: {
-    price: {
-      currency: Currency.Eth,
-      value: 1000000000000000000n,
-    },
-    describeCurrencyInTooltip: false,
-    currencySymbology: PriceSymbology.Acronym,
   },
 };
 export const UsdPrice: Story = {
@@ -185,116 +133,6 @@ export const MicroPriceDisplaySizeForWETH: Story = {
     displaySize: PriceDisplaySize.Micro,
   },
 };
-export const DisplaySymbologyAtLeft: Story = {
-  args: {
-    price: {
-      currency: Currency.Usd,
-      value: 198900n,
-    },
-    symbolPosition: CurrencySymbolPosition.Left,
-    displaySize: PriceDisplaySize.Micro,
-  },
-};
-export const DisplaySymbologyAtRight: Story = {
-  args: {
-    price: {
-      currency: Currency.Usd,
-      value: 198900n,
-    },
-    symbolPosition: CurrencySymbolPosition.Right,
-    displaySize: PriceDisplaySize.Micro,
-  },
-};
-export const DisplaySymbolSymbologyForETH: Story = {
-  args: {
-    price: {
-      currency: Currency.Eth,
-      value: 1000000000000000000n,
-    },
-    currencySymbology: PriceSymbology.Symbol,
-  },
-};
-export const DisplayAcronymSymbologyForETH: Story = {
-  args: {
-    price: {
-      currency: Currency.Eth,
-      value: 1000000000000000000n,
-    },
-    currencySymbology: PriceSymbology.Acronym,
-  },
-};
-export const DisplaySymbolSymbologyForUSD: Story = {
-  args: {
-    price: {
-      currency: Currency.Usd,
-      value: 198900n,
-    },
-    currencySymbology: PriceSymbology.Symbol,
-  },
-};
-export const DisplayAcronymSymbologyForUSD: Story = {
-  args: {
-    price: {
-      currency: Currency.Usd,
-      value: 198900n,
-    },
-    currencySymbology: PriceSymbology.Acronym,
-  },
-};
-export const DisplaySymbolSymbologyForUSDC: Story = {
-  args: {
-    price: {
-      currency: Currency.Usdc,
-      value: 198900n,
-    },
-    currencySymbology: PriceSymbology.Symbol,
-  },
-};
-export const DisplayAcronymSymbologyForUSDC: Story = {
-  args: {
-    price: {
-      currency: Currency.Usdc,
-      value: 198900n,
-    },
-    currencySymbology: PriceSymbology.Acronym,
-  },
-};
-export const DisplaySymbolSymbologyForDAI: Story = {
-  args: {
-    price: {
-      currency: Currency.Dai,
-      value: 198900n,
-    },
-    currencySymbology: PriceSymbology.Symbol,
-  },
-};
-export const DisplayAcronymSymbologyForDAI: Story = {
-  args: {
-    price: {
-      currency: Currency.Dai,
-      value: 198900n,
-    },
-    currencySymbology: PriceSymbology.Acronym,
-  },
-};
-export const DisplaySymbolSymbologyForWETH: Story = {
-  args: {
-    price: {
-      currency: Currency.Weth,
-      value: 198900n,
-    },
-    currencySymbology: PriceSymbology.Symbol,
-  },
-};
-export const DisplayAcronymSymbologyForWETH: Story = {
-  args: {
-    price: {
-      currency: Currency.Weth,
-      value: 198900n,
-    },
-    currencySymbology: PriceSymbology.Acronym,
-  },
-};
 export const EthMinDisplayPrice: Story = {
   args: {
     price: {
@@ -373,25 +211,5 @@ export const WethMaxDisplayPrice: Story = {
       currency: Currency.Weth,
       value: 1000000000000000000000000n,
     },
-  },
-};
-export const PrimaryPriceAndTooltipPrice: Story = {
-  name: "[Prices combination] Text price + Tooltip price",
-  args: {
-    price: {
-      currency: Currency.Usd,
-      value: 198900n,
-    },
-    displaySize: PriceDisplaySize.Large,
-    tooltipTriggerToDisplayPriceInTooltip: (
-      <DisplayedPrice
-        price={{
-          currency: Currency.Eth,
-          value: 1000000000000000000n,
-        }}
-        describeCurrencyInTooltip={false}
-        displaySize={PriceDisplaySize.Large}
-      />
-    ),
   },
 };

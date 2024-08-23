@@ -128,7 +128,7 @@ export const multiplyPriceByNumber = (price1: Price, price2: number): Price => {
   };
 };
 
-export const PriceSymbology = {
+export const CurrencySymbology = {
   /**
    * The price will be displayed with the currency's acronym (e.g. USD).
    */
@@ -138,19 +138,34 @@ export const PriceSymbology = {
    */
   Symbol: "Symbol",
 } as const;
-export type PriceSymbology =
-  (typeof PriceSymbology)[keyof typeof PriceSymbology];
+export type CurrencySymbology =
+  (typeof CurrencySymbology)[keyof typeof CurrencySymbology];
+
+/**
+ * Returns a string containing the currency's symbol or acronym.
+ * @param currency: Currency. The currency to get the symbology for (e.g. Currency.Eth)
+ * @param symbology: CurrencySymbology. The symbology to use (e.g. CurrencySymbology.Symbol)
+ * @returns: string. The currency's symbol or acronym (e.g. "$" or "USD")
+ */
+export const getCurrencySymbology = (
+  currency: Currency,
+  symbology: CurrencySymbology,
+): string => {
+  return symbology === CurrencySymbology.Acronym
+    ? PriceCurrencyFormat[currency].Acronym
+    : PriceCurrencyFormat[currency].Symbol;
+};
 
 export const formattedPrice = ({
   price,
-  withPrefix = false,
   withSufix = false,
-  symbology = PriceSymbology.Symbol,
+  withPrefix = false,
+  symbology = CurrencySymbology.Symbol,
 }: {
   price: Price;
   withPrefix?: boolean;
   withSufix?: boolean;
-  symbology?: PriceSymbology;
+  symbology?: CurrencySymbology;
 }): string => {
   let formattedAmount = "";
   const valueConsideringDecimals = (
@@ -200,14 +215,10 @@ export const formattedPrice = ({
   }
 
   const prefixUnit = withPrefix
-    ? symbology === PriceSymbology.Acronym
-      ? PriceCurrencyFormat[price.currency].Acronym
-      : PriceCurrencyFormat[price.currency].Symbol
+    ? getCurrencySymbology(price.currency, symbology)
     : "";
   const postfixUnit = withSufix
-    ? symbology === PriceSymbology.Acronym
-      ? PriceCurrencyFormat[price.currency].Acronym
-      : PriceCurrencyFormat[price.currency].Symbol
+    ? getCurrencySymbology(price.currency, symbology)
     : "";
 
   let priceDisplay =
