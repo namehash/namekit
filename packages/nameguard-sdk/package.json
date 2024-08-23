@@ -35,7 +35,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch --clean=false",
-    "test": "vitest"
+    "test": "NAMEGUARD_API_URI=$NAMEGUARD_API_URI vitest"
   },
   "dependencies": {
     "@namehash/ens-utils": "workspace:*",
