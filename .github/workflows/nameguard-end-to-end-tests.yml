@@ -96,13 +96,14 @@ jobs:
           if [ "${{ needs.check_changes.outputs.api_changed }}" -gt 0 ]; then
             echo "NAMEGUARD_API_URI=http://0.0.0.0:8000" >> $GITHUB_OUTPUT
           else
-            echo "NAMEGUARD_API_URI=${{ secrets.PRODUCTION_NAMEGUARD_API_URI }}" >> $GITHUB_OUTPUT
+            echo "NAMEGUARD_API_URI=https://api.nameguard.io" >> $GITHUB_OUTPUT
           fi
 
       - name: Debug Environment
         run: |
           echo "NAMEGUARD_API_URI: ${{ secrets.PRODUCTION_NAMEGUARD_API_URI }}" | base64
           echo "NAMEGUARD_API_URI: ${{ steps.set_api_uri.outputs.NAMEGUARD_API_URI }}" | base64
+          echo "NAMEGUARD_API_URI: $NAMEGUARD_API_URI" | base64
           echo "API_CHANGED: $API_CHANGED"
           echo "SDK_CHANGED: $SDK_CHANGED"
           echo "All environment variables:"
