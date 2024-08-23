@@ -22,7 +22,7 @@ jobs:
           - "nameguard-sdk"
           # - "nameguard-js"
           - "nameguard-react"
-          # - "namekit-react"
+          - "namekit-react"
 
     name: Test ${{ matrix.package }}
     runs-on: ubuntu-latest
