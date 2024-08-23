@@ -30,8 +30,6 @@ jobs:
           git fetch origin ${{ github.base_ref }}
           API_CHANGED=$(git diff --name-only origin/${{ github.base_ref }} HEAD | grep "^api/nameguard/" | wc -l)
           SDK_CHANGED=$(git diff --name-only origin/${{ github.base_ref }} HEAD | grep "^packages/nameguard-sdk/" | wc -l)
-          echo "API_CHANGED=$API_CHANGED" >> $GITHUB_ENV
-          echo "SDK_CHANGED=$SDK_CHANGED" >> $GITHUB_ENV
           echo "api_changed=$API_CHANGED" >> $GITHUB_OUTPUT
           echo "sdk_changed=$SDK_CHANGED" >> $GITHUB_OUTPUT
 
@@ -94,26 +92,14 @@ jobs:
         id: set_api_uri
         run: |
           if [ "${{ needs.check_changes.outputs.api_changed }}" -gt 0 ]; then
-            echo "NAMEGUARD_API_URI=http://0.0.0.0:8000" >> $GITHUB_OUTPUT
             echo "NAMEGUARD_API_URI=http://0.0.0.0:8000" >> $GITHUB_ENV
           else
-            echo "NAMEGUARD_API_URI=https://api.nameguard.io" >> $GITHUB_OUTPUT
             echo "NAMEGUARD_API_URI=https://api.nameguard.io" >> $GITHUB_ENV
           fi
-
-      - name: Debug Environment
-        run: |
-          echo "NAMEGUARD_API_URI: ${{ secrets.PRODUCTION_NAMEGUARD_API_URI }}" | base64
-          echo "NAMEGUARD_API_URI: ${{ steps.set_api_uri.outputs.NAMEGUARD_API_URI }}" | base64
-          echo "NAMEGUARD_API_URI: $NAMEGUARD_API_URI" | base64
-          echo "API_CHANGED: $API_CHANGED"
-          echo "SDK_CHANGED: $SDK_CHANGED"
-          echo "All environment variables:"
-          env
          
       - name: Run tests
         env:
           PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
           PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}
-          NAMEGUARD_API_URI: ${{ steps.set_api_uri.outputs.NAMEGUARD_API_URI }}
+          NAMEGUARD_API_URI: $NAMEGUARD_API_URI
         run: pnpm test --filter ./packages/nameguard-sdk
