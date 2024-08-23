@@ -90,11 +90,13 @@ jobs:
 
       - name: Set NAMEGUARD_API_URI
         id: set_api_uri
+        env:
+          PRODUCTION_NAMEGUARD_API_URI: ${{ vars.PRODUCTION_NAMEGUARD_API_URI }}
         run: |
           if [ "${{ needs.check_changes.outputs.api_changed }}" -gt 0 ]; then
             echo "NAMEGUARD_API_URI=http://0.0.0.0:8000" >> $GITHUB_ENV
           else
-            echo "NAMEGUARD_API_URI=https://api.nameguard.io" >> $GITHUB_ENV
+            echo "NAMEGUARD_API_URI=$PRODUCTION_NAMEGUARD_API_URI" >> $GITHUB_ENV
           fi
          
       - name: Run tests
