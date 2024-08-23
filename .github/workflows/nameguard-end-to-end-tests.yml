@@ -101,5 +101,4 @@ jobs:
         env:
           PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
           PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}
-          NAMEGUARD_API_URI: $NAMEGUARD_API_URI
         run: pnpm test --filter ./packages/nameguard-sdk
