@@ -9,4 +9,5 @@ export default defineConfig({
   clean: true,
   bundle: true,
   dts: true,
+  external: ["@namehash/ens-utils"],
 });

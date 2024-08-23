@@ -58,9 +58,16 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
-      - name: Build ${{ matrix.package }}
+      - name: Build Dependencies
+        run: |
+          for dep in ${{ join(matrix.package.dependencies, ' ') }}
+          do
+            pnpm --filter ./packages/$dep build
+          done
+
+      - name: Build ${{ matrix.package.name }}
         run: pnpm --filter ./packages/${{ matrix.package.name }} build
 
-      - name: Test ${{ matrix.package }}
-        if: matrix.package != 'nameguard-sdk' || needs.check_changes.outputs.sdk_only_changed == 'true'
+      - name: Test ${{ matrix.package.name }}
+        if: matrix.package.name != 'nameguard-sdk' || needs.check_changes.outputs.sdk_only_changed == 'true'
         run: pnpm --filter ./packages/${{ matrix.package.name }} test
