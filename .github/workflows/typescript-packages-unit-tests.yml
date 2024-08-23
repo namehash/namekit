@@ -33,15 +33,22 @@ jobs:
           fi
 
   build:
+    needs: check_changes
     runs-on: ubuntu-latest
     strategy:
       matrix:
         package:
-          - "ens-utils"
-          - "nameguard-js"
-          - "nameguard-react"
-          - "nameguard-sdk"
-          - "namekit-react"
+          - name: "ens-utils"
+            dependencies: []
+          - name: "nameguard-sdk"
+            dependencies: ["ens-utils"]
+          - name: "nameguard-js"
+            dependencies: ["nameguard-sdk"]
+          - name: "nameguard-react"
+            dependencies: ["nameguard-js"]
+          - name: "namekit-react"
+            dependencies: ["nameguard-react"]
+
     steps:
       - uses: actions/checkout@v4
 
