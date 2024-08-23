@@ -5,6 +5,7 @@ import {
   SecurePrimaryNameResult,
   NameGuardOptions,
   DEFAULT_COMPUTE_NAMEGUARD_REPORT,
+  Network,
 } from "@namehash/nameguard";
 import { securePrimaryName as securePrimaryNameImpl } from "./securePrimaryName";
 
@@ -16,7 +17,6 @@ class NameGuardJS extends NameGuard {
   private publicClient: PublicClient;
 
   constructor(options: NameGuardJSOptions) {
-    console.log({ options });
     super(options);
 
     this.publicClient = options.publicClient;
@@ -34,9 +34,6 @@ class NameGuardJS extends NameGuard {
     } else if (this.network !== "mainnet" && this.network !== "sepolia") {
       throw new Error(`Unsupported network: ${this.network}.`);
     }
-
-    console.log({ chainId });
-    console.log({ network: this.network });
   }
 
   public override getSecurePrimaryName(
