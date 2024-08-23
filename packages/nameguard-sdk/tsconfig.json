@@ -6,6 +6,8 @@
     "module": "ES2020"
   },
   "paths": {
-    "@namehash/ens-utils": ["../ens-utils/src"]
-  }
+    "@namehash/ens-utils": ["../ens-utils/dist"]
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

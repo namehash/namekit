@@ -1,15 +1,22 @@
 import { defineConfig } from "tsup";
 
-export default defineConfig({
-  entry: ["src/index.ts"],
-  format: ["esm"],
-  splitting: false,
-  sourcemap: true,
-  clean: true,
-  bundle: true,
-  dts: {
-    resolve: true,
+export default defineConfig([
+  {
+    entry: ["src/index.ts"],
+    format: ["esm"],
+    splitting: false,
+    sourcemap: true,
+    clean: true,
+    bundle: true,
+    external: ["@namehash/ens-utils"],
   },
-  external: ["@namehash/ens-utils"],
-  noExternal: ["@namehash/ens-utils"],
-});
+  {
+    entry: ["src/index.ts"],
+    format: ["esm"],
+    dts: {
+      only: true,
+      resolve: true,
+    },
+    external: ["@namehash/ens-utils"],
+  },
+]);
