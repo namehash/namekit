@@ -7,6 +7,9 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   bundle: true,
-  dts: true,
+  dts: {
+    resolve: true,
+  },
   external: ["@namehash/ens-utils"],
+  noExternal: ["@namehash/ens-utils"],
 });
