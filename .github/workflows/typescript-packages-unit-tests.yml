@@ -38,16 +38,11 @@ jobs:
     strategy:
       matrix:
         package:
-          - name: "ens-utils"
-            dependencies: []
-          - name: "nameguard-sdk"
-            dependencies: ["ens-utils"]
-          - name: "nameguard-js"
-            dependencies: ["nameguard-sdk"]
-          - name: "nameguard-react"
-            dependencies: ["nameguard-js"]
-          - name: "namekit-react"
-            dependencies: ["nameguard-react"]
+          - "ens-utils"
+          - "nameguard-sdk"
+          - "nameguard-js"
+          - "nameguard-react"
+          - "namekit-react"
 
     steps:
       - uses: actions/checkout@v4
