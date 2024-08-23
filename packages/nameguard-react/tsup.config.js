@@ -9,5 +9,11 @@ export default defineConfig({
   clean: true,
   skipNodeModulesBundle: true,
   dts: true,
-  external: ["@namehash/nameguard"],
+  external: [
+    "react",
+    "react-dom",
+    "@namehash/nameguard",
+    "@namehash/ens-utils",
+    "@namehash/ens-webfont",
+  ],
 });

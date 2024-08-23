@@ -20,8 +20,8 @@ jobs:
         package:
           - "ens-utils"
           - "nameguard-sdk"
-          - "nameguard-js"
-          # - "nameguard-react"
+          # - "nameguard-js"
+          - "nameguard-react"
           # - "namekit-react"
 
     name: Test ${{ matrix.package }}
