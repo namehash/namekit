@@ -6,11 +6,13 @@ on:
       - main
     paths:
       - "packages/**"
+      - ".github/workflows/typescript-packages-unit-tests.yml"
   pull_request:
     branches:
       - main
     paths:
       - "packages/**"
+      - ".github/workflows/typescript-packages-unit-tests.yml"
 
 jobs:
   check_changes:
