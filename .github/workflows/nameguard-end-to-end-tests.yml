@@ -107,7 +107,8 @@ jobs:
         env:
           PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
           PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}
-          NAMEGUARD_API_URI: ${{ steps.set_api_uri.outputs.NAMEGUARD_API_URI }}
+          NAMEGUARD_API_URI: http://0.0.0.0:8000
+          # NAMEGUARD_API_URI: ${{ steps.set_api_uri.outputs.NAMEGUARD_API_URI }}
         run: |
           echo "Using NAMEGUARD_API_URI: $NAMEGUARD_API_URI"
           pnpm test --filter ./packages/nameguard-sdk
