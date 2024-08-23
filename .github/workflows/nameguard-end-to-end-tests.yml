@@ -95,6 +95,13 @@ jobs:
           else
             echo "NAMEGUARD_API_URI=${{ secrets.PRODUCTION_NAMEGUARD_API_URI }}" >> $GITHUB_ENV
           fi
+          echo "Set NAMEGUARD_API_URI to: $NAMEGUARD_API_URI"
+
+      - name: Debug Environment
+        run: |
+          echo "NAMEGUARD_API_URI: $NAMEGUARD_API_URI"
+          echo "All environment variables:"
+          env
 
       - name: Run tests
         env:
@@ -102,4 +109,4 @@ jobs:
           PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}
         run: |
           echo "Using NAMEGUARD_API_URI: $NAMEGUARD_API_URI"
-          pnpm test --filter ./packages/nameguard-sdk
+          NAMEGUARD_API_URI="$NAMEGUARD_API_URI" pnpm test --filter ./packages/nameguard-sdk
