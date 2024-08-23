@@ -55,6 +55,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Build dependencies
+        run: |
+          for dep in ${{ join(matrix.package.dependencies, ' ') }}
+          do
+            pnpm --filter ./packages/$dep build
+          done
+
       - name: Build
         run: pnpm --filter ./packages/${{ matrix.package }} build
 
