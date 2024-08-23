@@ -59,8 +59,8 @@ jobs:
         run: pnpm install
 
       - name: Build ${{ matrix.package }}
-        run: pnpm --filter ./packages/${{ matrix.package }} build
+        run: pnpm --filter ./packages/${{ matrix.package.name }} build
 
       - name: Test ${{ matrix.package }}
         if: matrix.package != 'nameguard-sdk' || needs.check_changes.outputs.sdk_only_changed == 'true'
-        run: pnpm --filter ./packages/${{ matrix.package }} test
+        run: pnpm --filter ./packages/${{ matrix.package.name }} test
