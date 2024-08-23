@@ -3,6 +3,13 @@
   "extends": "@namekit/tsconfig/base.json",
   "compilerOptions": {
     "target": "ES2020",
-    "module": "ES2020"
-  }
+    "module": "ES2020",
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "@namehash/nameguard": ["node_modules/@namehash/nameguard"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }

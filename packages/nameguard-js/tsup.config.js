@@ -8,4 +8,6 @@ export default defineConfig({
   clean: true,
   bundle: true,
   dts: true,
+  external: ["@namehash/nameguard"],
+  noExternal: ["@namehash/nameguard"],
 });
