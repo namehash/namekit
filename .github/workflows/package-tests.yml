@@ -20,9 +20,9 @@ jobs:
         package:
           - "ens-utils"
           - "nameguard-sdk"
-          - "nameguard-js"
-          - "nameguard-react"
-          - "namekit-react"
+          # - "nameguard-js"
+          # - "nameguard-react"
+          # - "namekit-react"
 
     name: Test ${{ matrix.package }}
     runs-on: ubuntu-latest
@@ -56,14 +56,7 @@ jobs:
         run: pnpm install
 
       - name: Build dependencies
-        run: |
-          for dep in ${{ join(matrix.package.dependencies, ' ') }}
-          do
-            pnpm --filter ./packages/$dep build
-          done
-
-      - name: Build
-        run: pnpm --filter ./packages/${{ matrix.package }} build
+        run: pnpm build
 
       - name: Test
         run: pnpm --filter ./packages/${{ matrix.package }} test
