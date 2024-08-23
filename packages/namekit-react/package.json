@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@headlessui-float/react": "0.11.4",
-    "@headlessui/react": "1.7.17",
+    "@headlessui/react": "1.7.19",
     "@namehash/ens-webfont": "workspace:*",
     "@namehash/ens-utils": "workspace:*",
     "react": "^18.2.0",

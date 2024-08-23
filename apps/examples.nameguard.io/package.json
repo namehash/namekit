@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@headlessui-float/react": "0.11.4",
-    "@headlessui/react": "1.7.17",
+    "@headlessui/react": "1.7.19",
     "@namehash/nameguard": "workspace:*",
     "@namehash/nameguard-react": "workspace:*",
     "@namehash/nameguard-js": "workspace:*",
