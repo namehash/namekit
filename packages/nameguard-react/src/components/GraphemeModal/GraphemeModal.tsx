@@ -9,7 +9,7 @@ import { RatingIcon, RatingIconSize } from "../Report/RatingIcon";
 import { RatedBox } from "../RatedBox/RatedBox";
 import { ConfusableList } from "./ConfusableList";
 import { LoadingSkeleton } from "./LoadingSkeleton";
-import { Tooltip } from "../Tooltip/Tooltip";
+import { Tooltip } from "@namehash/namekit-react";
 
 export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
   const { isGraphemeModalOpen, closeGraphemeModal, currentGrapheme } =
@@ -17,7 +17,7 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
 
   const { data, isLoading } = useSWR<GraphemeGuardReport>(
     currentGrapheme,
-    (g: string) => nameguard.inspectGrapheme(g)
+    (g: string) => nameguard.inspectGrapheme(g),
   );
 
   const totalCodepoints = data?.codepoints?.length ?? 0;

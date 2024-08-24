@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Tooltip } from "@namehash/nameguard-react";
+import { Tooltip } from "@namehash/namekit-react";
 import { CopyIcon } from "@/components/atoms";
 
 const npmCommand = "npm install @namehash/nameguard";
