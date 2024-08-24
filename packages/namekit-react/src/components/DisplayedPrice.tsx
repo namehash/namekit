@@ -1,7 +1,6 @@
 import { type Price, formattedPrice } from "@namehash/ens-utils";
 import React from "react";
 import cc from "classcat";
-import { Tooltip } from "./Tooltip";
 
 export const PriceDisplaySize = {
   Micro: "nk-text-[12px] md:nk-text-[14px] nk-font-normal",
@@ -11,6 +10,19 @@ export const PriceDisplaySize = {
 } as const;
 export type PriceDisplaySize =
   (typeof PriceDisplaySize)[keyof typeof PriceDisplaySize];
+
+export const CurrencySymbolPosition = {
+  /**
+   * Display the currency symbol to the left of the price. (e.g. $1.00)
+   */
+  Left: "nk-mr-1.5",
+  /**
+   * Display the currency symbol to the right of the price. (e.g. 1.00$)
+   */
+  Right: "nk-ml-1.5",
+} as const;
+export type CurrencySymbolPosition =
+  (typeof CurrencySymbolPosition)[keyof typeof CurrencySymbolPosition];
 
 export interface DisplayedPriceProps {
   /**
@@ -29,61 +41,35 @@ export interface DisplayedPriceProps {
    * If `CurrencySymbolPosition.Left`, the currency symbol will be displayed to the left of the price.
    * If `CurrencySymbolPosition.Right`, the currency symbol will be displayed to the right of the price.
    */
-  // The size of the price display
-  displaySize?: PriceDisplaySize;
+  symbolPosition?: CurrencySymbolPosition;
   /**
-   * Whenever below prop is defined, the price will be
-   * displayed inside a Tooltip and the below content
-   * will be the trigger of this Tooltip displaying.
+   * The position of the currency symbol relative to the price.
+   * Defaults to `CurrencySymbolPosition.Left`.
+   *
+   * If `CurrencySymbolPosition.Left`, the currency symbol will be displayed to the left of the price.
+   * If `CurrencySymbolPosition.Right`, the currency symbol will be displayed to the right of the price.
    */
-  tooltipTriggerToDisplayPriceInTooltip?: React.ReactNode;
+  displaySize?: PriceDisplaySize;
 }
 
 export const DisplayedPrice = ({
   price,
   symbol,
   displaySize = PriceDisplaySize.Small,
-  tooltipTriggerToDisplayPriceInTooltip,
+  symbolPosition = CurrencySymbolPosition.Left,
 }: DisplayedPriceProps) => {
   const displayedPrice = (
     <div
       className={cc([
-        "nk-min-w-max nk-inline-flex nk-justify-center nk-items-end nk-tabular-nums nk-leading-none",
+        "nk-min-w-max nk-inline-flex nk-justify-center nk-items-end nk-space-x-1 nk-tabular-nums nk-leading-none",
         displaySize,
       ])}
     >
-      <p className="nk-order-2 nk-leading-none">{formattedPrice({ price })}</p>
-
-      {symbol}
+      {symbolPosition === CurrencySymbolPosition.Left && symbol}
+      <p className="nk-leading-none">{formattedPrice({ price })}</p>
+      {symbolPosition === CurrencySymbolPosition.Right && symbol}
     </div>
   );
 
-  const displayedPriceInATooltip = (
-    <div className={cc(["nk-inline-flex nk-items-center", displaySize])}>
-      <div className="nk-order-2 nk-leading-none">
-        <Tooltip trigger={tooltipTriggerToDisplayPriceInTooltip}>
-          <>
-            {price ? (
-              <div className="nk-bg-gray-900 focus:nk-outline-none nk-relative nk-h-full nk-rounded-md">
-                <div className="nk-text-[12px] nk-text-white sm:nk-text-[14px] nk-inline-flex nk-items-center nk-tabular-nums nk-leading-none">
-                  <p className="nk-order-2">
-                    {formattedPrice({
-                      price,
-                    })}
-                  </p>
-                  {symbol}
-                </div>
-              </div>
-            ) : (
-              <></>
-            )}
-          </>
-        </Tooltip>
-      </div>
-    </div>
-  );
-
-  return tooltipTriggerToDisplayPriceInTooltip
-    ? displayedPriceInATooltip
-    : displayedPrice;
+  return displayedPrice;
 };
