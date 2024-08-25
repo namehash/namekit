@@ -502,7 +502,7 @@ interface FieldsWithRequiredTitle extends Record<string, string> {
 
 export class NameGuard {
   private endpoint: URL;
-  public network: Network;
+  protected network: Network;
   private abortController: AbortController;
 
   constructor({
