@@ -1,4 +1,4 @@
-name: Package Tests
+name: TypeScript Packages - Unit
 
 on:
   push:
@@ -55,8 +55,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build dependencies
+      - name: Build
         run: pnpm build
 
-      - name: Test
+      - name: Test ${{ matrix.package }}
         run: pnpm --filter ./packages/${{ matrix.package }} test
