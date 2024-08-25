@@ -5,9 +5,8 @@
     "jsx": "react",
     "lib": ["dom", "dom.iterable", "esnext"],
     "resolveJsonModule": true,
-    "moduleResolution": "bundler",
     "paths": {
-      "@namehash/ens-utils": ["../ens-utils/dist"]
+      "@namehash/ens-utils": ["../ens-utils"]
     }
   }
 }
