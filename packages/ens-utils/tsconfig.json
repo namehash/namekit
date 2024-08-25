@@ -1,4 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-  "extends": "@namekit/tsconfig/base.json"
+  "extends": "@namekit/tsconfig/base.json",
+  "include": ["src/**/*"]
 }
