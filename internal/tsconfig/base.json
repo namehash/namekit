@@ -17,8 +17,7 @@
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "strict": true,
-    "downlevelIteration": true,
-    "baseUrl": "."
+    "downlevelIteration": true
   },
   "exclude": ["node_modules"]
 }
