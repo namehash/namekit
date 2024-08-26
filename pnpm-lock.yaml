@@ -109,12 +109,15 @@ importers:
       '@namehash/nameguard-react':
         specifier: workspace:*
         version: link:../../packages/nameguard-react
+      '@namehash/namekit-react':
+        specifier: workspace:*
+        version: link:../../packages/namekit-react
       '@namehash/seo':
         specifier: workspace:*
         version: link:../../internal/seo
       '@tailwindcss/forms':
         specifier: 0.5.6
-        version: 0.5.6(tailwindcss@3.4.10)
+        version: 0.5.6(tailwindcss@3.4.7)
       '@vercel/analytics':
         specifier: 1.1.2
         version: 1.1.2
@@ -151,7 +154,7 @@ importers:
         version: 18.3.0
       autoprefixer:
         specifier: latest
-        version: 10.4.20(postcss@8.4.41)
+        version: 10.4.19(postcss@8.4.41)
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
@@ -166,7 +169,7 @@ importers:
         version: 1.1.7
       tailwindcss:
         specifier: latest
-        version: 3.4.10
+        version: 3.4.7
       typescript:
         specifier: latest
         version: 5.5.4
@@ -183,8 +186,11 @@ importers:
         specifier: 2.1.3
         version: 2.1.3(react@18.3.1)
       '@namehash/ens-webfont':
-        specifier: 0.0.3
-        version: 0.0.3
+        specifier: workspace:*
+        version: link:../../packages/ens-webfont
+      '@namehash/namekit-react':
+        specifier: workspace:*
+        version: link:../../packages/namekit-react
       '@namehash/seo':
         specifier: workspace:*
         version: link:../../internal/seo
@@ -424,6 +430,9 @@ importers:
       '@namehash/nameguard':
         specifier: workspace:*
         version: link:../nameguard-sdk
+      '@namehash/namekit-react':
+        specifier: workspace:*
+        version: link:../namekit-react
       classcat:
         specifier: 5.0.4
         version: 5.0.4
@@ -644,7 +653,7 @@ packages:
     dependencies:
       '@babel/compat-data': 7.24.4
       '@babel/helper-validator-option': 7.23.5
-      browserslist: 4.23.0
+      browserslist: 4.23.3
       lru-cache: 5.1.1
       semver: 6.3.1
     dev: true
@@ -3171,10 +3180,6 @@ packages:
       react: 18.3.1
     dev: true
 
-  /@namehash/ens-webfont@0.0.3:
-    resolution: {integrity: sha512-2SNBgWkqd8Oe76EZ+b9pdIVTfwn3w0iNk8fI9ESQXYO1xyTPOvZL34avI64nrGmBZSZMsNyFdfc4xHXoVY1lIg==}
-    dev: false
-
   /@ndelangen/get-tarball@3.0.9:
     resolution: {integrity: sha512-9JKTEik4vq+yGosHYhZ1tiH/3WpUS0Nh0kej4Agndhox8pAdWhEx5knFVRcb/ya9knCRCs1rPxNrSXTDdfVqpA==}
     dependencies:
@@ -5405,13 +5410,13 @@ packages:
       tslib: 2.6.2
     dev: false
 
-  /@tailwindcss/forms@0.5.6(tailwindcss@3.4.10):
+  /@tailwindcss/forms@0.5.6(tailwindcss@3.4.7):
     resolution: {integrity: sha512-Fw+2BJ0tmAwK/w01tEFL5TiaJBX1NLT1/YbWgvm7ws3Qcn11kiXxzNTEQDMs5V3mQemhB56l3u0i9dwdzSQldA==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1'
     dependencies:
       mini-svg-data-uri: 1.4.4
-      tailwindcss: 3.4.10
+      tailwindcss: 3.4.7
     dev: false
 
   /@testing-library/dom@9.3.4:
@@ -6427,8 +6432,8 @@ packages:
       postcss-value-parser: 4.2.0
     dev: true
 
-  /autoprefixer@10.4.20(postcss@8.4.41):
-    resolution: {integrity: sha512-XY25y5xSv/wEoqzDyXXME4AFfkZI0P23z6Fs3YgymDnKJkCGOnkL0iTxCa85UTqaSgfcqyf3UA6+c7wUvx/16g==}
+  /autoprefixer@10.4.19(postcss@8.4.41):
+    resolution: {integrity: sha512-BaENR2+zBZ8xXhM4pUaKUxlVdxZ0EZhjvbopwnXmxRUfqDmwSpC2lAi/QXvx7NRdPCo1WKEcEF6mV64si1z4Ew==}
     engines: {node: ^10 || ^12 || >=14}
     hasBin: true
     peerDependencies:
@@ -7012,7 +7017,7 @@ packages:
   /core-js-compat@3.37.1:
     resolution: {integrity: sha512-9TNiImhKvQqSUkOvk/mMRZzOANTiEVC7WaBNhHcKM7x+/5E1l5NvsysR19zuDQScE8k+kfQXWRN3AtS/eOSHpg==}
     dependencies:
-      browserslist: 4.23.0
+      browserslist: 4.23.3
     dev: true
 
   /core-util-is@1.0.3:
@@ -11909,36 +11914,6 @@ packages:
     resolution: {integrity: sha512-X324n9OtpTmOMqEgDUEA/RgLrNfBF/jwJdctaPZDzB3mppxJk7TLIDmOreEDm1Bq4R9LSPu4Epf8VSdovNU+iA==}
     dev: true
 
-  /tailwindcss@3.4.10:
-    resolution: {integrity: sha512-KWZkVPm7yJRhdu4SRSl9d4AK2wM3a50UsvgHZO7xY77NQr2V+fIrEuoDGQcbvswWvFGbS2f6e+jC/6WJm1Dl0w==}
-    engines: {node: '>=14.0.0'}
-    hasBin: true
-    dependencies:
-      '@alloc/quick-lru': 5.2.0
-      arg: 5.0.2
-      chokidar: 3.6.0
-      didyoumean: 1.2.2
-      dlv: 1.1.3
-      fast-glob: 3.3.2
-      glob-parent: 6.0.2
-      is-glob: 4.0.3
-      jiti: 1.21.0
-      lilconfig: 2.1.0
-      micromatch: 4.0.5
-      normalize-path: 3.0.0
-      object-hash: 3.0.0
-      picocolors: 1.0.1
-      postcss: 8.4.41
-      postcss-import: 15.1.0(postcss@8.4.41)
-      postcss-js: 4.0.1(postcss@8.4.41)
-      postcss-load-config: 4.0.2(postcss@8.4.41)
-      postcss-nested: 6.0.1(postcss@8.4.41)
-      postcss-selector-parser: 6.0.16
-      resolve: 1.22.8
-      sucrase: 3.35.0
-    transitivePeerDependencies:
-      - ts-node
-
   /tailwindcss@3.4.3:
     resolution: {integrity: sha512-U7sxQk/n397Bmx4JHbJx/iSOOv5G+II3f1kpLpY2QeUv5DcPdcTsYLlusZfq1NthHS1c1cZoyFmmkex1rzke0A==}
     engines: {node: '>=14.0.0'}
@@ -12000,6 +11975,36 @@ packages:
     transitivePeerDependencies:
       - ts-node
     dev: true
+
+  /tailwindcss@3.4.7:
+    resolution: {integrity: sha512-rxWZbe87YJb4OcSopb7up2Ba4U82BoiSGUdoDr3Ydrg9ckxFS/YWsvhN323GMcddgU65QRy7JndC7ahhInhvlQ==}
+    engines: {node: '>=14.0.0'}
+    hasBin: true
+    dependencies:
+      '@alloc/quick-lru': 5.2.0
+      arg: 5.0.2
+      chokidar: 3.6.0
+      didyoumean: 1.2.2
+      dlv: 1.1.3
+      fast-glob: 3.3.2
+      glob-parent: 6.0.2
+      is-glob: 4.0.3
+      jiti: 1.21.0
+      lilconfig: 2.1.0
+      micromatch: 4.0.5
+      normalize-path: 3.0.0
+      object-hash: 3.0.0
+      picocolors: 1.0.1
+      postcss: 8.4.41
+      postcss-import: 15.1.0(postcss@8.4.41)
+      postcss-js: 4.0.1(postcss@8.4.41)
+      postcss-load-config: 4.0.2(postcss@8.4.41)
+      postcss-nested: 6.0.1(postcss@8.4.41)
+      postcss-selector-parser: 6.0.16
+      resolve: 1.22.8
+      sucrase: 3.35.0
+    transitivePeerDependencies:
+      - ts-node
 
   /tapable@2.2.1:
     resolution: {integrity: sha512-GNzQvQTOIP6RyTfE2Qxb8ZVlNmw0n88vp1szwWRimP02mnTsx3Wtn5qRdqY9w2XduFNUgvOwhNnQsjwCp+kqaQ==}
