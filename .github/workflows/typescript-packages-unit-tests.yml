@@ -1,4 +1,4 @@
-name: TypeScript Packages - Unit Tests
+name: TypeScript Packages - Unit
 
 on:
   push:
@@ -13,47 +13,50 @@ on:
       - "packages/**"
 
 jobs:
-  check_changes:
-    runs-on: ubuntu-latest
-    outputs:
-      sdk_only_changed: ${{ steps.check.outputs.sdk_only_changed }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Check for SDK-only changes
-        id: check
-        run: |
-          git fetch origin ${{ github.base_ref }}
-          API_CHANGED=$(git diff --name-only origin/${{ github.base_ref }} HEAD | grep "^api/nameguard/" | wc -l)
-          SDK_CHANGED=$(git diff --name-only origin/${{ github.base_ref }} HEAD | grep "^packages/nameguard-sdk/" | wc -l)
-          if [ $API_CHANGED -eq 0 ] && [ $SDK_CHANGED -gt 0 ]; then
-            echo "sdk_only_changed=true" >> $GITHUB_OUTPUT
-          else
-            echo "sdk_only_changed=false" >> $GITHUB_OUTPUT
-          fi
-
-  build:
-    runs-on: ubuntu-latest
+  test:
     strategy:
+      fail-fast: false
       matrix:
         package:
           - "ens-utils"
+          - "nameguard-sdk"
           - "nameguard-js"
           - "nameguard-react"
-          - "nameguard-sdk"
           - "namekit-react"
+
+    name: Test ${{ matrix.package }}
+    runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "lts/*"
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
 
-      - name: Install Dependencies
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
         run: pnpm install
 
-      - name: Build ${{ matrix.package }}
-        run: pnpm --filter ./packages/${{ matrix.package }} build
+      - name: Build
+        run: pnpm build
 
       - name: Test ${{ matrix.package }}
-        if: matrix.package != 'nameguard-sdk' || needs.check_changes.outputs.sdk_only_changed == 'true'
         run: pnpm --filter ./packages/${{ matrix.package }} test
