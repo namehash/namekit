@@ -12,7 +12,7 @@ export const Header = () => {
   return (
     <header className="sticky bg-white top-0 w-full z-20 border-b border-gray-300 h-[56px] py-[9px] sm:h-[70px] sm:py-4 select-none">
       <div className="max-w-7xl mx-auto items-center justify-between flex flex-row px-6">
-        <div className="flex flex-row gap-7 justify-between items-center">
+        <div className="flex flex-row lg:gap-2 xl:gap-7 justify-between items-center">
           <div className="flex flex-row justify-between items-center gap-1 cursor-pointer">
             <Link
               href="/"
@@ -33,7 +33,7 @@ export const Header = () => {
           </div>
         </div>
         <div className="flex flex-row items-center justify-between md:gap-5 h-[40px]">
-          <div className="hidden items-center justify-center lg:flex gap-1">
+          <div className="hidden items-center justify-center lg:flex gap-0.5">
             <a
               href="https://api.nameguard.io/docs"
               target="_blank"
