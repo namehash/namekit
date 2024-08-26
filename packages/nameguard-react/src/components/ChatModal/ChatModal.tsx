@@ -3,7 +3,7 @@ import React, { forwardRef, type Ref } from "react";
 import { AvatarIcons } from "./Avatars";
 import { Slideover } from "../Slideover/Slideover";
 import { IconButton, Link } from "@namehash/namekit-react";
-import { ExternalLinkIcon } from "../icons/externalLinkIcon";
+import { ExternalLinkIcon } from "../icons/ExternalLinkIcon";
 
 const xmtpChatUrl =
   "https://xmtp.chat/dm/0x91b40c01b12E7f1383E028fA91722fb53C871969";
