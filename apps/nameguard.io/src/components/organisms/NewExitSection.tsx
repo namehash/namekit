@@ -1,5 +1,5 @@
 import { NGSearch } from "../molecules/NGSearch";
-import { CalButton } from "@/components/atoms";
+import { CalendarButton } from "@/components/atoms";
 
 export function NewExitSection() {
   return (
@@ -32,7 +32,9 @@ export function NewExitSection() {
                   Our team is here to assist you.
                 </p>
               </div>
-              <CalButton variant="secondary">Schedule a call</CalButton>
+              <CalendarButton variant="secondary">
+                Schedule a call
+              </CalendarButton>
             </div>
           </div>
         </div>

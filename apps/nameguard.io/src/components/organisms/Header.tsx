@@ -5,7 +5,7 @@ import Link from "next/link";
 import { GithubIcon, NGSearchIcon } from "@/components/atoms";
 import { NGSearch } from "@/components/molecules";
 import MobileMenu from "./MobileMenu";
-import { CalButton } from "../atoms";
+import { CalendarButton } from "../atoms";
 import { Button, IconButton } from "@namehash/namekit-react";
 
 export const Header = () => {
@@ -61,7 +61,7 @@ export const Header = () => {
               <Button variant="ghost">Contact</Button>
             </a>
 
-            <CalButton>Discuss an integration</CalButton>
+            <CalendarButton>Discuss an integration</CalendarButton>
           </div>
 
           <div className="lg:hidden">

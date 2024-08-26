@@ -1,5 +1,5 @@
 import { Balancer } from "react-wrap-balancer";
-import { CalButton } from "../1 - atoms";
+import { CalendarButton } from "../1 - atoms";
 
 export const CTASection = () => {
   return (
@@ -84,7 +84,7 @@ const Cta = ({
             {buttonText}
           </a>
         ) : (
-          <CalButton>{buttonText}</CalButton>
+          <CalendarButton>{buttonText}</CalendarButton>
         )}
       </div>
       <div

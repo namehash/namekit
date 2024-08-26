@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, CalButton, BeansBg } from "../1 - atoms";
+import { ChevronDown, CalendarButton, BeansBg } from "../1 - atoms";
 import { Balancer } from "react-wrap-balancer";
 
 export const HeroSection = () => {
@@ -19,7 +19,7 @@ export const HeroSection = () => {
           </Balancer>
         </div>
         <div className="flex items-center justify-center mt-10">
-          <CalButton>Integrate with ENS</CalButton>
+          <CalendarButton>Integrate with ENS</CalendarButton>
         </div>
       </div>
       <BeansBg className="absolute right-0 top-0 h-full w-full z-10 animate-spinSlow" />

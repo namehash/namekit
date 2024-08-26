@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import {
-  CalButton,
+  CalendarButton,
   PreSectionText,
   SectionText,
   SectionTitle,
@@ -28,9 +28,9 @@ export const ContactSection = () => {
           </p>
         </div>
         <div className="w-full md:w-auto">
-          <CalButton variant="secondary" className="!w-full">
+          <CalendarButton variant="secondary" className="!w-full">
             Schedule a call
-          </CalButton>
+          </CalendarButton>
         </div>
       </div>
       <div className="w-full flex flex-col lg:flex-row m-auto gap-10 max-w-7xl">

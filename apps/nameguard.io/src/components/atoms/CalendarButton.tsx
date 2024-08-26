@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { getCalApi } from "@calcom/embed-react";
 import { Button, ButtonProps } from "@namehash/namekit-react";
 
-export const CalButton = ({ children, ...props }: ButtonProps) => {
+export const CalendarButton = ({ children, ...props }: ButtonProps) => {
   useEffect(() => {
     (async function () {
       const cal = await getCalApi();

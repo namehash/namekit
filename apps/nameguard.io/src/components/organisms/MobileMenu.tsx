@@ -2,7 +2,7 @@
 
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import { CalButton, NameGuardLogo } from "@/components/atoms";
+import { CalendarButton, NameGuardLogo } from "@/components/atoms";
 import { Button, IconButton } from "@namehash/namekit-react";
 
 const MobileMenu = () => {
@@ -97,9 +97,9 @@ const MobileMenu = () => {
             </a>
           </nav>
           <div className="p-4 w-full flex items-center justify-center">
-            <CalButton variant="secondary" className="!w-full">
+            <CalendarButton variant="secondary" className="!w-full">
               Discuss an integration
-            </CalButton>
+            </CalendarButton>
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@
 
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import { CalButton, NameHashLabsLogo } from "../1 - atoms";
+import { CalendarButton, NameHashLabsLogo } from "../1 - atoms";
 import Link from "next/link";
 
 const MobileMenu = () => {
@@ -91,7 +91,7 @@ const MobileMenu = () => {
               Open positions
             </Link>
           </nav>
-          <CalButton variant="secondary">Schedule a call</CalButton>
+          <CalendarButton variant="secondary">Schedule a call</CalendarButton>
         </div>
       </div>
     </div>

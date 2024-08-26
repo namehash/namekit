@@ -2,7 +2,7 @@
 
 import { Button, Link } from "@namehash/namekit-react";
 
-import { NameHashLabsLogo, CalButton } from "../1 - atoms";
+import { NameHashLabsLogo, CalendarButton } from "../1 - atoms";
 import MobileMenu from "./mobile-menu";
 
 export const Header = () => {
@@ -27,7 +27,7 @@ export const Header = () => {
           </a>
 
           <div className="hidden md:inline">
-            <CalButton>Schedule a call</CalButton>
+            <CalendarButton>Schedule a call</CalendarButton>
           </div>
 
           <MobileMenu />
