@@ -64,8 +64,12 @@ export const Header = () => {
             <CalButton>Discuss an integration</CalButton>
           </div>
 
-          <div className="flex lg:hidden justify-center align-center p-[7px]">
-            <NGSearchIcon />
+          <div className="lg:hidden">
+            <IconButton
+              className="!p-2"
+              variant="ghost"
+              icon={<NGSearchIcon />}
+            />
           </div>
 
           <MobileMenu />
