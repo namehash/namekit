@@ -1,7 +1,7 @@
 {
   "name": "@namehash/ens-utils",
   "description": "A collection of utilities for working with ENS. [DEPRECATED]",
-  "version": "1.15.1",
+  "version": "1.16.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -42,6 +42,7 @@
     "viem": "2.9.3"
   },
   "devDependencies": {
+    "@namekit/tsconfig": "workspace:*",
     "tsup": "8.0.2",
     "typescript": "5.3.3",
     "vite": "5.1.7",

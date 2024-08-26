@@ -1,5 +1,21 @@
 # @namehash/nameguard-js
 
+## 0.5.0
+
+### Minor Changes
+
+- 1e677da: build changes
+
+### Patch Changes
+
+- Updated dependencies [d2b8319]
+- Updated dependencies [1e677da]
+- Updated dependencies [f7524a8]
+- Updated dependencies [0156515]
+- Updated dependencies [ef3837d]
+  - @namehash/ens-utils@1.16.0
+  - @namehash/nameguard@0.4.0
+
 ## 0.4.1
 
 ### Patch Changes

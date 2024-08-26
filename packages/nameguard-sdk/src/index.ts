@@ -378,9 +378,9 @@ export interface AbstractNameGuardReport extends ConsolidatedNameGuardReport {
   checks: CheckResult[];
 
   /** Details of the inspection of all labels in `name`.
-    *
-    * defined if and only if `inspected` is `true`.
-  */
+   *
+   * defined if and only if `inspected` is `true`.
+   */
   labels?: LabelGuardReport[];
 
   /**
@@ -400,25 +400,27 @@ export interface AbstractNameGuardReport extends ConsolidatedNameGuardReport {
 }
 
 export interface InspectedNameGuardReport extends AbstractNameGuardReport {
-    labels: LabelGuardReport[];
-    inspected: true;
+  labels: LabelGuardReport[];
+  inspected: true;
 }
 
 /**
  * NameGuard report for a name that was exceptionally long and was not inspected for performance reasons.
  */
 export interface UninspectedNameGuardReport extends AbstractNameGuardReport {
-    labels?: undefined;
-    canonical_name?: undefined;
-    inspected: false;
-    rating: Rating.alert;
-    risk_count: 1;
+  labels?: undefined;
+  canonical_name?: undefined;
+  inspected: false;
+  rating: Rating.alert;
+  risk_count: 1;
 }
 
 /**
  * `InspectedNameGuardReport` if `inspected` field is `true`, else `UninspectedNameGuardReport`.
  */
-export type NameGuardReport = InspectedNameGuardReport | UninspectedNameGuardReport;
+export type NameGuardReport =
+  | InspectedNameGuardReport
+  | UninspectedNameGuardReport;
 
 export interface BulkConsolidatedNameGuardReport {
   results: ConsolidatedNameGuardReport[];
@@ -487,11 +489,9 @@ export interface NameGuardOptions {
   network?: Network;
 }
 
-interface InspectNameOptions {
-}
+interface InspectNameOptions {}
 
-interface InspectNamehashOptions {
-}
+interface InspectNamehashOptions {}
 
 interface InspectLabelhashOptions {
   parent?: string;
@@ -501,8 +501,7 @@ export interface SecurePrimaryNameOptions {
   computeNameGuardReport?: boolean;
 }
 
-interface FakeEthNameOptions {
-}
+interface FakeEthNameOptions {}
 
 interface FieldsWithRequiredTitle extends Record<string, string> {
   title: string;
@@ -546,7 +545,7 @@ export class NameGuard {
   // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
   /**
    * Inspects up to 250 names at a time with NameGuard.
-   * 
+   *
    * For each name provided in `names`, this function returns a `ConsolidatedNameGuardReport` containing:
    *   1. Consolidated details of all checks performed on the name, including checks on individual labels and graphemes.
    *
@@ -557,7 +556,7 @@ export class NameGuard {
    *
    * This function will attempt automated labelhash resolution through the ENS Subgraph,
    * using the network specified in the NameGuard instance.
-   * 
+   *
    *
    * @param {string[]} names The list of names for NameGuard to inspect.
    * @param {InspectNameOptions} options The options for the inspection.
@@ -587,7 +586,7 @@ export class NameGuard {
    * Inspects the name associated with a namehash.
    *
    * NameGuard will attempt to resolve the name associated with the namehash through the ENS Subgraph.
-   * If this resolution succeeds then NameGuard will return a `NameGuardReport` for the name. 
+   * If this resolution succeeds then NameGuard will return a `NameGuardReport` for the name.
    * If this resolution fails then NameGuard will return an error.
    *
    * @param {string} namehash A namehash should be a decimal or a hex (prefixed with 0x) string.
@@ -705,10 +704,13 @@ export class NameGuard {
     }
 
     const network_name = this.network;
-    const computeNameGuardReport = options?.computeNameGuardReport || DEFAULT_COMPUTE_NAMEGUARD_REPORT;
+    const computeNameGuardReport =
+      options?.computeNameGuardReport || DEFAULT_COMPUTE_NAMEGUARD_REPORT;
 
     // TODO: We need to add a `computeNameGuardReport` parameter to the API.
-    let response = await this.rawRequest(`secure-primary-name/${network_name}/${address}`);
+    let response = await this.rawRequest(
+      `secure-primary-name/${network_name}/${address}`,
+    );
 
     if (!computeNameGuardReport) {
       response.nameguard_result = null;
