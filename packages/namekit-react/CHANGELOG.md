@@ -1,5 +1,22 @@
 # @namehash/namekit-react
 
+## 0.5.0
+
+### Minor Changes
+
+- 4649abb: Add CurrencySymbol component
+- 35c9115: Start Tooltip component migration from nameguard-react to namekit-react
+- 1e677da: build changes
+- 0156515: Update tsconfig.json
+
+### Patch Changes
+
+- Updated dependencies [d2b8319]
+- Updated dependencies [1e677da]
+- Updated dependencies [0156515]
+- Updated dependencies [ef3837d]
+  - @namehash/ens-utils@1.16.0
+
 ## 0.4.1
 
 ### Patch Changes
