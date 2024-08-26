@@ -2,8 +2,11 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Base",
   "compilerOptions": {
-    "target": "ES2020",
-    "module": "ES2020",
+    "target": "es2022",
+    "module": "es2022",
+    "allowJs": true,
+    "moduleDetection": "force",
+    "sourceMap": true,
     "composite": false,
     "declaration": true,
     "declarationMap": true,
