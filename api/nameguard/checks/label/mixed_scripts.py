@@ -44,6 +44,7 @@ def check_label(label: Optional[InspectorResult]) -> GenericCheckResult:
 UNINSPECTED_SKIP_CHECK_RESULT = LabelCheckResult(
     check=Check.MIXED_SCRIPTS,
     status=CheckStatus.SKIP,
+    _label_message=UNINSPECTED_SKIP_MESSAGE,
     _name_message=UNINSPECTED_SKIP_MESSAGE,
     _title=TITLE_SKIP,
 )

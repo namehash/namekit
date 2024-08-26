@@ -1,1 +1,1 @@
-export { createClient, NameGuardJSOptions } from "./nameguard-js";
+export { createClient, type NameGuardJSOptions } from "./nameguard-js";

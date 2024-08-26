@@ -2,11 +2,10 @@ import { defineConfig } from "tsup";
 
 export default defineConfig({
   entry: ["src/index.ts"],
-  splitting: true,
-  sourcemap: false,
+  format: ["esm"],
   clean: true,
   dts: true,
-  treeshake: true,
+  skipNodeModulesBundle: true,
   target: [
     "chrome123",
     "edge122",
@@ -15,7 +14,4 @@ export default defineConfig({
     "safari17",
     "node20",
   ],
-  format: ["esm"],
-  skipNodeModulesBundle: true,
-  external: ["node_modules"],
 });

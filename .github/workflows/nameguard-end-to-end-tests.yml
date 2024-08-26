@@ -7,12 +7,14 @@ on:
     paths:
       - "packages/nameguard-sdk/**"
       - "api/nameguard/**"
+      - ".github/workflows/nameguard-end-to-end-tests.yml"
   pull_request:
     branches:
       - main
     paths:
       - "packages/nameguard-sdk/**"
       - "api/nameguard/**"
+      - ".github/workflows/nameguard-end-to-end-tests.yml"
 
 jobs:
   check_changes:
@@ -38,16 +40,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: true
+
       - name: Install Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "lts/*"
           cache: "pnpm"
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          run_install: true
 
       - name: Install poetry
         if: needs.check_changes.outputs.api_changed > 0
@@ -86,9 +88,19 @@ jobs:
         if: needs.check_changes.outputs.api_changed > 0
         run: curl http://0.0.0.0:8000/inspect-name/mainnet/test.eth
 
+      - name: Set NAMEGUARD_API_URI
+        id: set_api_uri
+        env:
+          PRODUCTION_NAMEGUARD_API_URI: ${{ vars.PRODUCTION_NAMEGUARD_API_URI }}
+        run: |
+          if [ "${{ needs.check_changes.outputs.api_changed }}" -gt 0 ]; then
+            echo "NAMEGUARD_API_URI=http://0.0.0.0:8000" >> $GITHUB_ENV
+          else
+            echo "NAMEGUARD_API_URI=$PRODUCTION_NAMEGUARD_API_URI" >> $GITHUB_ENV
+          fi
+         
       - name: Run tests
         env:
           PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
           PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}
-          NAMEGUARD_API_URI: ${{ needs.check_changes.outputs.api_changed > 0 && 'http://0.0.0.0:8000' || '' }}
         run: pnpm test --filter ./packages/nameguard-sdk
