@@ -33,7 +33,7 @@ export interface DisplayedPriceProps {
   /**
    * The currency symbol to display alongside the price.
    */
-  symbol: React.ReactNode;
+  symbol?: React.ReactNode;
   /**
    * The position of the currency symbol relative to the price.
    * Defaults to `CurrencySymbolPosition.Left`.
@@ -42,21 +42,14 @@ export interface DisplayedPriceProps {
    * If `CurrencySymbolPosition.Right`, the currency symbol will be displayed to the right of the price.
    */
   symbolPosition?: CurrencySymbolPosition;
-  /**
-   * The position of the currency symbol relative to the price.
-   * Defaults to `CurrencySymbolPosition.Left`.
-   *
-   * If `CurrencySymbolPosition.Left`, the currency symbol will be displayed to the left of the price.
-   * If `CurrencySymbolPosition.Right`, the currency symbol will be displayed to the right of the price.
-   */
   displaySize?: PriceDisplaySize;
 }
 
 export const DisplayedPrice = ({
   price,
-  symbol,
-  displaySize = PriceDisplaySize.Small,
+  symbol = <></>,
   symbolPosition = CurrencySymbolPosition.Left,
+  displaySize = PriceDisplaySize.Small,
 }: DisplayedPriceProps) => {
   const displayedPrice = (
     <div

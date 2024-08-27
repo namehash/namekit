@@ -40,7 +40,7 @@ interface CurrencySymbolProps extends React.ComponentProps<React.ElementType> {
    *
    * Defaults to `true`.
    */
-  describeCurrencyInTooltip: boolean;
+  describeCurrencyInTooltip?: boolean;
 }
 
 export const CurrencySymbol = ({
@@ -53,49 +53,19 @@ export const CurrencySymbol = ({
 
   switch (currency) {
     case Currency.Usd:
-      symbol = (
-        <span
-          aria-label={`${PriceCurrencyFormat[Currency.Usd].ExtendedCurrencyNameSingular} symbol`}
-        >
-          <UsdSymbol {...props} />
-        </span>
-      );
+      symbol = <UsdSymbol {...props} />;
       break;
     case Currency.Usdc:
-      symbol = (
-        <span
-          aria-label={`${PriceCurrencyFormat[Currency.Usdc].ExtendedCurrencyNameSingular} symbol`}
-        >
-          <UsdcSymbol {...props} width={size} height={size} />
-        </span>
-      );
+      symbol = <UsdcSymbol {...props} width={size} height={size} />;
       break;
     case Currency.Dai:
-      symbol = (
-        <span
-          aria-label={`${PriceCurrencyFormat[Currency.Dai].ExtendedCurrencyNameSingular} symbol`}
-        >
-          <DaiSymbol {...props} width={size} height={size} />
-        </span>
-      );
+      symbol = <DaiSymbol {...props} width={size} height={size} />;
       break;
     case Currency.Weth:
-      symbol = (
-        <span
-          aria-label={`${PriceCurrencyFormat[Currency.Weth].ExtendedCurrencyNameSingular} symbol`}
-        >
-          <WethSymbol {...props} width={size} height={size} />
-        </span>
-      );
+      symbol = <WethSymbol {...props} width={size} height={size} />;
       break;
     case Currency.Eth:
-      symbol = (
-        <span
-          aria-label={`${PriceCurrencyFormat[Currency.Eth].ExtendedCurrencyNameSingular} symbol`}
-        >
-          <EthSymbol {...props} width={size} height={size} />
-        </span>
-      );
+      symbol = <EthSymbol {...props} width={size} height={size} />;
       break;
     default:
       // TODO: We haven't created symbols for `Currency.Gas` yet.
@@ -107,7 +77,15 @@ export const CurrencySymbol = ({
   if (!describeCurrencyInTooltip) return symbol;
 
   return (
-    <Tooltip trigger={symbol}>
+    <Tooltip
+      trigger={
+        <span
+          aria-label={`${PriceCurrencyFormat[Currency.Eth].ExtendedCurrencyNameSingular} symbol`}
+        >
+          {symbol}
+        </span>
+      }
+    >
       <>{PriceCurrencyFormat[currency].ExtendedCurrencyNameSingular}</>
     </Tooltip>
   );
