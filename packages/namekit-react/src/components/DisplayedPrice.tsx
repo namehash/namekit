@@ -31,7 +31,7 @@ export interface DisplayedPriceProps {
    */
   price: Price;
   /**
-   * The currency symbol to display alongside the price.
+   * The `CurrencySymbol` to display alongside the `Price`.
    */
   symbol: React.ReactNode;
   /**
