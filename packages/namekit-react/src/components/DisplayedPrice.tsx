@@ -26,7 +26,7 @@ export type CurrencySymbolPosition =
 
 export interface DisplayedPriceProps {
   /**
-   * The price to be displayed
+   * The price value to be displayed
    * @example { currency: Currency.Eth, value: 1000000000000000000n }
    */
   price: Price;
