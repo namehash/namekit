@@ -42,6 +42,7 @@
     "@namehash/ens-utils": "workspace:*",
     "@namehash/ens-webfont": "workspace:*",
     "@namehash/nameguard": "workspace:*",
+    "@namehash/namekit-react": "workspace:*",
     "classcat": "5.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
