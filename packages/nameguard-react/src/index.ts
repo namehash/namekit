@@ -19,5 +19,6 @@ export { useChatModalStore } from "./stores/chat";
 export { useSearchStore } from "./stores/search";
 
 import "@namehash/ens-webfont";
+import "@namehash/namekit-react/styles.css";
 
 import "./styles.css";
