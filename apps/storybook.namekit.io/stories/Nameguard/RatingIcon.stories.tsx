@@ -14,7 +14,7 @@ const meta: Meta<typeof RatingIcon> = {
       options: Object.keys(RatingIconSize),
       control: { type: "select" },
     },
-    isInteractive: { control: { type: "boolean" } },
+    isInteractive: { control: "boolean" },
   },
   args: {
     isInteractive: false,
