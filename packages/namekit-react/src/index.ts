@@ -15,3 +15,4 @@ export * from "./components/ENSInput";
 export * from "./components/Link";
 export * from "./components/Tooltip";
 export * from "./components/CurrencySymbol/CurrencySymbol";
+export * from "./components/TruncatedText";

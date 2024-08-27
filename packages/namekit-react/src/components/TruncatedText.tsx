@@ -1,19 +1,22 @@
 /**
- * This TruncatedText component is a duplicate of @namehash/namekit-react
- * TruncatedText component. This duplicate will, in the near future, be
- * replaced by @namehash/namekit-react TruncatedText component. The duplicate is
- * necessary for the moment so any imports of @namehash/nameguard-react TruncatedText
- * component do not break once the migration is done! Once this duplicate
- * is in main, NameHash Labs will remove this TruncatedText component from
- * @namehash/nameguard-react and update the imports to use only the
- * new component instead, the @namehash/namekit-react TruncatedText.
+ * This TruncatedText component is a duplicate of @namehash/nameguard-react
+ * TruncatedText component. This duplicate will, in the near future, be the
+ * only TruncatedText component in the NameKit libraries. The duplicate is
+ * necessary for the moment so that it is included in main branch while
+ * @namehash/nameguard-react still has its TruncatedText: why is that?
+ *
+ * So any imports of @namehash/nameguard-react TruncatedText component
+ * do not break once this change is merged into main! Once this duplicate
+ * is in main, NameHash Labs will remove the TruncatedText component from
+ * @namehash/nameguard-react and update the imports to use this component
+ * instead, the @namehash/namekit-react TruncatedText.
  *
  * A ShortCut story was created to track this migration:
  * https://app.shortcut.com/ps-web3/story/25261/next-steps-on-displayedname-and-truncatedtext
  */
 
 import React, { useEffect, useState, useRef } from "react";
-import { Tooltip } from "../..";
+import { Tooltip } from "./Tooltip";
 import cc from "classcat";
 
 interface TruncatedTextProps {
@@ -70,7 +73,7 @@ export const TruncatedText = ({
     );
   };
 
-  const textDefaultClasses = "text-black text-sm truncate";
+  const textDefaultClasses = "nk-text-black nk-text-sm nk-truncate";
 
   return (
     <div>
@@ -82,7 +85,7 @@ export const TruncatedText = ({
         to determine if CSS truncation and full-text tooltip are needed. 
       */}
       {displayTooltipWhenTextOverflows && (
-        <div className="invisible absolute left-0 top-0 pointer-events-none">
+        <div className="nk-invisible nk-absolute nk-left-0 nk-top-0 nk-pointer-events-none">
           <div ref={invisibleTextWidthTester}>{text}</div>
         </div>
       )}
@@ -109,7 +112,7 @@ export const TruncatedText = ({
           >
             {getTextElm(
               cc([
-                "text-white text-sm leading-5 break-all",
+                "nk-text-white nk-text-sm nk-leading-5 nk-break-all",
                 tooltipTextStylingClasses,
               ]),
               maxTooltipWidth,
