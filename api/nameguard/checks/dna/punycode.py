@@ -61,6 +61,7 @@ def check_name(labels: list[Optional[Label]]) -> NameCheckResult:
 UNINSPECTED_SKIP_CHECK_RESULT = NameCheckResult(
     check=Check.PUNYCODE_COMPATIBLE_NAME,
     status=CheckStatus.SKIP,
+    _label_message=UNINSPECTED_SKIP_MESSAGE,
     _name_message=UNINSPECTED_SKIP_MESSAGE,
     _title=TITLE_SKIP,
 )

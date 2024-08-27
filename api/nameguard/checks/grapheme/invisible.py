@@ -32,6 +32,8 @@ def check_grapheme(grapheme: Grapheme) -> GenericCheckResult:
 UNINSPECTED_SKIP_CHECK_RESULT = GraphemeCheckResult(
     check=Check.INVISIBLE,
     status=CheckStatus.SKIP,
+    _grapheme_message=UNINSPECTED_SKIP_MESSAGE,
+    _label_message=UNINSPECTED_SKIP_MESSAGE,
     _name_message=UNINSPECTED_SKIP_MESSAGE,
     _title=TITLE_SKIP,
 )

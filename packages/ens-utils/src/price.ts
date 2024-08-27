@@ -1,8 +1,11 @@
-import { Currency, PriceCurrencyFormat, parseStringToCurrency } from "./currency";
+import {
+  Currency,
+  PriceCurrencyFormat,
+  parseStringToCurrency,
+} from "./currency";
 import { approxScaleBigInt, stringToBigInt } from "./number";
 
 export interface Price {
-
   // TODO: consider adding a constraint where value is never negative
   /**
    * The value of the price. This is a BigInt to avoid floating point math issues when working with prices.
@@ -23,19 +26,21 @@ export interface ExchangeRates extends Partial<Record<Currency, number>> {}
 /**
  * Builds a Price object.
  * @param value the value of the price. This is a BigInt to avoid floating point math issues when working with prices.
-   * For example, a price of 1.23 USD would be represented as 123n with a currency of USD.
-   * Note that the value is always in the smallest unit of the currency (e.g. cents for USD, wei for ETH).
-   * See the CurrencyConfig for the related currency for the number of decimals to use when converting the value to a human-readable format.
- * @param currency 
- * @returns 
+ * For example, a price of 1.23 USD would be represented as 123n with a currency of USD.
+ * Note that the value is always in the smallest unit of the currency (e.g. cents for USD, wei for ETH).
+ * See the CurrencyConfig for the related currency for the number of decimals to use when converting the value to a human-readable format.
+ * @param currency
+ * @returns
  */
-export const buildPrice = (value: bigint | string, currency: Currency | string): Price => {
-
-  let priceValue : bigint;
-  let priceCurrency : Currency;
+export const buildPrice = (
+  value: bigint | string,
+  currency: Currency | string,
+): Price => {
+  let priceValue: bigint;
+  let priceCurrency: Currency;
 
   if (typeof value === "string") {
-    priceValue = stringToBigInt(value)
+    priceValue = stringToBigInt(value);
   } else {
     priceValue = value;
   }
@@ -47,7 +52,7 @@ export const buildPrice = (value: bigint | string, currency: Currency | string):
   }
 
   return { value: priceValue, currency: priceCurrency };
-}
+};
 
 export const priceAsNumber = (price: Price): number => {
   return (
@@ -61,12 +66,12 @@ export const numberAsPrice = (number: number, currency: Currency): Price => {
 
   // Fix the number's displayed decimals (e.g. from 0.00001 to 0.00001)
   const numberWithCorrectCurrencyDecimals = Number(
-    number.toFixed(currencyDecimals)
+    number.toFixed(currencyDecimals),
   );
 
   // Remove the decimals from the number (e.g. from 0.00001 to 1)
   const numberWithoutDecimals = Number(
-    numberWithCorrectCurrencyDecimals * 10 ** currencyDecimals
+    numberWithCorrectCurrencyDecimals * 10 ** currencyDecimals,
   ).toFixed(0);
 
   /*
@@ -102,7 +107,7 @@ export const addPrices = (prices: Array<Price>): Price => {
 export const subtractPrices = (price1: Price, price2: Price): Price => {
   if (price1.currency !== price2.currency) {
     throw new Error(
-      `Cannot subtract price of currency ${price1.currency} to price of currency ${price2.currency}`
+      `Cannot subtract price of currency ${price1.currency} to price of currency ${price2.currency}`,
     );
   } else {
     return {
@@ -123,14 +128,44 @@ export const multiplyPriceByNumber = (price1: Price, price2: number): Price => {
   };
 };
 
+export const CurrencySymbology = {
+  /**
+   * The price will be displayed with the currency's acronym (e.g. USD).
+   */
+  Acronym: "Acronym",
+  /**
+   * The price will be displayed with the currency's symbol (e.g. $).
+   */
+  Symbol: "Symbol",
+} as const;
+export type CurrencySymbology =
+  (typeof CurrencySymbology)[keyof typeof CurrencySymbology];
+
+/**
+ * Returns a string containing the currency's symbol or acronym.
+ * @param currency: Currency. The currency to get the symbology for (e.g. Currency.Eth)
+ * @param symbology: CurrencySymbology. The symbology to use (e.g. CurrencySymbology.Symbol)
+ * @returns: string. The currency's symbol or acronym (e.g. "$" or "USD")
+ */
+export const getCurrencySymbology = (
+  currency: Currency,
+  symbology: CurrencySymbology,
+): string => {
+  return symbology === CurrencySymbology.Acronym
+    ? PriceCurrencyFormat[currency].Acronym
+    : PriceCurrencyFormat[currency].Symbol;
+};
+
 export const formattedPrice = ({
   price,
-  withPrefix = false,
   withSufix = false,
+  withPrefix = false,
+  symbology = CurrencySymbology.Symbol,
 }: {
   price: Price;
   withPrefix?: boolean;
   withSufix?: boolean;
+  symbology?: CurrencySymbology;
 }): string => {
   let formattedAmount = "";
   const valueConsideringDecimals = (
@@ -150,7 +185,7 @@ export const formattedPrice = ({
   ) {
     // If formatted number is 0.0 but real 'value' is not 0, then we show the Underflow price
     formattedAmount = String(
-      PriceCurrencyFormat[price.currency].MinDisplayValue
+      PriceCurrencyFormat[price.currency].MinDisplayValue,
     );
   } else if (wouldDisplayAsZero && price.value == 0n) {
     // But if the real 'value' is really 0, then we show 0.00 (in the correct number of Display Decimals)
@@ -158,7 +193,7 @@ export const formattedPrice = ({
     formattedAmount = prefix.padEnd(
       Number(PriceCurrencyFormat[price.currency].DisplayDecimals) +
         prefix.length,
-      "0"
+      "0",
     );
   }
 
@@ -168,10 +203,10 @@ export const formattedPrice = ({
 
   formattedAmount = displayNumber.toLocaleString("en-US", {
     minimumFractionDigits: Number(
-      PriceCurrencyFormat[price.currency].DisplayDecimals
+      PriceCurrencyFormat[price.currency].DisplayDecimals,
     ),
     maximumFractionDigits: Number(
-      PriceCurrencyFormat[price.currency].DisplayDecimals
+      PriceCurrencyFormat[price.currency].DisplayDecimals,
     ),
   });
 
@@ -180,10 +215,10 @@ export const formattedPrice = ({
   }
 
   const prefixUnit = withPrefix
-    ? PriceCurrencyFormat[price.currency].Symbol
+    ? getCurrencySymbology(price.currency, symbology)
     : "";
   const postfixUnit = withSufix
-    ? PriceCurrencyFormat[price.currency].Acronym
+    ? getCurrencySymbology(price.currency, symbology)
     : "";
 
   let priceDisplay =
@@ -197,7 +232,7 @@ export const formattedPrice = ({
 export const approxScalePrice = (
   price: Price,
   scaleFactor: number,
-  digitsOfPrecision = 20n
+  digitsOfPrecision = 20n,
 ): Price => {
   return {
     value: approxScaleBigInt(price.value, scaleFactor, digitsOfPrecision),
@@ -208,13 +243,13 @@ export const approxScalePrice = (
 export const convertCurrencyWithRates = (
   fromPrice: Price,
   toCurrency: Currency,
-  exchangeRates: ExchangeRates
+  exchangeRates: ExchangeRates,
 ): Price => {
   if (typeof exchangeRates[toCurrency] === "undefined") {
     throw new Error(`Exchange rate for currency ${toCurrency} not found`);
   } else if (typeof exchangeRates[fromPrice.currency] === "undefined") {
     throw new Error(
-      `Exchange rate for currency ${fromPrice.currency} not found`
+      `Exchange rate for currency ${fromPrice.currency} not found`,
     );
   }
 
