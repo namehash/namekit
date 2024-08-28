@@ -10,9 +10,6 @@ export default function DocsPage() {
       </h1>
 
       <nav className="flex flex-col space-y-4 mt-12 pb-40 mx-auto max-w-2xl">
-        <Link className="hover:underline" href={"/docs/rating-icon"}>
-          {"<RatingIcon />"}
-        </Link>
         <Link className="hover:underline" href={"/docs/check-result-code-icon"}>
           {"<CheckResultCodeIcon />"}
         </Link>
