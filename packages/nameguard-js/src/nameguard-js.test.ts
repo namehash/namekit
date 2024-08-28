@@ -6,6 +6,18 @@ import { createClient } from "./nameguard-js";
 const PROVIDER_URI_MAINNET = process.env.PROVIDER_URI_MAINNET;
 const PROVIDER_URI_SEPOLIA = process.env.PROVIDER_URI_SEPOLIA;
 
+if (!PROVIDER_URI_MAINNET) {
+  throw new Error(
+    "The PROVIDER_URI_MAINNET environment variable is not defined.",
+  );
+}
+
+if (!PROVIDER_URI_SEPOLIA) {
+  throw new Error(
+    "The PROVIDER_URI_SEPOLIA environment variable is not defined.",
+  );
+}
+
 /**
  * This is a fake endpoint that will not work.
  * If a client created with this endpoint tries to make an API request, it will throw an error.

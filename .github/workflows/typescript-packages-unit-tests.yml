@@ -12,6 +12,10 @@ on:
     paths:
       - "packages/**"
 
+env:
+  PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
+  PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}
+
 jobs:
   test:
     strategy:
