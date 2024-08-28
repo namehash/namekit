@@ -1,5 +1,6 @@
 import "./globals.css";
 import "@namehash/ens-webfont";
+import "@namehash/namekit-react/styles.css";
 import "@namehash/nameguard-react/styles.css";
 import type { Metadata } from "next";
 import { Metadata as NamehashMetadata } from "@namehash/seo";
