@@ -22,7 +22,7 @@ export const UnknownReportIcon = ({
 }: UnknownShieldProps) => {
   return (
     <Tooltip
-      trigge={RatingUnknownIcon({
+      trigger={RatingUnknownIcon({
         size,
         isInteractive: true,
         ...props,
