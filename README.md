@@ -27,16 +27,16 @@
       <img src="https://img.shields.io/github/license/namehash/namekit?color=444444" alt="MIT License">
     </picture>
   </a>
-  <a href="https://github.com/namehash/namekit/actions/workflows/ci_sdk.yml?query=branch%3Amain">
+  <a href="https://github.com/namehash/namekit/actions/workflows/typescript-packages-unit-tests.yml?query=branch%3Amain">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_sdk.yml?logo=typescript&logoColor=ffffff&color=444444">
-      <img src="https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_sdk.yml?logo=typescript&logoColor=ffffff&color=444444" alt="TypeScript Build Status">
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/github/actions/workflow/status/namehash/namekit/typescript-packages-unit-tests.yml?logo=typescript&logoColor=ffffff&color=444444">
+      <img src="https://img.shields.io/github/actions/workflow/status/namehash/namekit/typescript-packages-unit-tests.yml?logo=typescript&logoColor=ffffff&color=444444" alt="TypeScript Build Status">
     </picture>
   </a>
-  <a href="https://github.com/namehash/namekit/actions/workflows/ci_api.yml?query=branch%3Amain">
+  <a href="https://github.com/namehash/namekit/actions/workflows/nameguard-api-unit-tests.yml?query=branch%3Amain">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_api.yml?logo=python&logoColor=ffffff&color=444444">
-      <img src="https://img.shields.io/github/actions/workflow/status/namehash/namekit/ci_api.yml?logo=python&logoColor=ffffff&color=444444" alt="Python Build Status">
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/github/actions/workflow/status/namehash/namekit/nameguard-api-unit-tests.yml?logo=python&logoColor=ffffff&color=444444">
+      <img src="https://img.shields.io/github/actions/workflow/status/namehash/namekit/nameguard-api-unit-tests.yml?logo=python&logoColor=ffffff&color=444444" alt="Python Build Status">
     </picture>
   </a>
   <a href="#project-status">

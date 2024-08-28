@@ -1,5 +1,21 @@
 # @namehash/nameguard
 
+## 0.4.0
+
+### Minor Changes
+
+- 1e677da: build changes
+- f7524a8: Introduced uninspected NameGuard reports for performance optimization of exceptionally long names.
+- ef3837d: Removed Normalization enum from @namehash/nameguard so unique source of this is @namehash/ens-utils
+
+### Patch Changes
+
+- Updated dependencies [d2b8319]
+- Updated dependencies [1e677da]
+- Updated dependencies [0156515]
+- Updated dependencies [ef3837d]
+  - @namehash/ens-utils@1.16.0
+
 ## 0.3.1
 
 ### Patch Changes

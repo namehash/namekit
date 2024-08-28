@@ -5,6 +5,7 @@ import {
   SecurePrimaryNameResult,
   NameGuardOptions,
   DEFAULT_COMPUTE_NAMEGUARD_REPORT,
+  Network,
 } from "@namehash/nameguard";
 import { securePrimaryName as securePrimaryNameImpl } from "./securePrimaryName";
 
@@ -24,11 +25,11 @@ class NameGuardJS extends NameGuard {
     const chainId = this.publicClient.chain?.id;
     if (this.network === "mainnet" && chainId !== 1) {
       throw new Error(
-        `Network mismatch: expected mainnet (chain id 1), but got chain id ${chainId}.`
+        `Network mismatch: expected mainnet (chain id 1), but got chain id ${chainId}.`,
       );
     } else if (this.network === "sepolia" && chainId !== 11155111) {
       throw new Error(
-        `Network mismatch: expected sepolia (chain id 11155111), but got chain id ${chainId}.`
+        `Network mismatch: expected sepolia (chain id 11155111), but got chain id ${chainId}.`,
       );
     } else if (this.network !== "mainnet" && this.network !== "sepolia") {
       throw new Error(`Unsupported network: ${this.network}.`);
@@ -37,9 +38,10 @@ class NameGuardJS extends NameGuard {
 
   public override getSecurePrimaryName(
     address: string,
-    options?: SecurePrimaryNameOptions
+    options?: SecurePrimaryNameOptions,
   ): Promise<SecurePrimaryNameResult> {
-    const computeNameGuardReport = options?.computeNameGuardReport || DEFAULT_COMPUTE_NAMEGUARD_REPORT;
+    const computeNameGuardReport =
+      options?.computeNameGuardReport || DEFAULT_COMPUTE_NAMEGUARD_REPORT;
     if (computeNameGuardReport) {
       return super.getSecurePrimaryName(address, options);
     }

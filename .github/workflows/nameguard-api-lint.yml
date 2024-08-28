@@ -1,9 +1,9 @@
-name: Lint
+name: NameGuard API - Lint
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 jobs:
   lint:
     runs-on: ubuntu-latest

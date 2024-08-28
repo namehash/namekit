@@ -1,7 +1,7 @@
 {
   "name": "@namehash/namekit-react",
   "description": "React UI components for building on NameKit.",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -36,16 +36,20 @@
     }
   },
   "dependencies": {
-    "@namehash/ens-webfont": "workspace:*",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "@headlessui-float/react": "0.11.4",
+    "@headlessui/react": "1.7.17",
+    "@namehash/ens-utils": "workspace:*",
+    "@namehash/ens-webfont": "workspace:*"
   },
   "devDependencies": {
+    "@namekit/tsconfig": "workspace:*",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
     "autoprefixer": "10.4.19",
     "classcat": "5.0.4",
     "postcss": "8.4.38",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "tailwindcss": "3.4.4",
     "tsup": "^7.2.0",
     "typescript": "^5.2.2"

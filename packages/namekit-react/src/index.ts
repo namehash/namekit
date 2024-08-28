@@ -13,3 +13,5 @@ export * from "./components/ENSTextArea";
 export * from "./components/Input";
 export * from "./components/ENSInput";
 export * from "./components/Link";
+export * from "./components/Tooltip";
+export * from "./components/CurrencySymbol/CurrencySymbol";
