@@ -1,6 +1,5 @@
 export { ratingTextColor, checkResultCodeTextColor } from "./utils/text";
 export { viewNameReportURL, redirectToViewNameReportURL } from "./utils/url";
-export { Tooltip } from "./components/Tooltip/Tooltip";
 export { Search } from "./components/Search/Search";
 export { Report } from "./components/Report/Report";
 export { SearchModal } from "./components/Search/SearchModal";
@@ -21,5 +20,6 @@ export { useChatModalStore } from "./stores/chat";
 export { useSearchStore } from "./stores/search";
 
 import "@namehash/ens-webfont";
+import "@namehash/namekit-react/styles.css";
 
 import "./styles.css";

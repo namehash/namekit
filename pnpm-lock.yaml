@@ -112,6 +112,9 @@ importers:
       '@namehash/nameguard-react':
         specifier: workspace:*
         version: link:../../packages/nameguard-react
+      '@namehash/namekit-react':
+        specifier: workspace:*
+        version: link:../../packages/namekit-react
       '@namehash/seo':
         specifier: workspace:*
         version: link:../../internal/seo

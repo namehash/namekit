@@ -8,7 +8,7 @@ import {
 import cc from "classcat";
 import { ENSName } from "@namehash/ens-utils";
 
-import { Tooltip } from "../Tooltip/Tooltip";
+import { Tooltip } from "@namehash/namekit-react";
 import { RatingIcon, RatingIconSize } from "../Report/RatingIcon";
 import { checkResultCodeTextColor, ratingTextColor } from "../../utils/text";
 import { ReportUnknownIcon } from "../ReportUnknownIcon/ReportUnknownIcon";
