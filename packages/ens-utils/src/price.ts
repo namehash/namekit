@@ -128,44 +128,14 @@ export const multiplyPriceByNumber = (price1: Price, price2: number): Price => {
   };
 };
 
-export const CurrencySymbology = {
-  /**
-   * The price will be displayed with the currency's acronym (e.g. USD).
-   */
-  Acronym: "Acronym",
-  /**
-   * The price will be displayed with the currency's symbol (e.g. $).
-   */
-  Symbol: "Symbol",
-} as const;
-export type CurrencySymbology =
-  (typeof CurrencySymbology)[keyof typeof CurrencySymbology];
-
-/**
- * Returns a string containing the currency's symbol or acronym.
- * @param currency: Currency. The currency to get the symbology for (e.g. Currency.Eth)
- * @param symbology: CurrencySymbology. The symbology to use (e.g. CurrencySymbology.Symbol)
- * @returns: string. The currency's symbol or acronym (e.g. "$" or "USD")
- */
-export const getCurrencySymbology = (
-  currency: Currency,
-  symbology: CurrencySymbology,
-): string => {
-  return symbology === CurrencySymbology.Acronym
-    ? PriceCurrencyFormat[currency].Acronym
-    : PriceCurrencyFormat[currency].Symbol;
-};
-
 export const formattedPrice = ({
   price,
-  withSufix = false,
   withPrefix = false,
-  symbology = CurrencySymbology.Symbol,
+  withSufix = false,
 }: {
   price: Price;
   withPrefix?: boolean;
   withSufix?: boolean;
-  symbology?: CurrencySymbology;
 }): string => {
   let formattedAmount = "";
   const valueConsideringDecimals = (
@@ -215,10 +185,10 @@ export const formattedPrice = ({
   }
 
   const prefixUnit = withPrefix
-    ? getCurrencySymbology(price.currency, symbology)
+    ? PriceCurrencyFormat[price.currency].Symbol
     : "";
   const postfixUnit = withSufix
-    ? getCurrencySymbology(price.currency, symbology)
+    ? PriceCurrencyFormat[price.currency].Acronym
     : "";
 
   let priceDisplay =

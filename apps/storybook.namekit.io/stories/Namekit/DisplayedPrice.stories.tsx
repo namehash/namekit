@@ -1,15 +1,12 @@
 import {
   CurrencySymbol,
-  CurrencySymbolPosition,
   DisplayedPrice,
   PriceDisplaySize,
+  CurrencySymbology,
+  CurrencySymbolPosition,
 } from "@namehash/namekit-react";
 import type { Meta, StoryObj } from "@storybook/react";
-import {
-  Currency,
-  CurrencySymbology,
-  getCurrencySymbology,
-} from "@namehash/ens-utils";
+import { Currency, numberAsPrice, type Price } from "@namehash/ens-utils";
 import React from "react";
 
 const meta: Meta<typeof DisplayedPrice> = {
@@ -17,11 +14,60 @@ const meta: Meta<typeof DisplayedPrice> = {
   title: "Namekit/DisplayedPrice",
   argTypes: {
     price: {
-      control: "object",
+      options: ["OneETH", "OneUSD", "OneUSDC", "OneWETH", "OneDAI"],
+      mapping: {
+        OneETH: numberAsPrice(1, Currency.Eth),
+        OneUSD: numberAsPrice(1, Currency.Usd),
+        OneUSDC: numberAsPrice(1, Currency.Usdc),
+        OneWETH: numberAsPrice(1, Currency.Weth),
+        OneDAI: numberAsPrice(1, Currency.Dai),
+      },
+    },
+    symbol: {
+      options: [
+        "ParagraphElm",
+        "EmptyDivElm",
+        "undefined",
+        "null",
+        "CustomEthIconSymbol",
+        "CustomEthAcronymSymbol",
+      ],
+      mapping: {
+        ParagraphElm: <p>Whatever you want</p>,
+        EmptyDivElm: <div></div>,
+        CustomEthIconSymbol: (
+          <CurrencySymbol
+            currency={Currency.Eth}
+            symbology={CurrencySymbology.Icon}
+          />
+        ),
+        CustomEthAcronymSymbol: (
+          <CurrencySymbol
+            currency={Currency.Eth}
+            symbology={CurrencySymbology.Acronym}
+          />
+        ),
+        undefined: undefined,
+        null: null,
+      },
     },
     displaySize: {
-      options: Object.keys(PriceDisplaySize),
       control: { type: "select" },
+      options: ["Large", "Medium", "Small", "Micro"],
+      mapping: {
+        Large: PriceDisplaySize.Large,
+        Medium: PriceDisplaySize.Medium,
+        Small: PriceDisplaySize.Small,
+        Micro: PriceDisplaySize.Micro,
+      },
+    },
+    symbolPosition: {
+      control: { type: "select" },
+      options: ["Left", "Right"],
+      mapping: {
+        Left: CurrencySymbolPosition.Left,
+        Right: CurrencySymbolPosition.Right,
+      },
     },
   },
 };
@@ -40,654 +86,201 @@ export default meta;
 
 type Story = StoryObj<typeof DisplayedPrice>;
 
-export const EthPriceWithoutSymbol: Story = {
+export const LargeDisplaySize: Story = {
   args: {
-    price: {
-      currency: Currency.Eth,
-      value: 1000000000000000000n,
-    },
-  },
-};
-export const UsdPriceWithoutSymbol: Story = {
-  args: {
-    price: {
-      currency: Currency.Usd,
-      value: 198900n,
-    },
-  },
-};
-export const LargeUsdPrice: Story = {
-  args: {
-    price: {
-      currency: Currency.Usd,
-      value: 198900n,
-    },
+    price: numberAsPrice(2000, Currency.Usd),
     displaySize: PriceDisplaySize.Large,
   },
 };
-export const LargeEthPrice: Story = {
+export const MediumDisplaySize: Story = {
   args: {
-    price: {
-      currency: Currency.Eth,
-      value: 198900n,
-    },
-    displaySize: PriceDisplaySize.Large,
-  },
-};
-export const MediumUsdPrice: Story = {
-  args: {
-    price: {
-      currency: Currency.Usd,
-      value: 198900n,
-    },
+    price: numberAsPrice(2000, Currency.Usd),
     displaySize: PriceDisplaySize.Medium,
   },
 };
-export const MediumEthPrice: Story = {
+export const SmallDisplaySize: Story = {
   args: {
-    price: {
-      currency: Currency.Eth,
-      value: 198900n,
-    },
-    displaySize: PriceDisplaySize.Medium,
-  },
-};
-export const SmallUsdPrice: Story = {
-  args: {
-    price: {
-      currency: Currency.Usd,
-      value: 198900n,
-    },
+    price: numberAsPrice(2000, Currency.Usd),
     displaySize: PriceDisplaySize.Small,
   },
 };
-export const SmallEthPrice: Story = {
+export const MicroDisplaySize: Story = {
   args: {
-    price: {
-      currency: Currency.Eth,
-      value: 198900n,
-    },
-    displaySize: PriceDisplaySize.Small,
-  },
-};
-export const MicroUsdPrice: Story = {
-  args: {
-    price: {
-      currency: Currency.Usd,
-      value: 198900n,
-    },
+    price: numberAsPrice(2000, Currency.Usd),
     displaySize: PriceDisplaySize.Micro,
   },
 };
-export const MicroEthPrice: Story = {
+export const DefaultSymbol: Story = {
   args: {
-    price: {
-      currency: Currency.Eth,
-      value: 198900n,
-    },
-    displaySize: PriceDisplaySize.Micro,
-  },
-};
-export const EthMinDisplayPrice: Story = {
-  args: {
-    price: {
-      currency: Currency.Eth,
-      value: 100000000000000n,
-    },
-  },
-};
-export const EthMaxDisplayPrice: Story = {
-  args: {
-    price: {
-      currency: Currency.Eth,
-      value: 10000000000000000000000000n,
-    },
-  },
-};
-export const UsdMinDisplayPrice: Story = {
-  args: {
-    price: {
-      currency: Currency.Usd,
-      value: 1n,
-    },
-  },
-};
-export const UsdMaxDisplayPrice: Story = {
-  args: {
-    price: {
-      currency: Currency.Usd,
-      value: 1000000000000000000n,
-    },
-  },
-};
-export const UsdcMinDisplayPrice: Story = {
-  args: {
-    price: {
-      currency: Currency.Usdc,
-      value: 1n,
-    },
-  },
-};
-export const UsdcMaxDisplayPrice: Story = {
-  args: {
-    price: {
-      currency: Currency.Usdc,
-      value: 1000000000000000000n,
-    },
-  },
-};
-export const DaiMinDisplayPrice: Story = {
-  args: {
-    price: {
-      currency: Currency.Dai,
-      value: 1n,
-    },
-  },
-};
-export const DaiMaxDisplayPrice: Story = {
-  args: {
-    price: {
-      currency: Currency.Dai,
-      value: 10000000000000000000000000n,
-    },
-  },
-};
-export const WethMinDisplayPrice: Story = {
-  args: {
-    price: {
-      currency: Currency.Weth,
-      value: 1n,
-    },
-  },
-};
-export const WethMaxDisplayPrice: Story = {
-  args: {
-    price: {
-      currency: Currency.Weth,
-      value: 1000000000000000000000000n,
-    },
-  },
-};
-export const UsdPriceAndSymbolExample: Story = {
-  args: {
-    price: {
-      currency: Currency.Usd,
-      value: 198900n,
-    },
-    symbol: (
-      <p>
-        You can define your custom symbology by informing a React.ReactNode to
-        the "symbol" prop!
-      </p>
-    ),
-  },
-};
-export const UsdPriceWithSymbol: Story = {
-  args: {
-    price: {
-      currency: Currency.Usd,
-      value: 198900n,
-    },
-    symbol: (
-      <CurrencySymbol
-        describeCurrencyInTooltip={true}
-        currency={Currency.Usd}
-      />
-    ),
+    price: numberAsPrice(1, Currency.Eth),
     symbolPosition: CurrencySymbolPosition.Left,
   },
 };
-export const UsdPriceWithAcronym: Story = {
+export const CustomSymbolUsingOurCurrencySymbol: Story = {
   args: {
-    price: {
-      currency: Currency.Usd,
-      value: 198900n,
-    },
-    symbol: (
-      <span>
-        {getCurrencySymbology(Currency.Usd, CurrencySymbology.Acronym)}
-      </span>
-    ),
-    symbolPosition: CurrencySymbolPosition.Left,
-  },
-};
-export const UsdPriceWithSymbolOnRight: Story = {
-  args: {
-    price: {
-      currency: Currency.Usd,
-      value: 198900n,
-    },
+    price: numberAsPrice(1, Currency.Eth),
     symbol: (
       <CurrencySymbol
-        describeCurrencyInTooltip={true}
-        currency={Currency.Usd}
-      />
-    ),
-    symbolPosition: CurrencySymbolPosition.Right,
-  },
-};
-export const UsdPriceWithAcronymOnRight: Story = {
-  args: {
-    price: {
-      currency: Currency.Usd,
-      value: 198900n,
-    },
-    symbol: (
-      <span>
-        {getCurrencySymbology(Currency.Usd, CurrencySymbology.Acronym)}
-      </span>
-    ),
-    symbolPosition: CurrencySymbolPosition.Right,
-  },
-};
-export const EthPriceWithSymbol: Story = {
-  args: {
-    price: {
-      currency: Currency.Eth,
-      value: 1000000000000000000n,
-    },
-    symbol: (
-      <CurrencySymbol
-        describeCurrencyInTooltip={true}
         currency={Currency.Eth}
+        symbology={CurrencySymbology.Icon}
       />
     ),
-    symbolPosition: CurrencySymbolPosition.Left,
   },
 };
-export const EthPriceWithAcronym: Story = {
+export const CustomSymbolUsingCustomAcronymSymbology: Story = {
   args: {
-    price: {
-      currency: Currency.Eth,
-      value: 1000000000000000000n,
-    },
-    symbol: (
-      <span>
-        {getCurrencySymbology(Currency.Eth, CurrencySymbology.Acronym)}
-      </span>
-    ),
-    symbolPosition: CurrencySymbolPosition.Left,
-  },
-};
-export const EthPriceWithSymbolOnRight: Story = {
-  args: {
-    price: {
-      currency: Currency.Eth,
-      value: 1000000000000000000n,
-    },
+    price: numberAsPrice(1, Currency.Eth),
     symbol: (
       <CurrencySymbol
-        describeCurrencyInTooltip={true}
         currency={Currency.Eth}
+        symbology={CurrencySymbology.Acronym}
       />
     ),
-    symbolPosition: CurrencySymbolPosition.Right,
   },
 };
-export const EthPriceWithAcronymOnRight: Story = {
+export const CustomSymbolDoingWhateverYouWant: Story = {
   args: {
-    price: {
-      currency: Currency.Eth,
-      value: 1000000000000000000n,
-    },
-    symbol: (
-      <span>
-        {getCurrencySymbology(Currency.Eth, CurrencySymbology.Acronym)}
-      </span>
-    ),
+    price: numberAsPrice(1, Currency.Eth),
+    symbol: <p>Whatever you want</p>,
+  },
+};
+export const CurrencyWithSymbolAtTheRight: Story = {
+  args: {
+    price: numberAsPrice(1, Currency.Eth),
     symbolPosition: CurrencySymbolPosition.Right,
   },
 };
 export const EthPriceWithCurrencySymbol: Story = {
   args: {
-    price: {
-      currency: Currency.Eth,
-      value: 1000000000000000000n,
-    },
-    symbol: (
-      <CurrencySymbol
-        describeCurrencyInTooltip={true}
-        currency={Currency.Eth}
-      />
-    ),
+    price: numberAsPrice(1, Currency.Eth),
   },
 };
 export const WethPriceWithCurrencySymbol: Story = {
   args: {
-    price: {
-      currency: Currency.Weth,
-      value: 1000000000000000000n,
-    },
-    symbol: (
-      <CurrencySymbol
-        describeCurrencyInTooltip={true}
-        currency={Currency.Weth}
-      />
-    ),
+    price: numberAsPrice(1, Currency.Weth),
   },
 };
 export const DaiPriceWithCurrencySymbol: Story = {
   args: {
-    price: {
-      currency: Currency.Dai,
-      value: 1000000000000000000n,
-    },
-    symbol: (
-      <CurrencySymbol
-        describeCurrencyInTooltip={true}
-        currency={Currency.Dai}
-      />
-    ),
+    price: numberAsPrice(1, Currency.Dai),
   },
 };
 export const UsdcPriceWithCurrencySymbol: Story = {
   args: {
-    price: {
-      currency: Currency.Usdc,
-      value: 198900000n,
-    },
-    symbol: (
-      <CurrencySymbol
-        describeCurrencyInTooltip={true}
-        currency={Currency.Usdc}
-      />
-    ),
+    price: numberAsPrice(1, Currency.Usdc),
   },
 };
 export const UsdPriceWithCurrencySymbol: Story = {
   args: {
-    price: {
-      currency: Currency.Usd,
-      value: 198900n,
-    },
-    symbol: (
-      <CurrencySymbol
-        describeCurrencyInTooltip={true}
-        currency={Currency.Usd}
-      />
-    ),
+    price: numberAsPrice(1, Currency.Usd),
   },
 };
-export const UsdPriceWithCurrencySymbolWithoutTooltipDescription: Story = {
+export const EthMinDisplayPriceWithCustomCurrencyIcon: Story = {
   args: {
-    price: {
-      currency: Currency.Usd,
-      value: 198900n,
-    },
-    symbol: (
-      <CurrencySymbol
-        describeCurrencyInTooltip={false}
-        currency={Currency.Usd}
-      />
-    ),
-  },
-};
-export const EthMinDisplayPriceWithAcronym: Story = {
-  args: {
-    price: {
-      currency: Currency.Eth,
-      value: 100000000000000n,
-    },
-    symbol: (
-      <span>
-        {getCurrencySymbology(Currency.Eth, CurrencySymbology.Acronym)}
-      </span>
-    ),
-  },
-};
-export const EthMaxDisplayPriceWithAcronym: Story = {
-  args: {
-    price: {
-      currency: Currency.Eth,
-      value: 10000000000000000000000000n,
-    },
-    symbol: (
-      <span>
-        {getCurrencySymbology(Currency.Eth, CurrencySymbology.Acronym)}
-      </span>
-    ),
-  },
-};
-export const UsdMinDisplayPriceWithAcronym: Story = {
-  args: {
-    price: {
-      currency: Currency.Usd,
-      value: 1n,
-    },
-    symbol: (
-      <span>
-        {getCurrencySymbology(Currency.Eth, CurrencySymbology.Acronym)}
-      </span>
-    ),
-  },
-};
-export const UsdMaxDisplayPriceWithAcronym: Story = {
-  args: {
-    price: {
-      currency: Currency.Usd,
-      value: 1000000000000000000n,
-    },
-    symbol: (
-      <span>
-        {getCurrencySymbology(Currency.Eth, CurrencySymbology.Acronym)}
-      </span>
-    ),
-  },
-};
-export const UsdcMinDisplayPriceWithAcronym: Story = {
-  args: {
-    price: {
-      currency: Currency.Usdc,
-      value: 1n,
-    },
-    symbol: (
-      <span>
-        {getCurrencySymbology(Currency.Eth, CurrencySymbology.Acronym)}
-      </span>
-    ),
-  },
-};
-export const UsdcMaxDisplayPriceWithAcronym: Story = {
-  args: {
-    price: {
-      currency: Currency.Usdc,
-      value: 1000000000000000000n,
-    },
-    symbol: (
-      <span>
-        {getCurrencySymbology(Currency.Eth, CurrencySymbology.Acronym)}
-      </span>
-    ),
-  },
-};
-export const DaiMinDisplayPriceWithAcronym: Story = {
-  args: {
-    price: {
-      currency: Currency.Dai,
-      value: 1n,
-    },
-    symbol: (
-      <span>
-        {getCurrencySymbology(Currency.Eth, CurrencySymbology.Acronym)}
-      </span>
-    ),
-  },
-};
-export const DaiMaxDisplayPriceWithAcronym: Story = {
-  args: {
-    price: {
-      currency: Currency.Dai,
-      value: 10000000000000000000000000n,
-    },
-    symbol: (
-      <span>
-        {getCurrencySymbology(Currency.Eth, CurrencySymbology.Acronym)}
-      </span>
-    ),
-  },
-};
-export const WethMinDisplayPriceWithAcronym: Story = {
-  args: {
-    price: {
-      currency: Currency.Weth,
-      value: 1n,
-    },
-    symbol: (
-      <span>
-        {getCurrencySymbology(Currency.Eth, CurrencySymbology.Acronym)}
-      </span>
-    ),
-  },
-};
-export const WethMaxDisplayPriceWithAcronym: Story = {
-  args: {
-    price: {
-      currency: Currency.Weth,
-      value: 1000000000000000000000000n,
-    },
-    symbol: (
-      <span>
-        {getCurrencySymbology(Currency.Eth, CurrencySymbology.Acronym)}
-      </span>
-    ),
-  },
-};
-export const EthMinDisplayPriceWithSymbol: Story = {
-  args: {
-    price: {
-      currency: Currency.Eth,
-      value: 100000000000000n,
-    },
+    price: numberAsPrice(0.001, Currency.Eth),
     symbol: (
       <CurrencySymbol
         currency={Currency.Eth}
-        describeCurrencyInTooltip={true}
+        symbology={CurrencySymbology.Icon}
       />
     ),
   },
 };
-export const EthMaxDisplayPriceWithSymbol: Story = {
+export const EthMaxDisplayPriceWithCustomCurrencyIcon: Story = {
   args: {
-    price: {
-      currency: Currency.Eth,
-      value: 10000000000000000000000000n,
-    },
+    price: numberAsPrice(1000000, Currency.Eth),
     symbol: (
       <CurrencySymbol
         currency={Currency.Eth}
-        describeCurrencyInTooltip={true}
+        symbology={CurrencySymbology.Icon}
       />
     ),
   },
 };
-export const UsdMinDisplayPriceWithSymbol: Story = {
+export const UsdMinDisplayPriceWithCustomCurrencyIcon: Story = {
   args: {
-    price: {
-      currency: Currency.Usd,
-      value: 1n,
-    },
+    price: numberAsPrice(0.01, Currency.Usd),
     symbol: (
       <CurrencySymbol
         currency={Currency.Usd}
-        describeCurrencyInTooltip={true}
+        symbology={CurrencySymbology.Icon}
       />
     ),
   },
 };
-export const UsdMaxDisplayPriceWithSymbol: Story = {
+export const UsdMaxDisplayPriceWithCustomCurrencyIcon: Story = {
   args: {
-    price: {
-      currency: Currency.Usd,
-      value: 1000000000000000000n,
-    },
+    price: numberAsPrice(100000000, Currency.Usd),
     symbol: (
       <CurrencySymbol
         currency={Currency.Usd}
-        describeCurrencyInTooltip={true}
+        symbology={CurrencySymbology.Icon}
       />
     ),
   },
 };
-export const UsdcMinDisplayPriceWithSymbol: Story = {
+export const UsdcMinDisplayPriceWithCustomCurrencyIcon: Story = {
   args: {
-    price: {
-      currency: Currency.Usdc,
-      value: 1n,
-    },
+    price: numberAsPrice(0.01, Currency.Usdc),
     symbol: (
       <CurrencySymbol
         currency={Currency.Usdc}
-        describeCurrencyInTooltip={true}
+        symbology={CurrencySymbology.Icon}
       />
     ),
   },
 };
-export const UsdcMaxDisplayPriceWithSymbol: Story = {
+export const UsdcMaxDisplayPriceWithCustomCurrencyIcon: Story = {
   args: {
-    price: {
-      currency: Currency.Usdc,
-      value: 1000000000000000000n,
-    },
+    price: numberAsPrice(100000000, Currency.Usdc),
     symbol: (
       <CurrencySymbol
         currency={Currency.Usdc}
-        describeCurrencyInTooltip={true}
+        symbology={CurrencySymbology.Icon}
       />
     ),
   },
 };
-export const DaiMinDisplayPriceWithSymbol: Story = {
+export const DaiMinDisplayPriceWithCustomCurrencyIcon: Story = {
   args: {
-    price: {
-      currency: Currency.Dai,
-      value: 1n,
-    },
+    price: numberAsPrice(0.01, Currency.Dai),
     symbol: (
       <CurrencySymbol
         currency={Currency.Dai}
-        describeCurrencyInTooltip={true}
+        symbology={CurrencySymbology.Icon}
       />
     ),
   },
 };
-export const DaiMaxDisplayPriceWithSymbol: Story = {
+export const DaiMaxDisplayPriceWithCustomCurrencyIcon: Story = {
   args: {
-    price: {
-      currency: Currency.Dai,
-      value: 10000000000000000000000000n,
-    },
+    price: numberAsPrice(100000000, Currency.Dai),
     symbol: (
       <CurrencySymbol
         currency={Currency.Dai}
-        describeCurrencyInTooltip={true}
+        symbology={CurrencySymbology.Icon}
       />
     ),
   },
 };
-export const WethMinDisplayPriceWithSymbol: Story = {
+export const WethMinDisplayPriceWithCustomCurrencyIcon: Story = {
   args: {
-    price: {
-      currency: Currency.Weth,
-      value: 1n,
-    },
+    price: numberAsPrice(0.001, Currency.Weth),
     symbol: (
       <CurrencySymbol
         currency={Currency.Weth}
-        describeCurrencyInTooltip={true}
+        symbology={CurrencySymbology.Icon}
       />
     ),
   },
 };
-export const WethMaxDisplayPriceWithSymbol: Story = {
+export const WethMaxDisplayPriceWithCustomCurrencyIcon: Story = {
   args: {
-    price: {
-      currency: Currency.Weth,
-      value: 1000000000000000000000000n,
-    },
+    price: numberAsPrice(1000000, Currency.Weth),
     symbol: (
       <CurrencySymbol
         currency={Currency.Weth}
-        describeCurrencyInTooltip={true}
+        symbology={CurrencySymbology.Icon}
       />
     ),
   },
