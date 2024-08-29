@@ -41,7 +41,6 @@
     "@heroicons/react": "2.0.18",
     "@namehash/ens-utils": "workspace:*",
     "@namehash/ens-webfont": "workspace:*",
-    "@namehash/namekit-react": "workspace:*",
     "@namehash/nameguard": "workspace:*",
     "@namehash/namekit-react": "workspace:*",
     "classcat": "5.0.4",
