@@ -105,7 +105,7 @@ export const SmallMaxTooltipWidth: Story = {
 };
 export const BigMaxTooltipWidth: Story = {
   args: {
-    maxTooltipWidth: 550,
+    maxTooltipWidth: 600,
     text: getExampleTruncatedText(TruncatedTextExample.LONG_TEXT),
   },
 };
