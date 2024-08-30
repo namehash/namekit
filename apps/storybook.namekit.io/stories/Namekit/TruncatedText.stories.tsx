@@ -18,13 +18,51 @@ const getExampleTruncatedText = (example: TruncatedTextExample): string => {
 const meta: Meta<typeof TruncatedText> = {
   component: TruncatedText,
   title: "Namekit/TruncatedText",
+  argTypes: {
+    textStylingClasses: {
+      control: { type: "select" },
+      options: [
+        "WithoutCustomCSSClasses",
+        "CustomCSSClassForWebfont",
+        "CustomCSSClassesForExtravantDisplay",
+        "CustomCSSClassesForElegantDisplay",
+      ],
+      mapping: {
+        WithoutCustomCSSClasses: "",
+        CustomCSSClassForWebfont: "ens-webfont",
+        CustomCSSClassesForExtravantDisplay: "custom-class-name huge-font-size",
+        CustomCSSClassesForElegantDisplay: "beautiful-text ens-webfont",
+      },
+    },
+    tooltipTextStylingClasses: {
+      control: { type: "select" },
+      options: [
+        "WithoutCustomCSSClasses",
+        "CustomCSSClassForWebfont",
+        "CustomCSSClassesForExtravantDisplay",
+        "CustomCSSClassesForElegantDisplay",
+      ],
+      mapping: {
+        WithoutCustomCSSClasses: "",
+        CustomCSSClassForWebfont: "ens-webfont text-white",
+        CustomCSSClassesForExtravantDisplay: "custom-class-name huge-font-size",
+        CustomCSSClassesForElegantDisplay: "beautiful-text ens-webfont",
+      },
+    },
+    maxDisplayWidth: {
+      control: { type: "number" },
+    },
+    maxTooltipWidth: {
+      control: { type: "number" },
+    },
+  },
   args: {
     text: "",
     textStylingClasses: "",
     tooltipTextStylingClasses: "",
+    maxDisplayWidth: 300,
+    maxTooltipWidth: 400,
     displayTooltipWhenTextOverflows: true,
-    maxDisplayWidth: undefined,
-    maxTooltipWidth: undefined,
   },
 };
 
@@ -39,7 +77,7 @@ export const ShortText: Story = {
 };
 export const ShortTextStyled: Story = {
   args: {
-    textStylingClasses: "ens-webfont font-black",
+    textStylingClasses: "ens-webfont custom-class-name huge-font-size",
     text: getExampleTruncatedText(TruncatedTextExample.SHORT_TEXT),
   },
 };
@@ -50,7 +88,7 @@ export const LongText: Story = {
 };
 export const LongTextStyled: Story = {
   args: {
-    textStylingClasses: "ens-webfont font-black",
+    textStylingClasses: "ens-webfont custom-class-name huge-font-size",
     text: getExampleTruncatedText(TruncatedTextExample.LONG_TEXT),
   },
 };

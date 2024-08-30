@@ -9,7 +9,7 @@ type Props = {
   placement?: FloatProps["placement"];
 };
 
-const DEFAULT_MAX_TOOLTIP_WIDTH = Number.POSITIVE_INFINITY;
+const DEFAULT_MAX_TOOLTIP_WIDTH = 400;
 
 export function Tooltip({
   trigger,

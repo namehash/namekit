@@ -2,3 +2,12 @@
   color: red;
   background: white;
 }
+
+.huge-font-size {
+  font-size: 80px;
+}
+
+.beautiful-text {
+  font-weight: 700;
+  color: purple;
+}

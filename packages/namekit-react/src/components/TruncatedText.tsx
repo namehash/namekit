@@ -21,23 +21,20 @@ import cc from "classcat";
 
 interface TruncatedTextProps {
   text: string;
-  maxTooltipWidth?: number;
-  maxDisplayWidth?: number;
   textStylingClasses?: string;
   tooltipTextStylingClasses?: string;
   displayTooltipWhenTextOverflows?: boolean;
+  maxTooltipWidth?: number;
+  maxDisplayWidth: number;
 }
-
-const DEFAULT_MAX_DISPLAY_WIDTH = 300;
-const DEFAULT_MAX_TOOLTIP_WIDTH = 400;
 
 export const TruncatedText = ({
   text,
   textStylingClasses = "",
   tooltipTextStylingClasses = "",
   displayTooltipWhenTextOverflows = true,
-  maxTooltipWidth = DEFAULT_MAX_TOOLTIP_WIDTH,
-  maxDisplayWidth = DEFAULT_MAX_DISPLAY_WIDTH,
+  maxTooltipWidth,
+  maxDisplayWidth,
 }: TruncatedTextProps) => {
   const invisibleTextWidthTester = useRef<null | HTMLParagraphElement>(null);
 
@@ -48,11 +45,7 @@ export const TruncatedText = ({
   const [textOverflows, setTextOverflows] = useState<boolean>(false);
 
   useEffect(() => {
-    if (
-      displayTooltipWhenTextOverflows &&
-      invisibleTextWidthTester &&
-      invisibleTextWidthTester.current
-    ) {
+    if (displayTooltipWhenTextOverflows && invisibleTextWidthTester.current) {
       const textOverflows =
         Math.ceil(
           invisibleTextWidthTester.current.getBoundingClientRect().width,
@@ -60,68 +53,85 @@ export const TruncatedText = ({
 
       setTextOverflows(textOverflows);
     }
-  }, [invisibleTextWidthTester]);
+  }, [
+    displayTooltipWhenTextOverflows,
+    invisibleTextWidthTester,
+    maxDisplayWidth,
+    text,
+  ]);
 
   const getTextElm = (
     classes: string,
     maxWidth = maxDisplayWidth,
   ): JSX.Element => {
     return (
-      <p style={{ maxWidth: maxWidth }} className={classes}>
+      <p style={{ maxWidth }} className={classes}>
         {text}
       </p>
     );
   };
 
-  const textDefaultClasses = "nk-text-black nk-text-sm nk-truncate";
+  const textDefaultClasses = "nk-truncate";
 
-  return (
-    <div>
-      {/* 
+  const renderText = (): JSX.Element => {
+    return getTextElm(cc([textStylingClasses, textDefaultClasses]));
+  };
+
+  const renderTextWithATooltip = (): JSX.Element => {
+    return (
+      <div>
+        {/* 
         We use the invisible div defined below to acknowledge the 
         pixels amount required to display the full 'text' in the DOM.
 
         We then use this pixels count in comparison to maxDisplayWidth
         to determine if CSS truncation and full-text tooltip are needed. 
       */}
-      {displayTooltipWhenTextOverflows && (
-        <div className="nk-invisible nk-absolute nk-left-0 nk-top-0 nk-pointer-events-none">
+
+        <div
+          className={cc([
+            textStylingClasses,
+            "nk-invisible nk-absolute nk-left-0 nk-top-0 nk-pointer-events-none",
+          ])}
+        >
           <div ref={invisibleTextWidthTester}>{text}</div>
         </div>
-      )}
-      {/*
+
+        {/*
         Below HTML is the rendered text and tooltip, being the
         tooltip only shown when it is needed, on mouse hover. 
         
         But when is it needed?
-        Whenever the text displayed is longer than maxDisplayWidth.
+        Whenever the text displayed is longer than maxDisplayWidth,
+        which means, the textOverflows state is true.
       */}
-      {textOverflows && displayTooltipWhenTextOverflows ? (
-        <>
-          {/* 
+        {textOverflows ? (
+          <>
+            {/* 
             To ensure the TruncatedText doesn't appear wider than maxDisplayWidth,
             if the width required to display the full text exceeds that maximum CSS 
             automatically truncates the displayed text with an ellipsis ensuring it 
             fits within the required maximum width. If and only if CSS performs this 
             text truncation, a tooltip allows users to view the full text onMouseOver. 
           */}
-          <Tooltip
-            trigger={
-              <>{getTextElm(cc([textStylingClasses, textDefaultClasses]))}</>
-            }
-          >
-            {getTextElm(
-              cc([
-                "nk-text-white nk-text-sm nk-leading-5 nk-break-all",
-                tooltipTextStylingClasses,
-              ]),
-              maxTooltipWidth,
-            )}
-          </Tooltip>
-        </>
-      ) : (
-        <>{getTextElm(cc([textStylingClasses, textDefaultClasses]))}</>
-      )}
-    </div>
-  );
+            <Tooltip trigger={renderText()}>
+              {getTextElm(
+                cc([
+                  "nk-text-white nk-text-sm nk-leading-5 nk-break-all",
+                  tooltipTextStylingClasses,
+                ]),
+                maxTooltipWidth,
+              )}
+            </Tooltip>
+          </>
+        ) : (
+          renderText()
+        )}
+      </div>
+    );
+  };
+
+  return displayTooltipWhenTextOverflows
+    ? renderTextWithATooltip()
+    : renderText();
 };
