@@ -36,7 +36,7 @@ export interface DisplayedPriceProps {
    */
   price: Price;
   /**
-   * The `CurrencySymbol` to display alongside the `Price`.
+   * The symbol for the `Currency` of `price`. to display alongside the `Price` value.
    *
    * Whenever symbol is defined as null, no symbol is displayed.
    * Whenever no symbol is defined, the default symbol is displayed.
