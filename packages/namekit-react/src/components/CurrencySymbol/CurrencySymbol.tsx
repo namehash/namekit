@@ -30,7 +30,7 @@ export const CurrencySymbology = {
    */
   Symbol: "Symbol",
   /**
-   * The price will be displayed with the currency's icon (e.g. the Ethereum Icon as an SVG).
+   * The symbol displayed for `Currency` will be its graphical icon (e.g. the Ethereum Icon as an SVG).
    */
   Icon: "Icon",
 } as const;
