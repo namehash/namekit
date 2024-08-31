@@ -26,7 +26,7 @@ export const CurrencySymbology = {
    */
   Acronym: "Acronym",
   /**
-   * The price will be displayed with the currency's symbol (e.g. $).
+   * The symbol displayed for `Currency` will be its text-based symbol (e.g. "$").
    */
   Symbol: "Symbol",
   /**
