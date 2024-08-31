@@ -5,10 +5,10 @@ import cc from "classcat";
 
 import { Link } from "@namehash/namekit-react";
 
+import { ENSName } from "@namehash/ens-utils";
 import { ReportIcon } from "../ReportIcon/index";
 import { RatingLoadingIcon, RatingIconSize, DisplayedName } from "../..";
 import { UnknownReportIcon } from "../UnknownReportIcon/UnknownReportIcon";
-import { ENSName } from "@namehash/ens-utils";
 
 interface ReportBadgeProps {
   /*

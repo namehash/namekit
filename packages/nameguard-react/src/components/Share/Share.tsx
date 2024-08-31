@@ -11,7 +11,7 @@ import { toast } from "sonner";
 import { IconButton } from "@namehash/namekit-react";
 
 import cc from "classcat";
-import { Tooltip } from "../Tooltip/Tooltip";
+import { Tooltip } from "@namehash/namekit-react/client";
 import { CheckResultCode } from "@namehash/nameguard";
 import { checkResultCodeTextColor } from "../../utils/text";
 import { DisplayedName } from "../DisplayedName/DisplayedName";

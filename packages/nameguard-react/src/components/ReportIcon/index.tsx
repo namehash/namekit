@@ -10,7 +10,7 @@ import { ENSName } from "@namehash/ens-utils";
 
 import { Link } from "@namehash/namekit-react";
 
-import { Tooltip } from "../Tooltip/Tooltip";
+import { Tooltip } from "@namehash/namekit-react/client";
 import { RatingLoadingIcon } from "../icons/RatingLoadingIcon";
 import { RatingIcon, RatingIconSize } from "../Report/RatingIcon";
 import { checkResultCodeTextColor, ratingTextColor } from "../../utils/text";
