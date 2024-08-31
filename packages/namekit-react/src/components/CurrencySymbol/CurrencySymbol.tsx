@@ -22,7 +22,7 @@ export type CurrencySymbolSize =
 
 export const CurrencySymbology = {
   /**
-   * The price will be displayed with the currency's acronym (e.g. USD).
+   * The symbol displayed for `Currency` will be its acronym as text. (e.g. "USD").
    */
   Acronym: "Acronym",
   /**
