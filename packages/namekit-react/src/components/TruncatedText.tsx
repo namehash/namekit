@@ -16,25 +16,25 @@
  */
 
 import React, { useEffect, useState, useRef } from "react";
-import { Tooltip } from "./Tooltip";
 import cc from "classcat";
+import { Tooltip } from "./Tooltip";
 
 interface TruncatedTextProps {
   text: string;
+  maxDisplayWidth: number;
+  maxTooltipWidth?: number;
   textStylingClasses?: string;
   tooltipTextStylingClasses?: string;
   displayTooltipWhenTextOverflows?: boolean;
-  maxTooltipWidth?: number;
-  maxDisplayWidth: number;
 }
 
 export const TruncatedText = ({
   text,
+  maxDisplayWidth,
+  maxTooltipWidth,
   textStylingClasses = "",
   tooltipTextStylingClasses = "",
   displayTooltipWhenTextOverflows = true,
-  maxTooltipWidth,
-  maxDisplayWidth,
 }: TruncatedTextProps) => {
   const invisibleTextWidthTester = useRef<null | HTMLParagraphElement>(null);
 
@@ -98,13 +98,13 @@ export const TruncatedText = ({
         </div>
 
         {/*
-        Below HTML is the rendered text and tooltip, being the
-        tooltip only shown when it is needed, on mouse hover. 
-        
-        But when is it needed?
-        Whenever the text displayed is longer than maxDisplayWidth,
-        which means, the textOverflows state is true.
-      */}
+          Below HTML is the rendered text and tooltip, being the
+          tooltip only shown when it is needed, on mouse hover. 
+          
+          But when is it needed?
+          Whenever the text displayed is longer than maxDisplayWidth,
+          which means, the textOverflows state is true.
+        */}
         {textOverflows ? (
           <>
             {/* 

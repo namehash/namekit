@@ -20,34 +20,10 @@ const meta: Meta<typeof TruncatedText> = {
   title: "Namekit/TruncatedText",
   argTypes: {
     textStylingClasses: {
-      control: { type: "select" },
-      options: [
-        "WithoutCustomCSSClasses",
-        "CustomCSSClassForWebfont",
-        "CustomCSSClassesForExtravantDisplay",
-        "CustomCSSClassesForElegantDisplay",
-      ],
-      mapping: {
-        WithoutCustomCSSClasses: "",
-        CustomCSSClassForWebfont: "ens-webfont",
-        CustomCSSClassesForExtravantDisplay: "custom-class-name huge-font-size",
-        CustomCSSClassesForElegantDisplay: "beautiful-text ens-webfont",
-      },
+      control: { type: "text" },
     },
     tooltipTextStylingClasses: {
-      control: { type: "select" },
-      options: [
-        "WithoutCustomCSSClasses",
-        "CustomCSSClassForWebfont",
-        "CustomCSSClassesForExtravantDisplay",
-        "CustomCSSClassesForElegantDisplay",
-      ],
-      mapping: {
-        WithoutCustomCSSClasses: "",
-        CustomCSSClassForWebfont: "ens-webfont text-white",
-        CustomCSSClassesForExtravantDisplay: "custom-class-name huge-font-size",
-        CustomCSSClassesForElegantDisplay: "beautiful-text ens-webfont",
-      },
+      control: { type: "text" },
     },
     maxDisplayWidth: {
       control: { type: "number" },
@@ -58,10 +34,10 @@ const meta: Meta<typeof TruncatedText> = {
   },
   args: {
     text: "",
+    maxDisplayWidth: 300,
+    maxTooltipWidth: undefined,
     textStylingClasses: "",
     tooltipTextStylingClasses: "",
-    maxDisplayWidth: 300,
-    maxTooltipWidth: 400,
     displayTooltipWhenTextOverflows: true,
   },
 };
@@ -94,18 +70,6 @@ export const LongTextStyled: Story = {
 };
 export const DefaultTooltipTextStyles: Story = {
   args: {
-    text: getExampleTruncatedText(TruncatedTextExample.LONG_TEXT),
-  },
-};
-export const SmallMaxTooltipWidth: Story = {
-  args: {
-    maxTooltipWidth: 100,
-    text: getExampleTruncatedText(TruncatedTextExample.LONG_TEXT),
-  },
-};
-export const BigMaxTooltipWidth: Story = {
-  args: {
-    maxTooltipWidth: 600,
     text: getExampleTruncatedText(TruncatedTextExample.LONG_TEXT),
   },
 };
