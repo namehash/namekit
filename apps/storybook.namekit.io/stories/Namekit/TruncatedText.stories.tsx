@@ -33,11 +33,11 @@ const meta: Meta<typeof TruncatedText> = {
     },
   },
   args: {
-    text: "",
-    maxDisplayWidth: 300,
-    maxTooltipWidth: undefined,
     textStylingClasses: "",
     tooltipTextStylingClasses: "",
+    maxDisplayWidth: 300,
+    maxTooltipWidth: undefined,
+    text: "",
     displayTooltipWhenTextOverflows: true,
   },
 };
