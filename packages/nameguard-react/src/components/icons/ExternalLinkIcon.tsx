@@ -1,13 +1,7 @@
 import * as React from "react";
 import cc from "classcat";
-import { checkResultCodeTextColor } from "../../utils/text";
-import { CheckResultCode } from "@namehash/nameguard";
 
-export const ExternalLinkIcon = ({
-  isInteractive = false,
-  onClick = () => {},
-  className = "",
-}) => (
+export const ExternalLinkIcon = ({ onClick = () => {}, className = "" }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 20"
@@ -15,7 +9,6 @@ export const ExternalLinkIcon = ({
     className={cc([
       className,
       "ng-w-[12px] ng-h-[10px] ng-fill-current ng-transition",
-      checkResultCodeTextColor(CheckResultCode.skip, isInteractive),
     ])}
     onClick={onClick}
   >

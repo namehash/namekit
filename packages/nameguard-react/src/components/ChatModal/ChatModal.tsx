@@ -40,7 +40,9 @@ export const ChatModal = forwardRef(
             >
               <IconButton
                 iconPosition="right"
-                icon={<ExternalLinkIcon className="w-5 h-5 fill-current" />}
+                icon={
+                  <ExternalLinkIcon className="!w-5 !h-5 fill-current !text-white" />
+                }
               >
                 Open XMTP.chat
               </IconButton>
