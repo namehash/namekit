@@ -1,5 +1,6 @@
 "use client";
 
+import { IconButton } from "@namehash/namekit-react";
 import { ChevronDown, CalendarButton, BeansBg } from "../1 - atoms";
 import { Balancer } from "react-wrap-balancer";
 
@@ -50,18 +51,20 @@ export const HeroSection = () => {
         }}
       />
 
-      <button
-        onClick={() => {
-          const theVision = document.getElementById("theVisionSection");
-          if (theVision) {
-            theVision.scrollIntoView({ behavior: "smooth" });
-          }
-        }}
-        className="px-20 py-2.5 z-20 border rounded-full border-gray-300 bg-white absolute bottom-10 landscape:bottom-0 tall:landscape:bottom-0 hover:bg-gray-100 transition-colors duration-200"
-      >
-        <ChevronDown />
-        <span className="sr-only">Scroll to the next section</span>
-      </button>
+      <div className="z-20 absolute bottom-10 landscape:bottom-0 tall:landscape:bottom-0">
+        <IconButton
+          variant="secondary"
+          className="!px-20 !rounded-full"
+          size="large"
+          onClick={() => {
+            const theVision = document.getElementById("theVisionSection");
+            if (theVision) {
+              theVision.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
+          icon={<ChevronDown />}
+        />
+      </div>
     </div>
   );
 };
