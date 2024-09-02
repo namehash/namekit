@@ -702,12 +702,8 @@ export class NameGuard {
 
     // TODO: We need to add a `computeNameGuardReport` parameter to the API.
     let response = await this.rawRequest(
-      `secure-primary-name/${network_name}/${address}`,
+      `secure-primary-name/${network_name}/${address}?return_nameguard_report=${computeNameGuardReport}`,
     );
-
-    if (!computeNameGuardReport) {
-      response.nameguard_result = null;
-    }
 
     return response;
   }
