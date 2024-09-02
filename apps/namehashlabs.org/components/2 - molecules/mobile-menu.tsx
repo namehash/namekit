@@ -4,6 +4,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { CalendarButton, NameHashLabsLogo } from "../1 - atoms";
 import Link from "next/link";
+import { IconButton } from "@namehash/namekit-react";
 
 const MobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,9 +29,14 @@ const MobileMenu = () => {
   return (
     <div className="z-50">
       {/* Hamburguer button  */}
-      <button className="block md:hidden" onClick={() => toggleMenu()}>
-        <Bars3Icon className="w-6 h-6 text-black" />
-      </button>
+      <div className="block md:hidden">
+        <IconButton
+          variant="ghost"
+          className="!p-2"
+          icon={<Bars3Icon className="w-6 h-6 text-black" />}
+          onClick={() => toggleMenu()}
+        />
+      </div>
 
       {/* Menu Overlay  */}
       <div
