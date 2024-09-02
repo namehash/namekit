@@ -4,7 +4,7 @@ import cc from "classcat";
 export interface LinkProps extends React.ComponentPropsWithoutRef<"a"> {
   className?: string;
   variant?: "primary" | "secondary" | "underline";
-  size?: "small" | "medium" | "large";
+  size?: "xsmall" | "small" | "medium" | "large";
   asChild?: React.ReactElement;
 }
 
