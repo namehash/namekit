@@ -33,7 +33,7 @@ export const Header = () => {
           </div>
         </div>
         <div className="flex flex-row items-center justify-between md:gap-5 h-[40px]">
-          <div className="hidden items-center justify-center lg:flex gap-0.5">
+          <div className="hidden items-center justify-center lg:flex gap-2">
             <a
               href="https://api.nameguard.io/docs"
               target="_blank"
