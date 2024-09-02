@@ -499,6 +499,8 @@ async def secure_primary_name_get(
     2. For ENS names using CCIP-Read: requests to externally defined gateway servers.
 
     Returns `display_name` to be shown to users and estimates `impersonation_status`.
+
+    If `return_nameguard_report` is `False`, the `nameguard_result` field will be `None`.
     """
     logger.debug(
         f"{json.dumps({'endpoint': Endpoints.SECURE_PRIMARY_NAME, 'method': 'GET', 'network_name': network_name, 'address': address})}"

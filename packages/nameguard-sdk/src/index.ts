@@ -682,6 +682,8 @@ export class NameGuard {
    *
    * Returns `display_name` to be shown to users and estimates `impersonation_status`
    *
+   * If `options.computeNameGuardReport` is `False`, the `nameguard_result` field will be `null`.
+   * 
    * @param {string} address An Ethereum address.
    * @param {SecurePrimaryNameOptions} options The options for the secure primary name.
    * @returns {Promise<SecurePrimaryNameResult>} A promise that resolves with a `SecurePrimaryNameResult`.

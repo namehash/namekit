@@ -64,6 +64,15 @@ describe("NameGuard", () => {
     expect(data.display_name).toBe("nick.eth");
   });
 
+  it("should analyze a primary name and not include the nameguard_result", async () => {
+    const data = await nameguard.getSecurePrimaryName(
+      "0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5",
+      { computeNameGuardReport: false },
+    );
+
+    expect(data.display_name).toBe("nick.eth");
+  });
+
   it("should check a fake ENS name", async () => {
     const data = await nameguard.fakeEthNameCheck(
       "0x495f947276749ce646f68ac8c248420045cb7b5e",
