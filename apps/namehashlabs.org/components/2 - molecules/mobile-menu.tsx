@@ -56,13 +56,14 @@ const MobileMenu = () => {
             >
               <NameHashLabsLogo className="text-white" />
             </Link>
-            <button
-              className="p-3 hover:bg-white hover:bg-opacity-10 rounded-[6px] transition-colors duration-200"
+            <IconButton
               onClick={() => toggleMenu()}
+              variant="ghost"
+              className="!p-2"
+              icon={<XMarkIcon className="w-5 h-5 text-white" />}
             >
-              <XMarkIcon className="w-5 h-5 text-white" />
               <span className="sr-only">Toggle menu</span>
-            </button>
+            </IconButton>
           </div>
 
           <nav className="flex flex-col justify-center flex-grow gap-1">
