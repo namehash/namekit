@@ -1,7 +1,7 @@
 import React from "react";
 
+import { Tooltip } from "@namehash/namekit-react";
 import { RatingIconSize } from "../Report/RatingIcon";
-import { Tooltip } from "../Tooltip/Tooltip";
 import { RatingUnknownIcon } from "../icons/RatingUnknownIcon";
 
 type UnknownShieldProps = {

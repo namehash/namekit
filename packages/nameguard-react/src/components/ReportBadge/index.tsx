@@ -3,15 +3,10 @@ import { type ConsolidatedNameGuardReport } from "@namehash/nameguard";
 import React, { useEffect } from "react";
 import cc from "classcat";
 
-import { ReportIcon } from "../ReportIcon/index";
-import {
-  RatingLoadingIcon,
-  RatingIconSize,
-  Tooltip,
-  DisplayedName,
-} from "../..";
-import { UnknownReportIcon } from "../UnknownReportIcon/UnknownReportIcon";
 import { ENSName } from "@namehash/ens-utils";
+import { ReportIcon } from "../ReportIcon/index";
+import { RatingLoadingIcon, RatingIconSize, DisplayedName } from "../..";
+import { UnknownReportIcon } from "../UnknownReportIcon/UnknownReportIcon";
 
 interface ReportBadgeProps {
   /*
