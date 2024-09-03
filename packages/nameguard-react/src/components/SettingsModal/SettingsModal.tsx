@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import { Button, IconButton } from "@namehash/namekit-react";
 
 import { useSettingsStore, type Settings } from "../../stores/settings";
 
@@ -51,12 +52,14 @@ export const SettingsModal = () => {
                     Search settings
                   </Dialog.Title>
                   <div className="flex items-center right-0 inset-y-0 absolute pr-6 z-20">
-                    <button
+                    <IconButton
+                      icon={
+                        <XMarkIcon className="w-6 h-6 fill-current text-black md:text-gray-400" />
+                      }
                       onClick={closeModal}
-                      className="flex items-center justify-between p-2 -mr-3 appearance-none bg-transparent hover:bg-black/5 transition rounded-md"
-                    >
-                      <XMarkIcon className="w-6 h-6 fill-current text-black md:text-gray-400" />
-                    </button>
+                      variant="ghost"
+                      className="!p-2"
+                    />
                   </div>
                 </div>
 
@@ -175,18 +178,12 @@ export const SettingsModal = () => {
                   </fieldset>
 
                   <div className="flex items-center justify-end space-x-3 mt-8 pb-6">
-                    <button
-                      className="rounded-md text-sm bg-white shadow-sm border border-gray-300 text-black px-4 py-1.5 font-medium leading-6 transition hover:bg-gray-50"
-                      onClick={closeModal}
-                    >
+                    <Button variant="secondary" onClick={closeModal}>
                       Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      className="rounded-md text-sm bg-black border border-black text-white px-4 py-1.5 font-medium leading-6 transition hover:bg-gray-900"
-                    >
+                    </Button>
+                    <Button type="submit" onClick={closeModal}>
                       Save
-                    </button>
+                    </Button>
                   </div>
                 </form>
               </Dialog.Panel>

@@ -2,8 +2,9 @@
 
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import { CalButton, NameHashLabsLogo } from "../1 - atoms";
+import { CalendarButton, NameHashLabsLogo } from "../1 - atoms";
 import Link from "next/link";
+import { IconButton } from "@namehash/namekit-react";
 
 const MobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,9 +29,14 @@ const MobileMenu = () => {
   return (
     <div className="z-50">
       {/* Hamburguer button  */}
-      <button className="block md:hidden" onClick={() => toggleMenu()}>
-        <Bars3Icon className="w-6 h-6 text-black" />
-      </button>
+      <div className="block md:hidden">
+        <IconButton
+          variant="ghost"
+          className="!p-2"
+          icon={<Bars3Icon className="w-6 h-6 text-black" />}
+          onClick={() => toggleMenu()}
+        />
+      </div>
 
       {/* Menu Overlay  */}
       <div
@@ -38,8 +44,8 @@ const MobileMenu = () => {
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex flex-col h-full">
-          <div className="flex w-full justify-between items-center p-4">
+        <div className="flex flex-col h-full p-4">
+          <div className="flex w-full justify-between items-center">
             <Link
               href="/"
               aria-label="Home page"
@@ -50,16 +56,17 @@ const MobileMenu = () => {
             >
               <NameHashLabsLogo className="text-white" />
             </Link>
-            <button
-              className="p-3 hover:bg-white hover:bg-opacity-10 rounded-[6px] transition-colors duration-200"
+            <IconButton
               onClick={() => toggleMenu()}
+              variant="ghost"
+              className="!p-2"
+              icon={<XMarkIcon className="w-5 h-5 text-white" />}
             >
-              <XMarkIcon className="w-5 h-5 text-white" />
               <span className="sr-only">Toggle menu</span>
-            </button>
+            </IconButton>
           </div>
 
-          <nav className="flex flex-col justify-center flex-grow gap-1 mx-2">
+          <nav className="flex flex-col justify-center flex-grow gap-1">
             <Link
               className="block text-base leading-6 font-medium py-2 text-white hover:bg-opacity-10 hover:bg-white transition-color duration-300 px-3 rounded-[8px]"
               href="/"
@@ -90,11 +97,8 @@ const MobileMenu = () => {
             >
               Open positions
             </Link>
-
-            <CalButton className="block text-base leading-6 font-medium py-2 text-white hover:bg-opacity-10 hover:bg-white transition-color duration-300 px-3 rounded-[8px] text-left">
-              Schedule a call
-            </CalButton>
           </nav>
+          <CalendarButton variant="secondary">Schedule a call</CalendarButton>
         </div>
       </div>
     </div>

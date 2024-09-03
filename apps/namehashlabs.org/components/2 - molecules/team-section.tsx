@@ -8,6 +8,7 @@ import { AvatarSize } from "./avatar-with-tooltip";
 import { getCachedProfile } from "@/data/ensProfiles";
 import { UltimateENSAvatar } from ".";
 import { getNameHashLabsAvatarCallbacks } from "@/lib/client/nh-labs-avatar";
+import { Button } from "@namehash/namekit-react";
 
 const namehashLabsTeam = {
   profiles: [
@@ -46,11 +47,8 @@ export const TeamSection = () => {
               talents and would be happy to hear from you.
             </Balancer>
           </SectionText>
-          <a
-            href="/careers"
-            className="bg-black text-white text-base font-medium rounded-lg px-[17px] py-[9px] hover:bg-gray-800 transition"
-          >
-            Join our team
+          <a href="/careers">
+            <Button>Join our team</Button>
           </a>
         </div>
         <div className="grid lg:grid-cols-5 grid-cols-3 m-auto md:grid-cols-5 sm:grid-cols-3 place-items-center lg:gap-x-auto gap-6 lg:gap-8 lg:ml-auto lg:max-w-[1216px]">
