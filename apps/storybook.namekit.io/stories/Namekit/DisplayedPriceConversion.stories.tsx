@@ -3,6 +3,7 @@ import {
   CurrencySymbol,
   CurrencySymbology,
   CurrencySymbolPosition,
+  CurrencySymbolSize,
   DisplayedPriceConversion,
   PriceDisplaySize,
 } from "@namehash/namekit-react";
@@ -14,50 +15,32 @@ const meta: Meta<typeof DisplayedPriceConversion> = {
   title: "Namekit/DisplayedPriceConversion",
   argTypes: {
     price: {
-      options: ["OneETH", "OneUSD", "OneUSDC", "OneWETH", "OneDAI"],
+      options: ["OneETH"],
       mapping: {
         OneETH: numberAsPrice(1, Currency.Eth),
-        OneUSD: numberAsPrice(1, Currency.Usd),
-        OneUSDC: numberAsPrice(1, Currency.Usdc),
-        OneWETH: numberAsPrice(1, Currency.Weth),
-        OneDAI: numberAsPrice(1, Currency.Dai),
       },
     },
     convertedPrice: {
-      options: ["OneETH", "OneUSD", "OneUSDC", "OneWETH", "OneDAI"],
+      options: ["ToUSD", "ToUSDC", "ToWETH", "ToDAI"],
       mapping: {
-        OneETH: numberAsPrice(1, Currency.Eth),
-        OneUSD: numberAsPrice(1, Currency.Usd),
-        OneUSDC: numberAsPrice(1, Currency.Usdc),
-        OneWETH: numberAsPrice(1, Currency.Weth),
-        OneDAI: numberAsPrice(1, Currency.Dai),
+        ToUSD: numberAsPrice(2000, Currency.Usd),
+        ToUSDC: numberAsPrice(2000, Currency.Usdc),
+        ToWETH: numberAsPrice(1, Currency.Weth),
+        ToDAI: numberAsPrice(2000, Currency.Dai),
       },
     },
     symbol: {
-      control: { type: "select" },
-      options: [
-        "ParagraphElm",
-        "EmptyDivElm",
-        "undefined",
-        "null",
-        "CustomEthIconSymbol",
-        "CustomEthAcronymSymbol",
-      ],
+      control: {
+        type: "select",
+        labels: {
+          WhateverJSX: "Whatever JSX you want",
+          undefined: "undefined (uses default symbology)",
+          null: "null",
+        },
+      },
+      options: ["WhateverJSX", "undefined", "null"],
       mapping: {
-        ParagraphElm: <p>Whatever you want</p>,
-        EmptyDivElm: <div></div>,
-        CustomEthIconSymbol: (
-          <CurrencySymbol
-            currency={Currency.Eth}
-            symbology={CurrencySymbology.Icon}
-          />
-        ),
-        CustomEthAcronymSymbol: (
-          <CurrencySymbol
-            currency={Currency.Eth}
-            symbology={CurrencySymbology.Acronym}
-          />
-        ),
+        WhateverJSX: <p>Whatever JSX you want</p>,
         undefined: undefined,
         null: null,
       },
@@ -86,6 +69,7 @@ const meta: Meta<typeof DisplayedPriceConversion> = {
     },
   },
   args: {
+    price: numberAsPrice(1, Currency.Eth),
     displaySize: PriceDisplaySize.Medium,
     symbolPosition: CurrencySymbolPosition.Left,
   },
@@ -108,27 +92,21 @@ type Story = StoryObj<typeof DisplayedPriceConversion>;
 export const ConvertedPriceWithSymbolSymbology: Story = {
   args: {
     price: numberAsPrice(1, Currency.Eth),
-    convertedPrice: numberAsPrice(1, Currency.Weth),
+    convertedPrice: numberAsPrice(2000, Currency.Usdc),
     convertedPriceSymbology: CurrencySymbology.Symbol,
   },
 };
 export const ConvertedPriceWithAcronymSymbology: Story = {
   args: {
     price: numberAsPrice(1, Currency.Eth),
-    convertedPrice: numberAsPrice(1, Currency.Weth),
+    convertedPrice: numberAsPrice(2000, Currency.Usdc),
     convertedPriceSymbology: CurrencySymbology.Acronym,
   },
 };
 export const ConvertedPriceWithIconSymbology: Story = {
   args: {
     price: numberAsPrice(1, Currency.Eth),
-    symbol: (
-      <CurrencySymbol
-        currency={Currency.Eth}
-        symbology={CurrencySymbology.Acronym}
-      />
-    ),
-    convertedPrice: numberAsPrice(1, Currency.Weth),
+    convertedPrice: numberAsPrice(2000, Currency.Usdc),
     convertedPriceSymbology: CurrencySymbology.Icon,
   },
 };
