@@ -12,6 +12,7 @@
     "@heroicons/react": "2.0.18",
     "@namehash/ens-utils": "workspace:*",
     "@namehash/ens-webfont": "workspace:*",
+    "@namehash/namekit-react": "workspace:*",
     "@namehash/nameguard": "workspace:*",
     "@namehash/nameguard-react": "workspace:*",
     "@namehash/namekit-react": "workspace:*",

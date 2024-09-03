@@ -1,6 +1,6 @@
 import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import { Tooltip } from "@namehash/namekit-react";
+import { Tooltip } from "@namehash/namekit-react/client";
 
 const meta: Meta<typeof Tooltip> = {
   title: "UI/Tooltip",
@@ -53,9 +53,9 @@ export const DefaultMaxTooltipWidth: Story = {
     trigger: <>Tooltip Trigger</>,
     children: (
       <>
-        The default max tooltip width is positive infinity so
-        it is up to you to set an explicit max width limit,
-        See the "Custom Max Tooltip Width" story for an example of setting a max width.
+        The default max tooltip width is positive infinity so it is up to you to
+        set an explicit max width limit, See the "Custom Max Tooltip Width"
+        story for an example of setting a max width.
       </>
     ),
   },

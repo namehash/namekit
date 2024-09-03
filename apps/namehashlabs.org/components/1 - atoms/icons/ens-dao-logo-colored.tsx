@@ -1,6 +1,6 @@
 import { SVGProps } from "react";
 
-export const EnsLogoColored = (props: SVGProps<SVGSVGElement>) => {
+export const EnsDAOLogoColored = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -8,7 +8,7 @@ export const EnsLogoColored = (props: SVGProps<SVGSVGElement>) => {
       height="32"
       viewBox="0 0 120 32"
       fill="none"
-      {... props}
+      {...props}
     >
       <g clipPath="url(#clip0_4978_40585)">
         <path

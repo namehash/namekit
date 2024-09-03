@@ -1,6 +1,6 @@
 import { ContactUsForm } from "./ContactUsForm";
 import {
-  CalButton,
+  CalendarButton,
   ColorfulBg,
   PreSectionText,
   SectionTitle,
@@ -18,7 +18,7 @@ export const ContactSection = () => {
         <h1 className="font-bold text-[52px] ">Contact</h1>
       </div>
 
-      <div className="w-full flex lg:flex-row flex-col justify-between items-center rounded-[8px] bg-gradient-to-r lg:px-10 lg:py-8 p-5 mb-20 from-[#2D2D2D] to-black">
+      <div className="w-full flex lg:flex-row flex-col justify-between lg:items-center items-start rounded-[8px] bg-gradient-to-r lg:px-10 lg:py-8 p-5 mb-20 from-[#2D2D2D] to-black">
         <div className="flex flex-col gap-2 mb-4 lg:mb-0">
           <h3 className="text-2xl leading-8 font-semibold text-white">
             Discuss an integration
@@ -27,9 +27,11 @@ export const ContactSection = () => {
             Schedule a call with us to discuss an integration with NameGuard
           </p>
         </div>
-        <CalButton className="px-[25px] py-[13px] rounded-[8px] bg-white flex hover:bg-gray-100 transition-colors duration-200 w-full justify-center lg:w-auto">
-          Schedule a call
-        </CalButton>
+        <div className="w-full lg:w-auto">
+          <CalendarButton variant="secondary" className="!w-full">
+            Schedule a call
+          </CalendarButton>
+        </div>
       </div>
       <div className="w-full flex flex-col lg:flex-row m-auto gap-10 max-w-7xl">
         <div className="lg:w-1/2 w-full flex flex-col gap-3 items-start">

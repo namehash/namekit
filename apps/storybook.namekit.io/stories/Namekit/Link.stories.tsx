@@ -15,7 +15,7 @@ const meta: Meta<typeof Link> = {
     size: {
       control: {
         type: "select",
-        options: ["small", "medium", "large"],
+        options: ["xsmall", "small", "medium", "large"],
       },
     },
     className: { control: "text" },
@@ -80,6 +80,32 @@ export const UnderlineSmall: Story = {
     size: "small",
     href: "#",
     children: "Underline Small Link",
+  },
+};
+export const PrimaryXSmall: Story = {
+  args: {
+    variant: "primary",
+    size: "xsmall",
+    href: "#",
+    children: "Primary Extra Small Link",
+  },
+};
+
+export const SecondaryXSmall: Story = {
+  args: {
+    variant: "secondary",
+    size: "xsmall",
+    href: "#",
+    children: "Secondary Extra Small Link",
+  },
+};
+
+export const UnderlineXSmall: Story = {
+  args: {
+    variant: "underline",
+    size: "xsmall",
+    href: "#",
+    children: "Underline Extra Small Link",
   },
 };
 

@@ -2,6 +2,8 @@ import React, { forwardRef, type Ref } from "react";
 import useSWR from "swr";
 import { type GraphemeGuardReport, nameguard } from "@namehash/nameguard";
 
+import { Link } from "@namehash/namekit-react";
+
 import { useGraphemeModalStore } from "../../stores/grapheme";
 import { Slideover } from "../Slideover/Slideover";
 import { CheckResultCard } from "../Report/CheckResultCard";
@@ -9,7 +11,7 @@ import { RatingIcon, RatingIconSize } from "../Report/RatingIcon";
 import { RatedBox } from "../RatedBox/RatedBox";
 import { ConfusableList } from "./ConfusableList";
 import { LoadingSkeleton } from "./LoadingSkeleton";
-import { Tooltip } from "@namehash/namekit-react";
+import { Tooltip } from "@namehash/namekit-react/client";
 
 export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
   const { isGraphemeModalOpen, closeGraphemeModal, currentGrapheme } =
@@ -111,9 +113,13 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
                   <Tooltip
                     placement="left"
                     trigger={
-                      <p className="text-black underline text-sm leading-6 cursor-default">
+                      <Link
+                        variant="underline"
+                        className="!cursor-default"
+                        size="small"
+                      >
                         Why it matters?
-                      </p>
+                      </Link>
                     }
                   >
                     <div className="max-w-[480px]">
