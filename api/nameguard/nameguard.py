@@ -459,7 +459,7 @@ class NameGuard:
 
             if nameguard_result.highest_risk and nameguard_result.highest_risk.check.name == Check.UNINSPECTED.name:
                 status = SecurePrimaryNameStatus.UNINSPECTED
-                impersonation_status = None
+                impersonation_estimate = None
             elif nameguard_result.normalization == Normalization.UNNORMALIZED:
                 status = SecurePrimaryNameStatus.UNNORMALIZED
                 impersonation_estimate = None
