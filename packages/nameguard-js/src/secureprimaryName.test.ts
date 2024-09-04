@@ -1,8 +1,9 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeAll } from "vitest";
 import { createPublicClient, http } from "viem";
 import { mainnet } from "viem/chains";
 import { SecurePrimaryNameResult } from "@namehash/nameguard";
 import { securePrimaryName } from "./securePrimaryName";
+import { initializeData } from "./data";
 
 const PROVIDER_URI_MAINNET = process.env.PROVIDER_URI_MAINNET;
 
@@ -13,6 +14,10 @@ if (!PROVIDER_URI_MAINNET) {
 const TEST_TIMEOUT = 30000;
 
 describe("secure primary name", () => {
+  beforeAll(() => {
+    initializeData();
+  });
+
   it("should detect impersonation", async () => {
     const client = createPublicClient({
       chain: mainnet,

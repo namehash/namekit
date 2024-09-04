@@ -1,7 +1,12 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeAll } from "vitest";
 import { computeImpersonationEstimate } from "./impersonation";
+import { initializeData } from "./data";
 
 describe("Impersonation", () => {
+  beforeAll(() => {
+    initializeData();
+  });
+
   it("should return impersonation estimate", () => {
     expect(computeImpersonationEstimate("nick.eth")).toBe("unlikely");
     expect(computeImpersonationEstimate("nićk.eth")).toBe("potential");
