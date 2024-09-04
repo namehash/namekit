@@ -872,7 +872,7 @@ def test_primary_name_get_uninspected(test_client):
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
-    assert res_json['impersonation_status'] is None
+    assert res_json['impersonation_estimate'] is None
     assert res_json['primary_name_status'] == 'uninspected'
     assert res_json['primary_name'] is None
     assert res_json['display_name'] == 'Unnamed f4a4'
