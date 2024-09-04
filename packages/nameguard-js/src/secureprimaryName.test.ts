@@ -5,6 +5,11 @@ import { SecurePrimaryNameResult } from "@namehash/nameguard";
 import { securePrimaryName } from "./securePrimaryName";
 
 const PROVIDER_URI_MAINNET = process.env.PROVIDER_URI_MAINNET;
+
+if (!PROVIDER_URI_MAINNET) {
+  console.warn("PROVIDER_URI_MAINNET is not defined. Defaulting to viem's default provider, which may have rate limiting and other performance limitations.");
+}
+
 const TEST_TIMEOUT = 30000;
 
 describe("secure primary name", () => {
