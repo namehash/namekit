@@ -339,6 +339,7 @@ class NameGuard:
                             risk_count=count_risks(grapheme_checks),
                             highest_risk=get_highest_risk(grapheme_checks),
                             grapheme_description=grapheme.description,
+                            unicode_version=grapheme.unicode_version,
                         )
                         for grapheme, grapheme_checks in zip(label_analysis.graphemes, label_graphemes_checks)
                     ]
@@ -420,6 +421,7 @@ class NameGuard:
             ),
             canonical_grapheme=label_analysis.canonical_label,
             grapheme_description=grapheme_analysis.description,
+            unicode_version=grapheme_analysis.unicode_version,
         )
 
     def _inspect_confusable(self, grapheme: InspectorConfusableGraphemeResult) -> ConfusableGuardReport:
@@ -437,6 +439,7 @@ class NameGuard:
             risk_count=count_risks(grapheme_checks),
             highest_risk=get_highest_risk(grapheme_checks),
             grapheme_description=grapheme.description,
+            unicode_version=grapheme.unicode_version,
             is_canonical=False,
         )
 

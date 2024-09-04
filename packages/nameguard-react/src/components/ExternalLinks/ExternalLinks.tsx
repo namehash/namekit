@@ -5,7 +5,7 @@ import {
   ArrowUpRightIcon,
 } from "@heroicons/react/24/solid";
 
-import { Tooltip } from "../Tooltip/Tooltip";
+import { Tooltip } from "@namehash/namekit-react/client";
 
 type LinkItem = {
   href: string;

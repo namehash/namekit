@@ -165,6 +165,7 @@ def test_inspect_name_post_latin_all_pass(test_client):
             'rating',
             'risk_count',
             'grapheme_description',
+            'unicode_version',
             'subtitle',
             'title',
         }

@@ -9,6 +9,7 @@ import { buildENSName } from "@namehash/ens-utils";
 import { ReportModalNameBadge } from "../Report/ReportModalNameBadge";
 import { useSearchStore } from "../../stores/search";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import { IconButton } from "@namehash/namekit-react";
 
 const examples = [
   "culturecafé.eth",
@@ -102,22 +103,28 @@ export const SearchEmptyState = () => {
           <div className="inline-flex items-center space-x-1 absolute left-0 w-full pl-6 pr-10">
             {!isAtStart && (
               <div className="md:hidden fixed left-0 z-50">
-                <button
-                  className="appearance-none p-2 bg-white flex items-center justify-center"
+                <IconButton
                   onClick={slideLeft}
-                >
-                  <ChevronLeftIcon className="fill-current text-black w-5 h-5" />
-                </button>
+                  variant="ghost"
+                  size="small"
+                  className="!p-2"
+                  icon={
+                    <ChevronLeftIcon className="fill-current text-black w-5 h-5" />
+                  }
+                />
               </div>
             )}
             {!isAtEnd && (
               <div className="md:hidden fixed right-0 z-50">
-                <button
-                  className="appearance-none p-2 flex items-center justify-center bg-gradient-to-l from-white via-white to-transparent"
+                <IconButton
                   onClick={slideRight}
-                >
-                  <ChevronRightIcon className="fill-current text-black w-5 h-5" />
-                </button>
+                  variant="ghost"
+                  size="small"
+                  className="!p-2"
+                  icon={
+                    <ChevronRightIcon className="fill-current text-black w-5 h-5" />
+                  }
+                />
               </div>
             )}
             {(hadLoadingError || isLoading) &&
