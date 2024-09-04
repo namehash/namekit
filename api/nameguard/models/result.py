@@ -140,6 +140,12 @@ class ConsolidatedGraphemeGuardReport(ConsolidatedReport):
         examples=['A-Z letter'],
     )
 
+    unicode_version: Optional[str] = Field(
+        description='The Unicode version in which the grapheme was introduced or assigned.\n'
+        '* `null` if the grapheme is not assigned to any specific Unicode version',
+        examples=['15.0'],
+    )
+
     @property
     def _string_type(self) -> str:
         return 'grapheme'
