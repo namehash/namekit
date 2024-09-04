@@ -2,8 +2,6 @@ import { charCount } from "@namehash/ens-utils";
 import { EMOJI_SEQUENCES, EMOJI_ZWJ_SEQUENCES, EMOJI_BLOCK_STARTS, EMOJI_BLOCK_IS_EMOJI } from "./data/unicode";
 import { COMBINING } from "./data/combining";
 
-export { charCount };
-
 /**
  * Checks if the given string is a single character.
  * 
