@@ -13,7 +13,3 @@ export { ENSTextArea } from "./components/ENSTextArea";
 export { Input } from "./components/Input";
 export { ENSInput } from "./components/ENSInput";
 export { Link } from "./components/Link";
-export { Tooltip } from "./components/Tooltip";
-export { CurrencySymbol } from "./components/CurrencySymbol/CurrencySymbol";
-export { CurrencySymbolSize } from "./components/CurrencySymbol/CurrencySymbol";
-export { TruncatedText } from "./components/TruncatedText";

@@ -1,4 +1,4 @@
-import { TruncatedText } from "@namehash/namekit-react";
+import { TruncatedText } from "@namehash/namekit-react/client";
 import type { Meta, StoryObj } from "@storybook/react";
 
 enum TruncatedTextExample {
@@ -36,7 +36,7 @@ const meta: Meta<typeof TruncatedText> = {
     textStylingClasses: "",
     tooltipTextStylingClasses: "",
     maxDisplayWidth: 300,
-    maxTooltipWidth: undefined,
+    maxTooltipWidth: 400,
     text: "",
     displayTooltipWhenTextOverflows: true,
   },
@@ -73,9 +73,16 @@ export const DefaultTooltipTextStyles: Story = {
     text: getExampleTruncatedText(TruncatedTextExample.LONG_TEXT),
   },
 };
+export const CustomTooltipTextStyles: Story = {
+  args: {
+    tooltipTextStylingClasses: "ens-webfont custom-class-name colorful-text",
+    text: getExampleTruncatedText(TruncatedTextExample.LONG_TEXT),
+  },
+};
 export const SmallMaxDisplayWidth: Story = {
   args: {
     maxDisplayWidth: 60,
+    maxTooltipWidth: 500,
     text: getExampleTruncatedText(TruncatedTextExample.LONG_TEXT),
   },
 };

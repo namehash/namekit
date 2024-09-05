@@ -65,10 +65,10 @@ export const CustomMaxTooltipWidth: Story = {
   args: {
     placement: "bottom",
     maxTooltipWidth: 600,
-    trigger: <>Tooltip Trigger for tooltip with 400px max width</>,
+    trigger: <>Tooltip Trigger for tooltip with 600px max width</>,
     children: (
       <>
-        See it! The tooltip content is limited to 400px width. You can set the
+        See it! The tooltip content is limited to 600px width. You can set the
         maxTooltipWidth to the desired value to limit the text content display
         width!
       </>
