@@ -3,8 +3,8 @@ import cc from "classcat";
 
 export interface LinkProps extends React.ComponentPropsWithoutRef<"a"> {
   className?: string;
-  variant?: "primary" | "secondary";
-  size?: "small" | "medium" | "large";
+  variant?: "primary" | "secondary" | "underline";
+  size?: "xsmall" | "small" | "medium" | "large";
   asChild?: React.ReactElement;
 }
 
@@ -12,7 +12,7 @@ interface LinkComponent extends React.FC<LinkProps> {
   ExternalIcon: typeof ExternalIcon;
 }
 
-const linkBaseClasses = "nk-transition";
+const linkBaseClasses = "nk-transition cursor-pointer";
 
 const variantClasses = {
   primary:
@@ -23,6 +23,7 @@ const variantClasses = {
 };
 
 const sizeClasses = {
+  xsmall: "nk-text-xs",
   small: "nk-text-sm",
   medium: "nk-text-base",
   large: "nk-text-lg",

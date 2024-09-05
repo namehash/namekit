@@ -1,18 +1,22 @@
 "use client";
 
 import { useEffect } from "react";
-// @ts-ignore
 import { getCalApi } from "@calcom/embed-react";
+import { Button, ButtonProps } from "@namehash/namekit-react";
 
-export const CalButton = ({
-  children,
-  ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement>) => {
+export const CalendarButton = ({ children, ...props }: ButtonProps) => {
   useEffect(() => {
     (async function () {
       const cal = await getCalApi();
       cal("ui", {
-        styles: { branding: { brandColor: "#000000" } },
+        cssVarsPerTheme: {
+          light: {
+            "--brand-color": "#000000",
+          },
+          dark: {
+            "--brand-color": "#000000",
+          },
+        },
         hideEventTypeDetails: false,
         layout: "month_view",
       });
@@ -20,12 +24,12 @@ export const CalButton = ({
   }, []);
 
   return (
-    <button
-      data-cal-link="namehashlabs/nameguard"
+    <Button
+      data-cal-link="namehashlabs/namehashlabs"
       data-cal-config='{"layout":"month_view"}'
       {...props}
     >
       {children}
-    </button>
+    </Button>
   );
 };

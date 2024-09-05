@@ -216,6 +216,13 @@ export interface ConsolidatedGraphemeGuardReport extends ConsolidatedReport {
    * A user-friendly description of the grapheme type.
    */
   grapheme_description: string;
+
+  /**
+   * The Unicode version in which the grapheme was introduced or assigned.
+   *
+   * `null` if the grapheme is not assigned to any specific Unicode version.
+   */
+  unicode_version: string | null;
 }
 
 export interface ConfusableGuardReport extends ConsolidatedGraphemeGuardReport {

@@ -1,6 +1,6 @@
 import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import { Tooltip } from "@namehash/namekit-react";
+import { Tooltip } from "@namehash/namekit-react/client";
 
 const meta: Meta<typeof Tooltip> = {
   title: "UI/Tooltip",

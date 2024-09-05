@@ -13,7 +13,7 @@
  */
 
 import React, { useEffect, useState, useRef } from "react";
-import { Tooltip } from "../..";
+import { Tooltip } from "@namehash/namekit-react/client";
 import cc from "classcat";
 
 interface TruncatedTextProps {

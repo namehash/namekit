@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ExternalLinkIcon, PreSectionText } from "../1 - atoms";
 import { ColorfulBg } from "../1 - atoms/colorful-bg";
 import { ColorfulDownloadIcon } from "../1 - atoms/icons/colorful-download-icon";
+import { Button } from "@namehash/namekit-react";
 
 export const BrandAssets = () => {
   return (
@@ -29,12 +30,11 @@ export const BrandAssets = () => {
                 materials, website, or mobile application.
               </p>
             </div>
-            <a
-              target="_blank"
-              href="https://github.com/namehash/brand-assets"
-              className="flex gap-3 bg-black rounded-[8px] whitespace-nowrap text-white shadow-sm text-base leading-6 py-2 px-4 font-medium hover:bg-gray-800 transition-colors duration-200 flex-nowrap"
-            >
-              Download on Github <ExternalLinkIcon className="w-5 h-5" />
+
+            <a target="_blank" href="https://github.com/namehash/brand-assets">
+              <Button variant="primary" size="medium">
+                Download on Github <ExternalLinkIcon className="w-5 h-5" />
+              </Button>
             </a>
           </div>
           <a
