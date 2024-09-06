@@ -9,5 +9,6 @@
 
 .colorful-text {
   font-weight: 700;
-  color: purple;
+  text-decoration: underline;
+  color: lightgreen;
 }

@@ -75,7 +75,7 @@ export const DefaultTooltipTextStyles: Story = {
 };
 export const CustomTooltipTextStyles: Story = {
   args: {
-    tooltipTextStylingClasses: "ens-webfont custom-class-name colorful-text",
+    tooltipTextStylingClasses: "ens-webfont colorful-text",
     text: getExampleTruncatedText(TruncatedTextExample.LONG_TEXT),
   },
 };
