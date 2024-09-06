@@ -8,7 +8,8 @@ import {
 import cc from "classcat";
 import { ENSName } from "@namehash/ens-utils";
 
-import { Tooltip } from "@namehash/namekit-react";
+import { Button } from "@namehash/namekit-react";
+import { Tooltip } from "@namehash/namekit-react/client";
 import { RatingIcon, RatingIconSize } from "../Report/RatingIcon";
 import { checkResultCodeTextColor, ratingTextColor } from "../../utils/text";
 import { ReportUnknownIcon } from "../ReportUnknownIcon/ReportUnknownIcon";
@@ -171,7 +172,7 @@ export function ReportIcon({
           </div>
 
           <div className="text-sm text-white">
-            <button
+            <Button
               className="appearance-none underline font-medium"
               onClick={(e?: React.MouseEvent) => {
                 if (e) e.stopPropagation();
@@ -179,7 +180,7 @@ export function ReportIcon({
               }}
             >
               Inspect name for details
-            </button>
+            </Button>
           </div>
         </div>
       </div>

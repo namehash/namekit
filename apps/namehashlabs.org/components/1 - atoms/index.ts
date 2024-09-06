@@ -7,7 +7,7 @@ export * from "./section-title";
 export * from "./icons/external-link-icon";
 export * from "./icons/namehash-labs-logo";
 export * from "./headline-banner";
-export * from "./cal-button";
+export * from "./calendar-button";
 export * from "./icons/beans-bg";
 export * from "./icons/service-provider-badge";
 export * from "./icons/ens-solid-icon";

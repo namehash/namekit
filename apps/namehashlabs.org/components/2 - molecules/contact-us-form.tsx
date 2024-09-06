@@ -7,6 +7,7 @@ import cc from "classcat";
 import { ContactFormDataProps } from "@/lib/types/ContactFormDataProps";
 import { contactFormSchema } from "@/lib/schemas/contactFormSchema";
 import * as Yup from "yup";
+import { Button } from "@namehash/namekit-react";
 
 enum FormFields {
   Name = "name",
@@ -326,16 +327,14 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
             </div>
             <input type="hidden" id="source" name="source" value="" />
             <div className="flex h-full justify-end items-end">
-              <button
+              <Button
                 disabled={isLoading}
                 type="submit"
-                className={cc([
-                  `rounded-lg px-4 py-2 text-center text-base font-medium text-white shadow-sm hover:bg-gray-800 w-full lg:w-auto duration-300 transition-all bg-black`,
-                  isLoading && "opacity-50",
-                ])}
+                variant="primary"
+                size="medium"
               >
                 {isLoading ? "Sending..." : "Send message"}
-              </button>
+              </Button>
             </div>
           </div>
         </div>

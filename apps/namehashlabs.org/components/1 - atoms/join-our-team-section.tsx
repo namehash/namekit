@@ -1,5 +1,6 @@
 "use client";
 
+import { Link } from "@namehash/namekit-react";
 import Image from "next/image";
 import Balancer from "react-wrap-balancer";
 
@@ -37,12 +38,13 @@ export const JoinOurTeamSection = () => {
                   to apply to join our team. Interested? Send an email with your
                   details to{" "}
                 </p>
-                <a
+                <Link
+                  variant="underline"
+                  size="large"
                   href="mailto:hello@namehashlabs.org"
-                  className="underline hover:text-black transition-colors duration-200"
                 >
                   hello@namehashlabs.org
-                </a>
+                </Link>
               </Balancer>
             </div>
             <br />
