@@ -8,11 +8,17 @@ const meta: Meta<typeof TruncatedText> = {
   component: TruncatedText,
   title: "Namekit/TruncatedText",
   argTypes: {
+    text: {
+      control: { type: "text" },
+    },
     maxDisplayWidth: {
       control: { type: "number" },
     },
     textStylingClasses: {
       control: { type: "text" },
+    },
+    displayTooltipWhenTextOverflows: {
+      control: { type: "boolean" },
     },
     maxTooltipWidth: {
       control: { type: "number" },
