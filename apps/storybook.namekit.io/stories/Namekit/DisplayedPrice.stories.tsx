@@ -4,6 +4,7 @@ import {
   CurrencySymbology,
   PriceDisplaySize,
   CurrencySymbolPosition,
+  CurrencySymbolSize,
 } from "@namehash/namekit-react/client";
 import type { Meta, StoryObj } from "@storybook/react";
 import {
@@ -11,8 +12,26 @@ import {
   Currency,
   numberAsPrice,
   Price,
+  PriceCurrencyFormat,
 } from "@namehash/ens-utils";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+
+const getCurrencySymbolSizeBasedOnPriceDisplaySize = (
+  displaySize: PriceDisplaySize | undefined,
+) => {
+  switch (displaySize) {
+    case PriceDisplaySize.Large:
+      return CurrencySymbolSize.Large;
+    case PriceDisplaySize.Medium:
+      return CurrencySymbolSize.Large;
+    case PriceDisplaySize.Small:
+      return CurrencySymbolSize.Small;
+    case PriceDisplaySize.Micro:
+      return CurrencySymbolSize.Small;
+    default:
+      return CurrencySymbolSize.Large;
+  }
+};
 
 const meta: Meta<typeof DisplayedPrice> = {
   component: DisplayedPrice,
@@ -56,37 +75,22 @@ const meta: Meta<typeof DisplayedPrice> = {
      * P.S.: For those that have the necessary abilities please note how you could set
      * any text, any HTML element, or even React components you want as this prop's value!
      *
-     * ParagraphElm: a simple paragraph element with a text "Whatever you want"
-     * EmptyDivElm: an empty div element
-     * CustomEthIconSymbol: the `@namehash/namekit-react`'s `CurrencySymbol` as a Symbol
-     * CustomEthAcronymSymbol: the `@namehash/namekit-react`'s `CurrencySymbol` as an Acronym
+     * WhateverJSX: a simple JSX with a text saying "Whatever JSX you want"
      * undefined: undefined value, which results in`@namehash/namekit-react`'s default symbology
      * null: null value, which results in no symbol
      */
     symbol: {
-      options: [
-        "CustomEthAcronymSymbol",
-        "CustomEthIconSymbol",
-        "ParagraphElm",
-        "EmptyDivElm",
-        "undefined",
-        "null",
-      ],
+      control: {
+        type: "select",
+        labels: {
+          WhateverJSX: "Whatever JSX you want",
+          undefined: "undefined (uses default symbology)",
+          null: "null",
+        },
+      },
+      options: ["WhateverJSX", "undefined", "null"],
       mapping: {
-        CustomEthIconSymbol: (
-          <CurrencySymbol
-            currency={Currency.Eth}
-            symbology={CurrencySymbology.Icon}
-          />
-        ),
-        CustomEthAcronymSymbol: (
-          <CurrencySymbol
-            currency={Currency.Eth}
-            symbology={CurrencySymbology.Acronym}
-          />
-        ),
-        ParagraphElm: <p>Whatever you want</p>,
-        EmptyDivElm: <div></div>,
+        WhateverJSX: <p>Whatever JSX you want</p>,
         undefined: undefined,
         null: null,
       },
@@ -127,8 +131,9 @@ const meta: Meta<typeof DisplayedPrice> = {
   },
   args: {
     price: numberAsPrice(1, Currency.Eth),
-    symbolPosition: CurrencySymbolPosition.Left,
+    symbol: undefined,
     displaySize: PriceDisplaySize.Medium,
+    symbolPosition: CurrencySymbolPosition.Left,
   },
 };
 
@@ -231,6 +236,42 @@ export const CustomSymbolUsingOurCurrencySymbol: Story = {
       />
     ),
   },
+  render: (args) => {
+    const [currency, setCurrency] = useState<Currency>(args.price.currency);
+    const [currencySize, setCurrencySize] = useState<CurrencySymbolSize>(
+      CurrencySymbolSize.Large,
+    );
+
+    useEffect(() => {
+      setCurrencySize(
+        getCurrencySymbolSizeBasedOnPriceDisplaySize(args.displaySize),
+      );
+    }, [args.displaySize]);
+
+    useEffect(() => {
+      setCurrency(args.price.currency);
+    }, [args.price.currency]);
+
+    return (
+      <DisplayedPrice
+        {...args}
+        symbol={
+          <div
+            style={{
+              marginBottom:
+                currencySize === CurrencySymbolSize.Large ? "0.1rem" : "",
+            }}
+          >
+            <CurrencySymbol
+              size={currencySize}
+              currency={currency}
+              symbology={CurrencySymbology.Icon}
+            />
+          </div>
+        }
+      ></DisplayedPrice>
+    );
+  },
 };
 export const CustomSymbolUsingCustomAcronymSymbology: Story = {
   args: {
@@ -255,142 +296,81 @@ export const CurrencyWithSymbolAtTheRight: Story = {
     symbolPosition: CurrencySymbolPosition.Right,
   },
 };
-export const EthPriceWithCurrencySymbol: Story = {
-  args: {
-    price: numberAsPrice(1, Currency.Eth),
-  },
-};
-export const WethPriceWithCurrencySymbol: Story = {
-  args: {
-    price: numberAsPrice(1, Currency.Weth),
-  },
-};
-export const DaiPriceWithCurrencySymbol: Story = {
-  args: {
-    price: numberAsPrice(1, Currency.Dai),
-  },
-};
-export const UsdcPriceWithCurrencySymbol: Story = {
-  args: {
-    price: numberAsPrice(1, Currency.Usdc),
-  },
-};
-export const UsdPriceWithCurrencySymbol: Story = {
-  args: {
-    price: numberAsPrice(1, Currency.Usd),
-  },
-};
-export const EthWithCustomCurrencyIcon: Story = {
-  args: {
-    price: numberAsPrice(1.234, Currency.Eth),
-    symbol: (
-      <CurrencySymbol
-        currency={Currency.Eth}
-        symbology={CurrencySymbology.Icon}
-      />
-    ),
-  },
-};
-export const UsdWithCustomCurrencyIcon: Story = {
-  args: {
-    price: numberAsPrice(1.23, Currency.Usd),
-    symbol: (
-      <CurrencySymbol
-        currency={Currency.Usd}
-        symbology={CurrencySymbology.Icon}
-      />
-    ),
-  },
-};
-export const EthUnderflowDisplayPrice: Story = {
-  args: {
-    price: numberAsPrice(0.001, Currency.Eth),
-  },
-};
-export const UsdUnderflowDisplayPrice: Story = {
-  args: {
-    price: numberAsPrice(0.01, Currency.Usd),
-  },
-};
-export const EthOverflowDisplayPrice: Story = {
-  args: {
-    price: numberAsPrice(1000000, Currency.Eth),
-  },
-};
-export const UsdOverflowDisplayPriceWithCustomCurrencyIcon: Story = {
+export const OverflowDisplayPriceWithCustomCurrencyIcon: Story = {
   args: {
     price: numberAsPrice(100000000, Currency.Usd),
-    symbol: (
-      <CurrencySymbol
-        currency={Currency.Usd}
-        symbology={CurrencySymbology.Icon}
-      />
-    ),
+    displaySize: PriceDisplaySize.Small,
+  },
+  render: (args) => {
+    const [currency, setCurrency] = useState<Currency>(args.price.currency);
+    const [currencySize, setCurrencySize] = useState<CurrencySymbolSize>();
+
+    useEffect(() => {
+      setCurrencySize(
+        getCurrencySymbolSizeBasedOnPriceDisplaySize(args.displaySize),
+      );
+    }, [args.displaySize]);
+
+    useEffect(() => {
+      setCurrency(args.price.currency);
+    }, [args.price.currency]);
+
+    return (
+      <DisplayedPrice
+        {...args}
+        price={numberAsPrice(
+          Number(PriceCurrencyFormat[currency].MaxDisplayValue) + 1,
+          currency,
+        )}
+        symbol={
+          args.symbol || (
+            <CurrencySymbol
+              size={currencySize}
+              currency={currency}
+              symbology={CurrencySymbology.Icon}
+            />
+          )
+        }
+      ></DisplayedPrice>
+    );
   },
 };
-export const UsdcUnderflowDisplayPriceWithCustomCurrencyIcon: Story = {
+export const UnderflowDisplayPriceWithCustomCurrencyIcon: Story = {
   args: {
     price: numberAsPrice(0.01, Currency.Usdc),
-    symbol: (
-      <CurrencySymbol
-        currency={Currency.Usdc}
-        symbology={CurrencySymbology.Icon}
-      />
-    ),
+    displaySize: PriceDisplaySize.Small,
   },
-};
-export const UsdcOverflowDisplayPriceWithCustomCurrencyIcon: Story = {
-  args: {
-    price: numberAsPrice(100000000, Currency.Usdc),
-    symbol: (
-      <CurrencySymbol
-        currency={Currency.Usdc}
-        symbology={CurrencySymbology.Icon}
-      />
-    ),
-  },
-};
-export const DaiUnderflowDisplayPriceWithCustomCurrencyIcon: Story = {
-  args: {
-    price: numberAsPrice(0.01, Currency.Dai),
-    symbol: (
-      <CurrencySymbol
-        currency={Currency.Dai}
-        symbology={CurrencySymbology.Icon}
-      />
-    ),
-  },
-};
-export const DaiOverflowDisplayPriceWithCustomCurrencyIcon: Story = {
-  args: {
-    price: numberAsPrice(100000000, Currency.Dai),
-    symbol: (
-      <CurrencySymbol
-        currency={Currency.Dai}
-        symbology={CurrencySymbology.Icon}
-      />
-    ),
-  },
-};
-export const WethUnderflowDisplayPriceWithCustomCurrencyIcon: Story = {
-  args: {
-    price: numberAsPrice(0.001, Currency.Weth),
-    symbol: (
-      <CurrencySymbol
-        currency={Currency.Weth}
-        symbology={CurrencySymbology.Icon}
-      />
-    ),
-  },
-};
-export const WethOverflowDisplayPriceWithCustomCurrencyIcon: Story = {
-  args: {
-    price: numberAsPrice(1000000, Currency.Weth),
-    symbol: (
-      <CurrencySymbol
-        currency={Currency.Weth}
-        symbology={CurrencySymbology.Icon}
-      />
-    ),
+  render: (args) => {
+    const [currency, setCurrency] = useState<Currency>(args.price.currency);
+    const [currencySize, setCurrencySize] = useState<CurrencySymbolSize>();
+
+    useEffect(() => {
+      setCurrencySize(
+        getCurrencySymbolSizeBasedOnPriceDisplaySize(args.displaySize),
+      );
+    }, [args.displaySize]);
+
+    useEffect(() => {
+      setCurrency(args.price.currency);
+    }, [args.price.currency]);
+
+    return (
+      <DisplayedPrice
+        {...args}
+        price={numberAsPrice(
+          Number(PriceCurrencyFormat[currency].MinDisplayValue) - 1,
+          currency,
+        )}
+        symbol={
+          args.symbol || (
+            <CurrencySymbol
+              size={currencySize}
+              currency={currency}
+              symbology={CurrencySymbology.Icon}
+            />
+          )
+        }
+      ></DisplayedPrice>
+    );
   },
 };

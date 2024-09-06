@@ -1,5 +1,8 @@
 import { Currency } from "@namehash/ens-utils";
-import { CurrencySymbol } from "@namehash/namekit-react/client";
+import {
+  CurrencySymbol,
+  CurrencySymbology,
+} from "@namehash/namekit-react/client";
 import { CurrencySymbolSize } from "@namehash/namekit-react/client";
 import type { Meta, StoryObj } from "@storybook/react";
 
@@ -22,22 +25,24 @@ const meta: Meta<typeof CurrencySymbol> = {
       control: {
         type: "select",
         labels: {
-          [CurrencySymbolSize.Large]: "Large (20px)",
-          [CurrencySymbolSize.Small]: "Small (16px)",
+          [CurrencySymbolSize.Large]:
+            "Large (20px) (only applicable for Icon symbology)",
+          [CurrencySymbolSize.Small]:
+            "Small (16px) (only applicable for Icon symbology)",
         },
       },
     },
+    describeCurrencyInTooltip: { control: { type: "boolean" } },
     symbology: {
       options: Object.keys(CurrencySymbology),
       control: { type: "select" },
     },
-    describeCurrencyInTooltip: { control: { type: "boolean" } },
   },
   args: {
     currency: Currency.Eth,
     iconSize: CurrencySymbolSize.Small,
-    symbology: CurrencySymbology.Symbol,
     describeCurrencyInTooltip: true,
+    symbology: CurrencySymbology.Symbol,
   },
 };
 
