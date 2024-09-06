@@ -22,19 +22,19 @@ import { Tooltip } from "./Tooltip";
 interface TruncatedTextProps {
   text: string;
   maxDisplayWidth: number;
-  maxTooltipWidth?: number;
   textStylingClasses?: string;
-  tooltipTextStylingClasses?: string;
   displayTooltipWhenTextOverflows?: boolean;
+  maxTooltipWidth?: number;
+  tooltipTextStylingClasses?: string;
 }
 
 export const TruncatedText = ({
   text,
   maxDisplayWidth,
-  maxTooltipWidth,
   textStylingClasses = "",
-  tooltipTextStylingClasses = "",
   displayTooltipWhenTextOverflows = true,
+  maxTooltipWidth,
+  tooltipTextStylingClasses = "",
 }: TruncatedTextProps) => {
   const invisibleTextWidthTester = useRef<null | HTMLParagraphElement>(null);
 
