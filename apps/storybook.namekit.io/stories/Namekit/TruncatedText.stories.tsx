@@ -43,7 +43,7 @@ export const ShortText: Story = {
 export const ShortTextStyled: Story = {
   args: {
     text: SHORT_TEXT,
-    textStylingClasses: "ens-webfont custom-class-name huge-font-size",
+    textStylingClasses: "ens-webfont colorful-text huge-font-size",
   },
 };
 export const LongText: Story = {
@@ -54,7 +54,7 @@ export const LongText: Story = {
 export const LongTextStyled: Story = {
   args: {
     text: LONG_TEXT,
-    textStylingClasses: "ens-webfont custom-class-name huge-font-size",
+    textStylingClasses: "ens-webfont colorful-text huge-font-size",
   },
 };
 export const DefaultTooltipTextStyles: Story = {
