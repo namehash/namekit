@@ -27,6 +27,11 @@ const meta: Meta<typeof TruncatedText> = {
       control: { type: "text" },
     },
   },
+  args: {
+    textStylingClasses: "",
+    displayTooltipWhenTextOverflows: true,
+    tooltipTextStylingClasses: "",
+  },
 };
 
 export default meta;
