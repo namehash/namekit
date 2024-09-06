@@ -62,10 +62,10 @@ export const TruncatedText = ({
 
   const getTextElm = (
     classes: string,
-    maxWidth = maxDisplayWidth,
+    maxWidth?: number,
   ): JSX.Element => {
     return (
-      <p style={{ maxWidth }} className={classes}>
+      <p style={maxWidth !== undefined ? { maxWidth } : undefined} className={classes}>
         {text}
       </p>
     );
@@ -74,7 +74,7 @@ export const TruncatedText = ({
   const textDefaultClasses = "nk-truncate";
 
   const renderText = (): JSX.Element => {
-    return getTextElm(cc([textStylingClasses, textDefaultClasses]));
+    return getTextElm(cc([textStylingClasses, textDefaultClasses]), maxDisplayWidth);
   };
 
   const renderTextWithATooltip = (): JSX.Element => {

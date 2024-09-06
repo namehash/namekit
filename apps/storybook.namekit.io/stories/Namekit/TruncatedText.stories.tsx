@@ -72,7 +72,6 @@ export const SmallMaxDisplayWidth: Story = {
   args: {
     text: LONG_TEXT,
     maxDisplayWidth: 60,
-    maxTooltipWidth: 500,
   },
 };
 export const BigMaxDisplayWidth: Story = {
