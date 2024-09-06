@@ -19,26 +19,26 @@ const meta: Meta<typeof TruncatedText> = {
   component: TruncatedText,
   title: "Namekit/TruncatedText",
   argTypes: {
-    textStylingClasses: {
-      control: { type: "text" },
-    },
-    tooltipTextStylingClasses: {
-      control: { type: "text" },
-    },
     maxDisplayWidth: {
       control: { type: "number" },
+    },
+    textStylingClasses: {
+      control: { type: "text" },
     },
     maxTooltipWidth: {
       control: { type: "number" },
     },
+    tooltipTextStylingClasses: {
+      control: { type: "text" },
+    },
   },
   args: {
-    textStylingClasses: "",
-    tooltipTextStylingClasses: "",
-    maxDisplayWidth: 300,
-    maxTooltipWidth: 400,
     text: "",
+    maxDisplayWidth: 300,
+    textStylingClasses: "",
     displayTooltipWhenTextOverflows: true,
+    maxTooltipWidth: 400,
+    tooltipTextStylingClasses: "",
   },
 };
 
@@ -53,8 +53,8 @@ export const ShortText: Story = {
 };
 export const ShortTextStyled: Story = {
   args: {
-    textStylingClasses: "ens-webfont custom-class-name huge-font-size",
     text: getExampleTruncatedText(TruncatedTextExample.SHORT_TEXT),
+    textStylingClasses: "ens-webfont custom-class-name huge-font-size",
   },
 };
 export const LongText: Story = {
@@ -64,8 +64,8 @@ export const LongText: Story = {
 };
 export const LongTextStyled: Story = {
   args: {
-    textStylingClasses: "ens-webfont custom-class-name huge-font-size",
     text: getExampleTruncatedText(TruncatedTextExample.LONG_TEXT),
+    textStylingClasses: "ens-webfont custom-class-name huge-font-size",
   },
 };
 export const DefaultTooltipTextStyles: Story = {
@@ -75,27 +75,27 @@ export const DefaultTooltipTextStyles: Story = {
 };
 export const CustomTooltipTextStyles: Story = {
   args: {
-    tooltipTextStylingClasses: "ens-webfont colorful-text",
     text: getExampleTruncatedText(TruncatedTextExample.LONG_TEXT),
+    tooltipTextStylingClasses: "ens-webfont colorful-text",
   },
 };
 export const SmallMaxDisplayWidth: Story = {
   args: {
+    text: getExampleTruncatedText(TruncatedTextExample.LONG_TEXT),
     maxDisplayWidth: 60,
     maxTooltipWidth: 500,
-    text: getExampleTruncatedText(TruncatedTextExample.LONG_TEXT),
   },
 };
 export const BigMaxDisplayWidth: Story = {
   args: {
-    maxDisplayWidth: 600,
     text: getExampleTruncatedText(TruncatedTextExample.LONG_TEXT),
+    maxDisplayWidth: 600,
   },
 };
 export const WithoutTooltip: Story = {
   args: {
+    text: getExampleTruncatedText(TruncatedTextExample.LONG_TEXT),
     maxDisplayWidth: 200,
     displayTooltipWhenTextOverflows: false,
-    text: getExampleTruncatedText(TruncatedTextExample.LONG_TEXT),
   },
 };
