@@ -105,7 +105,7 @@ export const TruncatedText = ({
               1. Truncated on a single line with a max width of `maxDisplayWidth`.
                  This is used as the anchor text trigger of a `Tooltip`.
               2. Untruncated on one or more lines inside a `Tooltip`, with a
-                 max width per line of of `maxTooltipWidth`.
+                 max width per line of `maxTooltipWidth`.
           */}
             <Tooltip trigger={renderText()}>
               {getTextElm(
