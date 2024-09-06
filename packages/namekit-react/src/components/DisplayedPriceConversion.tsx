@@ -2,10 +2,7 @@ import { DisplayedPrice, DisplayedPriceProps } from "./DisplayedPrice";
 import { Price } from "@namehash/ens-utils";
 import { Tooltip } from "./Tooltip";
 import React from "react";
-import {
-  CurrencySymbol,
-  CurrencySymbology,
-} from "./CurrencySymbol/CurrencySymbol";
+import { CurrencySymbol, CurrencySymbology } from "./CurrencySymbol";
 
 interface DisplayedPriceConversionProps extends DisplayedPriceProps {
   convertedPrice: Price;

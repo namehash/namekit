@@ -1,12 +1,10 @@
 import { Currency, numberAsPrice } from "@namehash/ens-utils";
 import {
-  CurrencySymbol,
   CurrencySymbology,
   CurrencySymbolPosition,
-  CurrencySymbolSize,
   DisplayedPriceConversion,
   PriceDisplaySize,
-} from "@namehash/namekit-react";
+} from "@namehash/namekit-react/client";
 import type { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 

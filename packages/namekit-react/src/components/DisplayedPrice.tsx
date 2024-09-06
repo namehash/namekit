@@ -1,10 +1,7 @@
 import { type Price, formattedPrice } from "@namehash/ens-utils";
 import React from "react";
 import cc from "classcat";
-import {
-  CurrencySymbol,
-  CurrencySymbolSize,
-} from "./CurrencySymbol/CurrencySymbol";
+import { CurrencySymbol } from "./CurrencySymbol";
 
 export const PriceDisplaySize = {
   Micro: "nk-text-[12px] md:nk-text-[14px] nk-font-normal",

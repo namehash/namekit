@@ -1,10 +1,10 @@
 import {
   CurrencySymbol,
   DisplayedPrice,
-  PriceDisplaySize,
   CurrencySymbology,
+  PriceDisplaySize,
   CurrencySymbolPosition,
-} from "@namehash/namekit-react";
+} from "@namehash/namekit-react/client";
 import type { Meta, StoryObj } from "@storybook/react";
 import {
   convertCurrencyWithRates,

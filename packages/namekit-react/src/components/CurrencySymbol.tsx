@@ -1,5 +1,5 @@
 import { PriceCurrencyFormat, Currency } from "@namehash/ens-utils";
-import { Tooltip } from "../Tooltip";
+import { Tooltip } from "./Tooltip";
 
 import { UsdSymbol } from "./icons/UsdSymbol";
 import { UsdcSymbol } from "./icons/UsdcSymbol";
