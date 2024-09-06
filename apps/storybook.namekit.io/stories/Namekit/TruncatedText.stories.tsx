@@ -27,14 +27,6 @@ const meta: Meta<typeof TruncatedText> = {
       control: { type: "text" },
     },
   },
-  args: {
-    text: "",
-    maxDisplayWidth: 300,
-    textStylingClasses: "",
-    displayTooltipWhenTextOverflows: true,
-    maxTooltipWidth: 400,
-    tooltipTextStylingClasses: "",
-  },
 };
 
 export default meta;
@@ -44,33 +36,39 @@ type Story = StoryObj<typeof TruncatedText>;
 export const ShortText: Story = {
   args: {
     text: SHORT_TEXT,
+    maxDisplayWidth: 300,
   },
 };
 export const ShortTextStyled: Story = {
   args: {
     text: SHORT_TEXT,
+    maxDisplayWidth: 300,
     textStylingClasses: "ens-webfont colorful-text",
   },
 };
 export const LongText: Story = {
   args: {
     text: LONG_TEXT,
+    maxDisplayWidth: 300,
   },
 };
 export const LongTextStyled: Story = {
   args: {
     text: LONG_TEXT,
+    maxDisplayWidth: 300,
     textStylingClasses: "ens-webfont colorful-text",
   },
 };
 export const DefaultTooltipTextStyles: Story = {
   args: {
     text: LONG_TEXT,
+    maxDisplayWidth: 300,
   },
 };
 export const CustomTooltipTextStyles: Story = {
   args: {
     text: LONG_TEXT,
+    maxDisplayWidth: 300,
     tooltipTextStylingClasses: "ens-webfont colorful-text",
   },
 };
@@ -89,7 +87,7 @@ export const BigMaxDisplayWidth: Story = {
 export const WithoutTooltip: Story = {
   args: {
     text: LONG_TEXT,
-    maxDisplayWidth: 200,
+    maxDisplayWidth: 300,
     displayTooltipWhenTextOverflows: false,
   },
 };
