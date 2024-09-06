@@ -22,25 +22,25 @@ import { Tooltip } from "./Tooltip";
 interface TruncatedTextProps {
   text: string;
   maxDisplayWidth: number;
-  maxTooltipWidth?: number;
   textStylingClasses?: string;
-  tooltipTextStylingClasses?: string;
   displayTooltipWhenTextOverflows?: boolean;
+  maxTooltipWidth?: number;
+  tooltipTextStylingClasses?: string;
 }
 
 export const TruncatedText = ({
   text,
   maxDisplayWidth,
-  maxTooltipWidth,
   textStylingClasses = "",
-  tooltipTextStylingClasses = "",
   displayTooltipWhenTextOverflows = true,
+  maxTooltipWidth,
+  tooltipTextStylingClasses = "",
 }: TruncatedTextProps) => {
   const invisibleTextWidthTester = useRef<null | HTMLParagraphElement>(null);
 
   /* 
-    Below state is only true if the text displayed 
-    is longer than text maxDisplayWidth
+    `textOverflows` is `true` if and only if the width of `text` is greater
+    than `maxDisplayWidth`.
   */
   const [textOverflows, setTextOverflows] = useState<boolean>(false);
 
@@ -62,10 +62,10 @@ export const TruncatedText = ({
 
   const getTextElm = (
     classes: string,
-    maxWidth = maxDisplayWidth,
+    maxWidth?: number,
   ): JSX.Element => {
     return (
-      <p style={{ maxWidth }} className={classes}>
+      <p style={maxWidth !== undefined ? { maxWidth } : undefined} className={classes}>
         {text}
       </p>
     );
@@ -74,19 +74,13 @@ export const TruncatedText = ({
   const textDefaultClasses = "nk-truncate";
 
   const renderText = (): JSX.Element => {
-    return getTextElm(cc([textStylingClasses, textDefaultClasses]));
+    return getTextElm(cc([textStylingClasses, textDefaultClasses]), maxDisplayWidth);
   };
 
   const renderTextWithATooltip = (): JSX.Element => {
     return (
       <div>
-        {/* 
-        We use the invisible div defined below to acknowledge the 
-        pixels amount required to display the full 'text' in the DOM.
 
-        We then use this pixels count in comparison to maxDisplayWidth
-        to determine if CSS truncation and full-text tooltip are needed. 
-      */}
 
         <div
           className={cc([
@@ -94,25 +88,24 @@ export const TruncatedText = ({
             "nk-invisible nk-absolute nk-left-0 nk-top-0 nk-pointer-events-none",
           ])}
         >
+        {/* 
+          This invisible div is used to measure the true width of `text` as it
+          would be rendered in the DOM.
+        */}
           <div ref={invisibleTextWidthTester}>{text}</div>
         </div>
 
-        {/*
-          Below HTML is the rendered text and tooltip, being the
-          tooltip only shown when it is needed, on mouse hover. 
-          
-          But when is it needed?
-          Whenever the text displayed is longer than maxDisplayWidth,
-          which means, the textOverflows state is true.
-        */}
         {textOverflows ? (
           <>
             {/* 
-            To ensure the TruncatedText doesn't appear wider than maxDisplayWidth,
-            if the width required to display the full text exceeds that maximum CSS 
-            automatically truncates the displayed text with an ellipsis ensuring it 
-            fits within the required maximum width. If and only if CSS performs this 
-            text truncation, a tooltip allows users to view the full text onMouseOver. 
+              
+              `text` overflows `maxDisplayWidth`, therefore we need to render
+              it twice:
+
+              1. Truncated on a single line with a max width of `maxDisplayWidth`.
+                 This is used as the anchor text trigger of a `Tooltip`.
+              2. Untruncated on one or more lines inside a `Tooltip`, with a
+                 max width per line of `maxTooltipWidth`.
           */}
             <Tooltip trigger={renderText()}>
               {getTextElm(
@@ -125,6 +118,10 @@ export const TruncatedText = ({
             </Tooltip>
           </>
         ) : (
+
+          // `text` doesn't overflow `maxDisplayWidth`, therefore we can render
+          // it once without any truncation
+          
           renderText()
         )}
       </div>
