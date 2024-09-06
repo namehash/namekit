@@ -1,9 +1,12 @@
-import { defineConfig } from "tsup";
+import { defineConfig } from 'tsup';
 
 export default defineConfig({
-  entry: ["src/index.ts"],
+  entry: {
+    index: 'src/index.ts',  
+    client: 'src/client.ts', 
+  },
+  dts: true, 
   format: ["esm"],
-  sourcemap: true,
   clean: true,
-  dts: true,
+  skipNodeModulesBundle: true,
 });

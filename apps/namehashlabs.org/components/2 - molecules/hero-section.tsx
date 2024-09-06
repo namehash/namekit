@@ -1,6 +1,7 @@
 "use client";
 
-import { ChevronDown, CalButton, BeansBg } from "../1 - atoms";
+import { IconButton } from "@namehash/namekit-react";
+import { ChevronDown, CalendarButton, BeansBg } from "../1 - atoms";
 import { Balancer } from "react-wrap-balancer";
 
 export const HeroSection = () => {
@@ -19,9 +20,7 @@ export const HeroSection = () => {
           </Balancer>
         </div>
         <div className="flex items-center justify-center mt-10">
-          <CalButton className="bg-black cursor-pointer py-[13px] hover:bg-gray-800 transition-colors duration-200 px-[25px] border rounded-[8px] flex text-sm leading-5 font-medium lg:text-base lg:leading-6 text-white">
-            Integrate with ENS
-          </CalButton>
+          <CalendarButton>Integrate with ENS</CalendarButton>
         </div>
       </div>
       <BeansBg className="absolute right-0 top-0 h-full w-full z-10 animate-spinSlow" />
@@ -52,18 +51,20 @@ export const HeroSection = () => {
         }}
       />
 
-      <button
-        onClick={() => {
-          const theVision = document.getElementById("theVisionSection");
-          if (theVision) {
-            theVision.scrollIntoView({ behavior: "smooth" });
-          }
-        }}
-        className="px-20 py-2.5 z-20 border rounded-full border-gray-300 bg-white absolute bottom-10 landscape:bottom-0 tall:landscape:bottom-0 hover:bg-gray-100 transition-colors duration-200"
-      >
-        <ChevronDown />
-        <span className="sr-only">Scroll to the next section</span>
-      </button>
+      <div className="z-20 absolute bottom-10 landscape:bottom-0 tall:landscape:bottom-0">
+        <IconButton
+          variant="secondary"
+          className="!px-20 !rounded-full"
+          size="large"
+          onClick={() => {
+            const theVision = document.getElementById("theVisionSection");
+            if (theVision) {
+              theVision.scrollIntoView({ behavior: "smooth" });
+            }
+          }}
+          icon={<ChevronDown />}
+        />
+      </div>
     </div>
   );
 };

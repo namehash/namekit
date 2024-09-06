@@ -1,9 +1,6 @@
 import { Currency } from "@namehash/ens-utils";
-import {
-  CurrencySymbol,
-  CurrencySymbology,
-  CurrencySymbolSize,
-} from "@namehash/namekit-react";
+import { CurrencySymbol } from "@namehash/namekit-react/client";
+import { CurrencySymbolSize } from "@namehash/namekit-react/client";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof CurrencySymbol> = {

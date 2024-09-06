@@ -3,11 +3,8 @@ import { defineConfig } from "tsup";
 export default defineConfig({
   entry: ["src/index.ts"],
   format: ["esm"],
-  splitting: true,
-  sourcemap: true,
-  minify: false,
+  external: ["react", "react-dom"],
   clean: true,
   skipNodeModulesBundle: true,
   dts: true,
-  external: ["node_modules"],
 });

@@ -18,7 +18,7 @@ export function Tooltip({
   maxTooltipWidth = DEFAULT_MAX_TOOLTIP_WIDTH,
 
   /*
-    Props are applied to the Float component, 
+    Props are applied to the Float component,
     which is a wrapper for the tooltip "children".
   */
   ...props

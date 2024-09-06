@@ -8,8 +8,10 @@ import {
 
 import { toast } from "sonner";
 
+import { IconButton } from "@namehash/namekit-react";
+
 import cc from "classcat";
-import { Tooltip } from "../Tooltip/Tooltip";
+import { Tooltip } from "@namehash/namekit-react/client";
 import { CheckResultCode } from "@namehash/nameguard";
 import { checkResultCodeTextColor } from "../../utils/text";
 import { DisplayedName } from "../DisplayedName/DisplayedName";
@@ -75,15 +77,15 @@ export function Share({ name }: ShareProps) {
     <Fragment>
       <Tooltip
         trigger={
-          <button
-            className="flex items-center justify-between p-2 appearance-none bg-transparent hover:bg-black/5 transition rounded-md focus:outline-none"
+          <IconButton
+            variant="ghost"
+            icon={
+              <ArrowUpTrayIcon className="text-black fill-current w-6 h-6" />
+            }
             onClick={() => setIsOpen(true)}
           >
-            <ArrowUpTrayIcon className="text-black fill-current w-6 h-6" />
-            <span className="font-medium ml-1.5 text-sm hidden md:inline-block">
-              Share
-            </span>
-          </button>
+            Share
+          </IconButton>
         }
       >
         Share report
@@ -122,12 +124,14 @@ export function Share({ name }: ShareProps) {
                       Share NameGuard report
                     </Dialog.Title>
                     <div className="flex items-center right-0 inset-y-0 absolute pr-6 z-20">
-                      <button
+                      <IconButton
+                        icon={
+                          <XMarkIcon className="w-6 h-6 fill-current text-gray-400" />
+                        }
                         onClick={() => setIsOpen(false)}
-                        className="flex items-center justify-between p-2 -mr-3 appearance-none bg-transparent hover:bg-black/5 transition rounded-md"
-                      >
-                        <XMarkIcon className="w-6 h-6 fill-current text-gray-400" />
-                      </button>
+                        variant="ghost"
+                        className="!p-2"
+                      />
                     </div>
                   </div>
 
