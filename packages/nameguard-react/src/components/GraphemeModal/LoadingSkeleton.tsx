@@ -49,6 +49,10 @@ export const LoadingSkeleton = () => {
             <div className="rounded h-2 w-8 bg-gradient-to-br from-gray-200 to-gray-100"></div>
             <div className="rounded h-2 w-16 bg-gradient-to-br from-gray-200 to-gray-100"></div>
           </div>
+          <div className="flex flex-col space-y-3">
+            <div className="rounded h-2 w-8 bg-gradient-to-br from-gray-200 to-gray-100"></div>
+            <div className="rounded h-2 w-16 bg-gradient-to-br from-gray-200 to-gray-100"></div>
+          </div>
         </div>
       </div>
     </div>
