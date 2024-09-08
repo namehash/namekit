@@ -11,7 +11,7 @@ import React from "react";
 /**
  * The size of the `CurrencySymbol` icon.
  * This is defined as a mapping from a `CurrencySymbolSize` to a number.
- * This number represents the size (width and height) a `CurrencySymbol` should be displayed at, in pixels.
+ * This number represents the size (width and height) that the icon for a `CurrencySymbol` should be displayed at, in pixels.
  */
 export const CurrencySymbolSize = {
   Small: 16,
