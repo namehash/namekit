@@ -6,3 +6,4 @@ export {
   CurrencySymbol,
   CurrencySymbolSize,
 } from "./components/CurrencySymbol/CurrencySymbol";
+export { TruncatedText } from "./components/TruncatedText";
