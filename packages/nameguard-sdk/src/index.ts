@@ -450,7 +450,7 @@ export interface SecurePrimaryNameResult {
    * NameGuard report for the `primary_name`.
    *
    * * `null` if `primary_name_status` is `no_primary_name` (primary name is not found)
-   * * `null` if `SecurePrimaryNameOptions.computeNameGuardReport` is `false` or not provided
+   * * `null` if `SecurePrimaryNameOptions.returnNameGuardReport` is `false` or not provided
    */
   nameguard_result: NameGuardReport | null;
 }
@@ -491,7 +491,7 @@ interface InspectLabelhashOptions {
 }
 
 export interface SecurePrimaryNameOptions {
-  computeNameGuardReport?: boolean;
+  returnNameGuardReport?: boolean;
 }
 
 interface FakeEthNameOptions {}
@@ -682,7 +682,7 @@ export class NameGuard {
    *
    * Returns `display_name` to be shown to users and estimates `impersonation_status`
    *
-   * If `address` has a primary name and `options.computeNameGuardReport` is `True`, then NameGuard will attempt to inspect that primary name. Else, NameGuard will not perform any primary name inspection and the returned  `nameguard_result` field  will be `null`.
+   * If `address` has a primary name and `options.returnNameGuardReport` is `True`, then NameGuard will attempt to inspect that primary name. Else, NameGuard will not perform any primary name inspection and the returned `nameguard_result` field will be `null`.
    * 
    * @param {string} address An Ethereum address.
    * @param {SecurePrimaryNameOptions} options The options for the secure primary name.
@@ -699,12 +699,11 @@ export class NameGuard {
     }
 
     const network_name = this.network;
-    const computeNameGuardReport =
-      options?.computeNameGuardReport || DEFAULT_COMPUTE_NAMEGUARD_REPORT;
+    const returnNameGuardReport =
+      options?.returnNameGuardReport || DEFAULT_COMPUTE_NAMEGUARD_REPORT;
 
-    // TODO: We need to add a `computeNameGuardReport` parameter to the API.
     let response = await this.rawRequest(
-      `secure-primary-name/${network_name}/${address}?return_nameguard_report=${computeNameGuardReport}`,
+      `secure-primary-name/${network_name}/${address}?return_nameguard_report=${returnNameGuardReport}`,
     );
 
     return response;

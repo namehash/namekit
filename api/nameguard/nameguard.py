@@ -441,7 +441,7 @@ class NameGuard:
         )
 
     async def secure_primary_name(
-        self, address: str, network_name: str, return_nameguard_report: bool = True
+        self, address: str, network_name: str, return_nameguard_report: bool = False
     ) -> SecurePrimaryNameResult:
         try:
             domain = self.ns[network_name].name(address)

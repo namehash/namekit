@@ -489,7 +489,7 @@ async def inspect_labelhash_post(request: InspectLabelhashRequest) -> NameGuardR
     },
 )
 async def secure_primary_name_get(
-    address: str, network_name: NetworkName, return_nameguard_report: bool = True
+    address: str, network_name: NetworkName, return_nameguard_report: bool = False
 ) -> SecurePrimaryNameResult:
     """
     ## Performs a reverse lookup of an Ethereum `address` to a primary name.
@@ -500,7 +500,7 @@ async def secure_primary_name_get(
 
     Returns `display_name` to be shown to users and estimates `impersonation_status`.
 
-    If `return_nameguard_report` is `False`, the `nameguard_result` field will be `None`.
+    If `address` has a primary name and `return_nameguard_report` is `True`, then NameGuard will return a `SecurePrimaryNameResult` including a `NameGuardReport` for the primary name. Else, NameGuard will return `None` as `nameguard_result`.
     """
     logger.debug(
         f"{json.dumps({'endpoint': Endpoints.SECURE_PRIMARY_NAME, 'method': 'GET', 'network_name': network_name, 'address': address})}"
