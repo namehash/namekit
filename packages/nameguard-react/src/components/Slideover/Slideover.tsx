@@ -1,10 +1,10 @@
 import React, { forwardRef, Fragment, type Ref, ReactNode } from "react";
 import { Transition } from "@headlessui/react";
 import { ChevronDoubleRightIcon, XMarkIcon } from "@heroicons/react/24/solid";
-import { Button, IconButton } from "@namehash/namekit-react";
+import { IconButton } from "@namehash/namekit-react";
 
 type SlideoverProps = {
-  title: string;
+  title: string | ReactNode;
   isOpen: boolean;
   onClose: () => void;
   children: ReactNode;
@@ -37,7 +37,7 @@ export const Slideover = forwardRef(
             leaveFrom="md:opacity-100 md:translate-x-0"
             leaveTo="md:opacity-0 md:translate-x-28"
           >
-            <div className="relative z-50 md:z-40 flex justify-end h-full md:pt-[68px] md:pb-[53px]">
+            <div className="relative z-50 md:z-40 flex justify-end h-full md:pt-[68px] md:pb-[49px]">
               <div
                 className="w-full lg:max-w-[668px] transform overflow-y-auto bg-white md:shadow-2xl transition-all h-full flex flex-col"
                 ref={ref}
