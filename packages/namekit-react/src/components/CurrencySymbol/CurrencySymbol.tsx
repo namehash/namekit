@@ -20,7 +20,7 @@ interface CurrencySymbolProps {
 
   /**
    * The size of the `CurrencySymbol`.
-   * 
+   *
    * Defaults to `CurrencySymbolSize.Small`.
    */
   size: CurrencySymbolSize;
@@ -29,17 +29,17 @@ interface CurrencySymbolProps {
    * If `true`, hovering over the `CurrencySymbol` will display the
    * name of `currency` in a `Tooltip`. If `false` then the `CurrencySymbol`
    * won't have any `Tooltip`.
-   * 
+   *
    * Defaults to `true`.
    */
   describeCurrencyInTooltip: boolean;
-  
+
   /**
    * Optional. Defines a custom color for the `CurrencySymbol` that overrides
    * the default symbol color for `currency`.
-   * 
+   *
    * If defined, must be formatted as a hex color code.
-   * 
+   *
    * If undefined, defaults to the default symbol color for `currency`.
    */
   symbolFillColor?: string;
@@ -75,7 +75,9 @@ export const CurrencySymbol = ({
       break;
     default:
       // TODO: We haven't created symbols for `Currency.Gas` yet.
-      throw new Error(`Error creating CurrencySymbol: unsupported Currency: "${currency}".`);
+      throw new Error(
+        `Error creating CurrencySymbol: unsupported Currency: "${currency}".`,
+      );
   }
 
   if (!describeCurrencyInTooltip) return symbol;

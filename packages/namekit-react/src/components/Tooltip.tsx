@@ -3,13 +3,13 @@ import { Float, type FloatProps } from "@headlessui-float/react";
 import { Popover } from "@headlessui/react";
 
 type Props = {
-  maxTooltipWidth?: number;
   trigger: React.ReactNode;
   children: React.ReactNode;
   placement?: FloatProps["placement"];
+  maxTooltipWidth?: number;
 };
 
-const DEFAULT_MAX_TOOLTIP_WIDTH = Number.POSITIVE_INFINITY;
+const DEFAULT_MAX_TOOLTIP_WIDTH = 400;
 
 export function Tooltip({
   trigger,
@@ -18,7 +18,7 @@ export function Tooltip({
   maxTooltipWidth = DEFAULT_MAX_TOOLTIP_WIDTH,
 
   /*
-    Props are applied to the Float component, 
+    Props are applied to the Float component,
     which is a wrapper for the tooltip "children".
   */
   ...props

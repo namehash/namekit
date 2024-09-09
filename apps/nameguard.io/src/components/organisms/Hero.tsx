@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { HeroCarousel } from "./HeroCarousel";
 import { HeroStartCommand, NGSearch } from "@/components/molecules";
 import {
@@ -10,6 +11,7 @@ import {
   WarningShieldRedOutline,
   WarningShieldSmall,
 } from "@/components/atoms";
+import { Button } from "@namehash/namekit-react";
 
 export function Hero() {
   return (
@@ -29,30 +31,29 @@ export function Hero() {
             Guard your users from heartbreak and keep ENS usage safe across web3
           </p>
           <HeroStartCommand />
+
           <a
             href="https://api.nameguard.io/docs"
             className="hidden lg:block relative z-10"
           >
-            <button className="flex justify-center items-center px-[25px] py-[13px] rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-800 cursor-pointer">
-              <p className="text-white not-italic font-medium text-base leading-6">
-                View the docs
-              </p>
-            </button>
+            <Button variant="primary" size="large">
+              View the docs
+            </Button>
           </a>
+
           <div className="flex lg:hidden flex-col items-center gap-3 self-stretch">
             <NGSearch />
             <p className="w-full h-fit text-gray-500 text-sm leading-6 font-normal text-center sm:font-light">
               or
             </p>
+
             <a
               href="https://api.nameguard.io/docs"
-              className="relative z-10 w-full h-fit max-w-xs"
+              className="w-full h-fit flex max-w-xs items-center justify-center"
             >
-              <button className="w-full h-fit box-border flex justify-center items-center self-stretch px-[17px] py-[9px] rounded-lg bg-black z-10 shadow-sm transition hover:bg-gray-800 cursor-pointer">
-                <p className="text-white not-italic font-medium text-base leading-6">
-                  View the docs
-                </p>
-              </button>
+              <Button variant="primary" size="medium">
+                View the docs
+              </Button>
             </a>
           </div>
         </div>
