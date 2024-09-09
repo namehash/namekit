@@ -87,11 +87,7 @@ export function Hero() {
         </p>
         <div className="relative overflow-x-hidden w-full h-10 group">
           <div className="z-10 absolute top-0 w-full h-full pointer-events-none shadow-[inset_45px_0_25px_-20px_rgba(249,250,251,0.97),inset_-45px_0_25px_-20px_rgba(249,250,251,0.97)]"></div>
-          <Suspense
-            fallback={<div className="bg-gray-100 rounded-md h-8 w-full"></div>}
-          >
-            <HeroCarousel />
-          </Suspense>
+          <HeroCarousel />
         </div>
       </div>
     </div>
