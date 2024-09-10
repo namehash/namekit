@@ -81,6 +81,12 @@ export const GraphemeModal = forwardRef((_, ref: Ref<HTMLDivElement>) => {
                     {data?.grapheme_description}
                   </p>
                 </div>
+                <div className="space-y-1">
+                  <p className="text-gray-500 text-sm">Unicode</p>
+                  <p className="text-black text-sm font-semibold">
+                    {data?.unicode_version ?? "Unassigned"}
+                  </p>
+                </div>
               </div>
             </div>
           </RatedBox>

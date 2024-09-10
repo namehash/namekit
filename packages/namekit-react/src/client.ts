@@ -13,3 +13,4 @@ export {
   CurrencySymbolPosition,
 } from "./components/DisplayedPrice";
 export { DisplayedPriceConversion } from "./components/DisplayedPriceConversion";
+export { TruncatedText } from "./components/TruncatedText";

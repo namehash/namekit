@@ -53,8 +53,8 @@ export const DefaultMaxTooltipWidth: Story = {
     trigger: <>Tooltip Trigger</>,
     children: (
       <>
-        The default max tooltip width is positive infinity so it is up to you to
-        set an explicit max width limit, See the "Custom Max Tooltip Width"
+        The default max tooltip width is 400px and it is up to you to set
+        another explicit max width limit, See the "Custom Max Tooltip Width"
         story for an example of setting a max width.
       </>
     ),
@@ -64,11 +64,11 @@ export const DefaultMaxTooltipWidth: Story = {
 export const CustomMaxTooltipWidth: Story = {
   args: {
     placement: "bottom",
-    maxTooltipWidth: 400,
-    trigger: <>Tooltip Trigger for tooltip with 400px max width</>,
+    maxTooltipWidth: 600,
+    trigger: <>Tooltip Trigger for tooltip with 600px max width</>,
     children: (
       <>
-        See it! The tooltip content is limited to 400px width. You can set the
+        See it! The tooltip content is limited to 600px width. You can set the
         maxTooltipWidth to the desired value to limit the text content display
         width!
       </>
