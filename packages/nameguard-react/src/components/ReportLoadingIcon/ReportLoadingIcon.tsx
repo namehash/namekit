@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Tooltip } from "@namehash/namekit-react";
+import { Tooltip } from "@namehash/namekit-react/client";
 import { RatingIconSize } from "../Report/RatingIcon";
 import { RatingLoadingIcon } from "../icons/RatingLoadingIcon";
 

@@ -12,5 +12,4 @@ export default defineConfig({
   minify: false,
   clean: true,
   skipNodeModulesBundle: true,
-  dts: true,
 });
