@@ -1,24 +1,26 @@
 import { PriceCurrencyFormat, Currency } from "@namehash/ens-utils";
 import { Tooltip } from "./Tooltip";
 
-import { UsdSymbol } from "./icons/UsdSymbol";
-import { UsdcSymbol } from "./icons/UsdcSymbol";
-import { WethSymbol } from "./icons/WethSymbol";
-import { EthSymbol } from "./icons/EthSymbol";
-import { DaiSymbol } from "./icons/DaiSymbol";
+import { UsdTextSymbol } from "./icons/UsdTextSymbol";
+import { UsdcIcon } from "./icons/UsdcIcon";
+import { WethIcon } from "./icons/WethIcon";
+import { EthIcon } from "./icons/EthIcon";
+import { DaiIcon } from "./icons/DaiIcon";
+import { GasIcon } from "./icons/GasIcon";
+
 import React from "react";
 
 /**
  * The size of the `CurrencySymbol` icon.
- * This is defined as a mapping from a `CurrencySymbolSize` to a number.
+ * This is defined as a mapping from a `CurrencyIconSize` to a number.
  * This number represents the size (width and height) that the icon for a `CurrencySymbol` should be displayed at, in pixels.
  */
-export const CurrencySymbolSize = {
+export const CurrencyIconSize = {
   Small: 16,
   Large: 20,
 } as const;
-export type CurrencySymbolSize =
-  (typeof CurrencySymbolSize)[keyof typeof CurrencySymbolSize];
+export type CurrencyIconSize =
+  (typeof CurrencyIconSize)[keyof typeof CurrencyIconSize];
 
 export const CurrencySymbology = {
   /**
@@ -28,7 +30,7 @@ export const CurrencySymbology = {
   /**
    * The symbol displayed for `Currency` will be its text-based symbol (e.g. "$").
    */
-  Symbol: "Symbol",
+  TextSymbol: "TextSymbol",
   /**
    * The symbol displayed for `Currency` will be its graphical icon (e.g. the Ethereum Icon as an SVG).
    */
@@ -46,11 +48,11 @@ interface CurrencySymbolProps extends React.ComponentProps<React.ElementType> {
   /**
    * The size of the `CurrencySymbol` icon.
    *
-   * Defaults to `CurrencySymbolSize.Small`.
+   * Defaults to `CurrencyIconSize.Small`.
    * Only applicable when `symbology` is `CurrencySymbology.Icon`.
    * If you want to set a custom size for other symbologies, use props to define it (e.g. className="myCustomClassForTextSize")
    */
-  iconSize?: CurrencySymbolSize;
+  iconSize?: CurrencyIconSize;
 
   /**
    * If `true`, hovering over the `CurrencySymbol` will display the
@@ -64,7 +66,7 @@ interface CurrencySymbolProps extends React.ComponentProps<React.ElementType> {
   /**
    * The symbology to use when displaying the currency.
    *
-   * Defaults to `CurrencySymbology.Symbol`.
+   * Defaults to `CurrencySymbology.TextSymbol`.
    */
   symbology?: CurrencySymbology;
 }
@@ -72,59 +74,59 @@ interface CurrencySymbolProps extends React.ComponentProps<React.ElementType> {
 /**
  *
  * @param currency: Currency. The currency to get the Icon for (e.g. Currency.Eth)
- * @param iconSize: CurrencySymbolSize. The Icon size (width and height), in pixels.
+ * @param iconSize: CurrencyIconSize. The Icon size (width and height), in pixels.
  * @returns
  */
 const getCurrencyIcon = ({
   currency,
-  iconSize = CurrencySymbolSize.Small,
+  iconSize = CurrencyIconSize.Small,
   ...props
 }: {
-  iconSize: CurrencySymbolSize;
   currency: Currency;
+  iconSize: CurrencyIconSize;
 }): JSX.Element => {
   switch (currency) {
     case Currency.Usd:
-      return <UsdSymbol {...props} />;
+      /**
+       * USD is always displayed as a text symbol, never being represented as a SVG icon.
+       */
+      return <UsdTextSymbol {...props} />;
     case Currency.Usdc:
-      return <UsdcSymbol {...props} width={iconSize} height={iconSize} />;
+      return <UsdcIcon {...props} width={iconSize} height={iconSize} />;
     case Currency.Dai:
-      return <DaiSymbol {...props} width={iconSize} height={iconSize} />;
+      return <DaiIcon {...props} width={iconSize} height={iconSize} />;
     case Currency.Weth:
-      return <WethSymbol {...props} width={iconSize} height={iconSize} />;
+      return <WethIcon {...props} width={iconSize} height={iconSize} />;
     case Currency.Eth:
-      return <EthSymbol {...props} width={iconSize} height={iconSize} />;
-    default:
-      // TODO: We haven't created symbols for `Currency.Gas` yet.
-      throw new Error(
-        `Error creating CurrencySymbol: unsupported Currency: "${currency}".`,
-      );
+      return <EthIcon {...props} width={iconSize} height={iconSize} />;
+    case Currency.Gas:
+      return <GasIcon {...props} width={iconSize} height={iconSize} />;
   }
 };
 
 /**
  * Returns a JSX.Element containing the currency's symbol, acronym or icon.
  * @param currency: Currency. The currency to get the symbology for (e.g. Currency.Eth)
- * @param iconSize: CurrencySymbolSize. The size to use for Icon Symbology.
+ * @param iconSize: CurrencyIconSize. The size to use for Icon Symbology.
  *                   For other symbologies it is ignored. We suggest you use props to define
  *                   other symbologies sizes, as these are not SVGs but texts, instead. (e.g. className="myCustomClassForTextSize")
- * @param symbology: CurrencySymbology. The symbology to use (e.g. CurrencySymbology.Symbol)
+ * @param symbology: CurrencySymbology. The symbology to use (e.g. CurrencySymbology.TextSymbol)
  * @returns: JSX.Element. The currency's symbol, acronym or icon inside a JSX.Element where all extra props will be applied.
  */
 const getCurrencySymbology = ({
   currency,
-  iconSize = CurrencySymbolSize.Small,
-  symbology = CurrencySymbology.Symbol,
+  symbology = CurrencySymbology.TextSymbol,
+  iconSize = CurrencyIconSize.Small,
   ...props
 }: {
   currency: Currency;
-  iconSize?: CurrencySymbolSize;
   symbology: CurrencySymbology;
+  iconSize?: CurrencyIconSize;
 }): JSX.Element => {
   switch (symbology) {
     case CurrencySymbology.Acronym:
       return <p {...props}>{PriceCurrencyFormat[currency].Acronym}</p>;
-    case CurrencySymbology.Symbol:
+    case CurrencySymbology.TextSymbol:
       return <p {...props}>{PriceCurrencyFormat[currency].Symbol}</p>;
     case CurrencySymbology.Icon:
       return getCurrencyIcon({ currency, iconSize, ...props });
@@ -133,9 +135,9 @@ const getCurrencySymbology = ({
 
 export const CurrencySymbol = ({
   currency,
-  iconSize = CurrencySymbolSize.Small,
+  iconSize = CurrencyIconSize.Small,
   describeCurrencyInTooltip = false,
-  symbology = CurrencySymbology.Symbol,
+  symbology = CurrencySymbology.TextSymbol,
   ...props
 }: CurrencySymbolProps): JSX.Element => {
   const symbologyToDisplay = (
