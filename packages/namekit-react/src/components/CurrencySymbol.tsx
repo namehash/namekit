@@ -105,7 +105,7 @@ const getCurrencyIcon = ({
 /**
  * Returns a JSX.Element containing the currency's symbol, acronym or icon.
  * @param currency: Currency. The currency to get the symbology for (e.g. Currency.Eth)
- * @param symbology: CurrencySymbolSize. The size to use for Icon Symbology.
+ * @param iconSize: CurrencySymbolSize. The size to use for Icon Symbology.
  *                   For other symbologies it is ignored. We suggest you use props to define
  *                   other symbologies sizes, as these are not SVGs but texts, instead. (e.g. className="myCustomClassForTextSize")
  * @param symbology: CurrencySymbology. The symbology to use (e.g. CurrencySymbology.Symbol)
