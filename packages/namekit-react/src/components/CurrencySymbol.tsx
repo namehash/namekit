@@ -134,7 +134,7 @@ const getCurrencySymbology = ({
 export const CurrencySymbol = ({
   currency,
   iconSize = CurrencySymbolSize.Small,
-  describeCurrencyInTooltip = true,
+  describeCurrencyInTooltip = false,
   symbology = CurrencySymbology.Symbol,
   ...props
 }: CurrencySymbolProps): JSX.Element => {
