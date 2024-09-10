@@ -2,7 +2,7 @@ import React, { type SVGProps } from "react";
 
 const DAI_DEFAULT_COLOR = "#F5AC37";
 
-export const DaiSymbol = (props: SVGProps<SVGSVGElement>) => {
+export const DaiIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
       {...props}
@@ -22,7 +22,11 @@ export const DaiSymbol = (props: SVGProps<SVGSVGElement>) => {
       </g>
       <defs>
         <clipPath id="clip0_12879_99850">
-          <rect width="16" height="16" fill="white" />
+          <rect
+            height={props.height || "16"}
+            width={props.width || "16"}
+            fill="white"
+          />
         </clipPath>
       </defs>
     </svg>
