@@ -4,7 +4,7 @@ import {
   CurrencySymbology,
   PriceDisplaySize,
   CurrencySymbolPosition,
-  CurrencySymbolSize,
+  CurrencyIconSize,
 } from "@namehash/namekit-react/client";
 import type { Meta, StoryObj } from "@storybook/react";
 import {
@@ -16,20 +16,20 @@ import {
 } from "@namehash/ens-utils";
 import React, { useEffect, useState } from "react";
 
-const getCurrencySymbolSizeBasedOnPriceDisplaySize = (
+const getCurrencyIconSizeBasedOnPriceDisplaySize = (
   displaySize: PriceDisplaySize | undefined,
 ) => {
   switch (displaySize) {
     case PriceDisplaySize.Large:
-      return CurrencySymbolSize.Large;
+      return CurrencyIconSize.Large;
     case PriceDisplaySize.Medium:
-      return CurrencySymbolSize.Large;
+      return CurrencyIconSize.Large;
     case PriceDisplaySize.Small:
-      return CurrencySymbolSize.Small;
+      return CurrencyIconSize.Small;
     case PriceDisplaySize.Micro:
-      return CurrencySymbolSize.Small;
+      return CurrencyIconSize.Small;
     default:
-      return CurrencySymbolSize.Large;
+      return CurrencyIconSize.Large;
   }
 };
 
@@ -56,6 +56,7 @@ const meta: Meta<typeof DisplayedPrice> = {
         "Example With USD price",
         "Example With USDC price",
         "Example With DAI price",
+        "Example With GAS price",
       ],
       mapping: {
         ["Example With ETH price"]: numberAsPrice(1, Currency.Eth),
@@ -63,6 +64,7 @@ const meta: Meta<typeof DisplayedPrice> = {
         ["Example With USD price"]: numberAsPrice(1, Currency.Usd),
         ["Example With USDC price"]: numberAsPrice(1, Currency.Usdc),
         ["Example With DAI price"]: numberAsPrice(1, Currency.Dai),
+        ["Example With GAS price"]: numberAsPrice(1, Currency.Gas),
       },
     },
     /**
@@ -96,15 +98,21 @@ const meta: Meta<typeof DisplayedPrice> = {
       },
     },
     /**
+     * The possible `symbolPosition` values for `DisplayedPrice` component.
+     */
+    symbolPosition: {
+      options: Object.keys(CurrencySymbolPosition),
+      mapping: CurrencySymbolPosition,
+      control: {
+        type: "select",
+      },
+    },
+    /**
      * The possible `displaySize` values for `DisplayedPrice` component.
      */
     displaySize: {
-      options: [
-        PriceDisplaySize.Large,
-        PriceDisplaySize.Medium,
-        PriceDisplaySize.Small,
-        PriceDisplaySize.Micro,
-      ],
+      options: Object.keys(PriceDisplaySize),
+      mapping: PriceDisplaySize,
       control: {
         type: "select",
         labels: {
@@ -115,25 +123,10 @@ const meta: Meta<typeof DisplayedPrice> = {
         },
       },
     },
-    /**
-     * The possible `symbolPosition` values for `DisplayedPrice` component.
-     */
-    symbolPosition: {
-      options: [CurrencySymbolPosition.Left, CurrencySymbolPosition.Right],
-      control: {
-        type: "select",
-        labels: {
-          [CurrencySymbolPosition.Left]: "Left",
-          [CurrencySymbolPosition.Right]: "Right",
-        },
-      },
-    },
   },
   args: {
-    price: numberAsPrice(1, Currency.Eth),
-    symbol: undefined,
-    displaySize: PriceDisplaySize.Medium,
     symbolPosition: CurrencySymbolPosition.Left,
+    displaySize: PriceDisplaySize.Medium,
   },
 };
 
@@ -159,10 +152,12 @@ const exchangeRatesRecord = {
   [Currency.Usd]: 1,
   [Currency.Dai]: 1,
   [Currency.Usdc]: 1,
+  [Currency.Gas]: 1,
 };
 
 export const LargeDisplaySize: Story = {
   args: {
+    price: numberAsPrice(1, Currency.Eth),
     displaySize: PriceDisplaySize.Large,
   },
   render: (args, ctx) => {
@@ -238,13 +233,13 @@ export const CustomSymbolUsingOurCurrencySymbol: Story = {
   },
   render: (args) => {
     const [currency, setCurrency] = useState<Currency>(args.price.currency);
-    const [currencySize, setCurrencySize] = useState<CurrencySymbolSize>(
-      CurrencySymbolSize.Large,
+    const [currencySize, setCurrencySize] = useState<CurrencyIconSize>(
+      CurrencyIconSize.Large,
     );
 
     useEffect(() => {
       setCurrencySize(
-        getCurrencySymbolSizeBasedOnPriceDisplaySize(args.displaySize),
+        getCurrencyIconSizeBasedOnPriceDisplaySize(args.displaySize),
       );
     }, [args.displaySize]);
 
@@ -256,20 +251,13 @@ export const CustomSymbolUsingOurCurrencySymbol: Story = {
       <DisplayedPrice
         {...args}
         symbol={
-          <div
-            style={{
-              marginBottom:
-                currencySize === CurrencySymbolSize.Large ? "0.1rem" : "",
-            }}
-          >
-            <CurrencySymbol
-              size={currencySize}
-              currency={currency}
-              symbology={CurrencySymbology.Icon}
-            />
-          </div>
+          <CurrencySymbol
+            size={currencySize}
+            currency={currency}
+            symbology={CurrencySymbology.Icon}
+          />
         }
-      ></DisplayedPrice>
+      />
     );
   },
 };
@@ -303,11 +291,11 @@ export const OverflowDisplayPriceWithCustomCurrencyIcon: Story = {
   },
   render: (args) => {
     const [currency, setCurrency] = useState<Currency>(args.price.currency);
-    const [currencySize, setCurrencySize] = useState<CurrencySymbolSize>();
+    const [currencySize, setCurrencySize] = useState<CurrencyIconSize>();
 
     useEffect(() => {
       setCurrencySize(
-        getCurrencySymbolSizeBasedOnPriceDisplaySize(args.displaySize),
+        getCurrencyIconSizeBasedOnPriceDisplaySize(args.displaySize),
       );
     }, [args.displaySize]);
 
@@ -331,7 +319,7 @@ export const OverflowDisplayPriceWithCustomCurrencyIcon: Story = {
             />
           )
         }
-      ></DisplayedPrice>
+      />
     );
   },
 };
@@ -342,11 +330,11 @@ export const UnderflowDisplayPriceWithCustomCurrencyIcon: Story = {
   },
   render: (args) => {
     const [currency, setCurrency] = useState<Currency>(args.price.currency);
-    const [currencySize, setCurrencySize] = useState<CurrencySymbolSize>();
+    const [currencySize, setCurrencySize] = useState<CurrencyIconSize>();
 
     useEffect(() => {
       setCurrencySize(
-        getCurrencySymbolSizeBasedOnPriceDisplaySize(args.displaySize),
+        getCurrencyIconSizeBasedOnPriceDisplaySize(args.displaySize),
       );
     }, [args.displaySize]);
 
@@ -370,7 +358,7 @@ export const UnderflowDisplayPriceWithCustomCurrencyIcon: Story = {
             />
           )
         }
-      ></DisplayedPrice>
+      />
     );
   },
 };

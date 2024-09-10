@@ -1,14 +1,9 @@
-import {
-  Currency,
-  numberAsPrice,
-  PriceCurrencyFormat,
-} from "@namehash/ens-utils";
+import { Currency, numberAsPrice } from "@namehash/ens-utils";
 import {
   CurrencySymbol,
   CurrencySymbology,
   CurrencySymbolPosition,
-  CurrencySymbolSize,
-  DisplayedPrice,
+  CurrencyIconSize,
   DisplayedPriceConversion,
   PriceDisplaySize,
 } from "@namehash/namekit-react/client";
@@ -69,12 +64,8 @@ const meta: Meta<typeof DisplayedPriceConversion> = {
      * The possible `displaySize` values for `DisplayedPrice` component.
      */
     displaySize: {
-      options: [
-        PriceDisplaySize.Large,
-        PriceDisplaySize.Medium,
-        PriceDisplaySize.Small,
-        PriceDisplaySize.Micro,
-      ],
+      options: Object.keys(PriceDisplaySize),
+      mapping: PriceDisplaySize,
       control: {
         type: "select",
         labels: {
@@ -89,13 +80,10 @@ const meta: Meta<typeof DisplayedPriceConversion> = {
      * The possible `symbolPosition` values for `DisplayedPrice` component.
      */
     symbolPosition: {
-      options: [CurrencySymbolPosition.Left, CurrencySymbolPosition.Right],
+      options: Object.keys(CurrencySymbolPosition),
+      mapping: CurrencySymbolPosition,
       control: {
         type: "select",
-        labels: {
-          [CurrencySymbolPosition.Left]: "Left",
-          [CurrencySymbolPosition.Right]: "Right",
-        },
       },
     },
   },
@@ -103,7 +91,7 @@ const meta: Meta<typeof DisplayedPriceConversion> = {
     price: numberAsPrice(1, Currency.Eth),
     convertedPrice: numberAsPrice(2000, Currency.Usd),
     symbol: undefined,
-    convertedPriceSymbology: CurrencySymbology.Symbol,
+    convertedPriceSymbology: CurrencySymbology.TextSymbol,
     displaySize: PriceDisplaySize.Medium,
     symbolPosition: CurrencySymbolPosition.Left,
   },
@@ -127,7 +115,7 @@ export const ConvertedPriceWithSymbolSymbology: Story = {
   args: {
     price: numberAsPrice(1, Currency.Eth),
     convertedPrice: numberAsPrice(2000, Currency.Usd),
-    convertedPriceSymbology: CurrencySymbology.Symbol,
+    convertedPriceSymbology: CurrencySymbology.TextSymbol,
     displaySize: PriceDisplaySize.Medium,
     symbolPosition: CurrencySymbolPosition.Left,
   },
@@ -145,15 +133,15 @@ export const PriceWithIconSymbology: Story = {
   args: {
     price: numberAsPrice(1, Currency.Eth),
     convertedPrice: numberAsPrice(2000, Currency.Usd),
-    convertedPriceSymbology: CurrencySymbology.Icon,
-    displaySize: PriceDisplaySize.Medium,
-    symbolPosition: CurrencySymbolPosition.Left,
     symbol: (
       <CurrencySymbol
         currency={Currency.Eth}
         symbology={CurrencySymbology.Icon}
-        iconSize={CurrencySymbolSize.Large}
+        iconSize={CurrencyIconSize.Large}
       />
     ),
+    convertedPriceSymbology: CurrencySymbology.Icon,
+    displaySize: PriceDisplaySize.Medium,
+    symbolPosition: CurrencySymbolPosition.Left,
   },
 };

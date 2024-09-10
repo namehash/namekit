@@ -3,7 +3,7 @@ import {
   CurrencySymbol,
   CurrencySymbology,
 } from "@namehash/namekit-react/client";
-import { CurrencySymbolSize } from "@namehash/namekit-react/client";
+import { CurrencyIconSize } from "@namehash/namekit-react/client";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof CurrencySymbol> = {
@@ -11,25 +11,27 @@ const meta: Meta<typeof CurrencySymbol> = {
   title: "Namekit/CurrencySymbol",
   argTypes: {
     currency: {
-      options: [
-        Currency.Eth,
-        Currency.Usd,
-        Currency.Usdc,
-        Currency.Weth,
-        Currency.Dai,
-      ],
-      control: { type: "select" },
+      options: Object.values(Currency),
+      control: {
+        labels: Object.keys(Currency),
+        type: "select",
+      },
     },
     iconSize: {
-      options: [CurrencySymbolSize.Large, CurrencySymbolSize.Small],
+      options: Object.values(CurrencyIconSize),
+      if: { arg: "symbology", eq: CurrencySymbology.Icon },
       control: {
-        type: "select",
         labels: {
-          [CurrencySymbolSize.Large]:
-            "Large (20px) (only applicable for Icon symbology)",
-          [CurrencySymbolSize.Small]:
-            "Small (16px) (only applicable for Icon symbology)",
+          [CurrencyIconSize.Small]: "Small (16px)",
+          [CurrencyIconSize.Large]: "Large (20px)",
         },
+        type: "select",
+      },
+    },
+    className: {
+      if: { arg: "symbology", neq: CurrencySymbology.Icon },
+      control: {
+        type: "text",
       },
     },
     describeCurrencyInTooltip: { control: { type: "boolean" } },
@@ -39,10 +41,9 @@ const meta: Meta<typeof CurrencySymbol> = {
     },
   },
   args: {
-    currency: Currency.Eth,
-    iconSize: CurrencySymbolSize.Small,
+    iconSize: CurrencyIconSize.Small,
     describeCurrencyInTooltip: true,
-    symbology: CurrencySymbology.Symbol,
+    symbology: CurrencySymbology.TextSymbol,
   },
 };
 
@@ -52,28 +53,13 @@ type Story = StoryObj<typeof CurrencySymbol>;
 
 export const AsAnAcronym: Story = {
   args: {
-    iconSize: CurrencySymbolSize.Small,
     currency: Currency.Eth,
     symbology: CurrencySymbology.Acronym,
-  },
-};
-export const AsASymbol: Story = {
-  args: {
-    currency: Currency.Eth,
-    symbology: CurrencySymbology.Symbol,
   },
 };
 export const AsAnIcon: Story = {
   args: {
     currency: Currency.Eth,
-    iconSize: CurrencySymbolSize.Large,
-    symbology: CurrencySymbology.Icon,
-  },
-};
-export const SmallSize: Story = {
-  args: {
-    currency: Currency.Eth,
-    iconSize: CurrencySymbolSize.Small,
     symbology: CurrencySymbology.Icon,
   },
 };
@@ -83,23 +69,22 @@ export const WithCustomSymbolColor: Story = {
   },
   args: {
     currency: Currency.Eth,
-    iconSize: CurrencySymbolSize.Large,
     symbology: CurrencySymbology.Icon,
     fill: "#007bff",
   },
 };
-export const WithCustomFontSize: Story = {
+export const WithCustomFontStyle: Story = {
   argTypes: {
     className: { control: { type: "text" } },
   },
   args: {
-    className: "nk-text-3xl",
+    currency: Currency.Eth,
+    className: "nk-text-3xl colorful-text",
   },
 };
 export const NotShowingTooltipDescription: Story = {
   args: {
     currency: Currency.Eth,
-    iconSize: CurrencySymbolSize.Large,
     describeCurrencyInTooltip: false,
   },
 };
