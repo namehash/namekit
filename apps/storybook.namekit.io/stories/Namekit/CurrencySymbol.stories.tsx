@@ -63,7 +63,7 @@ export const AsAnIcon: Story = {
     symbology: CurrencySymbology.Icon,
   },
 };
-export const WithCustomSymbolColor: Story = {
+export const WithCustomIconColor: Story = {
   argTypes: {
     fill: { control: { type: "color" } },
   },
