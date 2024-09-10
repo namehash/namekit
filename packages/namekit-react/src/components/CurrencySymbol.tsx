@@ -62,7 +62,7 @@ interface CurrencySymbolProps extends React.ComponentProps<React.ElementType> {
   describeCurrencyInTooltip?: boolean;
 
   /**
-   * The symbology to use when displaying the currency.
+   * The symbology to use when displaying `currency`.
    *
    * Defaults to `CurrencySymbology.Symbol`.
    */
