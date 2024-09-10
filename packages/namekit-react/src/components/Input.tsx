@@ -87,7 +87,9 @@ export const Input: React.FC<InputProps> & { Slot: React.FC<SlotProps> } = ({
           </label>
         )}
       </div>
-      <span className="mt-2 text-sm font-normal text-red-600">{error}</span>
+      <span className="nk-mt-2 nk-text-sm nk-font-normal nk-text-red-600">
+        {error}
+      </span>
     </div>
   );
 };
