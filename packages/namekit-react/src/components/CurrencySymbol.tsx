@@ -48,7 +48,7 @@ interface CurrencySymbolProps extends React.ComponentProps<React.ElementType> {
    *
    * Defaults to `CurrencySymbolSize.Small`.
    * Only applicable when `symbology` is `CurrencySymbology.Icon`.
-   * If you want to set a custom size for other symbologies, use props to define it (e.g. className="myCustomClassForTextSize")
+   * If you want to set a custom appearance for other text-based symbologies, use the `className` prop to define it (e.g. className="myCustomClassForTextSize")
    */
   iconSize?: CurrencySymbolSize;
 
