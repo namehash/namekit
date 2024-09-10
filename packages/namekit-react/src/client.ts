@@ -5,7 +5,7 @@ export { Tooltip } from "./components/Tooltip";
 export {
   CurrencySymbol,
   CurrencySymbology,
-  CurrencySymbolSize,
+  CurrencyIconSize,
 } from "./components/CurrencySymbol";
 export {
   DisplayedPrice,

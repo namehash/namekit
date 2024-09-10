@@ -80,7 +80,9 @@ export const numberAsPrice = (number: number, currency: Currency): Price => {
   */
   const numberReadyToBeConvertedToBigInt = Number(numberWithoutDecimals);
 
-  // Safely convert the number to BigInt
+  /* 
+    Safely convert the number to BigInt
+  */
   return {
     value: BigInt(numberReadyToBeConvertedToBigInt),
     currency,

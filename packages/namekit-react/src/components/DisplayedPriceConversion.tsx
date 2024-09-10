@@ -10,7 +10,7 @@ interface DisplayedPriceConversionProps extends DisplayedPriceProps {
 }
 
 export const DisplayedPriceConversion = ({
-  convertedPriceSymbology = CurrencySymbology.Symbol,
+  convertedPriceSymbology = CurrencySymbology.TextSymbol,
   convertedPrice,
   ...props
 }: DisplayedPriceConversionProps) => {
