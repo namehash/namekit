@@ -364,8 +364,8 @@ export const UnderflowDisplayPriceWithCustomCurrencyIcon: Story = {
         symbol={
           args.symbol || (
             <CurrencySymbol
-              size={currencySize}
               currency={currency}
+              iconSize={currencySize}
               symbology={CurrencySymbology.Icon}
             />
           )
