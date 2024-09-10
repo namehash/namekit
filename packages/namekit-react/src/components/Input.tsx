@@ -7,6 +7,7 @@ export interface InputProps
   variant?: "primary" | "secondary";
   inputSize?: "small" | "medium" | "large";
   slotPosition?: "left" | "right";
+  error?: string;
 }
 
 interface SlotProps {
@@ -43,6 +44,7 @@ export const Input: React.FC<InputProps> & { Slot: React.FC<SlotProps> } = ({
   inputSize = "medium",
   slotPosition = "left",
   children,
+  error,
   id,
   ...props
 }) => {
@@ -60,26 +62,32 @@ export const Input: React.FC<InputProps> & { Slot: React.FC<SlotProps> } = ({
     variantClasses[variant],
     sizeClasses[inputSize],
     className,
+    {
+      "nk-border-red-300": !!error,
+    },
   ]);
 
   const inputClasses = cc([
-    "nk-ring-0 focus:nk-outline-none nk-w-full h-full placeholder:nk-text-gray-500 nk-bg-transparent",
+    "nk-ring-0 focus:nk-outline-none nk-w-full h-full placeholder:nk-text-gray-500 nk-bg-transparent nk-border-red-300",
     hasSlot && slotPosition === "left" ? "nk-pl-2" : "nk-pr-2",
   ]);
 
   return (
-    <div className={combinedClassName}>
-      {hasSlot && slotPosition === "left" && (
-        <label htmlFor={inputId} className={slotClassName}>
-          {children}
-        </label>
-      )}
-      <input id={inputId} className={inputClasses} {...props} />
-      {hasSlot && slotPosition === "right" && (
-        <label htmlFor={inputId} className={slotClassName}>
-          {children}
-        </label>
-      )}
+    <div className="nk-gap-1">
+      <div className={combinedClassName}>
+        {hasSlot && slotPosition === "left" && (
+          <label htmlFor={inputId} className={slotClassName}>
+            {children}
+          </label>
+        )}
+        <input id={inputId} className={inputClasses} {...props} />
+        {hasSlot && slotPosition === "right" && (
+          <label htmlFor={inputId} className={slotClassName}>
+            {children}
+          </label>
+        )}
+      </div>
+      <span className="mt-2 text-sm font-normal text-red-600">{error}</span>
     </div>
   );
 };
