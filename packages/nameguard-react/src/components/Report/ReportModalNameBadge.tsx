@@ -24,9 +24,9 @@ export function ReportModalNameBadge({
       ensName={ensName}
       displayUnnormalizedNames={true}
       hadLoadingError={hadLoadingError}
-      onIconClickOverride={(ensName: ENSName) => openModal(ensName.name)}
-      onBadgeClickOverride={(ensName: ENSName) => openModal(ensName.name)}
-      onTooltipClickOverride={(ensName: ENSName) => openModal(ensName.name)}
+      onOpenReport={(ensName: ENSName) => {
+        openModal(ensName.name);
+      }}
     />
   );
 }

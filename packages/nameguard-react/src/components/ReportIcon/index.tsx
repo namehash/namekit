@@ -1,25 +1,19 @@
 "use client";
 
 import React, { useEffect } from "react";
-import {
-  CheckResultCode,
-  ConsolidatedNameGuardReport,
-} from "@namehash/nameguard";
+import { ConsolidatedNameGuardReport } from "@namehash/nameguard";
 import cc from "classcat";
 import { ENSName } from "@namehash/ens-utils";
 
-import { Button } from "@namehash/namekit-react";
+import { Link } from "@namehash/namekit-react";
 import { Tooltip } from "@namehash/namekit-react/client";
 import { RatingIcon, RatingIconSize } from "../Report/RatingIcon";
-import { checkResultCodeTextColor, ratingTextColor } from "../../utils/text";
-import { ReportUnknownIcon } from "../ReportUnknownIcon/ReportUnknownIcon";
-import { ReportLoadingIcon } from "../ReportLoadingIcon/ReportLoadingIcon";
-import { redirectToViewNameReportURL } from "../../utils/url";
+import { ratingTextColor } from "../../utils/text";
+import { OpenReportHandler, openReport } from "../../utils/openreport";
+import { RatingUnknownIcon } from "../icons/RatingUnknownIcon";
+import { RatingLoadingIcon } from "../icons/RatingLoadingIcon";
 
 type ReportShieldProps = {
-  onIconClickOverride?: (ensName: ENSName) => void;
-  onTooltipClickOverride?: (ensName: ENSName) => void;
-
   /*
     The data prop is the consolidated report for the ensName.
     The ensName prop is the ENSName object.
@@ -33,26 +27,15 @@ type ReportShieldProps = {
 
   hadLoadingError?: boolean;
   size?: RatingIconSize;
+  onOpenReport?: OpenReportHandler;
 } & React.ComponentProps<"svg">;
-
-declare global {
-  interface Window {
-    location: Location;
-  }
-}
-
-enum ClickHandlerFor {
-  icon,
-  tooltip,
-}
 
 export function ReportIcon({
   data,
   ensName,
   hadLoadingError,
-  onIconClickOverride,
-  onTooltipClickOverride,
   size = RatingIconSize.small,
+  onOpenReport,
 
   /*
     Props are applied to the Report Icon triggeer which is the onHover trigger element 
@@ -63,57 +46,46 @@ export function ReportIcon({
   */
   ...props
 }: ReportShieldProps) {
-  const onClickHandler = (clickHandlerFor: ClickHandlerFor) => {
-    switch (clickHandlerFor) {
-      case ClickHandlerFor.icon:
-        if (onIconClickOverride) {
-          onIconClickOverride(ensName);
-        } else {
-          redirectToViewNameReportURL(ensName);
-        }
-        break;
-      case ClickHandlerFor.tooltip:
-        if (onTooltipClickOverride) {
-          onTooltipClickOverride(ensName);
-        } else {
-          redirectToViewNameReportURL(ensName);
-        }
-        break;
-    }
-  };
+  let icon: React.ReactNode;
+  let tooltipIcon: React.ReactNode;
+  let tooltipTitleClass: string;
+  let tooltipTitle: string;
+  let tooltipSubtitle: string | undefined = undefined;
+  let tooltipMessage: string | undefined = undefined;
+
+  // TODO: please share advice if we should add `role="button"` to each of the `icon` elements defined below? I saw that applied in the old code. Was it right to remove it?
 
   if (hadLoadingError) {
-    return (
-      <ReportUnknownIcon
-        size={size}
-        className="cursor-pointer"
-        onIconClickOverride={(e?: React.MouseEvent) => {
-          if (e) e.stopPropagation();
-          onClickHandler(ClickHandlerFor.icon);
-        }}
-        onTooltipClickOverride={(e?: React.MouseEvent) => {
-          if (e) e.stopPropagation();
-          onClickHandler(ClickHandlerFor.tooltip);
-        }}
+    icon = <RatingUnknownIcon size={size} isInteractive={true} {...props} />;
+    tooltipIcon = <RatingUnknownIcon size={RatingIconSize.small} />;
+    tooltipTitleClass = "font-semibold mb-1 text-white";
+    tooltipTitle = "Error loading report";
+  } else if (!data) {
+    icon = <RatingLoadingIcon size={size} {...props} />; // TODO: add isInteractive={true} prop?
+    tooltipIcon = (
+      <RatingLoadingIcon
+        size={RatingIconSize.small}
+        fill="#dddddd"
+        {...props}
       />
-    );
-  }
+    ); // TODO: why is it necessary to pass this `fill` prop to make this visible? That's a bad design. It should work properly without needing to pass that.
+    tooltipTitleClass = "font-semibold mb-1 text-white";
+    tooltipTitle = "Loading report...";
+  } else {
+    const { title, subtitle, rating, risk_count, highest_risk } = data;
 
-  if (!data) {
-    return (
-      <ReportLoadingIcon
-        size={size}
-        className="cursor-pointer"
-        onIconClickOverride={(e?: React.MouseEvent) => {
-          if (e) e.stopPropagation();
-          onClickHandler(ClickHandlerFor.icon);
-        }}
-        onTooltipClickOverride={(e?: React.MouseEvent) => {
-          if (e) e.stopPropagation();
-          onClickHandler(ClickHandlerFor.tooltip);
-        }}
-      />
+    icon = (
+      <RatingIcon rating={rating} size={size} isInteractive={true} {...props} />
     );
+    tooltipIcon = (
+      <RatingIcon rating={data.rating} size={RatingIconSize.small} />
+    );
+    tooltipTitleClass = cc(["font-semibold mb-1", ratingTextColor(rating)]);
+    tooltipTitle = title;
+    if (risk_count >= 1) {
+      tooltipSubtitle = `${risk_count} risk${risk_count !== 1 && "s"} detected`;
+    }
+    tooltipMessage = highest_risk?.message || subtitle;
   }
 
   useEffect(() => {
@@ -126,62 +98,51 @@ export function ReportIcon({
     }
   }, [data]);
 
-  const { title, subtitle, rating, risk_count, highest_risk } = data;
-
-  const textClass = cc(["font-semibold mb-1", ratingTextColor(rating)]);
-
   return (
     <Tooltip
       trigger={
-        <RatingIcon
-          role="button"
-          isInteractive={true}
-          onClick={(e?: React.MouseEvent) => {
-            if (e) e.stopPropagation();
-            onClickHandler(ClickHandlerFor.icon);
-          }}
+        /*
+          TODO: Is there a problem making this a <div? Advice appreciated.
+          Whatever you suggest, please be sure to test clicking on it on
+          `/docs/report`.
+
+          I also added `cursor-pointer` to this div to ensure the hover state UX is correct.
+          I tried changing this div to a button, but then started getting errors.
+        */
+        <div
+          onClick={() => openReport(ensName, onOpenReport)}
           className="cursor-pointer"
-          rating={rating}
-          size={size}
-          {...props}
-        />
+        >
+          {icon}
+        </div>
       }
     >
       <div className="flex items-start space-x-3 py-2.5 min-w-[300px] max-w-[300px]">
-        <div className="mt-0.5">
-          <RatingIcon rating={rating} size={RatingIconSize.small} />
-        </div>
+        <div className="mt-0.5">{tooltipIcon}</div>
 
         <div className="flex-1">
           <div className="flex items-center justify-between">
-            <span className={textClass}>{title}</span>
-            {risk_count >= 1 && (
-              <span
-                className={cc([
-                  "text-sm font-normal",
-                  checkResultCodeTextColor(CheckResultCode.info),
-                ])}
-              >
-                {risk_count} risk{risk_count !== 1 && "s"} detected
+            <span className={tooltipTitleClass}>{tooltipTitle}</span>
+            {tooltipSubtitle && (
+              <span className="text-sm font-normal text-gray-400">
+                {tooltipSubtitle}
               </span>
             )}
           </div>
 
-          <div className="text-left text-sm text-white font-normal">
-            {highest_risk?.message || subtitle}
-          </div>
+          {tooltipMessage && (
+            <div className="text-left text-sm text-white font-normal">
+              {tooltipMessage}
+            </div>
+          )}
 
-          <div className="text-sm text-white">
-            <Button
-              className="appearance-none underline font-medium"
-              onClick={(e?: React.MouseEvent) => {
-                if (e) e.stopPropagation();
-                onClickHandler(ClickHandlerFor.tooltip);
-              }}
-            >
-              Inspect name for details
-            </Button>
-          </div>
+          <Link
+            onClick={() => openReport(ensName, onOpenReport)}
+            variant="underline"
+            size="small"
+          >
+            Inspect name for details
+          </Link>
         </div>
       </div>
     </Tooltip>
