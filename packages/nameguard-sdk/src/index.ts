@@ -711,9 +711,9 @@ export class NameGuard {
 
     try {
       if (parent === "") {
-        return await this.inspectName(`[${labelhash}]`, options);
+        return await this.inspectName(`[${labelhash}]`);
       } else {
-        return await this.inspectName(`[${labelhash}].${parent}`, options);
+        return await this.inspectName(`[${labelhash}].${parent}`);
       }
     } catch (error) {
       if (error instanceof NameGuardError) {
