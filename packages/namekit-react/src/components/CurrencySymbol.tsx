@@ -32,7 +32,7 @@ export const CurrencySymbology = {
    */
   TextSymbol: "TextSymbol",
   /**
-   * The symbol displayed for `Currency` will be its graphical icon (e.g. the Ethereum Icon as an SVG).
+   * The symbol displayed for `Currency` will be its graphical icon (e.g. `EthIcon` that renders a SVG). If `Currency` is `Currency.Usd` then it will render as `CurrencySymbology.TextSymbol` instead.
    */
   Icon: "Icon",
 } as const;
