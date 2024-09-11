@@ -37,12 +37,6 @@ const meta: Meta<typeof IconButton> = {
       },
     },
     className: { control: "text" },
-    iconPosition: {
-      control: {
-        type: "select",
-        options: ["left", "right"],
-      },
-    },
   },
 };
 
@@ -54,7 +48,7 @@ export const PrimaryMedium: Story = {
   args: {
     variant: "primary",
     size: "medium",
-    icon: <SomeIcon />,
+    children: <SomeIcon />,
   },
 };
 
@@ -62,7 +56,7 @@ export const SecondaryMedium: Story = {
   args: {
     variant: "secondary",
     size: "medium",
-    icon: <SomeIcon />,
+    children: <SomeIcon />,
   },
 };
 
@@ -70,7 +64,7 @@ export const GhostMedium: Story = {
   args: {
     variant: "ghost",
     size: "medium",
-    icon: <SomeIcon />,
+    children: <SomeIcon />,
   },
 };
 
@@ -78,7 +72,7 @@ export const PrimarySmall: Story = {
   args: {
     variant: "primary",
     size: "small",
-    icon: <SomeIcon />,
+    children: <SomeIcon />,
   },
 };
 
@@ -86,7 +80,7 @@ export const SecondarySmall: Story = {
   args: {
     variant: "secondary",
     size: "small",
-    icon: <SomeIcon />,
+    children: <SomeIcon />,
   },
 };
 
@@ -94,7 +88,7 @@ export const GhostSmall: Story = {
   args: {
     variant: "ghost",
     size: "small",
-    icon: <SomeIcon />,
+    children: <SomeIcon />,
   },
 };
 
@@ -102,7 +96,7 @@ export const PrimaryLarge: Story = {
   args: {
     variant: "primary",
     size: "large",
-    icon: <SomeIcon />,
+    children: <SomeIcon />,
   },
 };
 
@@ -110,7 +104,7 @@ export const SecondaryLarge: Story = {
   args: {
     variant: "secondary",
     size: "large",
-    icon: <SomeIcon />,
+    children: <SomeIcon />,
   },
 };
 
@@ -118,7 +112,7 @@ export const CustomClass: Story = {
   args: {
     variant: "primary",
     size: "medium",
-    icon: <SomeIcon />,
+    children: <SomeIcon />,
     className: "custom-class-name",
   },
 };
@@ -127,9 +121,12 @@ export const IconRight: Story = {
   args: {
     variant: "primary",
     size: "medium",
-    icon: <SomeIcon />,
-    children: "Icon Right",
-    iconPosition: "right",
+    children: (
+      <>
+        Icon Right
+        <SomeIcon />
+      </>
+    ),
   },
 };
 
@@ -137,8 +134,12 @@ export const PrimaryWithText: Story = {
   args: {
     variant: "primary",
     size: "medium",
-    icon: <SomeIcon />,
-    children: "Share",
+    children: (
+      <>
+        <SomeIcon />
+        Share
+      </>
+    ),
   },
 };
 
@@ -146,8 +147,12 @@ export const SecondaryWithText: Story = {
   args: {
     variant: "secondary",
     size: "medium",
-    icon: <SomeIcon />,
-    children: "Share",
+    children: (
+      <>
+        Icon Right
+        <SomeIcon />
+      </>
+    ),
   },
 };
 
@@ -155,7 +160,11 @@ export const GhostWithText: Story = {
   args: {
     variant: "ghost",
     size: "medium",
-    icon: <SomeIcon />,
-    children: "Share",
+    children: (
+      <>
+        Icon Right
+        <SomeIcon />
+      </>
+    ),
   },
 };
