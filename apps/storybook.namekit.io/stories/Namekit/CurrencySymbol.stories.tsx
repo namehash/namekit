@@ -42,7 +42,7 @@ const meta: Meta<typeof CurrencySymbol> = {
   },
   args: {
     iconSize: CurrencyIconSize.Small,
-    describeCurrencyInTooltip: true,
+    describeCurrencyInTooltip: false,
     symbology: CurrencySymbology.TextSymbol,
   },
 };
@@ -57,9 +57,23 @@ export const AsAnAcronym: Story = {
     symbology: CurrencySymbology.Acronym,
   },
 };
-export const AsAnIcon: Story = {
+export const AsATextSymbol: Story = {
   args: {
     currency: Currency.Eth,
+    symbology: CurrencySymbology.TextSymbol,
+  },
+};
+export const AsASmallIcon: Story = {
+  args: {
+    currency: Currency.Eth,
+    iconSize: CurrencyIconSize.Small,
+    symbology: CurrencySymbology.Icon,
+  },
+};
+export const AsALargeIcon: Story = {
+  args: {
+    currency: Currency.Eth,
+    iconSize: CurrencyIconSize.Large,
     symbology: CurrencySymbology.Icon,
   },
 };
@@ -82,9 +96,9 @@ export const WithCustomFontStyle: Story = {
     className: "nk-text-3xl colorful-text",
   },
 };
-export const NotShowingTooltipDescription: Story = {
+export const ShowingTooltipDescription: Story = {
   args: {
     currency: Currency.Eth,
-    describeCurrencyInTooltip: false,
+    describeCurrencyInTooltip: true,
   },
 };

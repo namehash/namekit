@@ -65,7 +65,7 @@ interface CurrencySymbolProps extends React.ComponentProps<React.ElementType> {
    * name of `currency` in a `Tooltip`. If `false` then the `CurrencySymbol`
    * won't have any `Tooltip`.
    *
-   * Defaults to `true`.
+   * Defaults to `false`.
    */
   describeCurrencyInTooltip?: boolean;
 
