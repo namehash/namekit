@@ -165,9 +165,8 @@ export const AsChild: Story = {
   args: {
     variant: "primary",
     href: "#",
-    children:
-      "Link as a Span (which won't work, but is good for next/link instances)",
-    asChild: <span />,
+    children: <span>Hello world</span>,
+    asChild: true,
   },
 };
 
@@ -175,12 +174,12 @@ export const CurrentColor: Story = {
   args: {
     variant: "primary",
     children: (
-      <>
+      <span style={{ color: "green" }}>
         External Link
         <Link.ExternalIcon />
-      </>
+      </span>
     ),
-    asChild: <span style={{ color: "green" }} />,
+    asChild: true,
   },
 };
 

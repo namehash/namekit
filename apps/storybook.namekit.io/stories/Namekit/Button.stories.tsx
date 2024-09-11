@@ -112,7 +112,7 @@ export const AsChild: Story = {
   args: {
     variant: "primary",
     size: "medium",
-    children: "Button as a Link",
-    asChild: <a href="#" />,
+    children: <a href="https://nameguard.io">Button as a Link</a>,
+    asChild: true,
   },
 };

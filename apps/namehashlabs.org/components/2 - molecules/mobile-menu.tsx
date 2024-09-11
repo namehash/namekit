@@ -33,9 +33,10 @@ const MobileMenu = () => {
         <IconButton
           variant="ghost"
           className="!p-2"
-          icon={<Bars3Icon className="w-6 h-6 text-black" />}
           onClick={() => toggleMenu()}
-        />
+        >
+          <Bars3Icon className="w-6 h-6 text-black" />
+        </IconButton>
       </div>
 
       {/* Menu Overlay  */}
@@ -60,8 +61,8 @@ const MobileMenu = () => {
               onClick={() => toggleMenu()}
               variant="ghost"
               className="!p-2"
-              icon={<XMarkIcon className="w-5 h-5 text-white" />}
             >
+              <XMarkIcon className="w-5 h-5 text-white" />
               <span className="sr-only">Toggle menu</span>
             </IconButton>
           </div>
