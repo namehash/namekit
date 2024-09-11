@@ -1,7 +1,6 @@
 import { PriceCurrencyFormat, Currency } from "@namehash/ens-utils";
 import { Tooltip } from "./Tooltip";
 
-import { UsdTextSymbol } from "./icons/UsdTextSymbol";
 import { UsdcIcon } from "./icons/UsdcIcon";
 import { WethIcon } from "./icons/WethIcon";
 import { EthIcon } from "./icons/EthIcon";
@@ -85,23 +84,44 @@ const getCurrencyIcon = ({
   currency: Currency;
   iconSize: CurrencyIconSize;
 }): JSX.Element => {
+  let symbology = <></>;
+
   switch (currency) {
     case Currency.Usd:
       /**
        * USD is always displayed as a text symbol, never being represented as a SVG icon.
        */
-      return <UsdTextSymbol {...props} />;
+      return (
+        <CurrencySymbol
+          {...props}
+          currency={currency}
+          symbology={CurrencySymbology.TextSymbol}
+        />
+      );
     case Currency.Usdc:
-      return <UsdcIcon {...props} width={iconSize} height={iconSize} />;
+      symbology = <UsdcIcon {...props} width={iconSize} height={iconSize} />;
+      break;
     case Currency.Dai:
-      return <DaiIcon {...props} width={iconSize} height={iconSize} />;
+      symbology = <DaiIcon {...props} width={iconSize} height={iconSize} />;
+      break;
     case Currency.Weth:
-      return <WethIcon {...props} width={iconSize} height={iconSize} />;
+      symbology = <WethIcon {...props} width={iconSize} height={iconSize} />;
+      break;
     case Currency.Eth:
-      return <EthIcon {...props} width={iconSize} height={iconSize} />;
+      symbology = <EthIcon {...props} width={iconSize} height={iconSize} />;
+      break;
     case Currency.Gas:
-      return <GasIcon {...props} width={iconSize} height={iconSize} />;
+      symbology = <GasIcon {...props} width={iconSize} height={iconSize} />;
+      break;
   }
+
+  return (
+    <span
+      aria-label={`${PriceCurrencyFormat[currency].ExtendedCurrencyNameSingular} symbol`}
+    >
+      {symbology}
+    </span>
+  );
 };
 
 /**
@@ -125,9 +145,23 @@ const getCurrencySymbology = ({
 }): JSX.Element => {
   switch (symbology) {
     case CurrencySymbology.Acronym:
-      return <p {...props}>{PriceCurrencyFormat[currency].Acronym}</p>;
+      return (
+        <p
+          {...props}
+          aria-label={`${PriceCurrencyFormat[currency].ExtendedCurrencyNameSingular} symbol`}
+        >
+          {PriceCurrencyFormat[currency].Acronym}
+        </p>
+      );
     case CurrencySymbology.TextSymbol:
-      return <p {...props}>{PriceCurrencyFormat[currency].Symbol}</p>;
+      return (
+        <p
+          {...props}
+          aria-label={`${PriceCurrencyFormat[currency].ExtendedCurrencyNameSingular} symbol`}
+        >
+          {PriceCurrencyFormat[currency].Symbol}
+        </p>
+      );
     case CurrencySymbology.Icon:
       return getCurrencyIcon({ currency, iconSize, ...props });
   }
@@ -141,16 +175,14 @@ export const CurrencySymbol = ({
   ...props
 }: CurrencySymbolProps): JSX.Element => {
   const symbologyToDisplay = (
-    <span
-      aria-label={`${PriceCurrencyFormat[Currency.Eth].ExtendedCurrencyNameSingular} symbol`}
-    >
+    <>
       {getCurrencySymbology({
         currency,
         iconSize,
         symbology,
         ...props,
       })}
-    </span>
+    </>
   );
 
   if (!describeCurrencyInTooltip) return symbologyToDisplay;
