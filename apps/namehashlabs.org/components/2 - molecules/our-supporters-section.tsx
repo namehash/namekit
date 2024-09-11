@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { Profile, getCachedProfile } from "@/data/ensProfiles";
 import { AvatarSize, UltimateENSAvatar } from ".";
 import { getNameHashLabsAvatarCallbacks } from "@/lib/client/nh-labs-avatar";
-import { Button, IconButton } from "@namehash/namekit-react";
+import { Button, IconButton, Link } from "@namehash/namekit-react";
 
 export const OurSuportersSection = () => {
   return (
@@ -85,17 +85,14 @@ const AdditionalSupportersContainer = () => {
       <p className="text-lg leading-6 font-normal text-gray-500">
         and so many others
       </p>
-      <a
-        target="_blank"
+      <Link
         href="https://snapshot.org/#/ens.eth/proposal/0x6ba81cd2997288cc49ae1b95921ec8f107e8ffb9733321d53d488e2b30710b86"
+        asChild
       >
-        <IconButton
-          iconPosition="right"
-          icon={<ExternalLinkIcon className="text-white w-5 h-5" />}
-        >
-          View more
+        <IconButton>
+          View more <Link.ExternalIcon />
         </IconButton>
-      </a>
+      </Link>
     </div>
   );
 };

@@ -77,13 +77,8 @@ export function Share({ name }: ShareProps) {
     <Fragment>
       <Tooltip
         trigger={
-          <IconButton
-            variant="ghost"
-            icon={
-              <ArrowUpTrayIcon className="text-black fill-current w-6 h-6" />
-            }
-            onClick={() => setIsOpen(true)}
-          >
+          <IconButton variant="ghost" onClick={() => setIsOpen(true)}>
+            <ArrowUpTrayIcon className="text-black fill-current w-6 h-6" />
             Share
           </IconButton>
         }
@@ -125,13 +120,12 @@ export function Share({ name }: ShareProps) {
                     </Dialog.Title>
                     <div className="flex items-center right-0 inset-y-0 absolute pr-6 z-20">
                       <IconButton
-                        icon={
-                          <XMarkIcon className="w-6 h-6 fill-current text-gray-400" />
-                        }
                         onClick={() => setIsOpen(false)}
                         variant="ghost"
                         className="!p-2"
-                      />
+                      >
+                        <XMarkIcon className="w-6 h-6 fill-current text-gray-400" />
+                      </IconButton>
                     </div>
                   </div>
 

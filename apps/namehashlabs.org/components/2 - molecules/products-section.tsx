@@ -8,7 +8,7 @@ import { ExternalLinkIcon } from "../1 - atoms/icons/external-link-icon";
 import { SectionText } from "../1 - atoms";
 import { Balancer } from "react-wrap-balancer";
 import cc from "classcat";
-import { Button, IconButton } from "@namehash/namekit-react";
+import { Button, IconButton, Link } from "@namehash/namekit-react";
 interface ProductProps {
   label: {
     icon: React.ReactElement;
@@ -92,21 +92,16 @@ const Product = ({
             </SectionText>
             {buttonUrl && buttonLabel && (
               <div className="flex lg:justify-start justify-center">
-                <a
+                <Link
                   href={buttonUrl}
                   target={withoutExternalLinkIconInCTA ? undefined : "_blank"}
+                  asChild
                 >
-                  <IconButton
-                    iconPosition="right"
-                    icon={
-                      !withoutExternalLinkIconInCTA && (
-                        <ExternalLinkIcon className="w-5 h-5" />
-                      )
-                    }
-                  >
+                  <IconButton>
                     {buttonLabel}
+                    <Link.ExternalIcon />
                   </IconButton>
-                </a>
+                </Link>
               </div>
             )}
           </div>

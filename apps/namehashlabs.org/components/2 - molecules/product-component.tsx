@@ -1,7 +1,7 @@
 import { Balancer } from "react-wrap-balancer";
-import { ExternalLinkIcon, SectionText } from "../1 - atoms";
+import { SectionText } from "../1 - atoms";
 import cc from "classcat";
-import { IconButton } from "@namehash/namekit-react";
+import { IconButton, Link } from "@namehash/namekit-react";
 
 export interface ProductProps {
   title: string;
@@ -63,14 +63,11 @@ export const ProductComponent = ({
               <Balancer>{subtitle}</Balancer>
             </SectionText>
             {buttonUrl && (
-              <a href={buttonUrl} target="_blank">
-                <IconButton
-                  iconPosition="right"
-                  icon={<ExternalLinkIcon className="w-5 h-5" />}
-                >
-                  Join the discussion
+              <Link href={buttonUrl} asChild>
+                <IconButton>
+                  Join the discussion <Link.ExternalIcon />
                 </IconButton>
-              </a>
+              </Link>
             )}
           </div>
         </div>

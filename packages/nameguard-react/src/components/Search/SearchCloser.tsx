@@ -9,11 +9,12 @@ export const SearchCloser = () => {
 
   return (
     <IconButton
-      icon={<XMarkIcon className="w-6 h-6 fill-current text-black" />}
       className="!p-2"
       variant="ghost"
       size="medium"
       onClick={closeModal}
-    />
+    >
+      <XMarkIcon className="w-6 h-6 fill-current text-black" />
+    </IconButton>
   );
 };

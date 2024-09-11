@@ -8,10 +8,6 @@ export interface LinkProps extends React.ComponentPropsWithoutRef<"a"> {
   asChild?: boolean;
 }
 
-interface LinkComponent extends React.FC<LinkProps> {
-  ExternalIcon: typeof ExternalIcon;
-}
-
 const linkBaseClasses = "nk-transition cursor-pointer";
 
 const variantClasses = {
@@ -38,7 +34,14 @@ const isInternalLink = (href: string | undefined) => {
 
 export const ExternalIcon: React.FC = () => <span> ↗ </span>;
 
-export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
+interface LinkComponent
+  extends React.ForwardRefExoticComponent<
+    LinkProps & React.RefAttributes<HTMLAnchorElement>
+  > {
+  ExternalIcon: typeof ExternalIcon;
+}
+
+const LinkInner = React.forwardRef<HTMLAnchorElement, LinkProps>(
   (
     {
       asChild,
@@ -50,6 +53,8 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
     },
     ref,
   ) => {
+    const isExternal = !isInternalLink(props.href);
+
     const combinedClassName = cc([
       linkBaseClasses,
       variantClasses[variant],
@@ -57,11 +62,24 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
       className,
     ]);
 
+    const enhancedProps = {
+      ...props,
+      ...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {}),
+    };
+
+    const enhancedChildren = isExternal
+      ? React.Children.map(children, (child) =>
+          React.isValidElement(child) && child.type === ExternalIcon
+            ? child
+            : child,
+        )
+      : children;
+
     if (asChild) {
-      return React.Children.map(children, (child) => {
+      return React.Children.map(enhancedChildren, (child) => {
         if (React.isValidElement(child)) {
           return React.cloneElement(child, {
-            ...props,
+            ...enhancedProps,
             ...child.props,
             className: cc([combinedClassName, child.props.className]),
             ref,
@@ -72,11 +90,14 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
     }
 
     return (
-      <a ref={ref} className={combinedClassName} {...props}>
-        {children}
+      <a ref={ref} className={combinedClassName} {...enhancedProps}>
+        {enhancedChildren}
       </a>
     );
   },
 );
 
-Link.displayName = "Link";
+LinkInner.displayName = "Link";
+
+export const Link = LinkInner as LinkComponent;
+Link.ExternalIcon = ExternalIcon;

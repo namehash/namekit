@@ -46,16 +46,13 @@ export const Slideover = forwardRef(
                   <h2 className="font-medium text-lg">{title}</h2>
                   <div className="flex items-center right-0 md:left-0 md:right-auto inset-y-0 absolute pr-3 md:pr-0 md:pl-3 z-20">
                     <IconButton
-                      icon={
-                        <>
-                          <ChevronDoubleRightIcon className="hidden md:block w-6 h-6 fill-current text-black" />
-                          <XMarkIcon className="md:hidden w-6 h-6 fill-current text-black md:text-gray-400" />
-                        </>
-                      }
                       className="!p-2"
                       variant="ghost"
                       onClick={onClose}
-                    />
+                    >
+                      <ChevronDoubleRightIcon className="hidden md:block w-6 h-6 fill-current text-black" />
+                      <XMarkIcon className="md:hidden w-6 h-6 fill-current text-black md:text-gray-400" />
+                    </IconButton>
                   </div>
                 </div>
 
