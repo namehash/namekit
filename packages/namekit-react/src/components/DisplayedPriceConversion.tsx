@@ -30,7 +30,6 @@ export const DisplayedPriceConversion = ({
         symbolPosition={props.symbolPosition}
         symbol={
           <CurrencySymbol
-            describeCurrencyInTooltip={false}
             currency={convertedPrice.currency}
             symbology={convertedPriceSymbology}
           />
