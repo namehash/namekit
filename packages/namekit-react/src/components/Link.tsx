@@ -5,7 +5,7 @@ export interface LinkProps extends React.ComponentPropsWithoutRef<"a"> {
   className?: string;
   variant?: "primary" | "secondary" | "ghost" | "underline";
   size?: "xsmall" | "small" | "medium" | "large";
-  asChild?: React.ReactElement;
+  asChild?: boolean;
 }
 
 interface LinkComponent extends React.FC<LinkProps> {
@@ -38,57 +38,45 @@ const isInternalLink = (href: string | undefined) => {
 
 export const ExternalIcon: React.FC = () => <span> ↗ </span>;
 
-export const Link: LinkComponent = ({
-  asChild,
-  className,
-  variant = "primary",
-  size = "medium",
-  children,
-  ...props
-}) => {
-  const isExternal = !isInternalLink(props.href);
+export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
+  (
+    {
+      asChild,
+      className,
+      variant = "primary",
+      size = "medium",
+      children,
+      ...props
+    },
+    ref,
+  ) => {
+    const combinedClassName = cc([
+      linkBaseClasses,
+      variantClasses[variant],
+      sizeClasses[size],
+      className,
+    ]);
 
-  const combinedClassName = cc([
-    linkBaseClasses,
-    variantClasses[variant],
-    sizeClasses[size],
-    className,
-  ]);
+    if (asChild) {
+      return React.Children.map(children, (child) => {
+        if (React.isValidElement(child)) {
+          return React.cloneElement(child, {
+            ...props,
+            ...child.props,
+            className: cc([combinedClassName, child.props.className]),
+            ref,
+          });
+        }
+        return child;
+      });
+    }
 
-  const enhancedProps = {
-    ...props,
-    ...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {}),
-  };
+    return (
+      <a ref={ref} className={combinedClassName} {...props}>
+        {children}
+      </a>
+    );
+  },
+);
 
-  const enhancedChildren = isExternal
-    ? React.Children.map(children, (child) =>
-        React.isValidElement(child) && child.type === Link.ExternalIcon
-          ? child
-          : child,
-      )
-    : children;
-
-  if (asChild) {
-    const childProps = {
-      ...enhancedProps,
-      ...asChild.props,
-      className: cc([
-        linkBaseClasses,
-        variantClasses[variant],
-        sizeClasses[size],
-        className,
-        asChild.props.className,
-      ]),
-    };
-
-    return React.cloneElement(asChild, childProps, enhancedChildren);
-  }
-
-  return (
-    <a className={combinedClassName} {...enhancedProps}>
-      {enhancedChildren}
-    </a>
-  );
-};
-
-Link.ExternalIcon = ExternalIcon;
+Link.displayName = "Link";

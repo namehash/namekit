@@ -3,27 +3,22 @@ import { Button, ButtonProps } from "./Button";
 import cc from "classcat";
 
 export interface IconButtonProps extends ButtonProps {
-  icon: React.ReactNode;
-  iconPosition?: "left" | "right";
+  children: React.ReactNode;
 }
 
-export const IconButton: React.FC<IconButtonProps> = ({
-  icon,
-  iconPosition = "left",
-  children,
-  className,
-  ...props
-}) => {
-  const combinedClassName = cc([
-    "nk-inline-flex nk-gap-2.5 nk-items-center",
-    className,
-  ]);
+export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
+  ({ children, className, ...props }, ref) => {
+    const combinedClassName = cc([
+      "nk-inline-flex nk-items-center nk-justify-center",
+      className,
+    ]);
 
-  return (
-    <Button className={combinedClassName} {...props}>
-      {iconPosition === "left" && icon}
-      {children}
-      {iconPosition === "right" && icon}
-    </Button>
-  );
-};
+    return (
+      <Button ref={ref} className={combinedClassName} {...props}>
+        {children}
+      </Button>
+    );
+  },
+);
+
+IconButton.displayName = "IconButton";

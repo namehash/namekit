@@ -34,41 +34,33 @@ export const Header = () => {
         </div>
         <div className="flex flex-row items-center justify-between md:gap-5 h-[40px]">
           <div className="hidden items-center justify-center lg:flex gap-2">
-            <Button
-              variant="ghost"
-              asChild={
-                <Link variant="ghost" href="https://api.nameguard.io/docs" />
-              }
-            >
-              Docs
+            <Button variant="ghost" asChild>
+              <Link variant="ghost" href="https://api.nameguard.io/docs">
+                Docs
+              </Link>
             </Button>
 
-            <IconButton
-              variant="ghost"
-              icon={
-                <GithubIcon className="hidden md:block text-[#0F172A] fill-current" />
-              }
-              asChild={
-                <Link
-                  variant="ghost"
-                  href="https://github.com/namehash/nameguard"
-                />
-              }
-            >
-              GitHub
-            </IconButton>
+            <Button variant="ghost" asChild>
+              <Link
+                variant="ghost"
+                href="https://github.com/namehash/nameguard"
+              >
+                <GithubIcon className="hidden md:block text-[#0F172A] fill-current" />{" "}
+                GitHub
+              </Link>
+            </Button>
 
-            <Button variant="ghost" asChild={<NextLink href="/contact" />}>
-              Contact
+            <Button variant="ghost">
+              <NextLink href="/contact">Contact</NextLink>
             </Button>
 
             <CalendarButton>Discuss an integration</CalendarButton>
           </div>
 
           <div className="lg:hidden">
-            <Button variant="ghost">
+            <IconButton className="!p-2" variant="ghost">
               <NGSearchIcon />
-            </Button>
+            </IconButton>
           </div>
 
           <MobileMenu />
