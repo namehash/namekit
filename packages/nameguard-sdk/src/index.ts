@@ -503,10 +503,6 @@ export interface NameGuardOptions {
   network?: Network;
 }
 
-interface InspectNameOptions {}
-
-interface InspectNamehashOptions {}
-
 interface InspectLabelhashOptions {
   parent?: string;
 }
@@ -514,8 +510,6 @@ interface InspectLabelhashOptions {
 export interface SecurePrimaryNameOptions {
   computeNameGuardReport?: boolean;
 }
-
-interface FakeEthNameOptions {}
 
 interface FieldsWithRequiredTitle extends Record<string, string> {
   title: string;
@@ -542,20 +536,14 @@ export class NameGuard {
    * using the network specified in the `NameGuard` instance. Therefore the returned `name` may not match the provided `name`, but is guaranteed to have a matching `namehash`.
    *
    * @param {string} name The name for NameGuard to inspect.
-   * @param {InspectNameOptions} options The options for the inspection.
    * @returns {Promise<NameGuardReport>} A promise that resolves with the `NameGuardReport` of the name. Check the `inspected` field of the result to determine if the result is an `InspectedNameGuardReport` or an `UninspectedNameGuardReport` for performance reasons in the case that the provided `name` was exceptionally long.
    * @example
    * const nameGuardReport = await nameguard.inspectName('vitalik.eth');
    */
-  public async inspectName(
-    name: string,
-    options?: InspectNameOptions,
-  ): Promise<NameGuardReport> {
+  public async inspectName(name: string): Promise<NameGuardReport> {
     const network_name = this.network;
 
     try {
-      const network_name = this.network;
-
       return await this.rawRequest("inspect-name", "POST", {
         name,
         network_name,
@@ -590,12 +578,10 @@ export class NameGuard {
    *
    *
    * @param {string[]} names The list of names for NameGuard to inspect.
-   * @param {InspectNameOptions} options The options for the inspection.
    * @returns {Promise<BulkConsolidatedNameGuardReport>} A promise that resolves with a list of `ConsolidatedNameGuardReport` values for each name queried in the bulk inspection. Check the `inspected` field of each report to determine if the name was fully inspected or inspected in a limited way for performance reasons.
    */
   public async bulkInspectNames(
     names: string[],
-    options?: InspectNameOptions,
   ): Promise<BulkConsolidatedNameGuardReport> {
     if (names.length > MAX_BULK_INSPECTION_NAMES) {
       throw new NameGuardError(
@@ -635,16 +621,12 @@ export class NameGuard {
    * If this resolution fails then NameGuard will return an error.
    *
    * @param {string} namehash A namehash should be a decimal or a hex (prefixed with 0x) string.
-   * @param {InspectNamehashOptions} options The options for the inspection.
    * @returns {Promise<NameGuardReport>} A promise that resolves with the `NameGuardReport` of the name. Check the `inspected` field of the result to determine if the result is an `InspectedNameGuardReport` or an `UninspectedNameGuardReport` for performance reasons in the case that the provided `name` was exceptionally long.
    * @throws {NameGuardError} If the inspection fails due to network issues, server errors, or if the namehash cannot be resolved to a name.
    * @throws {Error} If the provided `namehash` is not in a valid Keccak256 hash format.
    */
 
-  public async inspectNamehash(
-    namehash: string,
-    options?: InspectNamehashOptions,
-  ): Promise<NameGuardReport> {
+  public async inspectNamehash(namehash: string): Promise<NameGuardReport> {
     if (!isKeccak256Hash(namehash)) {
       throw new NameGuardError(
         NameGuardErrorType.Input,
@@ -838,14 +820,12 @@ export class NameGuard {
    * @param {string} contract_address Contract address for the NFT contract (ERC721 and ERC1155 supported).
    * @param {string} token_id The ID of the token (in hex or decimal format).
    * @param {string} fields Fields with values which will be investigated (e.g. title, collection name, metadata) whether they look like fake .eth ENS name. `title` key is mandatory, for ENS contracts it should be the ENS name.
-   * @param {FakeEthNameOptions} options The options for the fake .eth ens name check.
    * @returns {Promise<FakeEthNameCheckResult>}  A promise that resolves with a `FakeEthNameCheckResult`.
    */
   public async fakeEthNameCheck(
     contract_address: string,
     token_id: string,
     fields: FieldsWithRequiredTitle,
-    options?: FakeEthNameOptions,
   ): Promise<FakeEthNameCheckResult> {
     if (!isEthereumAddress(contract_address)) {
       throw new NameGuardError(
