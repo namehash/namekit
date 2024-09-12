@@ -33,7 +33,7 @@
     "@types/react-dom": "latest",
     "autoprefixer": "latest",
     "eslint": "^8.56.0",
-    "eslint-config-next": "14.2.3",
+    "eslint-config-next": "14.2.11",
     "postcss": "latest",
     "tailwind-scrollbar-hide": "1.1.7",
     "tailwindcss": "latest",
