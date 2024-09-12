@@ -92,8 +92,8 @@ export function ReportIcon({
   let tooltipIcon: React.ReactNode;
   let tooltipTitleClass: string;
   let tooltipTitle: string;
-  let tooltipSubtitle: string | undefined = undefined;
-  let tooltipMessage: string | undefined = undefined;
+  let tooltipSubtitle: string | undefined;
+  let tooltipMessage: string | undefined;
 
   if (hadLoadingError) {
     icon = <RatingUnknownIcon size={size} isInteractive={true} {...props} />;
