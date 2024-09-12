@@ -36,6 +36,9 @@ importers:
       '@headlessui/react':
         specifier: 1.7.17
         version: 1.7.17(react-dom@18.2.0)(react@18.2.0)
+      '@namehash/ens-utils':
+        specifier: workspace:*
+        version: link:../../packages/ens-utils
       '@namehash/nameguard':
         specifier: workspace:*
         version: link:../../packages/nameguard-sdk
@@ -309,7 +312,7 @@ importers:
         version: 8.1.8(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)(typescript@5.5.4)(vite@5.1.7)
       '@storybook/test':
         specifier: ^8.1.8
-        version: 8.1.8
+        version: 8.1.8(vitest@1.6.0)
       '@types/react':
         specifier: ^18.3.2
         version: 18.3.3
@@ -451,7 +454,7 @@ importers:
         version: 8.1.8(prettier@3.2.5)(react-dom@18.3.1)(react@18.3.1)(typescript@5.3.3)
       '@storybook/test':
         specifier: ^8.1.8
-        version: 8.1.8
+        version: 8.1.8(vitest@1.6.0)
       '@types/react':
         specifier: 18.3.3
         version: 18.3.3
@@ -479,6 +482,9 @@ importers:
       typescript:
         specifier: ^5.2.2
         version: 5.3.3
+      vitest:
+        specifier: ^1.6.0
+        version: 1.6.0
 
   packages/nameguard-sdk:
     dependencies:
@@ -519,6 +525,12 @@ importers:
       '@namehash/ens-webfont':
         specifier: workspace:*
         version: link:../ens-webfont
+      react:
+        specifier: ^18.2.0
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.3.1(react@18.3.1)
     devDependencies:
       '@namekit/tsconfig':
         specifier: workspace:*
@@ -538,12 +550,6 @@ importers:
       postcss:
         specifier: 8.4.38
         version: 8.4.38
-      react:
-        specifier: ^18.2.0
-        version: 18.3.1
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.3.1(react@18.3.1)
       tailwindcss:
         specifier: 3.4.4
         version: 3.4.4
@@ -5306,7 +5312,7 @@ packages:
       '@storybook/instrumenter': 8.1.1
       '@storybook/preview-api': 8.1.1
       '@testing-library/dom': 9.3.4
-      '@testing-library/jest-dom': 6.4.5
+      '@testing-library/jest-dom': 6.4.5(vitest@1.6.0)
       '@testing-library/user-event': 14.5.2(@testing-library/dom@9.3.4)
       '@vitest/expect': 1.3.1
       '@vitest/spy': 1.4.0
@@ -5319,7 +5325,7 @@ packages:
       - vitest
     dev: true
 
-  /@storybook/test@8.1.8:
+  /@storybook/test@8.1.8(vitest@1.6.0):
     resolution: {integrity: sha512-SuKQZ2VPBLRK7zgkK+BAzau0HHdYjcsHFbVFa3E4r5n29KRXziW0hOcyBqMRh3jVi9tWKswTmDAOaPfPCxQjHA==}
     dependencies:
       '@storybook/client-logger': 8.1.8
@@ -5327,7 +5333,7 @@ packages:
       '@storybook/instrumenter': 8.1.8
       '@storybook/preview-api': 8.1.8
       '@testing-library/dom': 9.3.4
-      '@testing-library/jest-dom': 6.4.5
+      '@testing-library/jest-dom': 6.4.5(vitest@1.6.0)
       '@testing-library/user-event': 14.5.2(@testing-library/dom@9.3.4)
       '@vitest/expect': 1.3.1
       '@vitest/spy': 1.4.0
@@ -5433,7 +5439,7 @@ packages:
       pretty-format: 27.5.1
     dev: true
 
-  /@testing-library/jest-dom@6.4.5:
+  /@testing-library/jest-dom@6.4.5(vitest@1.6.0):
     resolution: {integrity: sha512-AguB9yvTXmCnySBP1lWjfNNUwpbElsaQ567lt2VdGqAdHtpieLgjmcVyv1q7PMIvLbgpDdkWV5Ydv3FEejyp2A==}
     engines: {node: '>=14', npm: '>=6', yarn: '>=1'}
     peerDependencies:
@@ -5462,6 +5468,7 @@ packages:
       dom-accessibility-api: 0.6.3
       lodash: 4.17.21
       redent: 3.0.0
+      vitest: 1.6.0
     dev: true
 
   /@testing-library/user-event@14.5.2(@testing-library/dom@9.3.4):
@@ -12863,6 +12870,27 @@ packages:
       - terser
     dev: true
 
+  /vite-node@1.6.0:
+    resolution: {integrity: sha512-de6HJgzC+TFzOu0NTC4RAIsyf/DY/ibWDYQUcuEA84EMHhcefTUGkjFHKKEJhQN4A+6I0u++kr3l36ZF2d7XRw==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    hasBin: true
+    dependencies:
+      cac: 6.7.14
+      debug: 4.3.4
+      pathe: 1.1.2
+      picocolors: 1.0.1
+      vite: 5.1.7(@types/node@20.12.12)
+    transitivePeerDependencies:
+      - '@types/node'
+      - less
+      - lightningcss
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+    dev: true
+
   /vite-node@1.6.0(@types/node@20.12.7):
     resolution: {integrity: sha512-de6HJgzC+TFzOu0NTC4RAIsyf/DY/ibWDYQUcuEA84EMHhcefTUGkjFHKKEJhQN4A+6I0u++kr3l36ZF2d7XRw==}
     engines: {node: ^18.0.0 || >=20.0.0}
@@ -13001,6 +13029,61 @@ packages:
       tinypool: 0.8.4
       vite: 5.1.7(@types/node@20.12.12)
       vite-node: 1.4.0(@types/node@20.12.12)
+      why-is-node-running: 2.2.2
+    transitivePeerDependencies:
+      - less
+      - lightningcss
+      - sass
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+    dev: true
+
+  /vitest@1.6.0:
+    resolution: {integrity: sha512-H5r/dN06swuFnzNFhq/dnz37bPXnq8xB2xB5JOVk8K09rUtoeNN+LHWkoQ0A/i3hvbUKKcCei9KpbxqHMLhLLA==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    hasBin: true
+    peerDependencies:
+      '@edge-runtime/vm': '*'
+      '@types/node': ^18.0.0 || >=20.0.0
+      '@vitest/browser': 1.6.0
+      '@vitest/ui': 1.6.0
+      happy-dom: '*'
+      jsdom: '*'
+    peerDependenciesMeta:
+      '@edge-runtime/vm':
+        optional: true
+      '@types/node':
+        optional: true
+      '@vitest/browser':
+        optional: true
+      '@vitest/ui':
+        optional: true
+      happy-dom:
+        optional: true
+      jsdom:
+        optional: true
+    dependencies:
+      '@vitest/expect': 1.6.0
+      '@vitest/runner': 1.6.0
+      '@vitest/snapshot': 1.6.0
+      '@vitest/spy': 1.6.0
+      '@vitest/utils': 1.6.0
+      acorn-walk: 8.3.2
+      chai: 4.4.1
+      debug: 4.3.4
+      execa: 8.0.1
+      local-pkg: 0.5.0
+      magic-string: 0.30.10
+      pathe: 1.1.2
+      picocolors: 1.0.1
+      std-env: 3.7.0
+      strip-literal: 2.1.0
+      tinybench: 2.8.0
+      tinypool: 0.8.4
+      vite: 5.1.7(@types/node@20.12.12)
+      vite-node: 1.6.0
       why-is-node-running: 2.2.2
     transitivePeerDependencies:
       - less

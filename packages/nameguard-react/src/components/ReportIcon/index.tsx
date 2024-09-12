@@ -1,152 +1,175 @@
 "use client";
 
 import React, { useEffect } from "react";
-import {
-  CheckResultCode,
-  ConsolidatedNameGuardReport,
-} from "@namehash/nameguard";
+import { ConsolidatedNameGuardReport } from "@namehash/nameguard";
 import cc from "classcat";
 import { ENSName } from "@namehash/ens-utils";
 
 import { Link } from "@namehash/namekit-react";
-
 import { Tooltip } from "@namehash/namekit-react/client";
-import { RatingLoadingIcon } from "../icons/RatingLoadingIcon";
 import { RatingIcon, RatingIconSize } from "../Report/RatingIcon";
-import { checkResultCodeTextColor, ratingTextColor } from "../../utils/text";
-import { UnknownReportIcon } from "../UnknownReportIcon/UnknownReportIcon";
+import { ratingTextColor } from "../../utils/text";
+import { OpenReportHandler, openReport } from "../../utils/openreport";
+import { RatingUnknownIcon } from "../icons/RatingUnknownIcon";
+import { RatingLoadingIcon } from "../icons/RatingLoadingIcon";
 
-type ReportIconProps = {
-  onClickOverride?: (ensName: ENSName) => void;
+interface ReportShieldProps {
+  /**
+   * The `ENSName` that this `ReportIcon` is related to.
+   *
+   * Used to provide functionality even when the `data` prop is `undefined`
+   * (such as during data loading).
+   */
+  name: ENSName;
 
-  /*
-    The data prop is the consolidated report for the ensName.
-    The ensName prop is the ENSName object.
-
-    The data prop should always be relative to the ensName prop.
-    This means that the data prop should always be the report for
-    the ensName provided in the ensName prop.
-  */
-  ensName: ENSName;
+  /**
+   * - If `undefined` and `hasLoadingError` is `false`:
+   *   - The component will display a loading state.
+   * - If `undefined` and `hasLoadingError` is `true`:
+   *   - The component will display an unknown state.
+   * - If `defined`:
+   *   - The component will display a summary of the report contained within `data`.
+   *   - The value of `data.name` must be equal to the value of `name.name`.
+   *
+   * @default undefined
+   */
   data?: ConsolidatedNameGuardReport;
 
+  /**
+   * - If `true`, the component will display an error state.
+   * - The value of this field is only considered if `data` is `undefined`.
+   *
+   * @default false
+   */
   hadLoadingError?: boolean;
-  size?: RatingIconSize;
-} & React.ComponentProps<"svg">;
 
-declare global {
-  interface Window {
-    location: Location;
-  }
+  /**
+   * The size of the `RatingIcon` to display.
+   *
+   * @default RatingIconSize.small
+   */
+  size?: RatingIconSize;
+
+  /**
+   * The custom `OpenReportHandler` to call when:
+   * - The report icon is clicked.
+   * - The link to inspect the name for details in the tooltip is clicked.
+   *
+   * If `undefined`, the default `OpenReportHandler` will be used.
+   *
+   * @default undefined
+   */
+  onOpenReport?: OpenReportHandler;
 }
 
 export function ReportIcon({
-  ensName,
+  name,
   data,
-  onClickOverride,
-  hadLoadingError,
+  hadLoadingError = false,
   size = RatingIconSize.small,
+  onOpenReport,
 
   /*
-    Props are applied to the shield icon which is the onHover trigger element
+    Props are applied to the Report Icon triggeer which is the onHover trigger element 
     for the tooltip with Report information. For examples, please visit the
-    https://nameguard.io/docs/report and see the ReportIcon docs. Any
-    additional props are passed to the shield icon that when hovered,
-    displays the tooltip with the report information.
+    https://nameguard.io/docs/report and see the ReportIcon docs. Any 
+    additional props received are passed to the Report Icon that when 
+    hovered, displays the tooltip with the report information.
   */
   ...props
-}: ReportIconProps) {
-  const onClickHandler = () => {
-    if (onClickOverride) onClickOverride(ensName);
-    else {
-      window.location.href = `https://nameguard.io/inspect/${encodeURIComponent(
-        ensName.name,
-      )}`;
-    }
-  };
-
-  if (hadLoadingError) {
-    return (
-      <UnknownReportIcon
-        size={size}
-        onClick={onClickHandler}
-        className="cursor-pointer"
-      >
-        <Link onClick={onClickHandler} variant="underline" size="small">
-          Inspect name for details
-        </Link>
-      </UnknownReportIcon>
-    );
-  }
-
-  if (!data) {
-    return (
-      <RatingLoadingIcon
-        onClick={onClickHandler}
-        className={cc([props.className, " cursor-pointer"])}
-        size={size}
-        {...props}
-      />
-    );
-  }
-
+}: ReportShieldProps) {
   useEffect(() => {
     if (data) {
-      if (data.name !== ensName.name) {
+      if (data.name !== name.name) {
         throw new Error(
-          `The data received is from: ${data.name} and not for the provided ensName, which is ${ensName.name}`,
+          `ReportIcon error: The name in the provided data: "${data.name}" does not match the expected name "${name.name}".`,
         );
       }
     }
   }, [data]);
 
-  const { title, subtitle, rating, risk_count, highest_risk } = data;
+  let icon: React.ReactNode;
+  let tooltipIcon: React.ReactNode;
+  let tooltipTitleClass: string;
+  let tooltipTitle: string;
+  let tooltipSubtitle: string | undefined;
+  let tooltipMessage: string | undefined;
 
-  const textClass = cc(["font-semibold mb-1", ratingTextColor(rating)]);
+  if (hadLoadingError) {
+    icon = <RatingUnknownIcon size={size} isInteractive={true} {...props} />;
+    tooltipIcon = <RatingUnknownIcon size={RatingIconSize.small} />;
+    tooltipTitleClass = "font-semibold mb-1 text-white";
+    tooltipTitle = "Error loading report";
+  } else if (!data) {
+    // TODO: an isInteractive prop is planned to be added to `RatingLoadingIcon`
+    // in https://app.shortcut.com/ps-web3/story/25745/refine-loading-state-of-ratingicon
+    icon = <RatingLoadingIcon size={size} {...props} />;
+    // TODO: the need to pass this `fill` prop is planned to be removed in
+    // https://app.shortcut.com/ps-web3/story/25745/refine-loading-state-of-ratingicon
+    tooltipIcon = (
+      <RatingLoadingIcon
+        size={RatingIconSize.small}
+        fill="#dddddd"
+        {...props}
+      />
+    );
+    tooltipTitleClass = "font-semibold mb-1 text-white";
+    tooltipTitle = "Loading report...";
+  } else {
+    const { title, subtitle, rating, risk_count, highest_risk } = data;
 
-  return (
-    <Tooltip
-      trigger={
-        <RatingIcon
-          role="button"
-          isInteractive={true}
-          onClick={onClickHandler}
-          className="cursor-pointer"
-          rating={rating}
-          size={size}
-          {...props}
-        />
-      }
-    >
-      <div className="flex items-start space-x-3 py-2.5 min-w-[300px] max-w-[300px]">
-        <div className="mt-0.5">
-          <RatingIcon rating={rating} size={RatingIconSize.small} />
-        </div>
+    icon = (
+      <RatingIcon rating={rating} size={size} isInteractive={true} {...props} />
+    );
+    tooltipIcon = (
+      <RatingIcon rating={data.rating} size={RatingIconSize.small} />
+    );
+    tooltipTitleClass = cc(["font-semibold mb-1", ratingTextColor(rating)]);
+    tooltipTitle = title;
+    if (risk_count >= 1) {
+      tooltipSubtitle = `${risk_count} risk${risk_count !== 1 ? "s" : ""} detected`;
+    }
+    tooltipMessage = highest_risk?.message || subtitle;
+  }
 
-        <div className="flex-1">
-          <div className="flex items-center justify-between">
-            <span className={textClass}>{title}</span>
-            {risk_count >= 1 && (
-              <span
-                className={cc([
-                  "text-sm font-normal",
-                  checkResultCodeTextColor(CheckResultCode.info),
-                ])}
-              >
-                {risk_count} risk{risk_count !== 1 && "s"} detected
-              </span>
-            )}
-          </div>
-
-          <div className="text-left text-sm text-white font-normal">
-            {highest_risk?.message || subtitle}
-          </div>
-
-          <Link onClick={onClickHandler} variant="underline" size="small">
-            Inspect name for details
-          </Link>
-        </div>
-      </div>
-    </Tooltip>
+  const iconButton = (
+    <div role="button" onClick={() => openReport(name, onOpenReport)}>
+      {icon}
+    </div>
   );
+
+  const minTooltipWidth = tooltipSubtitle ? 300 : 200;
+
+  const tooltip = (
+    <div className="flex items-start space-x-3 py-2.5 max-w-[300px]" style={{ minWidth: `${minTooltipWidth}px` }}>
+      <div className="mt-0.5">{tooltipIcon}</div>
+
+      <div className="flex-1">
+        <div className="flex items-center justify-between">
+          <span className={tooltipTitleClass}>{tooltipTitle}</span>
+          {tooltipSubtitle && (
+            <span className="text-sm font-normal text-gray-400">
+              {tooltipSubtitle}
+            </span>
+          )}
+        </div>
+
+        {tooltipMessage && (
+          <div className="text-left text-sm text-white font-normal">
+            {tooltipMessage}
+          </div>
+        )}
+
+        <Link
+          onClick={() => openReport(name, onOpenReport)}
+          variant="underline"
+          size="small"
+        >
+          Inspect name for details
+        </Link>
+      </div>
+    </div>
+  );
+
+  return <Tooltip trigger={iconButton}>{tooltip}</Tooltip>;
 }

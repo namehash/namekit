@@ -9,7 +9,6 @@ import { EnsSolidIcon, TwitterIcon } from "../1 - atoms/";
 import { Profile } from "@/data/ensProfiles";
 import { useId } from "react";
 import cc from "classcat";
-import { URL } from "url";
 
 interface AvatarWithTooltipProps {
   className?: string;

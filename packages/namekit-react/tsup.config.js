@@ -7,6 +7,9 @@ export default defineConfig({
   },
   dts: true, 
   format: ["esm"],
+  splitting: true,
+  sourcemap: true,
+  minify: false,
   clean: true,
   skipNodeModulesBundle: true,
 });

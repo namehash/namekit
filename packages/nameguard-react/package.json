@@ -17,11 +17,12 @@
   ],
   "scripts": {
     "build": "tsup",
-    "dev": "tsup --watch --clean=false"
+    "dev": "tsup --watch --clean=false",
+    "test": "vitest"
   },
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
+      "types": "./dist/index.d.mts",
       "import": "./dist/index.mjs",
       "default": "./dist/index.mjs"
     },
@@ -32,7 +33,7 @@
   },
   "main": "./dist/index.mjs",
   "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/index.d.mts",
   "styles": "./dist/index.css",
   "dependencies": {
     "@headlessui-float/react": "0.11.4",
@@ -40,8 +41,8 @@
     "@heroicons/react": "2.0.18",
     "@namehash/ens-utils": "workspace:*",
     "@namehash/ens-webfont": "workspace:*",
-    "@namehash/namekit-react": "workspace:*",
     "@namehash/nameguard": "workspace:*",
+    "@namehash/namekit-react": "workspace:*",
     "classcat": "5.0.4",
     "sonner": "1.2.3",
     "swr": "2.2.4",
@@ -58,7 +59,8 @@
     "react-dom": "18.3.1",
     "tailwindcss": "3.4.3",
     "tsup": "^7.2.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vitest": "^1.6.0"
   },
   "peerDependencies": {
     "react": "^18.2.0",

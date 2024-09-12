@@ -1,11 +1,11 @@
 import React from "react";
 
-import { RatingIcon, RatingIconSize } from "./RatingIcon";
-import { ReportFormattedDisplayName } from "./ReportFormattedDisplayName";
+import { RatingIconSize } from "./RatingIcon";
 import { ReportChangesApplied } from "./ReportChangesApplied";
-import { ParsedName } from "@namehash/ens-utils";
 import { RatingLoadingIcon } from "../icons/RatingLoadingIcon";
 import { DisplayedName } from "../DisplayedName/DisplayedName";
+import { ReportFormattedDisplayName } from "./ReportFormattedDisplayName";
+import { ParsedName } from "@namehash/ens-utils";
 
 type LoadingSkeletonProps = {
   parsedName: ParsedName;
