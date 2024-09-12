@@ -140,10 +140,6 @@ export function ReportIcon({
 
   const minTooltipWidth = tooltipSubtitle ? 300 : 200;
 
-  // const tooltipClasses = cc([
-  //   "flex items-start space-x-3 py-2.5 max-w-[300px]",
-  // ]);
-
   const tooltip = (
     <div className="flex items-start space-x-3 py-2.5 max-w-[300px]" style={{ minWidth: `${minTooltipWidth}px` }}>
       <div className="mt-0.5">{tooltipIcon}</div>

@@ -9,8 +9,8 @@ import {
 import { OpenReportHandler, RatingIconSize } from "@namehash/nameguard-react";
 import { ReportBadge, ReportIcon } from "@namehash/nameguard-react";
 
-const customOpenReportHandler: OpenReportHandler = (ensName: ENSName) => {
-  alert(`Example of custom logic to handle a request to open a NameGuard report for name "${ensName.displayName}".`);
+const customOpenReportHandler: OpenReportHandler = (name: ENSName) => {
+  alert(`Example of custom logic to handle a request to open a NameGuard report for name "${name.displayName}".`);
 };
 
 export default function ReportDocsPage() {

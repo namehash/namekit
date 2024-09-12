@@ -54,7 +54,6 @@ export async function HeroCarousel() {
           data={report}
           displayUnnormalizedNames={true}
           key={`carousel-item-${index}`}
-          
         />
       ))}
       {/* 
@@ -68,7 +67,6 @@ export async function HeroCarousel() {
           data={report}
           displayUnnormalizedNames={true}
           key={`carousel-item-${index}`}
-          
         />
       ))}
     </div>
