@@ -19,7 +19,7 @@ describe("NameGuard", () => {
   });
 
   it("should fetch the UninspectedNameGuard report for a name that is too long", async () => {
-    const name = "a".repeat(MAX_INSPECTED_NAME_CHARACTERS + 1);
+    const name = "a".repeat(MAX_INSPECTED_NAME_CHARACTERS+1);
     const data = await nameguard.inspectName(name);
 
     expect(data.name).toBe(name);
