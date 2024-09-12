@@ -40,35 +40,35 @@ export default function ReportDocsPage() {
 
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.pass)}
+                name={getExampleReportName(Rating.pass)}
                 data={getExampleReportData(Rating.pass)}
                 size={RatingIconSize.large}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.warn)}
+                name={getExampleReportName(Rating.warn)}
                 data={getExampleReportData(Rating.warn)}
                 size={RatingIconSize.large}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.alert)}
+                name={getExampleReportName(Rating.alert)}
                 data={getExampleReportData(Rating.alert)}
                 size={RatingIconSize.large}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName()}
+                name={getExampleReportName()}
                 size={RatingIconSize.large}
                 hadLoadingError={true}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName()}
+                name={getExampleReportName()}
                 size={RatingIconSize.large}
               />
             </div>
@@ -80,35 +80,35 @@ export default function ReportDocsPage() {
 
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.pass)}
+                name={getExampleReportName(Rating.pass)}
                 data={getExampleReportData(Rating.pass)}
                 size={RatingIconSize.medium}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.warn)}
+                name={getExampleReportName(Rating.warn)}
                 data={getExampleReportData(Rating.warn)}
                 size={RatingIconSize.medium}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.alert)}
+                name={getExampleReportName(Rating.alert)}
                 data={getExampleReportData(Rating.alert)}
                 size={RatingIconSize.medium}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName()}
+                name={getExampleReportName()}
                 size={RatingIconSize.medium}
                 hadLoadingError={true}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName()}
+                name={getExampleReportName()}
                 size={RatingIconSize.medium}
               />
             </div>
@@ -120,35 +120,35 @@ export default function ReportDocsPage() {
 
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.pass)}
+                name={getExampleReportName(Rating.pass)}
                 data={getExampleReportData(Rating.pass)}
                 size={RatingIconSize.small}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.warn)}
+                name={getExampleReportName(Rating.warn)}
                 data={getExampleReportData(Rating.warn)}
                 size={RatingIconSize.small}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.alert)}
+                name={getExampleReportName(Rating.alert)}
                 data={getExampleReportData(Rating.alert)}
                 size={RatingIconSize.small}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName()}
+                name={getExampleReportName()}
                 size={RatingIconSize.small}
                 hadLoadingError={true}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName()}
+                name={getExampleReportName()}
                 size={RatingIconSize.small}
               />
             </div>
@@ -160,35 +160,35 @@ export default function ReportDocsPage() {
 
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.pass)}
+                name={getExampleReportName(Rating.pass)}
                 data={getExampleReportData(Rating.pass)}
                 size={RatingIconSize.micro}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.warn)}
+                name={getExampleReportName(Rating.warn)}
                 data={getExampleReportData(Rating.warn)}
                 size={RatingIconSize.micro}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.alert)}
+                name={getExampleReportName(Rating.alert)}
                 data={getExampleReportData(Rating.alert)}
                 size={RatingIconSize.micro}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName()}
+                name={getExampleReportName()}
                 size={RatingIconSize.micro}
                 hadLoadingError={true}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName()}
+                name={getExampleReportName()}
                 size={RatingIconSize.micro}
               />
             </div>
@@ -200,35 +200,35 @@ export default function ReportDocsPage() {
 
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.pass)}
+                name={getExampleReportName(Rating.pass)}
                 data={getExampleReportData(Rating.pass)}
                 onOpenReport={customOpenReportHandler}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.warn)}
+                name={getExampleReportName(Rating.warn)}
                 data={getExampleReportData(Rating.warn)}
                 onOpenReport={customOpenReportHandler}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.alert)}
+                name={getExampleReportName(Rating.alert)}
                 data={getExampleReportData(Rating.alert)}
                 onOpenReport={customOpenReportHandler}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
+                name={getExampleReportName()}
                 hadLoadingError={true}
-                ensName={getExampleReportName()}
                 onOpenReport={customOpenReportHandler}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName()}
+                name={getExampleReportName()}
                 onOpenReport={customOpenReportHandler}
               />
             </div>
@@ -259,30 +259,30 @@ export default function ReportDocsPage() {
 
           <div className="flex items-center justify-center">
             <ReportBadge
-              ensName={getExampleReportName(Rating.pass)}
+              name={getExampleReportName(Rating.pass)}
               data={getExampleReportData(Rating.pass)}
             />
           </div>
           <div className="col-span-3 flex items-center justify-center">
             <ReportBadge
-              ensName={getExampleReportName(Rating.warn)}
+              name={getExampleReportName(Rating.warn)}
               data={getExampleReportData(Rating.warn)}
             />
           </div>
           <div className="col-span-2 flex items-center justify-center">
             <ReportBadge
+              name={getExampleReportName(Rating.alert)}
               data={getExampleReportData(Rating.alert)}
-              ensName={getExampleReportName(Rating.alert)}
             />
           </div>
           <div className="col-span-2 flex items-center justify-center">
             <ReportBadge
-              ensName={getExampleReportName()}
+              name={getExampleReportName()}
               hadLoadingError={true}
             />
           </div>
           <div className="flex items-center justify-center">
-            <ReportBadge ensName={getExampleReportName()} />
+            <ReportBadge name={getExampleReportName()} />
           </div>
         </div>
 
@@ -295,35 +295,35 @@ export default function ReportDocsPage() {
 
           <div className="flex items-center justify-center">
             <ReportBadge
-              ensName={getExampleReportName(Rating.pass)}
+              name={getExampleReportName(Rating.pass)}
               data={getExampleReportData(Rating.pass)}
               onOpenReport={customOpenReportHandler}
             />
           </div>
           <div className="col-span-3 flex items-center justify-center">
             <ReportBadge
-              ensName={getExampleReportName(Rating.warn)}
+              name={getExampleReportName(Rating.warn)}
               data={getExampleReportData(Rating.warn)}
               onOpenReport={customOpenReportHandler}
             />
           </div>
           <div className="col-span-2 flex items-center justify-center">
             <ReportBadge
+              name={getExampleReportName(Rating.alert)}
               data={getExampleReportData(Rating.alert)}
-              ensName={getExampleReportName(Rating.alert)}
               onOpenReport={customOpenReportHandler}
             />
           </div>
           <div className="col-span-2 flex items-center justify-center">
             <ReportBadge
+              name={getExampleReportName()}
               hadLoadingError={true}
-              ensName={getExampleReportName()}
               onOpenReport={customOpenReportHandler}
             />
           </div>
           <div className="flex items-center justify-center">
             <ReportBadge
-              ensName={getExampleReportName()}
+              name={getExampleReportName()}
               onOpenReport={customOpenReportHandler}
             />
           </div>
@@ -337,31 +337,31 @@ export default function ReportDocsPage() {
 
           <div className="flex items-center justify-center ml-16">
             <ReportBadge
-              ensName={getExampleReportName(Rating.pass)}
+              name={getExampleReportName(Rating.pass)}
               data={getExampleReportData(Rating.pass)}
             />
           </div>
           <div className="col-span-3 flex items-center justify-center ml-16">
             <ReportBadge
-              ensName={getExampleReportName(Rating.warn)}
+              name={getExampleReportName(Rating.warn)}
               data={getExampleReportData(Rating.warn)}
             />
           </div>
           <div className="col-span-2 flex items-center justify-center">
             <ReportBadge
-              displayUnnormalizedNames={true}
+              name={getExampleReportName(Rating.alert)}
               data={getExampleReportData(Rating.alert)}
-              ensName={getExampleReportName(Rating.alert)}
+              displayUnnormalizedNames={true}
             />
           </div>
           <div className="col-span-2 flex items-center justify-center">
             <ReportBadge
+              name={getExampleReportName()}
               hadLoadingError={true}
-              ensName={getExampleReportName()}
             />
           </div>
           <div className="flex items-center justify-center">
-            <ReportBadge ensName={getExampleReportName()} />
+            <ReportBadge name={getExampleReportName()} />
           </div>
         </div>
       </div>

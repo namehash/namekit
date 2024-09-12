@@ -130,17 +130,19 @@ export const SearchEmptyState = () => {
             {(hadLoadingError || isLoading) &&
               examples.map((_, index) => (
                 <ReportModalNameBadge
+                  name={examples[index]}
                   hadLoadingError={hadLoadingError}
-                  ensName={examples[index]}
+                  displayUnnormalizedNames={true}
                   key={index}
                 />
               ))}
             {data?.results?.map((report, index) => (
               <ReportModalNameBadge
-                key={index}
-                hadLoadingError={hadLoadingError}
-                ensName={examples[index]}
+                name={examples[index]}
                 data={report}
+                hadLoadingError={hadLoadingError}
+                displayUnnormalizedNames={true}
+                key={index}
               />
             ))}
             <div className="w-5 flex-shrink-0 relative">
