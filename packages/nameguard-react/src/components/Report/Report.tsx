@@ -1,7 +1,7 @@
 import React, { Fragment, useMemo } from "react";
 import useSWR from "swr";
 import { type NameGuardReport, nameguard, Rating } from "@namehash/nameguard";
-import { parseName, Normalization } from "@namehash/ens-utils";
+import { parseName, Normalization, buildENSName } from "@namehash/ens-utils";
 import { Toaster } from "sonner";
 
 import { type Settings } from "../../stores/settings";
@@ -118,7 +118,7 @@ export const Report = ({
           <ReportHeader />
           {data && externalLinks && (
             <div className="flex-shrink-0 flex items-start space-x-1 absolute md:relative right-0 md:right-auto -top-1 md:top-auto">
-              <Share name={data.name} />
+              <Share name={buildENSName(data.name)} />
               <ExternalLinks title="View name in" links={externalLinks} />
             </div>
           )}

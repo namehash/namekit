@@ -1,32 +1,36 @@
 import React from "react";
 import { ENSName } from "@namehash/ens-utils";
-import { ConsolidatedNameGuardReport } from "@namehash/nameguard";
 import { useSearchStore } from "../../stores/search";
 import { ReportBadge } from "../..";
+import { ReportBadgeProps } from "../ReportBadge";
 
-interface ReportModalNameBadgeProps {
-  data?: ConsolidatedNameGuardReport;
-  hadLoadingError?: boolean;
-  ensName: ENSName;
-}
+/**
+ * Same as `ReportBadgeProps` but without `onOpenReport`
+ * since `ReportModalNameBadge` provides its own implementation of
+ * `onOpenReport`.
+ */
+type ReportModalNameBadgeProps = Omit<ReportBadgeProps, 'onOpenReport'>;
 
 export function ReportModalNameBadge({
+  name,
   data,
-  ensName,
-  hadLoadingError = false,
+  hadLoadingError,
+  displayUnnormalizedNames,
+  maxNameDisplayWidth,
   ...props
 }: ReportModalNameBadgeProps) {
   const { openModal } = useSearchStore();
   return (
     <ReportBadge
       {...props}
+      name={name}
       data={data}
-      ensName={ensName}
-      displayUnnormalizedNames={true}
       hadLoadingError={hadLoadingError}
-      onIconClickOverride={(ensName: ENSName) => openModal(ensName.name)}
-      onBadgeClickOverride={(ensName: ENSName) => openModal(ensName.name)}
-      onTooltipClickOverride={(ensName: ENSName) => openModal(ensName.name)}
+      displayUnnormalizedNames={displayUnnormalizedNames}
+      maxNameDisplayWidth={maxNameDisplayWidth}
+      onOpenReport={(name: ENSName) => {
+        openModal(name.name);
+      }}
     />
   );
 }

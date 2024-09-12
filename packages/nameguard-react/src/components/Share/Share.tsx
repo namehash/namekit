@@ -15,16 +15,16 @@ import { Tooltip } from "@namehash/namekit-react/client";
 import { CheckResultCode } from "@namehash/nameguard";
 import { checkResultCodeTextColor } from "../../utils/text";
 import { DisplayedName } from "../DisplayedName/DisplayedName";
-import { buildENSName } from "@namehash/ens-utils";
-import { viewNameReportURL } from "../../utils/url";
+import { buildENSName, ENSName } from "@namehash/ens-utils";
+import { ReportURLGenerator, getReportURL } from "../../utils/url";
 
 type ShareProps = {
-  name: string;
+  name: ENSName;
+  generator?: ReportURLGenerator;
 };
 
-function createTwitterLink(name: string) {
-  const tweetText = `Check out the NameGuard Report for ${name}\n`;
-  const url = viewNameReportURL(buildENSName(name)).href;
+function createTwitterLink(name: ENSName, url: string) {
+  const tweetText = `Check out the NameGuard Report for ${name.displayName}\n`;
 
   return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
     tweetText,
@@ -44,19 +44,19 @@ function createMailToLink(subject, body) {
   return `mailto:?subject=${subjectEncoded}&body=${bodyEncoded}`;
 }
 
-export function Share({ name }: ShareProps) {
+export function Share({ name, generator }: ShareProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const twitterLink = createTwitterLink(name);
-  const telegramLink = createTelegramLink(
-    viewNameReportURL(buildENSName(name)).href,
-  );
+  const targetUrl = getReportURL(name, generator).href;
+
+  const twitterLink = createTwitterLink(name, targetUrl);
+  const telegramLink = createTelegramLink(targetUrl);
   const emailLink = createMailToLink(
-    `NameGuard Report for ${name}`,
-    `Check this out!\n${viewNameReportURL(buildENSName(name)).href}`,
+    `NameGuard Report for ${name.displayName}`,
+    `Check this out!\n${targetUrl}`,
   );
   const copyLinkToClipboard = () => {
-    navigator.clipboard.writeText(viewNameReportURL(buildENSName(name)).href);
+    navigator.clipboard.writeText(targetUrl);
     toast.success("Link copied to clipboard", {
       icon: (
         <CheckCircleIcon
@@ -137,7 +137,7 @@ export function Share({ name }: ShareProps) {
                   <div className="min-h-[200px] flex items-center justify-center px-6 md:px-10">
                     {name && (
                       <DisplayedName
-                        name={buildENSName(name)}
+                        name={name}
                         textStylingClasses="font-extrabold text-black text-xl"
                       />
                     )}

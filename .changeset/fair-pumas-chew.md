@@ -3,4 +3,4 @@
 "@namehash/nameguard": minor
 ---
 
-Use new function getNameGuardURLForENSname from @namehash/nameguard where possible
+Add custom getReportURL handlers for Report components

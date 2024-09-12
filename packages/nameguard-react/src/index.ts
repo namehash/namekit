@@ -1,5 +1,6 @@
 export { ratingTextColor, checkResultCodeTextColor } from "./utils/text";
-export { viewNameReportURL, redirectToViewNameReportURL } from "./utils/url";
+export { ReportURLGenerator, defaultReportURLGenerator, getReportURL, redirectToReport } from "./utils/url";
+export { OpenReportHandler, defaultOpenReportHandler, openReport } from "./utils/openreport";
 export { Search } from "./components/Search/Search";
 export { Report } from "./components/Report/Report";
 export { SearchModal } from "./components/Search/SearchModal";

@@ -4,7 +4,7 @@ import { type SecurePrimaryNameResult } from "@namehash/nameguard";
 import {
   RatingIcon,
   RatingIconSize,
-  viewNameReportURL,
+  getReportURL,
   ratingTextColor,
   RatingLoadingIcon,
 } from "@namehash/nameguard-react";
@@ -69,7 +69,7 @@ export function ImpersonationReport({ data }: ImpersonationReportProps) {
             <div className="text-sm text-white">
               <a
                 href={
-                  viewNameReportURL(buildENSName(nameguard_result.name)).href
+                  getReportURL(buildENSName(nameguard_result.name)).href
                 }
                 className="underline"
                 rel="noopener noreferrer"

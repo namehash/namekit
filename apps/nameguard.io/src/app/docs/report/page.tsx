@@ -6,8 +6,12 @@ import {
   ConsolidatedNameGuardReport,
   Rating,
 } from "@namehash/nameguard";
-import { RatingIconSize } from "@namehash/nameguard-react";
+import { OpenReportHandler, RatingIconSize } from "@namehash/nameguard-react";
 import { ReportBadge, ReportIcon } from "@namehash/nameguard-react";
+
+const customOpenReportHandler: OpenReportHandler = (name: ENSName) => {
+  alert(`Example of custom logic to handle a request to open a NameGuard report for name "${name.displayName}".`);
+};
 
 export default function ReportDocsPage() {
   return (
@@ -36,35 +40,35 @@ export default function ReportDocsPage() {
 
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.pass)}
+                name={getExampleReportName(Rating.pass)}
                 data={getExampleReportData(Rating.pass)}
                 size={RatingIconSize.large}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.warn)}
+                name={getExampleReportName(Rating.warn)}
                 data={getExampleReportData(Rating.warn)}
                 size={RatingIconSize.large}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.alert)}
+                name={getExampleReportName(Rating.alert)}
                 data={getExampleReportData(Rating.alert)}
                 size={RatingIconSize.large}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName()}
+                name={getExampleReportName()}
                 size={RatingIconSize.large}
                 hadLoadingError={true}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName()}
+                name={getExampleReportName()}
                 size={RatingIconSize.large}
               />
             </div>
@@ -76,35 +80,35 @@ export default function ReportDocsPage() {
 
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.pass)}
+                name={getExampleReportName(Rating.pass)}
                 data={getExampleReportData(Rating.pass)}
                 size={RatingIconSize.medium}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.warn)}
+                name={getExampleReportName(Rating.warn)}
                 data={getExampleReportData(Rating.warn)}
                 size={RatingIconSize.medium}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.alert)}
+                name={getExampleReportName(Rating.alert)}
                 data={getExampleReportData(Rating.alert)}
                 size={RatingIconSize.medium}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName()}
+                name={getExampleReportName()}
                 size={RatingIconSize.medium}
                 hadLoadingError={true}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName()}
+                name={getExampleReportName()}
                 size={RatingIconSize.medium}
               />
             </div>
@@ -116,35 +120,35 @@ export default function ReportDocsPage() {
 
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.pass)}
+                name={getExampleReportName(Rating.pass)}
                 data={getExampleReportData(Rating.pass)}
                 size={RatingIconSize.small}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.warn)}
+                name={getExampleReportName(Rating.warn)}
                 data={getExampleReportData(Rating.warn)}
                 size={RatingIconSize.small}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.alert)}
+                name={getExampleReportName(Rating.alert)}
                 data={getExampleReportData(Rating.alert)}
                 size={RatingIconSize.small}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName()}
+                name={getExampleReportName()}
                 size={RatingIconSize.small}
                 hadLoadingError={true}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName()}
+                name={getExampleReportName()}
                 size={RatingIconSize.small}
               />
             </div>
@@ -156,205 +160,76 @@ export default function ReportDocsPage() {
 
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.pass)}
+                name={getExampleReportName(Rating.pass)}
                 data={getExampleReportData(Rating.pass)}
                 size={RatingIconSize.micro}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.warn)}
+                name={getExampleReportName(Rating.warn)}
                 data={getExampleReportData(Rating.warn)}
                 size={RatingIconSize.micro}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.alert)}
+                name={getExampleReportName(Rating.alert)}
                 data={getExampleReportData(Rating.alert)}
                 size={RatingIconSize.micro}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName()}
+                name={getExampleReportName()}
                 size={RatingIconSize.micro}
                 hadLoadingError={true}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName()}
+                name={getExampleReportName()}
                 size={RatingIconSize.micro}
               />
             </div>
           </div>
           <div className="grid grid-cols-6 gap-x-6 py-5">
             <div className="flex items-center font-mono">
-              <pre>{"<ReportIcon \n   onIconClickOverride />"}</pre>
+              <pre>{"<ReportIcon \n   custom onOpenReport />"}</pre>
             </div>
 
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.pass)}
+                name={getExampleReportName(Rating.pass)}
                 data={getExampleReportData(Rating.pass)}
-                onIconClickOverride={(ensName: ENSName) =>
-                  alert(`${ensName.name} - icon click`)
-                }
+                onOpenReport={customOpenReportHandler}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.warn)}
+                name={getExampleReportName(Rating.warn)}
                 data={getExampleReportData(Rating.warn)}
-                onIconClickOverride={(ensName: ENSName) =>
-                  alert(`${ensName.name} - icon click`)
-                }
+                onOpenReport={customOpenReportHandler}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName(Rating.alert)}
+                name={getExampleReportName(Rating.alert)}
                 data={getExampleReportData(Rating.alert)}
-                onIconClickOverride={(ensName: ENSName) =>
-                  alert(`${ensName.name} - icon click`)
-                }
+                onOpenReport={customOpenReportHandler}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
+                name={getExampleReportName()}
                 hadLoadingError={true}
-                ensName={getExampleReportName()}
-                onIconClickOverride={(ensName: ENSName) =>
-                  alert(`${ensName.name} - icon click`)
-                }
+                onOpenReport={customOpenReportHandler}
               />
             </div>
             <div className="flex items-center justify-center">
               <ReportIcon
-                ensName={getExampleReportName()}
-                onIconClickOverride={(ensName: ENSName) =>
-                  alert(`${ensName.name} - icon click`)
-                }
-              />
-            </div>
-          </div>
-          <div className="grid grid-cols-6 gap-x-6 py-5">
-            <div className="flex items-center font-mono">
-              <pre>{"<ReportIcon \n   onTooltipClickOverride />"}</pre>
-            </div>
-
-            <div className="flex items-center justify-center">
-              <ReportIcon
-                ensName={getExampleReportName(Rating.pass)}
-                data={getExampleReportData(Rating.pass)}
-                onTooltipClickOverride={(ensName: ENSName) =>
-                  alert(`${ensName.name} - tooltip click`)
-                }
-              />
-            </div>
-            <div className="flex items-center justify-center">
-              <ReportIcon
-                ensName={getExampleReportName(Rating.warn)}
-                data={getExampleReportData(Rating.warn)}
-                onTooltipClickOverride={(ensName: ENSName) =>
-                  alert(`${ensName.name} - tooltip click`)
-                }
-              />
-            </div>
-            <div className="flex items-center justify-center">
-              <ReportIcon
-                ensName={getExampleReportName(Rating.alert)}
-                data={getExampleReportData(Rating.alert)}
-                onTooltipClickOverride={(ensName: ENSName) =>
-                  alert(`${ensName.name} - tooltip click`)
-                }
-              />
-            </div>
-            <div className="flex items-center justify-center">
-              <ReportIcon
-                hadLoadingError={true}
-                ensName={getExampleReportName()}
-                onTooltipClickOverride={(ensName: ENSName) =>
-                  alert(`${ensName.name} - tooltip click`)
-                }
-              />
-            </div>
-            <div className="flex items-center justify-center">
-              <ReportIcon
-                ensName={getExampleReportName()}
-                onTooltipClickOverride={(ensName: ENSName) =>
-                  alert(`${ensName.name} - tooltip click`)
-                }
-              />
-            </div>
-          </div>
-          <div className="grid grid-cols-6 gap-x-6 py-5">
-            <div className="flex items-center font-mono">
-              <pre>
-                {
-                  "<ReportIcon \n   onIconClickOverride\n   onTooltipClickOverride />"
-                }
-              </pre>
-            </div>
-
-            <div className="flex items-center justify-center">
-              <ReportIcon
-                ensName={getExampleReportName(Rating.pass)}
-                data={getExampleReportData(Rating.pass)}
-                onTooltipClickOverride={(ensName: ENSName) =>
-                  alert(`${ensName.name} - tooltip click`)
-                }
-                onIconClickOverride={(ensName: ENSName) =>
-                  alert(`${ensName.name} - icon click`)
-                }
-              />
-            </div>
-            <div className="flex items-center justify-center">
-              <ReportIcon
-                ensName={getExampleReportName(Rating.warn)}
-                data={getExampleReportData(Rating.warn)}
-                onTooltipClickOverride={(ensName: ENSName) =>
-                  alert(`${ensName.name} - tooltip click`)
-                }
-                onIconClickOverride={(ensName: ENSName) =>
-                  alert(`${ensName.name} - icon click`)
-                }
-              />
-            </div>
-            <div className="flex items-center justify-center">
-              <ReportIcon
-                ensName={getExampleReportName(Rating.alert)}
-                data={getExampleReportData(Rating.alert)}
-                onTooltipClickOverride={(ensName: ENSName) =>
-                  alert(`${ensName.name} - tooltip click`)
-                }
-                onIconClickOverride={(ensName: ENSName) =>
-                  alert(`${ensName.name} - icon click`)
-                }
-              />
-            </div>
-            <div className="flex items-center justify-center">
-              <ReportIcon
-                hadLoadingError={true}
-                ensName={getExampleReportName()}
-                onTooltipClickOverride={(ensName: ENSName) =>
-                  alert(`${ensName.name} - tooltip click`)
-                }
-                onIconClickOverride={(ensName: ENSName) =>
-                  alert(`${ensName.name} - icon click`)
-                }
-              />
-            </div>
-            <div className="flex items-center justify-center">
-              <ReportIcon
-                ensName={getExampleReportName()}
-                onTooltipClickOverride={(ensName: ENSName) =>
-                  alert(`${ensName.name} - tooltip click`)
-                }
-                onIconClickOverride={(ensName: ENSName) =>
-                  alert(`${ensName.name} - icon click`)
-                }
+                name={getExampleReportName()}
+                onOpenReport={customOpenReportHandler}
               />
             </div>
           </div>
@@ -384,272 +259,72 @@ export default function ReportDocsPage() {
 
           <div className="flex items-center justify-center">
             <ReportBadge
-              ensName={getExampleReportName(Rating.pass)}
+              name={getExampleReportName(Rating.pass)}
               data={getExampleReportData(Rating.pass)}
             />
           </div>
           <div className="col-span-3 flex items-center justify-center">
             <ReportBadge
-              ensName={getExampleReportName(Rating.warn)}
+              name={getExampleReportName(Rating.warn)}
               data={getExampleReportData(Rating.warn)}
             />
           </div>
           <div className="col-span-2 flex items-center justify-center">
             <ReportBadge
+              name={getExampleReportName(Rating.alert)}
               data={getExampleReportData(Rating.alert)}
-              ensName={getExampleReportName(Rating.alert)}
             />
           </div>
           <div className="col-span-2 flex items-center justify-center">
             <ReportBadge
-              ensName={getExampleReportName()}
+              name={getExampleReportName()}
               hadLoadingError={true}
             />
           </div>
           <div className="flex items-center justify-center">
-            <ReportBadge ensName={getExampleReportName()} />
+            <ReportBadge name={getExampleReportName()} />
           </div>
         </div>
 
         <div className="grid grid-cols-12 gap-x-6 py-5 border-t border-gray-100">
           <div className="flex items-center col-span-3">
             <div className="flex items-center font-mono">
-              <pre>{"<ReportBadge \n   onBadgeClickOverride />"}</pre>
+              <pre>{"<ReportBadge \n   custom onOpenReport />"}</pre>
             </div>
           </div>
 
           <div className="flex items-center justify-center">
             <ReportBadge
-              ensName={getExampleReportName(Rating.pass)}
+              name={getExampleReportName(Rating.pass)}
               data={getExampleReportData(Rating.pass)}
-              onBadgeClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - badge click`)
-              }
+              onOpenReport={customOpenReportHandler}
             />
           </div>
           <div className="col-span-3 flex items-center justify-center">
             <ReportBadge
-              ensName={getExampleReportName(Rating.warn)}
+              name={getExampleReportName(Rating.warn)}
               data={getExampleReportData(Rating.warn)}
-              onBadgeClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - badge click`)
-              }
+              onOpenReport={customOpenReportHandler}
             />
           </div>
           <div className="col-span-2 flex items-center justify-center">
             <ReportBadge
+              name={getExampleReportName(Rating.alert)}
               data={getExampleReportData(Rating.alert)}
-              ensName={getExampleReportName(Rating.alert)}
-              onBadgeClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - badge click`)
-              }
+              onOpenReport={customOpenReportHandler}
             />
           </div>
           <div className="col-span-2 flex items-center justify-center">
             <ReportBadge
+              name={getExampleReportName()}
               hadLoadingError={true}
-              ensName={getExampleReportName()}
-              onBadgeClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - badge click`)
-              }
+              onOpenReport={customOpenReportHandler}
             />
           </div>
           <div className="flex items-center justify-center">
             <ReportBadge
-              ensName={getExampleReportName()}
-              onBadgeClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - badge click`)
-              }
-            />
-          </div>
-        </div>
-        <div className="grid grid-cols-12 gap-x-6 py-5 border-t border-gray-100">
-          <div className="flex items-center col-span-3">
-            <div className="flex items-center font-mono">
-              <pre>{"<ReportBadge \n   onIconClickOverride />"}</pre>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-center">
-            <ReportBadge
-              ensName={getExampleReportName(Rating.pass)}
-              data={getExampleReportData(Rating.pass)}
-              onIconClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - icon click`)
-              }
-            />
-          </div>
-          <div className="col-span-3 flex items-center justify-center">
-            <ReportBadge
-              ensName={getExampleReportName(Rating.warn)}
-              data={getExampleReportData(Rating.warn)}
-              onIconClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - icon click`)
-              }
-            />
-          </div>
-          <div className="col-span-2 flex items-center justify-center">
-            <ReportBadge
-              data={getExampleReportData(Rating.alert)}
-              ensName={getExampleReportName(Rating.alert)}
-              onIconClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - icon click`)
-              }
-            />
-          </div>
-          <div className="col-span-2 flex items-center justify-center">
-            <ReportBadge
-              hadLoadingError={true}
-              ensName={getExampleReportName()}
-              onIconClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - icon click`)
-              }
-            />
-          </div>
-          <div className="flex items-center justify-center">
-            <ReportBadge
-              ensName={getExampleReportName()}
-              onIconClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - icon click`)
-              }
-            />
-          </div>
-        </div>
-        <div className="grid grid-cols-12 gap-x-6 py-5 border-t border-gray-100">
-          <div className="flex items-center col-span-3">
-            <div className="flex items-center font-mono">
-              <pre>{"<ReportBadge \n   onTooltipClickOverride />"}</pre>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-center">
-            <ReportBadge
-              ensName={getExampleReportName(Rating.pass)}
-              data={getExampleReportData(Rating.pass)}
-              onTooltipClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - tooltip click`)
-              }
-            />
-          </div>
-          <div className="col-span-3 flex items-center justify-center">
-            <ReportBadge
-              ensName={getExampleReportName(Rating.warn)}
-              data={getExampleReportData(Rating.warn)}
-              onTooltipClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - tooltip click`)
-              }
-            />
-          </div>
-          <div className="col-span-2 flex items-center justify-center">
-            <ReportBadge
-              data={getExampleReportData(Rating.alert)}
-              ensName={getExampleReportName(Rating.alert)}
-              onTooltipClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - tooltip click`)
-              }
-            />
-          </div>
-          <div className="col-span-2 flex items-center justify-center">
-            <ReportBadge
-              hadLoadingError={true}
-              ensName={getExampleReportName()}
-              onTooltipClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - tooltip click`)
-              }
-            />
-          </div>
-          <div className="flex items-center justify-center">
-            <ReportBadge
-              ensName={getExampleReportName()}
-              onTooltipClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - tooltip click`)
-              }
-            />
-          </div>
-        </div>
-        <div className="grid grid-cols-12 gap-x-6 py-5 border-t border-gray-100">
-          <div className="flex items-center col-span-3">
-            <div className="flex items-center font-mono">
-              <pre>
-                {
-                  "<ReportBadge \n   onTooltipClickOverride\n   onIconClickOverride\n   onBadgeClickOverride />"
-                }
-              </pre>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-center">
-            <ReportBadge
-              ensName={getExampleReportName(Rating.pass)}
-              data={getExampleReportData(Rating.pass)}
-              onBadgeClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - badge click`)
-              }
-              onIconClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - icon click`)
-              }
-              onTooltipClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - tooltip click`)
-              }
-            />
-          </div>
-          <div className="col-span-3 flex items-center justify-center">
-            <ReportBadge
-              ensName={getExampleReportName(Rating.warn)}
-              data={getExampleReportData(Rating.warn)}
-              onBadgeClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - badge click`)
-              }
-              onIconClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - icon click`)
-              }
-              onTooltipClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - tooltip click`)
-              }
-            />
-          </div>
-          <div className="col-span-2 flex items-center justify-center">
-            <ReportBadge
-              data={getExampleReportData(Rating.alert)}
-              ensName={getExampleReportName(Rating.alert)}
-              onBadgeClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - badge click`)
-              }
-              onIconClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - icon click`)
-              }
-              onTooltipClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - tooltip click`)
-              }
-            />
-          </div>
-          <div className="col-span-2 flex items-center justify-center">
-            <ReportBadge
-              hadLoadingError={true}
-              ensName={getExampleReportName()}
-              onBadgeClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - badge click`)
-              }
-              onIconClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - icon click`)
-              }
-              onTooltipClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - tooltip click`)
-              }
-            />
-          </div>
-          <div className="flex items-center justify-center">
-            <ReportBadge
-              ensName={getExampleReportName()}
-              onBadgeClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - badge click`)
-              }
-              onIconClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - icon click`)
-              }
-              onTooltipClickOverride={(ensName: ENSName) =>
-                alert(`${ensName.name} - tooltip click`)
-              }
+              name={getExampleReportName()}
+              onOpenReport={customOpenReportHandler}
             />
           </div>
         </div>
@@ -662,31 +337,31 @@ export default function ReportDocsPage() {
 
           <div className="flex items-center justify-center ml-16">
             <ReportBadge
-              ensName={getExampleReportName(Rating.pass)}
+              name={getExampleReportName(Rating.pass)}
               data={getExampleReportData(Rating.pass)}
             />
           </div>
           <div className="col-span-3 flex items-center justify-center ml-16">
             <ReportBadge
-              ensName={getExampleReportName(Rating.warn)}
+              name={getExampleReportName(Rating.warn)}
               data={getExampleReportData(Rating.warn)}
             />
           </div>
           <div className="col-span-2 flex items-center justify-center">
             <ReportBadge
-              displayUnnormalizedNames={true}
+              name={getExampleReportName(Rating.alert)}
               data={getExampleReportData(Rating.alert)}
-              ensName={getExampleReportName(Rating.alert)}
+              displayUnnormalizedNames={true}
             />
           </div>
           <div className="col-span-2 flex items-center justify-center">
             <ReportBadge
+              name={getExampleReportName()}
               hadLoadingError={true}
-              ensName={getExampleReportName()}
             />
           </div>
           <div className="flex items-center justify-center">
-            <ReportBadge ensName={getExampleReportName()} />
+            <ReportBadge name={getExampleReportName()} />
           </div>
         </div>
       </div>
