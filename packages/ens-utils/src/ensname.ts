@@ -266,7 +266,7 @@ export function getNamespaceRoot(name: ENSName): NamespaceRoot {
  *          `unknown` if the decentralization status of the name is unknown.
  */
 export function getDecentralizationStatus(
-  name: ENSName,
+  name: ENSName
 ): DecentralizationStatus {
   switch (getNamespaceRoot(name)) {
     case "ens":
@@ -328,11 +328,11 @@ export function getRegistrationPotential(name: ENSName): RegistrationPotential {
 
 /**
  * Calculates the number of characters in a label.
- *
+ * 
  * NOTE: This length will be the same as determined by the EthRegistrarController smart contracts.
  * These contracts calculate length using the following code that counts Unicode characters in UTF-8 encoding.
  * https://github.com/ensdomains/ens-contracts/blob/staging/contracts/ethregistrar/StringUtils.sol
- *
+ * 
  * This length may be different than the traditional ".length" property of a string in JavaScript.
  * In Javascript, the ".length" property of a string returns the number of UTF-16 code units in that string.
  * UTF-16 represents Unicode characters with codepoints higher can fit within a 16 bit value as a "surrogate pair"
