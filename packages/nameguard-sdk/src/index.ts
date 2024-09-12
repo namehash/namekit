@@ -471,7 +471,19 @@ export enum NameGuardErrorType {
   Unknown = "Unknown",
 }
 
+/**
+ * Custom error class for NameGuard-specific errors.
+ * This class extends the built-in Error class to provide more context about NameGuard-related errors.
+ */
 export class NameGuardError extends Error {
+  /**
+   * Creates a new NameGuardError instance.
+   *
+   * @param {NameGuardErrorType} type - The type of NameGuard error that occurred.
+   * @param {number} [status] - The HTTP status code associated with the error, if applicable.
+   *                            This is typically used for server errors to indicate the HTTP response status.
+   * @param {string} [message] - A custom error message. If not provided, a default message is generated based on the error type.
+   */
   constructor(
     public type: NameGuardErrorType,
     public status?: number,
