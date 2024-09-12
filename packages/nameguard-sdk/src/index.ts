@@ -982,15 +982,14 @@ export class NameGuard {
     }
   }
 
+  /**
+   * Aborts all pending requests.
+   * This method can be used to cancel all ongoing NameGuard API requests.
+   * Any pending requests will fail with an AbortError, which can be caught and handled where those requests are made.
+   */
   public abortAllRequests(): void {
     this.abortController.abort();
     this.abortController = new AbortController();
-
-    throw new NameGuardError(
-      NameGuardErrorType.Abort,
-      undefined,
-      "All pending requests have been aborted.",
-    );
   }
 }
 
