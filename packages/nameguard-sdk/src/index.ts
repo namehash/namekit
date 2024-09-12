@@ -537,8 +537,11 @@ export class NameGuard {
    *
    * @param {string} name The name for NameGuard to inspect.
    * @returns {Promise<NameGuardReport>} A promise that resolves with the `NameGuardReport` of the name. Check the `inspected` field of the result to determine if the result is an `InspectedNameGuardReport` or an `UninspectedNameGuardReport` for performance reasons in the case that the provided `name` was exceptionally long.
+   * @throws {NameGuardError} If there's an issue with the input, network, or server.
    * @example
    * const nameGuardReport = await nameguard.inspectName('vitalik.eth');
+   * console.log(nameGuardReport.name); // 'vitalik.eth'
+   * console.log(nameGuardReport.rating); // 'pass'
    */
   public async inspectName(name: string): Promise<NameGuardReport> {
     const network_name = this.network;
@@ -576,9 +579,14 @@ export class NameGuard {
    * This function will attempt automated labelhash resolution through the ENS Subgraph,
    * using the network specified in the NameGuard instance.
    *
-   *
    * @param {string[]} names The list of names for NameGuard to inspect.
    * @returns {Promise<BulkConsolidatedNameGuardReport>} A promise that resolves with a list of `ConsolidatedNameGuardReport` values for each name queried in the bulk inspection. Check the `inspected` field of each report to determine if the name was fully inspected or inspected in a limited way for performance reasons.
+   * @throws {NameGuardError} If there's an issue with the input (e.g., too many names), network, or server.
+   * @example
+   * const names = ['vitalik.eth', 'ethereum.eth'];
+   * const bulkReport = await nameguard.bulkInspectNames(names);
+   * console.log(bulkReport.results.length); // 2
+   * console.log(bulkReport.results[0].name); // 'vitalik.eth'
    */
   public async bulkInspectNames(
     names: string[],
@@ -622,10 +630,12 @@ export class NameGuard {
    *
    * @param {string} namehash A namehash should be a decimal or a hex (prefixed with 0x) string.
    * @returns {Promise<NameGuardReport>} A promise that resolves with the `NameGuardReport` of the name. Check the `inspected` field of the result to determine if the result is an `InspectedNameGuardReport` or an `UninspectedNameGuardReport` for performance reasons in the case that the provided `name` was exceptionally long.
-   * @throws {NameGuardError} If the inspection fails due to network issues, server errors, or if the namehash cannot be resolved to a name.
-   * @throws {Error} If the provided `namehash` is not in a valid Keccak256 hash format.
+   * @throws {NameGuardError} If the inspection fails due to network issues, server errors, if the namehash cannot be resolved to a name, or if the provided `namehash` is not in a valid Keccak256 hash format.
+   * @example
+   * const namehash = '0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835';
+   * const nameGuardReport = await nameguard.inspectNamehash(namehash);
+   * console.log(nameGuardReport.name); // 'vitalik.eth'
    */
-
   public async inspectNamehash(namehash: string): Promise<NameGuardReport> {
     if (!isKeccak256Hash(namehash)) {
       throw new NameGuardError(
@@ -694,6 +704,11 @@ export class NameGuard {
    * @param {string} labelhash A labelhash should be a decimal or a hex (prefixed with 0x) string.
    * @param {InspectLabelhashOptions} options The options for the inspection.
    * @returns {Promise<NameGuardReport>} A promise that resolves with the `NameGuardReport` of the name. Check the `inspected` field of the result to determine if the result is an `InspectedNameGuardReport` or an `UninspectedNameGuardReport` for performance reasons in the case that the provided `name` was exceptionally long.
+   * @throws {NameGuardError} If the provided `labelhash` is not in a valid Keccak256 hash format, or if there are network or server issues.
+   * @example
+   * const labelhash = '0x7d77fe9f36d36e8efa8870b9f50d95e0e9a58a4fee34b1f588094a247d91e8a5';
+   * const nameGuardReport = await nameguard.inspectLabelhash(labelhash, { parent: 'eth' });
+   * console.log(nameGuardReport.name); // 'vitalik.eth'
    */
   public async inspectLabelhash(
     labelhash: string,
@@ -733,6 +748,11 @@ export class NameGuard {
    *
    * @param {string} grapheme The grapheme to inspect. Must be a single grapheme (i.e. a single character or a sequence of characters that represent a single grapheme).
    * @returns {Promise<GraphemeGuardReport>} A promise that resolves with a `GraphemeGuardReport` of the inspected grapheme.
+   * @throws {NameGuardError} If the grapheme is empty or if there are network or server issues.
+   * @example
+   * const graphemeReport = await nameguard.inspectGrapheme('ξ');
+   * console.log(graphemeReport.grapheme); // 'ξ'
+   * console.log(graphemeReport.grapheme_name); // 'GREEK SMALL LETTER XI'
    */
   public async inspectGrapheme(grapheme: string): Promise<GraphemeGuardReport> {
     if (!grapheme || grapheme.length === 0) {
@@ -772,6 +792,12 @@ export class NameGuard {
    * @param {string} address An Ethereum address.
    * @param {SecurePrimaryNameOptions} options The options for the secure primary name.
    * @returns {Promise<SecurePrimaryNameResult>} A promise that resolves with a `SecurePrimaryNameResult`.
+   * @throws {NameGuardError} If the provided address is not a valid Ethereum address format, or if there are network or server issues.
+   * @example
+   * const address = '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045';
+   * const securePrimaryName = await nameguard.getSecurePrimaryName(address);
+   * console.log(securePrimaryName.primary_name); // 'vitalik.eth'
+   * console.log(securePrimaryName.impersonation_status); // 'unlikely'
    */
   public async getSecurePrimaryName(
     address: string,
@@ -819,8 +845,15 @@ export class NameGuard {
    *
    * @param {string} contract_address Contract address for the NFT contract (ERC721 and ERC1155 supported).
    * @param {string} token_id The ID of the token (in hex or decimal format).
-   * @param {string} fields Fields with values which will be investigated (e.g. title, collection name, metadata) whether they look like fake .eth ENS name. `title` key is mandatory, for ENS contracts it should be the ENS name.
-   * @returns {Promise<FakeEthNameCheckResult>}  A promise that resolves with a `FakeEthNameCheckResult`.
+   * @param {FieldsWithRequiredTitle} fields Fields with values which will be investigated (e.g. title, collection name, metadata) whether they look like fake .eth ENS name. `title` key is mandatory, for ENS contracts it should be the ENS name.
+   * @returns {Promise<FakeEthNameCheckResult>} A promise that resolves with a `FakeEthNameCheckResult`.
+   * @throws {NameGuardError} If the provided contract_address is not a valid Ethereum address format, if the token_id is not in a valid format, if the fields object is missing or doesn't contain a 'title' key with a string value, or if there are network or server issues.
+   * @example
+   * const contractAddress = '0x495f947276749ce646f68ac8c248420045cb7b5e';
+   * const tokenId = '123456';
+   * const fields = { title: 'fake-vitalik.eth' };
+   * const fakeEthNameResult = await nameguard.fakeEthNameCheck(contractAddress, tokenId, fields);
+   * console.log(fakeEthNameResult.status); // 'impersonated_eth_name'
    */
   public async fakeEthNameCheck(
     contract_address: string,
@@ -875,11 +908,14 @@ export class NameGuard {
 
   /**
    * Performs a raw HTTP request to the NameGuard API.
-   * @param {string} path The API endpoint path.
-   * @param {string} method The HTTP method (e.g., 'GET', 'POST').
-   * @param {object} body The request body for POST requests.
-   * @param {object} headers Additional headers for the request.
+   * This method is primarily for internal use but can be utilized for custom API calls.
+   *
+   * @param {string} path - The API endpoint path.
+   * @param {string} [method='GET'] - The HTTP method (e.g., 'GET', 'POST').
+   * @param {object} [body={}] - The request body for POST requests.
+   * @param {object} [headers={}] - Additional headers for the request.
    * @returns {Promise<any>} The response from the API.
+   * @throws {NameGuardError} If there's a network error, server error, or if the request is aborted.
    */
   async rawRequest(
     path: string,
