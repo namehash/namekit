@@ -3,7 +3,7 @@ import cc from "classcat";
 
 export interface LinkProps extends React.ComponentPropsWithoutRef<"a"> {
   className?: string;
-  variant?: "primary" | "secondary" | "ghost" | "underline";
+  variant?: "primary" | "secondary" | "underline";
   size?: "xsmall" | "small" | "medium" | "large";
   asChild?: boolean;
 }
@@ -14,8 +14,6 @@ const variantClasses = {
   primary:
     "nk-text-current nk-underline nk-decoration-transparent hover:nk-decoration-current sm:nk-underline-offset-[4px] sm:nk-transition-all sm:nk-duration-200 sm:hover:nk-underline-offset-[2px]",
   secondary: "nk-text-gray-500 hover:nk-text-black",
-  ghost:
-    "nk-text-current nk-underline nk-decoration-transparent sm:nk-transition-all sm:nk-duration-200",
   underline:
     "nk-text-current nk-underline nk-decoration-current sm:nk-underline-offset-[4px] sm:nk-transition-all sm:nk-duration-200 sm:hover:nk-underline-offset-[2px]",
 };
