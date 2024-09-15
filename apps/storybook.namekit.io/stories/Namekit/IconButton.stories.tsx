@@ -36,6 +36,9 @@ const meta: Meta<typeof IconButton> = {
         options: ["small", "medium", "large"],
       },
     },
+    children: {
+      control: false,
+    },
     className: { control: "text" },
   },
 };
@@ -114,57 +117,5 @@ export const CustomClass: Story = {
     size: "medium",
     children: <SomeIcon />,
     className: "custom-class-name",
-  },
-};
-
-export const IconRight: Story = {
-  args: {
-    variant: "primary",
-    size: "medium",
-    children: (
-      <>
-        Icon Right
-        <SomeIcon />
-      </>
-    ),
-  },
-};
-
-export const PrimaryWithText: Story = {
-  args: {
-    variant: "primary",
-    size: "medium",
-    children: (
-      <>
-        <SomeIcon />
-        Share
-      </>
-    ),
-  },
-};
-
-export const SecondaryWithText: Story = {
-  args: {
-    variant: "secondary",
-    size: "medium",
-    children: (
-      <>
-        Icon Right
-        <SomeIcon />
-      </>
-    ),
-  },
-};
-
-export const GhostWithText: Story = {
-  args: {
-    variant: "ghost",
-    size: "medium",
-    children: (
-      <>
-        Icon Right
-        <SomeIcon />
-      </>
-    ),
   },
 };

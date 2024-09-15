@@ -1,6 +1,6 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Button } from "@namehash/namekit-react";
+import { Button, Link } from "@namehash/namekit-react";
 
 const meta: Meta<typeof Button> = {
   title: "UI/Button",
@@ -18,7 +18,6 @@ const meta: Meta<typeof Button> = {
         options: ["small", "medium", "large"],
       },
     },
-    asChild: { control: { disable: true } },
     children: { control: "text" },
   },
 };
@@ -112,7 +111,16 @@ export const AsChild: Story = {
   args: {
     variant: "primary",
     size: "medium",
-    children: <a href="https://nameguard.io">Button as a Link</a>,
+    children: <a href="https://namekit.io">Button with regular a tag</a>,
+    asChild: true,
+  },
+};
+
+export const LinkAsChild: Story = {
+  args: {
+    variant: "primary",
+    size: "medium",
+    children: <Link href="https://namekit.io">Button with Link component</Link>,
     asChild: true,
   },
 };

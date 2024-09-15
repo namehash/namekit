@@ -8,7 +8,7 @@ export interface LinkProps extends React.ComponentPropsWithoutRef<"a"> {
   asChild?: boolean;
 }
 
-const linkBaseClasses = "nk-transition cursor-pointer";
+const linkBaseClasses = "nk-transition nk-cursor-pointer";
 
 const variantClasses = {
   primary:
@@ -54,11 +54,12 @@ const LinkInner = React.forwardRef<HTMLAnchorElement, LinkProps>(
     ref,
   ) => {
     const isExternal = !isInternalLink(props.href);
+    const isButtonChild = className?.includes("nk-button-as-child");
 
     const combinedClassName = cc([
       linkBaseClasses,
-      variantClasses[variant],
-      sizeClasses[size],
+      !isButtonChild && variantClasses[variant],
+      !isButtonChild && sizeClasses[size],
       className,
     ]);
 

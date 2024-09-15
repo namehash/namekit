@@ -18,10 +18,7 @@ const meta: Meta<typeof Link> = {
         options: ["xsmall", "small", "medium", "large"],
       },
     },
-    className: { control: "text" },
     href: { control: "text" },
-    target: { control: "text" },
-    rel: { control: "text" },
   },
 };
 
@@ -33,7 +30,7 @@ export const PrimaryMedium: Story = {
   args: {
     variant: "primary",
     size: "medium",
-    href: "#",
+    href: "https://namekit.io",
     children: "Primary Medium Link",
   },
 };
@@ -42,7 +39,7 @@ export const SecondaryMedium: Story = {
   args: {
     variant: "secondary",
     size: "medium",
-    href: "#",
+    href: "https://namekit.io",
     children: "Secondary Medium Link",
   },
 };
@@ -51,7 +48,7 @@ export const UnderlineMedium: Story = {
   args: {
     variant: "underline",
     size: "medium",
-    href: "#",
+    href: "https://namekit.io",
     children: "Underline Medium Link",
   },
 };
@@ -60,7 +57,7 @@ export const PrimarySmall: Story = {
   args: {
     variant: "primary",
     size: "small",
-    href: "#",
+    href: "https://namekit.io",
     children: "Primary Small Link",
   },
 };
@@ -69,7 +66,7 @@ export const SecondarySmall: Story = {
   args: {
     variant: "secondary",
     size: "small",
-    href: "#",
+    href: "https://namekit.io",
     children: "Secondary Small Link",
   },
 };
@@ -78,7 +75,7 @@ export const UnderlineSmall: Story = {
   args: {
     variant: "underline",
     size: "small",
-    href: "#",
+    href: "https://namekit.io",
     children: "Underline Small Link",
   },
 };
@@ -86,7 +83,7 @@ export const PrimaryXSmall: Story = {
   args: {
     variant: "primary",
     size: "xsmall",
-    href: "#",
+    href: "https://namekit.io",
     children: "Primary Extra Small Link",
   },
 };
@@ -95,7 +92,7 @@ export const SecondaryXSmall: Story = {
   args: {
     variant: "secondary",
     size: "xsmall",
-    href: "#",
+    href: "https://namekit.io",
     children: "Secondary Extra Small Link",
   },
 };
@@ -104,7 +101,7 @@ export const UnderlineXSmall: Story = {
   args: {
     variant: "underline",
     size: "xsmall",
-    href: "#",
+    href: "https://namekit.io",
     children: "Underline Extra Small Link",
   },
 };
@@ -113,7 +110,7 @@ export const PrimaryLarge: Story = {
   args: {
     variant: "primary",
     size: "large",
-    href: "#",
+    href: "https://namekit.io",
     children: "Primary Large Link",
   },
 };
@@ -122,7 +119,7 @@ export const SecondaryLarge: Story = {
   args: {
     variant: "secondary",
     size: "large",
-    href: "#",
+    href: "https://namekit.io",
     children: "Secondary Large Link",
   },
 };
@@ -131,7 +128,7 @@ export const UnderlineLarge: Story = {
   args: {
     variant: "underline",
     size: "large",
-    href: "#",
+    href: "https://namekit.io",
     children: "Underline Large Link",
   },
 };
@@ -155,7 +152,7 @@ export const SecondaryExternal: Story = {
 export const CustomClass: Story = {
   args: {
     variant: "primary",
-    href: "#",
+    href: "https://namekit.io",
     children: "Custom Class Link",
     className: "custom-class-name",
   },
@@ -164,7 +161,7 @@ export const CustomClass: Story = {
 export const AsChild: Story = {
   args: {
     variant: "primary",
-    href: "#",
+    href: "https://namekit.io",
     children: <span>Hello world</span>,
     asChild: true,
   },

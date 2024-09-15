@@ -10,6 +10,8 @@ export interface ButtonProps
   size?: "small" | "medium" | "large";
 }
 
+const buttonAsChildClass = "nk-button-as-child";
+
 const buttonBaseClasses =
   "nk-transition nk-text-base nk-rounded-lg nk-border nk-font-medium nk-flex nk-gap-2 nk-items-center nk-justify-center nk-whitespace-nowrap nk-underline-none";
 
@@ -42,6 +44,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       buttonBaseClasses,
       variantClasses[variant],
       sizeClasses[size],
+      asChild && buttonAsChildClass,
       className,
     ]);
 
