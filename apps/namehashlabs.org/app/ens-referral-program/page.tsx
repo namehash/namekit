@@ -127,12 +127,12 @@ const Item = ({
         <p className="text-lg leading-7 font-light text-gray-500">{text}</p>
       </div>
       {!!buttonUrl && (
-        <Link href={buttonUrl} asChild>
-          <IconButton variant="secondary" size="medium">
+        <IconButton variant="secondary" size="medium" asChild>
+          <Link href={buttonUrl}>
             {buttonText}
             <Link.ExternalIcon />
-          </IconButton>
-        </Link>
+          </Link>
+        </IconButton>
       )}
     </div>
   );

@@ -92,16 +92,15 @@ const Product = ({
             </SectionText>
             {buttonUrl && buttonLabel && (
               <div className="flex lg:justify-start justify-center">
-                <Link
-                  href={buttonUrl}
-                  target={withoutExternalLinkIconInCTA ? undefined : "_blank"}
-                  asChild
-                >
-                  <IconButton>
+                <IconButton asChild>
+                  <Link
+                    href={buttonUrl}
+                    target={withoutExternalLinkIconInCTA ? undefined : "_blank"}
+                  >
                     {buttonLabel}
                     <Link.ExternalIcon />
-                  </IconButton>
-                </Link>
+                  </Link>
+                </IconButton>
               </div>
             )}
           </div>
