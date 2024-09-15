@@ -1,6 +1,21 @@
 {
   "name": "@namehash/nameguard",
-  "version": "0.0.18",
+  "description": "A lightweight JavaScript client for the NameGuard API.",
+  "version": "0.4.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/namehash/namekit.git",
+    "directory": "packages/nameguard-sdk"
+  },
+  "homepage": "https://github.com/namehash/namekit/tree/main/packages/nameguard-sdk",
+  "keywords": [
+    "ENS",
+    "NameKit",
+    "NameHash",
+    "NameGuard",
+    "NFT"
+  ],
   "type": "module",
   "exports": {
     ".": {
@@ -22,14 +37,16 @@
     "dev": "tsup --watch --clean=false",
     "test": "vitest"
   },
+  "dependencies": {
+    "@namehash/ens-utils": "workspace:*",
+    "cross-fetch": "4.0.0"
+  },
   "devDependencies": {
+    "@namekit/tsconfig": "workspace:*",
     "@types/node": "^20.6.2",
     "tsup": "^7.2.0",
     "typescript": "^5.2.2",
     "vitest": "1.4.0"
-  },
-  "dependencies": {
-    "cross-fetch": "4.0.0"
   },
   "publishConfig": {
     "access": "public"

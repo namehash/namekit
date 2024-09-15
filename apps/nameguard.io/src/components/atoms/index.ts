@@ -1,5 +1,5 @@
 export * from "./icons";
-export * from "./CalButton";
+export * from "./CalendarButton";
 export * from "./ListSectionBadge";
 export * from "./MobileSectionDivider";
 export * from "./DeveloperSectionIconWrapper";

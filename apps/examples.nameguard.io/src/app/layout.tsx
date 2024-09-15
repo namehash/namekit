@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
+import { Suspense } from "react";
 
 import "./globals.css";
 import { Avatar } from "./components/Avatar";
+import { SecurePrimaryName } from "./components/SecurePrimaryName";
+import { SecurePrimaryNameLoading } from "./components/SecurePrimaryNameLoading";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -48,6 +51,9 @@ const messages = [
   {
     address: "0x4735F0ce83c1d328045a7737a7Dd53504714DFA5",
   },
+  {
+    address: "0xf4A4D9C75dA65d507cfcd5ff0aCB73D40D3A3bCB",
+  },
 ] as const;
 
 export default function RootLayout({
@@ -72,7 +78,7 @@ export default function RootLayout({
                   </span>
                 </div>
               </div>
-              <div className="overflow-x-hidden overflow-y-scroll flex flex-col h-full bg-gray-100 border-x">
+              <div className="overflow-y-scroll flex flex-col h-full bg-gray-100 border-x">
                 {messages.map(({ address }, index) => (
                   <Link
                     key={index}
@@ -80,9 +86,9 @@ export default function RootLayout({
                     className="flex items-center border-0 border-b border-gray-200 outline-blue outline-b-0 h-min cursor-pointer p-4 hover:bg-gray-200 space-x-3 font-mono"
                   >
                     <Avatar address={address} />
-                    <span className="overflow-clip overflow-ellipsis">
-                      {address}
-                    </span>
+                    <Suspense fallback={<SecurePrimaryNameLoading address={address} />}>
+                      <SecurePrimaryName address={address} />
+                    </Suspense>
                   </Link>
                 ))}
               </div>

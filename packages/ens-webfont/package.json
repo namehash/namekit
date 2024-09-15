@@ -1,13 +1,27 @@
 {
   "name": "@namehash/ens-webfont",
-  "version": "0.2.0",
+  "description": "A webfont to improve rendering of graphemes that might appear in normalizable ENS names on the web.",
+  "version": "0.5.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/namehash/namekit.git",
+    "directory": "packages/ens-webfont"
+  },
+  "homepage": "https://github.com/namehash/namekit/tree/main/packages/ens-webfont",
+  "keywords": [
+    "ENS",
+    "NameKit",
+    "NameHash",
+    "ENS Webfont",
+    "Font"
+  ],
   "main": "index.css",
   "files": [
     "index.css",
     "Unifont.otf",
     "LICENSE"
   ],
-  "scripts": {},
   "publishConfig": {
     "access": "public"
   }

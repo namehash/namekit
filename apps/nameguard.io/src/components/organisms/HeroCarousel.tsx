@@ -1,6 +1,10 @@
 "use client";
 
-import { nameguard } from "@namehash/nameguard";
+import React, { useEffect, useState } from "react";
+import {
+  BulkConsolidatedNameGuardReport,
+  nameguard,
+} from "@namehash/nameguard";
 import { buildENSName } from "@namehash/ens-utils";
 import { ReportModalNameBadge } from "@namehash/nameguard-react";
 
@@ -37,34 +41,47 @@ const examples = [
   "7️⃣7️⃣7️⃣.eth",
 ];
 
-export async function HeroCarousel() {
+export function HeroCarousel() {
+  const [data, setData] = useState<BulkConsolidatedNameGuardReport>();
   const ensNames = examples.map((n) => buildENSName(n));
-  const data = await nameguard.bulkInspectNames(examples);
+
+  useEffect(() => {
+    async function fetchData() {
+      const result = await nameguard.bulkInspectNames(examples);
+      setData(result);
+    }
+
+    fetchData();
+  }, []);
+
+  if (!data) {
+    return <div className="bg-gray-100 rounded-md h-8 w-full"></div>;
+  }
 
   return (
     <div className="w-[200%] group flex flex-nowrap justify-center items-center space-x-1 animate-carousel group-hover:pause-on-hover">
-      {/* 
+      {/*
         This carousel component needs lots of badges in order
         to look good in the Ui, we are, then, duplicating the
         badges displayed to enhance badges number.
       */}
       {data?.results?.map((report, index) => (
         <ReportModalNameBadge
+          data={report}
           key={`carousel-item-${index}`}
           ensName={ensNames[index]}
-          data={report}
         />
       ))}
-      {/* 
+      {/*
         This carousel component needs lots of badges in order
         to look good in the Ui, we are, then, duplicating the
         badges displayed to enhance badges number.
       */}
       {data?.results?.map((report, index) => (
         <ReportModalNameBadge
+          data={report}
           key={`carousel-item-${index}`}
           ensName={ensNames[index]}
-          data={report}
         />
       ))}
     </div>

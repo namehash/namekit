@@ -5,16 +5,19 @@ import { RatingIcon, RatingIconSize } from "@namehash/nameguard-react";
 const meta: Meta<typeof RatingIcon> = {
   component: RatingIcon,
   title: "Nameguard/RatingIcon",
-  parameters: {
-    controls: {
-      exclude: ["size", "isInteractive"],
-    },
-  },
   argTypes: {
     rating: {
-      options: [Rating.pass, Rating.warn, Rating.alert],
+      options: Object.keys(Rating),
       control: { type: "select" },
     },
+    size: {
+      options: Object.keys(RatingIconSize),
+      control: { type: "select" },
+    },
+    isInteractive: { control: "boolean" },
+  },
+  args: {
+    isInteractive: false,
   },
 };
 
@@ -22,35 +25,51 @@ export default meta;
 
 type Story = StoryObj<typeof RatingIcon>;
 
-export const Large: Story = {
-  args: {
-    rating: Rating.pass,
-    size: RatingIconSize.large,
-  },
-};
-
-export const Medium: Story = {
+export const Pass: Story = {
   args: {
     rating: Rating.pass,
     size: RatingIconSize.medium,
   },
 };
 
+export const Warn: Story = {
+  args: {
+    rating: Rating.warn,
+    size: RatingIconSize.medium,
+  },
+};
+
+export const Alert: Story = {
+  args: {
+    rating: Rating.alert,
+    size: RatingIconSize.medium,
+  },
+};
+export const Large: Story = {
+  args: {
+    rating: Rating.pass,
+    size: RatingIconSize.large,
+  },
+};
+export const Medium: Story = {
+  args: {
+    rating: Rating.pass,
+    size: RatingIconSize.medium,
+  },
+};
 export const Small: Story = {
   args: {
     rating: Rating.pass,
     size: RatingIconSize.small,
   },
 };
-
 export const Micro: Story = {
   args: {
     rating: Rating.pass,
     size: RatingIconSize.micro,
   },
 };
-
-export const Interactive: Story = {
+export const isInteractive: Story = {
   args: {
     rating: Rating.pass,
     size: RatingIconSize.small,

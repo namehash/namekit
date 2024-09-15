@@ -2,14 +2,14 @@ import "@namehash/ens-webfont";
 
 import "./styles.css";
 
-export * from "./components/DomainCard";
-
-export * from "./components/Button";
-export * from "./components/IconButton";
-export * from "./components/Heading";
-export * from "./components/Text";
-export * from "./components/TextArea";
-export * from "./components/ENSTextArea";
-export * from "./components/Input";
-export * from "./components/ENSInput";
-export * from "./components/Link";
+export { DomainCard } from "./components/DomainCard";
+export { Button } from "./components/Button";
+export { ButtonProps } from "./components/Button";
+export { IconButton } from "./components/IconButton";
+export { Heading } from "./components/Heading";
+export { Text } from "./components/Text";
+export { TextArea } from "./components/TextArea";
+export { ENSTextArea } from "./components/ENSTextArea";
+export { Input } from "./components/Input";
+export { ENSInput } from "./components/ENSInput";
+export { Link } from "./components/Link";

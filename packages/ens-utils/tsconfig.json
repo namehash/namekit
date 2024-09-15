@@ -1,15 +1,8 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@namekit/tsconfig/base.json",
   "compilerOptions": {
     "target": "ES2020",
-    "lib": ["ES2020", "dom"],
-    "module": "ES2020",
-    "moduleResolution": "node",
-    "strict": true,
-    "sourceMap": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-  },
-  "exclude": ["node_modules"]
+    "module": "ES2020"
+  }
 }

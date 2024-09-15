@@ -1,7 +1,7 @@
 import React, { Fragment, useMemo } from "react";
 import useSWR from "swr";
 import { type NameGuardReport, nameguard, Rating } from "@namehash/nameguard";
-import { parseName } from "@namehash/ens-utils";
+import { parseName, Normalization } from "@namehash/ens-utils";
 import { Toaster } from "sonner";
 
 import { type Settings } from "../../stores/settings";
@@ -61,7 +61,7 @@ export const Report = ({
   }, [name, settings]);
 
   const normalizationUnknown =
-    parsedName.outputName.normalization === "unknown" ?? true;
+    parsedName.outputName.normalization === Normalization.Unknown ?? true;
 
   const showEmptyState = parsedName.outputName.name.length === 0 ?? true;
 
@@ -121,14 +121,12 @@ export const Report = ({
             <ExternalLinks title="View name in" links={externalLinks} />
           </div>
         </div>
-
         {isLoading && !hadLoadingError && normalizationUnknown && (
           <LoadingSkeleton parsedName={parsedName} />
         )}
         {isLoading && !hadLoadingError && !normalizationUnknown && (
           <LoadingSkeleton parsedName={parsedName} />
         )}
-
         {hadLoadingError && <ReportError />}
 
         {data && (
@@ -145,14 +143,19 @@ export const Report = ({
                 ))}
               </div>
             </div>
-            <div className="space-y-4 md:space-y-5">
-              <p className="text-black font-semibold text-lg leading-6">
-                Name inspection
-              </p>
+          </Fragment>
+        )}
+        {data && data.inspected && (
+          <div className="space-y-4 md:space-y-5">
+            <p className="text-black font-semibold text-lg leading-6">
+              Name inspection
+            </p>
 
-              <LabelList items={data.labels} />
-            </div>
-
+            <LabelList items={data.labels} />
+          </div>
+        )}
+        {data && (
+          <Fragment>
             <FeedbackNotice onChatClick={openChatModal} />
             <ReportFooter />
           </Fragment>

@@ -1,7 +1,7 @@
 import React from "react";
 import cc from "classcat";
 import { type NameGuardReport } from "@namehash/nameguard";
-import { type ParsedName } from "@namehash/ens-utils";
+import type { ParsedName } from "@namehash/ens-utils";
 
 import { RatingIcon, RatingIconSize } from "./RatingIcon";
 import { RatedBox } from "../RatedBox/RatedBox";

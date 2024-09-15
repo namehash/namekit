@@ -8,6 +8,7 @@ import { ExternalLinkIcon } from "../1 - atoms/icons/external-link-icon";
 import { SectionText } from "../1 - atoms";
 import { Balancer } from "react-wrap-balancer";
 import cc from "classcat";
+import { Button, IconButton } from "@namehash/namekit-react";
 interface ProductProps {
   label: {
     icon: React.ReactElement;
@@ -89,17 +90,22 @@ const Product = ({
             <SectionText className="lg:text-start text-center w-full">
               <Balancer>{subtitle}</Balancer>
             </SectionText>
-            {buttonUrl && (
+            {buttonUrl && buttonLabel && (
               <div className="flex lg:justify-start justify-center">
                 <a
                   href={buttonUrl}
                   target={withoutExternalLinkIconInCTA ? undefined : "_blank"}
-                  className="border rounded-[8px] bg-black text-white px-4 py-2 transition-colors duration-200 hover:bg-gray-800 inline-flex items-center justify-center"
                 >
-                  {buttonLabel || "Learn more"}
-                  {!withoutExternalLinkIconInCTA && (
-                    <ExternalLinkIcon className="ml-3 w-5 h-5" />
-                  )}
+                  <IconButton
+                    iconPosition="right"
+                    icon={
+                      !withoutExternalLinkIconInCTA && (
+                        <ExternalLinkIcon className="w-5 h-5" />
+                      )
+                    }
+                  >
+                    {buttonLabel}
+                  </IconButton>
                 </a>
               </div>
             )}
@@ -146,6 +152,7 @@ const products: ProductProps[] = [
       title: "Improved economics for building on ENS",
       icon: <ChartBarSquareIcon className="h-5 w-5 text-gray-500" />,
     },
+    buttonLabel: "Learn more",
     illustration: (
       <Image
         quality={100}
@@ -167,6 +174,7 @@ const products: ProductProps[] = [
       title: "Incentive program to help ENS grow",
       icon: <ChartBarSquareIcon className="h-5 w-5 text-gray-500" />,
     },
+    buttonLabel: "Learn more",
     illustration: (
       <Image
         quality={100}
