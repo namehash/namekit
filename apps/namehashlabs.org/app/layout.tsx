@@ -23,9 +23,6 @@ const keywords = ["ens", "web3", "eth", "nameguard", "namekit", "namehash"];
 
 export const metadata: Metadata = {
   ...NamehashMetadata.defaultMetdata,
-  alternates: {
-    canonical: "/",
-  },
   title: {
     template: "NameHash Labs - %s",
     default: title,

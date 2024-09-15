@@ -20,9 +20,6 @@ const description =
 
 export const metadata: Metadata = {
   ...NamehashMetadata.defaultMetdata,
-  alternates: {
-    canonical: "/",
-  },
   title: {
     template: "NameGuard - %s",
     default: title,
