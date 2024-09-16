@@ -128,3 +128,21 @@ export const WithError: Story = {
     error: "Email is required",
   },
 };
+
+export const Disabled: Story = {
+  args: {
+    variant: "primary",
+    inputSize: "medium",
+    value: "Disabled input",
+    disabled: true,
+  },
+};
+
+export const DisabledSecondary: Story = {
+  args: {
+    variant: "secondary",
+    inputSize: "medium",
+    value: "Disabled input",
+    disabled: true,
+  },
+};
