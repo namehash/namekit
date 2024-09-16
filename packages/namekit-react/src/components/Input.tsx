@@ -15,7 +15,7 @@ interface SlotProps {
 }
 
 const wrapperClasses =
-  "nk-group nk-flex nk-relative nk-w-full nk-rounded-md nk-border nk-shadow-sm nk-transition-colors";
+  "nk-group nk-flex nk-relative nk-w-full nk-rounded-md nk-border nk-shadow-sm nk-transition-colors nk-flex nk-items-center";
 
 const variantClasses = {
   primary:
@@ -68,7 +68,7 @@ export const Input: React.FC<InputProps> & { Slot: React.FC<SlotProps> } = ({
   ]);
 
   const inputClasses = cc([
-    "nk-ring-0 focus:nk-outline-none nk-w-full h-full placeholder:nk-text-gray-500 nk-bg-transparent nk-border-red-300",
+    "nk-ring-0 focus:nk-outline-none nk-w-full h-full placeholder:nk-text-gray-500 nk-bg-transparent nk-border-red-300  nk-flex-1",
     hasSlot && slotPosition === "left" ? "nk-pl-2" : "nk-pr-2",
   ]);
 
