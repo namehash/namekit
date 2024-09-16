@@ -1,6 +1,7 @@
 import React, { ChangeEvent } from "react";
 
 import { useSearchStore } from "../../stores/search";
+import { Input } from "@namehash/namekit-react";
 
 export const SearchInput = () => {
   const { name, setName } = useSearchStore();
@@ -10,8 +11,9 @@ export const SearchInput = () => {
   };
 
   return (
-    <input
+    <Input
       type="text"
+      variant="secondary"
       value={name}
       onChange={handleChange}
       placeholder="Enter a name to inspect"
