@@ -6,10 +6,11 @@ export interface TextAreaProps
   className?: string;
   variant?: "primary" | "secondary";
   size?: "small" | "medium" | "large";
+  error?: string;
 }
 
 const textareaBaseClasses =
-  "nk-rounded-md nk-border nk-shadow-sm nk-ring-0 focus:nk-outline-none nk-transition-colors";
+  "nk-rounded-md nk-border nk-shadow-sm nk-ring-0 focus:nk-outline-none nk-transition-colors w-full";
 
 const variantClasses = {
   primary:
@@ -28,14 +29,23 @@ export const TextArea: React.FC<TextAreaProps> = ({
   className,
   variant = "primary",
   size = "medium",
+  error,
   ...props
 }) => {
   const combinedClassName = cc([
     textareaBaseClasses,
     variantClasses[variant],
     sizeClasses[size],
+    { "nk-border-red-300": error },
     className,
   ]);
 
-  return <textarea className={combinedClassName} {...props} />;
+  return (
+    <div className="nk-flex nk-flex-col">
+      <textarea className={combinedClassName} {...props} />
+      {error && (
+        <span className="mt-2 text-sm font-normal text-red-600">{error}</span>
+      )}
+    </div>
+  );
 };
