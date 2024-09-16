@@ -79,7 +79,7 @@ export const SettingsModal = () => {
                             aria-describedby="attempt-ens-normalization-description"
                             name="attempt-ens-normalization"
                             type="checkbox"
-                            className="h-4 w-4 rounded border-black text-black focus:ring-black"
+                            className="form-checkbox ng-h-4 ng-w-4 ng-rounded ng-border-black ng-text-black !ring-black"
                             checked={localSettings.attemptEnsNormalization}
                             onChange={(e) =>
                               setLocalSettings((prev) => ({
@@ -114,7 +114,7 @@ export const SettingsModal = () => {
                             aria-describedby="assume-tld-description"
                             name="assume-tld"
                             type="checkbox"
-                            className="h-4 w-4 rounded border-black text-black focus:ring-black"
+                            className="form-checkbox ng-h-4 ng-w-4 ng-rounded ng-border-black ng-text-black !ring-black"
                             checked={localSettings.assumedTld === "eth"}
                             onChange={(e) =>
                               setLocalSettings((prev) => ({
@@ -148,7 +148,7 @@ export const SettingsModal = () => {
                             aria-describedby="trim-whitespace-description"
                             name="trim-whitespace"
                             type="checkbox"
-                            className="h-4 w-4 rounded border-black text-black focus:ring-black"
+                            className="form-checkbox ng-h-4 ng-w-4 ng-rounded ng-border-black ng-text-black !ring-black"
                             checked={localSettings.trimWhitespace}
                             onChange={(e) =>
                               setLocalSettings((prev) => ({
