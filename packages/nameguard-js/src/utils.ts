@@ -1,4 +1,4 @@
-import { splitCharacters, charCount } from "@namehash/ens-utils";
+import { charCount } from "@namehash/ens-utils";
 import { EMOJI_SEQUENCES, EMOJI_ZWJ_SEQUENCES, EMOJI_BLOCK_STARTS, EMOJI_BLOCK_IS_EMOJI } from "./data/unicode";
 import { COMBINING } from "./data/combining";
 
