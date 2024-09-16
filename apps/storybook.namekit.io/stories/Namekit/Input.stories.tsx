@@ -125,7 +125,6 @@ export const WithError: Story = {
     variant: "primary",
     inputSize: "medium",
     placeholder: "Email address",
-    slotPosition: "right",
     error: "Email is required",
   },
 };
