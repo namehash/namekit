@@ -112,22 +112,20 @@ export const WithSlotRight: Story = {
   },
 };
 
-export const WithError: Story = {
-  args: {
-    variant: "primary",
-    inputSize: "medium",
-    placeholder: "Say something",
-    slotPosition: "right",
-    error: "This is an error",
-    children: <Input.Slot>@</Input.Slot>,
-  },
-};
-
 export const WithSlotLeftSmall: Story = {
   args: {
     variant: "primary",
     inputSize: "small",
     placeholder: "Say something",
-    children: <Input.Slot>@</Input.Slot>,
+  },
+};
+
+export const WithError: Story = {
+  args: {
+    variant: "primary",
+    inputSize: "medium",
+    placeholder: "Email address",
+    slotPosition: "right",
+    error: "Email is required",
   },
 };
