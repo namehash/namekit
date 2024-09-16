@@ -1,5 +1,6 @@
 import { splitGraphemes as unicodeStandardGraphemeSplit } from "text-segmentation";
-import { splitCharacters, isEmoji } from "./utils";
+import { isEmoji } from "./utils";
+import { splitCharacters } from "@namehash/ens-utils";
 import { HANGUL_JAMO } from "./data/hangul";
 import { INVISIBLE_JOINERS } from "./data/invisible_joiners";
 

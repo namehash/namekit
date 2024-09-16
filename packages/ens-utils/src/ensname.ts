@@ -327,6 +327,19 @@ export function getRegistrationPotential(name: ENSName): RegistrationPotential {
 }
 
 /**
+ * Splits a label into its individual characters.
+ * 
+ * This function uses the spread operator to split the string into an array of its Unicode characters (UTF-32) compatible with ens-normalize.
+ * Each element in the resulting array represents a single Unicode character.
+ * 
+ * @param label
+ * @returns An array of the individual characters within `label`.
+ */
+export function splitCharacters(label: string): string[] {
+  return [...label];
+}
+
+/**
  * Calculates the number of characters in a label.
  * 
  * NOTE: This length will be the same as determined by the EthRegistrarController smart contracts.
@@ -341,5 +354,5 @@ export function getRegistrationPotential(name: ENSName): RegistrationPotential {
  * @returns the number of characters within `label`.
  */
 export function charCount(label: string) {
-  return [...label].length;
+  return splitCharacters(label).length;
 }

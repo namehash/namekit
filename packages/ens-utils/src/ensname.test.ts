@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   buildENSName,
+  splitCharacters,
   charCount,
   getDecentralizationStatus,
   getDisplayLabels,
@@ -443,5 +444,42 @@ describe("charCount", () => {
 
     expect(result).toBe(4); // 4 Unicode characters
     expect(label.length).toBe(6);  // 6 UTF-16 code units
+  });
+});
+
+describe("splitCharacters", () => {
+  it("empty name", () => {
+    const label = "";
+    const result = splitCharacters(label);
+
+    expect(result).toEqual([]);
+  });
+
+  it("multi codepoint emoji", () => {
+    const label = "🧟‍♂";
+    const result = splitCharacters(label);
+
+    expect(result).toEqual(["🧟", "‍", "♂"]);  // 3 Unicode characters
+  });
+
+  it("another multi codepoint emoji", () => {
+    const label = "🤦🏼‍♂️";
+    const result = splitCharacters(label);
+
+    expect(result).toEqual(["🤦", "🏼", "‍", "♂", "️"]); // 5 Unicode characters
+  });
+
+  it("namehash string", () => {
+    const label = "namehash";
+    const result = splitCharacters(label);
+
+    expect(result).toEqual(["n", "a", "m", "e", "h", "a", "s", "h"]); // 8 Unicode characters
+  });
+
+  it("multi codepoint emoji 15.1", () => {
+    const label = "🏃🏿‍➡";
+    const result = splitCharacters(label);
+
+    expect(result).toEqual(["🏃", "🏿", "‍", "➡"]); // 4 Unicode characters
   });
 });

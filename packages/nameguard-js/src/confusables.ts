@@ -1,5 +1,6 @@
 import { GRAPHEME_CANONICALS } from "./data/canonicals";
-import { isCombiningChar, splitCharacters } from "./utils";
+import { isCombiningChar } from "./utils";
+import { splitCharacters } from "@namehash/ens-utils";
 
 /**
  * Checks if a grapheme is of the form `base character + sequence of combining marks`.
