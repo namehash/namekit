@@ -137,12 +137,3 @@ export const Disabled: Story = {
     disabled: true,
   },
 };
-
-export const DisabledSecondary: Story = {
-  args: {
-    variant: "secondary",
-    inputSize: "medium",
-    value: "Disabled input",
-    disabled: true,
-  },
-};
