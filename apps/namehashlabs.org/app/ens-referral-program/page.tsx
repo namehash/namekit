@@ -6,7 +6,7 @@ import { DocumentTextIcon } from "@heroicons/react/24/solid";
 import { FigmaIcon } from "@/components/1 - atoms/icons/figma-icon";
 import { GithubIcon } from "@/components/1 - atoms/icons/github-icon";
 import { ProductComponent } from "@/components/2 - molecules/product-component";
-import { IconButton, Link } from "@namehash/namekit-react";
+import { Button, IconButton, Link } from "@namehash/namekit-react";
 
 const description =
   "Join the discussion about an ENS Referral Program and help ENS grow.";
@@ -127,12 +127,12 @@ const Item = ({
         <p className="text-lg leading-7 font-light text-gray-500">{text}</p>
       </div>
       {!!buttonUrl && (
-        <IconButton variant="secondary" size="medium" asChild>
+        <Button variant="secondary" size="medium" asChild>
           <Link href={buttonUrl}>
             {buttonText}
             <Link.ExternalIcon />
           </Link>
-        </IconButton>
+        </Button>
       )}
     </div>
   );
