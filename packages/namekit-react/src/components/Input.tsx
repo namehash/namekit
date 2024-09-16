@@ -8,6 +8,7 @@ export interface InputProps
   inputSize?: "small" | "medium" | "large";
   slotPosition?: "left" | "right";
   error?: string;
+  disabled?: boolean;
 }
 
 interface SlotProps {
@@ -16,13 +17,6 @@ interface SlotProps {
 
 const wrapperClasses =
   "nk-group nk-flex nk-relative nk-w-full nk-rounded-md nk-border nk-shadow-sm nk-transition-colors nk-flex nk-items-center";
-
-const variantClasses = {
-  primary:
-    "nk-bg-white nk-text-black nk-border-gray-300 nk-shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] hover:nk-border-gray-400 has-[input:focus]:nk-border-gray-600 has-[input:focus:hover]:nk-border-gray-600",
-  secondary:
-    "nk-border-gray-200 nk-bg-gray-100 hover:nk-border-gray-300 has-[input:focus]:nk-border-gray-400 has-[input:focus:hover]:nk-border-gray-400",
-};
 
 const sizeClasses = {
   small: "nk-py-1 nk-px-2 nk-text-sm",
@@ -43,6 +37,7 @@ export const Input: React.FC<InputProps> & { Slot: React.FC<SlotProps> } = ({
   variant = "primary",
   inputSize = "medium",
   slotPosition = "left",
+  disabled = false,
   children,
   error,
   id,
@@ -56,6 +51,17 @@ export const Input: React.FC<InputProps> & { Slot: React.FC<SlotProps> } = ({
   const hasSlot = React.Children.toArray(children).some(
     (child: any) => child.type === Input.Slot,
   );
+
+  const variantClasses = {
+    primary: cc([
+      "nk-text-black nk-border-gray-300 nk-shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] hover:nk-border-gray-400 has-[input:focus]:nk-border-gray-600 has-[input:focus:hover]:nk-border-gray-600",
+      disabled ? "nk-bg-gray-50" : "nk-bg-white",
+    ]),
+    secondary: [
+      "nk-border-gray-200 hover:nk-border-gray-300 has-[input:focus]:nk-border-gray-400 has-[input:focus:hover]:nk-border-gray-400",
+      disabled ? "nk-bg-gray-200" : "nk-bg-gray-100",
+    ],
+  };
 
   const combinedClassName = cc([
     wrapperClasses,
@@ -80,7 +86,12 @@ export const Input: React.FC<InputProps> & { Slot: React.FC<SlotProps> } = ({
             {children}
           </label>
         )}
-        <input id={inputId} className={inputClasses} {...props} />
+        <input
+          id={inputId}
+          className={inputClasses}
+          disabled={disabled}
+          {...props}
+        />
         {hasSlot && slotPosition === "right" && (
           <label htmlFor={inputId} className={slotClassName}>
             {children}
