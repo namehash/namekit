@@ -91,3 +91,13 @@ export const CustomClass: Story = {
     rows: 4,
   },
 };
+
+export const Disabled: Story = {
+  args: {
+    variant: "primary",
+    size: "medium",
+    value: "Disabled Textarea",
+    rows: 4,
+    disabled: true,
+  },
+};
