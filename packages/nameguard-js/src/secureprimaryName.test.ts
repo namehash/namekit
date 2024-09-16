@@ -11,7 +11,7 @@ if (!PROVIDER_URI_MAINNET) {
   console.warn("PROVIDER_URI_MAINNET is not defined. Defaulting to viem's default provider, which may have rate limiting and other performance limitations.");
 }
 
-const TEST_TIMEOUT = 30000;
+const TEST_TIMEOUT_MS = 30000;
 
 describe("secure primary name", () => {
   beforeAll(() => {
@@ -203,5 +203,5 @@ describe("secure primary name", () => {
       expect(r.primary_name_status).toBe(primaryNameStatus);
       expect(r.primary_name).toBe(primaryName);
     }
-  }, TEST_TIMEOUT);
+  }, TEST_TIMEOUT_MS);
 });

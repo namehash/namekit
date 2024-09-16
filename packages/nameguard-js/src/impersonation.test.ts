@@ -2,7 +2,7 @@ import { describe, it, expect, beforeAll } from "vitest";
 import { computeImpersonationEstimate } from "./impersonation";
 import { initializeData } from "./data";
 
-describe("Impersonation", () => {
+describe("computeImpersonationEstimate", () => {
   beforeAll(() => {
     initializeData();
   });
