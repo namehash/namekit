@@ -8,7 +8,7 @@ import cc from "classcat";
 import * as Yup from "yup";
 import { contactFormSchema } from "@/lib/schemas/contactFormSchema";
 import { ContactFormDataProps } from "@/types/contactFormDataProps";
-import { Button, Input } from "@namehash/namekit-react";
+import { Button, Input, TextArea } from "@namehash/namekit-react";
 
 enum FormFields {
   Name = "name",
@@ -257,7 +257,6 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
                 type="text"
                 id="telegram"
                 slotPosition="left"
-                slot="@"
                 autoComplete="off"
                 disabled={isLoading}
                 onChange={handleInputChange}
@@ -274,26 +273,16 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
               >
                 Message
               </label>
-              <textarea
+
+              <TextArea
                 rows={4}
                 id="message"
                 disabled={isLoading}
                 onChange={handleInputChange}
                 defaultValue=""
                 name={FormFields.Message}
-                className={cc([
-                  "block w-full rounded-md px-3.5 py-2 text-gray-900 shadow-sm border border-gray-300 placeholder:text-gray-400 focus:border-gray-600 hover:border-gray-400 outline-none sm:text-sm sm:leading-6",
-                  {
-                    "border-red-300": validationErrors[FormFields.Message],
-                  },
-                ])}
+                error={validationErrors[FormFields.Message]}
               />
-
-              {validationErrors[FormFields.Message] && (
-                <span className="mt-2 text-sm font-normal text-red-600">
-                  {validationErrors[FormFields.Message]}
-                </span>
-              )}
             </div>
             <input type="hidden" id="source" name="source" value="" />
             <div className="flex h-full justify-end items-end">
