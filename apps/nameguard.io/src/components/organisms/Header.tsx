@@ -39,7 +39,7 @@ export const Header = () => {
             </Button>
 
             <Button variant="ghost" asChild>
-              <Link href="https://github.com/namehash/nameguard">
+              <Link href="https://github.com/namehash/namekit">
                 <GithubIcon className="hidden md:block fill-current" /> GitHub
               </Link>
             </Button>

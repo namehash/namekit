@@ -81,7 +81,7 @@ const MobileMenu = () => {
               className="!w-full !justify-start"
               asChild
             >
-              <Link href="https://github.com/namehash/nameguard">Github</Link>
+              <Link href="https://github.com/namehash/namekit">Github</Link>
             </Button>
 
             <Button

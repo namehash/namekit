@@ -12,7 +12,7 @@ export const HeadlineBanner = () => {
       </div>
       <Link
         target="_blank"
-        href="https://twitter.com/NamehashLabs"
+        href="https://x.com/NamehashLabs"
         variant="underline"
         size="small"
       >
