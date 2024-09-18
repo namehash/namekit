@@ -97,7 +97,7 @@ const Product = ({
                     target={withoutExternalLinkIconInCTA ? undefined : "_blank"}
                   >
                     {buttonLabel}
-                    <Link.ExternalIcon />
+                    {!withoutExternalLinkIconInCTA && <Link.ExternalIcon />}
                   </Link>
                 </IconButton>
               </div>
