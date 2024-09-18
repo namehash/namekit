@@ -2,8 +2,7 @@ import React, { forwardRef, type Ref } from "react";
 
 import { AvatarIcons } from "./Avatars";
 import { Slideover } from "../Slideover/Slideover";
-import { IconButton, Link } from "@namehash/namekit-react";
-import { ExternalLinkIcon } from "../icons/ExternalLinkIcon";
+import { Button, Link } from "@namehash/namekit-react";
 
 const xmtpChatUrl =
   "https://xmtp.chat/dm/0x91b40c01b12E7f1383E028fA91722fb53C871969";
@@ -32,12 +31,14 @@ export const ChatModal = forwardRef(
                 We&apos;re happy to hear your feedback
               </p>
             </div>
-            <Link className="inline-flex" href={xmtpChatUrl} asChild>
-              <IconButton>
-                Open XMTP.chat
-                <Link.ExternalIcon />
-              </IconButton>
-            </Link>
+            <div className="ng-inline-flex">
+              <Button asChild>
+                <Link href={xmtpChatUrl} variant="primary">
+                  Open XMTP.chat
+                  <Link.ExternalIcon />
+                </Link>
+              </Button>
+            </div>
             <p className="text-gray-400 leading-5 text-sm">OR</p>
             <p className="text-gray-400 leading-6 text-sm">
               You can contact us using any XMTP chat app, including: <br />

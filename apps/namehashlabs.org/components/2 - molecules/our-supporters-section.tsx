@@ -1,18 +1,12 @@
 "use client";
 
-import {
-  ExternalLinkIcon,
-  PreSectionText,
-  SectionText,
-  SectionTitle,
-} from "../1 - atoms";
+import { PreSectionText, SectionText, SectionTitle } from "../1 - atoms";
 import { Balancer } from "react-wrap-balancer";
-import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { Profile, getCachedProfile } from "@/data/ensProfiles";
 import { AvatarSize, UltimateENSAvatar } from ".";
 import { getNameHashLabsAvatarCallbacks } from "@/lib/client/nh-labs-avatar";
-import { Button, IconButton, Link } from "@namehash/namekit-react";
+import { IconButton, Link } from "@namehash/namekit-react";
 
 export const OurSuportersSection = () => {
   return (
@@ -85,14 +79,11 @@ const AdditionalSupportersContainer = () => {
       <p className="text-lg leading-6 font-normal text-gray-500">
         and so many others
       </p>
-      <Link
-        href="https://snapshot.org/#/ens.eth/proposal/0x6ba81cd2997288cc49ae1b95921ec8f107e8ffb9733321d53d488e2b30710b86"
-        asChild
-      >
-        <IconButton>
+      <IconButton asChild>
+        <Link href="https://snapshot.org/#/ens.eth/proposal/0x6ba81cd2997288cc49ae1b95921ec8f107e8ffb9733321d53d488e2b30710b86">
           View more <Link.ExternalIcon />
-        </IconButton>
-      </Link>
+        </Link>
+      </IconButton>
     </div>
   );
 };

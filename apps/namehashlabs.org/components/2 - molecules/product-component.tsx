@@ -62,12 +62,15 @@ export const ProductComponent = ({
             <SectionText className="lg:text-start text-center w-full text-lg leading-7 font-light">
               <Balancer>{subtitle}</Balancer>
             </SectionText>
+
             {buttonUrl && (
-              <Link href={buttonUrl} asChild>
-                <IconButton>
-                  Join the discussion <Link.ExternalIcon />
+              <div className="flex justify-center lg:justify-start">
+                <IconButton asChild>
+                  <Link href={buttonUrl}>
+                    Join the discussion <Link.ExternalIcon />
+                  </Link>
                 </IconButton>
-              </Link>
+              </div>
             )}
           </div>
         </div>

@@ -16,8 +16,8 @@ export const HeadlineBanner = () => {
         variant="underline"
         size="small"
       >
-        <p className="hidden sm:block">Follow us on Twitter</p>
-        <p className="block sm:hidden w-max">Follow us</p>
+        <span className="hidden sm:block">Follow us on Twitter</span>
+        <span className="block sm:hidden w-max">Follow us</span>
       </Link>
     </div>
   );
