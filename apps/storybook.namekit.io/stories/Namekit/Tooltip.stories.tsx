@@ -1,6 +1,10 @@
 import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import { Tooltip } from "@namehash/namekit-react/client";
+import {
+  Tooltip,
+  TooltipPlacement,
+  DEFAULT_MAX_TOOLTIP_WIDTH,
+} from "@namehash/namekit-react/client";
 
 const meta: Meta<typeof Tooltip> = {
   title: "UI/Tooltip",
@@ -10,29 +14,13 @@ const meta: Meta<typeof Tooltip> = {
   },
   argTypes: {
     trigger: {
-      control: { type: "select" },
-      options: ["Tooltip Trigger", "Any JSX element can be used as a trigger"],
-      mapping: {
-        "Tooltip Trigger": <>Tooltip Trigger</>,
-        "Any JSX element can be used as a trigger": (
-          <button disabled={true}>
-            Any JSX element can be used as a trigger
-          </button>
-        ),
-      },
+      control: false,
     },
     children: {
-      control: { type: "select" },
-      options: ["Tooltip Trigger", "Any JSX element can be used as a trigger"],
-      mapping: {
-        "Tooltip content": <>Tooltip content</>,
-        "Any JSX element can be used as a content": (
-          <h1>Any JSX element can be used as a content</h1>
-        ),
-      },
+      control: false,
     },
     placement: {
-      options: ["top", "right", "bottom", "left"],
+      options: Object.values(TooltipPlacement),
       control: { type: "select" },
     },
     maxTooltipWidth: {
@@ -40,8 +28,8 @@ const meta: Meta<typeof Tooltip> = {
     },
   },
   args: {
-    placement: "top",
-    maxTooltipWidth: 400,
+    placement: TooltipPlacement.TOP,
+    maxTooltipWidth: DEFAULT_MAX_TOOLTIP_WIDTH,
   },
 };
 
@@ -49,77 +37,62 @@ export default meta;
 
 type Story = StoryObj<typeof Tooltip>;
 
-export const BottomPlacement: Story = {
+export const TopPlacement: Story = {
   args: {
-    placement: "bottom",
     trigger: <>Tooltip Trigger</>,
     children: <>Tooltip content</>,
+    placement: TooltipPlacement.TOP,
   },
 };
 
-export const RightPlacement: Story = {
+export const BottomPlacement: Story = {
   args: {
-    placement: "right",
     trigger: <>Tooltip Trigger</>,
     children: <>Tooltip content</>,
+    placement: TooltipPlacement.BOTTOM,
   },
 };
 
 export const LeftPlacement: Story = {
   args: {
-    placement: "left",
     trigger: <>Tooltip Trigger</>,
     children: <>Tooltip content</>,
-  },
-  render: (args) => {
-    return (
-      <div className="nk-w-full nk-flex nk-justify-center">
-        <Tooltip {...args} />
-      </div>
-    );
+    placement: TooltipPlacement.LEFT,
   },
 };
 
-export const TopPlacement: Story = {
+export const RightPlacement: Story = {
   args: {
-    placement: "top",
     trigger: <>Tooltip Trigger</>,
     children: <>Tooltip content</>,
-  },
-  render: (args) => {
-    return (
-      <div className="nk-h-screen nk-flex nk-items-center">
-        <Tooltip {...args} />
-      </div>
-    );
+    placement: TooltipPlacement.RIGHT,
   },
 };
 
 export const DefaultMaxTooltipWidth: Story = {
   args: {
-    placement: "bottom",
     trigger: <>Tooltip Trigger</>,
     children: (
       <>
-        The default max tooltip width is 400px and it is up to you to set
-        another explicit max width limit, See the "Custom Max Tooltip Width"
-        story for an example of setting a max width.
+        This is the default max tooltip width. You can customize the max width
+        if desired. See the "Custom Max Tooltip Width" story for an example of
+        setting a custom max width.
       </>
     ),
+    placement: TooltipPlacement.BOTTOM,
   },
 };
 
 export const CustomMaxTooltipWidth: Story = {
   args: {
-    placement: "bottom",
-    maxTooltipWidth: 600,
-    trigger: <>Tooltip Trigger for tooltip with 600px max width</>,
+    trigger: <>Tooltip Trigger</>,
     children: (
       <>
-        See it! The tooltip content is limited to 600px width. You can set the
-        maxTooltipWidth to the desired value to limit the text content display
-        width!
+        This is a customized max tooltip width. You can customize the max width
+        if desired.
       </>
     ),
+    placement: TooltipPlacement.BOTTOM,
+    maxTooltipWidth: 200,
   },
 };

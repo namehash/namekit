@@ -1,20 +1,30 @@
-import React, { useState } from "react";
-import { Float, type FloatProps } from "@headlessui-float/react";
+import { Float } from "@headlessui-float/react";
 import { Popover } from "@headlessui/react";
+import React, { useState } from "react";
 
 type Props = {
   trigger: React.ReactNode;
   children: React.ReactNode;
-  placement?: FloatProps["placement"];
+  placement?: TooltipPlacement;
   maxTooltipWidth?: number;
 };
 
-const DEFAULT_MAX_TOOLTIP_WIDTH = 400;
+export const DEFAULT_MAX_TOOLTIP_WIDTH = 400;
+
+export const TooltipPlacement = {
+  TOP: "top",
+  RIGHT: "right",
+  BOTTOM: "bottom",
+  LEFT: "left",
+} as const;
+
+export type TooltipPlacement =
+  (typeof TooltipPlacement)[keyof typeof TooltipPlacement];
 
 export function Tooltip({
   trigger,
   children,
-  placement = "top",
+  placement = TooltipPlacement.TOP,
   maxTooltipWidth = DEFAULT_MAX_TOOLTIP_WIDTH,
 
   /*
