@@ -11,7 +11,6 @@ function getAbsolutePath(value) {
 /** @type { import('@storybook/react-vite').StorybookConfig } */
 const config = {
   stories: [
-    "../stories/**/*.mdx",
     "../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)",
     // "../../../packages/**/*.stories.@(js|jsx|mjs|ts|tsx)",
   ],
@@ -25,6 +24,9 @@ const config = {
   framework: {
     name: getAbsolutePath("@storybook/react-vite"),
     options: {},
+  },
+  core: {
+    disableTelemetry: true,
   },
 };
 export default config;
