@@ -447,7 +447,18 @@ The NameKit monorepo contains multiple packages and apps.
 
 ## Local Development
 
-You must clone this respository, and install the dependencies using [PNPM](https://pnpm.io/installation) before you can run it locally:
+### Prerequisites
+
+- [Git](https://git-scm.com/)
+- [Node.js](https://nodejs.org/)
+  - It's recommended you install Node.js through [nvm](https://github.com/nvm-sh/nvm) (see link for installation instructions).
+  - To ensure you're running the expected version of Node.js run `nvm install` in the root of the repository (after you clone it).
+- [pnpm](https://pnpm.io/)
+  - Run `npm install -g pnpm` or see [other installation options](https://pnpm.io/installation).
+
+### Getting started
+
+Use `git` to clone this respository, and install the dependencies using `pnpm` to run NameKit locally:
 
 1. `git clone https://github.com/namehash/namekit.git`
 2. `cd namekit`
