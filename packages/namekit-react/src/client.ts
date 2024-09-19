@@ -1,7 +1,12 @@
 import "@namehash/ens-webfont";
 import "./styles.css";
 
-export { Tooltip } from "./components/Tooltip";
+export {
+  Tooltip,
+  TooltipPlacement,
+  DEFAULT_MAX_TOOLTIP_WIDTH,
+  DEFAULT_TOOLTIP_PLACEMENT,
+} from "./components/Tooltip";
 export {
   CurrencySymbol,
   CurrencySymbolSize,
