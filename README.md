@@ -453,8 +453,10 @@ The NameKit monorepo contains multiple packages and apps.
 - [Node.js](https://nodejs.org/)
   - It's recommended you install Node.js through [nvm](https://github.com/nvm-sh/nvm) (see link for installation instructions).
   - To ensure you're running the expected version of Node.js run `nvm install` in the root of the repository (after you clone it).
+  - Node.js will automatically install `corepack`. You should also ensure Corepack is enabled by running `corepack enable`.
 - [pnpm](https://pnpm.io/)
   - Run `npm install -g pnpm` or see [other installation options](https://pnpm.io/installation).
+  - To ensure you're running the expected version of pnpm run `corepack use pnpm` in the root of the repository (after you clone it).
 
 ### Getting started
 
