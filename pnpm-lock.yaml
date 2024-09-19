@@ -7,10 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      yup:
-        specifier: 1.4.0
-        version: 1.4.0
     devDependencies:
       '@changesets/cli':
         specifier: ^2.27.2
