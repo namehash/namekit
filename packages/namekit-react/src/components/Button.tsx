@@ -8,6 +8,7 @@ export interface ButtonProps
   children?: React.ReactNode;
   variant?: "primary" | "secondary" | "ghost";
   size?: "small" | "medium" | "large";
+  padding?: string;
 }
 
 const buttonAsChildClass = "nk-button-as-child";
@@ -22,7 +23,7 @@ const variantClasses = {
   ghost: "nk-text-black nk-border-transparent hover:nk-bg-black/5",
 };
 
-const sizeClasses = {
+const defaultSizeClasses = {
   small: "nk-py-1 nk-px-2 nk-text-sm",
   medium: "nk-py-2 nk-px-4",
   large: "nk-py-3 nk-px-6 nk-text-lg",
@@ -36,6 +37,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       children,
       variant = "primary",
       size = "medium",
+      padding,
       ...props
     },
     ref,
@@ -43,7 +45,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const combinedClassName = cc([
       buttonBaseClasses,
       variantClasses[variant],
-      sizeClasses[size],
+      padding || defaultSizeClasses[size],
       asChild && buttonAsChildClass,
       className,
     ]);

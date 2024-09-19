@@ -30,11 +30,7 @@ const MobileMenu = () => {
     <div className="z-50">
       {/* Hamburguer button  */}
       <div className="block md:hidden">
-        <IconButton
-          variant="ghost"
-          className="!p-2"
-          onClick={() => toggleMenu()}
-        >
+        <IconButton variant="ghost" onClick={() => toggleMenu()}>
           <Bars3Icon className="w-6 h-6 text-black" />
         </IconButton>
       </div>

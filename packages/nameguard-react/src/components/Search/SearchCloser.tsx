@@ -8,12 +8,7 @@ export const SearchCloser = () => {
   const { closeModal } = useSearchStore();
 
   return (
-    <IconButton
-      className="!p-2"
-      variant="ghost"
-      size="medium"
-      onClick={closeModal}
-    >
+    <IconButton variant="ghost" size="medium" onClick={closeModal}>
       <XMarkIcon className="w-6 h-6 fill-current text-black" />
     </IconButton>
   );

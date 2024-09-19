@@ -52,7 +52,7 @@ export const Header = () => {
           </div>
 
           <div className="lg:hidden">
-            <IconButton className="!p-2" variant="ghost">
+            <IconButton variant="ghost">
               <NGSearchIcon />
             </IconButton>
           </div>
