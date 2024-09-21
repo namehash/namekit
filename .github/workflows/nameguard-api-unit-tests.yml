@@ -1,11 +1,15 @@
 name: NameGuard API - Unit Tests
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - ci
     paths:
       - "api/**"
   pull_request:
-    branches: [main]
+    branches:
+      - main
+      - ci
     paths:
       - "api/**"
 
