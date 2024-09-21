@@ -32,7 +32,7 @@ jobs:
           node-version-file: .nvmrc
           cache: "pnpm"
 
-      - name: Install dependencies
+      - name: Install npm dependencies
         run: pnpm install
 
       - name: Build packages
