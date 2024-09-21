@@ -9,7 +9,6 @@ on:
       - '.github/workflows/nameguard_api_cicd.yml'
 
 env:
-  NODE_VERSION: "18.16.0"
   TS_VERSION: "4.2.3"
   TS_NODE_VERSION: "10.0.0"
 
@@ -26,9 +25,9 @@ jobs:
       - name: Checkout this repo
         uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version-file: .nvmrc
 
       - name: Setup git
         run: |
