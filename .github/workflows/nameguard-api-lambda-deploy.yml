@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   build-image-deploy-serverless:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     env:
       SERVICE_NAME: nameguard
     steps:
