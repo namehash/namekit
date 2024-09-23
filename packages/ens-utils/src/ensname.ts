@@ -327,20 +327,22 @@ export function getRegistrationPotential(name: ENSName): RegistrationPotential {
 }
 
 /**
- * Splits a label into its individual characters.
+ * Splits a string into its individual characters.
  * 
- * This function uses the spread operator to split the string into an array of its Unicode characters (UTF-32) compatible with ens-normalize.
+ * Splits the string into an array of its Unicode characters.
+ * In Javascript, the ".split()" method of a string may give different result 
+ * because it returns the array of UTF-16 code units.
  * Each element in the resulting array represents a single Unicode character.
  * 
- * @param label
- * @returns An array of the individual characters within `label`.
+ * @param text
+ * @returns An array of the individual characters within `text`.
  */
-export function splitCharacters(label: string): string[] {
-  return [...label];
+export function splitCharacters(text: string): string[] {
+  return [...text];
 }
 
 /**
- * Calculates the number of characters in a label.
+ * Calculates the number of characters in a string.
  * 
  * NOTE: This length will be the same as determined by the EthRegistrarController smart contracts.
  * These contracts calculate length using the following code that counts Unicode characters in UTF-8 encoding.
@@ -351,8 +353,8 @@ export function splitCharacters(label: string): string[] {
  * UTF-16 represents Unicode characters with codepoints higher can fit within a 16 bit value as a "surrogate pair"
  * of UTF-16 code units. This means that some Unicode characters are represented by *more than one* UTF-16 code unit.
  * @param label
- * @returns the number of characters within `label`.
+ * @returns the number of characters within `string`.
  */
-export function charCount(label: string) {
-  return splitCharacters(label).length;
+export function charCount(text: string) {
+  return splitCharacters(text).length;
 }
