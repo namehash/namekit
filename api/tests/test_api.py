@@ -780,7 +780,7 @@ def test_primary_name(
     impersonation_risk,
     name,
 ):
-    response = test_client.get(f'/secure-primary-name/mainnet/{address}')
+    response = test_client.get(f'/secure-primary-name/mainnet/{address}?return_nameguard_report=true')
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
@@ -811,6 +811,35 @@ def test_primary_name_get(test_client):
     assert res_json['primary_name_status'] == 'normalized'
     assert res_json['primary_name'] == 'vitalik.eth'
     assert res_json['display_name'] == 'vitalik.eth'
+    assert res_json['nameguard_result'] is None
+
+
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
+def test_primary_name_get_no_report(test_client):
+    address = '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
+    response = test_client.get(f'/secure-primary-name/mainnet/{address}?return_nameguard_report=false')
+    assert response.status_code == 200
+    res_json = response.json()
+    print(res_json)
+    assert res_json['impersonation_status'] == 'unlikely'
+    assert res_json['primary_name_status'] == 'normalized'
+    assert res_json['primary_name'] == 'vitalik.eth'
+    assert res_json['display_name'] == 'vitalik.eth'
+    assert res_json['nameguard_result'] is None
+
+
+@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
+def test_primary_name_get_report(test_client):
+    address = '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
+    response = test_client.get(f'/secure-primary-name/mainnet/{address}?return_nameguard_report=true')
+    assert response.status_code == 200
+    res_json = response.json()
+    print(res_json)
+    assert res_json['impersonation_status'] == 'unlikely'
+    assert res_json['primary_name_status'] == 'normalized'
+    assert res_json['primary_name'] == 'vitalik.eth'
+    assert res_json['display_name'] == 'vitalik.eth'
+    assert res_json['nameguard_result'] is not None
 
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
@@ -895,7 +924,7 @@ def test_primary_name_get_empty(test_client):
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 def test_primary_name_get_emoji(test_client):
     address = '0x63A93f5843aD57d756097ef102A2886F05c7a29c'
-    response = test_client.get(f'/secure-primary-name/mainnet/{address}')
+    response = test_client.get(f'/secure-primary-name/mainnet/{address}?return_nameguard_report=true')
     assert response.status_code == 200
     res_json = response.json()
 

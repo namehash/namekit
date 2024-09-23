@@ -443,7 +443,9 @@ class NameGuard:
             is_canonical=False,
         )
 
-    async def secure_primary_name(self, address: str, network_name: str) -> SecurePrimaryNameResult:
+    async def secure_primary_name(
+        self, address: str, network_name: str, return_nameguard_report: bool = False
+    ) -> SecurePrimaryNameResult:
         try:
             domain = self.ns[network_name].name(address)
         except requests.exceptions.ConnectionError as ex:
@@ -482,7 +484,7 @@ class NameGuard:
             impersonation_status=impersonation_status,
             display_name=display_name,
             primary_name_status=status,
-            nameguard_result=nameguard_result,
+            nameguard_result=nameguard_result if return_nameguard_report else None,
         )
 
     async def fake_eth_name_check_fields(
