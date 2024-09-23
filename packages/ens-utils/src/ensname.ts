@@ -327,11 +327,10 @@ export function getRegistrationPotential(name: ENSName): RegistrationPotential {
 }
 
 /**
- * Splits a string into its individual characters.
+ * Splits a string into an array of its individual Unicode characters.
  * 
- * Splits the string into an array of its Unicode characters.
- * In Javascript, the ".split()" method of a string may give different result 
- * because it returns the array of UTF-16 code units.
+ * In JavaScript, the ".split()" method of a string may give different results 
+ * because it returns an array of UTF-16 code units.
  * Each element in the resulting array represents a single Unicode character.
  * 
  * @param text
