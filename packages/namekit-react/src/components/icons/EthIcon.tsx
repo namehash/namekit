@@ -2,12 +2,12 @@ import React, { type SVGProps } from "react";
 
 const ETH_DEFAULT_COLOR = "#272727";
 
-export const EthSymbol = (props: SVGProps<SVGSVGElement>) => {
+export const EthIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
+      {...props}
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
-      {...props}
       fill={props.fill ? props.fill : ETH_DEFAULT_COLOR}
     >
       <path

@@ -9,6 +9,13 @@ export {
 } from "./components/Tooltip";
 export {
   CurrencySymbol,
-  CurrencySymbolSize,
-} from "./components/CurrencySymbol/CurrencySymbol";
+  CurrencySymbology,
+  CurrencyIconSize,
+} from "./components/CurrencySymbol";
+export {
+  DisplayedPrice,
+  PriceDisplaySize,
+  CurrencySymbolPosition,
+} from "./components/DisplayedPrice";
+export { DisplayedPriceConversion } from "./components/DisplayedPriceConversion";
 export { TruncatedText } from "./components/TruncatedText";
