@@ -61,9 +61,9 @@ describe("NameGuardJS", () => {
       // this should try to fetch from the endpoint
       localNameguard.getSecurePrimaryName(
         "0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5",
-        { computeNameGuardReport: true }
+        { returnNameGuardReport: true }
       )
-    ).rejects.toThrow("request to http://localhost:1234/secure-primary-name/mainnet/0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5 failed");
+    ).rejects.toThrow("request to http://localhost:1234/secure-primary-name/mainnet/0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5?return_nameguard_report=true failed");
   });
 
   it("should throw an error for network mismatch on mainnet", () => {

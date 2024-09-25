@@ -1,20 +1,21 @@
 import React from "react";
 import { Meta, StoryObj } from "@storybook/react";
-import { Tooltip } from "@namehash/namekit-react/client";
+import { Tooltip, TooltipPlacement } from "@namehash/namekit-react/client";
 
 const meta: Meta<typeof Tooltip> = {
   title: "UI/Tooltip",
   component: Tooltip,
+  tags: ["autodocs"],
+  parameters: {
+    layout: "centered",
+  },
   argTypes: {
     placement: {
-      options: ["top", "right", "bottom", "left"],
+      options: Object.values(TooltipPlacement),
       control: { type: "select" },
     },
-    children: {
-      control: { type: "text" },
-    },
-    trigger: {
-      control: { type: "text" },
+    maxTooltipWidth: {
+      control: { type: "number" },
     },
   },
 };
@@ -23,55 +24,90 @@ export default meta;
 
 type Story = StoryObj<typeof Tooltip>;
 
-export const BottomPlacement: Story = {
+export const TopPlacement: Story = {
   args: {
-    placement: "bottom",
-    trigger: <>Tooltip Trigger</>,
-    children: <>Tooltip content</>,
+    placement: TooltipPlacement.Top,
+  },
+  render: (args) => {
+    const trigger = <span>Tooltip Trigger</span>;
+    return (
+      <Tooltip {...args} trigger={trigger}>
+        <span>Tooltip content</span>
+      </Tooltip>
+    );
   },
 };
 
-export const RightPlacement: Story = {
+export const BottomPlacement: Story = {
   args: {
-    placement: "right",
-    trigger: <>Tooltip Trigger</>,
-    children: <>Tooltip content</>,
+    placement: TooltipPlacement.Bottom,
+  },
+  render: (args) => {
+    const trigger = <span>Tooltip Trigger</span>;
+    return (
+      <Tooltip {...args} trigger={trigger}>
+        <span>Tooltip content</span>
+      </Tooltip>
+    );
   },
 };
 
 export const LeftPlacement: Story = {
   args: {
-    placement: "left",
-    trigger: <>Tooltip Trigger</>,
-    children: <>Tooltip content</>,
+    placement: TooltipPlacement.Left,
+  },
+  render: (args) => {
+    const trigger = <span>Tooltip Trigger</span>;
+    return (
+      <Tooltip {...args} trigger={trigger}>
+        <span>Tooltip content</span>
+      </Tooltip>
+    );
+  },
+};
+
+export const RightPlacement: Story = {
+  args: {
+    placement: TooltipPlacement.Right,
+  },
+  render: (args) => {
+    const trigger = <span>Tooltip Trigger</span>;
+    return (
+      <Tooltip {...args} trigger={trigger}>
+        <span>Tooltip content</span>
+      </Tooltip>
+    );
   },
 };
 
 export const DefaultMaxTooltipWidth: Story = {
-  args: {
-    placement: "bottom",
-    trigger: <>Tooltip Trigger</>,
-    children: (
-      <>
-        The default max tooltip width is 400px and it is up to you to set
-        another explicit max width limit, See the "Custom Max Tooltip Width"
-        story for an example of setting a max width.
-      </>
-    ),
+  render: (args) => {
+    const trigger = <span>Tooltip Trigger</span>;
+    return (
+      <Tooltip {...args} trigger={trigger}>
+        <span>
+          This is the default max tooltip width. You can customize the max width
+          if desired. See the "Custom Max Tooltip Width" story for an example of
+          setting a custom max width.
+        </span>
+      </Tooltip>
+    );
   },
 };
 
 export const CustomMaxTooltipWidth: Story = {
   args: {
-    placement: "bottom",
-    maxTooltipWidth: 600,
-    trigger: <>Tooltip Trigger for tooltip with 600px max width</>,
-    children: (
-      <>
-        See it! The tooltip content is limited to 600px width. You can set the
-        maxTooltipWidth to the desired value to limit the text content display
-        width!
-      </>
-    ),
+    maxTooltipWidth: 200,
+  },
+  render: (args) => {
+    const trigger = <span>Tooltip Trigger</span>;
+    return (
+      <Tooltip {...args} trigger={trigger}>
+        <span>
+          This is a customized max tooltip width. You can customize the max
+          width if desired.
+        </span>
+      </Tooltip>
+    );
   },
 };
