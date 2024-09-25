@@ -1,6 +1,6 @@
 import { GRAPHEME_CANONICALS } from "./data/canonicals";
 import { isCombiningChar } from "./utils";
-import { splitCharacters } from "@namehash/ens-utils";
+import { charSplit } from "@namehash/ens-utils";
 
 /**
  * Checks if a grapheme is of the form `base character + sequence of combining marks`.
@@ -10,7 +10,7 @@ import { splitCharacters } from "@namehash/ens-utils";
  * @returns A boolean indicating whether the grapheme has combining marks.
  */
 function graphemeHasCombiningMarks(grapheme: string): boolean {
-  const characters = splitCharacters(grapheme);
+  const characters = charSplit(grapheme);
   return (
     // has more than one character
     characters.length > 1 &&
@@ -87,7 +87,7 @@ export function isGraphemeConfusable(grapheme: string): boolean {
  * @returns The canonical form of the grapheme, or null if the canonical form is not known.
  */
 function getCanonicalGrapheme(grapheme: string): string | null {
-  const characters = splitCharacters(grapheme);
+  const characters = charSplit(grapheme);
 
   if (graphemeHasCombiningMarks(grapheme)) {
     return characters[0];
@@ -124,7 +124,7 @@ export function getCanonical(grapheme: string): string | null {
   } else {
     // If getCanonicalGrapheme failed, try looking at only the first character
     // which might be present in the confusables list (in contrast to the full grapheme)
-    return getCanonical(splitCharacters(grapheme)[0]);
+    return getCanonical(charSplit(grapheme)[0]);
   }
 }
 
