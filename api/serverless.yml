@@ -32,7 +32,6 @@ functions:
     name: oss-nameguard-${self:custom.stage}
     memorySize: 1769
     timeout: 10
-    versionFunctions: true
     url: true
     role: DefaultNameGuardRole
     provisionedConcurrency: 1
