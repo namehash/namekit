@@ -1,0 +1,25 @@
+{
+    "name": "nameguard-api",
+    "private": true,
+    "description": "AWS Lambda handler for NameGuard.",
+    "version": "1.0.0",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/namehash/namekit.git",
+      "directory": "api"
+    },
+    "homepage": "https://github.com/namehash/namekit/tree/main/api",
+    "keywords": [
+      "ENS",
+      "NameKit",
+      "NameGuard",
+      "NameHash"
+    ],
+    "dependencies": {
+      "serverless": "3.39.0"
+    },
+    "devDependencies": {
+      "serverless-prune-plugin": "2.0.2"
+    }
+  }
