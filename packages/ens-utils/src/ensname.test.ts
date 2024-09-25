@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   buildENSName,
-  splitCharacters,
+  charSplit,
   charCount,
   getDecentralizationStatus,
   getDisplayLabels,
@@ -406,79 +406,79 @@ describe("getRegistrationPotential", () => {
 });
 
 describe("charCount", () => {
-  it("empty name", () => {
-    const label = "";
-    const result = charCount(label);
+  it("counts empty strings", () => {
+    const text = "";
+    const result = charCount(text);
 
     expect(result).toBe(0);
-    expect(label.length).toBe(0);
+    expect(text.length).toBe(0);
   });
 
-  it("multi codepoint emoji", () => {
-    const label = "🧟‍♂";
-    const result = charCount(label);
+  it("counts multi codepoint emojis", () => {
+    const text = "🧟‍♂";
+    const result = charCount(text);
 
     expect(result).toBe(3);  // 3 Unicode characters
-    expect(label.length).toBe(4); // 4 UTF-16 code units
+    expect(text.length).toBe(4); // 4 UTF-16 code units
   });
 
-  it("another multi codepoint emoji", () => {
-    const label = "🤦🏼‍♂️";
-    const result = charCount(label);
+  it("counts another multi codepoint emoji", () => {
+    const text = "🤦🏼‍♂️";
+    const result = charCount(text);
 
     expect(result).toBe(5); // 5 Unicode characters
-    expect(label.length).toBe(7); // 7 UTF-16 code units
+    expect(text.length).toBe(7); // 7 UTF-16 code units
   });
 
-  it("namehash string", () => {
-    const label = "namehash";
-    const result = charCount(label);
+  it("counts ascii strings", () => {
+    const text = "namehash";
+    const result = charCount(text);
 
     expect(result).toBe(8); // 8 Unicode characters
-    expect(label.length).toBe(8); // 8 UTF-16 code units
+    expect(text.length).toBe(8); // 8 UTF-16 code units
   });
 
-  it("multi codepoint emoji 15.1", () => {
-    const label = "🏃🏿‍➡";
-    const result = charCount(label);
+  it("counts multi codepoint emoji 15.1", () => {
+    const text = "🏃🏿‍➡";
+    const result = charCount(text);
 
     expect(result).toBe(4); // 4 Unicode characters
-    expect(label.length).toBe(6);  // 6 UTF-16 code units
+    expect(text.length).toBe(6);  // 6 UTF-16 code units
   });
 });
 
-describe("splitCharacters", () => {
-  it("empty name", () => {
-    const label = "";
-    const result = splitCharacters(label);
+describe("charSplit", () => {
+  it("splits empty strings", () => {
+    const text = "";
+    const result = charSplit(text);
 
     expect(result).toEqual([]);
   });
 
-  it("multi codepoint emoji", () => {
-    const label = "🧟‍♂";
-    const result = splitCharacters(label);
+  it("splits multi codepoint emojis", () => {
+    const text = "🧟‍♂";
+    const result = charSplit(text);
 
     expect(result).toEqual(["🧟", "‍", "♂"]);  // 3 Unicode characters
   });
 
-  it("another multi codepoint emoji", () => {
-    const label = "🤦🏼‍♂️";
-    const result = splitCharacters(label);
+  it("splits another multi codepoint emoji", () => {
+    const text = "🤦🏼‍♂️";
+    const result = charSplit(text);
 
     expect(result).toEqual(["🤦", "🏼", "‍", "♂", "️"]); // 5 Unicode characters
   });
 
-  it("namehash string", () => {
-    const label = "namehash";
-    const result = splitCharacters(label);
+  it("splits ascii strings", () => {
+    const text = "namehash";
+    const result = charSplit(text);
 
     expect(result).toEqual(["n", "a", "m", "e", "h", "a", "s", "h"]); // 8 Unicode characters
   });
 
-  it("multi codepoint emoji 15.1", () => {
-    const label = "🏃🏿‍➡";
-    const result = splitCharacters(label);
+  it("splits multi codepoint emoji 15.1", () => {
+    const text = "🏃🏿‍➡";
+    const result = charSplit(text);
 
     expect(result).toEqual(["🏃", "🏿", "‍", "➡"]); // 4 Unicode characters
   });

@@ -337,7 +337,7 @@ export function getRegistrationPotential(name: ENSName): RegistrationPotential {
  * @param text the `string` to split into Unicode characters.
  * @returns An array of the Unicode characters contained in `text`.
  */
-export function splitCharacters(text: string): string[] {
+export function charSplit(text: string): string[] {
   return [...text];
 }
 
@@ -361,5 +361,5 @@ export function splitCharacters(text: string): string[] {
  * @returns the count of Unicode characters in `text`.
  */
 export function charCount(text: string) {
-  return splitCharacters(text).length;
+  return charSplit(text).length;
 }
