@@ -87,18 +87,21 @@ jobs:
         run: |
           echo "STATUS=Success  :rocket:" >> $GITHUB_ENV
           echo "TEXT=Lambda NameGuard deployed successfully! :white_check_mark:" >> $GITHUB_ENV
+          echo "COLOR=good" >> $GITHUB_ENV
 
       - name: Output status on deployment failed
         if: ${{ needs.build-image-deploy-serverless.result == 'failure' }}
         run: |
           echo "STATUS=Failure  :x:" >> $GITHUB_ENV
           echo "TEXT=Lambda NameGuard deployment failed! :rotating_light:" >> $GITHUB_ENV
+          echo "COLOR=danger" >> $GITHUB_ENV
 
       - name: Output status on deployment cancellation
         if: ${{ needs.build-image-deploy-serverless.result == 'cancelled' }}
         run: |
           echo "STATUS=Cancelled  :no_entry_sign:" >> $GITHUB_ENV
           echo "TEXT=Lambda NameGuard deployment was cancelled. :warning:" >> $GITHUB_ENV
+          echo "COLOR=warning" >> $GITHUB_ENV
 
       - name: Send deployment status Slack notification
         uses: 8398a7/action-slack@v3
@@ -108,7 +111,7 @@ jobs:
           custom_payload: |
             {
               attachments: [{
-                color: '${{ needs.build-image-deploy-serverless.result  }}' === 'success' ? 'good' : '${{ needs.build-image-deploy-serverless.result }}' === 'failure' ? 'danger' : 'warning',
+                color: '${{ env.COLOR }}',
                 title: 'Lambda NameGuard deployment.',
                 text: '${{ env.TEXT }}',
                 fields: [
