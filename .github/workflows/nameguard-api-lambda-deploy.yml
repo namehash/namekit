@@ -49,7 +49,7 @@ jobs:
       - name: Build and deploy lambda
         run: |
           cp ../LICENSE .
-          pnpm install -g serverless@3.39.0
+          pnpm install serverless@3.39.0
           pnpm install serverless-prune-plugin
           serverless deploy --stage prod --param="PROVIDER_URI_MAINNET=${{secrets.PROVIDER_URI_MAINNET}}" --param="PROVIDER_URI_SEPOLIA=${{secrets.PROVIDER_URI_SEPOLIA}}" --param="ALCHEMY_URI_MAINNET=${{secrets.ALCHEMY_URI_MAINNET}}" --param="ALCHEMY_URI_SEPOLIA=${{secrets.ALCHEMY_URI_SEPOLIA}}" --param="ENS_SUBGRAPH_URL_MAINNET=${{secrets.ENS_SUBGRAPH_URL_MAINNET}}" --param="ENS_SUBGRAPH_URL_SEPOLIA=${{secrets.ENS_SUBGRAPH_URL_SEPOLIA}}"
         working-directory: api
