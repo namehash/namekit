@@ -7,7 +7,7 @@ on:
       - staging
     paths:
       - "packages/nameguard-sdk/**"
-      - "api/nameguard/**"
+      - "packages/nameguard-python/**"
       - ".github/workflows/nameguard-end-to-end-tests.yml"
   pull_request:
     branches:
@@ -15,7 +15,7 @@ on:
       - staging
     paths:
       - "packages/nameguard-sdk/**"
-      - "api/nameguard/**"
+      - "packages/nameguard-python/**"
       - ".github/workflows/nameguard-end-to-end-tests.yml"
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
         id: check
         run: |
           git fetch origin ${{ github.base_ref }}
-          API_CHANGED=$(git diff --name-only origin/${{ github.base_ref }} HEAD | grep "^api/nameguard/" | wc -l)
+          API_CHANGED=$(git diff --name-only origin/${{ github.base_ref }} HEAD | grep "^packages/nameguard-python/" | wc -l)
           SDK_CHANGED=$(git diff --name-only origin/${{ github.base_ref }} HEAD | grep "^packages/nameguard-sdk/" | wc -l)
           echo "api_changed=$API_CHANGED" >> $GITHUB_OUTPUT
           echo "sdk_changed=$SDK_CHANGED" >> $GITHUB_OUTPUT
@@ -68,7 +68,7 @@ jobs:
 
       - name: Install dependencies
         if: needs.check_changes.outputs.api_changed > 0
-        working-directory: ./api
+        working-directory: ./packages/nameguard-python
         run: poetry install --with dev
 
       - name: Build the SDK
@@ -76,7 +76,7 @@ jobs:
 
       - name: Setup local nameguard api
         if: needs.check_changes.outputs.api_changed > 0
-        working-directory: ./api
+        working-directory: ./packages/nameguard-python
         env:
           PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
           PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}

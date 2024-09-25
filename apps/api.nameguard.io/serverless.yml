@@ -27,7 +27,8 @@ provider:
   ecr:
     images:
       oss-nameguard:
-        path: ./
+        # /packages/nameguard-python/
+        path: ../../packages/nameguard-python/
       platform: linux/arm64
 
 plugins:
