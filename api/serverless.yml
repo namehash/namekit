@@ -24,6 +24,7 @@ provider:
 
 plugins:
   - serverless-prune-plugin
+  - serverless-dotenv-plugin
 
 functions:
   oss-nameguard:
@@ -38,12 +39,12 @@ functions:
     tags:
       Stage: ${self:custom.stage}
     environment:
-      PROVIDER_URI_MAINNET: ${param:PROVIDER_URI_MAINNET}
-      PROVIDER_URI_SEPOLIA: ${param:PROVIDER_URI_SEPOLIA}
-      ALCHEMY_URI_MAINNET: ${param:ALCHEMY_URI_MAINNET}
-      ALCHEMY_URI_SEPOLIA: ${param:ALCHEMY_URI_SEPOLIA}
-      ENS_SUBGRAPH_URL_MAINNET: ${param:ENS_SUBGRAPH_URL_MAINNET}
-      ENS_SUBGRAPH_URL_SEPOLIA: ${param:ENS_SUBGRAPH_URL_SEPOLIA}
+      PROVIDER_URI_MAINNET: ${env:PROVIDER_URI_MAINNET}
+      PROVIDER_URI_SEPOLIA: ${env:PROVIDER_URI_SEPOLIA}
+      ALCHEMY_URI_MAINNET: ${env:ALCHEMY_URI_MAINNET}
+      ALCHEMY_URI_SEPOLIA: ${env:ALCHEMY_URI_SEPOLIA}
+      ENS_SUBGRAPH_URL_MAINNET: ${env:ENS_SUBGRAPH_URL_MAINNET}
+      ENS_SUBGRAPH_URL_SEPOLIA: ${env:ENS_SUBGRAPH_URL_SEPOLIA}
 
 
 resources:
