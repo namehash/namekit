@@ -1,5 +1,15 @@
 # @namehash/namekit-react
 
+## 0.6.0
+
+### Minor Changes
+
+- 8564ffb: New Style Addition: Updated components/Link.tsx to include a new size class, xsmall (nk-text-xs), to enhance design compatibility and provide more styling options.
+  Folder Structure Update: Introduced two new folders, /client and /. The /client folder exports components that require "use client" at the top of their files, while the / folder exports components that do not require this directive.
+  Style Adjustments: Made minor adjustments to the styles of various components to ensure consistency and alignment with the new design requirements.
+- dbaf813: Migrate TruncatedText and create Storybook examples
+- 79a6b77: Update Tooltip component to include TooltipPlacement and export DEFAULT_MAX_TOOLTIP_WIDTH
+
 ## 0.5.0
 
 ### Minor Changes

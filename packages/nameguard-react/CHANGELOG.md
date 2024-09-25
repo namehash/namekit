@@ -1,5 +1,27 @@
 # @namehash/nameguard-react
 
+## 0.6.0
+
+### Minor Changes
+
+- 38b141d: Remove Tooltip component from @namehash/nameguard-react
+- bc963fd: add unicode version title and value to grapheme modal
+- dbaf813: Migrate TruncatedText and create Storybook examples
+
+### Patch Changes
+
+- 8564ffb: New Style Addition: Updated components/Link.tsx to include a new size class, xsmall (nk-text-xs), to enhance design compatibility and provide more styling options.
+  Folder Structure Update: Introduced two new folders, /client and /. The /client folder exports components that require "use client" at the top of their files, while the / folder exports components that do not require this directive.
+  Style Adjustments: Made minor adjustments to the styles of various components to ensure consistency and alignment with the new design requirements.
+- 39ece2a: Add support for uninspected NameGuard reports.
+- Updated dependencies [82e4dc0]
+- Updated dependencies [8564ffb]
+- Updated dependencies [01236c9]
+- Updated dependencies [dbaf813]
+- Updated dependencies [79a6b77]
+  - @namehash/nameguard@0.5.0
+  - @namehash/namekit-react@0.6.0
+
 ## 0.5.0
 
 ### Minor Changes

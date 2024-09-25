@@ -1,5 +1,12 @@
 # @namehash/nameguard
 
+## 0.5.0
+
+### Minor Changes
+
+- 82e4dc0: Added unicode_version field to ConsolidatedGraphemeGuardReport.
+- 01236c9: Add a `computeNameGuardReport` parameter to the NameGuard API
+
 ## 0.4.0
 
 ### Minor Changes

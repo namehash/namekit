@@ -1,5 +1,18 @@
 # @namehash/nameguard-js
 
+## 0.6.0
+
+### Minor Changes
+
+- 01236c9: Add a `computeNameGuardReport` parameter to the NameGuard API
+
+### Patch Changes
+
+- 2912357: Refine nameguard-js unit tests
+- Updated dependencies [82e4dc0]
+- Updated dependencies [01236c9]
+  - @namehash/nameguard@0.5.0
+
 ## 0.5.0
 
 ### Minor Changes
