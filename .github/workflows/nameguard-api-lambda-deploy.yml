@@ -54,16 +54,6 @@ jobs:
         with:
           platforms: arm64
 
-      - name: Create .env file
-        run: |
-          echo "PROVIDER_URI_MAINNET=${{ secrets.PROVIDER_URI_MAINNET }}" >> .env
-          echo "PROVIDER_URI_SEPOLIA=${{ secrets.PROVIDER_URI_SEPOLIA }}" >> .env
-          echo "ALCHEMY_URI_MAINNET=${{ secrets.ALCHEMY_URI_MAINNET }}" >> .env
-          echo "ALCHEMY_URI_SEPOLIA=${{ secrets.ALCHEMY_URI_SEPOLIA }}" >> .env
-          echo "ENS_SUBGRAPH_URL_MAINNET=${{ secrets.ENS_SUBGRAPH_URL_MAINNET }}" >> .env
-          echo "ENS_SUBGRAPH_URL_SEPOLIA=${{ secrets.ENS_SUBGRAPH_URL_SEPOLIA }}" >> .env
-        working-directory: api
-
       - name: Build and deploy lambda
         env:
           PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
