@@ -327,32 +327,38 @@ export function getRegistrationPotential(name: ENSName): RegistrationPotential {
 }
 
 /**
- * Splits a string into an array of its individual Unicode characters.
+ * Splits a `string` into an array of the Unicode characters it contains.
  * 
- * In JavaScript, the ".split()" method of a string may give different results 
- * because it returns an array of UTF-16 code units.
- * Each element in the resulting array represents a single Unicode character.
+ * In JavaScript, the `.split("")` method of a `string` may give different
+ * results because it returns an array of UTF-16 code units, not Unicode
+ * characters. For example, the string "😄" (Grinning Face with Smiling Eyes) is
+ * represented by two UTF-16 code units, but is a single Unicode character.
  * 
- * @param text
- * @returns An array of the individual characters within `text`.
+ * @param text the `string` to split into Unicode characters.
+ * @returns An array of the Unicode characters contained in `text`.
  */
 export function splitCharacters(text: string): string[] {
   return [...text];
 }
 
 /**
- * Calculates the number of characters in a string.
+ * Counts the number of Unicode characters in a `string`.
  * 
- * NOTE: This length will be the same as determined by the EthRegistrarController smart contracts.
- * These contracts calculate length using the following code that counts Unicode characters in UTF-8 encoding.
+ * This length may be different than the traditional `.length` property of a
+ * `string` in JavaScript. In Javascript, the `.length` property of a `string`
+ * returns the number of UTF-16 code units in that `string`. Some Unicode
+ * characters have codepoints higher than can fit within a 16 bit value. For
+ * example, the character "😄" (Grinning Face with Smiling Eyes) has a codepoint
+ * of U+1F604, which exceeds 16 bits. Therefore, UTF-16 represents such
+ * characters using *more than one* 16-bit code unit, which is known as a
+ * "surrogate pair".
+ * 
+ * NOTE: This length will be the same as determined by the
+ * EthRegistrarController smart contracts. These contracts calculate length
+ * using the following code that counts Unicode characters in UTF-8 encoding.
  * https://github.com/ensdomains/ens-contracts/blob/staging/contracts/ethregistrar/StringUtils.sol
- * 
- * This length may be different than the traditional ".length" property of a string in JavaScript.
- * In Javascript, the ".length" property of a string returns the number of UTF-16 code units in that string.
- * UTF-16 represents Unicode characters with codepoints higher can fit within a 16 bit value as a "surrogate pair"
- * of UTF-16 code units. This means that some Unicode characters are represented by *more than one* UTF-16 code unit.
- * @param label
- * @returns the number of characters within `string`.
+ * @param text the `string` to count the Unicode characters of.
+ * @returns the count of Unicode characters in `text`.
  */
 export function charCount(text: string) {
   return splitCharacters(text).length;
