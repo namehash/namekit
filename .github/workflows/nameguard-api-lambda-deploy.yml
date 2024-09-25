@@ -5,7 +5,8 @@ on:
     branches:
       - main
     paths:
-      - 'api/**'
+      - 'packages/nameguard-python/**'
+      - 'apps/api.nameguard.io/**'
       - '.github/workflows/nameguard_api_cicd.yml'
 
 env:
@@ -52,7 +53,7 @@ jobs:
           npm install -g serverless@3.39.0
           npm install serverless-prune-plugin
           serverless deploy --stage prod --param="PROVIDER_URI_MAINNET=${{secrets.PROVIDER_URI_MAINNET}}" --param="PROVIDER_URI_SEPOLIA=${{secrets.PROVIDER_URI_SEPOLIA}}" --param="ALCHEMY_URI_MAINNET=${{secrets.ALCHEMY_URI_MAINNET}}" --param="ALCHEMY_URI_SEPOLIA=${{secrets.ALCHEMY_URI_SEPOLIA}}" --param="ENS_SUBGRAPH_URL_MAINNET=${{secrets.ENS_SUBGRAPH_URL_MAINNET}}" --param="ENS_SUBGRAPH_URL_SEPOLIA=${{secrets.ENS_SUBGRAPH_URL_SEPOLIA}}"
-        working-directory: api
+        working-directory: apps/api.nameguard.io
 
       - name: Delete old images from ECR
         env:
@@ -63,7 +64,7 @@ jobs:
           IMAGES_TO_DELETE=$(aws ecr describe-images --repository-name $ECR_REPO --query 'sort_by(imageDetails,& imagePushedAt)[*].imageDigest' --filter "tagStatus=UNTAGGED" --output json | jq '.[0]')
           if [[ $len > 5 ]]; then aws ecr batch-delete-image --repository-name $ECR_REPO --image-ids imageDigest=$IMAGES_TO_DELETE; fi
 
-        working-directory: api
+        working-directory: apps/api.nameguard.io
 
   notify:
     name: Send Slack deployment event notification
