@@ -40,9 +40,9 @@ class NameGuardJS extends NameGuard {
     address: string,
     options?: SecurePrimaryNameOptions,
   ): Promise<SecurePrimaryNameResult> {
-    const computeNameGuardReport =
-      options?.computeNameGuardReport || DEFAULT_COMPUTE_NAMEGUARD_REPORT;
-    if (computeNameGuardReport) {
+    const returnNameGuardReport =
+      options?.returnNameGuardReport || DEFAULT_COMPUTE_NAMEGUARD_REPORT;
+    if (returnNameGuardReport) {
       return super.getSecurePrimaryName(address, options);
     }
     return securePrimaryNameImpl(address, this.publicClient);
