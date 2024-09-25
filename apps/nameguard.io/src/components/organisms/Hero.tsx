@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { HeroCarousel } from "./HeroCarousel";
 import { HeroStartCommand, NGSearch } from "@/components/molecules";
 import {

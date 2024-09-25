@@ -1,20 +1,32 @@
-import React, { useState } from "react";
-import { Float, type FloatProps } from "@headlessui-float/react";
+import { Float } from "@headlessui-float/react";
 import { Popover } from "@headlessui/react";
+import React, { useState } from "react";
 
 type Props = {
-  maxTooltipWidth?: number;
   trigger: React.ReactNode;
   children: React.ReactNode;
-  placement?: FloatProps["placement"];
+  placement?: TooltipPlacement;
+  maxTooltipWidth?: number;
 };
 
-const DEFAULT_MAX_TOOLTIP_WIDTH = Number.POSITIVE_INFINITY;
+export const DEFAULT_MAX_TOOLTIP_WIDTH = 400;
+
+export const TooltipPlacement = {
+  Top: "top",
+  Right: "right",
+  Bottom: "bottom",
+  Left: "left",
+} as const;
+
+export type TooltipPlacement =
+  (typeof TooltipPlacement)[keyof typeof TooltipPlacement];
+
+export const DEFAULT_TOOLTIP_PLACEMENT = TooltipPlacement.Top;
 
 export function Tooltip({
   trigger,
   children,
-  placement = "top",
+  placement = DEFAULT_TOOLTIP_PLACEMENT,
   maxTooltipWidth = DEFAULT_MAX_TOOLTIP_WIDTH,
 
   /*
@@ -32,7 +44,7 @@ export function Tooltip({
     <Popover className="nk-flex nk-items-center">
       <Float
         show={open}
-        placement={placement}
+        placement={placement} // our `TooltipPlacement` values are a subset of headlessui's `Placement` values
         offset={15}
         shift={6}
         flip={10}
