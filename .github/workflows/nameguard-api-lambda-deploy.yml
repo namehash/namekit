@@ -7,7 +7,7 @@ on:
       - ci
     paths:
       - 'api/**'
-      - '.github/workflows/nameguard_api_cicd.yml'
+      - '.github/workflows/nameguard_api_lambda_deploy.yml'
 
 permissions:
   id-token: write
