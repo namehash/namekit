@@ -54,9 +54,6 @@ jobs:
         with:
           platforms: arm64
 
-      - name: Copy LICENSE to api directory
-        run: cp LICENSE api/
-
       - name: Create .env file
         run: |
           echo "PROVIDER_URI_MAINNET=${{ secrets.PROVIDER_URI_MAINNET }}" >> .env
