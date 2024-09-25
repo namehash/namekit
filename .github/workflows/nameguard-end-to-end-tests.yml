@@ -25,7 +25,8 @@ jobs:
       api_changed: ${{ steps.check.outputs.api_changed }}
       sdk_changed: ${{ steps.check.outputs.sdk_changed }}
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout NameKit repo
+        uses: actions/checkout@v4
       - name: Check for changes
         id: check
         run: |

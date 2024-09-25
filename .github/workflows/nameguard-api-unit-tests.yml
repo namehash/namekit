@@ -30,7 +30,8 @@ jobs:
         python-version: [3.9, 3.11]
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout NameKit repo
+        uses: actions/checkout@v4
 
       - name: Install poetry
         run: pipx install poetry
@@ -62,7 +63,8 @@ jobs:
     if: ${{ github.event_name == 'pull_request' }}
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout NameKit repo
+        uses: actions/checkout@v4
         with:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.ref }}
