@@ -16,6 +16,9 @@
       "NameGuard",
       "NameHash"
     ],
+    "scripts": {
+      "deploy:prod": "serverless deploy --stage prod"
+    },
     "dependencies": {
       "serverless": "3.39.0"
     },
