@@ -23,7 +23,6 @@
     "serverless": "3.39.0"
   },
   "devDependencies": {
-    "serverless-dotenv-plugin": "6.0.0",
     "serverless-prune-plugin": "2.0.2"
   }
 }

@@ -30,9 +30,6 @@ importers:
         specifier: 3.39.0
         version: 3.39.0
     devDependencies:
-      serverless-dotenv-plugin:
-        specifier: 6.0.0
-        version: 6.0.0(serverless@3.39.0)
       serverless-prune-plugin:
         specifier: 2.0.2
         version: 2.0.2(serverless@3.39.0)
@@ -5876,11 +5873,6 @@ packages:
 
   server-only@0.0.1:
     resolution: {integrity: sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==}
-
-  serverless-dotenv-plugin@6.0.0:
-    resolution: {integrity: sha512-8tLVNwHfDO0sBz6+m+DLTZquRk0AZq9rzqk3kphm1iIWKfan9R7RKt4hdq3eQ0kmDoqzudjPYBEXAJ5bUNKeGQ==}
-    peerDependencies:
-      serverless: 1 || 2 || pre-3 || 3
 
   serverless-prune-plugin@2.0.2:
     resolution: {integrity: sha512-tW1Q8MAVmhW8KQN+e0AsSVsb9nmRWWj28xBjMwvVC3FbammmtUJT+5nRpmjxJZ6/K/j3OV1Rx8b32md71BwkYQ==}
@@ -13792,13 +13784,6 @@ snapshots:
       - supports-color
 
   server-only@0.0.1: {}
-
-  serverless-dotenv-plugin@6.0.0(serverless@3.39.0):
-    dependencies:
-      chalk: 4.1.2
-      dotenv: 16.4.5
-      dotenv-expand: 10.0.0
-      serverless: 3.39.0
 
   serverless-prune-plugin@2.0.2(serverless@3.39.0):
     dependencies:

@@ -24,7 +24,6 @@ provider:
 
 plugins:
   - serverless-prune-plugin
-  - serverless-dotenv-plugin
 
 functions:
   oss-nameguard:
