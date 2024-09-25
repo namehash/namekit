@@ -17,7 +17,7 @@
     "NameHash"
   ],
   "scripts": {
-    "deploy:prod": "serverless deploy --stage prod"
+    "deploy:prod": "DOCKER_CONFIG=./.docker serverless deploy --stage prod"
   },
   "dependencies": {
     "serverless": "3.39.0"

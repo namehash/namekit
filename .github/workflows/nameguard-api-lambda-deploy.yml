@@ -56,7 +56,6 @@ jobs:
 
       - name: Build and deploy lambda
         env:
-          DOCKER_CONFIG: ${{ github.workspace }}/api/.docker
           PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
           PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}
           ALCHEMY_URI_MAINNET: ${{ secrets.ALCHEMY_URI_MAINNET }}
