@@ -52,7 +52,7 @@ jobs:
           cache: "pnpm"
 
       - name: Install npm dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Install poetry
         if: needs.check_changes.outputs.api_changed > 0
