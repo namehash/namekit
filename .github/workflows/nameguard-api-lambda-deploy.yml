@@ -81,7 +81,7 @@ jobs:
     name: Send Slack deployment event notification
     if: ${{ needs.build-image-deploy-serverless.result != 'skipped' && always() }}
     needs: [build-image-deploy-serverless]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Output status on deployment success
         if: ${{ needs.build-image-deploy-serverless.result == 'success'}}
