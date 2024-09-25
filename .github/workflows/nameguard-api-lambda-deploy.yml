@@ -50,10 +50,11 @@ jobs:
         with:
           platforms: arm64
 
+      - name: Copy LICENSE to api directory
+        run: cp LICENSE api/
+
       - name: Build and deploy lambda
-        run: |
-          cp ../LICENSE .
-          pnpm run deploy:prod --param="PROVIDER_URI_MAINNET=${{secrets.PROVIDER_URI_MAINNET}}" --param="PROVIDER_URI_SEPOLIA=${{secrets.PROVIDER_URI_SEPOLIA}}" --param="ALCHEMY_URI_MAINNET=${{secrets.ALCHEMY_URI_MAINNET}}" --param="ALCHEMY_URI_SEPOLIA=${{secrets.ALCHEMY_URI_SEPOLIA}}" --param="ENS_SUBGRAPH_URL_MAINNET=${{secrets.ENS_SUBGRAPH_URL_MAINNET}}" --param="ENS_SUBGRAPH_URL_SEPOLIA=${{secrets.ENS_SUBGRAPH_URL_SEPOLIA}}"
+        run: pnpm run deploy:prod --param="PROVIDER_URI_MAINNET=${{secrets.PROVIDER_URI_MAINNET}}" --param="PROVIDER_URI_SEPOLIA=${{secrets.PROVIDER_URI_SEPOLIA}}" --param="ALCHEMY_URI_MAINNET=${{secrets.ALCHEMY_URI_MAINNET}}" --param="ALCHEMY_URI_SEPOLIA=${{secrets.ALCHEMY_URI_SEPOLIA}}" --param="ENS_SUBGRAPH_URL_MAINNET=${{secrets.ENS_SUBGRAPH_URL_MAINNET}}" --param="ENS_SUBGRAPH_URL_SEPOLIA=${{secrets.ENS_SUBGRAPH_URL_SEPOLIA}}"
         working-directory: api
 
       - name: Delete old images from ECR
