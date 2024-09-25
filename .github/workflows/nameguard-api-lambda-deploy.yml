@@ -13,6 +13,10 @@ permissions:
   id-token: write
   contents: write
 
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
 jobs:
   build-image-deploy-serverless:
     runs-on: ubuntu-latest
