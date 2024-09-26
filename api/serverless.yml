@@ -136,7 +136,7 @@ resources:
               - OPTIONS
               - GET
             ForwardedValues:
-              QueryString: false
+              QueryString: true
               Headers:
                 - Accept
                 - x-api-key
