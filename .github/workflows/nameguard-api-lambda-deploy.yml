@@ -11,15 +11,19 @@ on:
   workflow_dispatch:
 
 permissions:
+  # `id-token: write` is required for the auth to AWS
   id-token: write
   contents: read
 
 concurrency:
   group: ${{ github.workflow }}
+  # `cancel-in-progress: false` creates a queue for workflow runs, such that
+  # only one instance of this workflow runs at a time.
   cancel-in-progress: false
 
 jobs:
   build-image-deploy-serverless:
+    name: Build and deploy NameGuard API Lambda
     runs-on: ubuntu-latest
     steps:
       - name: Checkout NameKit repo
