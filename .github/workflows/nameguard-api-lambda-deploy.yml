@@ -21,8 +21,6 @@ concurrency:
 jobs:
   build-image-deploy-serverless:
     runs-on: ubuntu-latest
-    env:
-      SERVICE_NAME: nameguard
     steps:
       - name: Checkout NameKit repo
         uses: actions/checkout@v4
