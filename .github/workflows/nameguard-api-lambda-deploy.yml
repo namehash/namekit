@@ -37,11 +37,6 @@ jobs:
       - name: Install npm dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Setup git
-        run: |
-          git config --global user.name 'GitHub Actions'
-          git config --global user.email 'github-actions@github.com'
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
