@@ -1,12 +1,23 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeAll } from "vitest";
 import { createPublicClient, http } from "viem";
 import { mainnet } from "viem/chains";
 import { SecurePrimaryNameResult } from "@namehash/nameguard";
 import { securePrimaryName } from "./securePrimaryName";
+import { initializeData } from "./data";
 
 const PROVIDER_URI_MAINNET = process.env.PROVIDER_URI_MAINNET;
 
+if (!PROVIDER_URI_MAINNET) {
+  console.warn("PROVIDER_URI_MAINNET is not defined. Defaulting to viem's default provider, which may have rate limiting and other performance limitations.");
+}
+
+const TEST_TIMEOUT_MS = 30000;
+
 describe("secure primary name", () => {
+  beforeAll(() => {
+    initializeData();
+  });
+
   it("should detect impersonation", async () => {
     const client = createPublicClient({
       chain: mainnet,
@@ -183,14 +194,14 @@ describe("secure primary name", () => {
     for (let i = 0; i < results.length; i++) {
       const r = results[i];
       const test = tests[i];
-      const impersonationStatus = test[1] as string | null;
+      const impersonationEstimate = test[1] as string | null;
       const primaryNameStatus = test[2] as string;
       const primaryName = test[3] as string;
       const displayName = test[4] as string;
       expect(r.display_name).toBe(displayName);
-      expect(r.impersonation_status).toBe(impersonationStatus);
+      expect(r.impersonation_estimate).toBe(impersonationEstimate);
       expect(r.primary_name_status).toBe(primaryNameStatus);
       expect(r.primary_name).toBe(primaryName);
     }
-  }, 30000);
+  }, TEST_TIMEOUT_MS);
 });

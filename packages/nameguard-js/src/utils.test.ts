@@ -1,7 +1,12 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeAll } from "vitest";
 import { isEmojiChar, isEmojiSequence, isEmojiZwjSequence, isEmoji } from "./utils";
+import { initializeData } from "./data";
 
 describe("isEmojiChar", () => {
+  beforeAll(() => {
+    initializeData();
+  });
+
   it("should check if a character is an emoji", () => {
     const cases: [string, boolean][] = [
       ["🫶", true],
@@ -26,6 +31,10 @@ describe("isEmojiChar", () => {
 });
 
 describe("isEmojiSequence", () => {
+  beforeAll(() => {
+    initializeData();
+  });
+
   it("should check if a string is an emoji sequence", () => {
     const cases: [string, boolean][] = [
       ["🇵🇱", true],
@@ -46,6 +55,10 @@ describe("isEmojiSequence", () => {
 });
 
 describe("isEmojiZwjSequence", () => {
+  beforeAll(() => {
+    initializeData();
+  });
+
   it("should check if a string is an emoji zwj sequence", () => {
     const cases: [string, boolean][] = [
       ["", false],
@@ -62,6 +75,10 @@ describe("isEmojiZwjSequence", () => {
 });
 
 describe("isEmoji", () => {
+  beforeAll(() => {
+    initializeData();
+  });
+
   it("should check if a string is an emoji", () => {
     const cases: [string, boolean][] = [
       ["*️⃣", false],

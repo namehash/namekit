@@ -1,6 +1,7 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeAll } from "vitest";
 import { splitGraphemes, countGraphemes } from "./graphemes";
-import jsonNamehashExamples from "../utils/normalized_graphemes.json";
+import jsonNamehashExamples from "./data/normalized_graphemes.json";
+import { initializeData } from "./data";
 
 const grapehemeTestInputs = [
   "",
@@ -34,6 +35,10 @@ const graphemeTestOutputs = [
 ];
 
 describe("countGraphemes", () => {
+  beforeAll(() => {
+    initializeData();
+  });
+
   it("should count graphemes in a string", () => {
     for (const example_idx in grapehemeTestInputs) {
       expect(countGraphemes(grapehemeTestInputs[example_idx])).toBe(
@@ -44,6 +49,10 @@ describe("countGraphemes", () => {
 });
 
 describe("splitGraphemes", () => {
+  beforeAll(() => {
+    initializeData();
+  });
+
   it("should split strings into graphemes", () => {
     for (const example_idx in grapehemeTestInputs) {
       expect(splitGraphemes(grapehemeTestInputs[example_idx])).toStrictEqual(

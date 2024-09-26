@@ -1,4 +1,4 @@
-import { ImpersonationStatus } from "@namehash/nameguard";
+import { ImpersonationEstimate } from "@namehash/nameguard";
 import { getNormalizedCanonicalLabel } from "./canonical";
 
 const LABELHASH_REGEX = /^\[[0-9a-f]{64}\]$/;
@@ -19,7 +19,7 @@ function isLabelhash(label: string): boolean {
  * @param name - The name to analyze.
  * @returns The impersonation estimate for the given name.
  */
-export function computeImpersonationStatus(name: string): ImpersonationStatus {
+export function computeImpersonationEstimate(name: string): ImpersonationEstimate {
   // We do not need codepoint splitting here, as we only check for empty names.
   // If the name is empty, it has 0 labels and .split would return an array with one empty string.
   const labels = name.length === 0 ? [] : name.split(".");

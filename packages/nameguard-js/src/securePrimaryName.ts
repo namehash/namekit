@@ -1,7 +1,7 @@
 import { ens_beautify } from "@adraffy/ens-normalize";
 import { PublicClient } from "viem";
 import { SecurePrimaryNameResult } from "@namehash/nameguard";
-import { computeImpersonationStatus } from "./impersonation";
+import { computeImpersonationEstimate } from "./impersonation";
 import { lookupPrimaryName } from "./lookup";
 import { isEnsNormalized } from "./normalization";
 
@@ -25,7 +25,7 @@ export async function securePrimaryName(
   if (primaryName === null) {
     return {
       primary_name: null,
-      impersonation_status: null,
+      impersonation_estimate: null,
       display_name: unnamedName,
       primary_name_status: "no_primary_name",
       nameguard_result: null,
@@ -36,7 +36,7 @@ export async function securePrimaryName(
   if (!isEnsNormalized(primaryName)) {
     return {
       primary_name: null,
-      impersonation_status: null,
+      impersonation_estimate: null,
       display_name: unnamedName,
       primary_name_status: "unnormalized",
       nameguard_result: null,
@@ -49,7 +49,7 @@ export async function securePrimaryName(
   return {
     primary_name: primaryName,
     // Only perform the impersonation check if the primary name is normalized.
-    impersonation_status: computeImpersonationStatus(primaryName),
+    impersonation_estimate: computeImpersonationEstimate(primaryName),
     display_name: beautifulName,
     primary_name_status: "normalized",
     nameguard_result: null,

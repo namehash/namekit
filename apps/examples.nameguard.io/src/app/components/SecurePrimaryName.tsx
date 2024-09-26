@@ -28,16 +28,16 @@ export async function SecurePrimaryName({ address }: Props) {
   const data = await nameguard.getSecurePrimaryName(address);
 
   const pillColor =
-    data.impersonation_status === "potential" ?
+    data.impersonation_estimate === "potential" ?
       "bg-red-300" :
-      data.impersonation_status === "unlikely" ?
+      data.impersonation_estimate === "unlikely" ?
         "bg-green-300" :
         "bg-yellow-300";
 
   const pillText =
-    data.impersonation_status === "potential" ?
+    data.impersonation_estimate === "potential" ?
       "Potential impersonation!" :
-      data.impersonation_status === "unlikely" ?
+      data.impersonation_estimate === "unlikely" ?
         "Name is secure" :
         "No primary name!";
 
