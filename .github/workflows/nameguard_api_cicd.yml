@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - fix-cicd
     paths:
       - 'api/**'
       - '.github/workflows/nameguard_api_cicd.yml'
