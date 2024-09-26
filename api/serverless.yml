@@ -3,13 +3,12 @@ service: oss-nameguard
 custom:
   stage: ${opt:stage}
   apiDomain: api.nameguard.io
-  hostedZoneName: nameguard.io.  
+  hostedZoneName: nameguard.io.
   hostedZoneId: Z00825691ZLCWE2VKJQW0
   prune:
     automatic: true
     number: 5
-  region: us-east-1   
-
+  region: us-east-1
 
 provider:
   name: aws
@@ -20,7 +19,6 @@ provider:
       oss-nameguard:
         path: ./
       platform: linux/arm64
-    
 
 plugins:
   - serverless-prune-plugin
@@ -44,7 +42,6 @@ functions:
       ALCHEMY_URI_SEPOLIA: ${env:ALCHEMY_URI_SEPOLIA}
       ENS_SUBGRAPH_URL_MAINNET: ${env:ENS_SUBGRAPH_URL_MAINNET}
       ENS_SUBGRAPH_URL_SEPOLIA: ${env:ENS_SUBGRAPH_URL_SEPOLIA}
-
 
 resources:
   Resources:

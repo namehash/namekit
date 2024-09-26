@@ -39,14 +39,19 @@ jobs:
           cache: "pnpm"
 
       - name: Install npm dependencies
+        # We're installing pnpm / node dependencies to make use
+        # of the Serverless framework when we build and deploy the lambda.
         run: pnpm install --frozen-lockfile
 
       - name: Set up QEMU
+        # This GitHub action runs on x86_64, but we want to build the lambda
+        # for arm64 for increased cost savings in AWS when we deploy it.
         uses: docker/setup-qemu-action@v3
         with:
           platforms: arm64
 
-      - name: Assume AWS Role using GitHub OIDC provider
+      - name: Assume AWS Role
+        # Uses GitHub OIDC provider to assume AWS role
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE}}
