@@ -503,7 +503,7 @@ async def secure_primary_name_get(
     If `address` has a primary name and `return_nameguard_report` is `True`, then NameGuard will return a `SecurePrimaryNameResult` including a `NameGuardReport` for the primary name. Else, NameGuard will return `None` as `nameguard_result`.
     """
     logger.debug(
-        f"{json.dumps({'endpoint': Endpoints.SECURE_PRIMARY_NAME, 'method': 'GET', 'network_name': network_name, 'address': address})}"
+        f"{json.dumps({'endpoint': Endpoints.SECURE_PRIMARY_NAME, 'method': 'GET', 'network_name': network_name, 'address': address, 'return_nameguard_report': return_nameguard_report})}"
     )
     nameguard.context.endpoint_name.set(Endpoints.SECURE_PRIMARY_NAME)
     address = validate_ethereum_address(address)
