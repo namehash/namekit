@@ -480,7 +480,7 @@ async def inspect_labelhash_post(request: InspectLabelhashRequest) -> NameGuardR
 
 
 @app.get(
-    '/secure-primary-name/{network_name}/{address}/',
+    '/secure-primary-name/{network_name}/{address}',
     tags=['secure_primary_name'],
     summary='Reverse lookup of an Ethereum address to a primary name',
     responses={
