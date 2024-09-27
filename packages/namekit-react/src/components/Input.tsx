@@ -59,7 +59,7 @@ export const Input: React.FC<InputProps> & { Slot: React.FC<SlotProps> } = ({
     ]),
     secondary: [
       "nk-border-gray-200 hover:nk-border-gray-300 has-[input:focus]:nk-border-gray-400 has-[input:focus:hover]:nk-border-gray-400",
-      disabled ? "nk-bg-gray-200" : "nk-bg-gray-100",
+      disabled ? "nk-text-gray-500 nk-bg-gray-200" : "nk-bg-gray-100",
     ],
   };
 
