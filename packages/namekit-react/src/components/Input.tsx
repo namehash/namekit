@@ -55,7 +55,7 @@ export const Input: React.FC<InputProps> & { Slot: React.FC<SlotProps> } = ({
   const variantClasses = {
     primary: cc([
       "nk-text-black nk-border-gray-300 nk-shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] hover:nk-border-gray-400 has-[input:focus]:nk-border-gray-600 has-[input:focus:hover]:nk-border-gray-600",
-      disabled ? "nk-bg-gray-50" : "nk-bg-white",
+      disabled ? "nk-text-gray-500 nk-bg-gray-50" : "nk-bg-white",
     ]),
     secondary: [
       "nk-border-gray-200 hover:nk-border-gray-300 has-[input:focus]:nk-border-gray-400 has-[input:focus:hover]:nk-border-gray-400",
