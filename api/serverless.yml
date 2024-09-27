@@ -51,7 +51,7 @@ resources:
         Path: /my/default/path/
         RoleName: DefaultNameGuardRole # required if you want to use 'serverless deploy --function' later on
         AssumeRolePolicyDocument:
-          Version: '2012-10-17'
+          Version: "2012-10-17"
           Statement:
             - Effect: Allow
               Principal:
@@ -61,7 +61,7 @@ resources:
         Policies:
           - PolicyName: NameGuardPolicy
             PolicyDocument:
-              Version: '2012-10-17'
+              Version: "2012-10-17"
               Statement:
                 - Effect: Allow # note that these rights are given in the default policy and are required if you want logs out of your lambda(s)
                   Action:
@@ -70,35 +70,34 @@ resources:
                     - logs:PutLogEvents
                     - logs:TagResource
                   Resource:
-                    - 'Fn::Join':
-                      - ':'
-                      -
-                        - 'arn:aws:logs'
-                        - Ref: 'AWS::Region'
-                        - Ref: 'AWS::AccountId'
-                        - 'log-group:/aws/lambda/*:*:*'
-                -  Effect: "Allow"
-                   Action:
-                     - "s3:PutObject"
-                   Resource:
-                     Fn::Join:
-                       - ""
-                       - - "arn:aws:s3:::"
-                         - "Ref" : "ServerlessDeploymentBucket"
-                -  Effect: Allow
-                   Action:
-                     - ecr:BatchGetImage
-                     - ecr:GetDownloadUrlForLayer
-                   Resource: [ "*" ] 
+                    - "Fn::Join":
+                        - ":"
+                        - - "arn:aws:logs"
+                          - Ref: "AWS::Region"
+                          - Ref: "AWS::AccountId"
+                          - "log-group:/aws/lambda/*:*:*"
+                - Effect: "Allow"
+                  Action:
+                    - "s3:PutObject"
+                  Resource:
+                    Fn::Join:
+                      - ""
+                      - - "arn:aws:s3:::"
+                        - "Ref": "ServerlessDeploymentBucket"
+                - Effect: Allow
+                  Action:
+                    - ecr:BatchGetImage
+                    - ecr:GetDownloadUrlForLayer
+                  Resource: ["*"]
 
-    ACMCertificate: 
+    ACMCertificate:
       Type: "AWS::CertificateManager::Certificate"
-      Properties: 
+      Properties:
         DomainName: ${self:custom.apiDomain}
         DomainValidationOptions:
-              - DomainName: ${self:custom.apiDomain}
-                HostedZoneId: ${self:custom.hostedZoneId}
-        ValidationMethod: DNS 
+          - DomainName: ${self:custom.apiDomain}
+            HostedZoneId: ${self:custom.hostedZoneId}
+        ValidationMethod: DNS
 
     ApiCloudFrontDistribution:
       Type: AWS::CloudFront::Distribution
@@ -111,8 +110,15 @@ resources:
           Comment: Api distribution for ${self:custom.apiDomain}
           Origins:
             - Id: ApiGateway
-              DomainName: !Select [2, !Split ["/", !GetAtt OssDashnameguardLambdaFunctionUrl.FunctionUrl]]
-              OriginPath: ''
+              DomainName:
+                !Select [
+                  2,
+                  !Split [
+                    "/",
+                    !GetAtt OssDashnameguardLambdaFunctionUrl.FunctionUrl,
+                  ],
+                ]
+              OriginPath: ""
               CustomOriginConfig:
                 HTTPPort: 80
                 HTTPSPort: 443
@@ -161,4 +167,4 @@ resources:
             Type: A
             AliasTarget:
               HostedZoneId: Z2FDTNDATAQYW2 #default for cloudfront
-              DNSName: { 'Fn::GetAtt': [ApiCloudFrontDistribution, DomainName] } # set the domain of your cloudfront distribution
+              DNSName: { "Fn::GetAtt": [ApiCloudFrontDistribution, DomainName] } # set the domain of your cloudfront distribution

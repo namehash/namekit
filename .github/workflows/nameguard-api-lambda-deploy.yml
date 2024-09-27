@@ -6,8 +6,8 @@ on:
       - main
       - ci
     paths:
-      - 'api/**'
-      - '.github/workflows/nameguard-api-lambda-deploy.yml'
+      - "api/**"
+      - ".github/workflows/nameguard-api-lambda-deploy.yml"
   workflow_dispatch:
 
 permissions:
