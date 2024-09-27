@@ -284,6 +284,8 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
                 error={validationErrors[FormFields.Message]}
               />
             </div>
+            {/* Hidden input to capture the source URL of the form submission.
+            Its value is set programmatically in a useEffect hook. */}
             <input type="hidden" id="source" name="source" value="" />
             <div className="flex h-full justify-end items-end">
               <Button
