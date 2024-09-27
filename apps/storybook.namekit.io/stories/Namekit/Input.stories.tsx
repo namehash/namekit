@@ -117,6 +117,8 @@ export const WithSlotLeftSmall: Story = {
     variant: "primary",
     inputSize: "small",
     placeholder: "Say something",
+    slotPosition: "left",
+    children: <Input.Slot>@</Input.Slot>,
   },
 };
 
