@@ -392,7 +392,7 @@ class SecurePrimaryNameResult(BaseModel):
 
     nameguard_result: Optional[NameGuardReport] = Field(
         description='NameGuard report for the `primary_name`.\n'
-        '* `null` if `primary_name_status` is `no_primary_name` (primary name is not found)'
+        '* if `address` has a primary name and `return_nameguard_report` is `True`, then return a `NameGuardReport` for the primary name. Else, NameGuard will return `null`',
     )
 
 

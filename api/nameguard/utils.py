@@ -3,6 +3,7 @@ from typing import Optional
 from ens.utils import Web3
 from hexbytes import HexBytes
 from ens.constants import EMPTY_SHA3_BYTES
+from urllib.parse import urlparse
 
 from nameguard.exceptions import InvalidNameHash, InvalidTokenID, InvalidEthereumAddress
 from nameguard.models import Rating, GenericCheckResult, Check
@@ -223,13 +224,13 @@ def detect_grapheme_link_name(link: str) -> str:
     * https://unicode.link/inspect/utf8:{...}
     * http://📙.la/{...}
     """
-
-    if link.startswith('https://unicodeplus.com'):
+    host = urlparse(link).hostname
+    if host == 'unicodeplus.com':
         return 'UnicodePlus'
-    elif link.startswith('https://unicode.link'):
+    elif host == 'unicode.link':
         # title of th epage
         return 'Unicode Visualizer'
-    elif link.startswith('http://📙.la'):
+    elif host == '📙.la':
         return 'Emojipedia'
     else:
         return 'Unknown External Page'

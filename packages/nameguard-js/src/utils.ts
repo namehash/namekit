@@ -2,8 +2,6 @@ import { charCount } from "@namehash/ens-utils";
 import { EMOJI_SEQUENCES, EMOJI_ZWJ_SEQUENCES, EMOJI_BLOCK_STARTS, EMOJI_BLOCK_IS_EMOJI } from "./data/unicode";
 import { COMBINING } from "./data/combining";
 
-export { charCount };
-
 /**
  * Checks if the given string is a single character.
  * 
@@ -12,16 +10,6 @@ export { charCount };
  */
 export function isCharacter(text: string): boolean {
   return charCount(text) === 1;
-}
-
-/**
- * Splits a string into an array of individual characters.
- *
- * @param text - The string to split.
- * @returns An array of individual characters.
- */
-export function splitCharacters(text: string): string[] {
-  return [...text];
 }
 
 export function isEmojiSequence(grapheme: string): boolean {
