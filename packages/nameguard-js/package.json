@@ -44,7 +44,7 @@
     "vitest": "1.6.0"
   },
   "dependencies": {
-    "@adraffy/ens-normalize": "1.10.1",
+    "@adraffy/ens-normalize": "1.11.0",
     "@namehash/ens-utils": "workspace:*",
     "@namehash/nameguard": "workspace:*",
     "text-segmentation": "1.0.3",

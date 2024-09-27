@@ -35,7 +35,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@adraffy/ens-normalize": "1.10.1",
+    "@adraffy/ens-normalize": "1.11.0",
     "@ethersproject/hash": "5.7.0",
     "date-fns": "3.3.1",
     "decimal.js": "10.4.3",
