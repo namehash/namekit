@@ -28,7 +28,7 @@
     "yup": "1.4.0"
   },
   "devDependencies": {
-    "@types/node": "latest",
+    "@types/node": "22.7.4",
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "autoprefixer": "latest",

@@ -20,7 +20,7 @@
     "viem": "^2.9.3"
   },
   "devDependencies": {
-    "@types/node": "^20",
+    "@types/node": "22.7.4",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
