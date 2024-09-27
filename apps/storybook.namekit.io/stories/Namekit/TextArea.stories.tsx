@@ -1,4 +1,3 @@
-import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { TextArea } from "@namehash/namekit-react";
 
@@ -92,11 +91,21 @@ export const CustomClass: Story = {
   },
 };
 
-export const Disabled: Story = {
+export const PrimaryDisabled: Story = {
   args: {
     variant: "primary",
     size: "medium",
-    value: "Disabled Textarea",
+    value: "Primary Disabled Textarea",
+    rows: 4,
+    disabled: true,
+  },
+};
+
+export const SecondaryDisabled: Story = {
+  args: {
+    variant: "secondary",
+    size: "medium",
+    value: "Secondary Disabled Textarea",
     rows: 4,
     disabled: true,
   },
