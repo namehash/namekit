@@ -789,12 +789,12 @@ def test_primary_name(
     assert res_json['primary_name'] == primary_name
     assert res_json['display_name'] == display_name
     if primary_name_status != 'no_primary_name':
-        assert res_json['nameguard_result']['name'] == name
-        assert res_json['nameguard_result']['canonical_name'] == canonical_name
+        assert res_json['nameguard_report']['name'] == name
+        assert res_json['nameguard_report']['canonical_name'] == canonical_name
         assert (
             any(
                 check['check'] == 'impersonation_risk' and check['status'] == 'warn'
-                for check in res_json['nameguard_result']['checks']
+                for check in res_json['nameguard_report']['checks']
             )
             == impersonation_risk
         )
@@ -811,7 +811,7 @@ def test_primary_name_get(test_client):
     assert res_json['primary_name_status'] == 'normalized'
     assert res_json['primary_name'] == 'vitalik.eth'
     assert res_json['display_name'] == 'vitalik.eth'
-    assert res_json['nameguard_result'] is None
+    assert res_json['nameguard_report'] is None
 
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
@@ -825,7 +825,7 @@ def test_primary_name_get_no_report(test_client):
     assert res_json['primary_name_status'] == 'normalized'
     assert res_json['primary_name'] == 'vitalik.eth'
     assert res_json['display_name'] == 'vitalik.eth'
-    assert res_json['nameguard_result'] is None
+    assert res_json['nameguard_report'] is None
 
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
@@ -839,7 +839,7 @@ def test_primary_name_get_report(test_client):
     assert res_json['primary_name_status'] == 'normalized'
     assert res_json['primary_name'] == 'vitalik.eth'
     assert res_json['display_name'] == 'vitalik.eth'
-    assert res_json['nameguard_result'] is not None
+    assert res_json['nameguard_report'] is not None
 
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
@@ -933,7 +933,7 @@ def test_primary_name_get_emoji(test_client):
     assert res_json['primary_name'] == '👩🏿\u200d🦱.eth'
     assert res_json['display_name'] == '👩🏿\u200d🦱.eth'
     assert (
-        res_json['nameguard_result']['highest_risk']['message']
+        res_json['nameguard_report']['highest_risk']['message']
         == 'Emojis used in this name may be visually confused with other similar emojis'
     )
 
@@ -1273,9 +1273,9 @@ def test_fake_eth_name_check_fields(
         FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME,
         FakeEthNameCheckStatus.UNKNOWN_ETH_NAME,
     ):
-        assert res_json['nameguard_result'] is not None
+        assert res_json['nameguard_report'] is not None
     else:
-        assert res_json['nameguard_result'] is None
+        assert res_json['nameguard_report'] is None
 
     # if res_json['status'] != FakeEthNameCheckStatus.UNKNOWN_NFT:
     #     assert res_json['investigated_fields']
