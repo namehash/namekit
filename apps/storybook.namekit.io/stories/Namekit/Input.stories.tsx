@@ -84,12 +84,15 @@ export const SecondaryLarge: Story = {
   },
 };
 
-export const CustomClass: Story = {
+export const CustomStyling: Story = {
   args: {
     variant: "primary",
     inputSize: "medium",
-    placeholder: "Custom Class Input",
-    className: "custom-class-name",
+    value: "Custom Styled Input",
+    style: {
+      color: "blue",
+      fontWeight: "bold",
+    },
   },
 };
 
