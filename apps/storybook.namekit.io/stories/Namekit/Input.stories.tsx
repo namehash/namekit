@@ -129,11 +129,20 @@ export const WithError: Story = {
   },
 };
 
-export const Disabled: Story = {
+export const PrimaryDisabled: Story = {
   args: {
     variant: "primary",
     inputSize: "medium",
-    value: "Disabled input",
+    value: "Primary disabled input",
+    disabled: true,
+  },
+};
+
+export const SecondaryDisabled: Story = {
+  args: {
+    variant: "secondary",
+    inputSize: "medium",
+    value: "Secondary disabled input",
     disabled: true,
   },
 };
