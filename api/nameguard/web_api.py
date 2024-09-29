@@ -7,7 +7,7 @@ import time
 init_time = time.time()
 
 from enum import Enum
-from fastapi import FastAPI, Path
+from fastapi import FastAPI, Path, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
@@ -488,7 +488,9 @@ async def inspect_labelhash_post(request: InspectLabelhashRequest) -> NameGuardR
         **ProviderUnavailable.get_responses_spec(),
     },
 )
-async def secure_primary_name_get(address: str, network_name: NetworkName) -> SecurePrimaryNameResult:
+async def secure_primary_name_get(
+    address: str, network_name: NetworkName, request: Request, return_nameguard_report: bool = False
+) -> SecurePrimaryNameResult:
     """
     ## Performs a reverse lookup of an Ethereum `address` to a primary name.
 
@@ -497,14 +499,19 @@ async def secure_primary_name_get(address: str, network_name: NetworkName) -> Se
     2. For ENS names using CCIP-Read: requests to externally defined gateway servers.
 
     Returns `display_name` to be shown to users and estimates `impersonation_status`.
+
+    If `address` has a primary name and `return_nameguard_report` is `True`, then NameGuard will return a `SecurePrimaryNameResult` including a `NameGuardReport` for the primary name. Else, NameGuard will return `None` as `nameguard_result`.
     """
     logger.debug(
-        f"{json.dumps({'endpoint': Endpoints.SECURE_PRIMARY_NAME, 'method': 'GET', 'network_name': network_name, 'address': address})}"
+        f"{json.dumps({'endpoint': Endpoints.SECURE_PRIMARY_NAME, 'method': 'GET', 'network_name': network_name, 'address': address, 'return_nameguard_report': return_nameguard_report})}"
     )
+    logger.debug(f'Request headers: {dict(request.headers)}')
+    logger.debug(f'Request query params: {dict(request.query_params)}')
+    logger.debug(f'Request path params: {dict(request.path_params)}')
     nameguard.context.endpoint_name.set(Endpoints.SECURE_PRIMARY_NAME)
     address = validate_ethereum_address(address)
 
-    return await ng.secure_primary_name(address, network_name)
+    return await ng.secure_primary_name(address, network_name, return_nameguard_report)
 
 
 # -- fake-ens-name-check --
