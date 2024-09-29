@@ -1,7 +1,7 @@
 import { Balancer } from "react-wrap-balancer";
 import { SectionText } from "../1 - atoms";
 import cc from "classcat";
-import { Button, IconButton, Link } from "@namehash/namekit-react";
+import { Button, Link } from "@namehash/namekit-react";
 
 export interface ProductProps {
   title: string;
