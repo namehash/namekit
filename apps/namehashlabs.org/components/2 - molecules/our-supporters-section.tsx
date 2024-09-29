@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Profile, getCachedProfile } from "@/data/ensProfiles";
 import { AvatarSize, UltimateENSAvatar } from ".";
 import { getNameHashLabsAvatarCallbacks } from "@/lib/client/nh-labs-avatar";
-import { IconButton, Link } from "@namehash/namekit-react";
+import { Button, Link } from "@namehash/namekit-react";
 
 export const OurSuportersSection = () => {
   return (
@@ -79,11 +79,11 @@ const AdditionalSupportersContainer = () => {
       <p className="text-lg leading-6 font-normal text-gray-500">
         and so many others
       </p>
-      <IconButton asChild>
+      <Button asChild>
         <Link href="https://snapshot.org/#/ens.eth/proposal/0x6ba81cd2997288cc49ae1b95921ec8f107e8ffb9733321d53d488e2b30710b86">
           View more <Link.ExternalIcon />
         </Link>
-      </IconButton>
+      </Button>
     </div>
   );
 };

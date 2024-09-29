@@ -7,7 +7,7 @@ import Image from "next/image";
 import { SectionText } from "../1 - atoms";
 import { Balancer } from "react-wrap-balancer";
 import cc from "classcat";
-import { IconButton, Link } from "@namehash/namekit-react";
+import { Button, Link } from "@namehash/namekit-react";
 interface ProductProps {
   label: {
     icon: React.ReactElement;
@@ -91,7 +91,7 @@ const Product = ({
             </SectionText>
             {buttonUrl && buttonLabel && (
               <div className="flex lg:justify-start justify-center">
-                <IconButton asChild>
+                <Button asChild>
                   <Link
                     href={buttonUrl}
                     target={withoutExternalLinkIconInCTA ? undefined : "_blank"}
@@ -99,7 +99,7 @@ const Product = ({
                     {buttonLabel}
                     {!withoutExternalLinkIconInCTA && <Link.ExternalIcon />}
                   </Link>
-                </IconButton>
+                </Button>
               </div>
             )}
           </div>
