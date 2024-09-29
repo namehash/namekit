@@ -1,7 +1,7 @@
 import { Balancer } from "react-wrap-balancer";
 import { SectionText } from "../1 - atoms";
 import cc from "classcat";
-import { IconButton, Link } from "@namehash/namekit-react";
+import { Button, IconButton, Link } from "@namehash/namekit-react";
 
 export interface ProductProps {
   title: string;
@@ -65,11 +65,11 @@ export const ProductComponent = ({
 
             {buttonUrl && (
               <div className="flex justify-center lg:justify-start">
-                <IconButton asChild>
+                <Button asChild>
                   <Link href={buttonUrl}>
                     Join the discussion <Link.ExternalIcon />
                   </Link>
-                </IconButton>
+                </Button>
               </div>
             )}
           </div>

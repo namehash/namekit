@@ -28,17 +28,14 @@ const MobileMenu = () => {
 
   return (
     <div className="z-50 lg:hidden">
-      {/* Hamburguer button  */}
-
       <IconButton
         className="-mr-3"
         onClick={() => toggleMenu()}
         variant="ghost"
       >
-        <Bars3Icon className="w-6 h-6 text-black" />
+        <Bars3Icon className="w-5 h-5 text-black" />
       </IconButton>
 
-      {/* Menu Overlay  */}
       <div
         className={`fixed top-0 right-0 w-full h-full bg-black z-50 transform ease-in-out transition-all duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"

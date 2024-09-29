@@ -32,14 +32,11 @@ export function Hero() {
           </p>
           <HeroStartCommand />
 
-          <Button
-            variant="primary"
-            size="large"
-            asChild
-            className="hidden lg:block relative z-10"
-          >
-            <Link href="https://api.nameguard.io/docs">View the docs</Link>
-          </Button>
+          <div className="hidden md:block relative z-10">
+            <Button variant="primary" size="large" asChild>
+              <Link href="https://api.nameguard.io/docs">View the docs</Link>
+            </Button>
+          </div>
 
           <div className="flex lg:hidden flex-col items-center gap-3 self-stretch">
             <NGSearch />

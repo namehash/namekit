@@ -43,9 +43,10 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref,
   ) => {
     const combinedClassName = cc([
+      "nk-button",
       buttonBaseClasses,
       variantClasses[variant],
-      padding || defaultSizeClasses[size],
+      defaultSizeClasses[size],
       asChild && buttonAsChildClass,
       className,
     ]);
