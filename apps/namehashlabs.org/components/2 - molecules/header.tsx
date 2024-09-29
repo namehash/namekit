@@ -14,26 +14,26 @@ export const Header = () => {
           <NameHashLabsLogo />
         </NextLink>
 
-        <div className="flex items-center justify-center gap-3">
+        <div className="hidden md:flex items-center justify-end gap-3">
           <Button variant="ghost" size="medium" asChild>
-            <NextLink href="/ens-referral-program" className="hidden md:block">
+            <NextLink href="/ens-referral-program">
               ENS Referral Program
             </NextLink>
           </Button>
 
-          <Button variant="secondary" size="medium" asChild>
-            <NextLink className="hidden md:block" href="/careers">
-              Open positions
-            </NextLink>
+          <Button
+            variant="secondary"
+            size="medium"
+            asChild
+            className="hidden md:block"
+          >
+            <NextLink href="/careers">Open positions</NextLink>
           </Button>
 
-          <div className="hidden md:inline">
-            <CalendarButton>Schedule a call</CalendarButton>
-          </div>
-
-          <MobileMenu />
+          <CalendarButton>Schedule a call</CalendarButton>
         </div>
       </div>
+      <MobileMenu />
     </nav>
   );
 };

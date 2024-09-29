@@ -25,9 +25,6 @@ const keywords = ["ens", "web3", "eth", "nameguard", "namekit", "namehash"];
 export const metadata: Metadata = {
   ...NamehashMetadata.defaultMetdata,
   metadataBase: new URL("https://namehashlabs.org"),
-  alternates: {
-    canonical: "/",
-  },
   title: {
     template: "NameHash Labs - %s",
     default: title,
@@ -38,8 +35,8 @@ export const metadata: Metadata = {
     ...NamehashMetadata.defaultMetdata.openGraph,
     title,
     description,
-    url: new URL("https://namehashlabs.org"),
     siteName: "NameHash Labs",
+    url: new URL("https://namehashlabs.org"),
   },
   twitter: {
     ...NamehashMetadata.defaultMetdata.twitter,
@@ -54,7 +51,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} font-sans`}>
+      <body className={inter.variable}>
         <div className="w-full">
           <HeadlineBanner />
           <div className="w-full flex flex-col relative items-center justify-center">

@@ -24,9 +24,6 @@ const description =
 export const metadata: Metadata = {
   ...NamehashMetadata.defaultMetdata,
   metadataBase: new URL("https://nameguard.io"),
-  alternates: {
-    canonical: "/",
-  },
   title: {
     template: "NameGuard - %s",
     default: title,
@@ -41,7 +38,7 @@ export const metadata: Metadata = {
     title,
     description,
     siteName: "NameGuard",
-    url: "https://nameguard.io",
+    url: new URL("https://nameguard.io"),
   },
   twitter: {
     ...NamehashMetadata.defaultMetdata.twitter,
