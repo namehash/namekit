@@ -1,11 +1,18 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element */
 import React, { FormEvent, useEffect, useState } from "react";
 import cc from "classcat";
-import { Button } from "@namehash/namekit-react";
-import * as Yup from "yup";
 import { CheckIcon, XCircleIcon } from "@heroicons/react/24/solid";
+import * as Yup from "yup";
+import { Button, Input, TextArea } from "@namehash/namekit-react";
+
+enum FormFields {
+  Name = "name",
+  Email = "email",
+  Telegram = "telegram",
+  Message = "message",
+  Source = "source",
+}
 
 export interface ContactFormDataProps {
   name: string;
@@ -25,14 +32,6 @@ export const contactFormSchema = Yup.object().shape({
     .optional(),
   message: Yup.string().required("Message is required"),
 });
-
-enum FormFields {
-  Name = "name",
-  Email = "email",
-  Telegram = "telegram",
-  Message = "message",
-  Source = "source",
-}
 
 const validationErrorsInitialState = {
   [FormFields.Name]: "",
@@ -233,27 +232,16 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
                 Name
               </label>
               <div className="w-full">
-                <input
+                <Input
                   id="name"
                   type="text"
                   disabled={isLoading}
                   name={FormFields.Name}
                   autoComplete="off"
                   onChange={handleInputChange}
-                  className={cc([
-                    "block w-full rounded-md px-3.5 py-2 text-gray-900 shadow-sm border border-gray-300 placeholder:text-gray-400 focus:border-gray-600 hover:border-gray-400 outline-none sm:text-sm sm:leading-6",
-                    {
-                      "border-red-300": validationErrors[FormFields.Name],
-                    },
-                  ])}
+                  error={validationErrors[FormFields.Name]}
                 />
               </div>
-
-              {validationErrors[FormFields.Name] && (
-                <span className="mt-2 text-sm font-normal text-red-600">
-                  {validationErrors[FormFields.Name]}
-                </span>
-              )}
             </div>
             <div className="gap-1">
               <label
@@ -262,25 +250,15 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
               >
                 Email
               </label>
-              <input
+              <Input
                 id="email"
                 type="email"
                 disabled={isLoading}
                 onChange={handleInputChange}
                 autoComplete="off"
                 name={FormFields.Email}
-                className={cc([
-                  "block w-full rounded-md px-3.5 py-2 text-gray-900 shadow-sm border focus:border-gray-600 hover:border-gray-400 border-gray-300 placeholder:text-gray-400 outline-none sm:text-sm sm:leading-6",
-                  {
-                    "border-red-300": validationErrors[FormFields.Email],
-                  },
-                ])}
+                error={validationErrors[FormFields.Email]}
               />
-              {validationErrors[FormFields.Email] && (
-                <span className="mt-2 text-sm font-normal text-red-600">
-                  {validationErrors[FormFields.Email]}
-                </span>
-              )}
             </div>
             <div className="gap-1">
               <label
@@ -289,30 +267,18 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
               >
                 Telegram (optional)
               </label>
-              <div className="relative">
-                <span className="text-sm leading-5 font-medium text-gray-500 absolute left-2 top-2.5">
-                  @
-                </span>
-                <input
-                  type="text"
-                  id="telegram"
-                  autoComplete="off"
-                  disabled={isLoading}
-                  onChange={handleInputChange}
-                  name={FormFields.Telegram}
-                  className={cc([
-                    "block w-full rounded-md pr-3.5 pl-6 py-2 text-gray-900 shadow-sm border border-gray-300 placeholder:text-gray-400 focus:border-gray-600 hover:border-gray-400 outline-none sm:text-sm sm:leading-6",
-                    {
-                      "border-red-300": validationErrors[FormFields.Telegram],
-                    },
-                  ])}
-                />
-                {validationErrors[FormFields.Telegram] && (
-                  <span className="mt-2 text-sm font-normal text-red-600">
-                    {validationErrors[FormFields.Telegram]}
-                  </span>
-                )}
-              </div>
+              <Input
+                type="text"
+                id="telegram"
+                slotPosition="left"
+                autoComplete="off"
+                disabled={isLoading}
+                onChange={handleInputChange}
+                name={FormFields.Telegram}
+                error={validationErrors[FormFields.Telegram]}
+              >
+                <Input.Slot>@</Input.Slot>
+              </Input>
             </div>
             <div className="gap-1">
               <label
@@ -321,27 +287,19 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
               >
                 Message
               </label>
-              <textarea
+
+              <TextArea
                 rows={4}
                 id="message"
                 disabled={isLoading}
                 onChange={handleInputChange}
                 defaultValue=""
                 name={FormFields.Message}
-                className={cc([
-                  "block w-full rounded-md px-3.5 py-2 text-gray-900 shadow-sm border border-gray-300 placeholder:text-gray-400 focus:border-gray-600 hover:border-gray-400 outline-none sm:text-sm sm:leading-6",
-                  {
-                    "border-red-300": validationErrors[FormFields.Message],
-                  },
-                ])}
+                error={validationErrors[FormFields.Message]}
               />
-
-              {validationErrors[FormFields.Message] && (
-                <span className="mt-2 text-sm font-normal text-red-600">
-                  {validationErrors[FormFields.Message]}
-                </span>
-              )}
             </div>
+            {/* Hidden input to capture the source URL of the form submission.
+            Its value is set programmatically in a useEffect hook. */}
             <input type="hidden" id="source" name="source" value="" />
             <div className="flex h-full justify-end items-end">
               <Button
