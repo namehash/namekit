@@ -139,7 +139,7 @@ export const PrimaryDisabled: Story = {
   args: {
     variant: "primary",
     inputSize: "medium",
-    value: "Primary disabled input",
+    defaultValue: "Primary disabled input",
     disabled: true,
   },
 };
@@ -148,7 +148,7 @@ export const SecondaryDisabled: Story = {
   args: {
     variant: "secondary",
     inputSize: "medium",
-    value: "Secondary disabled input",
+    defaultValue: "Secondary disabled input",
     disabled: true,
   },
 };
