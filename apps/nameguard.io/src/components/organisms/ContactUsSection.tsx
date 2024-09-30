@@ -1,4 +1,3 @@
-import { ContactUsForm } from "./ContactUsForm";
 import {
   CalendarButton,
   ColorfulBg,
@@ -7,6 +6,7 @@ import {
   SectionText,
   AirplaneIllustration,
 } from "@/components/atoms/";
+import { ContactUsForm } from "@namehash/internal";
 
 export const ContactSection = () => {
   return (
