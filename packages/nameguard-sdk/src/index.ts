@@ -468,6 +468,7 @@ export enum NameGuardErrorType {
   Timeout = "Timeout",
   Abort = "Abort",
   Input = "Input",
+  NotFound = "NotFound",
   Unknown = "Unknown",
 }
 
@@ -951,34 +952,81 @@ export class NameGuard {
     }
 
     try {
+      const timeoutId = setTimeout(() => {
+        this.abortController.abort();
+      }, 30000); // 30 second timeout
+
       const response = await fetch(url, options);
 
+      clearTimeout(timeoutId);
+
       if (!response.ok) {
-        throw new NameGuardError(
-          NameGuardErrorType.Server,
-          response.status,
-          `Server responded with status ${response.status}`,
-        );
+        switch (response.status) {
+          case 400:
+            throw new NameGuardError(
+              NameGuardErrorType.Input,
+              response.status,
+              "Bad request: The server could not understand the request",
+            );
+          case 404:
+            throw new NameGuardError(
+              NameGuardErrorType.NotFound,
+              response.status,
+              "Not Found: The requested resource could not be found",
+            );
+          default:
+            if (response.status >= 500) {
+              throw new NameGuardError(
+                NameGuardErrorType.Server,
+                response.status,
+                `Server error: ${response.statusText}`,
+              );
+            } else {
+              throw new NameGuardError(
+                NameGuardErrorType.Unknown,
+                response.status,
+                `Unexpected error: ${response.statusText}`,
+              );
+            }
+        }
       }
 
       return await response.json();
     } catch (error: unknown) {
       if (error instanceof NameGuardError) {
         throw error;
-      } else if (error instanceof DOMException && error.name === "AbortError") {
-        throw new NameGuardError(NameGuardErrorType.Abort);
-      } else if (
-        error instanceof TypeError &&
-        error.message === "Failed to fetch"
-      ) {
-        throw new NameGuardError(NameGuardErrorType.Network);
-      } else {
-        throw new NameGuardError(
-          NameGuardErrorType.Unknown,
-          undefined,
-          isError(error) ? error.message : "Unknown error",
-        );
+      } else if (error instanceof Error) {
+        if (error.name === "AbortError") {
+          if (this.abortController.signal.aborted) {
+            throw new NameGuardError(
+              NameGuardErrorType.Timeout,
+              undefined,
+              "Request timed out",
+            );
+          } else {
+            throw new NameGuardError(
+              NameGuardErrorType.Abort,
+              undefined,
+              "Request was aborted",
+            );
+          }
+        } else if (
+          error.message === "Failed to fetch" ||
+          error.message.includes("Network request failed")
+        ) {
+          throw new NameGuardError(
+            NameGuardErrorType.Network,
+            undefined,
+            "Network error: Unable to reach the server",
+          );
+        }
       }
+
+      throw new NameGuardError(
+        NameGuardErrorType.Unknown,
+        undefined,
+        `An unexpected error occurred: ${error instanceof Error ? error.message : String(error)}`,
+      );
     }
   }
 
