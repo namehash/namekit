@@ -54,7 +54,7 @@ const devElements: ListSectionElement[] = [
         <GithubIconDevelopers />
       </DeveloperSectionIconWrapper>
     ),
-    link: "https://github.com/namehash/nameguard/tree/main/api",
+    link: "https://github.com/namehash/namekit/tree/main/api",
   },
   {
     header: (
@@ -70,7 +70,7 @@ const devElements: ListSectionElement[] = [
         <GithubIconDevelopers />
       </DeveloperSectionIconWrapper>
     ),
-    link: "https://github.com/namehash/nameguard/tree/main/packages/sdk",
+    link: "https://github.com/namehash/namekit/tree/main/packages/nameguard-sdk",
   },
   {
     header: (
@@ -89,7 +89,7 @@ const devElements: ListSectionElement[] = [
         <GithubIconDevelopers />
       </DeveloperSectionIconWrapper>
     ),
-    link: "https://github.com/namehash/nameguard/tree/main/packages/nameguard-react",
+    link: "https://github.com/namehash/namekit/tree/main/packages/nameguard-react",
   },
   {
     header: (
@@ -170,7 +170,7 @@ const devElements: ListSectionElement[] = [
         <GithubIconDevelopers />
       </DeveloperSectionIconWrapper>
     ),
-    link: "https://github.com/namehash/ens-utils/blob/main/README.md",
+    link: "https://github.com/namehash/namekit/tree/main/packages/ens-utils#nameparser",
   },
   {
     header: (
@@ -206,7 +206,7 @@ const devElements: ListSectionElement[] = [
         <GearWheelIcon />
       </DeveloperSectionIconWrapper>
     ),
-    link: "https://github.com/namehash/nameguard/blob/main/api/serverless.yml",
+    link: "https://github.com/namehash/namekit/blob/main/api/serverless.yml",
   },
   {
     header: (
@@ -243,6 +243,6 @@ const devElements: ListSectionElement[] = [
         <FontIcon />
       </DeveloperSectionIconWrapper>
     ),
-    link: "https://github.com/namehash/nameguard/tree/main/packages/ens-webfont",
+    link: "https://github.com/namehash/namekit/tree/main/packages/ens-webfont",
   },
 ];

@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
-import { ExternalLinkIcon, PreSectionText } from "../1 - atoms";
+import { PreSectionText } from "../1 - atoms";
 import { ColorfulBg } from "../1 - atoms/colorful-bg";
 import { ColorfulDownloadIcon } from "../1 - atoms/icons/colorful-download-icon";
-import { Button } from "@namehash/namekit-react";
+import { Button, Link } from "@namehash/namekit-react";
 
 export const BrandAssets = () => {
   return (
@@ -31,11 +31,11 @@ export const BrandAssets = () => {
               </p>
             </div>
 
-            <a target="_blank" href="https://github.com/namehash/brand-assets">
-              <Button variant="primary" size="medium">
-                Download on Github <ExternalLinkIcon className="w-5 h-5" />
-              </Button>
-            </a>
+            <Button variant="primary" size="medium" asChild>
+              <Link href="https://github.com/namehash/brand-assets">
+                Download on Github <Link.ExternalIcon />
+              </Link>
+            </Button>
           </div>
           <a
             target="_blank"
