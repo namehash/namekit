@@ -29,12 +29,16 @@ export const TextArea: React.FC<TextAreaProps> = ({
 }) => {
   const variantClasses = {
     primary: cc([
-      "nk-text-black nk-border-gray-300 nk-shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] hover:nk-border-gray-400 focus:nk-border-gray-600 focus:hover:nk-border-gray-600 placeholder:nk-text-gray-500",
-      disabled ? "nk-bg-gray-50 nk-text-gray-500" : "nk-bg-white",
+      "nk-text-black nk-border-gray-300 nk-shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] focus:nk-border-gray-600 focus:hover:nk-border-gray-600 placeholder:nk-text-gray-500",
+      disabled
+        ? "nk-bg-gray-50 nk-text-gray-500"
+        : "nk-bg-white hover:nk-border-gray-400",
     ]),
     secondary: cc([
-      "nk-border-gray-200 hover:nk-border-gray-300 focus:nk-border-gray-400 focus:hover:nk-border-gray-400",
-      disabled ? "nk-bg-gray-200 nk-text-gray-500" : "nk-bg-gray-100",
+      "nk-border-gray-200 focus:nk-border-gray-400 focus:hover:nk-border-gray-400",
+      disabled
+        ? "nk-bg-gray-200 nk-text-gray-500"
+        : "nk-bg-gray-100 hover:nk-border-gray-300",
     ]),
   };
 
