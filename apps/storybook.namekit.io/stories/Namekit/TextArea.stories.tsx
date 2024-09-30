@@ -95,7 +95,7 @@ export const PrimaryDisabled: Story = {
   args: {
     variant: "primary",
     size: "medium",
-    value: "Primary Disabled Textarea",
+    defaultValue: "Primary Disabled Textarea",
     rows: 4,
     disabled: true,
   },
@@ -105,7 +105,7 @@ export const SecondaryDisabled: Story = {
   args: {
     variant: "secondary",
     size: "medium",
-    value: "Secondary Disabled Textarea",
+    defaultValue: "Secondary Disabled Textarea",
     rows: 4,
     disabled: true,
   },
