@@ -23,6 +23,7 @@ const description =
 
 export const metadata: Metadata = {
   ...NamehashMetadata.defaultMetdata,
+  metadataBase: new URL("https://nameguard.io"),
   title: {
     template: "NameGuard - %s",
     default: title,
@@ -37,6 +38,7 @@ export const metadata: Metadata = {
     title,
     description,
     siteName: "NameGuard",
+    url: new URL("https://nameguard.io"),
   },
   twitter: {
     ...NamehashMetadata.defaultMetdata.twitter,

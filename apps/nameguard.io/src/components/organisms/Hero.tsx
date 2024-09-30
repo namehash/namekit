@@ -11,7 +11,7 @@ import {
   WarningShieldRedOutline,
   WarningShieldSmall,
 } from "@/components/atoms";
-import { Button } from "@namehash/namekit-react";
+import { Button, Link } from "@namehash/namekit-react";
 
 export function Hero() {
   return (
@@ -32,14 +32,11 @@ export function Hero() {
           </p>
           <HeroStartCommand />
 
-          <a
-            href="https://api.nameguard.io/docs"
-            className="hidden lg:block relative z-10"
-          >
-            <Button variant="primary" size="large">
-              View the docs
+          <div className="hidden lg:block relative z-10">
+            <Button variant="primary" size="large" asChild>
+              <Link href="https://api.nameguard.io/docs">View the docs</Link>
             </Button>
-          </a>
+          </div>
 
           <div className="flex lg:hidden flex-col items-center gap-3 self-stretch">
             <NGSearch />
@@ -47,14 +44,14 @@ export function Hero() {
               or
             </p>
 
-            <a
-              href="https://api.nameguard.io/docs"
+            <Button
+              variant="primary"
+              size="medium"
+              asChild
               className="w-full h-fit flex max-w-xs items-center justify-center"
             >
-              <Button variant="primary" size="medium">
-                View the docs
-              </Button>
-            </a>
+              <Link href="https://api.nameguard.io/docs">View the docs</Link>
+            </Button>
           </div>
         </div>
 

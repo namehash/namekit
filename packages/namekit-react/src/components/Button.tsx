@@ -3,15 +3,18 @@ import cc from "classcat";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  asChild?: React.ReactElement;
+  asChild?: boolean;
   className?: string;
   children?: React.ReactNode;
   variant?: "primary" | "secondary" | "ghost";
   size?: "small" | "medium" | "large";
+  padding?: string;
 }
 
+const buttonAsChildClass = "nk-button-as-child";
+
 const buttonBaseClasses =
-  "nk-transition nk-text-base nk-rounded-lg nk-border nk-font-medium nk-flex nk-gap-2 nk-items-center nk-justify-center nk-whitespace-nowrap";
+  "nk-transition nk-text-base nk-rounded-lg nk-border nk-font-medium nk-inline-flex nk-gap-2 nk-items-center nk-whitespace-nowrap nk-underline-none";
 
 const variantClasses = {
   primary: "nk-bg-black nk-text-white nk-border-black hover:nk-bg-mine-shaft",
@@ -20,46 +23,54 @@ const variantClasses = {
   ghost: "nk-text-black nk-border-transparent hover:nk-bg-black/5",
 };
 
-const sizeClasses = {
+const defaultSizeClasses = {
   small: "nk-py-1 nk-px-2 nk-text-sm",
   medium: "nk-py-2 nk-px-4",
   large: "nk-py-3 nk-px-6 nk-text-lg",
 };
 
-export const Button: React.FC<ButtonProps> = ({
-  asChild,
-  className,
-  children,
-  variant = "primary",
-  size = "medium",
-  ...props
-}) => {
-  const combinedClassName = cc([
-    buttonBaseClasses,
-    variantClasses[variant],
-    sizeClasses[size],
-    className,
-  ]);
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  (
+    {
+      asChild,
+      className,
+      children,
+      variant = "primary",
+      size = "medium",
+      padding,
+      ...props
+    },
+    ref,
+  ) => {
+    const combinedClassName = cc([
+      "nk-button",
+      buttonBaseClasses,
+      variantClasses[variant],
+      defaultSizeClasses[size],
+      asChild && buttonAsChildClass,
+      className,
+    ]);
 
-  if (asChild) {
-    const childProps = {
-      ...props,
-      ...asChild.props,
-      className: cc([
-        buttonBaseClasses,
-        variantClasses[variant],
-        sizeClasses[size],
-        className,
-        asChild.props.className,
-      ]),
-    };
+    if (asChild) {
+      return React.Children.map(children, (child) => {
+        if (React.isValidElement(child)) {
+          return React.cloneElement(child, {
+            ...props,
+            ...child.props,
+            className: cc([combinedClassName, child.props.className]),
+            ref,
+          });
+        }
+        return child;
+      });
+    }
 
-    return React.cloneElement(asChild, childProps, children);
-  }
+    return (
+      <button ref={ref} className={combinedClassName} {...props}>
+        {children}
+      </button>
+    );
+  },
+);
 
-  return (
-    <button className={combinedClassName} {...props}>
-      {children}
-    </button>
-  );
-};
+Button.displayName = "Button";

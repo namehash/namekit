@@ -1,32 +1,32 @@
 "use client";
 
-import Link from "next/link";
+import NextLink from "next/link";
 
 import { GithubIcon, NGSearchIcon } from "@/components/atoms";
 import { NGSearch } from "@/components/molecules";
 import MobileMenu from "./MobileMenu";
 import { CalendarButton } from "../atoms";
-import { Button, IconButton } from "@namehash/namekit-react";
+import { Button, IconButton, Link } from "@namehash/namekit-react";
 
 export const Header = () => {
   return (
     <header className="sticky bg-white top-0 w-full z-20 border-b border-gray-300 h-[56px] py-[9px] sm:h-[70px] sm:py-4 select-none">
       <div className="max-w-7xl mx-auto items-center justify-between flex flex-row px-6">
         <div className="flex flex-row lg:gap-2 xl:gap-7 justify-between items-center">
-          <div className="flex flex-row justify-between items-center gap-1 cursor-pointer">
-            <Link
+          <div className="flex flex-row justify-between items-center gap-1 cursor-pointer flex-shrink-0 pr-2">
+            <NextLink
               href="/"
               className="text-black not-italic font-bold text-[22.683px] leading-[22.683px] tracking-[-0.907px] sm:text-[27.816px] sm:leading-[27.816px] sm:tracking-[-1.113px]"
             >
               NameGuard
-            </Link>
-            <Link href="/">
+            </NextLink>
+            <NextLink href="/">
               <div className="relative -top-1.5 bg-black w-fit h-fit p-[2.8px] rounded-[2.8px] flex-shrink-0">
                 <p className="text-white not-italic font-semibold pb-[0.5px] text-[6.857px] leading-[7.619px] sm:text-[8.409px] sm:leading-[9.343px]">
                   beta
                 </p>
               </div>
-            </Link>
+            </NextLink>
           </div>
           <div className="lg:flex sm:w-full sm:h-full sm:p-0 sm:m-0 hidden">
             <NGSearch />
@@ -34,42 +34,29 @@ export const Header = () => {
         </div>
         <div className="flex flex-row items-center justify-between md:gap-5 h-[40px]">
           <div className="hidden items-center justify-center lg:flex gap-2">
-            <a
-              href="https://api.nameguard.io/docs"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button variant="ghost">Docs</Button>
-            </a>
+            <div className="hidden items-center justify-center xl:flex gap-2">
+              <Button variant="ghost" asChild>
+                <Link href="https://api.nameguard.io/docs">Docs</Link>
+              </Button>
 
-            <a
-              href="https://github.com/namehash/nameguard"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <IconButton
-                variant="ghost"
-                icon={
-                  <GithubIcon className="hidden md:block text-[#0F172A] fill-current" />
-                }
-              >
-                Github
-              </IconButton>
-            </a>
+              <Button variant="ghost" asChild>
+                <Link href="https://github.com/namehash/namekit">
+                  <GithubIcon className="hidden md:block fill-current" /> GitHub
+                </Link>
+              </Button>
+            </div>
 
-            <a href="/contact">
-              <Button variant="ghost">Contact</Button>
-            </a>
+            <Button variant="ghost" asChild>
+              <NextLink href="/contact">Contact</NextLink>
+            </Button>
 
             <CalendarButton>Discuss an integration</CalendarButton>
           </div>
 
           <div className="lg:hidden">
-            <IconButton
-              className="!p-2"
-              variant="ghost"
-              icon={<NGSearchIcon />}
-            />
+            <IconButton variant="ghost">
+              <NGSearchIcon />
+            </IconButton>
           </div>
 
           <MobileMenu />
