@@ -14,7 +14,7 @@ export interface ButtonProps
 const buttonAsChildClass = "nk-button-as-child";
 
 const buttonBaseClasses =
-  "nk-transition nk-text-base nk-rounded-lg nk-border nk-font-medium nk-inline-flex nk-gap-2 nk-items-center nk-justify-start nk-whitespace-nowrap nk-underline-none";
+  "nk-transition nk-text-base nk-rounded-lg nk-border nk-font-medium nk-inline-flex nk-gap-2 nk-items-center nk-whitespace-nowrap nk-underline-none";
 
 const variantClasses = {
   primary: "nk-bg-black nk-text-white nk-border-black hover:nk-bg-mine-shaft",

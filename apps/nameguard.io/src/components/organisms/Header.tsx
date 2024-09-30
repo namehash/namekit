@@ -34,15 +34,17 @@ export const Header = () => {
         </div>
         <div className="flex flex-row items-center justify-between md:gap-5 h-[40px]">
           <div className="hidden items-center justify-center lg:flex gap-2">
-            <Button variant="ghost" asChild>
-              <Link href="https://api.nameguard.io/docs">Docs</Link>
-            </Button>
+            <div className="hidden items-center justify-center xl:flex gap-2">
+              <Button variant="ghost" asChild>
+                <Link href="https://api.nameguard.io/docs">Docs</Link>
+              </Button>
 
-            <Button variant="ghost" asChild>
-              <Link href="https://github.com/namehash/namekit">
-                <GithubIcon className="hidden md:block fill-current" /> GitHub
-              </Link>
-            </Button>
+              <Button variant="ghost" asChild>
+                <Link href="https://github.com/namehash/namekit">
+                  <GithubIcon className="hidden md:block fill-current" /> GitHub
+                </Link>
+              </Button>
+            </div>
 
             <Button variant="ghost" asChild>
               <NextLink href="/contact">Contact</NextLink>

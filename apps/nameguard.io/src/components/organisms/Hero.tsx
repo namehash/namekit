@@ -32,7 +32,7 @@ export function Hero() {
           </p>
           <HeroStartCommand />
 
-          <div className="hidden md:block relative z-10">
+          <div className="hidden lg:block relative z-10">
             <Button variant="primary" size="large" asChild>
               <Link href="https://api.nameguard.io/docs">View the docs</Link>
             </Button>

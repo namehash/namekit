@@ -19,7 +19,7 @@ const variantClasses = {
 };
 
 const defaultSizeClasses = {
-  small: "nk-py-1 nk-px-1 nk-text-sm",
+  small: "nk-py-1.5 nk-px-1.5 nk-text-sm",
   medium: "nk-py-2 nk-px-2",
   large: "nk-py-3 nk-px-3 nk-text-lg",
 };
