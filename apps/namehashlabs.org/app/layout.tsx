@@ -24,10 +24,6 @@ const keywords = ["ens", "web3", "eth", "nameguard", "namekit", "namehash"];
 
 export const metadata: Metadata = {
   ...NamehashMetadata.defaultMetdata,
-  metadataBase: new URL("https://namehashlabs.org"),
-  alternates: {
-    canonical: "/",
-  },
   title: {
     template: "NameHash Labs - %s",
     default: title,
@@ -38,7 +34,6 @@ export const metadata: Metadata = {
     ...NamehashMetadata.defaultMetdata.openGraph,
     title,
     description,
-    url: new URL("https://namehashlabs.org"),
     siteName: "NameHash Labs",
   },
   twitter: {

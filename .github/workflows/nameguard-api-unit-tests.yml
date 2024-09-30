@@ -1,11 +1,13 @@
 name: NameGuard API - Unit Tests
 on:
   push:
-    branches: [main]
+    branches:
+      - main
     paths:
       - "api/**"
   pull_request:
-    branches: [main]
+    branches:
+      - main
     paths:
       - "api/**"
 
@@ -26,13 +28,14 @@ jobs:
         python-version: [3.9, 3.11]
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout NameKit repo
+        uses: actions/checkout@v4
 
       - name: Install poetry
         run: pipx install poetry
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
           cache: "poetry"
@@ -58,7 +61,8 @@ jobs:
     if: ${{ github.event_name == 'pull_request' }}
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout NameKit repo
+        uses: actions/checkout@v4
         with:
           repository: ${{ github.event.pull_request.head.repo.full_name }}
           ref: ${{ github.event.pull_request.head.ref }}
@@ -67,7 +71,7 @@ jobs:
         run: pipx install poetry
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: 3.11
           cache: "poetry"

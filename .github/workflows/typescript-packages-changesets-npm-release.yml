@@ -19,20 +19,20 @@ jobs:
     name: Release Packages
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
+      - name: Checkout NameKit repo
+        uses: actions/checkout@v4
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: "lts/*"
+          node-version-file: .nvmrc
           cache: "pnpm"
 
-      - name: Install dependencies
-        run: pnpm install
+      - name: Install npm dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Build packages
         run: pnpm turbo run build --filter='./packages/*'
