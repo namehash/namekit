@@ -5,7 +5,7 @@ import "@namehash/nameguard-react/styles.css";
 import "@namehash/namekit-react/styles.css";
 
 import type { Metadata } from "next";
-import { Metadata as NamehashMetadata } from "@namehash/seo";
+import { Metadata as NamehashMetadata } from "@namehash/internal";
 import { Inter } from "next/font/google";
 import Favicon from "../../public/favicon/favicon_package_v0-2/favicon.ico";
 import AppleTouchIcon from "../../public/favicon/favicon_package_v0-2/apple-touch-icon.png";

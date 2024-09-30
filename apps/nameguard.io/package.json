@@ -15,7 +15,7 @@
     "@namehash/nameguard": "workspace:*",
     "@namehash/nameguard-react": "workspace:*",
     "@namehash/namekit-react": "workspace:*",
-    "@namehash/seo": "workspace:*",
+    "@namehash/internal": "workspace:*",
     "@tailwindcss/forms": "0.5.6",
     "@vercel/analytics": "1.1.2",
     "@vercel/speed-insights": "1.0.9",

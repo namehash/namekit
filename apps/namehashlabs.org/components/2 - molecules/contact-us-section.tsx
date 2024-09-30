@@ -6,9 +6,9 @@ import {
   SectionTitle,
 } from "../1 - atoms";
 import { ColorfulBg } from "../1 - atoms/colorful-bg";
-import { ContactUsForm as ContactUs } from "@namehash/contact-form";
+import { ContactUsForm } from "@namehash/internal";
 
-import { ContactUsForm } from "./contact-us-form";
+// import { ContactUsForm } from "./contact-us-form";
 
 export const ContactSection = () => {
   return (
@@ -52,8 +52,7 @@ export const ContactSection = () => {
           />
         </div>
         <div className="lg:w-1/2 w-full bg-gray-50 py-4 px-4 lg:py-8 lg:px-10 border rounded-[8px] flex justify-center items-center">
-          {/* <ContactUsForm title="Send a message" /> */}
-          <ContactUs title="Send a message" />
+          <ContactUsForm title="Send a message" />
         </div>
       </div>
     </section>

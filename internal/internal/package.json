@@ -1,5 +1,5 @@
 {
-  "name": "@namehash/seo",
+  "name": "@namehash/internal",
   "private": true,
   "version": "1.1.0",
   "main": "src/index.ts",

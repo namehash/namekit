@@ -3,8 +3,8 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { FormEvent, useEffect, useState } from "react";
 import cc from "classcat";
-import * as Yup from "yup";
 import { Button } from "@namehash/namekit-react";
+import * as Yup from "yup";
 import { CheckIcon, XCircleIcon } from "@heroicons/react/24/solid";
 
 export interface ContactFormDataProps {
