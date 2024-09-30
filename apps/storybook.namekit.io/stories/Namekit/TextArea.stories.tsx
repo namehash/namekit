@@ -86,7 +86,11 @@ export const CustomClass: Story = {
     variant: "primary",
     size: "medium",
     placeholder: "Custom Class Textarea",
-    className: "custom-class-name",
+    defaultValue: "Custom Styled Textarea",
+    style: {
+      color: "blue",
+      fontWeight: "bold",
+    },
     rows: 4,
   },
 };
