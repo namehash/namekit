@@ -101,7 +101,7 @@ export const WithSlotLeft: Story = {
   args: {
     variant: "primary",
     inputSize: "medium",
-    placeholder: "Say something",
+    placeholder: "telegram_username",
     children: <Input.Slot>@</Input.Slot>,
   },
 };
@@ -110,19 +110,9 @@ export const WithSlotRight: Story = {
   args: {
     variant: "primary",
     inputSize: "medium",
-    placeholder: "Say something",
+    placeholder: "Uniswap handle",
     slotPosition: "right",
-    children: <Input.Slot>@</Input.Slot>,
-  },
-};
-
-export const WithSlotLeftSmall: Story = {
-  args: {
-    variant: "primary",
-    inputSize: "small",
-    placeholder: "Say something",
-    slotPosition: "left",
-    children: <Input.Slot>@</Input.Slot>,
+    children: <Input.Slot>.uni.eth</Input.Slot>,
   },
 };
 
