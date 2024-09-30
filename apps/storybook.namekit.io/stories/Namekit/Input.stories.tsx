@@ -88,7 +88,8 @@ export const CustomStyling: Story = {
   args: {
     variant: "primary",
     inputSize: "medium",
-    value: "Custom Styled Input",
+    placeholder: "Custom Styled Input",
+    defaultValue: "Custom Styled Input",
     style: {
       color: "blue",
       fontWeight: "bold",
