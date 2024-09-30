@@ -8,8 +8,6 @@ import {
 import { ColorfulBg } from "../1 - atoms/colorful-bg";
 import { ContactUsForm } from "@namehash/internal";
 
-// import { ContactUsForm } from "./contact-us-form";
-
 export const ContactSection = () => {
   return (
     <section className="w-full max-w-[1216px] py-20 px-5">

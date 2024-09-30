@@ -4,8 +4,8 @@ import { SectionText, SectionTitle } from "../1 - atoms";
 import { ColorfulBg } from "../1 - atoms/colorful-bg";
 import { BlockfulLogo } from "../1 - atoms/icons/blockful-logo";
 import { EnelpolLogo } from "../1 - atoms/icons/enelpol-logo";
-import { ContactUsForm } from "../2 - molecules/contact-us-form";
 import { AxiomLogo } from "../1 - atoms/icons/axiom-logo";
+import { ContactUsForm } from "@namehash/internal";
 
 export const PartnersPage = () => {
   return (
