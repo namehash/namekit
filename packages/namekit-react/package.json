@@ -48,7 +48,7 @@
     "@namekit/tsconfig": "workspace:*",
     "@types/react": "18.3.11",
     "@types/react-dom": "18.3.0",
-    "autoprefixer": "10.4.19",
+    "autoprefixer": "10.4.20",
     "classcat": "5.0.5",
     "postcss": "8.4.38",
     "react": "18.3.1",
