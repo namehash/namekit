@@ -17,7 +17,7 @@
     "next": "14.2.13",
     "react": "^18",
     "react-dom": "^18",
-    "viem": "^2.9.3"
+    "viem": "2.21.16"
   },
   "devDependencies": {
     "@types/node": "22.7.4",

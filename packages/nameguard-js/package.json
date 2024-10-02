@@ -48,7 +48,7 @@
     "@namehash/ens-utils": "workspace:*",
     "@namehash/nameguard": "workspace:*",
     "text-segmentation": "1.0.3",
-    "viem": "2.9.3",
+    "viem": "2.21.16",
     "whatwg-fetch": "3.6.20"
   },
   "publishConfig": {
