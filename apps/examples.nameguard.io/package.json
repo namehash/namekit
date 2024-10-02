@@ -1,5 +1,5 @@
 {
-  "name": "nameguard-examples",
+  "name": "examples.nameguard.io",
   "private": true,
   "scripts": {
     "dev": "next dev",
