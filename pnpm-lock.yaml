@@ -231,8 +231,8 @@ importers:
         specifier: 5.26.3
         version: 5.26.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-wrap-balancer:
-        specifier: 1.1.0
-        version: 1.1.0(react@18.3.1)
+        specifier: 1.1.1
+        version: 1.1.1(react@18.3.1)
       swiper:
         specifier: 11.1.1
         version: 11.1.1
@@ -5482,8 +5482,8 @@ packages:
       react: '>=16.14.0'
       react-dom: '>=16.14.0'
 
-  react-wrap-balancer@1.1.0:
-    resolution: {integrity: sha512-EhF3jOZm5Fjx+Cx41e423qOv2c2aOvXAtym2OHqrGeMUnwERIyNsRBgnfT3plB170JmuYvts8K2KSPEIerKr5A==}
+  react-wrap-balancer@1.1.1:
+    resolution: {integrity: sha512-AB+l7FPRWl6uZ28VcJ8skkwLn2+UC62bjiw8tQUrZPlEWDVnR9MG0lghyn7EyxuJSsFEpht4G+yh2WikEqQ/5Q==}
     peerDependencies:
       react: '>=16.8.0 || ^17.0.0 || ^18'
 
@@ -12990,7 +12990,7 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  react-wrap-balancer@1.1.0(react@18.3.1):
+  react-wrap-balancer@1.1.1(react@18.3.1):
     dependencies:
       react: 18.3.1
 
