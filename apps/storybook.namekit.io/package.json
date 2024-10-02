@@ -1,5 +1,5 @@
 {
-  "name": "nameguard-storybook",
+  "name": "storybook.namekit.io",
   "private": true,
   "scripts": {
     "dev": "storybook dev -p 6006",
