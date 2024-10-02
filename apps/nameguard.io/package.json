@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@calcom/embed-react": "1.3.0",
-    "@heroicons/react": "2.0.18",
+    "@heroicons/react": "2.1.5",
     "@namehash/ens-utils": "workspace:*",
     "@namehash/ens-webfont": "workspace:*",
     "@namehash/nameguard": "workspace:*",
