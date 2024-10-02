@@ -248,7 +248,7 @@ export function RoadMap() {
           Built and released an{" "}
           <a
             className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
-            href="https://nameguard-examples-nextjs.vercel.app/"
+            href="https://examples.nameguard.io/"
             target="_blank"
             rel="noopener noreferrer"
           >
