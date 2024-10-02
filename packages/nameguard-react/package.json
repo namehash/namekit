@@ -43,7 +43,7 @@
     "@namehash/nameguard": "workspace:*",
     "@namehash/namekit-react": "workspace:*",
     "classcat": "5.0.5",
-    "sonner": "1.2.3",
+    "sonner": "1.5.0",
     "swr": "2.2.4",
     "zustand": "4.4.5"
   },
