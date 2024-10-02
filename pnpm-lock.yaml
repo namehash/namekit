@@ -52,8 +52,8 @@ importers:
         specifier: workspace:*
         version: link:../../packages/nameguard-react
       classcat:
-        specifier: 5.0.4
-        version: 5.0.4
+        specifier: 5.0.5
+        version: 5.0.5
       next:
         specifier: 14.2.13
         version: 14.2.13(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -131,8 +131,8 @@ importers:
         specifier: 1.0.9
         version: 1.0.9(next@14.2.13(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
       classcat:
-        specifier: 5.0.4
-        version: 5.0.4
+        specifier: 5.0.5
+        version: 5.0.5
       next:
         specifier: 14.2.13
         version: 14.2.13(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -440,8 +440,8 @@ importers:
         specifier: workspace:*
         version: link:../namekit-react
       classcat:
-        specifier: 5.0.4
-        version: 5.0.4
+        specifier: 5.0.5
+        version: 5.0.5
       sonner:
         specifier: 1.2.3
         version: 1.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -539,8 +539,8 @@ importers:
         specifier: 10.4.19
         version: 10.4.19(postcss@8.4.38)
       classcat:
-        specifier: 5.0.4
-        version: 5.0.4
+        specifier: 5.0.5
+        version: 5.0.5
       postcss:
         specifier: 8.4.38
         version: 8.4.38
@@ -3099,9 +3099,6 @@ packages:
   ci-info@3.9.0:
     resolution: {integrity: sha512-NIxF55hv4nSqQswkAeiOi1r83xy8JldOFDTWiug55KBu9Jnblncd2U6ViHmYgHf01TPZS77NJBhBMKdWj9HQMQ==}
     engines: {node: '>=8'}
-
-  classcat@5.0.4:
-    resolution: {integrity: sha512-sbpkOw6z413p+HDGcBENe498WM9woqWHiJxCq7nvmxe9WmrUmqfAcxpIwAiMtM5Q3AhYkzXcNQHqsWq0mND51g==}
 
   classcat@5.0.5:
     resolution: {integrity: sha512-JhZUT7JFcQy/EzW605k/ktHtncoo9vnyW/2GspNYwFlN1C/WmjuV/xtS04e9SOkL2sTdw0VAZ2UGCcQ9lR6p6w==}
@@ -10245,8 +10242,6 @@ snapshots:
   chromatic@11.10.2: {}
 
   ci-info@3.9.0: {}
-
-  classcat@5.0.4: {}
 
   classcat@5.0.5: {}
 

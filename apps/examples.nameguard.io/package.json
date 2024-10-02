@@ -13,7 +13,7 @@
     "@namehash/nameguard": "workspace:*",
     "@namehash/nameguard-js": "workspace:*",
     "@namehash/nameguard-react": "workspace:*",
-    "classcat": "5.0.4",
+    "classcat": "5.0.5",
     "next": "14.2.13",
     "react": "^18",
     "react-dom": "^18",
