@@ -443,8 +443,8 @@ importers:
         specifier: 2.2.5
         version: 2.2.5(react@18.3.1)
       zustand:
-        specifier: 4.4.5
-        version: 4.4.5(@types/react@18.3.11)(react@18.3.1)
+        specifier: 4.5.4
+        version: 4.5.4(@types/react@18.3.11)(react@18.3.1)
     devDependencies:
       '@types/react':
         specifier: 18.3.11
@@ -6006,12 +6006,12 @@ packages:
     resolution: {integrity: sha512-9qv4rlDiopXg4E69k+vMHjNN63YFMe9sZMrdlvKnCjlCRWeCBswPPMPUfx+ipsAWq1LXHe70RcbaHdJJpS6hyQ==}
     engines: {node: '>= 10'}
 
-  zustand@4.4.5:
-    resolution: {integrity: sha512-jgIrBBLKncQW74PA2Lclct3gwD4aPughwGE4FqlXrv3rDqQox7JCn8rwUiFK6ygJcbBAvfTf8fF+ICg7HLD2FQ==}
+  zustand@4.5.4:
+    resolution: {integrity: sha512-/BPMyLKJPtFEvVL0E9E9BTUM63MNyhPGlvxk1XjrfWTUlV+BR8jufjsovHzrtR6YNcBEcL7cMHovL1n9xHawEg==}
     engines: {node: '>=12.7.0'}
     peerDependencies:
       '@types/react': '>=16.8'
-      immer: '>=9.0'
+      immer: '>=9.0.6'
       react: '>=16.8'
     peerDependenciesMeta:
       '@types/react':
@@ -12969,7 +12969,7 @@ snapshots:
       compress-commons: 4.1.2
       readable-stream: 3.6.2
 
-  zustand@4.4.5(@types/react@18.3.11)(react@18.3.1):
+  zustand@4.5.4(@types/react@18.3.11)(react@18.3.1):
     dependencies:
       use-sync-external-store: 1.2.0(react@18.3.1)
     optionalDependencies:
