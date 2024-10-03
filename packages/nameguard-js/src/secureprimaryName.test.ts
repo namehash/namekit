@@ -43,16 +43,18 @@ describe("secure primary name", () => {
         false,
         "٧٣٧.eth",
       ],
-      [
-        "0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd",
-        "unlikely",
-        "normalized",
-        "exampleprimary.cb.id",
-        "exampleprimary.cb.id",
-        "exampleprimary.cb.id",
-        false,
-        "exampleprimary.cb.id",
-      ],
+      // [ NOTE: This test used to work, but cb.id has changed something and now
+      //   it no longer recognizes "exampleprimary.cb.id" or returns data for it.
+      //   as a quick for now, let's disabled this test.
+      //   "0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd",
+      //   "unlikely",
+      //   "normalized",
+      //   "exampleprimary.cb.id",
+      //   "exampleprimary.cb.id",
+      //   "exampleprimary.cb.id",
+      //   false,
+      //   "exampleprimary.cb.id",
+      // ],
       [
           '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96046',
           null,
