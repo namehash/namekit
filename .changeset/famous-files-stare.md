@@ -1,5 +1,4 @@
 ---
-"nameguard-examples": minor
 "@namehash/nameguard-js": minor
 "@namehash/nameguard": minor
 "nameguard-api": minor
