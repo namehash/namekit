@@ -104,7 +104,7 @@ export function RoadMap() {
           Build{" "}
           <a
             className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
-            href="https://github.com/namehash/nameguard/tree/main/api"
+            href="https://github.com/namehash/namekit/tree/main/api"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -141,7 +141,7 @@ export function RoadMap() {
           Made it easy for anyone to{" "}
           <a
             className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
-            href="https://github.com/namehash/nameguard/blob/main/api/serverless.yml"
+            href="https://github.com/namehash/namekit/blob/main/api/serverless.yml"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -160,7 +160,7 @@ export function RoadMap() {
           Offered a more convenient method for{" "}
           <a
             className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
-            href="https://github.com/namehash/nameguard/tree/main/packages/sdk"
+            href="https://github.com/namehash/namekit/tree/main/packages/nameguard-sdk"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -195,7 +195,7 @@ export function RoadMap() {
           Implemented{" "}
           <a
             className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
-            href="https://github.com/namehash/nameguard/tree/main/packages/nameguard-react"
+            href="https://github.com/namehash/namekit/tree/main/packages/nameguard-react"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -213,7 +213,7 @@ export function RoadMap() {
           Created a{" "}
           <a
             className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
-            href="https://github.com/namehash/ens-utils/blob/main/README.md"
+            href="https://github.com/namehash/namekit/tree/main/packages/ens-utils#nameparser"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -341,7 +341,7 @@ export function RoadMap() {
           Released an{" "}
           <a
             className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
-            href="https://github.com/namehash/nameguard/pull/139"
+            href="https://github.com/namehash/namekit/tree/main/packages/ens-webfont"
             target="_blank"
             rel="noopener noreferrer"
           >

@@ -53,13 +53,12 @@ export const SettingsModal = () => {
                   </Dialog.Title>
                   <div className="flex items-center right-0 inset-y-0 absolute pr-6 z-20">
                     <IconButton
-                      icon={
-                        <XMarkIcon className="w-6 h-6 fill-current text-black md:text-gray-400" />
-                      }
                       onClick={closeModal}
                       variant="ghost"
                       className="!p-2"
-                    />
+                    >
+                      <XMarkIcon className="w-6 h-6 fill-current text-black md:text-gray-400" />
+                    </IconButton>
                   </div>
                 </div>
 
@@ -79,7 +78,7 @@ export const SettingsModal = () => {
                             aria-describedby="attempt-ens-normalization-description"
                             name="attempt-ens-normalization"
                             type="checkbox"
-                            className="h-4 w-4 rounded border-black text-black focus:ring-black"
+                            className="form-checkbox ng-h-4 ng-w-4 ng-rounded ng-border-black ng-text-black !ring-black"
                             checked={localSettings.attemptEnsNormalization}
                             onChange={(e) =>
                               setLocalSettings((prev) => ({
@@ -114,7 +113,7 @@ export const SettingsModal = () => {
                             aria-describedby="assume-tld-description"
                             name="assume-tld"
                             type="checkbox"
-                            className="h-4 w-4 rounded border-black text-black focus:ring-black"
+                            className="form-checkbox ng-h-4 ng-w-4 ng-rounded ng-border-black ng-text-black !ring-black"
                             checked={localSettings.assumedTld === "eth"}
                             onChange={(e) =>
                               setLocalSettings((prev) => ({
@@ -148,7 +147,7 @@ export const SettingsModal = () => {
                             aria-describedby="trim-whitespace-description"
                             name="trim-whitespace"
                             type="checkbox"
-                            className="h-4 w-4 rounded border-black text-black focus:ring-black"
+                            className="form-checkbox ng-h-4 ng-w-4 ng-rounded ng-border-black ng-text-black !ring-black"
                             checked={localSettings.trimWhitespace}
                             onChange={(e) =>
                               setLocalSettings((prev) => ({

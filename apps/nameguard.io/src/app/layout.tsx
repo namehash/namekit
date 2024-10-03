@@ -1,6 +1,5 @@
 import "./globals.css";
 import "@namehash/ens-webfont";
-import "@namehash/namekit-react/styles.css";
 import "@namehash/nameguard-react/styles.css";
 import "@namehash/namekit-react/styles.css";
 
@@ -23,6 +22,7 @@ const description =
 
 export const metadata: Metadata = {
   ...NamehashMetadata.defaultMetdata,
+  metadataBase: new URL("https://nameguard.io"),
   title: {
     template: "NameGuard - %s",
     default: title,
@@ -37,6 +37,7 @@ export const metadata: Metadata = {
     title,
     description,
     siteName: "NameGuard",
+    url: new URL("https://nameguard.io"),
   },
   twitter: {
     ...NamehashMetadata.defaultMetdata.twitter,

@@ -499,3 +499,9 @@ We use [Storybook](https://storybook.namekit.io/) to preview components across o
 - `@namehash/ens-webfont`
 - `@namehash/ui`
   - These components are mostly internal and not intended for public use, but they are used across our packages.
+
+## Tailwind Configuration
+
+When configuring Tailwind CSS for use with this project, please note the following:
+
+If you're using the `@tailwindcss/forms` plugin in your `tailwind.config.ts`, you may encounter some styling conflicts with our components. To resolve this, you should use the plugin with the class strategy applied. Here's an example of how to configure it: https://github.com/tailwindlabs/tailwindcss-forms?tab=readme-ov-file#using-only-global-styles-or-only-classes
