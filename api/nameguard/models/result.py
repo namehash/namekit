@@ -390,7 +390,7 @@ class SecurePrimaryNameResult(BaseModel):
         examples=['vitalik.eth'],
     )
 
-    nameguard_result: Optional[NameGuardReport] = Field(
+    nameguard_report: Optional[NameGuardReport] = Field(
         description='NameGuard report for the `primary_name`.\n'
         '* if `address` has a primary name and `return_nameguard_report` is `True`, then return a `NameGuardReport` for the primary name. Else, NameGuard will return `null`',
     )
@@ -424,7 +424,7 @@ class FakeEthNameCheckResult(BaseModel):
 
     status: FakeEthNameCheckStatus
 
-    nameguard_result: Optional[NameGuardReport] = Field(
+    nameguard_report: Optional[NameGuardReport] = Field(
         description='NameGuard report for the .eth ENS NFT.\n'
         '* `null` if `status` is any value except `authentic_eth_name`, `invalid_eth_name` and `unknown_eth_name` (the NFT is not associated with authentic ".eth" contracts)\n'
     )

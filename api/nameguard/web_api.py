@@ -7,7 +7,7 @@ import time
 init_time = time.time()
 
 from enum import Enum
-from fastapi import FastAPI, Path, Request
+from fastapi import FastAPI, Path
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
@@ -489,7 +489,7 @@ async def inspect_labelhash_post(request: InspectLabelhashRequest) -> NameGuardR
     },
 )
 async def secure_primary_name_get(
-    address: str, network_name: NetworkName, request: Request, return_nameguard_report: bool = False
+    address: str, network_name: NetworkName, return_nameguard_report: bool = False
 ) -> SecurePrimaryNameResult:
     """
     ## Performs a reverse lookup of an Ethereum `address` to a primary name.
@@ -500,14 +500,11 @@ async def secure_primary_name_get(
 
     Returns `display_name` to be shown to users and estimates `impersonation_status`.
 
-    If `address` has a primary name and `return_nameguard_report` is `True`, then NameGuard will return a `SecurePrimaryNameResult` including a `NameGuardReport` for the primary name. Else, NameGuard will return `None` as `nameguard_result`.
+    If `address` has a primary name and `return_nameguard_report` is `True`, then NameGuard will return a `SecurePrimaryNameResult` including a `NameGuardReport` for the primary name. Else, NameGuard will return `None` as `nameguard_report`.
     """
     logger.debug(
         f"{json.dumps({'endpoint': Endpoints.SECURE_PRIMARY_NAME, 'method': 'GET', 'network_name': network_name, 'address': address, 'return_nameguard_report': return_nameguard_report})}"
     )
-    logger.debug(f'Request headers: {dict(request.headers)}')
-    logger.debug(f'Request query params: {dict(request.query_params)}')
-    logger.debug(f'Request path params: {dict(request.path_params)}')
     nameguard.context.endpoint_name.set(Endpoints.SECURE_PRIMARY_NAME)
     address = validate_ethereum_address(address)
 

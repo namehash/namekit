@@ -118,7 +118,7 @@ export interface FakeEthNameCheckResult {
    *
    * `null` if `status` is any value except `authentic_eth_name`, `invalid_eth_name` and `unknown_eth_name` (the NFT is not associated with authentic ".eth" contracts)
    */
-  nameguard_result: NameGuardReport | null;
+  nameguard_report: NameGuardReport | null;
 
   /**
    * Fields with values from Alchemy response which are investigated (e.g. title, collection name, metadata) whether they look like fake .eth ENS name.
@@ -459,7 +459,7 @@ export interface SecurePrimaryNameResult {
    * * `null` if `primary_name_status` is `no_primary_name` (primary name is not found)
    * * `null` if `SecurePrimaryNameOptions.returnNameGuardReport` is `false` or not provided
    */
-  nameguard_result: NameGuardReport | null;
+  nameguard_report: NameGuardReport | null;
 }
 
 // TODO: Let's apply more formalization to this error class.
@@ -689,7 +689,7 @@ export class NameGuard {
    *
    * Returns `display_name` to be shown to users and estimates `impersonation_status`
    *
-   * If `address` has a primary name and `options.returnNameGuardReport` is `true`, then NameGuard will attempt to inspect that primary name. Else, NameGuard will not perform any primary name inspection and the returned `nameguard_result` field will be `null`.
+   * If `address` has a primary name and `options.returnNameGuardReport` is `true`, then NameGuard will attempt to inspect that primary name. Else, NameGuard will not perform any primary name inspection and the returned `nameguard_report` field will be `null`.
    * 
    * @param {string} address An Ethereum address.
    * @param {SecurePrimaryNameOptions} options The options for the secure primary name.
