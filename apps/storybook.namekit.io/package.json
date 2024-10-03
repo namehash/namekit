@@ -6,19 +6,19 @@
     "build": "storybook build"
   },
   "devDependencies": {
-    "@chromatic-com/storybook": "^1.4.0",
-    "@storybook/addon-essentials": "^8.3.1",
-    "@storybook/addon-interactions": "^8.3.1",
-    "@storybook/addon-links": "^8.3.1",
-    "@storybook/addon-onboarding": "^8.3.1",
-    "@storybook/blocks": "^8.3.1",
-    "@storybook/react": "^8.3.1",
-    "@storybook/react-vite": "^8.3.1",
-    "@storybook/test": "^8.3.1",
+    "@chromatic-com/storybook": "1.9.0",
+    "@storybook/addon-essentials": "8.3.4",
+    "@storybook/addon-interactions": "8.3.4",
+    "@storybook/addon-links": "8.3.4",
+    "@storybook/addon-onboarding": "8.3.4",
+    "@storybook/blocks": "8.3.4",
+    "@storybook/react": "8.3.4",
+    "@storybook/react-vite": "8.3.4",
+    "@storybook/test": "8.3.4",
     "@types/react": "18.3.11",
     "@types/react-dom": "18.3.0",
-    "prop-types": "^15.8.1",
-    "storybook": "^8.3.1"
+    "prop-types": "15.8.1",
+    "storybook": "8.3.4"
   },
   "dependencies": {
     "@namehash/ens-utils": "workspace:*",
