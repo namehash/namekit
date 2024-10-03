@@ -1,7 +1,7 @@
 {
   "name": "@namehash/ens-utils",
   "description": "A collection of utilities for working with ENS. [DEPRECATED]",
-  "version": "1.16.0",
+  "version": "1.17.0",
   "license": "MIT",
   "repository": {
     "type": "git",

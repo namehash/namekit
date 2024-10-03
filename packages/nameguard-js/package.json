@@ -1,7 +1,7 @@
 {
   "name": "@namehash/nameguard-js",
   "description": "A JavaScript implementation of NameGuard. Currently implements securePrimaryName with more coming soon.",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "license": "MIT",
   "repository": {
     "type": "git",
