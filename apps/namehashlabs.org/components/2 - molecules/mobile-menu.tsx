@@ -2,9 +2,10 @@
 
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import NextLink from "next/link";
+import { Button, IconButton } from "@namehash/namekit-react";
+
 import { CalendarButton, NameHashLabsLogo } from "../1 - atoms";
-import Link from "next/link";
-import { IconButton } from "@namehash/namekit-react";
 
 const MobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,17 +29,12 @@ const MobileMenu = () => {
 
   return (
     <div className="z-50">
-      {/* Hamburguer button  */}
       <div className="block md:hidden">
-        <IconButton
-          variant="ghost"
-          className="!p-2"
-          icon={<Bars3Icon className="w-6 h-6 text-black" />}
-          onClick={() => toggleMenu()}
-        />
+        <IconButton variant="ghost" onClick={() => toggleMenu()}>
+          <Bars3Icon className="w-6 h-6 text-black" />
+        </IconButton>
       </div>
 
-      {/* Menu Overlay  */}
       <div
         className={`fixed top-0 right-0 w-full h-full bg-black z-50 transform ease-in-out transition-all duration-300 ${
           isOpen ? "translate-x-0" : "translate-x-full"
@@ -46,7 +42,7 @@ const MobileMenu = () => {
       >
         <div className="flex flex-col h-full p-4">
           <div className="flex w-full justify-between items-center">
-            <Link
+            <NextLink
               href="/"
               aria-label="Home page"
               onClick={() => {
@@ -55,48 +51,51 @@ const MobileMenu = () => {
               }}
             >
               <NameHashLabsLogo className="text-white" />
-            </Link>
+            </NextLink>
             <IconButton
               onClick={() => toggleMenu()}
               variant="ghost"
               className="!p-2"
-              icon={<XMarkIcon className="w-5 h-5 text-white" />}
             >
+              <XMarkIcon className="w-5 h-5 text-white" />
               <span className="sr-only">Toggle menu</span>
             </IconButton>
           </div>
 
           <nav className="flex flex-col justify-center flex-grow gap-1">
-            <Link
-              className="block text-base leading-6 font-medium py-2 text-white hover:bg-opacity-10 hover:bg-white transition-color duration-300 px-3 rounded-[8px]"
-              href="/"
-              onClick={() => {
-                toggleMenu();
-                enableScroll();
-              }}
-            >
-              Home
-            </Link>
-            <Link
-              className="block text-base leading-6 font-medium py-2 text-white hover:bg-opacity-10 hover:bg-white transition-color duration-300 px-3 rounded-[8px]"
-              href="/ens-referral-program"
-              onClick={() => {
-                toggleMenu();
-                enableScroll();
-              }}
-            >
-              ENS Referral Program
-            </Link>
-            <Link
-              onClick={() => {
-                toggleMenu();
-                enableScroll();
-              }}
-              className="block text-base leading-6 font-medium py-2 text-white hover:bg-opacity-10 hover:bg-white transition-color duration-300 px-3 rounded-[8px]"
-              href="/careers"
-            >
-              Open positions
-            </Link>
+            <Button variant="primary" asChild>
+              <NextLink
+                href="/"
+                onClick={() => {
+                  toggleMenu();
+                  enableScroll();
+                }}
+              >
+                Home
+              </NextLink>
+            </Button>
+            <Button variant="primary" asChild>
+              <NextLink
+                href="/ens-referral-program"
+                onClick={() => {
+                  toggleMenu();
+                  enableScroll();
+                }}
+              >
+                ENS Referral Program
+              </NextLink>
+            </Button>
+            <Button variant="primary" asChild>
+              <NextLink
+                onClick={() => {
+                  toggleMenu();
+                  enableScroll();
+                }}
+                href="/careers"
+              >
+                Open positions
+              </NextLink>
+            </Button>
           </nav>
           <CalendarButton variant="secondary">Schedule a call</CalendarButton>
         </div>

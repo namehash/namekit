@@ -117,7 +117,7 @@ export const Footer = (props: React.HTMLAttributes<HTMLDivElement>) => {
 
           <div className="flex gap-3">
             <Link
-              href="https://twitter.com/NamehashLabs"
+              href="https://x.com/NamehashLabs"
               target="_blank"
               aria-label="Twitter"
             >
