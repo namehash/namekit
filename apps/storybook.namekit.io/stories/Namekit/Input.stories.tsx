@@ -24,7 +24,6 @@ const meta: Meta<typeof Input> = {
         options: ["text", "email", "number", "password"],
       },
     },
-    asChild: { control: { disable: true } },
     className: { control: "text" },
     placeholder: { control: "text" },
   },
@@ -84,12 +83,16 @@ export const SecondaryLarge: Story = {
   },
 };
 
-export const CustomClass: Story = {
+export const CustomStyling: Story = {
   args: {
     variant: "primary",
     inputSize: "medium",
-    placeholder: "Custom Class Input",
-    className: "custom-class-name",
+    placeholder: "Custom Styled Input",
+    defaultValue: "Custom Styled Input",
+    style: {
+      color: "blue",
+      fontWeight: "bold",
+    },
   },
 };
 
@@ -97,7 +100,7 @@ export const WithSlotLeft: Story = {
   args: {
     variant: "primary",
     inputSize: "medium",
-    placeholder: "Say something",
+    placeholder: "Telegram username",
     children: <Input.Slot>@</Input.Slot>,
   },
 };
@@ -106,17 +109,35 @@ export const WithSlotRight: Story = {
   args: {
     variant: "primary",
     inputSize: "medium",
-    placeholder: "Say something",
+    placeholder: "Uniswap handle",
     slotPosition: "right",
-    children: <Input.Slot>@</Input.Slot>,
+    children: <Input.Slot>.uni.eth</Input.Slot>,
   },
 };
 
-export const WithSlotLeftSmall: Story = {
+export const WithError: Story = {
   args: {
     variant: "primary",
-    inputSize: "small",
-    placeholder: "Say something",
-    children: <Input.Slot>@</Input.Slot>,
+    inputSize: "medium",
+    placeholder: "Email address",
+    error: "Email is required",
+  },
+};
+
+export const PrimaryDisabled: Story = {
+  args: {
+    variant: "primary",
+    inputSize: "medium",
+    defaultValue: "Primary disabled input",
+    disabled: true,
+  },
+};
+
+export const SecondaryDisabled: Story = {
+  args: {
+    variant: "secondary",
+    inputSize: "medium",
+    defaultValue: "Secondary disabled input",
+    disabled: true,
   },
 };

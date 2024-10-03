@@ -10,16 +10,17 @@
     "release": "pnpm publish -r",
     "changeset": "changeset"
   },
-  "packageManager": "pnpm@8.6.10",
+  "packageManager": "pnpm@9.10.0",
   "devDependencies": {
     "@changesets/changelog-github": "0.5.0",
     "@changesets/cli": "^2.27.2",
     "eslint": "^8.56.0",
     "prettier": "^3.2.5",
     "rimraf": "^5.0.7",
-    "turbo": "2.0.6"
+    "turbo": "2.1.2"
   },
-  "dependencies": {
-    "yup": "1.4.0"
+  "engines": {
+    "node": ">=18.12.0",
+    "pnpm": ">=9.0.0"
   }
 }

@@ -1,12 +1,10 @@
 import { ColorfulBg } from "../1 - atoms/colorful-bg";
-import Image from "next/image";
+
 import { RoleCard } from "../2 - molecules/role-card";
-import { ExternalLinkIcon } from "../1 - atoms";
 import { Role } from "@/types";
 import { getRelatedRoles } from "@/lib/utils/careers";
-import Link from "next/link";
 import rolesData from "@/data/rolesData";
-import { FrontendBanner } from "../1 - atoms/career-banners/frontend-banner";
+import { Link } from "@namehash/namekit-react";
 
 const MAX_RELATED_ROLES = 3;
 
@@ -54,15 +52,13 @@ const JoinOurTeam = () => {
           </Link>
         </p>
       </div>
-      <a
+      <Link
         href="mailto:hello@namehashlabs.org"
         className="px-4 cursor-pointer flex items-center gap-3 py-2 rounded-[8px] bg-white flex-nowrap hover:bg-gray-100 transition-colors duration-200 w-full justify-center "
       >
-        <p className="text-base leading-6 font-medium whitespace-nowrap">
-          Email Us
-        </p>
-        <ExternalLinkIcon className="w-5 h-5" />
-      </a>
+        Email Us
+        <Link.ExternalIcon />
+      </Link>
     </div>
   );
 };
@@ -72,7 +68,7 @@ const MoreRoles = ({ role }: { role: Role }) => {
     role,
     rolesData.roles,
     true,
-    MAX_RELATED_ROLES
+    MAX_RELATED_ROLES,
   );
 
   return (

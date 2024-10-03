@@ -11,3 +11,10 @@ __pycache__
 
 *storybook.log
 storybook-static
+
+# Ignore pnpm-lock.yaml in all subdirectories, but not in the monorepo root.
+**/pnpm-lock.yaml
+!/pnpm-lock.yaml
+
+# We use pnpm, not npm.
+package-lock.json

@@ -447,7 +447,20 @@ The NameKit monorepo contains multiple packages and apps.
 
 ## Local Development
 
-You must clone this respository, and install the dependencies using [PNPM](https://pnpm.io/installation) before you can run it locally:
+### Prerequisites
+
+- [Git](https://git-scm.com/)
+- [Node.js](https://nodejs.org/)
+  - It's recommended you install Node.js through [nvm](https://github.com/nvm-sh/nvm) (see link for installation instructions).
+  - To ensure you're running the expected version of Node.js run `nvm install` in the root of the repository (after you clone it).
+  - Node.js will automatically install `corepack`. You should also ensure Corepack is enabled by running `corepack enable`.
+- [pnpm](https://pnpm.io/)
+  - Run `npm install -g pnpm` or see [other installation options](https://pnpm.io/installation).
+  - To ensure you're running the expected version of pnpm run `corepack use pnpm` in the root of the repository (after you clone it).
+
+### Getting started
+
+Use `git` to clone this respository, and install the dependencies using `pnpm` to run NameKit locally:
 
 1. `git clone https://github.com/namehash/namekit.git`
 2. `cd namekit`
@@ -486,3 +499,9 @@ We use [Storybook](https://storybook.namekit.io/) to preview components across o
 - `@namehash/ens-webfont`
 - `@namehash/ui`
   - These components are mostly internal and not intended for public use, but they are used across our packages.
+
+## Tailwind Configuration
+
+When configuring Tailwind CSS for use with this project, please note the following:
+
+If you're using the `@tailwindcss/forms` plugin in your `tailwind.config.ts`, you may encounter some styling conflicts with our components. To resolve this, you should use the plugin with the class strategy applied. Here's an example of how to configure it: https://github.com/tailwindlabs/tailwindcss-forms?tab=readme-ov-file#using-only-global-styles-or-only-classes
