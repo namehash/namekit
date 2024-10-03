@@ -1,4 +1,3 @@
-import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import { TextArea } from "@namehash/namekit-react";
 
@@ -87,7 +86,31 @@ export const CustomClass: Story = {
     variant: "primary",
     size: "medium",
     placeholder: "Custom Class Textarea",
-    className: "custom-class-name",
+    defaultValue: "Custom Styled Textarea",
+    style: {
+      color: "blue",
+      fontWeight: "bold",
+    },
     rows: 4,
+  },
+};
+
+export const PrimaryDisabled: Story = {
+  args: {
+    variant: "primary",
+    size: "medium",
+    defaultValue: "Primary Disabled Textarea",
+    rows: 4,
+    disabled: true,
+  },
+};
+
+export const SecondaryDisabled: Story = {
+  args: {
+    variant: "secondary",
+    size: "medium",
+    defaultValue: "Secondary Disabled Textarea",
+    rows: 4,
+    disabled: true,
   },
 };
