@@ -101,7 +101,7 @@ export const WithSlotLeft: Story = {
   args: {
     variant: "primary",
     inputSize: "medium",
-    placeholder: "telegram_username",
+    placeholder: "Telegram username",
     children: <Input.Slot>@</Input.Slot>,
   },
 };
