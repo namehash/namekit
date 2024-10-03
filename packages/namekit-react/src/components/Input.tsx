@@ -7,6 +7,8 @@ export interface InputProps
   variant?: "primary" | "secondary";
   inputSize?: "small" | "medium" | "large";
   slotPosition?: "left" | "right";
+  error?: string;
+  disabled?: boolean;
 }
 
 interface SlotProps {
@@ -14,14 +16,7 @@ interface SlotProps {
 }
 
 const wrapperClasses =
-  "nk-group nk-flex nk-relative nk-w-full nk-rounded-md nk-border nk-shadow-sm nk-transition-colors";
-
-const variantClasses = {
-  primary:
-    "nk-bg-white nk-text-black nk-border-gray-300 nk-shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] hover:nk-border-gray-400 has-[input:focus]:nk-border-gray-600 has-[input:focus:hover]:nk-border-gray-600",
-  secondary:
-    "nk-border-gray-200 nk-bg-gray-100 hover:nk-border-gray-300 has-[input:focus]:nk-border-gray-400 has-[input:focus:hover]:nk-border-gray-400",
-};
+  "nk-group nk-flex nk-relative nk-w-full nk-rounded-md nk-border nk-shadow-sm nk-transition-colors nk-flex nk-items-center";
 
 const sizeClasses = {
   small: "nk-py-1 nk-px-2 nk-text-sm",
@@ -42,7 +37,9 @@ export const Input: React.FC<InputProps> & { Slot: React.FC<SlotProps> } = ({
   variant = "primary",
   inputSize = "medium",
   slotPosition = "left",
+  disabled = false,
   children,
+  error,
   id,
   ...props
 }) => {
@@ -55,30 +52,60 @@ export const Input: React.FC<InputProps> & { Slot: React.FC<SlotProps> } = ({
     (child: any) => child.type === Input.Slot,
   );
 
+  const variantClasses = {
+    primary: cc([
+      "nk-text-black nk-border-gray-300 nk-shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] has-[input:focus]:nk-border-gray-600 has-[input:focus:hover]:nk-border-gray-600",
+      disabled
+        ? "nk-text-gray-500 nk-bg-gray-50"
+        : "nk-bg-white hover:nk-border-gray-400",
+    ]),
+    secondary: [
+      "nk-border-gray-200 has-[input:focus]:nk-border-gray-400 has-[input:focus:hover]:nk-border-gray-400",
+      disabled
+        ? "nk-text-gray-500 nk-bg-gray-200"
+        : "nk-bg-gray-100 hover:nk-border-gray-300",
+    ],
+  };
+
   const combinedClassName = cc([
     wrapperClasses,
     variantClasses[variant],
     sizeClasses[inputSize],
     className,
+    {
+      "nk-border-red-300": !!error,
+    },
   ]);
 
   const inputClasses = cc([
-    "nk-ring-0 focus:nk-outline-none nk-w-full h-full placeholder:nk-text-gray-500 nk-bg-transparent",
+    "nk-ring-0 focus:nk-outline-none nk-w-full h-full placeholder:nk-text-gray-500 nk-bg-transparent nk-border-red-300  nk-flex-1",
     hasSlot && slotPosition === "left" ? "nk-pl-2" : "nk-pr-2",
   ]);
 
   return (
-    <div className={combinedClassName}>
-      {hasSlot && slotPosition === "left" && (
-        <label htmlFor={inputId} className={slotClassName}>
-          {children}
-        </label>
-      )}
-      <input id={inputId} className={inputClasses} {...props} />
-      {hasSlot && slotPosition === "right" && (
-        <label htmlFor={inputId} className={slotClassName}>
-          {children}
-        </label>
+    <div className="nk-gap-1">
+      <div className={combinedClassName}>
+        {hasSlot && slotPosition === "left" && (
+          <label htmlFor={inputId} className={slotClassName}>
+            {children}
+          </label>
+        )}
+        <input
+          id={inputId}
+          className={inputClasses}
+          disabled={disabled}
+          {...props}
+        />
+        {hasSlot && slotPosition === "right" && (
+          <label htmlFor={inputId} className={slotClassName}>
+            {children}
+          </label>
+        )}
+      </div>
+      {error && (
+        <span className="nk-mt-2 nk-text-sm nk-font-normal nk-text-red-600">
+          {error}
+        </span>
       )}
     </div>
   );
