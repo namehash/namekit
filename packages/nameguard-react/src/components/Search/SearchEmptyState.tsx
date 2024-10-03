@@ -27,7 +27,6 @@ const examples = [
   "unknоwn.eth",
   "john🇺🇸",
   "7️⃣7️⃣7️⃣.eth",
-  "extremelylongnamethatgoesonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandonandon.eth",
 ].map((name) => buildENSName(name));
 
 export const SearchEmptyState = () => {
@@ -103,28 +102,16 @@ export const SearchEmptyState = () => {
           <div className="inline-flex items-center space-x-1 absolute left-0 w-full pl-6 pr-10">
             {!isAtStart && (
               <div className="md:hidden fixed left-0 z-50">
-                <IconButton
-                  onClick={slideLeft}
-                  variant="ghost"
-                  size="small"
-                  className="!p-2"
-                  icon={
-                    <ChevronLeftIcon className="fill-current text-black w-5 h-5" />
-                  }
-                />
+                <IconButton onClick={slideLeft} variant="ghost" size="small">
+                  <ChevronLeftIcon className="fill-current text-black w-5 h-5" />
+                </IconButton>
               </div>
             )}
             {!isAtEnd && (
               <div className="md:hidden fixed right-0 z-50">
-                <IconButton
-                  onClick={slideRight}
-                  variant="ghost"
-                  size="small"
-                  className="!p-2"
-                  icon={
-                    <ChevronRightIcon className="fill-current text-black w-5 h-5" />
-                  }
-                />
+                <IconButton onClick={slideRight} variant="ghost" size="small">
+                  <ChevronRightIcon className="fill-current text-black w-5 h-5" />
+                </IconButton>
               </div>
             )}
             {(hadLoadingError || isLoading) &&

@@ -16,7 +16,7 @@ export const Footer = () => {
       </p>
       <div className="flex flex-row justify-between gap-3">
         <a
-          href="https://twitter.com/NamehashLabs"
+          href="https://x.com/NamehashLabs"
           aria-label="Twitter Link"
           target="_blank"
           rel="noopener noreferrer"
@@ -24,7 +24,7 @@ export const Footer = () => {
           <TwitterIcon className="sm:transition sm:hover:fill-black text-[#AFAFAF] fill-current transition-all duration-200" />
         </a>
         <a
-          href="https://github.com/namehash/nameguard"
+          href="https://github.com/namehash/namekit"
           aria-label="Github Link"
           target="_blank"
           rel="noopener noreferrer"

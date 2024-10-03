@@ -24,7 +24,6 @@ const meta: Meta<typeof Input> = {
         options: ["text", "email", "number", "password"],
       },
     },
-    asChild: { control: { disable: true } },
     className: { control: "text" },
     placeholder: { control: "text" },
   },
