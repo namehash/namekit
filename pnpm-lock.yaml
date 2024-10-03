@@ -321,7 +321,7 @@ importers:
         version: 8.3.4(@storybook/test@8.3.4(storybook@8.3.4))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.3.4)(typescript@5.6.2)
       '@storybook/react-vite':
         specifier: ^8.3.1
-        version: 8.3.4(@storybook/test@8.3.4(storybook@8.3.4))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.17.2)(storybook@8.3.4)(typescript@5.6.2)(vite@5.1.7(@types/node@22.7.4))
+        version: 8.3.4(@storybook/test@8.3.4(storybook@8.3.4))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.17.2)(storybook@8.3.4)(typescript@5.6.2)(vite@5.1.8(@types/node@22.7.4))
       '@storybook/test':
         specifier: ^8.3.1
         version: 8.3.4(storybook@8.3.4)
@@ -377,8 +377,8 @@ importers:
         specifier: 5.3.3
         version: 5.3.3
       vite:
-        specifier: 5.1.7
-        version: 5.1.7(@types/node@22.7.4)
+        specifier: 5.1.8
+        version: 5.1.8(@types/node@22.7.4)
       vitest:
         specifier: 1.4.0
         version: 1.4.0(@types/node@22.7.4)
@@ -1356,6 +1356,7 @@ packages:
   '@humanwhocodes/config-array@0.11.14':
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
     engines: {node: '>=10.10.0'}
+    deprecated: Use @eslint/config-array instead
 
   '@humanwhocodes/module-importer@1.0.1':
     resolution: {integrity: sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA==}
@@ -1363,6 +1364,7 @@ packages:
 
   '@humanwhocodes/object-schema@2.0.3':
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
+    deprecated: Use @eslint/object-schema instead
 
   '@img/sharp-darwin-arm64@0.33.3':
     resolution: {integrity: sha512-FaNiGX1MrOuJ3hxuNzWgsT/mg5OHG/Izh59WW2mk1UwYHUwtfbhk5QNKYZgxf0pLOhx9ctGiGa2OykD71vOnSw==}
@@ -4243,6 +4245,7 @@ packages:
 
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
+    deprecated: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -5596,6 +5599,7 @@ packages:
 
   rimraf@3.0.2:
     resolution: {integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==}
+    deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
 
   rimraf@5.0.7:
@@ -6444,6 +6448,34 @@ packages:
 
   vite@5.1.7:
     resolution: {integrity: sha512-sgnEEFTZYMui/sTlH1/XEnVNHMujOahPLGMxn1+5sIT45Xjng1Ec1K78jRP15dSmVgg5WBin9yO81j3o9OxofA==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': ^18.0.0 || >=20.0.0
+      less: '*'
+      lightningcss: ^1.21.0
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      lightningcss:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+
+  vite@5.1.8:
+    resolution: {integrity: sha512-mB8ToUuSmzODSpENgvpFk2fTiU/YQ1tmcVJJ4WZbq4fPdGJkFNVcmVL5k7iDug6xzWjjuGDKAuSievIsD6H7Xw==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -8325,13 +8357,13 @@ snapshots:
     dependencies:
       '@sinclair/typebox': 0.27.8
 
-  '@joshwooding/vite-plugin-react-docgen-typescript@0.3.0(typescript@5.6.2)(vite@5.1.7(@types/node@22.7.4))':
+  '@joshwooding/vite-plugin-react-docgen-typescript@0.3.0(typescript@5.6.2)(vite@5.1.8(@types/node@22.7.4))':
     dependencies:
       glob: 7.2.3
       glob-promise: 4.2.2(glob@7.2.3)
       magic-string: 0.27.0
       react-docgen-typescript: 2.2.2(typescript@5.6.2)
-      vite: 5.1.7(@types/node@22.7.4)
+      vite: 5.1.8(@types/node@22.7.4)
     optionalDependencies:
       typescript: 5.6.2
 
@@ -9125,7 +9157,7 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@storybook/builder-vite@8.3.4(storybook@8.3.4)(typescript@5.6.2)(vite@5.1.7(@types/node@22.7.4))':
+  '@storybook/builder-vite@8.3.4(storybook@8.3.4)(typescript@5.6.2)(vite@5.1.8(@types/node@22.7.4))':
     dependencies:
       '@storybook/csf-plugin': 8.3.4(storybook@8.3.4)
       '@types/find-cache-dir': 3.2.1
@@ -9137,7 +9169,7 @@ snapshots:
       magic-string: 0.30.10
       storybook: 8.3.4
       ts-dedent: 2.2.0
-      vite: 5.1.7(@types/node@22.7.4)
+      vite: 5.1.8(@types/node@22.7.4)
     optionalDependencies:
       typescript: 5.6.2
     transitivePeerDependencies:
@@ -9325,11 +9357,11 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       storybook: 8.3.4
 
-  '@storybook/react-vite@8.3.4(@storybook/test@8.3.4(storybook@8.3.4))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.17.2)(storybook@8.3.4)(typescript@5.6.2)(vite@5.1.7(@types/node@22.7.4))':
+  '@storybook/react-vite@8.3.4(@storybook/test@8.3.4(storybook@8.3.4))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(rollup@4.17.2)(storybook@8.3.4)(typescript@5.6.2)(vite@5.1.8(@types/node@22.7.4))':
     dependencies:
-      '@joshwooding/vite-plugin-react-docgen-typescript': 0.3.0(typescript@5.6.2)(vite@5.1.7(@types/node@22.7.4))
+      '@joshwooding/vite-plugin-react-docgen-typescript': 0.3.0(typescript@5.6.2)(vite@5.1.8(@types/node@22.7.4))
       '@rollup/pluginutils': 5.1.0(rollup@4.17.2)
-      '@storybook/builder-vite': 8.3.4(storybook@8.3.4)(typescript@5.6.2)(vite@5.1.7(@types/node@22.7.4))
+      '@storybook/builder-vite': 8.3.4(storybook@8.3.4)(typescript@5.6.2)(vite@5.1.8(@types/node@22.7.4))
       '@storybook/react': 8.3.4(@storybook/test@8.3.4(storybook@8.3.4))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(storybook@8.3.4)(typescript@5.6.2)
       find-up: 5.0.0
       magic-string: 0.30.10
@@ -9339,7 +9371,7 @@ snapshots:
       resolve: 1.22.8
       storybook: 8.3.4
       tsconfig-paths: 4.2.0
-      vite: 5.1.7(@types/node@22.7.4)
+      vite: 5.1.8(@types/node@22.7.4)
     transitivePeerDependencies:
       - '@preact/preset-vite'
       - '@storybook/test'
@@ -11136,7 +11168,7 @@ snapshots:
       eslint: 8.56.0
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.56.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.56.0))(eslint@8.56.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.56.0)(typescript@5.3.3))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.56.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.56.0))(eslint@8.56.0))(eslint@8.56.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.56.0)(typescript@5.3.3))(eslint-import-resolver-typescript@3.6.1)(eslint@8.56.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.56.0)
       eslint-plugin-react: 7.34.1(eslint@8.56.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.56.0)
@@ -11196,7 +11228,7 @@ snapshots:
       enhanced-resolve: 5.16.1
       eslint: 8.56.0
       eslint-module-utils: 2.8.1(@typescript-eslint/parser@7.2.0(eslint@8.56.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.56.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.56.0))(eslint@8.56.0))(eslint@8.56.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.56.0)(typescript@5.3.3))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.56.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.56.0))(eslint@8.56.0))(eslint@8.56.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.56.0)(typescript@5.3.3))(eslint-import-resolver-typescript@3.6.1)(eslint@8.56.0)
       fast-glob: 3.3.2
       get-tsconfig: 4.7.5
       is-core-module: 2.13.1
@@ -11274,7 +11306,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.56.0)(typescript@5.3.3))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@7.2.0(eslint@8.56.0)(typescript@5.3.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.56.0))(eslint@8.56.0))(eslint@8.56.0):
+  eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.2.0(eslint@8.56.0)(typescript@5.3.3))(eslint-import-resolver-typescript@3.6.1)(eslint@8.56.0):
     dependencies:
       array-includes: 3.1.8
       array.prototype.findlastindex: 1.2.5
@@ -14703,7 +14735,7 @@ snapshots:
       debug: 4.3.4(supports-color@8.1.1)
       pathe: 1.1.2
       picocolors: 1.0.1
-      vite: 5.1.7(@types/node@20.12.12)
+      vite: 5.1.8(@types/node@20.12.12)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -14720,7 +14752,7 @@ snapshots:
       debug: 4.3.4(supports-color@8.1.1)
       pathe: 1.1.2
       picocolors: 1.0.1
-      vite: 5.1.7(@types/node@20.12.7)
+      vite: 5.1.8(@types/node@20.12.7)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -14737,7 +14769,7 @@ snapshots:
       debug: 4.3.4(supports-color@8.1.1)
       pathe: 1.1.2
       picocolors: 1.0.1
-      vite: 5.1.7(@types/node@22.7.4)
+      vite: 5.1.8(@types/node@22.7.4)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -14754,7 +14786,7 @@ snapshots:
       debug: 4.3.4(supports-color@8.1.1)
       pathe: 1.1.2
       picocolors: 1.0.1
-      vite: 5.1.7(@types/node@20.12.7)
+      vite: 5.1.8(@types/node@20.12.7)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -14771,7 +14803,7 @@ snapshots:
       debug: 4.3.4(supports-color@8.1.1)
       pathe: 1.1.2
       picocolors: 1.0.1
-      vite: 5.1.7(@types/node@22.7.4)
+      vite: 5.1.8(@types/node@22.7.4)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -14783,15 +14815,6 @@ snapshots:
       - terser
     optional: true
 
-  vite@5.1.7(@types/node@20.12.12):
-    dependencies:
-      esbuild: 0.19.12
-      postcss: 8.4.47
-      rollup: 4.17.2
-    optionalDependencies:
-      '@types/node': 20.12.12
-      fsevents: 2.3.3
-
   vite@5.1.7(@types/node@20.12.7):
     dependencies:
       esbuild: 0.19.12
@@ -14802,6 +14825,34 @@ snapshots:
       fsevents: 2.3.3
 
   vite@5.1.7(@types/node@22.7.4):
+    dependencies:
+      esbuild: 0.19.12
+      postcss: 8.4.47
+      rollup: 4.17.2
+    optionalDependencies:
+      '@types/node': 22.7.4
+      fsevents: 2.3.3
+    optional: true
+
+  vite@5.1.8(@types/node@20.12.12):
+    dependencies:
+      esbuild: 0.19.12
+      postcss: 8.4.47
+      rollup: 4.17.2
+    optionalDependencies:
+      '@types/node': 20.12.12
+      fsevents: 2.3.3
+
+  vite@5.1.8(@types/node@20.12.7):
+    dependencies:
+      esbuild: 0.19.12
+      postcss: 8.4.47
+      rollup: 4.17.2
+    optionalDependencies:
+      '@types/node': 20.12.7
+      fsevents: 2.3.3
+
+  vite@5.1.8(@types/node@22.7.4):
     dependencies:
       esbuild: 0.19.12
       postcss: 8.4.47
@@ -14829,7 +14880,7 @@ snapshots:
       strip-literal: 2.1.0
       tinybench: 2.8.0
       tinypool: 0.8.4
-      vite: 5.1.7(@types/node@20.12.12)
+      vite: 5.1.8(@types/node@20.12.12)
       vite-node: 1.4.0(@types/node@20.12.12)
       why-is-node-running: 2.2.2
     optionalDependencies:
@@ -14862,7 +14913,7 @@ snapshots:
       strip-literal: 2.1.0
       tinybench: 2.8.0
       tinypool: 0.8.4
-      vite: 5.1.7(@types/node@20.12.7)
+      vite: 5.1.8(@types/node@20.12.7)
       vite-node: 1.4.0(@types/node@20.12.7)
       why-is-node-running: 2.2.2
     optionalDependencies:
@@ -14895,7 +14946,7 @@ snapshots:
       strip-literal: 2.1.0
       tinybench: 2.8.0
       tinypool: 0.8.4
-      vite: 5.1.7(@types/node@22.7.4)
+      vite: 5.1.8(@types/node@22.7.4)
       vite-node: 1.4.0(@types/node@22.7.4)
       why-is-node-running: 2.2.2
     optionalDependencies:
