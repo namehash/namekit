@@ -1,16 +1,18 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
-  "changelog": [
-    "@changesets/changelog-github",
-    {
-      "repo": "namehash/namekit"
-    }
-  ],
+  "changelog": "@changesets/cli/changelog",
   "commit": false,
   "fixed": [],
   "linked": [],
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["nameguard.io", "storybook.namekit.io", "examples.nameguard.io", "namehashlabs.org", "nameguard-api", "@namehash/seo"]
+  "ignore": [
+    "nameguard.io",
+    "storybook.namekit.io",
+    "examples.nameguard.io",
+    "namehashlabs.org",
+    "nameguard-api",
+    "@namehash/seo"
+  ]
 }
