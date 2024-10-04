@@ -1,5 +1,7 @@
 "use client";
 
+import NextLink from "next/link";
+
 import { PreSectionText } from "../1 - atoms/pre-section-text";
 import { SectionText } from "../1 - atoms/section-text";
 import { SectionTitle } from "../1 - atoms/section-title";
@@ -47,9 +49,9 @@ export const TeamSection = () => {
               talents and would be happy to hear from you.
             </Balancer>
           </SectionText>
-          <a href="/careers">
-            <Button>Join our team</Button>
-          </a>
+          <Button asChild>
+            <NextLink href="/careers">Join our team</NextLink>
+          </Button>
         </div>
         <div className="grid lg:grid-cols-5 grid-cols-3 m-auto md:grid-cols-5 sm:grid-cols-3 place-items-center lg:gap-x-auto gap-6 lg:gap-8 lg:ml-auto lg:max-w-[1216px]">
           {namehashLabsTeam.profiles.map((member) => {

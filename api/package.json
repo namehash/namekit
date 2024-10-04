@@ -17,13 +17,12 @@
     "NameHash"
   ],
   "scripts": {
-    "deploy:prod": "serverless deploy --stage prod"
+    "deploy:prod": "DOCKER_CONFIG=./.docker serverless deploy --stage prod"
   },
   "dependencies": {
     "serverless": "3.39.0"
   },
   "devDependencies": {
-    "serverless-dotenv-plugin": "6.0.0",
     "serverless-prune-plugin": "2.0.2"
   }
 }

@@ -4,8 +4,20 @@
 
 ### Minor Changes
 
-- 82e4dc0: Added unicode_version field to ConsolidatedGraphemeGuardReport.
-- 01236c9: Add a `computeNameGuardReport` parameter to the NameGuard API
+- [#315](https://github.com/namehash/namekit/pull/315) [`82e4dc0`](https://github.com/namehash/namekit/commit/82e4dc044ef9ccf8d44bc0617e3a77f9d7a94ca8) Thanks [@Carbon225](https://github.com/Carbon225)! - Added unicode_version field to ConsolidatedGraphemeGuardReport.
+
+- [#420](https://github.com/namehash/namekit/pull/420) [`c2fdd5f`](https://github.com/namehash/namekit/commit/c2fdd5f83bc575bd1c7632503cc4da9d87c9da1a) Thanks [@djstrong](https://github.com/djstrong)! - Rename "NameGuard result" to "NameGuard report"
+
+- [#387](https://github.com/namehash/namekit/pull/387) [`01236c9`](https://github.com/namehash/namekit/commit/01236c9e547cb0820b682c7064d73f85942698ae) Thanks [@djstrong](https://github.com/djstrong)! - Add a `computeNameGuardReport` parameter to the NameGuard API
+
+### Patch Changes
+
+- [#419](https://github.com/namehash/namekit/pull/419) [`3ce420c`](https://github.com/namehash/namekit/commit/3ce420ce297392f0285265fed01bd8abf2a68313) Thanks [@lightwalker-eth](https://github.com/lightwalker-eth)! - Fix build config
+
+- [#419](https://github.com/namehash/namekit/pull/419) [`3ce420c`](https://github.com/namehash/namekit/commit/3ce420ce297392f0285265fed01bd8abf2a68313) Thanks [@lightwalker-eth](https://github.com/lightwalker-eth)! - Upgrade dependencies
+
+- Updated dependencies [[`ba89172`](https://github.com/namehash/namekit/commit/ba89172f2d22fbb5a32f7b1939926d5e89f3b2cd), [`3ce420c`](https://github.com/namehash/namekit/commit/3ce420ce297392f0285265fed01bd8abf2a68313)]:
+  - @namehash/ens-utils@1.17.0
 
 ## 0.4.0
 

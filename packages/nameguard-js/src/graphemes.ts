@@ -1,5 +1,6 @@
 import { splitGraphemes as unicodeStandardGraphemeSplit } from "text-segmentation";
-import { splitCharacters, isEmoji } from "./utils";
+import { isEmoji } from "./utils";
+import { charSplit } from "@namehash/ens-utils";
 import { HANGUL_JAMO } from "./data/hangul";
 import { INVISIBLE_JOINERS } from "./data/invisible_joiners";
 
@@ -29,7 +30,7 @@ export function splitGraphemes(name: string): string[] {
   // break up invisible characters
   let graphemesWithSplitInvisibles = [];
   for (const graphemeStr of graphemes) {
-    const graphemeCps = splitCharacters(graphemeStr);
+    const graphemeCps = charSplit(graphemeStr);
     let i = graphemeCps.length - 1;
     while (i >= 0) {
       if (INVISIBLE_JOINERS.has(graphemeCps[i])) {
@@ -59,7 +60,7 @@ export function splitGraphemes(name: string): string[] {
   // break up Hangul Jamo
   let graphemesWithSplitHangul = [];
   for (const graphemeStr of graphemes) {
-    const graphemeCps = splitCharacters(graphemeStr);
+    const graphemeCps = charSplit(graphemeStr);
     let i = 0;
     let j = 1;
     while (j < graphemeCps.length) {

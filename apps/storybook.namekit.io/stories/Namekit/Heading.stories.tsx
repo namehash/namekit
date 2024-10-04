@@ -70,11 +70,3 @@ export const CustomClass: Story = {
     className: "my-class-name",
   },
 };
-
-export const AsChild: Story = {
-  args: {
-    as: "h1",
-    children: "Heading as a span",
-    asChild: <span />,
-  },
-};

@@ -61,7 +61,7 @@ jobs:
 
       - name: Set up Python
         if: needs.check_changes.outputs.api_changed > 0
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: 3.11
           cache: "poetry"
@@ -102,7 +102,7 @@ jobs:
           else
             echo "NAMEGUARD_API_URI=$PRODUCTION_NAMEGUARD_API_URI" >> $GITHUB_ENV
           fi
-         
+
       - name: Run tests
         env:
           PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}

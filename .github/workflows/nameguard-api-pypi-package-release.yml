@@ -16,21 +16,21 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install pip dependencies
         working-directory: ./api
         run: |
           python -m pip install --upgrade pip
           pip install build
 
-      - name: Build package
+      - name: Build NameGuard package
         working-directory: ./api
         run: python -m build
 
-      - name: Publish package
+      - name: Publish NameGuard package
         uses: pypa/gh-action-pypi-publish@release/v1.8
         with:
           packages-dir: api/dist/
