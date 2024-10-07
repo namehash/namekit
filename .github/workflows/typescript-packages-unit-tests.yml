@@ -4,13 +4,13 @@ on:
   push:
     branches:
       - main
-      - ci
+      - staging
     paths:
       - "packages/**"
   pull_request:
     branches:
       - main
-      - ci
+      - staging
     paths:
       - "packages/**"
 
