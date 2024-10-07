@@ -181,7 +181,7 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
 
         <div
           className={cc([
-            "w-full h-full flex flex-col items-center justify-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300",
+            "w-full h-full flex flex-col items-center justify-center absolute  transition-all duration-300",
             successfulFormSubmit ? "opacity-100" : "opacity-0 z-[-1]",
           ])}
         >
@@ -198,6 +198,7 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
               setSuccessfulFormSubmit(false);
             }}
             type="reset"
+            className="mt-5"
           >
             Send another message
           </Button>
