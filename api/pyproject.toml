@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nameguard"
-version = "0.1.7"
+version = "0.1.8"
 description = "Security \"x-ray\" for ENS names"
 authors = ["NameHash Team <devops@namehash.io>"]
 maintainers = ["NameHash Team <devops@namehash.io>"]
@@ -34,7 +34,7 @@ uvicorn = { extras = ["standard"], version = "^0.23.2" }
 pytest-asyncio = "^0.21.1"
 pytest-cov = "^4.1.0"
 pytest-retry = "^1.5.0"
-ruff = "^0.1.6"
+ruff = "^0.6.0"
 pre-commit = "^3.5.0"
 coverage-badge = "^1.1.0"
 

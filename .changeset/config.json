@@ -7,5 +7,12 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["nameguard.io", "nameguard-storybook", "nameguard-examples"]
+  "ignore": [
+    "nameguard.io",
+    "storybook.namekit.io",
+    "examples.nameguard.io",
+    "namehashlabs.org",
+    "nameguard-api",
+    "@namehash/seo"
+  ]
 }

@@ -3,10 +3,10 @@
   "extends": "@namekit/tsconfig/base.json",
   "compilerOptions": {
     "target": "ES2020",
-    "module": "ES2020"
-  },
-  "paths": {
-    "@namehash/ens-utils": ["../ens-utils/dist"]
+    "module": "ES2020",
+    "paths": {
+      "@namehash/ens-utils": ["../ens-utils/dist"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
