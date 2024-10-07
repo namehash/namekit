@@ -316,7 +316,7 @@ def test_inspect_namehash_get(
         (
             '0x00f52438ae09d2f909ee2efc19ba8af75058e74ca4507aa091bd8282aa490e77',
             'unknown',
-            '🥛.[2e8eaa68c7e128861299162323c29c29672f5c094aceaf22d9c0935e4bbd3f85].[a64d2b5a93eda272d27734cc2fb8d1c468562e279f1e97e759eea1a5a410f8e3].👽.enspunks.eth',
+            '🥛.[2e8eaa68c7e128861299162323c29c29672f5c094aceaf22d9c0935e4bbd3f85].🛸.👽.enspunks.eth',
         ),
         pytest.param(
             '0x1bc53f6413409d078ec18a29b17f981eafab341598a4e970ac9efab7d29258af',
