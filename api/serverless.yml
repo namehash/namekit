@@ -1,8 +1,14 @@
 service: oss-nameguard
 
+stages:
+  staging:
+    alias: api-staging.nameguard.io
+  prod:
+    alias: api.nameguard.io
+
 custom:
   stage: ${opt:stage}
-  apiDomain: ${{ self:custom.stage == 'prod' ? 'api.nameguard.io' : 'api-staging.nameguard.io' }}
+  apiDomain: ${self:stages.${self:custom.stage}.alias}
   hostedZoneName: nameguard.io.
   hostedZoneId: Z00825691ZLCWE2VKJQW0
   prune:
