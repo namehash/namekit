@@ -4,10 +4,6 @@
   "version": "1.1.0",
   "main": "src/index.ts",
   "types": "src/index.ts",
-  "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch --clean=false"
-  },
   "dependencies": {
     "classcat": "5.0.4",
     "next": "14.1.4",
@@ -24,7 +20,6 @@
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
     "react": "^18.2.0",
-    "tsup": "^7.2.0",
     "react-dom": "^18.2.0",
     "typescript": "^5.3.3",
     "@namekit/tsconfig": "workspace:*"
