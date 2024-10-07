@@ -47,9 +47,10 @@ interface ValidationErrors {
 
 interface ContactUsFormProps {
   title: string;
+  url?: string;
 }
 
-export const ContactUsForm = ({ title }: ContactUsFormProps) => {
+export const ContactUsForm = ({ title, url }: ContactUsFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successfulFormSubmit, setSuccessfulFormSubmit] = useState(false);
@@ -108,7 +109,7 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
   };
 
   const sendData = async (data: ContactFormDataProps) => {
-    const apiUrl = "/api/contact-form";
+    const apiUrl = url || "/api/contact-form";
 
     const fetchPromise = fetch(apiUrl, {
       method: "POST",
