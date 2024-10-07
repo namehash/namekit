@@ -3,8 +3,12 @@ service: oss-nameguard
 stages:
   staging:
     alias: api-staging.nameguard.io
+    lambda-role: DefaultNameGuardRoleStaging
+    lambda-policy-name: NameGuardPolicyStaging
   prod:
     alias: api.nameguard.io
+    lambda-role: DefaultNameGuardRole
+    lambda-policy-name: NameGuardPolicy
 
 custom:
   stage: ${opt:stage}
@@ -55,7 +59,7 @@ resources:
       Type: AWS::IAM::Role
       Properties:
         Path: /my/default/path/
-        RoleName: DefaultNameGuardRole # required if you want to use 'serverless deploy --function' later on
+        RoleName: ${self:stages.${self:custom.stage}.lambda-role}
         AssumeRolePolicyDocument:
           Version: "2012-10-17"
           Statement:
@@ -65,7 +69,7 @@ resources:
                   - lambda.amazonaws.com
               Action: sts:AssumeRole
         Policies:
-          - PolicyName: NameGuardPolicy
+          - PolicyName: ${self:stages.${self:custom.stage}.lambda-policy-name}
             PolicyDocument:
               Version: "2012-10-17"
               Statement:
