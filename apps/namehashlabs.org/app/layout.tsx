@@ -22,9 +22,11 @@ const description =
   "NameHash Labs builds open source public goods that drive the global adoption of ENS.";
 const keywords = ["ens", "web3", "eth", "nameguard", "namekit", "namehash"];
 
+const baseUrl = "https://namehashlabs.org";
+
 export const metadata: Metadata = {
   ...NamehashMetadata.defaultMetdata,
-  metadataBase: new URL("https://namehashlabs.org"),
+  metadataBase: new URL(baseUrl),
   title: {
     template: "NameHash Labs - %s",
     default: title,
@@ -36,7 +38,6 @@ export const metadata: Metadata = {
     title,
     description,
     siteName: "NameHash Labs",
-    url: new URL("https://namehashlabs.org"),
   },
   twitter: {
     ...NamehashMetadata.defaultMetdata.twitter,
