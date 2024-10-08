@@ -6,7 +6,7 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/@namehash/nameguard-react/**/*.{js,jsx,ts,tsx}",
+    "../../packages/nameguard-react/src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {
