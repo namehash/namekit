@@ -1,5 +1,16 @@
 # @namehash/nameguard
 
+## 0.6.0
+
+### Minor Changes
+
+- 34f5b20: release
+
+### Patch Changes
+
+- Updated dependencies [34f5b20]
+  - @namehash/ens-utils@1.18.0
+
 ## 0.5.0
 
 ### Minor Changes
