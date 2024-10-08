@@ -1,5 +1,11 @@
 # @namehash/ens-webfont
 
+## 0.6.0
+
+### Minor Changes
+
+- 34f5b20: release
+
 ## 0.5.1
 
 ### Patch Changes
