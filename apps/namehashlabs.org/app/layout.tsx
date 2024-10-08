@@ -17,6 +17,7 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+const siteName = "NameHash Labs";
 const title = "NameHash Labs - Helping ENS Grow";
 const description =
   "NameHash Labs builds open source public goods that drive the global adoption of ENS.";
@@ -28,20 +29,26 @@ export const metadata: Metadata = {
   ...NamehashMetadata.defaultMetdata,
   metadataBase: new URL(baseUrl),
   title: {
-    template: "NameHash Labs - %s",
+    template: `${siteName} - %s`,
     default: title,
   },
   description,
   keywords,
   openGraph: {
     ...NamehashMetadata.defaultMetdata.openGraph,
-    title,
+    title: {
+      template: `${siteName} - %s`,
+      default: title,
+    },
     description,
-    siteName: "NameHash Labs",
+    siteName,
   },
   twitter: {
     ...NamehashMetadata.defaultMetdata.twitter,
-    title,
+    title: {
+      template: `${siteName} - %s`,
+      default: title,
+    },
     description,
   },
 };
