@@ -6,21 +6,23 @@ import { DocumentTextIcon } from "@heroicons/react/24/solid";
 import { FigmaIcon } from "@/components/1 - atoms/icons/figma-icon";
 import { GithubIcon } from "@/components/1 - atoms/icons/github-icon";
 import { ProductComponent } from "@/components/2 - molecules/product-component";
-import { Button, IconButton, Link } from "@namehash/namekit-react";
+import { Button, Link } from "@namehash/namekit-react";
 
+const title = "ENS Referral Program Proposal";
 const description =
   "Join the discussion about an ENS Referral Program and help ENS grow.";
 
 export const metadata: Metadata = {
-  title: "ENS Referral Program Proposal",
+  title,
   description,
   keywords: ["ens", "web3", "eth", "referral program"],
   openGraph: {
-    title: "NameHash Labs - ENS Referral Program Proposal",
+    title,
     description,
+    url: "/ens-referral-program",
   },
   twitter: {
-    title: "NameHash Labs - ENS Referral Program Proposal",
+    title,
     description,
   },
 };

@@ -41,6 +41,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     ...NamehashMetadata.defaultMetdata.twitter,
+    title,
     description,
   },
 };
