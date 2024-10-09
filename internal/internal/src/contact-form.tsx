@@ -304,11 +304,7 @@ export const ContactUsForm = ({ title, url }: ContactUsFormProps) => {
             Its value is set programmatically in a useEffect hook. */}
             <input type="hidden" id="source" name="source" value="" />
             <div className="flex h-full justify-end items-end">
-              <Button
-                disabled={isLoading}
-                type="submit"
-                className={cc([{ "opacity-50": isLoading }])}
-              >
+              <Button disabled={isLoading} type="submit">
                 {isLoading ? "Sending..." : "Send message"}
               </Button>
             </div>
