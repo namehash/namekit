@@ -1,13 +1,9 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element */
-import { FormEvent, useEffect, useState } from "react";
-import { CheckIcon, XCircleIcon } from "@heroicons/react/24/solid";
+import React, { FormEvent, useEffect, useState } from "react";
 import cc from "classcat";
-
+import { CheckIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import * as Yup from "yup";
-import { contactFormSchema } from "@/lib/schemas/contactFormSchema";
-import { ContactFormDataProps } from "@/types/contactFormDataProps";
 import { Button, Input, TextArea } from "@namehash/namekit-react";
 
 enum FormFields {
@@ -17,6 +13,25 @@ enum FormFields {
   Message = "message",
   Source = "source",
 }
+
+export interface ContactFormDataProps {
+  name: string;
+  email: string;
+  telegram: string;
+  message: string;
+  source: string;
+}
+
+export const contactFormSchema = Yup.object().shape({
+  name: Yup.string().required("Name is required"),
+  email: Yup.string()
+    .email("Invalid email format")
+    .required("Email is required"),
+  telegram: Yup.string()
+    .matches(/^$|^[A-Za-z0-9_]+$/, "Invalid Telegram username")
+    .optional(),
+  message: Yup.string().required("Message is required"),
+});
 
 const validationErrorsInitialState = {
   [FormFields.Name]: "",
@@ -32,9 +47,10 @@ interface ValidationErrors {
 
 interface ContactUsFormProps {
   title: string;
+  url?: string;
 }
 
-export const ContactUsForm = ({ title }: ContactUsFormProps) => {
+export const ContactUsForm = ({ title, url }: ContactUsFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successfulFormSubmit, setSuccessfulFormSubmit] = useState(false);
@@ -93,8 +109,7 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
   };
 
   const sendData = async (data: ContactFormDataProps) => {
-    const apiUrl =
-      process.env.NEXT_PUBLIC_CONTACT_FORM_API_URL || "/api/contact-form";
+    const apiUrl = url || "/api/contact-form";
 
     const fetchPromise = fetch(apiUrl, {
       method: "POST",
@@ -167,7 +182,7 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
 
         <div
           className={cc([
-            "w-full h-full flex flex-col items-center justify-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300",
+            "w-full h-full flex flex-col items-center justify-center absolute  transition-all duration-300",
             successfulFormSubmit ? "opacity-100" : "opacity-0 z-[-1]",
           ])}
         >
@@ -184,6 +199,7 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
               setSuccessfulFormSubmit(false);
             }}
             type="reset"
+            className="mt-5"
           >
             Send another message
           </Button>

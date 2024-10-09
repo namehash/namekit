@@ -6,7 +6,7 @@ import {
   SectionTitle,
 } from "../1 - atoms";
 import { ColorfulBg } from "../1 - atoms/colorful-bg";
-import { ContactUsForm } from "./contact-us-form";
+import { ContactUsForm } from "@namehash/internal";
 
 export const ContactSection = () => {
   return (
