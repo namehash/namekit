@@ -107,6 +107,33 @@ export const CustomClass: Story = {
   },
 };
 
+export const PrimaryDisabled: Story = {
+  args: {
+    variant: "primary",
+    size: "medium",
+    children: "Primary Disabled Button",
+    disabled: true,
+  },
+};
+
+export const SecondaryDisabled: Story = {
+  args: {
+    variant: "secondary",
+    size: "medium",
+    children: "Secondary Disabled Button",
+    disabled: true,
+  },
+};
+
+export const GhostDisabled: Story = {
+  args: {
+    variant: "ghost",
+    size: "medium",
+    children: "Ghost Disabled Button",
+    disabled: true,
+  },
+};
+
 export const AsChild: Story = {
   args: {
     variant: "primary",
