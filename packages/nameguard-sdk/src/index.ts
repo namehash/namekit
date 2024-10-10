@@ -462,14 +462,41 @@ export interface SecurePrimaryNameResult {
   nameguard_report: NameGuardReport | null;
 }
 
-// TODO: Let's apply more formalization to this error class.
-class NameGuardError extends Error {
+export enum NameGuardErrorType {
+  Server = "Server",
+  Network = "Network",
+  Timeout = "Timeout",
+  Abort = "Abort",
+  Input = "Input",
+  NotFound = "NotFound",
+  Unknown = "Unknown",
+}
+
+/**
+ * Custom error class for NameGuard-specific errors.
+ * This class extends the built-in Error class to provide more context about NameGuard-related errors.
+ */
+export class NameGuardError extends Error {
+  /**
+   * Creates a new NameGuardError instance.
+   *
+   * @param {NameGuardErrorType} type - The type of NameGuard error that occurred.
+   * @param {number} [status] - The HTTP status code associated with the error, if applicable.
+   *                            This is typically used for server errors to indicate the HTTP response status.
+   * @param {string} [message] - A custom error message. If not provided, a default message is generated based on the error type.
+   */
   constructor(
-    public status: number,
+    public type: NameGuardErrorType,
+    public status?: number,
     message?: string,
   ) {
-    super(message);
+    super(message || `NameGuard ${type} Error`);
+    this.name = "NameGuardError";
   }
+}
+
+function isError(error: unknown): error is Error {
+  return error instanceof Error;
 }
 
 const DEFAULT_ENDPOINT = "https://api.nameguard.io";
@@ -487,11 +514,8 @@ const MAX_INSPECTED_NAME_UNKNOWN_LABELS = 5;
 export interface NameGuardOptions {
   endpoint?: string;
   network?: Network;
+  timeout?: number;
 }
-
-interface InspectNameOptions {}
-
-interface InspectNamehashOptions {}
 
 interface InspectLabelhashOptions {
   parent?: string;
@@ -501,8 +525,6 @@ export interface SecurePrimaryNameOptions {
   returnNameGuardReport?: boolean;
 }
 
-interface FakeEthNameOptions {}
-
 interface FieldsWithRequiredTitle extends Record<string, string> {
   title: string;
 }
@@ -510,15 +532,25 @@ interface FieldsWithRequiredTitle extends Record<string, string> {
 export class NameGuard {
   private endpoint: URL;
   protected network: Network;
-  private abortController: AbortController;
+  private activeRequests: Set<AbortController> = new Set();
+  private timeout: number;
 
+  /**
+   * Creates a new instance of the NameGuard client.
+   *
+   * @param {NameGuardOptions} options - Configuration options for NameGuard.
+   * @param {string} [options.endpoint] - The base URL for the NameGuard API. Defaults to 'https://api.nameguard.io'.
+   * @param {Network} [options.network] - The Ethereum network to use. Defaults to 'mainnet'.
+   * @param {number} [options.timeout] - The timeout in milliseconds for requests. Defaults to 30000 (30 seconds).
+   */
   constructor({
     endpoint = DEFAULT_ENDPOINT,
     network = DEFAULT_NETWORK,
+    timeout = 30000,
   }: NameGuardOptions = {}) {
     this.endpoint = new URL(endpoint);
     this.network = network;
-    this.abortController = new AbortController();
+    this.timeout = timeout;
   }
 
   /**
@@ -528,18 +560,32 @@ export class NameGuard {
    * using the network specified in the `NameGuard` instance. Therefore the returned `name` may not match the provided `name`, but is guaranteed to have a matching `namehash`.
    *
    * @param {string} name The name for NameGuard to inspect.
-   * @param {InspectNameOptions} options The options for the inspection.
    * @returns {Promise<NameGuardReport>} A promise that resolves with the `NameGuardReport` of the name. Check the `inspected` field of the result to determine if the result is an `InspectedNameGuardReport` or an `UninspectedNameGuardReport` for performance reasons in the case that the provided `name` was exceptionally long.
+   * @throws {NameGuardError} If there's an issue with the input, network, or server.
    * @example
    * const nameGuardReport = await nameguard.inspectName('vitalik.eth');
+   * console.log(nameGuardReport.name); // 'vitalik.eth'
+   * console.log(nameGuardReport.rating); // 'pass'
    */
-  public inspectName(
-    name: string,
-    options?: InspectNameOptions,
-  ): Promise<NameGuardReport> {
+  public async inspectName(name: string): Promise<NameGuardReport> {
     const network_name = this.network;
 
-    return this.rawRequest("inspect-name", "POST", { name, network_name });
+    try {
+      return await this.rawRequest("inspect-name", "POST", {
+        name,
+        network_name,
+      });
+    } catch (error) {
+      if (error instanceof NameGuardError) {
+        throw error;
+      }
+
+      throw new NameGuardError(
+        NameGuardErrorType.Input,
+        undefined,
+        `Invalid input: ${isError(error) ? error.message : "Unknown error"}`,
+      );
+    }
   }
 
   // TODO: Document how this API will attempt automated labelhash resolution through the ENS Subgraph.
@@ -557,27 +603,44 @@ export class NameGuard {
    * This function will attempt automated labelhash resolution through the ENS Subgraph,
    * using the network specified in the NameGuard instance.
    *
-   *
    * @param {string[]} names The list of names for NameGuard to inspect.
-   * @param {InspectNameOptions} options The options for the inspection.
    * @returns {Promise<BulkConsolidatedNameGuardReport>} A promise that resolves with a list of `ConsolidatedNameGuardReport` values for each name queried in the bulk inspection. Check the `inspected` field of each report to determine if the name was fully inspected or inspected in a limited way for performance reasons.
+   * @throws {NameGuardError} If there's an issue with the input (e.g., too many names), network, or server.
+   * @example
+   * const names = ['vitalik.eth', 'ethereum.eth'];
+   * const bulkReport = await nameguard.bulkInspectNames(names);
+   * console.log(bulkReport.results.length); // 2
+   * console.log(bulkReport.results[0].name); // 'vitalik.eth'
    */
-  public bulkInspectNames(
+  public async bulkInspectNames(
     names: string[],
-    options?: InspectNameOptions,
   ): Promise<BulkConsolidatedNameGuardReport> {
     if (names.length > MAX_BULK_INSPECTION_NAMES) {
-      throw new Error(
+      throw new NameGuardError(
+        NameGuardErrorType.Input,
+        undefined,
         `Bulk inspection of more than ${MAX_BULK_INSPECTION_NAMES} names at a time is not supported.`,
       );
     }
 
     const network_name = this.network;
 
-    return this.rawRequest("bulk-inspect-names", "POST", {
-      names,
-      network_name,
-    });
+    try {
+      return await this.rawRequest("bulk-inspect-names", "POST", {
+        names,
+        network_name,
+      });
+    } catch (error) {
+      if (error instanceof NameGuardError) {
+        throw error;
+      }
+
+      throw new NameGuardError(
+        NameGuardErrorType.Unknown,
+        undefined,
+        isError(error) ? error.message : "Unknown error",
+      );
+    }
   }
 
   // TODO: We need to have more specialized error handling here for cases such as the lookup in the ENS Subgraph failing.
@@ -590,37 +653,52 @@ export class NameGuard {
    * If this resolution fails then NameGuard will return an error.
    *
    * @param {string} namehash A namehash should be a decimal or a hex (prefixed with 0x) string.
-   * @param {InspectNamehashOptions} options The options for the inspection.
    * @returns {Promise<NameGuardReport>} A promise that resolves with the `NameGuardReport` of the name. Check the `inspected` field of the result to determine if the result is an `InspectedNameGuardReport` or an `UninspectedNameGuardReport` for performance reasons in the case that the provided `name` was exceptionally long.
-   * @throws {NameGuardError} If the inspection fails due to network issues, server errors, or if the namehash cannot be resolved to a name.
-   * @throws {Error} If the provided `namehash` is not in a valid Keccak256 hash format.
+   * @throws {NameGuardError} If the inspection fails due to network issues, server errors, if the namehash cannot be resolved to a name, or if the provided `namehash` is not in a valid Keccak256 hash format.
+   * @example
+   * const namehash = '0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835';
+   * const nameGuardReport = await nameguard.inspectNamehash(namehash);
+   * console.log(nameGuardReport.name); // 'vitalik.eth'
    */
-
-  public async inspectNamehash(
-    namehash: string,
-    options?: InspectNamehashOptions,
-  ): Promise<NameGuardReport> {
+  public async inspectNamehash(namehash: string): Promise<NameGuardReport> {
     if (!isKeccak256Hash(namehash)) {
-      throw new Error("Invalid Keccak256 hash format for namehash.");
+      throw new NameGuardError(
+        NameGuardErrorType.Input,
+        undefined,
+        "Invalid Keccak256 hash format for namehash.",
+      );
     }
 
     const network = this.network;
 
-    const url = new URL(
-      `inspect-namehash/${network}/${namehash}`,
-      this.endpoint,
-    );
+    try {
+      const url = new URL(
+        `inspect-namehash/${network}/${namehash}`,
+        this.endpoint,
+      );
 
-    const response = await fetch(url);
+      const response = await fetch(url);
 
-    if (!response.ok) {
+      if (!response.ok) {
+        throw new NameGuardError(
+          NameGuardErrorType.Server,
+          response.status,
+          `Failed to inspect namehash ${namehash} using the network ${network}.`,
+        );
+      }
+
+      return await response.json();
+    } catch (error) {
+      if (error instanceof NameGuardError) {
+        throw error;
+      }
+
       throw new NameGuardError(
-        response.status,
-        `Failed to inspect namehash ${namehash} using the network ${network}.`,
+        NameGuardErrorType.Unknown,
+        undefined,
+        isError(error) ? error.message : "Unknown error",
       );
     }
-
-    return await response.json();
   }
 
   // TODO: The main purpose of this function is to pass a tokenId rather than a labelhash. However we need to make changes
@@ -650,21 +728,42 @@ export class NameGuard {
    * @param {string} labelhash A labelhash should be a decimal or a hex (prefixed with 0x) string.
    * @param {InspectLabelhashOptions} options The options for the inspection.
    * @returns {Promise<NameGuardReport>} A promise that resolves with the `NameGuardReport` of the name. Check the `inspected` field of the result to determine if the result is an `InspectedNameGuardReport` or an `UninspectedNameGuardReport` for performance reasons in the case that the provided `name` was exceptionally long.
+   * @throws {NameGuardError} If the provided `labelhash` is not in a valid Keccak256 hash format, or if there are network or server issues.
+   * @example
+   * const labelhash = '0x7d77fe9f36d36e8efa8870b9f50d95e0e9a58a4fee34b1f588094a247d91e8a5';
+   * const nameGuardReport = await nameguard.inspectLabelhash(labelhash, { parent: 'eth' });
+   * console.log(nameGuardReport.name); // 'vitalik.eth'
    */
   public async inspectLabelhash(
     labelhash: string,
     options?: InspectLabelhashOptions,
   ): Promise<NameGuardReport> {
     if (!isKeccak256Hash(labelhash)) {
-      throw new Error("Invalid Keccak256 hash format for labelhash.");
+      throw new NameGuardError(
+        NameGuardErrorType.Input,
+        undefined,
+        "Invalid Keccak256 hash format for labelhash.",
+      );
     }
 
     const parent = options?.parent || DEFAULT_INSPECT_LABELHASH_PARENT;
 
-    if (parent === "") {
-      return await this.inspectName(`[${labelhash}]`, options);
-    } else {
-      return await this.inspectName(`[${labelhash}].${parent}`, options);
+    try {
+      if (parent === "") {
+        return await this.inspectName(`[${labelhash}]`);
+      } else {
+        return await this.inspectName(`[${labelhash}].${parent}`);
+      }
+    } catch (error) {
+      if (error instanceof NameGuardError) {
+        throw error;
+      }
+
+      throw new NameGuardError(
+        NameGuardErrorType.Unknown,
+        undefined,
+        isError(error) ? error.message : "Unknown error",
+      );
     }
   }
 
@@ -673,11 +772,36 @@ export class NameGuard {
    *
    * @param {string} grapheme The grapheme to inspect. Must be a single grapheme (i.e. a single character or a sequence of characters that represent a single grapheme).
    * @returns {Promise<GraphemeGuardReport>} A promise that resolves with a `GraphemeGuardReport` of the inspected grapheme.
+   * @throws {NameGuardError} If the grapheme is empty or if there are network or server issues.
+   * @example
+   * const graphemeReport = await nameguard.inspectGrapheme('ξ');
+   * console.log(graphemeReport.grapheme); // 'ξ'
+   * console.log(graphemeReport.grapheme_name); // 'GREEK SMALL LETTER XI'
    */
-  public inspectGrapheme(grapheme: string): Promise<GraphemeGuardReport> {
+  public async inspectGrapheme(grapheme: string): Promise<GraphemeGuardReport> {
+    if (!grapheme || grapheme.length === 0) {
+      throw new NameGuardError(
+        NameGuardErrorType.Input,
+        undefined,
+        "Grapheme must not be empty.",
+      );
+    }
+
     const grapheme_encoded = encodeURIComponent(grapheme);
 
-    return this.rawRequest(`inspect-grapheme/${grapheme_encoded}`);
+    try {
+      return await this.rawRequest(`inspect-grapheme/${grapheme_encoded}`);
+    } catch (error) {
+      if (error instanceof NameGuardError) {
+        throw error;
+      }
+
+      throw new NameGuardError(
+        NameGuardErrorType.Unknown,
+        undefined,
+        isError(error) ? error.message : "Unknown error",
+      );
+    }
   }
 
   /**
@@ -690,17 +814,25 @@ export class NameGuard {
    * Returns `display_name` to be shown to users and estimates `impersonation_status`
    *
    * If `address` has a primary name and `options.returnNameGuardReport` is `true`, then NameGuard will attempt to inspect that primary name. Else, NameGuard will not perform any primary name inspection and the returned `nameguard_report` field will be `null`.
-   * 
+   *
    * @param {string} address An Ethereum address.
    * @param {SecurePrimaryNameOptions} options The options for the secure primary name.
    * @returns {Promise<SecurePrimaryNameResult>} A promise that resolves with a `SecurePrimaryNameResult`.
+   * @throws {NameGuardError} If the provided address is not a valid Ethereum address format, or if there are network or server issues.
+   * @example
+   * const address = '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045';
+   * const securePrimaryName = await nameguard.getSecurePrimaryName(address);
+   * console.log(securePrimaryName.primary_name); // 'vitalik.eth'
+   * console.log(securePrimaryName.impersonation_status); // 'unlikely'
    */
   public async getSecurePrimaryName(
     address: string,
     options?: SecurePrimaryNameOptions,
   ): Promise<SecurePrimaryNameResult> {
     if (!isEthereumAddress(address)) {
-      throw new Error(
+      throw new NameGuardError(
+        NameGuardErrorType.Input,
+        undefined,
         `The provided address: "${address}" is not in a valid Ethereum address format.`,
       );
     }
@@ -709,11 +841,27 @@ export class NameGuard {
     const returnNameGuardReport =
       options?.returnNameGuardReport || DEFAULT_COMPUTE_NAMEGUARD_REPORT;
 
-    let response = await this.rawRequest(
-      `secure-primary-name/${network_name}/${address}?return_nameguard_report=${returnNameGuardReport}`,
-    );
+    // TODO: We need to add a `computeNameGuardReport` parameter to the API.
+    try {
+      let response = await this.rawRequest(
+        `secure-primary-name/${network_name}/${address}?return_nameguard_report=${returnNameGuardReport}`,
+      );
 
-    return response;
+      if (!returnNameGuardReport) {
+        response.nameguard_result = null;
+      }
+
+      return response;
+    } catch (error) {
+      if (error instanceof NameGuardError) {
+        throw error;
+      }
+      throw new NameGuardError(
+        NameGuardErrorType.Unknown,
+        undefined,
+        isError(error) ? error.message : "Unknown error",
+      );
+    }
   }
 
   /**
@@ -723,51 +871,77 @@ export class NameGuard {
    *
    * @param {string} contract_address Contract address for the NFT contract (ERC721 and ERC1155 supported).
    * @param {string} token_id The ID of the token (in hex or decimal format).
-   * @param {string} fields Fields with values which will be investigated (e.g. title, collection name, metadata) whether they look like fake .eth ENS name. `title` key is mandatory, for ENS contracts it should be the ENS name.
-   * @param {FakeEthNameOptions} options The options for the fake .eth ens name check.
-   * @returns {Promise<FakeEthNameCheckResult>}  A promise that resolves with a `FakeEthNameCheckResult`.
+   * @param {FieldsWithRequiredTitle} fields Fields with values which will be investigated (e.g. title, collection name, metadata) whether they look like fake .eth ENS name. `title` key is mandatory, for ENS contracts it should be the ENS name.
+   * @returns {Promise<FakeEthNameCheckResult>} A promise that resolves with a `FakeEthNameCheckResult`.
+   * @throws {NameGuardError} If the provided contract_address is not a valid Ethereum address format, if the token_id is not in a valid format, if the fields object is missing or doesn't contain a 'title' key with a string value, or if there are network or server issues.
+   * @example
+   * const contractAddress = '0x495f947276749ce646f68ac8c248420045cb7b5e';
+   * const tokenId = '123456';
+   * const fields = { title: 'fake-vitalik.eth' };
+   * const fakeEthNameResult = await nameguard.fakeEthNameCheck(contractAddress, tokenId, fields);
+   * console.log(fakeEthNameResult.status); // 'impersonated_eth_name'
    */
-  public fakeEthNameCheck(
+  public async fakeEthNameCheck(
     contract_address: string,
     token_id: string,
     fields: FieldsWithRequiredTitle,
-    options?: FakeEthNameOptions,
   ): Promise<FakeEthNameCheckResult> {
     if (!isEthereumAddress(contract_address)) {
-      throw new Error(
+      throw new NameGuardError(
+        NameGuardErrorType.Input,
+        undefined,
         `The provided address: "${contract_address}" is not in a valid Ethereum address format.`,
       );
     }
 
     if (!isTokenId(token_id)) {
-      throw new Error(
+      throw new NameGuardError(
+        NameGuardErrorType.Input,
+        undefined,
         `The provided token_id: "${token_id}" is not in a valid token id format.`,
       );
     }
 
     if (!fields || !fields.title || typeof fields.title !== "string") {
-      throw new Error(
+      throw new NameGuardError(
+        NameGuardErrorType.Input,
+        undefined,
         "The 'fields' object must be provided and contain a 'title' key with a string value.",
       );
     }
 
     const network_name = this.network;
 
-    return this.rawRequest("fake-eth-name-check", "POST", {
-      network_name,
-      contract_address,
-      token_id,
-      fields,
-    });
+    try {
+      return await this.rawRequest("fake-eth-name-check", "POST", {
+        network_name,
+        contract_address,
+        token_id,
+        fields,
+      });
+    } catch (error) {
+      if (error instanceof NameGuardError) {
+        throw error;
+      }
+
+      throw new NameGuardError(
+        NameGuardErrorType.Unknown,
+        undefined,
+        isError(error) ? error.message : "Unknown error",
+      );
+    }
   }
 
   /**
    * Performs a raw HTTP request to the NameGuard API.
-   * @param {string} path The API endpoint path.
-   * @param {string} method The HTTP method (e.g., 'GET', 'POST').
-   * @param {object} body The request body for POST requests.
-   * @param {object} headers Additional headers for the request.
+   * This method is primarily for internal use but can be utilized for custom API calls.
+   *
+   * @param {string} path - The API endpoint path.
+   * @param {string} [method='GET'] - The HTTP method (e.g., 'GET', 'POST').
+   * @param {object} [body={}] - The request body for POST requests.
+   * @param {object} [headers={}] - Additional headers for the request.
    * @returns {Promise<any>} The response from the API.
+   * @throws {NameGuardError} If there's a network error, server error, or if the request is aborted.
    */
   async rawRequest(
     path: string,
@@ -777,35 +951,124 @@ export class NameGuard {
   ): Promise<any> {
     const url = new URL(path, this.endpoint);
 
+    const abortController = new AbortController();
+    this.activeRequests.add(abortController);
+
+    const timeoutId = setTimeout(() => {
+      if (!abortController.signal.aborted) {
+        abortController.abort("timeout");
+      }
+    }, this.timeout);
+
     const options: RequestInit = {
       method,
       headers: {
         "Content-Type": "application/json",
         ...headers,
       },
-      signal: this.abortController.signal,
+      signal: abortController.signal,
     };
 
     if (method !== "GET") {
       options.body = JSON.stringify(body);
     }
 
-    const response = await fetch(url, options);
+    try {
+      const response = await fetch(url, options);
 
-    if (!response.ok) {
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        switch (response.status) {
+          case 400:
+            throw new NameGuardError(
+              NameGuardErrorType.Input,
+              response.status,
+              "Bad request: The server could not understand the request",
+            );
+          case 404:
+            throw new NameGuardError(
+              NameGuardErrorType.NotFound,
+              response.status,
+              "Not Found: The requested resource could not be found",
+            );
+          default:
+            if (response.status >= 500) {
+              throw new NameGuardError(
+                NameGuardErrorType.Server,
+                response.status,
+                `Server error: ${response.statusText}`,
+              );
+            } else {
+              throw new NameGuardError(
+                NameGuardErrorType.Unknown,
+                response.status,
+                `Unexpected error: ${response.statusText}`,
+              );
+            }
+        }
+      }
+
+      return await response.json();
+    } catch (error: unknown) {
+      if (error instanceof Error && error.name === "AbortError") {
+        if (abortController.signal.reason === "timeout") {
+          throw new NameGuardError(
+            NameGuardErrorType.Timeout,
+            undefined,
+            `Request timed out after ${this.timeout}ms`,
+          );
+        } else {
+          throw new NameGuardError(
+            NameGuardErrorType.Abort,
+            undefined,
+            "Request was aborted",
+          );
+        }
+      }
+
+      if (error instanceof NameGuardError) {
+        throw error;
+      } else if (error instanceof Error) {
+        if (error.name === "AbortError") {
+          throw new NameGuardError(
+            NameGuardErrorType.Timeout,
+            undefined,
+            "Request timed out or was aborted",
+          );
+        } else if (
+          error.message === "Failed to fetch" ||
+          error.message.includes("Network request failed")
+        ) {
+          throw new NameGuardError(
+            NameGuardErrorType.Network,
+            undefined,
+            "Network error: Unable to reach the server",
+          );
+        }
+      }
+
       throw new NameGuardError(
-        response.status,
-        `Failed to perform request to ${path}.`,
+        NameGuardErrorType.Unknown,
+        undefined,
+        `An unexpected error occurred: ${error instanceof Error ? error.message : String(error)}`,
       );
+    } finally {
+      clearTimeout(timeoutId);
+      this.activeRequests.delete(abortController);
     }
-
-    return await response.json();
   }
 
+  /**
+   * Aborts all pending requests.
+   * This method can be used to cancel all ongoing NameGuard API requests.
+   * Any pending requests will fail with an AbortError, which can be caught and handled where those requests are made.
+   */
   public abortAllRequests(): void {
-    this.abortController.abort();
-
-    this.abortController = new AbortController();
+    for (const controller of this.activeRequests) {
+      controller.abort();
+    }
+    this.activeRequests.clear();
   }
 }
 
