@@ -1,5 +1,53 @@
 # @namehash/nameguard-react
 
+## 0.7.0
+
+### Minor Changes
+
+- 34f5b20: release
+
+### Patch Changes
+
+- Updated dependencies [34f5b20]
+  - @namehash/ens-utils@1.18.0
+  - @namehash/ens-webfont@0.6.0
+  - @namehash/nameguard@0.6.0
+  - @namehash/namekit-react@0.7.0
+
+## 0.6.0
+
+### Minor Changes
+
+- [#377](https://github.com/namehash/namekit/pull/377) [`38b141d`](https://github.com/namehash/namekit/commit/38b141dd588ebf7f6b38fa78561242a762c6a7ee) Thanks [@FrancoAguzzi](https://github.com/FrancoAguzzi)! - Remove Tooltip component from @namehash/nameguard-react
+
+- [#389](https://github.com/namehash/namekit/pull/389) [`bc963fd`](https://github.com/namehash/namekit/commit/bc963fd65e8bb791283a76c0b66d732948635fef) Thanks [@notrab](https://github.com/notrab)! - add unicode version title and value to grapheme modal
+
+- [#381](https://github.com/namehash/namekit/pull/381) [`dbaf813`](https://github.com/namehash/namekit/commit/dbaf8138521633ee1cad525468a918ee8ed357a1) Thanks [@FrancoAguzzi](https://github.com/FrancoAguzzi)! - Migrate TruncatedText and create Storybook examples
+
+- [#393](https://github.com/namehash/namekit/pull/393) [`b9eb52d`](https://github.com/namehash/namekit/commit/b9eb52da0e2cab98ecafde290dd0eef86ff3d48e) Thanks [@eduramme](https://github.com/eduramme)! - - Added a new disabled version for the Input and TextArea components in @namehash/namekit-react.
+
+  - Introduced an error state for the TextArea component in @namehash/namekit-react.
+  - Updated SearchInput in @namehash/nameguard-react to use the ENSInput component from @namehash/namekit-react.
+
+- [#394](https://github.com/namehash/namekit/pull/394) [`8b6842a`](https://github.com/namehash/namekit/commit/8b6842ad1266611b578e70b02dd30d3694b0313d) Thanks [@notrab](https://github.com/notrab)! - Introduce new API for IconButton, Button and Link with asChild
+
+### Patch Changes
+
+- [#342](https://github.com/namehash/namekit/pull/342) [`8564ffb`](https://github.com/namehash/namekit/commit/8564ffbd0558598ca386a92531bb9ccba261877f) Thanks [@eduramme](https://github.com/eduramme)! - New Style Addition: Updated components/Link.tsx to include a new size class, xsmall (nk-text-xs), to enhance design compatibility and provide more styling options.
+  Folder Structure Update: Introduced two new folders, /client and /. The /client folder exports components that require "use client" at the top of their files, while the / folder exports components that do not require this directive.
+  Style Adjustments: Made minor adjustments to the styles of various components to ensure consistency and alignment with the new design requirements.
+
+- [#419](https://github.com/namehash/namekit/pull/419) [`3ce420c`](https://github.com/namehash/namekit/commit/3ce420ce297392f0285265fed01bd8abf2a68313) Thanks [@lightwalker-eth](https://github.com/lightwalker-eth)! - Align with latest lint rules
+
+- [#350](https://github.com/namehash/namekit/pull/350) [`39ece2a`](https://github.com/namehash/namekit/commit/39ece2a329fb6d8888f834281e611a774124e33e) Thanks [@notrab](https://github.com/notrab)! - Add support for uninspected NameGuard reports.
+
+- [#419](https://github.com/namehash/namekit/pull/419) [`3ce420c`](https://github.com/namehash/namekit/commit/3ce420ce297392f0285265fed01bd8abf2a68313) Thanks [@lightwalker-eth](https://github.com/lightwalker-eth)! - Upgrade dependencies
+
+- Updated dependencies [[`82e4dc0`](https://github.com/namehash/namekit/commit/82e4dc044ef9ccf8d44bc0617e3a77f9d7a94ca8), [`c2fdd5f`](https://github.com/namehash/namekit/commit/c2fdd5f83bc575bd1c7632503cc4da9d87c9da1a), [`8564ffb`](https://github.com/namehash/namekit/commit/8564ffbd0558598ca386a92531bb9ccba261877f), [`01236c9`](https://github.com/namehash/namekit/commit/01236c9e547cb0820b682c7064d73f85942698ae), [`dbaf813`](https://github.com/namehash/namekit/commit/dbaf8138521633ee1cad525468a918ee8ed357a1), [`79a6b77`](https://github.com/namehash/namekit/commit/79a6b77c92f5893daccebabfc6c26d51ec909be7), [`3ce420c`](https://github.com/namehash/namekit/commit/3ce420ce297392f0285265fed01bd8abf2a68313), [`b9eb52d`](https://github.com/namehash/namekit/commit/b9eb52da0e2cab98ecafde290dd0eef86ff3d48e), [`8b6842a`](https://github.com/namehash/namekit/commit/8b6842ad1266611b578e70b02dd30d3694b0313d), [`ba89172`](https://github.com/namehash/namekit/commit/ba89172f2d22fbb5a32f7b1939926d5e89f3b2cd), [`b9eb52d`](https://github.com/namehash/namekit/commit/b9eb52da0e2cab98ecafde290dd0eef86ff3d48e), [`3ce420c`](https://github.com/namehash/namekit/commit/3ce420ce297392f0285265fed01bd8abf2a68313)]:
+  - @namehash/nameguard@0.5.0
+  - @namehash/namekit-react@0.6.0
+  - @namehash/ens-utils@1.17.0
+
 ## 0.5.0
 
 ### Minor Changes

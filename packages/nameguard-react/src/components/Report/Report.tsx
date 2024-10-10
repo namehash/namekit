@@ -61,9 +61,9 @@ export const Report = ({
   }, [name, settings]);
 
   const normalizationUnknown =
-    parsedName.outputName.normalization === Normalization.Unknown ?? true;
+    parsedName.outputName.normalization === Normalization.Unknown;
 
-  const showEmptyState = parsedName.outputName.name.length === 0 ?? true;
+  const showEmptyState = parsedName.outputName.name.length === 0;
 
   const {
     data,

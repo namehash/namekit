@@ -62,8 +62,9 @@ export const HeroSection = () => {
               theVision.scrollIntoView({ behavior: "smooth" });
             }
           }}
-          icon={<ChevronDown />}
-        />
+        >
+          <ChevronDown />
+        </IconButton>
       </div>
     </div>
   );

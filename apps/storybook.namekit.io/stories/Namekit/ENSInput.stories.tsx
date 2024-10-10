@@ -23,7 +23,6 @@ const meta: Meta<typeof ENSInput> = {
         options: ["text", "email", "number", "password"],
       },
     },
-    asChild: { control: { disable: true } },
     className: { control: "text" },
     placeholder: { control: "text" },
   },

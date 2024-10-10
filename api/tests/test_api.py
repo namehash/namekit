@@ -316,7 +316,7 @@ def test_inspect_namehash_get(
         (
             '0x00f52438ae09d2f909ee2efc19ba8af75058e74ca4507aa091bd8282aa490e77',
             'unknown',
-            '🥛.[2e8eaa68c7e128861299162323c29c29672f5c094aceaf22d9c0935e4bbd3f85].[a64d2b5a93eda272d27734cc2fb8d1c468562e279f1e97e759eea1a5a410f8e3].👽.enspunks.eth',
+            '🥛.[2e8eaa68c7e128861299162323c29c29672f5c094aceaf22d9c0935e4bbd3f85].🛸.👽.enspunks.eth',
         ),
         pytest.param(
             '0x1bc53f6413409d078ec18a29b17f981eafab341598a4e970ac9efab7d29258af',
@@ -789,12 +789,12 @@ def test_primary_name(
     assert res_json['primary_name'] == primary_name
     assert res_json['display_name'] == display_name
     if primary_name_status != 'no_primary_name':
-        assert res_json['nameguard_result']['name'] == name
-        assert res_json['nameguard_result']['canonical_name'] == canonical_name
+        assert res_json['nameguard_report']['name'] == name
+        assert res_json['nameguard_report']['canonical_name'] == canonical_name
         assert (
             any(
                 check['check'] == 'impersonation_risk' and check['status'] == 'warn'
-                for check in res_json['nameguard_result']['checks']
+                for check in res_json['nameguard_report']['checks']
             )
             == impersonation_risk
         )
@@ -811,7 +811,7 @@ def test_primary_name_get(test_client):
     assert res_json['primary_name_status'] == 'normalized'
     assert res_json['primary_name'] == 'vitalik.eth'
     assert res_json['display_name'] == 'vitalik.eth'
-    assert res_json['nameguard_result'] is None
+    assert res_json['nameguard_report'] is None
 
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
@@ -825,7 +825,7 @@ def test_primary_name_get_no_report(test_client):
     assert res_json['primary_name_status'] == 'normalized'
     assert res_json['primary_name'] == 'vitalik.eth'
     assert res_json['display_name'] == 'vitalik.eth'
-    assert res_json['nameguard_result'] is None
+    assert res_json['nameguard_report'] is None
 
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
@@ -839,7 +839,7 @@ def test_primary_name_get_report(test_client):
     assert res_json['primary_name_status'] == 'normalized'
     assert res_json['primary_name'] == 'vitalik.eth'
     assert res_json['display_name'] == 'vitalik.eth'
-    assert res_json['nameguard_result'] is not None
+    assert res_json['nameguard_report'] is not None
 
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
@@ -933,7 +933,7 @@ def test_primary_name_get_emoji(test_client):
     assert res_json['primary_name'] == '👩🏿\u200d🦱.eth'
     assert res_json['display_name'] == '👩🏿\u200d🦱.eth'
     assert (
-        res_json['nameguard_result']['highest_risk']['message']
+        res_json['nameguard_report']['highest_risk']['message']
         == 'Emojis used in this name may be visually confused with other similar emojis'
     )
 
@@ -1273,9 +1273,9 @@ def test_fake_eth_name_check_fields(
         FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME,
         FakeEthNameCheckStatus.UNKNOWN_ETH_NAME,
     ):
-        assert res_json['nameguard_result'] is not None
+        assert res_json['nameguard_report'] is not None
     else:
-        assert res_json['nameguard_result'] is None
+        assert res_json['nameguard_report'] is None
 
     # if res_json['status'] != FakeEthNameCheckStatus.UNKNOWN_NFT:
     #     assert res_json['investigated_fields']

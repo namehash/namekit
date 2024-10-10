@@ -6,7 +6,7 @@ This repository contains all of the code for the [namehashlabs.org](https://name
 
 You must clone the full monorepo and install dependencies with PNPM before you can run it locally:
 
-1. `git clone https://github.com/namehash/nameguard.git`
+1. `git clone https://github.com/namehash/namekit.git`
 2. `pnpm install` (run from the root directory of the monorepo)
 3. `cd apps/namehashlabs.org`
 4. Configure environment variables. Members of the NameHash Labs team on Vercel should use the [Vercel CLI](https://vercel.com/docs/cli) to run the following commands. Otherwise you must manually configure the required environment variables (see [.example.env](./.example.env) for details).
