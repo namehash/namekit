@@ -7,6 +7,7 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@namehash/nameguard-react/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/@namehash/internal/src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {
