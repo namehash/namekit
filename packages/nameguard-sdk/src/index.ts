@@ -514,6 +514,7 @@ const MAX_INSPECTED_NAME_UNKNOWN_LABELS = 5;
 export interface NameGuardOptions {
   endpoint?: string;
   network?: Network;
+  timeout?: number;
 }
 
 interface InspectLabelhashOptions {
@@ -531,15 +532,25 @@ interface FieldsWithRequiredTitle extends Record<string, string> {
 export class NameGuard {
   private endpoint: URL;
   protected network: Network;
-  private abortController: AbortController;
+  private activeRequests: Set<AbortController> = new Set();
+  private timeout: number;
 
+  /**
+   * Creates a new instance of the NameGuard client.
+   *
+   * @param {NameGuardOptions} options - Configuration options for NameGuard.
+   * @param {string} [options.endpoint] - The base URL for the NameGuard API. Defaults to 'https://api.nameguard.io'.
+   * @param {Network} [options.network] - The Ethereum network to use. Defaults to 'mainnet'.
+   * @param {number} [options.timeout] - The timeout in milliseconds for requests. Defaults to 30000 (30 seconds).
+   */
   constructor({
     endpoint = DEFAULT_ENDPOINT,
     network = DEFAULT_NETWORK,
+    timeout = 30000,
   }: NameGuardOptions = {}) {
     this.endpoint = new URL(endpoint);
     this.network = network;
-    this.abortController = new AbortController();
+    this.timeout = timeout;
   }
 
   /**
@@ -803,7 +814,7 @@ export class NameGuard {
    * Returns `display_name` to be shown to users and estimates `impersonation_status`
    *
    * If `address` has a primary name and `options.returnNameGuardReport` is `true`, then NameGuard will attempt to inspect that primary name. Else, NameGuard will not perform any primary name inspection and the returned `nameguard_result` field will be `null`.
-   * 
+   *
    * @param {string} address An Ethereum address.
    * @param {SecurePrimaryNameOptions} options The options for the secure primary name.
    * @returns {Promise<SecurePrimaryNameResult>} A promise that resolves with a `SecurePrimaryNameResult`.
@@ -940,13 +951,22 @@ export class NameGuard {
   ): Promise<any> {
     const url = new URL(path, this.endpoint);
 
+    const abortController = new AbortController();
+    this.activeRequests.add(abortController);
+
+    const timeoutId = setTimeout(() => {
+      if (!abortController.signal.aborted) {
+        abortController.abort("timeout");
+      }
+    }, this.timeout);
+
     const options: RequestInit = {
       method,
       headers: {
         "Content-Type": "application/json",
         ...headers,
       },
-      signal: this.abortController.signal,
+      signal: abortController.signal,
     };
 
     if (method !== "GET") {
@@ -954,10 +974,6 @@ export class NameGuard {
     }
 
     try {
-      const timeoutId = setTimeout(() => {
-        this.abortController.abort();
-      }, 30000); // 30 second timeout
-
       const response = await fetch(url, options);
 
       clearTimeout(timeoutId);
@@ -995,23 +1011,31 @@ export class NameGuard {
 
       return await response.json();
     } catch (error: unknown) {
+      if (error instanceof Error && error.name === "AbortError") {
+        if (abortController.signal.reason === "timeout") {
+          throw new NameGuardError(
+            NameGuardErrorType.Timeout,
+            undefined,
+            `Request timed out after ${this.timeout}ms`,
+          );
+        } else {
+          throw new NameGuardError(
+            NameGuardErrorType.Abort,
+            undefined,
+            "Request was aborted",
+          );
+        }
+      }
+
       if (error instanceof NameGuardError) {
         throw error;
       } else if (error instanceof Error) {
         if (error.name === "AbortError") {
-          if (this.abortController.signal.aborted) {
-            throw new NameGuardError(
-              NameGuardErrorType.Timeout,
-              undefined,
-              "Request timed out",
-            );
-          } else {
-            throw new NameGuardError(
-              NameGuardErrorType.Abort,
-              undefined,
-              "Request was aborted",
-            );
-          }
+          throw new NameGuardError(
+            NameGuardErrorType.Timeout,
+            undefined,
+            "Request timed out or was aborted",
+          );
         } else if (
           error.message === "Failed to fetch" ||
           error.message.includes("Network request failed")
@@ -1029,6 +1053,9 @@ export class NameGuard {
         undefined,
         `An unexpected error occurred: ${error instanceof Error ? error.message : String(error)}`,
       );
+    } finally {
+      clearTimeout(timeoutId);
+      this.activeRequests.delete(abortController);
     }
   }
 
@@ -1038,8 +1065,10 @@ export class NameGuard {
    * Any pending requests will fail with an AbortError, which can be caught and handled where those requests are made.
    */
   public abortAllRequests(): void {
-    this.abortController.abort();
-    this.abortController = new AbortController();
+    for (const controller of this.activeRequests) {
+      controller.abort();
+    }
+    this.activeRequests.clear();
   }
 }
 
