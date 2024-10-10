@@ -32,6 +32,30 @@ const slotColorClasses = {
   secondary: "nk-text-black",
 };
 
+const getVariantClasses = (
+  variant: "primary" | "secondary",
+  disabled: boolean,
+) => {
+  const baseClasses = {
+    primary:
+      "nk-text-black nk-border-gray-300 nk-shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] has-[input:focus]:nk-border-gray-600 has-[input:focus:hover]:nk-border-gray-600",
+    secondary:
+      "nk-border-gray-200 has-[input:focus]:nk-border-gray-400 has-[input:focus:hover]:nk-border-gray-400",
+  };
+
+  const stateClasses = disabled
+    ? {
+        primary: "nk-text-gray-500 nk-bg-gray-50",
+        secondary: "nk-text-gray-500 nk-bg-gray-200",
+      }
+    : {
+        primary: "nk-bg-white hover:nk-border-gray-400",
+        secondary: "nk-bg-gray-100 hover:nk-border-gray-300",
+      };
+
+  return cc([baseClasses[variant], stateClasses[variant]]);
+};
+
 export const Input: React.FC<InputProps> & { Slot: React.FC<SlotProps> } = ({
   className,
   variant = "primary",
@@ -43,64 +67,50 @@ export const Input: React.FC<InputProps> & { Slot: React.FC<SlotProps> } = ({
   id,
   ...props
 }) => {
-  const generatedId = useId();
-  const inputId = id || generatedId;
-
+  const inputId = id || useId();
   const slotClassName = cc([slotBaseClasses, slotColorClasses[variant]]);
-
   const hasSlot = React.Children.toArray(children).some(
     (child: any) => child.type === Input.Slot,
   );
 
-  const variantClasses = {
-    primary: cc([
-      "nk-text-black nk-border-gray-300 nk-shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] has-[input:focus]:nk-border-gray-600 has-[input:focus:hover]:nk-border-gray-600",
-      disabled
-        ? "nk-text-gray-500 nk-bg-gray-50"
-        : "nk-bg-white hover:nk-border-gray-400",
-    ]),
-    secondary: [
-      "nk-border-gray-200 has-[input:focus]:nk-border-gray-400 has-[input:focus:hover]:nk-border-gray-400",
-      disabled
-        ? "nk-text-gray-500 nk-bg-gray-200"
-        : "nk-bg-gray-100 hover:nk-border-gray-300",
-    ],
-  };
-
   const combinedClassName = cc([
     wrapperClasses,
-    variantClasses[variant],
+    getVariantClasses(variant, disabled),
     sizeClasses[inputSize],
     className,
     {
-      "nk-border-red-300": !!error,
+      "nk-border-red-300 hover:nk-border-red-600 has-[input:focus]:nk-border-red-600 has-[input:focus:hover]:nk-border-red-600":
+        !!error,
     },
   ]);
 
   const inputClasses = cc([
-    "nk-ring-0 focus:nk-outline-none nk-w-full h-full placeholder:nk-text-gray-500 nk-bg-transparent nk-border-red-300  nk-flex-1",
+    "nk-ring-0 focus:nk-outline-none nk-w-full h-full placeholder:nk-text-gray-500 nk-bg-transparent nk-border-red-300 nk-flex-1",
     hasSlot && slotPosition === "left" ? "nk-pl-2" : "nk-pr-2",
   ]);
+
+  const renderSlot = (position: "left" | "right") => {
+    if (hasSlot && slotPosition === position) {
+      return (
+        <label htmlFor={inputId} className={slotClassName}>
+          {children}
+        </label>
+      );
+    }
+    return null;
+  };
 
   return (
     <div className="nk-gap-1">
       <div className={combinedClassName}>
-        {hasSlot && slotPosition === "left" && (
-          <label htmlFor={inputId} className={slotClassName}>
-            {children}
-          </label>
-        )}
+        {renderSlot("left")}
         <input
           id={inputId}
           className={inputClasses}
           disabled={disabled}
           {...props}
         />
-        {hasSlot && slotPosition === "right" && (
-          <label htmlFor={inputId} className={slotClassName}>
-            {children}
-          </label>
-        )}
+        {renderSlot("right")}
       </div>
       {error && (
         <span className="nk-mt-2 nk-text-sm nk-font-normal nk-text-red-600">
@@ -111,6 +121,4 @@ export const Input: React.FC<InputProps> & { Slot: React.FC<SlotProps> } = ({
   );
 };
 
-Input.Slot = ({ children }: SlotProps) => {
-  return children;
-};
+Input.Slot = ({ children }: SlotProps) => children;

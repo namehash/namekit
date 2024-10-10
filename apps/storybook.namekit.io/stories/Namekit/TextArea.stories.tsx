@@ -114,3 +114,13 @@ export const SecondaryDisabled: Story = {
     disabled: true,
   },
 };
+
+export const WithError: Story = {
+  args: {
+    variant: "primary",
+    size: "medium",
+    rows: 4,
+    placeholder: "Description",
+    error: "Description is required",
+  },
+};
