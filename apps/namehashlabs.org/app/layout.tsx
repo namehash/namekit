@@ -17,29 +17,38 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+const siteName = "NameHash Labs";
 const title = "NameHash Labs - Helping ENS Grow";
 const description =
   "NameHash Labs builds open source public goods that drive the global adoption of ENS.";
 const keywords = ["ens", "web3", "eth", "nameguard", "namekit", "namehash"];
 
+const baseUrl = "https://namehashlabs.org";
+
 export const metadata: Metadata = {
   ...NamehashMetadata.defaultMetdata,
-  metadataBase: new URL("https://namehashlabs.org"),
+  metadataBase: new URL(baseUrl),
   title: {
-    template: "NameHash Labs - %s",
+    template: `${siteName} - %s`,
     default: title,
   },
   description,
   keywords,
   openGraph: {
     ...NamehashMetadata.defaultMetdata.openGraph,
-    title,
+    title: {
+      template: `${siteName} - %s`,
+      default: title,
+    },
     description,
-    siteName: "NameHash Labs",
-    url: new URL("https://namehashlabs.org"),
+    siteName,
   },
   twitter: {
     ...NamehashMetadata.defaultMetdata.twitter,
+    title: {
+      template: `${siteName} - %s`,
+      default: title,
+    },
     description,
   },
 };
