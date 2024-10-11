@@ -1,5 +1,11 @@
 # @namekit/tsconfig
 
+## 0.1.0
+
+### Minor Changes
+
+- 34f5b20: release
+
 ## 0.0.1
 
 ### Patch Changes
