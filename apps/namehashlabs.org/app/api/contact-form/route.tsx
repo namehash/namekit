@@ -1,6 +1,8 @@
-import { contactFormSchema } from "@/lib/schemas/contactFormSchema";
+import {
+  contactFormSchema,
+  ContactFormDataProps,
+} from "@namehash/internal/src/contact-form";
 import { host } from "@/lib/shared/origin";
-import { ContactFormDataProps } from "@/lib/types/ContactFormDataProps";
 import { type NextRequest, NextResponse } from "next/server";
 import * as Yup from "yup";
 
