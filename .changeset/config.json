@@ -13,6 +13,7 @@
     "examples.nameguard.io",
     "namehashlabs.org",
     "nameguard-api",
-    "@namehash/seo"
+    "@namehash/seo",
+    "@namehash/internal"
   ]
 }

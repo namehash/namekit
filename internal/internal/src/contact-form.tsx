@@ -1,13 +1,9 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element */
-import { FormEvent, useEffect, useState } from "react";
-import { CheckIcon, XCircleIcon } from "@heroicons/react/24/solid";
+import React, { FormEvent, useEffect, useState } from "react";
 import cc from "classcat";
-
+import { CheckIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import * as Yup from "yup";
-import { contactFormSchema } from "@/lib/schemas/contactFormSchema";
-import { ContactFormDataProps } from "@/types/contactFormDataProps";
 import { Button, Input, TextArea } from "@namehash/namekit-react";
 
 enum FormFields {
@@ -17,6 +13,25 @@ enum FormFields {
   Message = "message",
   Source = "source",
 }
+
+export interface ContactFormDataProps {
+  name: string;
+  email: string;
+  telegram: string;
+  message: string;
+  source: string;
+}
+
+const contactFormSchema = Yup.object().shape({
+  name: Yup.string().required("Name is required"),
+  email: Yup.string()
+    .email("Invalid email format")
+    .required("Email is required"),
+  telegram: Yup.string()
+    .matches(/^$|^[A-Za-z0-9_]+$/, "Invalid Telegram username")
+    .optional(),
+  message: Yup.string().required("Message is required"),
+});
 
 const validationErrorsInitialState = {
   [FormFields.Name]: "",
@@ -32,9 +47,25 @@ interface ValidationErrors {
 
 interface ContactUsFormProps {
   title: string;
+  submissionEndpoint: string;
 }
 
-export const ContactUsForm = ({ title }: ContactUsFormProps) => {
+// Validation function
+export async function validateContactFormData(
+  data: ContactFormDataProps,
+): Promise<Yup.ValidationError | null> {
+  try {
+    await contactFormSchema.validate(data, { abortEarly: false });
+    return null; // No errors, return null
+  } catch (error) {
+    if (error instanceof Yup.ValidationError) {
+      return error; // Return the validation error
+    }
+    throw error; // Rethrow other types of errors
+  }
+}
+
+export const ContactUsForm = ({ title, submissionEndpoint }: ContactUsFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successfulFormSubmit, setSuccessfulFormSubmit] = useState(false);
@@ -93,10 +124,7 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
   };
 
   const sendData = async (data: ContactFormDataProps) => {
-    const apiUrl =
-      process.env.NEXT_PUBLIC_CONTACT_FORM_API_URL || "/api/contact-form";
-
-    const fetchPromise = fetch(apiUrl, {
+    const fetchPromise = fetch(submissionEndpoint, {
       method: "POST",
       headers: {
         Accept: "application/json, text/plain, */*",
@@ -167,7 +195,7 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
 
         <div
           className={cc([
-            "w-full h-full flex flex-col items-center justify-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300",
+            "w-full h-full flex flex-col items-center justify-center absolute  transition-all duration-300",
             successfulFormSubmit ? "opacity-100" : "opacity-0 z-[-1]",
           ])}
         >
@@ -184,6 +212,7 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
               setSuccessfulFormSubmit(false);
             }}
             type="reset"
+            className="mt-5"
           >
             Send another message
           </Button>
@@ -288,11 +317,7 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
             Its value is set programmatically in a useEffect hook. */}
             <input type="hidden" id="source" name="source" value="" />
             <div className="flex h-full justify-end items-end">
-              <Button
-                disabled={isLoading}
-                type="submit"
-                className={cc([{ "opacity-50": isLoading }])}
-              >
+              <Button disabled={isLoading} type="submit">
                 {isLoading ? "Sending..." : "Send message"}
               </Button>
             </div>

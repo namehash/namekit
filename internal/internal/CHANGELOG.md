@@ -1,4 +1,4 @@
-# @namehash/seo
+# @namehash/internal
 
 ## 1.1.0
 
