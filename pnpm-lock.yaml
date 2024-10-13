@@ -245,9 +245,6 @@ importers:
       swiper:
         specifier: 11.1.14
         version: 11.1.14
-      yup:
-        specifier: 1.4.0
-        version: 1.4.0
     devDependencies:
       '@types/node':
         specifier: 22.7.4
@@ -13285,7 +13282,7 @@ snapshots:
   vite-node@2.1.2(@types/node@22.7.4):
     dependencies:
       cac: 6.7.14
-      debug: 4.3.7(supports-color@8.1.1)
+      debug: 4.3.7
       pathe: 1.1.2
       vite: 5.1.7(@types/node@22.7.4)
     transitivePeerDependencies:
@@ -13350,7 +13347,7 @@ snapshots:
       '@vitest/spy': 2.1.2
       '@vitest/utils': 2.1.2
       chai: 5.1.1
-      debug: 4.3.7(supports-color@8.1.1)
+      debug: 4.3.7
       magic-string: 0.30.11
       pathe: 1.1.2
       std-env: 3.7.0

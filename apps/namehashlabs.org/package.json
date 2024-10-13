@@ -28,8 +28,7 @@
     "react-tooltip": "5.26.3",
     "react-wrap-balancer": "1.1.1",
     "sharp": "0.33.5",
-    "swiper": "11.1.14",
-    "yup": "1.4.0"
+    "swiper": "11.1.14"
   },
   "devDependencies": {
     "@types/node": "22.7.4",
