@@ -1,5 +1,13 @@
 # @namehash/nameguard-react
 
+## 0.7.1
+
+### Patch Changes
+
+- Updated dependencies [ee8c4db]
+- Updated dependencies [32dc97d]
+  - @namehash/namekit-react@0.8.0
+
 ## 0.7.0
 
 ### Minor Changes
