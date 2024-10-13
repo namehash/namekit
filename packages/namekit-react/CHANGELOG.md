@@ -1,5 +1,15 @@
 # @namehash/namekit-react
 
+## 0.8.0
+
+### Minor Changes
+
+- 32dc97d: - Created a disabled state for the Button component
+
+### Patch Changes
+
+- ee8c4db: Add specialized focus / hover state for input fields with an error.
+
 ## 0.7.0
 
 ### Minor Changes
