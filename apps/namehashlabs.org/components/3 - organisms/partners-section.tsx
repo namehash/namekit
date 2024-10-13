@@ -47,7 +47,10 @@ export const PartnersPage = () => {
           </SectionText>
         </div>
         <div className="lg:w-1/2 w-full bg-gray-50 py-4 px-4 lg:py-8 lg:px-10 border rounded-[8px] flex justify-center items-center">
-          <ContactUsForm title="Discuss a partnership" />
+          <ContactUsForm
+            title="Discuss a partnership"
+            submissionEndpoint="/api/contact-form"
+          />
         </div>
       </div>
     </section>
