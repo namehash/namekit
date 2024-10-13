@@ -19,6 +19,30 @@ const sizeClasses = {
   large: "nk-py-3 nk-px-6 nk-text-lg",
 };
 
+const getVariantClasses = (
+  variant: "primary" | "secondary",
+  disabled: boolean,
+) => {
+  const baseClasses = {
+    primary:
+      "nk-text-black nk-border-gray-300 nk-shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] focus:nk-border-gray-600 focus:hover:nk-border-gray-600 placeholder:nk-text-gray-500",
+    secondary:
+      "nk-border-gray-200 focus:nk-border-gray-400 focus:hover:nk-border-gray-400",
+  };
+
+  const stateClasses = disabled
+    ? {
+        primary: "nk-bg-gray-50 nk-text-gray-500",
+        secondary: "nk-bg-gray-200 nk-text-gray-500",
+      }
+    : {
+        primary: "nk-bg-white hover:nk-border-gray-400",
+        secondary: "nk-bg-gray-100 hover:nk-border-gray-300",
+      };
+
+  return cc([baseClasses[variant], stateClasses[variant]]);
+};
+
 export const TextArea: React.FC<TextAreaProps> = ({
   className,
   variant = "primary",
@@ -27,26 +51,14 @@ export const TextArea: React.FC<TextAreaProps> = ({
   disabled = false,
   ...props
 }) => {
-  const variantClasses = {
-    primary: cc([
-      "nk-text-black nk-border-gray-300 nk-shadow-[0_1px_2px_0_rgba(0,0,0,0.05)] focus:nk-border-gray-600 focus:hover:nk-border-gray-600 placeholder:nk-text-gray-500",
-      disabled
-        ? "nk-bg-gray-50 nk-text-gray-500"
-        : "nk-bg-white hover:nk-border-gray-400",
-    ]),
-    secondary: cc([
-      "nk-border-gray-200 focus:nk-border-gray-400 focus:hover:nk-border-gray-400",
-      disabled
-        ? "nk-bg-gray-200 nk-text-gray-500"
-        : "nk-bg-gray-100 hover:nk-border-gray-300",
-    ]),
-  };
-
   const combinedClassName = cc([
     textareaBaseClasses,
-    variantClasses[variant],
+    getVariantClasses(variant, disabled),
     sizeClasses[size],
-    { "nk-border-red-300": error },
+    {
+      "nk-border-red-300 hover:nk-border-red-600 focus:nk-border-red-600 focus:hover:nk-border-red-600":
+        error,
+    },
     className,
   ]);
 
@@ -54,7 +66,9 @@ export const TextArea: React.FC<TextAreaProps> = ({
     <div className="nk-flex nk-flex-col">
       <textarea className={combinedClassName} disabled={disabled} {...props} />
       {error && (
-        <span className="mt-2 text-sm font-normal text-red-600">{error}</span>
+        <span className="nk-mt-2 nk-text-sm nk-font-normal nk-text-red-600">
+          {error}
+        </span>
       )}
     </div>
   );
