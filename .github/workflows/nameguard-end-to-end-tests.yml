@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - ci
+      - staging
     paths:
       - "packages/nameguard-sdk/**"
       - "api/nameguard/**"
@@ -12,7 +12,7 @@ on:
   pull_request:
     branches:
       - main
-      - ci
+      - staging
     paths:
       - "packages/nameguard-sdk/**"
       - "api/nameguard/**"

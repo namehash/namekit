@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - ci
+      - staging
     paths:
       - "api/**"
       - ".github/workflows/nameguard-api-lambda-deploy.yml"
@@ -65,7 +65,15 @@ jobs:
           ALCHEMY_URI_SEPOLIA: ${{ secrets.ALCHEMY_URI_SEPOLIA }}
           ENS_SUBGRAPH_URL_MAINNET: ${{ secrets.ENS_SUBGRAPH_URL_MAINNET }}
           ENS_SUBGRAPH_URL_SEPOLIA: ${{ secrets.ENS_SUBGRAPH_URL_SEPOLIA }}
-        run: pnpm run deploy:prod
+        run: |
+          if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
+            pnpm run deploy:prod
+          elif [[ ${{ github.ref }} == 'refs/heads/staging' ]]; then
+            pnpm run deploy:staging
+          else
+            echo "Deployment is only supported for main and staging branches"
+            exit 1
+          fi
         working-directory: api
 
       - name: Delete old images from ECR
