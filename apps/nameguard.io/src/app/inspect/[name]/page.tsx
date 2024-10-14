@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: `NameGuard Report for ${decodedName}`,
     },
     openGraph: {
+      siteName: "NameGuard",
       title: `NameGuard Report for ${decodedName}`,
     },
   };
