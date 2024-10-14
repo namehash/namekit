@@ -20,6 +20,7 @@ export const metadata: Metadata = {
     title,
     description,
     url: "/ens-referral-program",
+    siteName: "NameHash Labs",
   },
   twitter: {
     title,
