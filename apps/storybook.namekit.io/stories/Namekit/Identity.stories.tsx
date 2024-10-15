@@ -1,6 +1,6 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Identity } from "@namehash/namekit-react";
+import { Identity } from "@namehash/namekit-react/client";
 
 const meta: Meta<typeof Identity.Root> = {
   title: "Namekit/Identity",

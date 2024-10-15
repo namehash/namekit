@@ -13,4 +13,3 @@ export { ENSTextArea } from "./components/ENSTextArea";
 export { Input } from "./components/Input";
 export { ENSInput } from "./components/ENSInput";
 export { Link } from "./components/Link";
-export { Identity } from "./components/Identity";
