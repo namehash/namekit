@@ -1,3 +1,5 @@
+"use client";
+
 import "@namehash/ens-webfont";
 import "./styles.css";
 
@@ -12,3 +14,5 @@ export {
   CurrencySymbolSize,
 } from "./components/CurrencySymbol/CurrencySymbol";
 export { TruncatedText } from "./components/TruncatedText";
+
+export { Identity } from "./components/Identity";
