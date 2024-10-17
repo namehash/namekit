@@ -5,6 +5,10 @@ import cc from "classcat";
 import { CheckIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import * as Yup from "yup";
 import { Button, Input, TextArea } from "@namehash/namekit-react";
+import {
+  ContactFormDataProps,
+  contactFormSchema,
+} from "./contact-form-validation";
 
 enum FormFields {
   Name = "name",
@@ -13,25 +17,6 @@ enum FormFields {
   Message = "message",
   Source = "source",
 }
-
-export interface ContactFormDataProps {
-  name: string;
-  email: string;
-  telegram: string;
-  message: string;
-  source: string;
-}
-
-const contactFormSchema = Yup.object().shape({
-  name: Yup.string().required("Name is required"),
-  email: Yup.string()
-    .email("Invalid email format")
-    .required("Email is required"),
-  telegram: Yup.string()
-    .matches(/^$|^[A-Za-z0-9_]+$/, "Invalid Telegram username")
-    .optional(),
-  message: Yup.string().required("Message is required"),
-});
 
 const validationErrorsInitialState = {
   [FormFields.Name]: "",
@@ -50,22 +35,10 @@ interface ContactUsFormProps {
   submissionEndpoint: string;
 }
 
-// Validation function
-export async function validateContactFormData(
-  data: ContactFormDataProps,
-): Promise<Yup.ValidationError | null> {
-  try {
-    await contactFormSchema.validate(data, { abortEarly: false });
-    return null; // No errors, return null
-  } catch (error) {
-    if (error instanceof Yup.ValidationError) {
-      return error; // Return the validation error
-    }
-    throw error; // Rethrow other types of errors
-  }
-}
-
-export const ContactUsForm = ({ title, submissionEndpoint }: ContactUsFormProps) => {
+export const ContactUsForm = ({
+  title,
+  submissionEndpoint,
+}: ContactUsFormProps): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successfulFormSubmit, setSuccessfulFormSubmit] = useState(false);
