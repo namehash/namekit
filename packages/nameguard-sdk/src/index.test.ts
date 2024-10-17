@@ -1,6 +1,12 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 
-import { createClient, MAX_INSPECTED_NAME_CHARACTERS } from ".";
+import {
+  createClient,
+  MAX_INSPECTED_NAME_CHARACTERS,
+  NameGuard,
+  NameGuardError,
+  NameGuardErrorType,
+} from ".";
 
 const nameguard = createClient({
   // undefined will default to the production endpoint
@@ -19,7 +25,7 @@ describe("NameGuard", () => {
   });
 
   it("should fetch the UninspectedNameGuard report for a name that is too long", async () => {
-    const name = "a".repeat(MAX_INSPECTED_NAME_CHARACTERS+1);
+    const name = "a".repeat(MAX_INSPECTED_NAME_CHARACTERS + 1);
     const data = await nameguard.inspectName(name);
 
     expect(data.name).toBe(name);
@@ -216,5 +222,83 @@ describe("NameGuard", () => {
     expect(data.nameguard_report).not.toBeNull();
     expect(data.nameguard_report?.name).toBe("hello<world>!.eth");
     expect(data.nameguard_report?.canonical_name).toBeNull();
+  });
+});
+
+describe("NameGuard AbortController", () => {
+  let nameguard: NameGuard;
+  let originalFetch: typeof fetch;
+
+  beforeEach(() => {
+    nameguard = new NameGuard();
+    originalFetch = global.fetch;
+  });
+
+  afterEach(() => {
+    global.fetch = originalFetch;
+    vi.useRealTimers();
+    vi.restoreAllMocks();
+  });
+
+  it("should use custom timeout", async () => {
+    vi.useFakeTimers();
+
+    const customTimeout = 10000;
+    const customNameguard = new NameGuard({ timeout: customTimeout });
+
+    global.fetch = vi.fn(() => new Promise(() => {})); // Never resolves
+
+    const promise = customNameguard.inspectName("test.eth");
+
+    vi.advanceTimersByTime(customTimeout + 100); // Advance time just past the custom timeout
+
+    await expect(promise).rejects.toThrow(NameGuardError);
+    await expect(promise).rejects.toHaveProperty(
+      "type",
+      NameGuardErrorType.Timeout,
+    );
+    await expect(promise).rejects.toThrow(
+      `Request timed out after ${customTimeout}ms`,
+    );
+  });
+
+  it("should abort a request after timeout", async () => {
+    vi.useFakeTimers();
+
+    global.fetch = vi.fn(() => new Promise(() => {})); // Never resolves
+
+    const promise = nameguard.inspectName("test.eth");
+
+    vi.advanceTimersByTime(31000); // Advance time past the 30 second timeout
+
+    await expect(promise).rejects.toThrow(NameGuardError);
+    await expect(promise).rejects.toHaveProperty(
+      "type",
+      NameGuardErrorType.Timeout,
+    );
+    await expect(promise).rejects.toThrow("Request timed out after 30000ms");
+  });
+
+  it("should abort all requests when abortAllRequests is called", async () => {
+    global.fetch = vi.fn(() => new Promise(() => {})); // Never resolves
+
+    const promise1 = nameguard.inspectName("test1.eth");
+    const promise2 = nameguard.inspectName("test2.eth");
+
+    // Allow some time for the requests to start
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    nameguard.abortAllRequests();
+
+    await expect(promise1).rejects.toThrow(NameGuardError);
+    await expect(promise1).rejects.toHaveProperty(
+      "type",
+      NameGuardErrorType.Abort,
+    );
+    await expect(promise2).rejects.toThrow(NameGuardError);
+    await expect(promise2).rejects.toHaveProperty(
+      "type",
+      NameGuardErrorType.Abort,
+    );
   });
 });
