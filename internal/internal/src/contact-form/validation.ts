@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import { ContactFormDataProps } from "./types";
 
 // Validation function
 export async function validateContactFormData(
@@ -13,14 +14,6 @@ export async function validateContactFormData(
     }
     throw error; // Rethrow other types of errors
   }
-}
-
-export interface ContactFormDataProps {
-  name: string;
-  email: string;
-  telegram: string;
-  message: string;
-  source: string;
 }
 
 export const contactFormSchema = Yup.object().shape({

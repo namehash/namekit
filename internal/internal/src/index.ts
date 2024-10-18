@@ -1,9 +1,7 @@
 import "./styles.css";
 
 export * as Metadata from "./metadata";
-export { ContactUsForm } from "./contact-form";
 
-export {
-  validateContactFormData,
-  type ContactFormDataProps,
-} from "./contact-form-validation";
+export { ContactUsForm } from "./contact-form/contact-form";
+export { validateContactFormData } from "./contact-form/validation";
+export { type ContactFormDataProps } from "./contact-form/types";

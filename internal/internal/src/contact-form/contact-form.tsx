@@ -5,10 +5,8 @@ import cc from "classcat";
 import { CheckIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import * as Yup from "yup";
 import { Button, Input, TextArea } from "@namehash/namekit-react";
-import {
-  ContactFormDataProps,
-  contactFormSchema,
-} from "./contact-form-validation";
+import { contactFormSchema } from "./validation";
+import { ContactFormDataProps } from "./types";
 
 enum FormFields {
   Name = "name",
