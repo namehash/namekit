@@ -54,7 +54,7 @@ const devElements: ListSectionElement[] = [
         <GithubIconDevelopers />
       </DeveloperSectionIconWrapper>
     ),
-    link: "https://github.com/namehash/namekit/tree/main/api",
+    link: "https://github.com/namehash/namekit/tree/main/packages/nameguard-python",
   },
   {
     header: (
@@ -206,7 +206,7 @@ const devElements: ListSectionElement[] = [
         <GearWheelIcon />
       </DeveloperSectionIconWrapper>
     ),
-    link: "https://github.com/namehash/namekit/blob/main/api/serverless.yml",
+    link: "https://github.com/namehash/namekit/blob/main/apps/api.nameguard.io",
   },
   {
     header: (

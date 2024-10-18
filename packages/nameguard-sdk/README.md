@@ -1,5 +1,6 @@
 # NameGuard SDK
 
+![Tests](https://github.com/namehash/namekit/actions/workflows/nameguard-end-to-end-tests.yml/badge.svg?branch=main)
 ![NPM Version](https://img.shields.io/npm/v/@namehash/nameguard)
 
 [NameGuard](https://nameguard.io) is designed to inspect and prevent malicious use of Ethereum Name Service (ENS) names. It provides a comprehensive set of functionalities to check the normalization status of names, labels, and graphemes, conduct various safety checks on ENS names, and verify the authenticity of ".eth" names in NFTs.

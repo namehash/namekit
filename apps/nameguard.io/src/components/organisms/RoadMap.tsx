@@ -104,7 +104,7 @@ export function RoadMap() {
           Build{" "}
           <a
             className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
-            href="https://github.com/namehash/namekit/tree/main/api"
+            href="https://github.com/namehash/namekit/tree/main/packages/nameguard-python"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -141,7 +141,7 @@ export function RoadMap() {
           Made it easy for anyone to{" "}
           <a
             className="text-black underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
-            href="https://github.com/namehash/namekit/blob/main/api/serverless.yml"
+            href="https://github.com/namehash/namekit/blob/main/apps/api.nameguard.io"
             target="_blank"
             rel="noopener noreferrer"
           >

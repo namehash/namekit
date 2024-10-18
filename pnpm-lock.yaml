@@ -465,16 +465,6 @@ importers:
         specifier: 2.1.2
         version: 2.1.2(@types/node@22.7.4)
 
-  packages/nameguard-python:
-    dependencies:
-      serverless:
-        specifier: 3.39.0
-        version: 3.39.0
-    devDependencies:
-      serverless-prune-plugin:
-        specifier: 2.0.2
-        version: 2.0.2(serverless@3.39.0)
-
   packages/nameguard-react:
     dependencies:
       '@headlessui-float/react':

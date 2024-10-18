@@ -7,12 +7,14 @@ on:
       - staging
     paths:
       - "packages/**"
+      - "!packages/nameguard-python/**"
   pull_request:
     branches:
       - main
       - staging
     paths:
       - "packages/**"
+      - "!packages/nameguard-python/**"
 
 env:
   PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}

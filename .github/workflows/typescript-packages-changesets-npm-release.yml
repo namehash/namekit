@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "packages/**"
+      - "!packages/nameguard-python/**"
 
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 

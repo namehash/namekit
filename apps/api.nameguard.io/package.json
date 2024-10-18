@@ -7,9 +7,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/namehash/namekit.git",
-    "directory": "api"
+    "directory": "apps/api.nameguard.io"
   },
-  "homepage": "https://github.com/namehash/namekit/tree/main/api",
+  "homepage": "https://github.com/namehash/namekit/tree/main/apps/api.nameguard.io",
   "keywords": [
     "ENS",
     "NameKit",
