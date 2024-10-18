@@ -75,7 +75,7 @@ jobs:
             echo "Deployment is only supported for main and staging branches"
             exit 1
           fi
-        working-directory: apps/api.nameguard.io
+        working-directory: ./packages/nameguard-python
 
       - name: Delete old images from ECR
         env:
