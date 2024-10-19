@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: "NameHash Labs - Brand Assets",
     description,
+    url: "/brand-assets",
+    siteName: "NameHash Labs",
   },
   twitter: {
     title: "NameHash Labs - Brand Assets",

@@ -5,10 +5,23 @@ import { JoinOurTeamSection } from "@/components/1 - atoms/join-our-team-section
 import rolesData from "@/data/rolesData";
 import { RoleCard } from "@/components/2 - molecules/role-card";
 
+const title = "Careers";
+const description = "NameHash Labs Careers.";
+
 export const metadata: Metadata = {
-  title: "NameHash Labs - Careers",
-  description: "NameHash Labs careers.",
+  title,
+  description,
   keywords: ["ens", "web3", "eth", "namehash", "careers"],
+  openGraph: {
+    title,
+    description,
+    url: "/careets",
+    siteName: "NameHash Labs",
+  },
+  twitter: {
+    title,
+    description,
+  },
 };
 
 const isRolesListEmpty = !rolesData.roles.length;
