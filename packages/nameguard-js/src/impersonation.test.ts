@@ -8,6 +8,7 @@ describe("computeImpersonationEstimate", () => {
   });
 
   it("should return impersonation estimate", () => {
+    // examples taken from Python Nameguard API tests
     expect(computeImpersonationEstimate("nick.eth")).toBe("unlikely");
     expect(computeImpersonationEstimate("nićk.eth")).toBe("potential");
     expect(computeImpersonationEstimate("vitalik.eth")).toBe("unlikely");
