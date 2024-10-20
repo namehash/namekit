@@ -1,14 +1,16 @@
 name: NameGuard API - Lint
 on:
   push:
-    branches: ["main"]
+    branches:
+      - main
   pull_request:
-    branches: ["main"]
+    branches: ["main", "staging"]
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout NameKit repo
+        uses: actions/checkout@v4
 
       - name: Ruff Check
         uses: chartboost/ruff-action@v1

@@ -4,54 +4,76 @@ on:
   push:
     branches:
       - main
+      - staging
     paths:
-      - 'api/**'
-      - '.github/workflows/nameguard_api_cicd.yml'
-
-env:
-  NODE_VERSION: "18.16.0"
-  TS_VERSION: "4.2.3"
-  TS_NODE_VERSION: "10.0.0"
+      - "api/**"
+      - ".github/workflows/nameguard-api-lambda-deploy.yml"
+  workflow_dispatch:
 
 permissions:
+  # `id-token: write` is required for the auth to AWS
   id-token: write
-  contents: write
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}
+  # `cancel-in-progress: false` creates a queue for workflow runs, such that
+  # only one instance of this workflow runs at a time.
+  cancel-in-progress: false
 
 jobs:
   build-image-deploy-serverless:
-    runs-on: ubuntu-20.04
-    env:
-      SERVICE_NAME: nameguard
+    name: Build and deploy NameGuard API Lambda
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout this repo
-        uses: actions/checkout@v3
+      - name: Checkout NameKit repo
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ env.NODE_VERSION }}
+          node-version-file: .nvmrc
+          cache: "pnpm"
 
-      - name: Setup git
-        run: |
-          git config --global user.name 'GitHub Actions'
-          git config --global user.email ''
+      - name: Install npm dependencies
+        # We're installing pnpm / node dependencies to make use
+        # of the Serverless framework when we build and deploy the lambda.
+        run: pnpm install --frozen-lockfile
 
-      - name: Configure AWS credentials
+      - name: Set up QEMU
+        # This GitHub action runs on x86_64, but we want to build the lambda
+        # for arm64 for increased cost savings in AWS when we deploy it.
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+
+      - name: Assume AWS Role
+        # Uses GitHub OIDC provider to assume AWS role
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE}}
           aws-region: us-east-1
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-        with:
-          platforms: arm64
-
       - name: Build and deploy lambda
+        env:
+          PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
+          PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}
+          ALCHEMY_URI_MAINNET: ${{ secrets.ALCHEMY_URI_MAINNET }}
+          ALCHEMY_URI_SEPOLIA: ${{ secrets.ALCHEMY_URI_SEPOLIA }}
+          ENS_SUBGRAPH_URL_MAINNET: ${{ secrets.ENS_SUBGRAPH_URL_MAINNET }}
+          ENS_SUBGRAPH_URL_SEPOLIA: ${{ secrets.ENS_SUBGRAPH_URL_SEPOLIA }}
         run: |
-          cp ../LICENSE .
-          npm install -g serverless@3.39.0
-          npm install serverless-prune-plugin
-          serverless deploy --stage prod --param="PROVIDER_URI_MAINNET=${{secrets.PROVIDER_URI_MAINNET}}" --param="PROVIDER_URI_SEPOLIA=${{secrets.PROVIDER_URI_SEPOLIA}}" --param="ALCHEMY_URI_MAINNET=${{secrets.ALCHEMY_URI_MAINNET}}" --param="ALCHEMY_URI_SEPOLIA=${{secrets.ALCHEMY_URI_SEPOLIA}}" --param="ENS_SUBGRAPH_URL_MAINNET=${{secrets.ENS_SUBGRAPH_URL_MAINNET}}" --param="ENS_SUBGRAPH_URL_SEPOLIA=${{secrets.ENS_SUBGRAPH_URL_SEPOLIA}}"
+          if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
+            pnpm run deploy:prod
+          elif [[ ${{ github.ref }} == 'refs/heads/staging' ]]; then
+            pnpm run deploy:staging
+          else
+            echo "Deployment is only supported for main and staging branches"
+            exit 1
+          fi
         working-directory: api
 
       - name: Delete old images from ECR
@@ -67,21 +89,29 @@ jobs:
 
   notify:
     name: Send Slack deployment event notification
-    if: ${{ needs.build-image-deploy-serverless.result != 'skipped' && always() }}
     needs: [build-image-deploy-serverless]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Output status on deployment success
         if: ${{ needs.build-image-deploy-serverless.result == 'success'}}
         run: |
           echo "STATUS=Success  :rocket:" >> $GITHUB_ENV
           echo "TEXT=Lambda NameGuard deployed successfully! :white_check_mark:" >> $GITHUB_ENV
+          echo "COLOR=good" >> $GITHUB_ENV
 
       - name: Output status on deployment failed
         if: ${{ needs.build-image-deploy-serverless.result == 'failure' }}
         run: |
           echo "STATUS=Failure  :x:" >> $GITHUB_ENV
           echo "TEXT=Lambda NameGuard deployment failed! :rotating_light:" >> $GITHUB_ENV
+          echo "COLOR=danger" >> $GITHUB_ENV
+
+      - name: Output status on deployment cancellation
+        if: ${{ needs.build-image-deploy-serverless.result == 'cancelled' }}
+        run: |
+          echo "STATUS=Cancelled  :no_entry_sign:" >> $GITHUB_ENV
+          echo "TEXT=Lambda NameGuard deployment was cancelled. :warning:" >> $GITHUB_ENV
+          echo "COLOR=warning" >> $GITHUB_ENV
 
       - name: Send deployment status Slack notification
         uses: 8398a7/action-slack@v3
@@ -91,7 +121,7 @@ jobs:
           custom_payload: |
             {
               attachments: [{
-                color: '${{ needs.build-image-deploy-serverless.result  }}' === 'success' ? 'good' : '${{ needs.build-image-deploy-serverless.result }}' === 'failure' ? 'danger' : 'warning',
+                color: '${{ env.COLOR }}',
                 title: 'Lambda NameGuard deployment.',
                 text: '${{ env.TEXT }}',
                 fields: [

@@ -1,13 +1,12 @@
 "use client";
 
-/* eslint-disable @next/next/no-img-element */
-import { FormEvent, useEffect, useState } from "react";
-import { CheckIcon, XCircleIcon } from "@heroicons/react/24/solid";
+import React, { FormEvent, useEffect, useState } from "react";
 import cc from "classcat";
-import { ContactFormDataProps } from "@/lib/types/ContactFormDataProps";
-import { contactFormSchema } from "@/lib/schemas/contactFormSchema";
+import { CheckIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import * as Yup from "yup";
-import { Button } from "@namehash/namekit-react";
+import { Button, Input, TextArea } from "@namehash/namekit-react";
+import { contactFormSchema } from "./validation";
+import { ContactFormDataProps } from "./types";
 
 enum FormFields {
   Name = "name",
@@ -31,9 +30,13 @@ interface ValidationErrors {
 
 interface ContactUsFormProps {
   title: string;
+  submissionEndpoint: string;
 }
 
-export const ContactUsForm = ({ title }: ContactUsFormProps) => {
+export const ContactUsForm = ({
+  title,
+  submissionEndpoint,
+}: ContactUsFormProps): JSX.Element => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successfulFormSubmit, setSuccessfulFormSubmit] = useState(false);
@@ -92,13 +95,11 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
   };
 
   const sendData = async (data: ContactFormDataProps) => {
-    const apiUrl =
-      process.env.NEXT_PUBLIC_CONTACT_FORM_API_URL || "/api/contact-form";
-
-    const fetchPromise = fetch(apiUrl, {
+    const fetchPromise = fetch(submissionEndpoint, {
       method: "POST",
       headers: {
         Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
@@ -165,7 +166,7 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
 
         <div
           className={cc([
-            "w-full h-full flex flex-col items-center justify-center absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-all duration-300",
+            "w-full h-full flex flex-col items-center justify-center absolute  transition-all duration-300",
             successfulFormSubmit ? "opacity-100" : "opacity-0 z-[-1]",
           ])}
         >
@@ -176,15 +177,16 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
           <p className="text-sm text-gray-500 mt-2 text-center">
             We have received your message and will get back to you soon.
           </p>
-          <button
+
+          <Button
             onClick={() => {
               setSuccessfulFormSubmit(false);
             }}
             type="reset"
-            className="mt-5 bg-black hover:bg-gray-800 transition-colors duration-200 px-4 py-2 rounded-md shadow-sm text-white text-sm font-medium"
+            className="mt-5"
           >
             Send another message
-          </button>
+          </Button>
         </div>
 
         <div
@@ -216,27 +218,16 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
                 Name
               </label>
               <div className="w-full">
-                <input
+                <Input
                   id="name"
                   type="text"
                   disabled={isLoading}
                   name={FormFields.Name}
                   autoComplete="off"
                   onChange={handleInputChange}
-                  className={cc([
-                    "block w-full rounded-md px-3.5 py-2 text-gray-900 shadow-sm border border-gray-300 placeholder:text-gray-400 focus:border-gray-600 hover:border-gray-400 outline-none sm:text-sm sm:leading-6",
-                    {
-                      "border-red-300": validationErrors[FormFields.Name],
-                    },
-                  ])}
+                  error={validationErrors[FormFields.Name]}
                 />
               </div>
-
-              {validationErrors[FormFields.Name] && (
-                <span className="mt-2 text-sm font-normal text-red-600">
-                  {validationErrors[FormFields.Name]}
-                </span>
-              )}
             </div>
             <div className="gap-1">
               <label
@@ -245,25 +236,15 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
               >
                 Email
               </label>
-              <input
+              <Input
                 id="email"
                 type="email"
                 disabled={isLoading}
                 onChange={handleInputChange}
                 autoComplete="off"
                 name={FormFields.Email}
-                className={cc([
-                  "block w-full rounded-md px-3.5 py-2 text-gray-900 shadow-sm border focus:border-gray-600 hover:border-gray-400 border-gray-300 placeholder:text-gray-400 outline-none sm:text-sm sm:leading-6",
-                  {
-                    "border-red-300": validationErrors[FormFields.Email],
-                  },
-                ])}
+                error={validationErrors[FormFields.Email]}
               />
-              {validationErrors[FormFields.Email] && (
-                <span className="mt-2 text-sm font-normal text-red-600">
-                  {validationErrors[FormFields.Email]}
-                </span>
-              )}
             </div>
             <div className="gap-1">
               <label
@@ -272,30 +253,18 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
               >
                 Telegram (optional)
               </label>
-              <div className="relative">
-                <span className="text-sm leading-5 font-medium text-gray-500 absolute left-2 top-2.5">
-                  @
-                </span>
-                <input
-                  type="text"
-                  id="telegram"
-                  autoComplete="off"
-                  disabled={isLoading}
-                  onChange={handleInputChange}
-                  name={FormFields.Telegram}
-                  className={cc([
-                    "block w-full rounded-md pr-3.5 pl-6 py-2 text-gray-900 shadow-sm border border-gray-300 placeholder:text-gray-400 focus:border-gray-600 hover:border-gray-400 outline-none sm:text-sm sm:leading-6",
-                    {
-                      "border-red-300": validationErrors[FormFields.Telegram],
-                    },
-                  ])}
-                />
-                {validationErrors[FormFields.Telegram] && (
-                  <span className="mt-2 text-sm font-normal text-red-600">
-                    {validationErrors[FormFields.Telegram]}
-                  </span>
-                )}
-              </div>
+              <Input
+                type="text"
+                id="telegram"
+                slotPosition="left"
+                autoComplete="off"
+                disabled={isLoading}
+                onChange={handleInputChange}
+                name={FormFields.Telegram}
+                error={validationErrors[FormFields.Telegram]}
+              >
+                <Input.Slot>@</Input.Slot>
+              </Input>
             </div>
             <div className="gap-1">
               <label
@@ -304,35 +273,22 @@ export const ContactUsForm = ({ title }: ContactUsFormProps) => {
               >
                 Message
               </label>
-              <textarea
+
+              <TextArea
                 rows={4}
                 id="message"
                 disabled={isLoading}
                 onChange={handleInputChange}
                 defaultValue=""
                 name={FormFields.Message}
-                className={cc([
-                  "block w-full rounded-md px-3.5 py-2 text-gray-900 shadow-sm border border-gray-300 placeholder:text-gray-400 focus:border-gray-600 hover:border-gray-400 outline-none sm:text-sm sm:leading-6",
-                  {
-                    "border-red-300": validationErrors[FormFields.Message],
-                  },
-                ])}
+                error={validationErrors[FormFields.Message]}
               />
-
-              {validationErrors[FormFields.Message] && (
-                <span className="mt-2 text-sm font-normal text-red-600">
-                  {validationErrors[FormFields.Message]}
-                </span>
-              )}
             </div>
+            {/* Hidden input to capture the source URL of the form submission.
+            Its value is set programmatically in a useEffect hook. */}
             <input type="hidden" id="source" name="source" value="" />
             <div className="flex h-full justify-end items-end">
-              <Button
-                disabled={isLoading}
-                type="submit"
-                variant="primary"
-                size="medium"
-              >
+              <Button disabled={isLoading} type="submit">
                 {isLoading ? "Sending..." : "Send message"}
               </Button>
             </div>

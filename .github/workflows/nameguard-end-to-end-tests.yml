@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - staging
     paths:
       - "packages/nameguard-sdk/**"
       - "api/nameguard/**"
@@ -11,6 +12,7 @@ on:
   pull_request:
     branches:
       - main
+      - staging
     paths:
       - "packages/nameguard-sdk/**"
       - "api/nameguard/**"
@@ -23,7 +25,8 @@ jobs:
       api_changed: ${{ steps.check.outputs.api_changed }}
       sdk_changed: ${{ steps.check.outputs.sdk_changed }}
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout NameKit repo
+        uses: actions/checkout@v4
       - name: Check for changes
         id: check
         run: |
@@ -42,14 +45,15 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          run_install: true
 
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: "lts/*"
+          node-version-file: .nvmrc
           cache: "pnpm"
+
+      - name: Install npm dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Install poetry
         if: needs.check_changes.outputs.api_changed > 0
@@ -57,7 +61,7 @@ jobs:
 
       - name: Set up Python
         if: needs.check_changes.outputs.api_changed > 0
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: 3.11
           cache: "poetry"
@@ -98,7 +102,7 @@ jobs:
           else
             echo "NAMEGUARD_API_URI=$PRODUCTION_NAMEGUARD_API_URI" >> $GITHUB_ENV
           fi
-         
+
       - name: Run tests
         env:
           PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}

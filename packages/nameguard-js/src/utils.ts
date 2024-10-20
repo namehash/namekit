@@ -13,16 +13,6 @@ export function isCharacter(text: string): boolean {
 }
 
 /**
- * Splits a string into an array of individual characters.
- *
- * @param text - The string to split.
- * @returns An array of individual characters.
- */
-export function splitCharacters(text: string): string[] {
-  return [...text];
-}
-
-/**
  * Checks if the given grapheme is an emoji sequence.
  * 
  * An emoji sequence is a specific combination of code points that represent a single emoji.

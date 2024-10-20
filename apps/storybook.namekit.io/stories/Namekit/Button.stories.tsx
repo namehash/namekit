@@ -1,6 +1,6 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Button } from "@namehash/namekit-react";
+import { Button, Link } from "@namehash/namekit-react";
 
 const meta: Meta<typeof Button> = {
   title: "UI/Button",
@@ -18,7 +18,6 @@ const meta: Meta<typeof Button> = {
         options: ["small", "medium", "large"],
       },
     },
-    asChild: { control: { disable: true } },
     children: { control: "text" },
   },
 };
@@ -108,11 +107,47 @@ export const CustomClass: Story = {
   },
 };
 
+export const PrimaryDisabled: Story = {
+  args: {
+    variant: "primary",
+    size: "medium",
+    children: "Primary Disabled Button",
+    disabled: true,
+  },
+};
+
+export const SecondaryDisabled: Story = {
+  args: {
+    variant: "secondary",
+    size: "medium",
+    children: "Secondary Disabled Button",
+    disabled: true,
+  },
+};
+
+export const GhostDisabled: Story = {
+  args: {
+    variant: "ghost",
+    size: "medium",
+    children: "Ghost Disabled Button",
+    disabled: true,
+  },
+};
+
 export const AsChild: Story = {
   args: {
     variant: "primary",
     size: "medium",
-    children: "Button as a Link",
-    asChild: <a href="#" />,
+    children: <a href="https://namekit.io">Button with regular a tag</a>,
+    asChild: true,
+  },
+};
+
+export const LinkAsChild: Story = {
+  args: {
+    variant: "primary",
+    size: "medium",
+    children: <Link href="https://namekit.io">Button with Link component</Link>,
+    asChild: true,
   },
 };

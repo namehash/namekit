@@ -452,21 +452,21 @@ class NameGuard:
             raise ProviderUnavailable(f'Communication error with provider occurred: {ex}')
         display_name = f'Unnamed {address[2:6].lower()}'
         primary_name = None
-        nameguard_result = None
+        nameguard_report = None
         if domain is None:
             status = SecurePrimaryNameStatus.NO_PRIMARY_NAME
             impersonation_estimate = None
         else:
-            nameguard_result = await self.inspect_name(network_name, domain)
+            nameguard_report = await self.inspect_name(network_name, domain)
 
-            if nameguard_result.highest_risk and nameguard_result.highest_risk.check.name == Check.UNINSPECTED.name:
+            if nameguard_report.highest_risk and nameguard_report.highest_risk.check.name == Check.UNINSPECTED.name:
                 status = SecurePrimaryNameStatus.UNINSPECTED
                 impersonation_estimate = None
-            elif nameguard_result.normalization == Normalization.UNNORMALIZED:
+            elif nameguard_report.normalization == Normalization.UNNORMALIZED:
                 status = SecurePrimaryNameStatus.UNNORMALIZED
                 impersonation_estimate = None
             else:
-                display_name = nameguard_result.beautiful_name
+                display_name = nameguard_report.beautiful_name
                 status = SecurePrimaryNameStatus.NORMALIZED
                 primary_name = domain
 
@@ -474,7 +474,7 @@ class NameGuard:
                     ImpersonationEstimate.UNLIKELY
                     if any(
                         check.check == 'impersonation_risk' and check.status == CheckStatus.PASS
-                        for check in nameguard_result.checks
+                        for check in nameguard_report.checks
                     )
                     else ImpersonationEstimate.POTENTIAL
                 )
@@ -484,7 +484,7 @@ class NameGuard:
             impersonation_estimate=impersonation_estimate,
             display_name=display_name,
             primary_name_status=status,
-            nameguard_result=nameguard_result if return_nameguard_report else None,
+            nameguard_report=nameguard_report if return_nameguard_report else None,
         )
 
     async def fake_eth_name_check_fields(
@@ -506,19 +506,19 @@ class NameGuard:
 
         if token_type not in ['ERC721', 'ERC1155'] and contract_address in ens_contract_adresses:
             return FakeEthNameCheckResult(
-                status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_fields=None
+                status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_report=None, investigated_fields=None
             )
         if token_type == 'NOT_A_CONTRACT':
             return FakeEthNameCheckResult(
-                status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_fields=None
+                status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_report=None, investigated_fields=None
             )
         elif token_type == 'NO_SUPPORTED_NFT_STANDARD':
             return FakeEthNameCheckResult(
-                status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_fields=None
+                status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_report=None, investigated_fields=None
             )
         elif token_type not in ['ERC721', 'ERC1155']:  # Alchemy does not support other types
             return FakeEthNameCheckResult(
-                status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_fields=None
+                status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_report=None, investigated_fields=None
             )
 
         title = res_json['title']
@@ -555,14 +555,14 @@ class NameGuard:
 
             if title is None:
                 return FakeEthNameCheckResult(
-                    status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_result=None, investigated_fields=None
+                    status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_report=None, investigated_fields=None
                 )
             else:
                 if is_labelhash_eth(title):
                     report = await self.inspect_name(network_name, title, resolve_labelhashes=False)
                     return FakeEthNameCheckResult(
                         status=FakeEthNameCheckStatus.UNKNOWN_ETH_NAME,
-                        nameguard_result=report,
+                        nameguard_report=report,
                         investigated_fields=None,
                     )
 
@@ -571,13 +571,13 @@ class NameGuard:
                 if is_ens_normalized(title):
                     return FakeEthNameCheckResult(
                         status=FakeEthNameCheckStatus.AUTHENTIC_ETH_NAME,
-                        nameguard_result=report,
+                        nameguard_report=report,
                         investigated_fields=None,
                     )
                 else:
                     return FakeEthNameCheckResult(
                         status=FakeEthNameCheckStatus.INVALID_ETH_NAME,
-                        nameguard_result=report,
+                        nameguard_report=report,
                         investigated_fields=None,
                     )
         else:
@@ -605,18 +605,18 @@ class NameGuard:
             if impersonated:
                 return FakeEthNameCheckResult(
                     status=FakeEthNameCheckStatus.IMPERSONATED_ETH_NAME,
-                    nameguard_result=None,
+                    nameguard_report=None,
                     investigated_fields=impersonating_fields,
                 )
             elif potentially_impersonated:
                 return FakeEthNameCheckResult(
                     status=FakeEthNameCheckStatus.POTENTIALLY_IMPERSONATED_ETH_NAME,
-                    nameguard_result=None,
+                    nameguard_report=None,
                     investigated_fields=impersonating_fields,
                 )
             else:
                 return FakeEthNameCheckResult(
                     status=FakeEthNameCheckStatus.NON_IMPERSONATED_ETH_NAME,
-                    nameguard_result=None,
+                    nameguard_report=None,
                     investigated_fields=None,
                 )

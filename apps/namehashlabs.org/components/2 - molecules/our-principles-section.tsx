@@ -86,7 +86,7 @@ const principles: PrinciplesProps[] = [
         We are exclusively committed to the ENS namespace. We also agree to
         uphold all articles in the{" "}
         <Link
-          href="https://docs.ens.domains/v/governance/ens-dao-constitution"
+          href="https://docs.ens.domains/dao/constitution"
           target="_blank"
           size="large"
           className="!text-black"
@@ -105,7 +105,7 @@ const principles: PrinciplesProps[] = [
       <>
         We support the{" "}
         <Link
-          href="https://docs.ens.domains/ens-improvement-proposals/"
+          href="https://docs.ens.domains/ensip"
           target="_blank"
           className="!text-black"
           size="large"

@@ -4,11 +4,13 @@ import {
   ShieldCheckIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
-import { ExternalLinkIcon } from "../1 - atoms/icons/external-link-icon";
-import { SectionText } from "../1 - atoms";
 import { Balancer } from "react-wrap-balancer";
 import cc from "classcat";
-import { Button, IconButton } from "@namehash/namekit-react";
+import { Button, Link } from "@namehash/namekit-react";
+import NextLink from "next/link";
+
+import { SectionText } from "../1 - atoms";
+
 interface ProductProps {
   label: {
     icon: React.ReactElement;
@@ -23,7 +25,6 @@ interface ProductProps {
   buttonUrl?: string;
   greenLabelText?: string;
   sectionId?: string;
-  withoutExternalLinkIconInCTA?: boolean;
 }
 
 const Product = ({
@@ -37,8 +38,12 @@ const Product = ({
   buttonLabel,
   buttonUrl,
   greenLabelText,
-  withoutExternalLinkIconInCTA,
 }: ProductProps) => {
+  const isInternalLink = (url: string) => {
+    if (!url) return false;
+    return url.startsWith("/") || url.startsWith("#") || !url.includes("://");
+  };
+
   return (
     <section
       className={cc([
@@ -92,21 +97,16 @@ const Product = ({
             </SectionText>
             {buttonUrl && buttonLabel && (
               <div className="flex lg:justify-start justify-center">
-                <a
-                  href={buttonUrl}
-                  target={withoutExternalLinkIconInCTA ? undefined : "_blank"}
-                >
-                  <IconButton
-                    iconPosition="right"
-                    icon={
-                      !withoutExternalLinkIconInCTA && (
-                        <ExternalLinkIcon className="w-5 h-5" />
-                      )
-                    }
-                  >
-                    {buttonLabel}
-                  </IconButton>
-                </a>
+                <Button asChild>
+                  {isInternalLink(buttonUrl) ? (
+                    <NextLink href={buttonUrl}>{buttonLabel}</NextLink>
+                  ) : (
+                    <Link href={buttonUrl}>
+                      {buttonLabel}
+                      <Link.ExternalIcon />
+                    </Link>
+                  )}
+                </Button>
               </div>
             )}
           </div>
@@ -136,7 +136,6 @@ export const ProductsSection = () => {
           buttonLabel={product.buttonLabel}
           illustration={product.illustration}
           greenLabelText={product.greenLabelText}
-          withoutExternalLinkIconInCTA={product.withoutExternalLinkIconInCTA}
         />
       ))}
     </div>
@@ -186,9 +185,8 @@ const products: ProductProps[] = [
       />
     ),
     greenLabelText: "Proposal pending",
-    buttonUrl: "https://namehashlabs.org/ens-referral-program",
+    buttonUrl: "/ens-referral-program",
     sectionId: "ens-referral-program",
-    withoutExternalLinkIconInCTA: true,
   },
   {
     title: "NameGuard",

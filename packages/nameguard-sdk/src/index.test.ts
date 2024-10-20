@@ -69,17 +69,17 @@ describe("getSecurePrimaryName", () => {
     );
 
     expect(data.display_name).toBe("nick.eth");
-    expect(data.nameguard_result).not.toBeNull();
+    expect(data.nameguard_report).not.toBeNull();
   });
 
-  it("should analyze a primary name and not include the nameguard_result", async () => {
+  it("should analyze a primary name and not include the nameguard_report", async () => {
     const data = await nameguard.getSecurePrimaryName(
       "0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5",
       { returnNameGuardReport: false },
     );
 
     expect(data.display_name).toBe("nick.eth");
-    expect(data.nameguard_result).toBeNull();
+    expect(data.nameguard_report).toBeNull();
   });
 
   it("getSecurePrimaryName: normalized - unlikely impersonation", async () => {
@@ -92,9 +92,9 @@ describe("getSecurePrimaryName", () => {
     expect(data.impersonation_estimate).toBe("unlikely");
     expect(data.primary_name).toBe("vitalik.eth");
     expect(data.display_name).toBe("vitalik.eth");
-    expect(data.nameguard_result).not.toBeNull();
-    expect(data.nameguard_result?.name).toBe("vitalik.eth");
-    expect(data.nameguard_result?.canonical_name).toBe("vitalik.eth");
+    expect(data.nameguard_report).not.toBeNull();
+    expect(data.nameguard_report?.name).toBe("vitalik.eth");
+    expect(data.nameguard_report?.canonical_name).toBe("vitalik.eth");
   });
 
   it("getSecurePrimaryName: normalized - potential impersonation", async () => {
@@ -107,9 +107,9 @@ describe("getSecurePrimaryName", () => {
     expect(data.impersonation_estimate).toBe("potential");
     expect(data.primary_name).toBe("vitalìk.eth");
     expect(data.display_name).toBe("vitalìk.eth");
-    expect(data.nameguard_result).not.toBeNull();
-    expect(data.nameguard_result?.name).toBe("vitalìk.eth");
-    expect(data.nameguard_result?.canonical_name).toBe("vitalik.eth");
+    expect(data.nameguard_report).not.toBeNull();
+    expect(data.nameguard_report?.name).toBe("vitalìk.eth");
+    expect(data.nameguard_report?.canonical_name).toBe("vitalik.eth");
   });
 
   it("getSecurePrimaryName: normalized - unlikely impersonation - offchain name", async () => {
@@ -122,9 +122,9 @@ describe("getSecurePrimaryName", () => {
     expect(data.impersonation_estimate).toBe("unlikely");
     expect(data.primary_name).toBe("exampleprimary.cb.id");
     expect(data.display_name).toBe("exampleprimary.cb.id");
-    expect(data.nameguard_result).not.toBeNull();
-    expect(data.nameguard_result?.name).toBe("exampleprimary.cb.id");
-    expect(data.nameguard_result?.canonical_name).toBe("exampleprimary.cb.id");
+    expect(data.nameguard_report).not.toBeNull();
+    expect(data.nameguard_report?.name).toBe("exampleprimary.cb.id");
+    expect(data.nameguard_report?.canonical_name).toBe("exampleprimary.cb.id");
   });
 
   it("getSecurePrimaryName: no primary name", async () => {
@@ -137,7 +137,7 @@ describe("getSecurePrimaryName", () => {
     expect(data.impersonation_estimate).toBeNull();
     expect(data.primary_name).toBeNull();
     expect(data.display_name).toBe("Unnamed d8da");
-    expect(data.nameguard_result).toBeNull();
+    expect(data.nameguard_report).toBeNull();
   });
 
   it("getSecurePrimaryName: unnormalized", async () => {
@@ -150,9 +150,9 @@ describe("getSecurePrimaryName", () => {
     expect(data.impersonation_estimate).toBeNull();
     expect(data.primary_name).toBeNull();
     expect(data.display_name).toBe("Unnamed fa9a");
-    expect(data.nameguard_result).not.toBeNull();
-    expect(data.nameguard_result?.name).toBe("888‍‍.eth");
-    expect(data.nameguard_result?.canonical_name).toBeNull();
+    expect(data.nameguard_report).not.toBeNull();
+    expect(data.nameguard_report?.name).toBe("888‍‍.eth");
+    expect(data.nameguard_report?.canonical_name).toBeNull();
   });
 
   it("getSecurePrimaryName: unnormalized with canonical", async () => {
@@ -165,9 +165,9 @@ describe("getSecurePrimaryName", () => {
     expect(data.impersonation_estimate).toBeNull();
     expect(data.primary_name).toBeNull();
     expect(data.display_name).toBe("Unnamed af73");
-    expect(data.nameguard_result).not.toBeNull();
-    expect(data.nameguard_result?.name).toBe("୨୨୨୨୨.eth");
-    expect(data.nameguard_result?.canonical_name).toBeNull();
+    expect(data.nameguard_report).not.toBeNull();
+    expect(data.nameguard_report?.name).toBe("୨୨୨୨୨.eth");
+    expect(data.nameguard_report?.canonical_name).toBeNull();
   });
 
   it("getSecurePrimaryName: unnormalized but normalizable", async () => {
@@ -180,9 +180,9 @@ describe("getSecurePrimaryName", () => {
     expect(data.impersonation_estimate).toBeNull();
     expect(data.primary_name).toBeNull();
     expect(data.display_name).toBe("Unnamed f537");
-    expect(data.nameguard_result).not.toBeNull();
-    expect(data.nameguard_result?.name).toBe("٠٠۱.eth");
-    expect(data.nameguard_result?.canonical_name).toBeNull();
+    expect(data.nameguard_report).not.toBeNull();
+    expect(data.nameguard_report?.name).toBe("٠٠۱.eth");
+    expect(data.nameguard_report?.canonical_name).toBeNull();
   });
 
   it("getSecurePrimaryName: normalized with different display_name", async () => {
@@ -195,9 +195,9 @@ describe("getSecurePrimaryName", () => {
     expect(data.impersonation_estimate).toBe("unlikely");
     expect(data.primary_name).toBe("vincξnt.eth");
     expect(data.display_name).toBe("vincΞnt.eth");
-    expect(data.nameguard_result).not.toBeNull();
-    expect(data.nameguard_result?.name).toBe("vincξnt.eth");
-    expect(data.nameguard_result?.canonical_name).toBe("vincξnt.eth");
+    expect(data.nameguard_report).not.toBeNull();
+    expect(data.nameguard_report?.name).toBe("vincξnt.eth");
+    expect(data.nameguard_report?.canonical_name).toBe("vincξnt.eth");
   });
 
   it("getSecurePrimaryName: attempted code injection with primary name", async () => {
@@ -210,9 +210,9 @@ describe("getSecurePrimaryName", () => {
     expect(data.impersonation_estimate).toBeNull();
     expect(data.primary_name).toBeNull();
     expect(data.display_name).toBe("Unnamed 744e");
-    expect(data.nameguard_result).not.toBeNull();
-    expect(data.nameguard_result?.name).toBe("hello<world>!.eth");
-    expect(data.nameguard_result?.canonical_name).toBeNull();
+    expect(data.nameguard_report).not.toBeNull();
+    expect(data.nameguard_report?.name).toBe("hello<world>!.eth");
+    expect(data.nameguard_report?.canonical_name).toBeNull();
   });
 });
 
