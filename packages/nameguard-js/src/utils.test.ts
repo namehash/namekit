@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeAll } from "vitest";
-import { isEmojiChar, isEmojiSequence, isEmojiZwjSequence, isEmoji } from "./utils";
+import { isEmojiChar, isEmojiSequence, isEmojiZwjSequence, isEmoji, isCombiningChar } from "./utils";
 import { initializeData } from "./data";
 
 describe("isEmojiChar", () => {
@@ -91,6 +91,42 @@ describe("isEmoji", () => {
     ];
     for (const [text, expected] of cases) {
       expect(isEmoji(text)).toBe(expected)
+    }
+  });
+});
+
+describe("isCombiningChar", () => {
+  it("should check if a character is a combining character", () => {
+    // examples created with python's unicodedata.combining() function
+    const nonCombining = [
+      "\u{01c6b5}",
+      "\u{040d07}",
+      "\u{085ce7}",
+      "\u{0f1877}",
+      "\u{046173}",
+      "\u{10f4c1}",
+      "\u{055b7a}",
+      "\u{06ac1e}",
+      "\u{063027}",
+      "\u{057c5c}"
+    ];
+    const combining = [
+      "\u{000345}",
+      "\u{01e014}",
+      "\u{000822}",
+      "\u{002dee}",
+      "\u{01d16d}",
+      "\u{00fe23}",
+      "\u{01e133}",
+      "\u{000e3a}",
+      "\u{000d3b}",
+      "\u{002dfa}"
+    ];
+    for (const chr of nonCombining) {
+      expect(isCombiningChar(chr)).toBe(false);
+    }
+    for (const chr of combining) {
+      expect(isCombiningChar(chr)).toBe(true);
     }
   });
 });
