@@ -3,8 +3,9 @@
 import NextLink from "next/link";
 import { Button } from "@namehash/namekit-react";
 
-import { NameHashLabsLogo, CalendarButton } from "../1 - atoms";
+import { NameHashLabsLogo } from "../1 - atoms";
 import MobileMenu from "./mobile-menu";
+import { CalendarButton } from "@namehash/internal";
 
 export const Header = () => {
   return (
@@ -30,7 +31,9 @@ export const Header = () => {
             <NextLink href="/careers">Open positions</NextLink>
           </Button>
 
-          <CalendarButton>Schedule a call</CalendarButton>
+          <CalendarButton link="namehashlabs/namehashlabs">
+            Schedule a call
+          </CalendarButton>
         </div>
       </div>
       <MobileMenu />

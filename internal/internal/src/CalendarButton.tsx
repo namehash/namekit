@@ -5,7 +5,15 @@ import { useEffect } from "react";
 import { getCalApi } from "@calcom/embed-react";
 import { Button, ButtonProps } from "@namehash/namekit-react";
 
-export const CalendarButton = ({ children, ...props }: ButtonProps) => {
+interface CalendarButtonProps extends ButtonProps {
+  link: string;
+}
+
+export const CalendarButton = ({
+  children,
+  link,
+  ...props
+}: CalendarButtonProps) => {
   useEffect(() => {
     (async function () {
       const cal = await getCalApi();
@@ -19,7 +27,7 @@ export const CalendarButton = ({ children, ...props }: ButtonProps) => {
 
   return (
     <Button
-      data-cal-link="namehashlabs/nameguard"
+      data-cal-link={link}
       data-cal-config='{"layout":"month_view"}'
       {...props}
     >

@@ -1,12 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import {
-  CalendarButton,
-  PreSectionText,
-  SectionText,
-  SectionTitle,
-} from "../1 - atoms";
+import { PreSectionText, SectionText, SectionTitle } from "../1 - atoms";
 import { ColorfulBg } from "../1 - atoms/colorful-bg";
-import { ContactUsForm } from "@namehash/internal";
+import { CalendarButton, ContactUsForm } from "@namehash/internal";
 
 export const ContactSection = () => {
   return (
@@ -28,7 +23,7 @@ export const ContactSection = () => {
           </p>
         </div>
         <div className="w-full md:w-auto">
-          <CalendarButton variant="secondary" className="!w-full">
+          <CalendarButton link="namehashlabs/namehashlabs" variant="secondary">
             Schedule a call
           </CalendarButton>
         </div>
