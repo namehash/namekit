@@ -1,7 +1,3 @@
-// for compression the json type is:
-// { [key: string]: [string, number] }
-import GRAPHEME_CANONICALS_ from "./canonicals.json";
-
 /**
  * Stores information about a potentially confusable grapheme and its canonical form.
  */
@@ -22,7 +18,14 @@ export interface GraphemeCanonical {
  * Map containing graphemes and their canonical forms.
  * This data is taken from the NameHash ens-label-inspector Python package.
  */
-export const GRAPHEME_CANONICALS: Map<string, GraphemeCanonical> =
-  new Map(
-    Object.entries(GRAPHEME_CANONICALS_ as { [key: string]: [string, number] })
-    .map(([k, v]) => [k, { canonicalGrapheme: v[0], numConfusables: v[1] }]));
+export let GRAPHEME_CANONICALS: Map<string, GraphemeCanonical> | null = null;
+
+export function initializeCanonicals() {
+  // The json stores the data as a map of grapheme -> [canonicalGrapheme, numConfusables]
+  const GRAPHEME_CANONICALS_: { [key: string]: [string, number] } = require("./canonicals.json");
+  GRAPHEME_CANONICALS =
+    new Map(
+      Object.entries(GRAPHEME_CANONICALS_)
+        .map(([k, v]) => [k, { canonicalGrapheme: v[0], numConfusables: v[1] }])
+    );
+}

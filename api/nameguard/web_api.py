@@ -498,7 +498,7 @@ async def secure_primary_name_get(
     1. The Ethereum Provider configured in the NameGuard instance.
     2. For ENS names using CCIP-Read: requests to externally defined gateway servers.
 
-    Returns `display_name` to be shown to users and estimates `impersonation_status`.
+    Returns `display_name` to be shown to users and estimates `impersonation_estimate`.
 
     If `address` has a primary name and `return_nameguard_report` is `True`, then NameGuard will return a `SecurePrimaryNameResult` including a `NameGuardReport` for the primary name. Else, NameGuard will return `None` as `nameguard_report`.
     """

@@ -7,14 +7,17 @@ import { INVISIBLE_JOINERS } from "./data/invisible_joiners";
 /**
  * Splits the input string into what users perceive as "characters", called graphemes.
  *
- * This function extends the official Unicode grapheme splitting algorithm with additional features.
- * It matches the algorithm used by NameGuard which introduces user-friendly features like Hangul and invisible character splitting.
+ * This function extends the official Unicode grapheme splitting algorithm
+ * with additional features. It matches the algorithm used by NameGuard
+ * which introduces user-friendly features like Hangul and invisible character splitting.
  *
- * Splitting is performed using the [text-segmentation](https://github.com/niklasvh/text-segmentation) library with added special Hangul treatment.
- * This makes it possible to handle strings with arbitrary Hangul Jamo sequences that most operating systems render as distinct graphemes.
- * Without this fix, some Hangul Jamo would be merged into one grapheme which would seem confusing to the user who sees them as separate.
- * See splitGraphemes.test.ts for examples.
- * This function also handles invisible characters within graphemes, ensuring they are split into separate graphemes for better clarity.
+ * Splitting is performed using the [text-segmentation](https://github.com/niklasvh/text-segmentation)
+ * library with added special Hangul treatment. This makes it possible to handle strings
+ * with arbitrary Hangul Jamo sequences that most operating systems render as distinct graphemes.
+ * Without this fix, some Hangul Jamo would be merged into one grapheme which would
+ * seem confusing to the user who sees them as separate. See splitGraphemes.test.ts for examples.
+ * This function also handles invisible characters within graphemes,
+ * ensuring they are split into separate graphemes for better clarity.
  *
  * This implementation is safe to use in all modern web browsers,
  * unlike the related browser API for splitting graphemes according to the Unicode standard,
@@ -77,6 +80,17 @@ export function splitGraphemes(name: string): string[] {
   return graphemes;
 }
 
+/**
+ * Counts the number of graphemes in a given string.
+ *
+ * This function uses the `splitGraphemes` function to split the input string
+ * into its constituent graphemes and then returns the count of these graphemes.
+ * The count will include all characters, including invisible characters
+ * and label separators.
+ *
+ * @param name - The input string to count graphemes from.
+ * @returns The number of graphemes in the input string.
+ */
 export function countGraphemes(name: string): number {
   return splitGraphemes(name).length;
 }
