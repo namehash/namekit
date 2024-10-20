@@ -821,7 +821,7 @@ def test_primary_name_get_no_report(test_client):
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
-    assert res_json['impersonation_status'] == 'unlikely'
+    assert res_json['impersonation_estimate'] == 'unlikely'
     assert res_json['primary_name_status'] == 'normalized'
     assert res_json['primary_name'] == 'vitalik.eth'
     assert res_json['display_name'] == 'vitalik.eth'
@@ -835,7 +835,7 @@ def test_primary_name_get_report(test_client):
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
-    assert res_json['impersonation_status'] == 'unlikely'
+    assert res_json['impersonation_estimate'] == 'unlikely'
     assert res_json['primary_name_status'] == 'normalized'
     assert res_json['primary_name'] == 'vitalik.eth'
     assert res_json['display_name'] == 'vitalik.eth'
