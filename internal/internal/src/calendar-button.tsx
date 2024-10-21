@@ -4,6 +4,7 @@ import { useEffect } from "react";
 // @ts-ignore
 import { getCalApi } from "@calcom/embed-react";
 import { Button, ButtonProps } from "@namehash/namekit-react";
+import cc from "classcat";
 
 interface CalendarButtonProps extends ButtonProps {
   link: string;
@@ -25,11 +26,14 @@ export const CalendarButton = ({
     })();
   }, []);
 
+  const className = cc(["flex justify-center", props.className]);
+
   return (
     <Button
       data-cal-link={link}
       data-cal-config='{"layout":"month_view"}'
       {...props}
+      className={className}
     >
       {children}
     </Button>

@@ -24,7 +24,7 @@ export const ContactSection = () => {
         </div>
         <div className="w-full lg:w-auto">
           <CalendarButton
-            className="w-full justify-center"
+            className="w-full"
             link="namehashlabs/namehashlabs"
             variant="secondary"
           >
