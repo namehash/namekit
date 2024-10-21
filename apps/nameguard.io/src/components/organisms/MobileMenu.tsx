@@ -3,8 +3,9 @@
 import NextLink from "next/link";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import { CalendarButton, NameGuardLogo } from "@/components/atoms";
+import { NameGuardLogo } from "@/components/atoms";
 import { Button, IconButton, Link } from "@namehash/namekit-react";
+import { CalendarButton } from "@namehash/internal";
 
 const MobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -93,7 +94,11 @@ const MobileMenu = () => {
             </Button>
           </nav>
           <div className="p-4 w-full flex items-center justify-center">
-            <CalendarButton variant="secondary" className="!w-full">
+            <CalendarButton
+              variant="secondary"
+              className="!w-full"
+              link="namehashlabs/nameguard"
+            >
               Discuss an integration
             </CalendarButton>
           </div>

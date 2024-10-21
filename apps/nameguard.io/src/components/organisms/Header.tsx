@@ -5,8 +5,8 @@ import NextLink from "next/link";
 import { GithubIcon, NGSearchIcon } from "@/components/atoms";
 import { NGSearch } from "@/components/molecules";
 import MobileMenu from "./MobileMenu";
-import { CalendarButton } from "../atoms";
 import { Button, IconButton, Link } from "@namehash/namekit-react";
+import { CalendarButton } from "@namehash/internal";
 
 export const Header = () => {
   return (
@@ -50,7 +50,9 @@ export const Header = () => {
               <NextLink href="/contact">Contact</NextLink>
             </Button>
 
-            <CalendarButton>Discuss an integration</CalendarButton>
+            <CalendarButton link="namehashlabs/nameguard">
+              Discuss an integration
+            </CalendarButton>
           </div>
 
           <div className="lg:hidden">

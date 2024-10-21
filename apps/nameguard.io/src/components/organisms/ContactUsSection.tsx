@@ -1,12 +1,11 @@
 import {
-  CalendarButton,
   ColorfulBg,
   PreSectionText,
   SectionTitle,
   SectionText,
   AirplaneIllustration,
 } from "@/components/atoms/";
-import { ContactUsForm } from "@namehash/internal";
+import { CalendarButton, ContactUsForm } from "@namehash/internal";
 
 export const ContactSection = () => {
   return (
@@ -28,7 +27,11 @@ export const ContactSection = () => {
           </p>
         </div>
         <div className="w-full lg:w-auto">
-          <CalendarButton variant="secondary" className="!w-full">
+          <CalendarButton
+            variant="secondary"
+            className="w-full"
+            link="namehashlabs/nameguard"
+          >
             Schedule a call
           </CalendarButton>
         </div>

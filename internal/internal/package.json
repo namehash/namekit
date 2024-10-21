@@ -5,6 +5,7 @@
   "main": "src/index.ts",
   "types": "src/index.ts",
   "dependencies": {
+    "@calcom/embed-react": "1.5.1",
     "@heroicons/react": "2.1.5",
     "@namehash/namekit-react": "workspace:*",
     "classcat": "5.0.5",
