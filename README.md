@@ -320,7 +320,7 @@ The NameKit monorepo contains multiple packages and apps.
         </picture>
       </td>
       <td>
-        <a href="api">nameguard</a>
+        <a href="packages/nameguard-python/">nameguard</a>
       </td>
       <td>Identify and prevent malicious use of ENS names.</td>
       <td>
@@ -380,6 +380,21 @@ The NameKit monorepo contains multiple packages and apps.
       <td>Official website for NameGuard.</td>
       <td>
         <a href="https://nameguard.io">Preview</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop breaking header for this column across multiple lines -->
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/lambda-444444?logo=awslambda&logoColor=white">
+          <img src="https://img.shields.io/badge/lambda-444444?logo=awslambda&logoColor=white" alt="AWS Lambda" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="apps/api.nameguard.io/">api.nameguard.io</a>
+      </td>
+      <td>AWS Lambda deployment of the NameGuard API</td>
+      <td>
+        <a href="https://api.nameguard.io">Preview</a>
       </td>
     </tr>
     <tr>
