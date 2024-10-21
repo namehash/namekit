@@ -29,7 +29,7 @@ export const ContactSection = () => {
         <div className="w-full lg:w-auto">
           <CalendarButton
             variant="secondary"
-            className="!w-full"
+            className="w-full justify-center"
             link="namehashlabs/nameguard"
           >
             Schedule a call
