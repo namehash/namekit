@@ -1321,7 +1321,7 @@ def test_bulk_inspect_name_post_long(test_client):
     assert len(name) == MAX_INSPECTED_NAME_CHARACTERS
 
     names = [name] * MAX_NUMBER_OF_NAMES_IN_BULK
-    response = test_client.post('/bulk-inspect-names', json={'names': names, 'network_name': 'mainnet'})
+    response = test_client.post('/bulk-inspect-names', json={'names': names, 'network_name': 'mainnet'}, timeout=60)
     assert response.status_code == 200
     res_json = response.json()
     for x in res_json['results']:

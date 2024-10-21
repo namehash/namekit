@@ -21,18 +21,18 @@ jobs:
           python-version: "3.11"
 
       - name: Install pip dependencies
-        working-directory: ./api
+        working-directory: ./packages/nameguard-python
         run: |
           python -m pip install --upgrade pip
           pip install build
 
       - name: Build NameGuard package
-        working-directory: ./api
+        working-directory: ./packages/nameguard-python
         run: python -m build
 
       - name: Publish NameGuard package
         uses: pypa/gh-action-pypi-publish@release/v1.8
         with:
-          packages-dir: api/dist/
+          packages-dir: packages/nameguard-python/dist/
           user: __token__
           password: ${{ secrets.PYPI_TOKEN }}
