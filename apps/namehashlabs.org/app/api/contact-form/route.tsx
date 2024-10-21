@@ -1,7 +1,7 @@
 import {
   ContactFormDataProps,
   validateContactFormData,
-} from "@namehash/internal/src/contact-form";
+} from "@namehash/internal";
 import { host } from "@/lib/shared/origin";
 import { type NextRequest, NextResponse } from "next/server";
 
