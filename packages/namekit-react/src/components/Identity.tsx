@@ -11,8 +11,13 @@ import {
   type SecurePrimaryNameResult,
 } from "@namehash/nameguard";
 
-interface IdentityContextType extends SecurePrimaryNameResult {
+interface IdentityContextType {
+  network: string;
   address: string;
+  returnNameGuardReport: boolean;
+  loadingState: "loading" | "error" | "success";
+  error?: string;
+  identityData?: SecurePrimaryNameResult;
 }
 
 const IdentityContext = createContext<IdentityContextType | null>(null);
@@ -37,6 +42,7 @@ interface RootProps {
   network?: Network;
   className?: string;
   children: ReactNode;
+  returnNameGuardReport?: boolean;
 }
 
 const Root = ({
@@ -44,39 +50,44 @@ const Root = ({
   network = "mainnet",
   className,
   children,
+  returnNameGuardReport = false,
   ...props
 }: RootProps) => {
-  const [data, setData] = useState<IdentityContextType | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<IdentityContextType>({
+    address,
+    network,
+    returnNameGuardReport,
+    loadingState: "loading",
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true);
+        setData((prev) => ({ ...prev, loadingState: "loading" }));
 
         const nameguard = createClient({ network });
 
         const result = await nameguard.getSecurePrimaryName(address, {
-          returnNameGuardReport: true,
+          returnNameGuardReport,
         });
 
-        setData({ ...result, address });
+        setData((prev) => ({
+          ...prev,
+          loadingState: "success",
+          identityData: result,
+        }));
       } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "An unknown error occurred",
-        );
-      } finally {
-        setLoading(false);
+        setData((prev) => ({
+          ...prev,
+          loadingState: "error",
+          error:
+            err instanceof Error ? err.message : "An unknown error occurred",
+        }));
       }
     };
 
     fetchData();
-  }, [address, network]);
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-  if (!data) return null;
+  }, [address, network, returnNameGuardReport]);
 
   return (
     <IdentityContext.Provider value={data}>
@@ -87,26 +98,65 @@ const Root = ({
   );
 };
 
-const Avatar = ({ className, children, ...props }: SubComponentProps) => {
-  const { display_name } = useIdentity();
+const Avatar = ({ className, ...props }: SubComponentProps) => {
+  const { identityData, loadingState, network } = useIdentity();
+
+  if (loadingState === "loading") {
+    return (
+      <div
+        className={`namekit-identity namekit-avatar-skeleton ${className}`}
+        {...props}
+      >
+        <div className="nk-w-10 nk-h-10 nk-bg-gray-200 nk-rounded-full nk-animate-pulse"></div>
+      </div>
+    );
+  }
+
+  if (loadingState === "error" || !identityData?.display_name) {
+    return (
+      <div
+        className={`namekit-identity namekit-avatar-error ${className}`}
+        {...props}
+      >
+        <div className="nk-w-10 nk-h-10 nk-bg-red-200 nk-rounded-full nk-flex nk-items-center nk-justify-center">
+          !
+        </div>
+      </div>
+    );
+  }
+
+  const avatarUrl = `https://metadata.ens.domains/${network}/avatar/${identityData.display_name}`;
 
   return (
-    <div className={`namekit-avatar ${className}`} {...props}>
+    <div className={`namekit-identity namekit-avatar ${className}`} {...props}>
       <img
-        src={`https://avatar.example.com/${display_name}`}
-        alt={display_name}
+        src={avatarUrl}
+        alt={identityData.display_name}
+        className="nk-w-10 nk-h-10 nk-rounded-full nk-object-cover"
+        onError={(e) => {
+          e.currentTarget.src = "path/to/fallback/image.png";
+        }}
       />
-      {children}
     </div>
   );
 };
 
 const Name = ({ className, ...props }: SubComponentProps) => {
-  const { display_name } = useIdentity();
+  const { identityData, loadingState, address } = useIdentity();
+
+  if (loadingState === "loading") {
+    return (
+      <div className={`namekit-name-skeleton ${className}`} {...props}></div>
+    );
+  }
+
+  const displayName =
+    identityData?.display_name ||
+    address.slice(0, 6) + "..." + address.slice(-4);
 
   return (
-    <div className={`namekit-name ${className}`} {...props}>
-      {display_name}
+    <div className={`namekit-identity namekit-name ${className}`} {...props}>
+      {displayName}
     </div>
   );
 };
@@ -115,22 +165,30 @@ const Address = ({ className, ...props }: SubComponentProps) => {
   const { address } = useIdentity();
 
   return (
-    <div className={`namekit-address ${className}`} {...props}>
+    <div className={`namekit-identity namekit-address ${className}`} {...props}>
       {address}
     </div>
   );
 };
 
 const NameGuardShield = ({ className, ...props }: SubComponentProps) => {
-  const { nameguard_report } = useIdentity();
+  const { identityData, returnNameGuardReport, loadingState } = useIdentity();
+
+  if (
+    !returnNameGuardReport ||
+    loadingState !== "success" ||
+    !identityData?.nameguard_report
+  ) {
+    return null;
+  }
 
   return (
     <div className={`namekit-nameguard-shield ${className}`} {...props}>
       <div className="namekit-nameguard-rating">
-        Rating: {nameguard_report?.rating}
+        Rating: {identityData.nameguard_report.rating}
       </div>
       <div className="namekit-nameguard-risk-count">
-        Risks: {nameguard_report?.risk_count}
+        Risks: {identityData.nameguard_report.risk_count}
       </div>
     </div>
   );

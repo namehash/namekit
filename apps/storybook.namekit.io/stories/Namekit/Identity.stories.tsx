@@ -46,14 +46,11 @@ export const MultipleCards: Story = {
   render: () => (
     <>
       <IdentityCard address="0x838aD0EAE54F99F1926dA7C3b6bFbF617389B4D9" />
-      <IdentityCard address="0x123456789abcdef123456789abcdef123456789a" />
-      <IdentityCard address="0xabcdef123456789abcdef123456789abcdef1234" />
-      <IdentityCard address="0x987654321fedcba987654321fedcba987654321f" />
+      <IdentityCard address="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045" />
       <IdentityCard
-        address="0xfedcba987654321fedcba987654321fedcba9876"
-        network="sepolia"
+        address="0xf81bc66316a3f2a60adc258f97f61dfcbdd23bb1"
+        returnNameGuardReport
       />
-      <IdentityCard address="0x111222333444555666777888999000aaabbbcccd" />
     </>
   ),
 };
