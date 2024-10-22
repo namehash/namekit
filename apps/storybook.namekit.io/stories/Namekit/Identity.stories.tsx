@@ -24,12 +24,18 @@ type Story = StoryObj<typeof Identity.Root>;
 const IdentityCard: React.FC<{
   address: string;
   network?: "mainnet" | "sepolia";
-}> = ({ address, network }) => (
-  <Identity.Root address={address} network={network}>
+  returnNameGuardReport?: boolean;
+}> = ({ address, network, returnNameGuardReport }) => (
+  <Identity.Root
+    address={address}
+    network={network}
+    returnNameGuardReport={returnNameGuardReport}
+  >
     <Identity.Avatar />
     <Identity.Name />
     <Identity.Address />
     <Identity.NameGuardShield />
+    <Identity.ENSProfileLink />
   </Identity.Root>
 );
 
