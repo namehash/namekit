@@ -36,6 +36,7 @@ const IdentityCard: React.FC<{
     <Identity.Address />
     <Identity.NameGuardShield />
     <Identity.ENSProfileLink />
+    <Identity.Followers />
   </Identity.Root>
 );
 

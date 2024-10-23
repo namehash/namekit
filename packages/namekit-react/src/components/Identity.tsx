@@ -18,6 +18,7 @@ interface IdentityContextType {
   loadingState: "loading" | "error" | "success";
   error?: string;
   identityData?: SecurePrimaryNameResult;
+  followersCount?: string;
 }
 
 const IdentityContext = createContext<IdentityContextType | null>(null);
@@ -86,7 +87,26 @@ const Root = ({
       }
     };
 
+    const fetchFollowersData = async () => {
+      try {
+        const response = await fetch(
+          `https://api.ethfollow.xyz/api/v1/users/${address}/stats`,
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const result = await response.json();
+        setData((prev) => ({
+          ...prev,
+          followersCount: result.followers_count,
+        }));
+      } catch (err) {
+        console.error("Error fetching followers data:", err);
+      }
+    };
+
     fetchData();
+    fetchFollowersData();
   }, [address, network, returnNameGuardReport]);
 
   return (
@@ -194,6 +214,35 @@ const NameGuardShield = ({ className, ...props }: SubComponentProps) => {
   );
 };
 
+const Followers = ({ className, ...props }: SubComponentProps) => {
+  const { followersCount, loadingState } = useIdentity();
+
+  if (loadingState === "loading") {
+    return (
+      <div className={`namekit-followers-skeleton ${className}`} {...props}>
+        Loading followers...
+      </div>
+    );
+  }
+
+  if (followersCount === undefined) {
+    return (
+      <div className={`namekit-followers-loading ${className}`} {...props}>
+        Fetching followers...
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={`namekit-identity namekit-followers ${className}`}
+      {...props}
+    >
+      {followersCount} followers
+    </div>
+  );
+};
+
 const ENSLogo = () => (
   <svg
     fill="none"
@@ -239,4 +288,5 @@ export const Identity = {
   Address,
   NameGuardShield,
   ENSProfileLink,
+  Followers,
 };
