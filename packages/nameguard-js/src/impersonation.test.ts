@@ -8,6 +8,7 @@ describe("Impersonation", () => {
     expect(computeImpersonationStatus("vitalik.eth")).toBe("unlikely");
     expect(computeImpersonationStatus("vitalìk.eth")).toBe("potential");
     expect(computeImpersonationStatus("٧٣٧.eth")).toBe("unlikely");
+    expect(computeImpersonationStatus("poet.base.eth")).toBe("unlikely");
     expect(computeImpersonationStatus("exampleprimary.cb.id")).toBe("unlikely");
     expect(computeImpersonationStatus("888‍‍.eth")).toBe("potential");
     expect(computeImpersonationStatus("‍‍❤‍‍.eth")).toBe("potential");
