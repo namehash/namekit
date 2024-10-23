@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     ...NamehashMetadata.defaultMetdata.openGraph,
     title,
     description,
-    url: "/careets",
+    url: "/careers",
     siteName: "NameHash Labs",
   },
   twitter: {

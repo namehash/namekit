@@ -6,6 +6,7 @@ import { BrandAssets } from "@/components/2 - molecules/brand-assets";
 const description = "Brand assets for NameHash Labs.";
 
 export const metadata: Metadata = {
+  ...NamehashMetadata.defaultMetdata,
   title: "Brand Assets",
   description,
   keywords: ["ens", "web3", "eth", "namehash", "brand assets"],

@@ -14,6 +14,7 @@ const description =
   "Join the discussion about an ENS Referral Program and help ENS grow.";
 
 export const metadata: Metadata = {
+  ...NamehashMetadata.defaultMetdata,
   title,
   description,
   keywords: ["ens", "web3", "eth", "referral program"],
