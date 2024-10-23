@@ -53,11 +53,7 @@ const MobileMenu = () => {
             >
               <NameHashLabsLogo className="text-white" />
             </NextLink>
-            <IconButton
-              onClick={() => toggleMenu()}
-              variant="ghost"
-              className="!p-2"
-            >
+            <IconButton onClick={() => toggleMenu()} className="-mr-1">
               <XMarkIcon className="w-5 h-5 text-white" />
               <span className="sr-only">Toggle menu</span>
             </IconButton>
