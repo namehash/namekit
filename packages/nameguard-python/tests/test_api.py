@@ -638,13 +638,23 @@ def test_inspect_grapheme_multi(test_client):
         ),
         (
             '0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd',
+            None,
+            'no_primary_name',
+            None,
+            'Unnamed fd9e',
+            None,
+            False,
+            None,
+        ),  # causes ContractLogicError
+        (
+            '0x9d32572997DA4948063E3Fc11c2552Eb82F7208E',
             'unlikely',
             'normalized',
-            'exampleprimary.cb.id',
-            'exampleprimary.cb.id',
-            'exampleprimary.cb.id',
+            'poet.base.eth',
+            'poet.base.eth',
+            'poet.base.eth',
             False,
-            'exampleprimary.cb.id',
+            'poet.base.eth',
         ),
         (
             '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96046',
@@ -857,15 +867,15 @@ def test_primary_name_get_uppercase(test_client):
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 def test_primary_name_get_offchain(test_client):
-    address = '0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd'
+    address = '0x9d32572997DA4948063E3Fc11c2552Eb82F7208E'
     response = test_client.get(f'/secure-primary-name/mainnet/{address}')
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
     assert res_json['impersonation_status'] == 'unlikely'
     assert res_json['primary_name_status'] == 'normalized'
-    assert res_json['primary_name'] == 'exampleprimary.cb.id'
-    assert res_json['display_name'] == 'exampleprimary.cb.id'
+    assert res_json['primary_name'] == 'poet.base.eth'
+    assert res_json['display_name'] == 'poet.base.eth'
 
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
