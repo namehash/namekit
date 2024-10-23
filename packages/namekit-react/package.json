@@ -43,6 +43,7 @@
     "@headlessui/react": "1.7.17",
     "@namehash/ens-utils": "workspace:*",
     "@namehash/ens-webfont": "workspace:*",
+    "@namehash/nameguard": "workspace:*",
     "classcat": "5.0.5"
   },
   "devDependencies": {
