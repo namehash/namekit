@@ -1,4 +1,7 @@
-# NameHash NameGuard
+# NameGuard Python
+
+![Tests](https://github.com/namehash/namekit/actions/workflows/nameguard-python-unit-tests.yml/badge.svg?branch=main)
+![Coverage](https://github.com/namehash/namekit/raw/packages/nameguard-python/coverage_badge.svg)
 
 The NameHash team is proud to present NameGuard, a tool for identifying and preventing malicious use of ENS names.
 
@@ -19,9 +22,11 @@ The NameHash team is proud to present NameGuard, a tool for identifying and prev
   - ASGI web server
   - [Amazon AWS Lambda](https://aws.amazon.com/lambda/) handler
 
-⚠️ **This SDK is BETA. Things will change based on the community feedback.**
+⚠️ **This package and API is BETA. Things will change based on community feedback.**
 
 ## Getting Started
+
+This package contains the core logic for NameGuard, a python library and web API server.
 
 ### [Try the official web app](https://nameguard.io)
 
@@ -37,7 +42,7 @@ curl https://api.nameguard.io/inspect-name/mainnet/nick.eth
 
 The API documentation is available at <https://api.nameguard.io/redoc> or <https://api.nameguard.io/docs>.
 
-### Using the SDK
+### Using the TypeScript SDK
 
 Quickstart:
 
@@ -50,11 +55,11 @@ import { nameguard } from "@namehash/nameguard";
 await nameguard.inspectName("nick.eth");
 ```
 
-See the [SDK README](./packages/sdk/README.md) for more details.
+See the [SDK README](./packages/nameguard-sdk/README.md) for more details.
 
 ### Using the Python library
 
-Quickstart:
+NameGuard is available as a Python library on [PyPI](https://pypi.org/project/nameguard/). You can install it with `pip`:
 
 ```bash
 pip install nameguard
@@ -66,11 +71,99 @@ ng = NameGuard()
 await ng.inspect_name(network_name='mainnet', name='nick.eth')
 ```
 
-See the [NameGuard Python README](./api/README.md) for more details.
+See the [NameGuard Python README](./apps/api.nameguard.io/README.md) for more details.
 
-### Running your own NameGuard instance
+### Environment Variables
 
-See the [NameGuard Python README](./api/README.md) for more details.
+NameGuard uses the specified Provider endpoints (e.g. Alchemy, Infura, your own Ethereum node, etc...) for `secure-primary-name/`. Provider endpoints have to be set by environment variables, e.g.:
+
+```bash
+export PROVIDER_URI_MAINNET=https://eth-mainnet.g.alchemy.com/v2/[YOUR_ALCHEMY_API_KEY]
+export PROVIDER_URI_SEPOLIA=https://eth-sepolia.g.alchemy.com/v2/[YOUR_ALCHEMY_API_KEY]
+export ALCHEMY_URI_MAINNET=https://eth-mainnet.g.alchemy.com/v2/[YOUR_ALCHEMY_API_KEY]
+export ALCHEMY_URI_SEPOLIA=https://eth-sepolia.g.alchemy.com/v2/[YOUR_ALCHEMY_API_KEY]
+export ENS_SUBGRAPH_URL_MAINNET="https://gateway-arbitrum.network.thegraph.com/api/[YOUR_SUBGRAPH_API_KEY]/subgraphs/id/5XqPmWe6gjyrJtFn9cLy237i4cWw2j9HcUJEXsP5qGtH"
+export ENS_SUBGRAPH_URL_SEPOLIA="https://gateway-arbitrum.network.thegraph.com/api/[YOUR_SUBGRAPH_API_KEY]/subgraphs/id/DmMXLtMZnGbQXASJ7p1jfzLUbBYnYUD9zNBTxpkjHYXV"
+```
+
+#### Starting the webserver
+
+A FastAPI application is included in the `nameguard.web_api` module. The default installation from PyPI does not include an ASGI server, so you will need to install one separately. For example, to install [uvicorn](https://www.uvicorn.org):
+
+```bash
+pip install 'uvicorn[standard]'
+```
+
+You can start the web server with:
+
+```bash
+uvicorn nameguard.web_api:app
+```
+
+Make an example request:
+
+```bash
+curl -d '{"name":"nick.eth", "network_name": "mainnet"}' -H "Content-Type: application/json" -X POST http://localhost:8000/inspect-name
+# {
+#   "rating": "pass",
+#   "risk_count": 0,
+#   "highest_risk": null,
+#   "name": "nick.eth",
+#   "namehash": "0x05a67c0ee82964c4f7394cdd47fee7f4d9503a23c09c38341779ea012afe6e00",
+#   "normalization": "normalized",
+#   "checks": [...],
+#   "labels": [...],
+#   "canonical_name": "nick.eth",
+#   "title": "Looks Good",
+#   "subtitle": "All security checks passed!",
+#   "beautiful_name": "nick.eth"
+# }
+```
+
+## Development
+
+### Running tests
+
+Before running nameguard tests, make sure you have installed the
+required dependencies (along with dev dependencies).
+They are installed by default using poetry:
+
+```bash
+poetry install
+```
+
+To run nameguard tests locally, just run pytest from the root directory:
+
+```bash
+pytest ./packages/nameguard-python/tests/
+```
+
+NameGuard also provides an option to run API tests (`packages/nameguard-python/tests/test_api.py`)
+against a remote host (e.g. Lambda) where a NameGuard instance is running.
+To enable this, you will need to set an environment variable
+`LAMBDA_ROOT_URL` to specify the remote host URL.
+
+This can be done like this:
+
+```bash
+LAMBDA_ROOT_URL=https://api.nameguard.io poetry run pytest packages/nameguard-python/tests/test_api.py
+```
+
+### Using the AWS Lambda handler
+
+NameGuard includes a handler for [Amazon AWS Lambda](https://aws.amazon.com/lambda/). It is available in the `nameguard.lambda` module. You can use it to create a Lambda function that will respond to HTTP requests. It uses the [mangum](https://mangum.io) library.
+
+Check out the included [Dockerfile](./Dockerfile) for an example of how to build a Lambda container image.
+
+See the [AWS Lambda deployment scripts](./apps/api.nameguard.io/) for more details.
+
+### Disable monkeypatch tests
+
+By default, the tests are using mock responses from external APIs. If you want to run tests using real requests to external APIs then set `MONKEYPATCH=0`.
+
+```bash
+MONKEYPATCH=0 poetry run pytest
+```
 
 ## NameGuard Specification
 

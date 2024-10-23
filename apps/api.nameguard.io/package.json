@@ -7,9 +7,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/namehash/namekit.git",
-    "directory": "api"
+    "directory": "apps/api.nameguard.io"
   },
-  "homepage": "https://github.com/namehash/namekit/tree/main/api",
+  "homepage": "https://github.com/namehash/namekit/tree/main/apps/api.nameguard.io",
   "keywords": [
     "ENS",
     "NameKit",
@@ -17,8 +17,8 @@
     "NameHash"
   ],
   "scripts": {
-    "deploy:prod": "DOCKER_CONFIG=./.docker serverless deploy --stage prod",
-    "deploy:staging": "DOCKER_CONFIG=./.docker serverless deploy --stage staging"
+    "deploy:prod": "DOCKER_CONFIG=../../packages/nameguard-python/.docker serverless deploy --stage prod",
+    "deploy:staging": "DOCKER_CONFIG=../../packages/nameguard-python/.docker serverless deploy --stage staging"
   },
   "dependencies": {
     "serverless": "3.39.0"

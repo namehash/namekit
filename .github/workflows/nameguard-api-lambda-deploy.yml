@@ -6,7 +6,8 @@ on:
       - main
       - staging
     paths:
-      - "api/**"
+      - "packages/nameguard-python/**"
+      - "apps/api.nameguard.io/**"
       - ".github/workflows/nameguard-api-lambda-deploy.yml"
   workflow_dispatch:
 
@@ -74,7 +75,7 @@ jobs:
             echo "Deployment is only supported for main and staging branches"
             exit 1
           fi
-        working-directory: api
+        working-directory: apps/api.nameguard.io
 
       - name: Delete old images from ECR
         env:
@@ -85,7 +86,7 @@ jobs:
           IMAGES_TO_DELETE=$(aws ecr describe-images --repository-name $ECR_REPO --query 'sort_by(imageDetails,& imagePushedAt)[*].imageDigest' --filter "tagStatus=UNTAGGED" --output json | jq '.[0]')
           if [[ $len > 5 ]]; then aws ecr batch-delete-image --repository-name $ECR_REPO --image-ids imageDigest=$IMAGES_TO_DELETE; fi
 
-        working-directory: api
+        working-directory: apps/api.nameguard.io
 
   notify:
     name: Send Slack deployment event notification
