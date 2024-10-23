@@ -5,7 +5,8 @@ import { useState } from "react";
 import NextLink from "next/link";
 import { Button, IconButton } from "@namehash/namekit-react";
 
-import { CalendarButton, NameHashLabsLogo } from "../1 - atoms";
+import { NameHashLabsLogo } from "../1 - atoms";
+import { CalendarButton } from "@namehash/internal";
 
 const MobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -93,7 +94,9 @@ const MobileMenu = () => {
               </NextLink>
             </Button>
           </nav>
-          <CalendarButton variant="secondary">Schedule a call</CalendarButton>
+          <CalendarButton link="namehashlabs/namehashlabs" variant="secondary">
+            Schedule a call
+          </CalendarButton>
         </div>
       </div>
     </div>
