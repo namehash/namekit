@@ -1,6 +1,6 @@
 # NameGuard Python
 
-![Tests](https://github.com/namehash/namekit/actions/workflows/nameguard-api-unit-tests.yml/badge.svg?branch=main)
+![Tests](https://github.com/namehash/namekit/actions/workflows/nameguard-python-unit-tests.yml/badge.svg?branch=main)
 ![Coverage](https://github.com/namehash/namekit/raw/packages/nameguard-python/coverage_badge.svg)
 
 This repository contains the core logic for NameGuard, a python library and web API server.
