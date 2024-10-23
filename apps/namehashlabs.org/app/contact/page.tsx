@@ -1,4 +1,5 @@
 import { type Metadata } from "next";
+import { Metadata as NamehashMetadata } from "@namehash/internal";
 
 import { ContactSection } from "@/components/2 - molecules/contact-us-section";
 
@@ -9,10 +10,12 @@ export const metadata: Metadata = {
   description,
   keywords: ["ens", "web3", "eth", "namehash", "contact"],
   openGraph: {
+    ...NamehashMetadata.defaultMetdata.openGraph,
     title: "NameHash Labs - Contact Us",
     description,
   },
   twitter: {
+    ...NamehashMetadata.defaultMetdata.twitter,
     title: "NameHash Labs - Contact Us",
     description,
   },

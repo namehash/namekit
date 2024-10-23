@@ -1,4 +1,5 @@
 import { type Metadata } from "next";
+import { Metadata as NamehashMetadata } from "@namehash/internal";
 
 import { ColorfulBg } from "@/components/1 - atoms/colorful-bg";
 import { JoinOurTeamSection } from "@/components/1 - atoms/join-our-team-section";
@@ -9,16 +10,19 @@ const title = "Careers";
 const description = "NameHash Labs Careers.";
 
 export const metadata: Metadata = {
+  ...NamehashMetadata.defaultMetdata,
   title,
   description,
   keywords: ["ens", "web3", "eth", "namehash", "careers"],
   openGraph: {
+    ...NamehashMetadata.defaultMetdata.openGraph,
     title,
     description,
     url: "/careets",
     siteName: "NameHash Labs",
   },
   twitter: {
+    ...NamehashMetadata.defaultMetdata.twitter,
     title,
     description,
   },

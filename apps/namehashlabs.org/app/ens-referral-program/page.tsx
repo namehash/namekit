@@ -1,6 +1,7 @@
 import { type Metadata } from "next";
 import Image from "next/image";
 import cc from "classcat";
+import { Metadata as NamehashMetadata } from "@namehash/internal";
 
 import { DocumentTextIcon } from "@heroicons/react/24/solid";
 import { FigmaIcon } from "@/components/1 - atoms/icons/figma-icon";
@@ -17,12 +18,14 @@ export const metadata: Metadata = {
   description,
   keywords: ["ens", "web3", "eth", "referral program"],
   openGraph: {
+    ...NamehashMetadata.defaultMetdata.openGraph,
     title,
     description,
     url: "/ens-referral-program",
     siteName: "NameHash Labs",
   },
   twitter: {
+    ...NamehashMetadata.defaultMetdata.twitter,
     title,
     description,
   },
