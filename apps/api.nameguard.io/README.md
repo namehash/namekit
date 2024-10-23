@@ -3,7 +3,7 @@
 ![Tests](https://github.com/namehash/namekit/actions/workflows/ci_api.yml/badge.svg?branch=main)
 ![Coverage](coverage_badge.svg)
 
-This repository contains the core logic for NameGuard, a python library, web API server, and AWS Lambda handler.
+This repository contains the NameGuard AWS Lambda deployment.
 
 ## Getting Started
 
@@ -81,49 +81,6 @@ curl -d '{"name":"nick.eth", "network_name": "mainnet"}' -H "Content-Type: appli
 #   "subtitle": "All security checks passed!",
 #   "beautiful_name": "nick.eth"
 # }
-```
-
-## Development
-
-### Running tests
-
-Before running nameguard tests, make sure you have installed the
-required dependencies (along with dev dependencies).
-They are installed by default using poetry:
-
-```bash
-poetry install
-```
-
-To run nameguard tests locally, just run pytest from the root directory:
-
-```bash
-pytest ./api/tests/
-```
-
-NameGuard also provides an option to run API tests (`api/tests/test_api.py`)
-against a remote host (e.g. Lambda) where a NameGuard instance is running.
-To enable this, you will need to set an environment variable
-`LAMBDA_ROOT_URL` to specify the remote host URL.
-
-This can be done like this:
-
-```bash
-LAMBDA_ROOT_URL=https://api.nameguard.io poetry run pytest api/tests/test_api.py
-```
-
-### Using the AWS Lambda handler
-
-NameGuard includes a handler for [Amazon AWS Lambda](https://aws.amazon.com/lambda/). It is available in the `nameguard.lambda` module. You can use it to create a Lambda function that will respond to HTTP requests. It uses the [mangum](https://mangum.io) library.
-
-Check out the included [Dockerfile](./Dockerfile) for an example of how to build a Lambda container image.
-
-### Disable monkeypatch tests
-
-By default, the tests are using mock responses from external APIs. If you want to run tests using real requests to external APIs then set `MONKEYPATCH=0`.
-
-```bash
-MONKEYPATCH=0 poetry run pytest
 ```
 
 ## License
