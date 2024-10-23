@@ -1,5 +1,5 @@
 import { Balancer } from "react-wrap-balancer";
-import { CalendarButton } from "../1 - atoms";
+import { CalendarButton } from "@namehash/internal";
 
 export const CTASection = () => {
   return (
@@ -84,7 +84,9 @@ const Cta = ({
             {buttonText}
           </a>
         ) : (
-          <CalendarButton>{buttonText}</CalendarButton>
+          <CalendarButton link="namehashlabs/namehashlabs">
+            {buttonText}
+          </CalendarButton>
         )}
       </div>
       <div

@@ -1,8 +1,9 @@
 "use client";
 
 import { IconButton } from "@namehash/namekit-react";
-import { ChevronDown, CalendarButton, BeansBg } from "../1 - atoms";
+import { ChevronDown, BeansBg } from "../1 - atoms";
 import { Balancer } from "react-wrap-balancer";
+import { CalendarButton } from "@namehash/internal";
 
 export const HeroSection = () => {
   return (
@@ -20,7 +21,9 @@ export const HeroSection = () => {
           </Balancer>
         </div>
         <div className="flex items-center justify-center mt-10">
-          <CalendarButton>Integrate with ENS</CalendarButton>
+          <CalendarButton link="namehashlabs/namehashlabs">
+            Integrate with ENS
+          </CalendarButton>
         </div>
       </div>
       <BeansBg className="absolute right-0 top-0 h-full w-full z-10 animate-spinSlow" />

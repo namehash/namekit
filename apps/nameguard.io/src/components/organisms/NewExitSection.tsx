@@ -1,5 +1,5 @@
+import { CalendarButton } from "@namehash/internal";
 import { NGSearch } from "../molecules/NGSearch";
-import { CalendarButton } from "@/components/atoms";
 
 export function NewExitSection() {
   return (
@@ -32,7 +32,7 @@ export function NewExitSection() {
                   Our team is here to assist you.
                 </p>
               </div>
-              <CalendarButton variant="secondary">
+              <CalendarButton link="namehashlabs/nameguard" variant="secondary">
                 Schedule a call
               </CalendarButton>
             </div>
