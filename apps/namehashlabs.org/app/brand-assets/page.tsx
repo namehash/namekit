@@ -1,19 +1,26 @@
 import { type Metadata } from "next";
+import { Metadata as NamehashMetadata } from "@namehash/internal";
 
 import { BrandAssets } from "@/components/2 - molecules/brand-assets";
 
+const title = "Brand Assets";
 const description = "Brand assets for NameHash Labs.";
 
 export const metadata: Metadata = {
-  title: "Brand Assets",
+  ...NamehashMetadata.defaultMetdata,
+  title,
   description,
   keywords: ["ens", "web3", "eth", "namehash", "brand assets"],
   openGraph: {
-    title: "NameHash Labs - Brand Assets",
+    ...NamehashMetadata.defaultMetdata.openGraph,
+    title,
     description,
+    url: "/brand-assets",
+    siteName: "NameHash Labs",
   },
   twitter: {
-    title: "NameHash Labs - Brand Assets",
+    ...NamehashMetadata.defaultMetdata.twitter,
+    title,
     description,
   },
 };
