@@ -87,7 +87,7 @@ const Root = ({
       }
     };
 
-    const fetchFollowersData = async () => {
+    const fetchEthFollowUserStats = async () => {
       try {
         const response = await fetch(
           `https://api.ethfollow.xyz/api/v1/users/${address}/stats`,
@@ -106,7 +106,7 @@ const Root = ({
     };
 
     fetchData();
-    fetchFollowersData();
+    fetchEthFollowUserStats();
   }, [address, network, returnNameGuardReport]);
 
   return (
