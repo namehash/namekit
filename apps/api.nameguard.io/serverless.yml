@@ -28,6 +28,7 @@ provider:
     images:
       oss-nameguard:
         path: ../../packages/nameguard-python/
+        file: ../../apps/api.nameguard.io/Dockerfile
       platform: linux/arm64
 
 plugins:
