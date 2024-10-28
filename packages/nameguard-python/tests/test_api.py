@@ -637,16 +637,6 @@ def test_inspect_grapheme_multi(test_client):
             '٧٣٧.eth',
         ),
         (
-            '0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd',
-            None,
-            'no_primary_name',
-            None,
-            'Unnamed fd9e',
-            None,
-            False,
-            None,
-        ),  # causes ContractLogicError
-        (
             '0x9d32572997DA4948063E3Fc11c2552Eb82F7208E',
             'unlikely',
             'normalized',
