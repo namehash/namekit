@@ -21,7 +21,7 @@ export function HeroStartCommand() {
   }, [copiedToClipboard]);
 
   return (
-    <div className="hidden relative z-10 lg:flex items-center gap-2 py-[9px] pl-4 pr-[14px] rounded-lg bg-black bg-opacity-5 border border-gray-300 sm:gap-3 sm:py-[13px] sm:pl-[20px] sm:pr-[16px]">
+    <div className="hidden relative z-10 lg:flex items-center gap-2 py-[9px] pl-4 pr-[14px] rounded-lg bg-gray-100 border border-gray-300 sm:gap-3 sm:py-[13px] sm:pl-[20px] sm:pr-[16px]">
       <p className="text-black leading-6 font-normal text-sm sm:text-base">
         {npmCommand}
       </p>

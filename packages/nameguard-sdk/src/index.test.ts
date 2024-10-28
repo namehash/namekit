@@ -114,17 +114,17 @@ describe("getSecurePrimaryName", () => {
 
   it("getSecurePrimaryName: normalized - unlikely impersonation - offchain name", async () => {
     const data = await nameguard.getSecurePrimaryName(
-      "0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd",
+      "0x9d32572997DA4948063E3Fc11c2552Eb82F7208E",
       { returnNameGuardReport: true },
     );
 
     expect(data.primary_name_status).toBe("normalized");
     expect(data.impersonation_estimate).toBe("unlikely");
-    expect(data.primary_name).toBe("exampleprimary.cb.id");
-    expect(data.display_name).toBe("exampleprimary.cb.id");
+    expect(data.primary_name).toBe("poet.base.eth");
+    expect(data.display_name).toBe("poet.base.eth");
     expect(data.nameguard_report).not.toBeNull();
-    expect(data.nameguard_report?.name).toBe("exampleprimary.cb.id");
-    expect(data.nameguard_report?.canonical_name).toBe("exampleprimary.cb.id");
+    expect(data.nameguard_report?.name).toBe("poet.base.eth");
+    expect(data.nameguard_report?.canonical_name).toBe("poet.base.eth");
   });
 
   it("getSecurePrimaryName: no primary name", async () => {

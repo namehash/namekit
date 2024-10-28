@@ -4,13 +4,13 @@ on:
     branches:
       - main
     paths:
-      - "api/**"
+      - "packages/nameguard-python/**"
   pull_request:
     branches:
       - main
       - staging
     paths:
-      - "api/**"
+      - "packages/nameguard-python/**"
 
 env:
   PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
@@ -42,15 +42,15 @@ jobs:
           cache: "poetry"
 
       - name: Install dependencies
-        working-directory: ./api
+        working-directory: ./packages/nameguard-python
         run: poetry install
 
       - name: Run tests mocked
-        working-directory: ./api
+        working-directory: ./packages/nameguard-python
         run: poetry run pytest -vv --durations=0
 
       - name: Run tests
-        working-directory: ./api
+        working-directory: ./packages/nameguard-python
         run: MONKEYPATCH=0 poetry run pytest -vv --durations=0
 
   add_badge:
@@ -78,15 +78,15 @@ jobs:
           cache: "poetry"
 
       - name: Install dependencies
-        working-directory: ./api
+        working-directory: ./packages/nameguard-python
         run: poetry install
 
       - name: Run tests mocked
-        working-directory: ./api
+        working-directory: ./packages/nameguard-python
         run: poetry run pytest -vv --durations=0 --cov-report term-missing --cov=./
 
       - name: Generate coverage badge
-        working-directory: ./api
+        working-directory: ./packages/nameguard-python
         run: poetry run coverage-badge -fo coverage_badge.svg
 
       - name: Commit changes
@@ -95,4 +95,4 @@ jobs:
           author_name: github-actions
           author_email: actions@github.com
           message: "Update coverage badge"
-          add: "api/coverage_badge.svg"
+          add: "packages/nameguard-python/coverage_badge.svg"

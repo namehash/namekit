@@ -27,7 +27,8 @@ provider:
   ecr:
     images:
       oss-nameguard:
-        path: ./
+        path: ../../packages/nameguard-python/
+        file: ../../apps/api.nameguard.io/Dockerfile
       platform: linux/arm64
 
 plugins:
@@ -39,7 +40,7 @@ functions:
       name: oss-nameguard
     name: oss-nameguard-${self:custom.stage}
     memorySize: 1769
-    timeout: 10
+    timeout: 60
     url: true
     role: DefaultNameGuardRole
     provisionedConcurrency: 1

@@ -20,7 +20,7 @@ export function ReadySection(props: ReadySectionProps) {
     <section className="relative w-full h-full py-10 px-5 flex flex-col items-center justify-center bg-white sm:bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] sm:[background-size:24px_24px] md:py-24 sm:px-0">
       <div className="max-w-full flex flex-col items-center sm:mx-auto sm:px-6 sm:gap-3">
         <div className="w-full flex flex-col gap-5 items-center max-w-2xl mx-auto">
-          <div className="inline-flex px-4 py-2 bg-black bg-opacity-5 rounded-[20px] gap-2 justify-center items-center z-10">
+          <div className="inline-flex px-4 py-2 bg-gray-100 rounded-[20px] gap-2 justify-center items-center z-10">
             {props.sectionTargetSvg}
             <span className="text-black text-center text-sm not-italic font-medium z-10 leading-5">
               {props.sectionTargetClientMessage}

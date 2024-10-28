@@ -55,11 +55,11 @@ describe("secure primary name", () => {
         displayName: "٧٣٧.eth",
       },
       {
-        address: "0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd",
+        address: "0x9d32572997DA4948063E3Fc11c2552Eb82F7208E",
         impersonationEstimate: "unlikely",
         primaryNameStatus: "normalized",
-        primaryName: "exampleprimary.cb.id",
-        displayName: "exampleprimary.cb.id",
+        primaryName: "poet.base.eth",
+        displayName: "poet.base.eth",
       },
       {
         address: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96046",
