@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { Button, IconButton } from "@namehash/namekit-react";
+import { Button, IconButton, Checkbox } from "@namehash/namekit-react";
 
 import { useSettingsStore, type Settings } from "../../stores/settings";
 
@@ -73,12 +73,10 @@ export const SettingsModal = () => {
                     <div className="space-y-4">
                       <div className="relative flex items-start">
                         <div className="flex h-6 items-center">
-                          <input
+                          <Checkbox
                             id="attempt-ens-normalization"
                             aria-describedby="attempt-ens-normalization-description"
                             name="attempt-ens-normalization"
-                            type="checkbox"
-                            className="form-checkbox ng-h-4 ng-w-4 ng-rounded ng-border-black ng-text-black !ring-black"
                             checked={localSettings.attemptEnsNormalization}
                             onChange={(e) =>
                               setLocalSettings((prev) => ({
@@ -108,12 +106,10 @@ export const SettingsModal = () => {
 
                       <div className="relative flex items-start">
                         <div className="flex h-6 items-center">
-                          <input
+                          <Checkbox
                             id="assume-tld"
                             aria-describedby="assume-tld-description"
                             name="assume-tld"
-                            type="checkbox"
-                            className="form-checkbox ng-h-4 ng-w-4 ng-rounded ng-border-black ng-text-black !ring-black"
                             checked={localSettings.assumedTld === "eth"}
                             onChange={(e) =>
                               setLocalSettings((prev) => ({
@@ -142,12 +138,10 @@ export const SettingsModal = () => {
 
                       <div className="relative flex items-start">
                         <div className="flex h-6 items-center">
-                          <input
+                          <Checkbox
                             id="trim-whitespace"
                             aria-describedby="trim-whitespace-description"
                             name="trim-whitespace"
-                            type="checkbox"
-                            className="form-checkbox ng-h-4 ng-w-4 ng-rounded ng-border-black ng-text-black !ring-black"
                             checked={localSettings.trimWhitespace}
                             onChange={(e) =>
                               setLocalSettings((prev) => ({

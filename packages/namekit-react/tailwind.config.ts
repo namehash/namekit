@@ -11,6 +11,7 @@ const config: Config = {
       },
     },
   },
+  plugins: [require("@tailwindcss/forms")({ strategy: "class" })],
 };
 
 export default config;
