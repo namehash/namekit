@@ -674,6 +674,16 @@ async def test_dynamic_check_order(nameguard: NameGuard):
 
 
 @pytest.mark.asyncio
+async def test_secure_primary_name_error(nameguard: NameGuard, monkeypatch):
+    network = 'mainnet'
+    monkeypatch.setattr(nameguard.ns[network], 'name', lambda address: (_ for _ in ()).throw(Exception('Error')))
+    r = await nameguard.secure_primary_name(
+        '0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd', network, return_nameguard_report=True
+    )
+    assert r.primary_name_status == 'no_primary_name'
+
+
+@pytest.mark.asyncio
 async def test_stress_inspect_name(nameguard: NameGuard):
     # with omit_cure=False takes 1 minute
     result = await nameguard.inspect_name('mainnet', '⎛⎝⎞⎠' * 1000)
