@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+.carousel .swiper-wrapper,
+.preview .swiper-wrapper,
+.breakpoint .swiper-wrapper,
+.coverflow .swiper-wrapper {
+  padding-bottom: 3rem;
+}
+
+/* Classes necessary to Swiper JS */
+.fade,
+.rewind {
+  margin-left: initial !important;
+  margin-right: initial !important;
+}
+
+.fade .swiper-button-next::after,
+.fade .swiper-button-prev::after,
+.rewind .swiper-button-next::after,
+.rewind .swiper-button-prev::after {
+  content: "";
+}
+
+.fade .swiper-button-prev::before,
+.rewind .swiper-button-prev::before {
+  content: "";
+  display: block;
+  margin: auto;
+  width: 28px;
+  height: 28px;
+  background-image: url(/svgs/chevron-left.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.fade .swiper-button-next::before,
+.rewind .swiper-button-next::before {
+  content: "";
+  display: block;
+  margin: auto;
+  width: 28px;
+  height: 28px;
+  background-image: url(/svgs/chevron-right.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.fade .swiper-button-prev,
+.fade .swiper-button-next,
+.rewind .swiper-button-prev,
+.rewind .swiper-button-next {
+  bottom: 0;
+}
+
+.rewind .swiper-button-next {
+  display: none;
+}
+
+@media (min-width: 1080px) {
+  .rewind .swiper-button-next {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    border-width: 1px;
+    border-color: #d1d5db;
+    background-color: #fff;
+    transition: background-color 200ms;
+    transform: translateY(-80px);
+  }
+}
+
+.rewind .swiper-button-next:hover {
+  background-color: #f9fafb;
+}
+
+.rewind .swiper-button-prev {
+  display: none;
+}
+
+@media (min-width: 1080px) {
+  .rewind .swiper-button-prev {
+    display: flex;
+
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    border-width: 1px;
+    border-color: #d1d5db;
+    background-color: #fff;
+    transition: background-color 200ms;
+    transform: translateY(-80px);
+  }
+}
+
+.rewind .swiper-button-prev:hover {
+  background-color: #f9fafb;
+}

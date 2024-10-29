@@ -1,5 +1,23 @@
 # @namehash/nameguard-react
 
+![NPM Version](https://img.shields.io/npm/v/@namehash/nameguard-react)
+
+## Install
+
+```bash
+npm install @namehash/nameguard-react
+```
+
+## Setup
+
+The `nameguard-react` package comes with its own styles exported for some components, as well as global Tailwind styles (soon to be removed).
+
+Make sure you import the `styles.css` file somewhere in your app:
+
+```tsx
+import "@namehash/nameguard-react/styles.css";
+```
+
 ## Usage
 
 These components can be used to interface with NameGuard with React.
@@ -53,3 +71,21 @@ export default () => (
   <Report name="notrab.eth" chatModalStore={useChatModalStore} />
 );
 ```
+
+## Creating components
+
+When creating components, you should use the Tailwind prefix `ng-` for all class names. This means when using `@namehash/nameguard-react` components in projects not using Tailwind, it works as expected.
+
+```tsx
+<p className="ng-text-red-500">Hello world</p>
+```
+
+## Contact Us
+
+Visit our [website](https://namehashlabs.org/) and get in contact.
+
+## License
+
+Licensed under the MIT License, Copyright &copy; 2023-present [NameHash Labs](https://namehashlabs.org).
+
+See [LICENSE](./LICENSE) for more information.

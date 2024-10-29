@@ -3,6 +3,10 @@ import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
 
 import { RatedBox } from "../RatedBox/RatedBox";
 
+import cc from "classcat";
+import { CheckResultCode } from "@namehash/nameguard";
+import { checkResultCodeTextColor } from "../../utils/text";
+
 export const ReportError = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
@@ -24,7 +28,12 @@ export const ReportError = () => {
       <div className="py-9 px-10 flex items-center space-x-6">
         <div className="flex-shrink-0">
           <div className="rounded-full bg-red-50 flex items-center justify-center w-12 h-12">
-            <ExclamationTriangleIcon className="text-red-600 stroke-current w-5 h-5" />
+            <ExclamationTriangleIcon
+              className={cc([
+                "stroke-current w-5 h-5",
+                checkResultCodeTextColor(CheckResultCode.alert),
+              ])}
+            />
           </div>
         </div>
         <div className="space-y-1 flex-shrink-0">

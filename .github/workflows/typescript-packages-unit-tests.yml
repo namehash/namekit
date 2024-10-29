@@ -1,0 +1,71 @@
+name: TypeScript Packages - Unit
+
+on:
+  push:
+    branches:
+      - main
+      - staging
+    paths:
+      - "packages/**"
+      - "!packages/nameguard-python/**"
+  pull_request:
+    branches:
+      - main
+      - staging
+    paths:
+      - "packages/**"
+      - "!packages/nameguard-python/**"
+
+env:
+  PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
+  PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - "ens-utils"
+          - "nameguard-sdk"
+          - "nameguard-js"
+          - "nameguard-react"
+          - "namekit-react"
+
+    name: Test ${{ matrix.package }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: "pnpm"
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install npm dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      - name: Test ${{ matrix.package }}
+        run: pnpm --filter ./packages/${{ matrix.package }} test

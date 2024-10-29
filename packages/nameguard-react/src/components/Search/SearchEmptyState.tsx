@@ -4,11 +4,12 @@ import {
   nameguard,
   type BulkConsolidatedNameGuardReport,
 } from "@namehash/nameguard";
-import { parseName } from "@namehash/nameparser";
+import { buildENSName } from "@namehash/ens-utils";
 
-import { NameBadge } from "../NameBadge/NameBadge";
+import { ReportModalNameBadge } from "../Report/ReportModalNameBadge";
 import { useSearchStore } from "../../stores/search";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import { IconButton } from "@namehash/namekit-react";
 
 const examples = [
   "culturecafé.eth",
@@ -26,7 +27,7 @@ const examples = [
   "unknоwn.eth",
   "john🇺🇸",
   "7️⃣7️⃣7️⃣.eth",
-];
+].map((name) => buildENSName(name));
 
 export const SearchEmptyState = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -34,17 +35,20 @@ export const SearchEmptyState = () => {
   const [isAtEnd, setIsAtEnd] = useState<boolean>(false);
 
   const { openModal } = useSearchStore();
-  const parsedNames = examples.map((n) => parseName(n));
+  const exampleNames = examples.map((n) => n.name);
 
-  const { data, isLoading } = useSWR<BulkConsolidatedNameGuardReport>(
-    examples.join(),
-    (_) =>
-      nameguard.bulkInspectNames(parsedNames.map((n) => n.outputName.name)),
+  const {
+    data,
+    isLoading,
+    error: hadLoadingError,
+  } = useSWR<BulkConsolidatedNameGuardReport>(
+    exampleNames.join(),
+    (_) => nameguard.bulkInspectNames(exampleNames),
     {
       revalidateIfStale: false,
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
-    }
+    },
   );
 
   useEffect(() => {
@@ -98,31 +102,32 @@ export const SearchEmptyState = () => {
           <div className="inline-flex items-center space-x-1 absolute left-0 w-full pl-6 pr-10">
             {!isAtStart && (
               <div className="md:hidden fixed left-0 z-50">
-                <button
-                  className="appearance-none p-2 bg-white flex items-center justify-center"
-                  onClick={slideLeft}
-                >
+                <IconButton onClick={slideLeft} variant="ghost" size="small">
                   <ChevronLeftIcon className="fill-current text-black w-5 h-5" />
-                </button>
+                </IconButton>
               </div>
             )}
             {!isAtEnd && (
               <div className="md:hidden fixed right-0 z-50">
-                <button
-                  className="appearance-none p-2 flex items-center justify-center bg-gradient-to-l from-white via-white to-transparent"
-                  onClick={slideRight}
-                >
+                <IconButton onClick={slideRight} variant="ghost" size="small">
                   <ChevronRightIcon className="fill-current text-black w-5 h-5" />
-                </button>
+                </IconButton>
               </div>
             )}
-            {isLoading &&
-              examples.map((e, index) => <NameBadge name={e} key={index} />)}
+            {(hadLoadingError || isLoading) &&
+              examples.map((_, index) => (
+                <ReportModalNameBadge
+                  hadLoadingError={hadLoadingError}
+                  ensName={examples[index]}
+                  key={index}
+                />
+              ))}
             {data?.results?.map((report, index) => (
-              <NameBadge
+              <ReportModalNameBadge
                 key={index}
+                hadLoadingError={hadLoadingError}
+                ensName={examples[index]}
                 data={report}
-                onClick={() => openModal(report.name)}
               />
             ))}
             <div className="w-5 flex-shrink-0 relative">

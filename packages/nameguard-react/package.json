@@ -1,44 +1,66 @@
 {
   "name": "@namehash/nameguard-react",
-  "version": "0.0.26",
+  "description": "React UI components for building on NameGuard.",
+  "version": "0.7.1",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/namehash/namekit.git",
+    "directory": "packages/nameguard-react"
+  },
+  "homepage": "https://github.com/namehash/namekit/tree/main/packages/nameguard-react",
+  "keywords": [
+    "ENS",
+    "NameKit",
+    "NameHash",
+    "NameGuard"
+  ],
   "scripts": {
     "build": "tsup",
-    "dev": "tsup --watch --clean=false",
-    "prettier-check": "prettier --check ."
+    "dev": "tsup --watch --clean=false"
   },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": {
-        "node": "./dist/index.js",
-        "default": "./dist/index.js"
-      },
-      "require": {
-        "node": "./dist/index.cjs",
-        "default": "./dist/index.cjs"
-      }
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.mjs"
+    },
+    "./styles.css": {
+      "import": "./dist/index.css",
+      "default": "./dist/index.css"
     }
   },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "styles": "./dist/index.css",
   "dependencies": {
     "@headlessui-float/react": "0.11.4",
     "@headlessui/react": "1.7.17",
-    "@heroicons/react": "2.0.18",
-    "@namehash/ens-webfont": "latest",
-    "@namehash/nameguard": "latest",
-    "@namehash/nameparser": "latest",
-    "classcat": "5.0.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "sonner": "1.2.3",
-    "swr": "2.2.4",
-    "zustand": "4.4.5"
+    "@heroicons/react": "2.1.5",
+    "@namehash/ens-utils": "workspace:*",
+    "@namehash/ens-webfont": "workspace:*",
+    "@namehash/nameguard": "workspace:*",
+    "@namehash/namekit-react": "workspace:*",
+    "classcat": "5.0.5",
+    "sonner": "1.5.0",
+    "swr": "2.2.5",
+    "zustand": "4.5.4"
   },
   "devDependencies": {
-    "tsup": "^7.2.0",
-    "typescript": "^5.2.2"
+    "@types/react": "18.3.11",
+    "@types/react-dom": "18.3.0",
+    "autoprefixer": "10.4.20",
+    "postcss": "8.4.47",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "tailwindcss": "3.4.13",
+    "tsup": "8.3.0",
+    "typescript": "5.6.2"
+  },
+  "peerDependencies": {
+    "react": "^18",
+    "react-dom": "^18"
   },
   "publishConfig": {
     "access": "public"

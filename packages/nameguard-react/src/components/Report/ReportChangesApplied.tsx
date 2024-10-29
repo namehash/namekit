@@ -1,6 +1,7 @@
 import React from "react";
 
 import { useSettingsStore } from "../../stores/settings";
+import { Link } from "@namehash/namekit-react";
 
 type Props = {
   transformations?: any[];
@@ -36,12 +37,9 @@ export function ReportChangesApplied({ transformations = [] }: Props) {
           </div>
         </div>
         <div className="md:flex-shrink-0 hidden md:flex md:items-center md:justify-end">
-          <button
-            className="text-sm text-black leading-5 appearance-none underline sm:underline-offset-[4px] sm:transition-all sm:duration-200 sm:hover:underline-offset-[2px]"
-            onClick={openSettingsModal}
-          >
+          <Link onClick={openSettingsModal} size="small" variant="underline">
             Manage settings
-          </button>
+          </Link>
         </div>
       </div>
     </div>

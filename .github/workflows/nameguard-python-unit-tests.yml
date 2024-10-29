@@ -1,0 +1,98 @@
+name: NameGuard API - Unit Tests
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/nameguard-python/**"
+  pull_request:
+    branches:
+      - main
+      - staging
+    paths:
+      - "packages/nameguard-python/**"
+
+env:
+  PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
+  PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}
+  ALCHEMY_URI_MAINNET: ${{ secrets.ALCHEMY_URI_MAINNET }}
+  ALCHEMY_URI_SEPOLIA: ${{ secrets.ALCHEMY_URI_SEPOLIA }}
+  ENS_SUBGRAPH_URL_MAINNET: ${{ secrets.ENS_SUBGRAPH_URL_MAINNET }}
+  ENS_SUBGRAPH_URL_SEPOLIA: ${{ secrets.ENS_SUBGRAPH_URL_SEPOLIA }}
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: [3.9, 3.11]
+
+    steps:
+      - name: Checkout NameKit repo
+        uses: actions/checkout@v4
+
+      - name: Install poetry
+        run: pipx install poetry
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "poetry"
+
+      - name: Install dependencies
+        working-directory: ./packages/nameguard-python
+        run: poetry install
+
+      - name: Run tests mocked
+        working-directory: ./packages/nameguard-python
+        run: poetry run pytest -vv --durations=0
+
+      - name: Run tests
+        working-directory: ./packages/nameguard-python
+        run: MONKEYPATCH=0 poetry run pytest -vv --durations=0
+
+  add_badge:
+    runs-on: ubuntu-latest
+    needs: test
+    permissions:
+      contents: write
+
+    if: ${{ github.event_name == 'pull_request' }}
+
+    steps:
+      - name: Checkout NameKit repo
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Install poetry
+        run: pipx install poetry
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+          cache: "poetry"
+
+      - name: Install dependencies
+        working-directory: ./packages/nameguard-python
+        run: poetry install
+
+      - name: Run tests mocked
+        working-directory: ./packages/nameguard-python
+        run: poetry run pytest -vv --durations=0 --cov-report term-missing --cov=./
+
+      - name: Generate coverage badge
+        working-directory: ./packages/nameguard-python
+        run: poetry run coverage-badge -fo coverage_badge.svg
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          author_name: github-actions
+          author_email: actions@github.com
+          message: "Update coverage badge"
+          add: "packages/nameguard-python/coverage_badge.svg"

@@ -1,7 +1,10 @@
 import React from "react";
-import { ConsolidatedGraphemeGuardReport } from "@namehash/nameguard";
+import {
+  CheckResultCode,
+  ConsolidatedGraphemeGuardReport,
+} from "@namehash/nameguard";
 
-import { Check } from "./Check";
+import { CheckResultCodeIcon } from "./CheckResultCodeIcon";
 import { RiskCounter } from "./RiskCounter";
 import { useGraphemeModalStore } from "../../stores/grapheme";
 
@@ -48,9 +51,23 @@ export function GraphemeListItem({ item }: GraphemeListItemProps) {
               <RiskCounter count={item.risk_count} />
             </div>
 
-            <div className="flex-shrink-0 ml-auto md:ml-auto md:order-1 flex items-center">
-              <Check code={item.rating} />
-            </div>
+            {item.highest_risk ? (
+              <div className="flex-shrink-0 ml-auto md:ml-auto md:order-1 flex items-center">
+                <CheckResultCodeIcon
+                  isInteractive={true}
+                  className="cursor-pointer"
+                  code={item.highest_risk.status}
+                />
+              </div>
+            ) : (
+              <div className="flex-shrink-0 ml-auto md:ml-auto md:order-1 flex items-center">
+                <CheckResultCodeIcon
+                  isInteractive={true}
+                  className="cursor-pointer"
+                  code={CheckResultCode.pass}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

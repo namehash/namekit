@@ -1,0 +1,53 @@
+{
+  "name": "@namehash/ens-utils",
+  "description": "A collection of utilities for working with ENS. [DEPRECATED]",
+  "version": "1.18.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/namehash/namekit.git",
+    "directory": "packages/ens-utils"
+  },
+  "homepage": "https://github.com/namehash/namekit/tree/main/packages/ens-utils",
+  "keywords": [
+    "ENS",
+    "NameKit",
+    "NameHash"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch --clean=false",
+    "test": "vitest",
+    "test:watch": "vitest watch"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@adraffy/ens-normalize": "1.11.0",
+    "@ethersproject/hash": "5.7.0",
+    "date-fns": "3.3.1",
+    "decimal.js": "10.4.3",
+    "viem": "2.21.16"
+  },
+  "devDependencies": {
+    "@namekit/tsconfig": "workspace:*",
+    "tsup": "8.3.0",
+    "typescript": "5.6.2",
+    "vitest": "2.1.2"
+  },
+  "files": [
+    "dist"
+  ]
+}

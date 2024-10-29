@@ -1,7 +1,7 @@
 import React, { Fragment, useMemo } from "react";
 import useSWR from "swr";
-import { type NameGuardReport, nameguard } from "@namehash/nameguard";
-import { parseName } from "@namehash/nameparser";
+import { type NameGuardReport, nameguard, Rating } from "@namehash/nameguard";
+import { parseName, Normalization } from "@namehash/ens-utils";
 import { Toaster } from "sonner";
 
 import { type Settings } from "../../stores/settings";
@@ -24,6 +24,7 @@ import { useGraphemeModalStore } from "../../stores/grapheme";
 import { ReportError } from "./ReportError";
 import { ExternalLinks } from "../ExternalLinks/ExternalLinks";
 import { Share } from "../Share/Share";
+import { ratingTextColor } from "../../utils/text";
 
 type ReportProps = {
   data?: NameGuardReport;
@@ -48,11 +49,11 @@ export const Report = ({
 
   const outsideChatClickRef = useOutsideClick(
     store.closeChatModal,
-    store.isChatModalOpen
+    store.isChatModalOpen,
   );
   const outsideGraphemeClickRef = useOutsideClick(
     closeAllGraphemeModals,
-    isGraphemeModalOpen
+    isGraphemeModalOpen,
   );
 
   const parsedName = useMemo(() => {
@@ -60,11 +61,15 @@ export const Report = ({
   }, [name, settings]);
 
   const normalizationUnknown =
-    parsedName.outputName.normalization === "unknown" ?? true;
+    parsedName.outputName.normalization === Normalization.Unknown;
 
-  const showEmptyState = parsedName.outputName.name.length === 0 ?? true;
+  const showEmptyState = parsedName.outputName.name.length === 0;
 
-  const { data, error, isLoading } = useSWR<NameGuardReport>(
+  const {
+    data,
+    error: hadLoadingError,
+    isLoading,
+  } = useSWR<NameGuardReport>(
     fallbackData ? null : parsedName.outputName.name,
     (n: string) => nameguard.inspectName(n),
     {
@@ -72,7 +77,7 @@ export const Report = ({
       revalidateIfStale: false,
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
-    }
+    },
   );
 
   const externalLinks = [
@@ -116,15 +121,13 @@ export const Report = ({
             <ExternalLinks title="View name in" links={externalLinks} />
           </div>
         </div>
-
-        {isLoading && !error && normalizationUnknown && (
+        {isLoading && !hadLoadingError && normalizationUnknown && (
           <LoadingSkeleton parsedName={parsedName} />
         )}
-        {isLoading && !error && !normalizationUnknown && (
+        {isLoading && !hadLoadingError && !normalizationUnknown && (
           <LoadingSkeleton parsedName={parsedName} />
         )}
-
-        {error && <ReportError />}
+        {hadLoadingError && <ReportError />}
 
         {data && (
           <Fragment>
@@ -140,14 +143,19 @@ export const Report = ({
                 ))}
               </div>
             </div>
-            <div className="space-y-4 md:space-y-5">
-              <p className="text-black font-semibold text-lg leading-6">
-                Name inspection
-              </p>
+          </Fragment>
+        )}
+        {data && data.inspected && (
+          <div className="space-y-4 md:space-y-5">
+            <p className="text-black font-semibold text-lg leading-6">
+              Name inspection
+            </p>
 
-              <LabelList items={data.labels} />
-            </div>
-
+            <LabelList items={data.labels} />
+          </div>
+        )}
+        {data && (
+          <Fragment>
             <FeedbackNotice onChatClick={openChatModal} />
             <ReportFooter />
           </Fragment>
@@ -168,7 +176,7 @@ export const Report = ({
             toast:
               "!bg-black !border-black !relative !text-sm !leading-5 !font-medium !px-5",
             title: "!text-white",
-            success: "!fill-current !text-green-400",
+            success: `!fill-current !${ratingTextColor(Rating.pass)}`,
             closeButton: "!hidden",
           },
         }}

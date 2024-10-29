@@ -1,106 +1,522 @@
-# NameGuard by NameHash
+<!-- VERTICAL WHITESPACE -->
 
-![Tests](https://github.com/namehash/nameguard/actions/workflows/ci_api.yml/badge.svg?branch=main)
-![Coverage](https://raw.githubusercontent.com/namehash/nameguard/main/coverage_badge.svg)
+<br>
+<br>
 
-The NameHash team is proud to present NameGuard, a tool for identifying and preventing malicious use of ENS names.
-It is unfortunate that as the ENS ecosystem grows, so does the number of malicious actors trying to exploit it.
-NameGuard is a tool that can help you protect yourself and your users from malicious ENS names.
+<!-- LOGO -->
 
-- Offers multiple levels of protection
-  - Impersonated name detection
-  - Confusable grapheme detection
-  - International accessibility checks
-  - Rendering checks for different fonts
-  - ENSIP-15 verification with detailed explanations and auto-suggestions (provided by [ens-normalize-python](https://github.com/namehash/ens-normalize-python))
-  - Punycode and DNS hostname compatibility checks
-  - and more!
-- Provides a unified rating system for entire names, as well as detailed explanations for each check
-  - :green_circle: Pass: no issues found
-  - :yellow_circle: Warn: potential issues found
-  - :red_circle: Fail: serious issues found
-- Supports many use cases
-  - Standalone Python library ([PyPI](https://pypi.org/project/nameguard/))
-  - ASGI web server
-  - [Amazon AWS Lambda](https://aws.amazon.com/lambda/) handler
+<p align="center">
+  <a href="https://namekit.io">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset=".github/logo-dark.svg">
+      <img alt="NameKit" src=".github/logo-light.svg" width="auto" height="60">
+    </picture>
+  </a>
+</p>
 
-⚠️ **This SDK is BETA. Things will change based on the community feedback.**
+<!-- TAGLINE -->
+<p align="center">
+  Easily integrate rich ENS user journeys into your wallet, app, or game.
+<p>
 
-## Getting Started
+<!-- PROJECT SHIELDS -->
+<p align="center">
+  <a href="LICENSE">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/github/license/namehash/namekit?color=444444">
+      <img src="https://img.shields.io/github/license/namehash/namekit?color=444444" alt="MIT License">
+    </picture>
+  </a>
+  <a href="https://github.com/namehash/namekit/actions/workflows/typescript-packages-unit-tests.yml?query=branch%3Amain">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/github/actions/workflow/status/namehash/namekit/typescript-packages-unit-tests.yml?logo=typescript&logoColor=ffffff&color=444444">
+      <img src="https://img.shields.io/github/actions/workflow/status/namehash/namekit/typescript-packages-unit-tests.yml?logo=typescript&logoColor=ffffff&color=444444" alt="TypeScript Build Status">
+    </picture>
+  </a>
+  <a href="https://github.com/namehash/namekit/actions/workflows/nameguard-python-unit-tests.yml?query=branch%3Amain">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/github/actions/workflow/status/namehash/namekit/nameguard-python-unit-tests.yml?logo=python&logoColor=ffffff&color=444444">
+      <img src="https://img.shields.io/github/actions/workflow/status/namehash/namekit/nameguard-python-unit-tests.yml?logo=python&logoColor=ffffff&color=444444" alt="Python Build Status">
+    </picture>
+  </a>
+  <a href="#project-status">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/status-alpha-444444">
+      <img src="https://img.shields.io/badge/status-alpha-444444" alt="status: alpha">
+    </picture>
+  </a>
+</p>
 
-### [Try the official web app](https://nameguard.io)
+## Project Status
 
-### Using the public API
+🏗️ NameKit is currently an alpha preview under active development. Expect APIs and interfaces to experience breaking changes.
 
-NameGuard is hosted at <https://api.nameguard.io>
+## Project Directory
 
-You can make a basic request to the API like this:
+The NameKit monorepo contains multiple packages and apps.
 
-```bash
-curl https://api.nameguard.io/inspect-name/mainnet/nick.eth | python -m json.tool
-```
+### NameKit Packages
 
-The API documentation is available at <https://api.nameguard.io/redoc> or <https://api.nameguard.io/docs>.
+<table>
+  <thead>
+    <tr>
+      <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to stop language images from getting smashed --></th>
+      <th align="left">Source Code</th>
+      <th align="left">Summary</th>
+      <th align="left">Deployment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop distorting deployment shields --></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white">
+          <img src="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white" alt="TypeScript" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        namekit-core
+        <br>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/coming%20soon-e1e1e1">
+          <img src="https://img.shields.io/badge/coming%20soon-e1e1e1" alt="coming soon" width="auto" height="17">
+        </picture>
+      </td>
+      <td>Core logic and data types for NameKit. Simplify and enhance your integration with ENS.</td>
+      <td>
+        -
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/tsx-444444?logo=react&logoColor=white">
+          <img src="https://img.shields.io/badge/tsx-444444?logo=typescript&logoColor=white" alt="React" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="packages/namekit-react">namekit-react</a>
+      </td>
+      <td>React UI components for building on NameKit.</td>
+      <td>
+        <a href="https://www.npmjs.com/package/@namehash/namekit-react">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fnamekit-react?style=flat&color=444444">
+            <img src="https://img.shields.io/npm/v/%40namehash%2Fnamekit-react?style=flat&color=444444" alt="NPM Version" width="auto" height="17">
+          </picture>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white">
+          <img src="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white" alt="TypeScript" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="packages/ens-utils">ens-utils</a>
+        <br>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/deprecated-e1e1e1">
+          <img src="https://img.shields.io/badge/deprecated-e1e1e1" alt="deprecated" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        A collection of utilities for working with ENS.
+      </td>
+      <td>
+        <a href="https://www.npmjs.com/package/@namehash/ens-utils">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fens-utils?style=flat&color=444444">
+            <img src="https://img.shields.io/npm/v/%40namehash%2Fens-utils?style=flat&color=444444" alt="NPM Version" width="auto" height="17">
+          </picture>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/sol-444444?logo=ethereum&logoColor=white">
+          <img src="https://img.shields.io/badge/sol-444444?logo=ethereum&logoColor=white" alt="Solidity" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="https://github.com/namehash/namekit-contracts">namekit-contracts</a>
+      </td>
+      <td>
+        Earn revenue for helping ENS grow.
+      </td>
+      <td>
+        <a href="https://etherscan.io/address/0x232332263e6e4bd8a134b238975e2200c8b7dac1#code">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/mainnet-444444?logo=ethereum&logoColor=white&labelColor=4f4f4f">
+            <img src="https://img.shields.io/badge/mainnet-444444?logo=ethereum&logoColor=white&labelColor=4f4f4f" alt="Ethereum Mainnet" width="auto" height="17">
+          </picture>
+        </a><br>
+        <a href="https://sepolia.etherscan.io/address/0x1cf7735B2e2641274f6d038701c561010D2fCf46#code">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/sepolia-444444?logo=ethereum&logoColor=white&labelColor=4f4f4f">
+            <img src="https://img.shields.io/badge/sepolia-444444?logo=ethereum&logoColor=white&labelColor=4f4f4f" alt="Ethereum Sepolia" width="auto" height="17">
+          </picture>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-### Using the SDK
+### NameGuard Packages
 
-Quickstart:
+<table>
+  <thead>
+    <tr>
+      <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to stop language images from getting smashed --></th>
+      <th align="left">Source Code</th>
+      <th align="left">Summary</th>
+      <th align="left">Deployment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop distorting deployment shields --></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white">
+          <img src="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white" alt="TypeScript" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="packages/nameguard-sdk">nameguard-sdk</a>
+      </td>
+      <td>A lightweight JavaScript client for the NameGuard API.</td>
+      <td>
+        <a href="https://www.npmjs.com/package/@namehash/nameguard">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fnameguard?style=flat&color=444444">
+            <img src="https://img.shields.io/npm/v/%40namehash%2Fnameguard?style=flat&color=444444" alt="NPM Version" width="auto" height="17">
+          </picture>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white">
+          <img src="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white" alt="TypeScript" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="packages/nameguard-js">nameguard-js</a>
+      </td>
+      <td>A JavaScript implementation of NameGuard. Currently implements securePrimaryName with more coming soon.</td>
+      <td>
+        <a href="https://www.npmjs.com/package/@namehash/nameguard-js">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fnameguard-js?style=flat&color=444444">
+            <img src="https://img.shields.io/npm/v/%40namehash%2Fnameguard-js?style=flat&color=444444" alt="NPM Version" width="auto" height="17">
+          </picture>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/tsx-444444?logo=react&logoColor=white">
+          <img src="https://img.shields.io/badge/tsx-444444?logo=typescript&logoColor=white" alt="React" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="packages/nameguard-react">nameguard-react</a>
+      </td>
+      <td>React UI components for building on NameGuard.</td>
+      <td>
+        <a href="https://www.npmjs.com/package/@namehash/nameguard-react">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fnameguard-react?style=flat&color=444444">
+            <img src="https://img.shields.io/npm/v/%40namehash%2Fnameguard-react?style=flat&color=444444" alt="NPM Version" width="auto" height="17">
+          </picture>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/css-444444?logo=css3&logoColor=white">
+          <img src="https://img.shields.io/badge/css-444444?logo=css3&logoColor=white" alt="CSS" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="packages/ens-webfont">ens-webfont</a>
+      </td>
+      <td>A webfont to improve rendering of graphemes that might appear in normalizable ENS names on the web.</td>
+      <td>
+        <a href="https://www.npmjs.com/package/@namehash/ens-webfont">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fens-webfont?style=flat&color=444444">
+            <img src="https://img.shields.io/npm/v/%40namehash%2Fens-webfont?style=flat&color=444444" alt="NPM Version" width="auto" height="17">
+          </picture>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/py-444444?logo=python&logoColor=white">
+          <img src="https://img.shields.io/badge/py-444444?logo=python&logoColor=white" alt="Python" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="https://github.com/namehash/ens-normalize-python">ens-normalize-python</a>
+      </td>
+      <td>Python implementation of ENSIP-15 (ENS Normalize).</td>
+      <td>
+        <a href="https://pypi.org/project/ens-normalize/">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/pypi/v/ens-normalize?style=flat&color=444444">
+            <img src="https://img.shields.io/pypi/v/ens-normalize?style=flat&color=444444" alt="PyPI Version" width="auto" height="17">
+          </picture>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/py-444444?logo=python&logoColor=white">
+          <img src="https://img.shields.io/badge/py-444444?logo=python&logoColor=white" alt="Python" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="https://github.com/namehash/ens-font-data">ens-font-data</a>
+      </td>
+      <td>Metadata for graphemes that may appear in ENS names.</td>
+      <td>
+        -
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/py-444444?logo=python&logoColor=white">
+          <img src="https://img.shields.io/badge/py-444444?logo=python&logoColor=white" alt="Python" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="https://github.com/namehash/ens-label-inspector">ens-label-inspector</a>
+      </td>
+      <td>Detailed inspection of labels in ENS names.</td>
+      <td>
+        <a href="https://pypi.org/project/ens-label-inspector/">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/pypi/v/ens-label-inspector?style=flat&color=444444">
+            <img src="https://img.shields.io/pypi/v/ens-label-inspector?style=flat&color=444444" alt="PyPI Version" width="auto" height="17">
+          </picture>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/py-444444?logo=python&logoColor=white">
+          <img src="https://img.shields.io/badge/py-444444?logo=python&logoColor=white" alt="Python" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="packages/nameguard-python/">nameguard</a>
+      </td>
+      <td>Identify and prevent malicious use of ENS names.</td>
+      <td>
+        <a href="https://pypi.org/project/nameguard/">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/pypi/v/nameguard?style=flat&color=444444">
+            <img src="https://img.shields.io/pypi/v/nameguard?style=flat&color=444444" alt="PyPI Version" width="auto" height="17">
+          </picture>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-```bash
-npm install @namehash/nameguard
-```
+### Apps
 
-```ts
-import { nameguard } from "@namehash/nameguard";
-await nameguard.inspectName("nick.eth");
-```
+<table>
+  <thead>
+    <tr>
+      <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to stop language images from getting smashed --></th>
+      <th align="left">Source Code</th>
+      <th align="left">Summary</th>
+      <th align="left">✨ Try it out! ✨</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white">
+          <img src="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white" alt="TypeScript" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        ens-node
+        <br>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/coming%20soon-e1e1e1">
+          <img src="https://img.shields.io/badge/coming%20soon-e1e1e1" alt="coming soon" width="auto" height="17">
+        </picture>
+      </td>
+      <td>Backend for NameKit. Simplify and enhance your integration with ENS.</td>
+      <td>
+        -
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/next.js-444444?logo=next.js&logoColor=white">
+          <img src="https://img.shields.io/badge/next.js-444444?logo=next.js&logoColor=white" alt="Next.js" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="apps/nameguard.io/">nameguard.io</a>
+      </td>
+      <td>Official website for NameGuard.</td>
+      <td>
+        <a href="https://nameguard.io">Preview</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop breaking header for this column across multiple lines -->
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/lambda-444444?logo=awslambda&logoColor=white">
+          <img src="https://img.shields.io/badge/lambda-444444?logo=awslambda&logoColor=white" alt="AWS Lambda" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="apps/api.nameguard.io/">api.nameguard.io</a>
+      </td>
+      <td>AWS Lambda deployment of the NameGuard API</td>
+      <td>
+        <a href="https://api.nameguard.io">Preview</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/next.js-444444?logo=next.js&logoColor=white">
+          <img src="https://img.shields.io/badge/next.js-444444?logo=next.js&logoColor=white" alt="Next.js" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="apps/examples.nameguard.io/">examples.nameguard.io</a>
+      </td>
+      <td>Examples for using nameguard-sdk, nameguard-js, and nameguard-react.</td>
+      <td>
+        <a href="https://examples.nameguard.io">Preview</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/tsx-444444?logo=storybook&logoColor=white">
+          <img src="https://img.shields.io/badge/tsx-444444?logo=storybook&logoColor=white" alt="Storybook" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="apps/storybook.namekit.io/">storybook.namekit.io</a>
+      </td>
+      <td>Explore UI components included in namekit-react, nameguard-react, and ens-webfont.</td>
+      <td>
+        <a href="https://storybook.namekit.io">Preview</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/mdx-444444?logo=mintlify&logoColor=white">
+          <img src="https://img.shields.io/badge/mdx-444444?logo=mintlify&logoColor=white" alt="Mintlify" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="apps/docs.nameguard.io/">docs.nameguard.io</a>
+      </td>
+      <td>Documentation for all NameGuard packages.</td>
+      <td>
+        <a href="https://docs.nameguard.io">Preview</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/next.js-444444?logo=next.js&logoColor=white">
+          <img src="https://img.shields.io/badge/next.js-444444?logo=next.js&logoColor=white" alt="Next.js" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="apps/namehashlabs.org/">namehashlabs.org</a>
+      </td>
+      <td>Official website for NameHash Labs.</td>
+      <td>
+        <a href="https://namehashlabs.org">Preview</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-See the [SDK README](./packages/sdk/README.md) for more details.
+## Local Development
 
-### Using the Python library
+### Prerequisites
 
-Quickstart:
+- [Git](https://git-scm.com/)
+- [Node.js](https://nodejs.org/)
+  - It's recommended you install Node.js through [nvm](https://github.com/nvm-sh/nvm) (see link for installation instructions).
+  - To ensure you're running the expected version of Node.js run `nvm install` in the root of the repository (after you clone it).
+  - Node.js will automatically install `corepack`. You should also ensure Corepack is enabled by running `corepack enable`.
+- [pnpm](https://pnpm.io/)
+  - Run `npm install -g pnpm` or see [other installation options](https://pnpm.io/installation).
+  - To ensure you're running the expected version of pnpm run `corepack use pnpm` in the root of the repository (after you clone it).
 
-```bash
-pip install nameguard
-```
+### Getting started
 
-```python
-from nameguard import NameGuard
-ng = NameGuard()
-await ng.inspect_name(network_name='mainnet', name='nick.eth')
-```
+Use `git` to clone this respository, and install the dependencies using `pnpm` to run NameKit locally:
 
-See the [NameGuard Python README](./api/README.md) for more details.
+1. `git clone https://github.com/namehash/namekit.git`
+2. `cd namekit`
+3. `pnpm i`
+4. `pnpm dev`
 
-### Running your own NameGuard instance
+It's recommended you run `pnpm dev` in the root of the repository to start all apps, packages, and internal resources to support local development.
 
-See the [NameGuard Python README](./api/README.md) for more details.
+## Testing
 
-## NameGuard Specification
+Tests are automatically ran when a new Pull Request is opened. You can run them locally using `pnpm test`.
 
-### Checks
+If you're developing locally, you can watch changes and run tests automatically using `pnpm test:watch`.
 
-1. **Impersonation**: Detects names that could be trying to impersonate a different name by using similar characters. Example: [`vitalìk.eth`](https://nameguard.io/inspect/vitalìk.eth)
+## Continuous Deployment
 
-2. **Confusables**: Detects characters that can be confused with other characters. Example: [`vitalìk.eth`](https://nameguard.io/inspect/vitalìk.eth)
+We use [changesets](https://github.com/changesets/changesets) to manage our releases.
 
-3. **Font Support**: Checks if the characters in the name are supported by commonly used fonts. Example: [`🛈.eth`](https://nameguard.io/inspect/🛈.eth)
+> [!NOTE]
+> If you're making changes to any of the [`packages/*`](/packages), you should create a changeset.
 
-4. **Invisibles**: Detects invisible characters. Example: [`888‍‍.eth`](https://nameguard.io/inspect/888‍‍.eth)
+1. Run `pnpm changeset`
+2. Choose the packages you want to release
+3. Add a summary of the changes
+4. Commit the file
+5. Open a Pull Request
+6. Once the PR is merged, a new or existing `Version Packages` PR will open.
+7. Merge the `Version Packages` PR when you're ready to release a new version (of all packages) to NPM, or wait to merge in other changesets first.
 
-5. **Typing Difficulty**: Detects names that are difficult to type on some keyboards. Example: [`żółć.eth`](https://nameguard.io/inspect/żółć.eth)
+## Storybook
 
-6. **Mixed Scripts**: Detects names that contain characters from multiple scripts or alphabets. Example: [`あア.eth`](https://www.nameguard.io/inspect/あア.eth)
+We use [Storybook](https://storybook.namekit.io/) to preview components across our core packages:
 
-7. **Name Wrapper**: Checks if the name is supported by the new ENS Name Wrapper. Example: [`abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd.eth`](https://nameguard.io/inspect/abcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcdabcd.eth)
+- `@namehash/namekit-react`
+- `@namehash/nameguard-react`
+- `@namehash/ens-webfont`
+- `@namehash/ui`
+  - These components are mostly internal and not intended for public use, but they are used across our packages.
 
-8. **ENSIP-15**: Checks if the name is normalized according to ENSIP-15. Example: [`bitсoin.eth`](https://nameguard.io/inspect/bitсoin.eth)
+## Tailwind Configuration
 
-9. **Punycode**: Checks if the name is compatible with Punycode encoding. Example: [`ab--abc.eth`](https://www.nameguard.io/inspect/ab--abc.eth)
+When configuring Tailwind CSS for use with this project, please note the following:
 
-10. **Unknown Labels**: Checks if the name contains unknown labels. Example: [`[5bc926fc40cc7c49e0df6dddf26e4dc7b9d6d32f4a55d4f0670320dbf414afd2].byongdok.eth`](https://nameguard.io/inspect/[5bc926fc40cc7c49e0df6dddf26e4dc7b9d6d32f4a55d4f0670320dbf414afd2].byongdok.eth)
-
-11. **Decentralized Name**: Checks if the name is decentralized (unruggable). Example: [`example.com`](https://www.nameguard.io/inspect/example.com)
-
-13. **NameWrapper fuses**: Checks that the NameWrapper configuration of a name is safe.
+If you're using the `@tailwindcss/forms` plugin in your `tailwind.config.ts`, you may encounter some styling conflicts with our components. To resolve this, you should use the plugin with the class strategy applied. Here's an example of how to configure it: https://github.com/tailwindlabs/tailwindcss-forms?tab=readme-ov-file#using-only-global-styles-or-only-classes

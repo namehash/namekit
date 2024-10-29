@@ -1,18 +1,19 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env"],
-  "pipeline": {
+  "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["!.next/cache/**", ".next/**", "dist/**"]
-    },
-    "lint": {
-      "dependsOn": ["^build", "build"]
+      "outputs": [
+        "!.next/cache/**",
+        ".next/**",
+        "dist/**",
+        "storybook-static/**"
+      ]
     },
     "dev": {
       "cache": false,
       "persistent": true
-    },
-    "prettier-check": {}
+    }
   }
 }

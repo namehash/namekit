@@ -1,9 +1,11 @@
+import cc from "classcat";
 import React, { Fragment } from "react";
-import { ShieldExclamationIcon } from "@heroicons/react/20/solid";
-
-import { NoGraphemesWarning } from "./NoGraphemesWarning";
 import { GraphemeList } from "./GraphemeList";
-import { NameGuardReport } from "@namehash/nameguard";
+import { NoGraphemesWarning } from "./NoGraphemesWarning";
+import { CheckResultCode, NameGuardReport, Rating } from "@namehash/nameguard";
+import { Normalization } from "@namehash/ens-utils";
+import { checkResultCodeTextColor } from "../../utils/text";
+import { RatingIcon } from "./RatingIcon";
 
 type LabelListItemProps = {
   item: NameGuardReport["labels"][0];
@@ -16,7 +18,7 @@ export const LabelListItem = ({
   rawLabels,
   index,
 }: LabelListItemProps) => {
-  const unknown = item.normalization === "unknown";
+  const unknown = item.normalization === Normalization.Unknown;
   const empty = item.label === "";
 
   return (
@@ -40,12 +42,17 @@ export const LabelListItem = ({
             </Fragment>
           ))}
         </div>
-        {(item.normalization === "unnormalized" ||
-          item.normalization === "unknown") && (
+        {(item.normalization === Normalization.Unnormalized ||
+          item.normalization === Normalization.Unknown) && (
           <div className="flex items-center space-x-2">
-            <ShieldExclamationIcon className="w-4 h-4 text-red-600 fill-current" />
-            <span className="text-red-600 text-sm">
-              {item.normalization === "unnormalized"
+            <RatingIcon rating={Rating.alert} />
+            <span
+              className={cc([
+                "text-sm",
+                checkResultCodeTextColor(CheckResultCode.alert),
+              ])}
+            >
+              {item.normalization === Normalization.Unnormalized
                 ? "Not ENS Normalized"
                 : "Not found"}
             </span>

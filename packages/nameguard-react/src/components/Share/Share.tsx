@@ -8,7 +8,14 @@ import {
 
 import { toast } from "sonner";
 
-import { Tooltip } from "../Tooltip/Tooltip";
+import { IconButton } from "@namehash/namekit-react";
+
+import cc from "classcat";
+import { Tooltip } from "@namehash/namekit-react/client";
+import { CheckResultCode } from "@namehash/nameguard";
+import { checkResultCodeTextColor } from "../../utils/text";
+import { DisplayedName } from "../DisplayedName/DisplayedName";
+import { buildENSName } from "@namehash/ens-utils";
 
 type ShareProps = {
   name?: string;
@@ -19,7 +26,7 @@ function createTwitterLink(name: string) {
   const url = `https://nameguard.io/inspect/${encodeURIComponent(name)}`;
 
   return `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-    tweetText
+    tweetText,
   )}&url=${encodeURIComponent(url)}`;
 }
 
@@ -41,18 +48,25 @@ export function Share({ name }: ShareProps) {
 
   const twitterLink = createTwitterLink(name);
   const telegramLink = createTelegramLink(
-    `https://nameguard.io/inspect/${encodeURIComponent(name)}`
+    `https://nameguard.io/inspect/${encodeURIComponent(name)}`,
   );
   const emailLink = createMailToLink(
     `NameGuard Report for ${name}`,
-    `Check this out!\nhttps://nameguard.io/inspect/${encodeURIComponent(name)}`
+    `Check this out!\nhttps://nameguard.io/inspect/${encodeURIComponent(name)}`,
   );
   const copyLinkToClipboard = () => {
     navigator.clipboard.writeText(
-      `https://nameguard.io/inspect/${encodeURIComponent(name)}`
+      `https://nameguard.io/inspect/${encodeURIComponent(name)}`,
     );
     toast.success("Link copied to clipboard", {
-      icon: <CheckCircleIcon className="text-emerald-600 w-5 h-5" />,
+      icon: (
+        <CheckCircleIcon
+          className={cc([
+            "w-5 h-5",
+            checkResultCodeTextColor(CheckResultCode.pass),
+          ])}
+        />
+      ),
     });
     closeModal();
   };
@@ -63,15 +77,10 @@ export function Share({ name }: ShareProps) {
     <Fragment>
       <Tooltip
         trigger={
-          <button
-            className="flex items-center justify-between p-2 appearance-none bg-transparent hover:bg-black/5 transition rounded-md focus:outline-none"
-            onClick={() => setIsOpen(true)}
-          >
+          <IconButton variant="ghost" onClick={() => setIsOpen(true)}>
             <ArrowUpTrayIcon className="text-black fill-current w-6 h-6" />
-            <span className="font-medium ml-1.5 text-sm hidden md:inline-block">
-              Share
-            </span>
-          </button>
+            Share
+          </IconButton>
         }
       >
         Share report
@@ -110,20 +119,24 @@ export function Share({ name }: ShareProps) {
                       Share NameGuard report
                     </Dialog.Title>
                     <div className="flex items-center right-0 inset-y-0 absolute pr-6 z-20">
-                      <button
+                      <IconButton
                         onClick={() => setIsOpen(false)}
-                        className="flex items-center justify-between p-2 -mr-3 appearance-none bg-transparent hover:bg-black/5 transition rounded-md"
+                        variant="ghost"
+                        className="!p-2"
                       >
                         <XMarkIcon className="w-6 h-6 fill-current text-gray-400" />
-                      </button>
+                      </IconButton>
                     </div>
                   </div>
 
                   <div className="min-h-[200px] flex items-center justify-center px-6 md:px-10">
                     {name && (
-                      <p className="font-extrabold text-black text-xl text-ellipsis overflow-hidden line-clamp-1 ens-webfont">
-                        {name}
-                      </p>
+                      <>
+                        <DisplayedName
+                          name={buildENSName(name)}
+                          textStylingClasses="font-extrabold text-black text-xl"
+                        />
+                      </>
                     )}
                   </div>
 

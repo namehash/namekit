@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import { Button, IconButton } from "@namehash/namekit-react";
 
 import { useSettingsStore, type Settings } from "../../stores/settings";
 
@@ -51,12 +52,13 @@ export const SettingsModal = () => {
                     Search settings
                   </Dialog.Title>
                   <div className="flex items-center right-0 inset-y-0 absolute pr-6 z-20">
-                    <button
+                    <IconButton
                       onClick={closeModal}
-                      className="flex items-center justify-between p-2 -mr-3 appearance-none bg-transparent hover:bg-black/5 transition rounded-md"
+                      variant="ghost"
+                      className="!p-2"
                     >
                       <XMarkIcon className="w-6 h-6 fill-current text-black md:text-gray-400" />
-                    </button>
+                    </IconButton>
                   </div>
                 </div>
 
@@ -76,7 +78,7 @@ export const SettingsModal = () => {
                             aria-describedby="attempt-ens-normalization-description"
                             name="attempt-ens-normalization"
                             type="checkbox"
-                            className="h-4 w-4 rounded border-black text-black focus:ring-black"
+                            className="form-checkbox ng-h-4 ng-w-4 ng-rounded ng-border-black ng-text-black !ring-black"
                             checked={localSettings.attemptEnsNormalization}
                             onChange={(e) =>
                               setLocalSettings((prev) => ({
@@ -111,7 +113,7 @@ export const SettingsModal = () => {
                             aria-describedby="assume-tld-description"
                             name="assume-tld"
                             type="checkbox"
-                            className="h-4 w-4 rounded border-black text-black focus:ring-black"
+                            className="form-checkbox ng-h-4 ng-w-4 ng-rounded ng-border-black ng-text-black !ring-black"
                             checked={localSettings.assumedTld === "eth"}
                             onChange={(e) =>
                               setLocalSettings((prev) => ({
@@ -145,7 +147,7 @@ export const SettingsModal = () => {
                             aria-describedby="trim-whitespace-description"
                             name="trim-whitespace"
                             type="checkbox"
-                            className="h-4 w-4 rounded border-black text-black focus:ring-black"
+                            className="form-checkbox ng-h-4 ng-w-4 ng-rounded ng-border-black ng-text-black !ring-black"
                             checked={localSettings.trimWhitespace}
                             onChange={(e) =>
                               setLocalSettings((prev) => ({
@@ -175,18 +177,12 @@ export const SettingsModal = () => {
                   </fieldset>
 
                   <div className="flex items-center justify-end space-x-3 mt-8 pb-6">
-                    <button
-                      className="rounded-md text-sm bg-white shadow-sm border border-gray-300 text-black px-4 py-1.5 font-medium leading-6 transition hover:bg-gray-50"
-                      onClick={closeModal}
-                    >
+                    <Button variant="secondary" onClick={closeModal}>
                       Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      className="rounded-md text-sm bg-black border border-black text-white px-4 py-1.5 font-medium leading-6 transition hover:bg-gray-900"
-                    >
+                    </Button>
+                    <Button type="submit" onClick={closeModal}>
                       Save
-                    </button>
+                    </Button>
                   </div>
                 </form>
               </Dialog.Panel>

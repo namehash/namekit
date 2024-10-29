@@ -1,0 +1,67 @@
+{
+  "name": "@namehash/namekit-react",
+  "description": "React UI components for building on NameKit.",
+  "version": "0.8.0",
+  "license": "MIT",
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/namehash/namekit.git",
+    "directory": "packages/namekit-react"
+  },
+  "homepage": "https://github.com/namehash/namekit/tree/main/packages/namekit-react",
+  "keywords": [
+    "ENS",
+    "NameKit",
+    "NameHash"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "sideEffects": false,
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "styles": "./dist/index.css",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs.js"
+    },
+    "./client": {
+      "import": "./dist/client.mjs",
+      "require": "./dist/client.cjs.js"
+    },
+    "./styles.css": {
+      "import": "./dist/index.css",
+      "default": "./dist/index.css"
+    }
+  },
+  "dependencies": {
+    "@headlessui-float/react": "0.11.4",
+    "@headlessui/react": "1.7.17",
+    "@namehash/ens-utils": "workspace:*",
+    "@namehash/ens-webfont": "workspace:*",
+    "classcat": "5.0.5"
+  },
+  "devDependencies": {
+    "@namekit/tsconfig": "workspace:*",
+    "@types/react": "18.3.11",
+    "@types/react-dom": "18.3.0",
+    "autoprefixer": "10.4.20",
+    "postcss": "8.4.47",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "tailwindcss": "3.4.13",
+    "tsup": "8.3.0",
+    "typescript": "5.6.2"
+  },
+  "peerDependencies": {
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

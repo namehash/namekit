@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@namekit/tsconfig/base.json",
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ES2020"
+  }
+}

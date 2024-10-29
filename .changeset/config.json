@@ -1,16 +1,19 @@
 {
-  "$schema": "https://unpkg.com/@changesets/config@2.2.0/schema.json",
+  "$schema": "https://unpkg.com/@changesets/config@3.0.0/schema.json",
   "changelog": "@changesets/cli/changelog",
   "commit": false,
   "fixed": [],
-  "linked": [
-    ["@namehash/nameguard", "@namehash/nameguard-react", "@namehash/nameparser"]
-  ],
+  "linked": [],
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": [],
-  "snapshot": {
-    "useCalculatedVersion": true
-  }
+  "ignore": [
+    "nameguard.io",
+    "storybook.namekit.io",
+    "examples.nameguard.io",
+    "namehashlabs.org",
+    "nameguard-api",
+    "@namehash/seo",
+    "@namehash/internal"
+  ]
 }

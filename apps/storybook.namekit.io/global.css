@@ -1,0 +1,10 @@
+.custom-class-name {
+  color: red;
+  background: white;
+}
+
+.colorful-text {
+  font-weight: 700;
+  text-decoration: underline;
+  color: lightgreen;
+}
