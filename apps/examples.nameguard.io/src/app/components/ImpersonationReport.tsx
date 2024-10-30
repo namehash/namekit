@@ -7,9 +7,8 @@ import {
   RatingLoadingIcon,
   ratingTextColor,
 } from "@namehash/nameguard-react";
+import { Tooltip } from "@namehash/namekit-react/client";
 import cc from "classcat";
-
-import { Tooltip } from "./Tooltip";
 
 type ImpersonationReportProps = {
   data?: SecurePrimaryNameResult;
