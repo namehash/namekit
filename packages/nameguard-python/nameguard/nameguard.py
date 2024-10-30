@@ -10,7 +10,7 @@ from ens_normalize import is_ens_normalized, ens_cure, DisallowedSequence, ens_p
 import requests
 from label_inspector.inspector import Inspector
 from label_inspector.config import initialize_inspector_config
-from label_inspector.models import InspectorConfusableGraphemeResult
+from label_inspector.models import InspectorConfusableGraphemeResult, InspectorResult
 from web3 import HTTPProvider
 from web3.exceptions import ContractLogicError
 from dotenv import load_dotenv
@@ -182,7 +182,7 @@ class NameGuard:
         # optimization
         self.eth_label = self._inspector.analyse_label('eth', simple_confusables=True, omit_cure=True)
 
-    def analyse_label(self, label: str):
+    def analyse_label(self, label: str) -> InspectorResult:
         if label == 'eth':
             return self.eth_label
         return self._inspector.analyse_label(label, simple_confusables=True, omit_cure=True)
@@ -270,6 +270,9 @@ class NameGuard:
         name_checks = agg_checks(name_checks)
 
         # -- DNA checks --
+
+        # After the aggregation of all previous checks, run the Do-Not-Aggregate checks.
+        # These checks are run on every entity (grapheme/label/name) separately.
 
         for check_g, check_l, check_n in DNA_CHECKS:
             for label_i, label_analysis in enumerate(labels_analysis):
