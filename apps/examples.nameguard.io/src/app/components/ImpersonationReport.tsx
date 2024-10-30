@@ -7,9 +7,8 @@ import {
   RatingLoadingIcon,
   ratingTextColor,
 } from "@namehash/nameguard-react";
+import { Tooltip } from "@namehash/namekit-react/client";
 import cc from "classcat";
-
-import { Tooltip } from "./Tooltip";
 
 type ImpersonationReportProps = {
   data?: SecurePrimaryNameResult;
@@ -18,8 +17,8 @@ type ImpersonationReportProps = {
 export function ImpersonationReport({ data }: ImpersonationReportProps) {
   if (
     !data ||
-    data?.impersonation_status === null ||
-    data?.impersonation_status === "unlikely"
+    data?.impersonation_estimate === null ||
+    data?.impersonation_estimate === "unlikely"
   )
     return null;
 
