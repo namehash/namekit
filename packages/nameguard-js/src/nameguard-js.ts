@@ -5,9 +5,9 @@ import {
   SecurePrimaryNameResult,
   NameGuardOptions,
   DEFAULT_COMPUTE_NAMEGUARD_REPORT,
-  Network,
 } from "@namehash/nameguard";
 import { securePrimaryName as securePrimaryNameImpl } from "./securePrimaryName";
+import { initializeData } from "./data";
 
 export interface NameGuardJSOptions extends NameGuardOptions {
   publicClient: PublicClient;
@@ -34,6 +34,9 @@ class NameGuardJS extends NameGuard {
     } else if (this.network !== "mainnet" && this.network !== "sepolia") {
       throw new Error(`Unsupported network: ${this.network}.`);
     }
+
+    // This class is the only public interface to the data, so we initialize it here.
+    initializeData();
   }
 
   public override getSecurePrimaryName(

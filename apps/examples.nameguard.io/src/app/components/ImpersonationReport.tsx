@@ -17,8 +17,8 @@ type ImpersonationReportProps = {
 export function ImpersonationReport({ data }: ImpersonationReportProps) {
   if (
     !data ||
-    data?.impersonation_status === null ||
-    data?.impersonation_status === "unlikely"
+    data?.impersonation_estimate === null ||
+    data?.impersonation_estimate === "unlikely"
   )
     return null;
 

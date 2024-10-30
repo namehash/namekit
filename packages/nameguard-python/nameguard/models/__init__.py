@@ -24,7 +24,7 @@ from .result import (
     SecurePrimaryNameStatus,
     FakeEthNameCheckStatus,
     FakeEthNameCheckResult,
-    ImpersonationStatus,
+    ImpersonationEstimate,
     ConfusableGuardReport,
 )
 
