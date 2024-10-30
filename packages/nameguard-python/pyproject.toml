@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nameguard"
-version = "0.1.8"
+version = "0.1.9"
 description = "Security \"x-ray\" for ENS names"
 authors = ["NameHash Team <devops@namehash.io>"]
 maintainers = ["NameHash Team <devops@namehash.io>"]
@@ -13,8 +13,8 @@ packages = [{ include = "nameguard" }]
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.13"
-ens-label-inspector = "^0.2.11"
-fastapi = "^0.114.2"
+ens-label-inspector = "^0.2.12"
+fastapi = "^0.115.4"
 mangum = { version = "^0.17.0", optional = true }
 web3 = "6.11.1"
 eth-typing = "^4.4.0"
