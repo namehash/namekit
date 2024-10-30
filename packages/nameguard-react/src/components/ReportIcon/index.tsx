@@ -102,7 +102,7 @@ export function ReportIcon({
 
   const { title, subtitle, rating, risk_count, highest_risk } = data;
 
-  const textClass = cc(["font-semibold mb-1", ratingTextColor(rating)]);
+  const textClass = cc(["font-semibold", ratingTextColor(rating)]);
 
   return (
     <Tooltip
@@ -124,7 +124,7 @@ export function ReportIcon({
         </div>
 
         <div className="flex-1">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mb-1">
             <span className={textClass}>{title}</span>
             {risk_count >= 1 && (
               <span
