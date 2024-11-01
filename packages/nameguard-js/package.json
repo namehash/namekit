@@ -39,7 +39,7 @@
   "devDependencies": {
     "@namekit/tsconfig": "workspace:*",
     "@types/node": "22.7.4",
-    "tsup": "8.3.0",
+    "tsup": "8.3.5",
     "typescript": "5.6.2",
     "vitest": "2.1.2"
   },
