@@ -10,9 +10,34 @@ import {
   Network,
   type SecurePrimaryNameResult,
 } from "@namehash/nameguard";
+import cc from "classcat";
+
+export interface ProfileLinkConfig {
+  getProfileURL: (address: string) => string;
+  getProfileLink: (address: string, children: ReactNode) => JSX.Element;
+}
+
+interface NameKitConfig {
+  profileLinks?: ProfileLinkConfig;
+}
+
+const NameKitConfigContext = createContext<NameKitConfig>({});
+
+export const NameKitProvider: React.FC<{
+  children: React.ReactNode;
+  config: NameKitConfig;
+}> = ({ children, config }) => {
+  return (
+    <NameKitConfigContext.Provider value={config}>
+      {children}
+    </NameKitConfigContext.Provider>
+  );
+};
+
+export const useNameKitConfig = () => useContext(NameKitConfigContext);
 
 interface IdentityContextType {
-  network: string;
+  network: Network;
   address: string;
   returnNameGuardReport: boolean;
   loadingState: "loading" | "error" | "success";
@@ -243,42 +268,40 @@ const Followers = ({ className, ...props }: SubComponentProps) => {
   );
 };
 
-const ENSLogo = () => (
-  <svg
-    fill="none"
-    height="16"
-    viewBox="0 0 202 231"
-    width="14"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <g fill="#0080bc">
-      <path d="m98.3592 2.80337-63.5239 104.52363c-.4982.82-1.6556.911-2.2736.178-5.5924-6.641-26.42692-34.89-.6463-60.6377 23.5249-23.4947 53.4891-40.24601 64.5942-46.035595 1.2599-.656858 2.587.758365 1.8496 1.971665z" />
-      <path d="m94.8459 230.385c1.2678.888 2.8299-.626 1.9802-1.918-14.1887-21.581-61.3548-93.386-67.8702-104.165-6.4264-10.632-19.06614-28.301-20.12056-43.4178-.10524-1.5091-2.19202-1.8155-2.71696-.3963-.8466 2.2888-1.74793 5.0206-2.58796 8.1413-10.60469 39.3938 4.79656 81.1968 38.24488 104.6088l53.0706 37.148z" />
-      <path d="m103.571 228.526 63.524-104.523c.498-.82 1.656-.911 2.274-.178 5.592 6.64 26.427 34.89.646 60.638-23.525 23.494-53.489 40.246-64.594 46.035-1.26.657-2.587-.758-1.85-1.972z" />
-      <path d="m107.154.930762c-1.268-.8873666-2.83.625938-1.98 1.918258 14.189 21.58108 61.355 93.38638 67.87 104.16498 6.427 10.632 19.066 28.301 20.121 43.418.105 1.509 2.192 1.815 2.717.396.846-2.289 1.748-5.02 2.588-8.141 10.604-39.394-4.797-81.1965-38.245-104.609z" />
-    </g>
-  </svg>
-);
+interface ProfileLinkProps extends SubComponentProps {
+  config?: ProfileLinkConfig;
+}
 
-const ENSProfileLink = ({ className, ...props }: SubComponentProps) => {
-  const { identityData, loadingState } = useIdentity();
+const ProfileLink = ({
+  className,
+  children,
+  config: instanceConfig,
+  ...props
+}: ProfileLinkProps) => {
+  const { loadingState, address } = useIdentity();
+  const globalConfig = useNameKitConfig();
 
-  if (loadingState !== "success" || !identityData?.display_name) {
+  if (loadingState !== "success") {
     return null;
   }
 
-  return (
-    <a
-      href={`https://app.ens.domains/${identityData.display_name}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`namekit-ens-profile-link ${className}`}
-      {...props}
-    >
-      <ENSLogo />
-      <span className="nk-ml-1">ENS Profile</span>
-    </a>
-  );
+  const config = instanceConfig ||
+    globalConfig.profileLinks || {
+      getProfileURL: (address) => `https://app.ens.domains/${address}`,
+      getProfileLink: (address, children) => (
+        <a
+          href={`https://app.ens.domains/${address}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={cc(["namekit-profile-link", className])}
+          {...props}
+        >
+          {children}
+        </a>
+      ),
+    };
+
+  return config.getProfileLink(address, children);
 };
 
 export const Identity = {
@@ -287,6 +310,6 @@ export const Identity = {
   Name,
   Address,
   NameGuardShield,
-  ENSProfileLink,
+  ProfileLink,
   Followers,
 };
