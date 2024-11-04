@@ -78,7 +78,6 @@ interface CurrencySymbolProps extends React.ComponentProps<React.ElementType> {
 }
 
 /**
- *
  * @param currency: Currency. The currency to get the Icon for (e.g. Currency.Eth)
  * @param iconSize: CurrencyIconSize. The Icon size (width and height), in pixels.
  * @param className: string. The classes to apply to the Icon.
