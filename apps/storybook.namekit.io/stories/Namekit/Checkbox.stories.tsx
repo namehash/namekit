@@ -19,6 +19,20 @@ type Story = StoryObj<typeof Checkbox>;
 
 export const Default: Story = {};
 
+export const EnabledUnchecked: Story = {
+  args: {
+    checked: false,
+    disabled: false,
+  },
+};
+
+export const EnabledChecked: Story = {
+  args: {
+    checked: true,
+    disabled: false,
+  },
+};
+
 export const Disabled: Story = {
   args: {
     disabled: true,
