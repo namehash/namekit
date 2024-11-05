@@ -71,102 +71,50 @@ export const SettingsModal = () => {
                       Adjust these settings based on your preferences.
                     </legend>
                     <div className="space-y-4">
-                      <div className="relative flex items-start">
-                        <div className="flex h-6 items-center">
-                          <Checkbox
-                            id="attempt-ens-normalization"
-                            aria-describedby="attempt-ens-normalization-description"
-                            name="attempt-ens-normalization"
-                            checked={localSettings.attemptEnsNormalization}
-                            onChange={(e) =>
-                              setLocalSettings((prev) => ({
-                                ...prev,
-                                attemptEnsNormalization: e.target.checked,
-                              }))
-                            }
-                          />
-                        </div>
-                        <div className="ml-3 text-sm leading-6">
-                          <label
-                            htmlFor="attempt-ens-normalization"
-                            className="font-medium text-gray-900"
-                          >
-                            Attempt normalization
-                          </label>
-                          <p
-                            id="attempt-ens-normalization-description"
-                            className="text-gray-500 text-sm leading-5"
-                          >
-                            Attempt ENS Normalization before inspecting search
-                            queries. If normalization fails the raw search query
-                            will be inspected instead.
-                          </p>
-                        </div>
-                      </div>
+                      <Checkbox
+                        id="attempt-ens-normalization"
+                        aria-describedby="attempt-ens-normalization-description"
+                        name="attempt-ens-normalization"
+                        checked={localSettings.attemptEnsNormalization}
+                        label="Attempt normalization"
+                        description="Attempt ENS Normalization before inspecting search queries. If normalization fails the raw search query will be inspected instead."
+                        onChange={(e) =>
+                          setLocalSettings((prev) => ({
+                            ...prev,
+                            attemptEnsNormalization: e.target.checked,
+                          }))
+                        }
+                      />
 
-                      <div className="relative flex items-start">
-                        <div className="flex h-6 items-center">
-                          <Checkbox
-                            id="assume-tld"
-                            aria-describedby="assume-tld-description"
-                            name="assume-tld"
-                            checked={localSettings.assumedTld === "eth"}
-                            onChange={(e) =>
-                              setLocalSettings((prev) => ({
-                                ...prev,
-                                assumedTld: e.target.checked ? "eth" : null,
-                              }))
-                            }
-                          />
-                        </div>
-                        <div className="ml-3 text-sm leading-6">
-                          <label
-                            htmlFor="assume-tld"
-                            className="font-medium text-gray-900"
-                          >
-                            Assume &quot;.eth&quot;
-                          </label>
-                          <p
-                            id="assume-tld-description"
-                            className="text-gray-500 text-sm leading-5"
-                          >
-                            Automatically adds “.eth” as an assumed top-level
-                            name.
-                          </p>
-                        </div>
-                      </div>
+                      <Checkbox
+                        id="assume-tld"
+                        aria-describedby="assume-tld-description"
+                        name="assume-tld"
+                        checked={localSettings.assumedTld === "eth"}
+                        label='Assume ".eth"'
+                        description="Automatically adds “.eth” as an assumed top-level name."
+                        onChange={(e) =>
+                          setLocalSettings((prev) => ({
+                            ...prev,
+                            assumedTld: e.target.checked ? "eth" : null,
+                          }))
+                        }
+                      />
 
-                      <div className="relative flex items-start">
-                        <div className="flex h-6 items-center">
-                          <Checkbox
-                            id="trim-whitespace"
-                            aria-describedby="trim-whitespace-description"
-                            name="trim-whitespace"
-                            checked={localSettings.trimWhitespace}
-                            onChange={(e) =>
-                              setLocalSettings((prev) => ({
-                                ...prev,
-                                trimWhitespace: e.target.checked,
-                              }))
-                            }
-                          />
-                        </div>
-                        <div className="ml-3 text-sm leading-6">
-                          <label
-                            htmlFor="trim-whitespace"
-                            className="font-medium text-gray-900"
-                          >
-                            Trim whitespace
-                          </label>
-                          <p
-                            id="trim-whitespace-description"
-                            className="text-gray-500 text-sm leading-5"
-                          >
-                            Remove any leading or trailing whitespace characters
-                            before performing inspection.
-                          </p>
-                        </div>
-                      </div>
+                      <Checkbox
+                        id="trim-whitespace"
+                        aria-describedby="trim-whitespace-description"
+                        name="trim-whitespace"
+                        checked={localSettings.trimWhitespace}
+                        label="Trim whitespace"
+                        description="Remove any leading or trailing whitespace characters before performing inspection."
+                        onChange={(e) =>
+                          setLocalSettings((prev) => ({
+                            ...prev,
+                            trimWhitespace: e.target.checked,
+                          }))
+                        }
+                      />
                     </div>
                   </fieldset>
 
