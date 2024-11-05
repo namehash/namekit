@@ -76,55 +76,70 @@ export const SettingsModal = () => {
                         aria-describedby="attempt-ens-normalization-description"
                         name="attempt-ens-normalization"
                         checked={localSettings.attemptEnsNormalization}
-                        label="Attempt normalization"
-                        description="Attempt ENS Normalization before inspecting search queries. If normalization fails the raw search query will be inspected instead."
                         onChange={(e) =>
                           setLocalSettings((prev) => ({
                             ...prev,
                             attemptEnsNormalization: e.target.checked,
                           }))
                         }
-                      />
+                      >
+                        <p>Attempt normalization</p>
+                        <p className="nk-text-gray-500 nk-text-sm nk-leading-5">
+                          Attempt ENS Normalization before inspecting search
+                          queries. If normalization fails the raw search query
+                          will be inspected instead.
+                        </p>
+                      </Checkbox>
 
                       <Checkbox
                         id="assume-tld"
                         aria-describedby="assume-tld-description"
                         name="assume-tld"
                         checked={localSettings.assumedTld === "eth"}
-                        label='Assume ".eth"'
-                        description="Automatically adds “.eth” as an assumed top-level name."
                         onChange={(e) =>
                           setLocalSettings((prev) => ({
                             ...prev,
                             assumedTld: e.target.checked ? "eth" : null,
                           }))
                         }
-                      />
+                      >
+                        <p>Assume ".eth"</p>
+                        <p className="nk-text-gray-500 nk-text-sm nk-leading-5">
+                          Automatically adds “.eth” as an assumed top-level
+                          name.
+                        </p>
+                      </Checkbox>
 
                       <Checkbox
                         id="trim-whitespace"
                         aria-describedby="trim-whitespace-description"
                         name="trim-whitespace"
                         checked={localSettings.trimWhitespace}
-                        label="Trim whitespace"
-                        description="Remove any leading or trailing whitespace characters before performing inspection."
                         onChange={(e) =>
                           setLocalSettings((prev) => ({
                             ...prev,
                             trimWhitespace: e.target.checked,
                           }))
                         }
-                      />
+                      >
+                        <p>Trim whitespace</p>
+                        <p className="nk-text-gray-500 nk-text-sm nk-leading-5">
+                          Remove any leading or trailing whitespace characters
+                          before performing inspection.
+                        </p>
+                      </Checkbox>
                     </div>
                   </fieldset>
 
                   <div className="flex items-center justify-end space-x-3 mt-8 pb-6">
-                    <Button variant="secondary" onClick={closeModal}>
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      onClick={closeModal}
+                    >
                       Cancel
                     </Button>
-                    <Button type="submit" onClick={closeModal}>
-                      Save
-                    </Button>
+                    <Button type="submit">Save</Button>
                   </div>
                 </form>
               </Dialog.Panel>

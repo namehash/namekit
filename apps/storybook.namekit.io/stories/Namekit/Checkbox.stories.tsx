@@ -9,8 +9,6 @@ const meta: Meta<typeof Checkbox> = {
     disabled: { control: "boolean" },
     checked: { control: "boolean" },
     className: { control: "text" },
-    label: { control: "text" },
-    description: { control: "text" },
     id: { control: "text" },
   },
 };
@@ -42,8 +40,7 @@ export const WithClassName: Story = {
 
 export const WithLabel: Story = {
   args: {
-    label: "Checkbox",
-    description: "This is a checkbox",
+    children: "Checkbox",
     id: "checkbox-1",
     disabled: true,
   },
