@@ -7,6 +7,11 @@ const meta: Meta<typeof Checkbox> = {
   component: Checkbox,
   argTypes: {
     disabled: { control: "boolean" },
+    checked: { control: "boolean" },
+    className: { control: "text" },
+    label: { control: "text" },
+    description: { control: "text" },
+    id: { control: "text" },
   },
 };
 
@@ -25,6 +30,21 @@ export const Disabled: Story = {
 export const DisabledChecked: Story = {
   args: {
     checked: true,
+    disabled: true,
+  },
+};
+
+export const WithClassName: Story = {
+  args: {
+    className: "bg-red-500",
+  },
+};
+
+export const WithLabel: Story = {
+  args: {
+    label: "Checkbox",
+    description: "This is a checkbox",
+    id: "checkbox-1",
     disabled: true,
   },
 };
