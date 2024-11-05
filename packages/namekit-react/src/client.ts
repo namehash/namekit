@@ -15,4 +15,8 @@ export {
 } from "./components/CurrencySymbol/CurrencySymbol";
 export { TruncatedText } from "./components/TruncatedText";
 
-export { Identity, NameKitProvider } from "./components/Identity";
+export {
+  Identity,
+  NameKitProvider,
+  ProfileLinkGenerator,
+} from "./components/Identity";

@@ -12,21 +12,46 @@ import {
 } from "@namehash/nameguard";
 import cc from "classcat";
 
-export interface ProfileLinkConfig {
-  getProfileURL: (address: string) => string;
-  getProfileLink: (address: string, children: ReactNode) => JSX.Element;
+export class ProfileLinkGenerator {
+  private baseURL: string;
+  private name: string;
+
+  constructor(name: string, baseURL: string) {
+    this.name = name;
+    this.baseURL = baseURL;
+  }
+
+  getName(): string {
+    return this.name;
+  }
+
+  getProfileURL(address: string): string {
+    return `${this.baseURL}${address}`;
+  }
 }
 
+export const ENSProfileLink = new ProfileLinkGenerator(
+  "ENS",
+  "https://app.ens.domains/",
+);
+
+const DEFAULT_PROFILE_LINKS = [ENSProfileLink];
+
 interface NameKitConfig {
-  profileLinks?: ProfileLinkConfig;
+  profileLinks?: ProfileLinkGenerator[];
 }
 
 const NameKitConfigContext = createContext<NameKitConfig>({});
 
-export const NameKitProvider: React.FC<{
+interface NameKitProviderProps {
   children: React.ReactNode;
   config: NameKitConfig;
-}> = ({ children, config }) => {
+}
+
+export const NameKitProvider: React.FC<NameKitProviderProps> = ({
+  children,
+  config,
+}) => {
   return (
     <NameKitConfigContext.Provider value={config}>
       {children}
@@ -268,40 +293,69 @@ const Followers = ({ className, ...props }: SubComponentProps) => {
   );
 };
 
-interface ProfileLinkProps extends SubComponentProps {
-  config?: ProfileLinkConfig;
+interface ProfileLinkProps {
+  config?: ProfileLinkGenerator;
+  className?: string;
+  children?: React.ReactNode;
+  onClick?: (e: React.MouseEvent) => void;
 }
 
-const ProfileLink = ({
-  className,
+const ProfileLink: React.FC<ProfileLinkProps> = ({
+  config,
   children,
-  config: instanceConfig,
-  ...props
-}: ProfileLinkProps) => {
-  const { loadingState, address } = useIdentity();
-  const globalConfig = useNameKitConfig();
+  onClick,
+}) => {
+  const identity = useIdentity();
+  const nameKitConfig = useNameKitConfig();
 
-  if (loadingState !== "success") {
+  const linkConfig =
+    config || nameKitConfig.profileLinks?.[0] || DEFAULT_PROFILE_LINKS[0];
+
+  if (!identity) {
+    console.warn("ProfileLink used outside of Identity context");
     return null;
   }
 
-  const config = instanceConfig ||
-    globalConfig.profileLinks || {
-      getProfileURL: (address) => `https://app.ens.domains/${address}`,
-      getProfileLink: (address, children) => (
-        <a
-          href={`https://app.ens.domains/${address}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={cc(["namekit-profile-link", className])}
-          {...props}
-        >
-          {children}
-        </a>
-      ),
-    };
+  const url = linkConfig.getProfileURL(identity.address);
 
-  return config.getProfileLink(address, children);
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="namekit-profile-link"
+      onClick={onClick}
+    >
+      {children || linkConfig.getName()}
+    </a>
+  );
+};
+
+interface ProfileLinksProps {
+  configs?: ProfileLinkGenerator[];
+  className?: string;
+}
+
+const ProfileLinks: React.FC<ProfileLinksProps> = ({ configs, className }) => {
+  const identity = useIdentity();
+  const { profileLinks: globalConfigs } = useNameKitConfig();
+
+  const linksToRender = configs || globalConfigs || DEFAULT_PROFILE_LINKS;
+
+  if (!identity) {
+    console.warn("ProfileLinks used outside of Identity context");
+    return null;
+  }
+
+  return (
+    <div className={cc(["namekit-profile-links", className])}>
+      {linksToRender.map((config) => (
+        <ProfileLink key={config.getName()} config={config}>
+          {config.getName()}
+        </ProfileLink>
+      ))}
+    </div>
+  );
 };
 
 export const Identity = {
@@ -311,5 +365,6 @@ export const Identity = {
   Address,
   NameGuardShield,
   ProfileLink,
+  ProfileLinks,
   Followers,
 };

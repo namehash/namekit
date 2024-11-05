@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useRef } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
-import { Identity, NameKitProvider } from "@namehash/namekit-react/client";
+import {
+  Identity,
+  NameKitProvider,
+  ProfileLinkGenerator,
+} from "@namehash/namekit-react/client";
 
 const meta: Meta<typeof Identity.Root> = {
   title: "Namekit/Identity",
@@ -20,6 +24,15 @@ const meta: Meta<typeof Identity.Root> = {
 export default meta;
 
 type Story = StoryObj<typeof Identity.Root>;
+
+const TwitterProfileLink = new ProfileLinkGenerator(
+  "Twitter",
+  "https://twitter.com/",
+);
+const GitHubProfileLink = new ProfileLinkGenerator(
+  "GitHub",
+  "https://github.com/",
+);
 
 const DefaultIdentityCard: React.FC<{
   address: string;
@@ -45,17 +58,10 @@ const DefaultIdentityCard: React.FC<{
   </Identity.Root>
 );
 
-const customAppConfig = {
-  profileLinks: {
-    getProfileURL: (address: string) => `/profiles/${address}`,
-    getProfileLink: (address: string, children: React.ReactNode) => (
-      <a href={`/profiles/${address}`}>{children}</a>
-    ),
-  },
-};
-
 const CustomAppIdentityCard: React.FC<{ address: string }> = ({ address }) => (
-  <NameKitProvider config={customAppConfig}>
+  <NameKitProvider
+    config={{ profileLinks: [TwitterProfileLink, GitHubProfileLink] }}
+  >
     <Identity.Root address={address}>
       <Identity.Avatar />
       <Identity.Name />
@@ -66,36 +72,35 @@ const CustomAppIdentityCard: React.FC<{ address: string }> = ({ address }) => (
   </NameKitProvider>
 );
 
-const modalConfig = {
-  profileLinks: {
-    getProfileURL: (address: string) => `#${address}`,
-    getProfileLink: (address: string, children: React.ReactNode) => (
-      <button
-        onClick={(e) => {
-          e.preventDefault();
-          alert(`Would open modal for ${address}`);
-        }}
-      >
-        {children}
-      </button>
-    ),
-  },
-};
+const ModalIdentityCard: React.FC<{ address: string }> = ({ address }) => {
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
-const ModalIdentityCard: React.FC<{ address: string }> = ({ address }) => (
-  <NameKitProvider config={modalConfig}>
-    <Identity.Root address={address}>
-      <Identity.Avatar />
-      <Identity.Name />
-      <Identity.ProfileLink>
-        <>
-          <span>Open Profile Modal</span>
-          <span>→</span>
-        </>
-      </Identity.ProfileLink>
-    </Identity.Root>
-  </NameKitProvider>
-);
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    dialogRef.current?.showModal();
+  };
+
+  return (
+    <NameKitProvider
+      config={{ profileLinks: [new ProfileLinkGenerator("Modal", "#")] }}
+    >
+      <Identity.Root address={address}>
+        <Identity.Avatar />
+        <Identity.Name />
+        <Identity.ProfileLink onClick={handleClick}>
+          <>
+            <span>Open Profile Modal</span>
+            <span>→</span>
+          </>
+        </Identity.ProfileLink>
+      </Identity.Root>
+      <dialog ref={dialogRef}>
+        Hello {address}
+        <button onClick={() => dialogRef.current?.close()}>Close</button>
+      </dialog>
+    </NameKitProvider>
+  );
+};
 
 export const Default: Story = {
   args: {
@@ -110,8 +115,8 @@ export const MultipleCards: Story = {
   render: () => (
     <>
       <DefaultIdentityCard address="0x838aD0EAE54F99F1926dA7C3b6bFbF617389B4D9" />
-      <CustomAppIdentityCard address="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045" />
-      <ModalIdentityCard address="0xf81bc66316a3f2a60adc258f97f61dfcbdd23bb1" />
+      <DefaultIdentityCard address="0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045" />
+      <DefaultIdentityCard address="0xf81bc66316a3f2a60adc258f97f61dfcbdd23bb1" />
     </>
   ),
 };
@@ -121,10 +126,12 @@ export const ProfileLinkVariants: Story = {
     const address = "0x838aD0EAE54F99F1926dA7C3b6bFbF617389B4D9";
 
     return (
-      <div>
+      <div className="nk-space-y-8">
         <div>
           <h3>Default ENS App Link</h3>
           <Identity.Root address={address}>
+            <Identity.Avatar />
+            <Identity.Name />
             <Identity.ProfileLink>
               <div className="nk-flex nk-items-center nk-gap-2">
                 <ENSLogo />
@@ -136,27 +143,20 @@ export const ProfileLinkVariants: Story = {
 
         <div>
           <h3>Custom App Link</h3>
-          <NameKitProvider config={customAppConfig}>
+          <NameKitProvider
+            config={{ profileLinks: [TwitterProfileLink, GitHubProfileLink] }}
+          >
             <Identity.Root address={address}>
-              <Identity.ProfileLink>
-                <button>View Profile</button>
-              </Identity.ProfileLink>
+              <Identity.Avatar />
+              <Identity.Name />
+              <Identity.ProfileLinks />
             </Identity.Root>
           </NameKitProvider>
         </div>
 
         <div>
-          <h3>Modal Trigger</h3>
-          <NameKitProvider config={modalConfig}>
-            <Identity.Root address={address}>
-              <Identity.ProfileLink>
-                <>
-                  <span>Open Profile Modal</span>
-                  <span>→</span>
-                </>
-              </Identity.ProfileLink>
-            </Identity.Root>
-          </NameKitProvider>
+          <h3>Modal Link</h3>
+          <ModalIdentityCard address={address} />
         </div>
       </div>
     );
