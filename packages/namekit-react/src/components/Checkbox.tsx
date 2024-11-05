@@ -6,7 +6,12 @@ interface CheckboxProps extends InputHTMLAttributes<HTMLInputElement> {
   description?: string;
 }
 
-export const Checkbox = ({ label, description, ...props }: CheckboxProps) => {
+export const Checkbox = ({
+  label,
+  description,
+  className,
+  ...props
+}: CheckboxProps) => {
   return (
     <div className="relative flex items-start">
       <div className="flex h-6 items-center">
@@ -14,8 +19,8 @@ export const Checkbox = ({ label, description, ...props }: CheckboxProps) => {
           type="checkbox"
           {...props}
           className={cc([
-            "nk-form-checkbox nk-h-4 nk-w-4 nk-rounded nk-border-[1.25px] nk-border-gray-300 nk-text-black nk-ring-0 nk-cursor-pointer checked:nk-ring-0 focus:nk-ring-0 focus:nk-ring-transparent focus:nk-outline-none focus-visible:nk-border-gray-400 active:nk-ring-0 enabled:hover:nk-border-gray-400 disabled:nk-cursor-not-allowed disabled:nk-opacity-50 disabled:nk-bg-gray-100 disabled:checked:nk-bg-gray-300",
-            props.className,
+            "nk-form-checkbox nk-h-4 nk-w-4 nk-rounded nk-border-[1.25px] nk-border-gray-300 nk-text-black nk-cursor-pointer checked:nk-ring-0 focus:nk-ring-0 focus:nk-ring-transparent focus:nk-outline-none focus-visible:nk-border-gray-400 enabled:hover:nk-border-gray-400 disabled:nk-cursor-not-allowed disabled:nk-opacity-50 disabled:nk-bg-gray-100 disabled:checked:nk-bg-gray-300",
+            className,
           ])}
         />
       </div>
