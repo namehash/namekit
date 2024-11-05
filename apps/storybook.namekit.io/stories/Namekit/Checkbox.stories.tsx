@@ -46,16 +46,9 @@ export const DisabledChecked: Story = {
   },
 };
 
-export const WithClassName: Story = {
-  args: {
-    className: "bg-red-500",
-  },
-};
-
 export const WithLabel: Story = {
   args: {
     children: "Checkbox",
-    id: "checkbox-1",
     disabled: true,
   },
 };
@@ -70,5 +63,65 @@ export const CustomStyling: Story = {
       borderColor: "red",
       transition: "all 0.3s ease",
     },
+  },
+};
+
+export const EnabledWithLabel: Story = {
+  args: {
+    children: "Enabled Checkbox",
+    disabled: false,
+  },
+};
+
+export const DisabledWithLabel: Story = {
+  args: {
+    children: "Disabled Checkbox",
+    disabled: true,
+  },
+};
+
+export const CheckboxWithDescriptiveText: Story = {
+  args: {
+    children: (
+      <>
+        <p>Accept Terms & Conditions</p>
+        <p
+          style={{
+            color: "#6B7280",
+            fontSize: "0.875rem",
+            lineHeight: "1.25rem",
+          }}
+        >
+          I agree to the Terms of Service and Privacy Policy. By checking this
+          box, I acknowledge that I have read and understood all terms and
+          conditions.
+        </p>
+      </>
+    ),
+    id: "checkbox-with-description",
+    disabled: false,
+  },
+};
+
+export const DisabledCheckboxWithDescriptiveText: Story = {
+  args: {
+    children: (
+      <>
+        <p>Accept Terms & Conditions</p>
+        <p
+          style={{
+            color: "#6B7280",
+            fontSize: "0.875rem",
+            lineHeight: "1.25rem",
+          }}
+        >
+          I agree to the Terms of Service and Privacy Policy. By checking this
+          box, I acknowledge that I have read and understood all terms and
+          conditions.
+        </p>
+      </>
+    ),
+    id: "checkbox-with-description",
+    disabled: true,
   },
 };
