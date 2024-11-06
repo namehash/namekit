@@ -11,7 +11,7 @@ export const Checkbox = ({
   return (
     <label
       className={cc([
-        "nk-relative nk-flex nk-items-start nk-flex-row nk-font-medium",
+        "nk-relative nk-flex nk-items-start nk-flex-row",
         disabled ? "nk-cursor-default" : "nk-cursor-pointer",
       ])}
     >
@@ -29,7 +29,7 @@ export const Checkbox = ({
       </div>
       <div
         className={cc([
-          "nk-ml-3 nk-text-sm nk-leading-6 nk-text-gray-900",
+          "nk-ml-3 nk-text-sm nk-leading-6 nk-text-gray-900 nk-font-medium",
           { "nk-opacity-50": disabled },
         ])}
       >
