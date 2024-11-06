@@ -84,7 +84,7 @@ export const SettingsModal = () => {
                         }
                       >
                         <p>Attempt normalization</p>
-                        <p className="nk-text-gray-500 nk-text-sm nk-leading-5">
+                        <p className="text-gray-500 text-sm leading-5 font-normal">
                           Attempt ENS Normalization before inspecting search
                           queries. If normalization fails the raw search query
                           will be inspected instead.
@@ -104,7 +104,7 @@ export const SettingsModal = () => {
                         }
                       >
                         <p>Assume ".eth"</p>
-                        <p className="nk-text-gray-500 nk-text-sm nk-leading-5">
+                        <p className="text-gray-500 text-sm leading-5 font-normal">
                           Automatically adds “.eth” as an assumed top-level
                           name.
                         </p>
@@ -123,7 +123,7 @@ export const SettingsModal = () => {
                         }
                       >
                         <p>Trim whitespace</p>
-                        <p className="nk-text-gray-500 nk-text-sm nk-leading-5">
+                        <p className="text-gray-500 text-sm leading-5 font-normal">
                           Remove any leading or trailing whitespace characters
                           before performing inspection.
                         </p>
