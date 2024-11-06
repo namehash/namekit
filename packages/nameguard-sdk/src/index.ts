@@ -93,7 +93,7 @@ export type SecurePrimaryNameStatus =
   | "unnormalized" /** The ENS primary name was found, but it is not normalized. */
   | "uninspected" /** A name was exceptionally long and was not inspected for performance reasons */;
 
-export type ImpersonationStatus =
+export type ImpersonationEstimate =
   | "unlikely" /** The name is unlikely to be impersonating. */
   | "potential"; /** The name is potentially impersonating. */
 
@@ -433,11 +433,11 @@ export interface SecurePrimaryNameResult {
   primary_name_status: SecurePrimaryNameStatus;
 
   /**
-   * Impersonation status of the `primary_name`.
+   * Impersonation estimate of the `primary_name`.
    *
    * `null` if `primary_name` is `null`.
    */
-  impersonation_status: ImpersonationStatus | null;
+  impersonation_estimate: ImpersonationEstimate | null;
 
   /**
    * Primary ENS name for the Ethereum address.
@@ -485,7 +485,7 @@ export const MAX_INSPECTED_NAME_CHARACTERS = 200;
 const MAX_INSPECTED_NAME_UNKNOWN_LABELS = 5;
 
 export interface NameGuardOptions {
-  endpoint?: string;
+  nameguardEndpoint?: string;
   network?: Network;
 }
 
@@ -508,15 +508,15 @@ interface FieldsWithRequiredTitle extends Record<string, string> {
 }
 
 export class NameGuard {
-  private endpoint: URL;
+  private nameguardEndpoint: URL;
   protected network: Network;
   private abortController: AbortController;
 
   constructor({
-    endpoint = DEFAULT_ENDPOINT,
+    nameguardEndpoint = DEFAULT_ENDPOINT,
     network = DEFAULT_NETWORK,
   }: NameGuardOptions = {}) {
-    this.endpoint = new URL(endpoint);
+    this.nameguardEndpoint = new URL(nameguardEndpoint);
     this.network = network;
     this.abortController = new AbortController();
   }
@@ -608,7 +608,7 @@ export class NameGuard {
 
     const url = new URL(
       `inspect-namehash/${network}/${namehash}`,
-      this.endpoint,
+      this.nameguardEndpoint,
     );
 
     const response = await fetch(url);
@@ -687,7 +687,7 @@ export class NameGuard {
    * 1. The Ethereum Provider configured in the NameGuard instance.
    * 2. For ENS names using CCIP-Read: requests to externally defined gateway servers.
    *
-   * Returns `display_name` to be shown to users and estimates `impersonation_status`
+   * Returns `display_name` to be shown to users and estimates `impersonation_estimate`
    *
    * If `address` has a primary name and `options.returnNameGuardReport` is `true`, then NameGuard will attempt to inspect that primary name. Else, NameGuard will not perform any primary name inspection and the returned `nameguard_report` field will be `null`.
    *
@@ -775,7 +775,7 @@ export class NameGuard {
     body: object = {},
     headers: object = {},
   ): Promise<any> {
-    const url = new URL(path, this.endpoint);
+    const url = new URL(path, this.nameguardEndpoint);
 
     const options: RequestInit = {
       method,

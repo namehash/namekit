@@ -4,13 +4,13 @@ import { createClient, MAX_INSPECTED_NAME_CHARACTERS } from ".";
 
 const nameguard = createClient({
   // undefined will default to the production endpoint
-  endpoint: process.env.NAMEGUARD_API_URI,
+  nameguardEndpoint: process.env.NAMEGUARD_API_URI,
 });
 
-describe("NameGuard", () => {
-  // No mocking (we should probably mock)
-  // Test urlencoded
+// No mocking (we should probably mock)
+// Test urlencoded
 
+describe("inspectName", () => {
   it("should fetch the NameGuard report for a single name", async () => {
     const data = await nameguard.inspectName("notrab.eth");
 
@@ -19,42 +19,49 @@ describe("NameGuard", () => {
   });
 
   it("should fetch the UninspectedNameGuard report for a name that is too long", async () => {
-    const name = "a".repeat(MAX_INSPECTED_NAME_CHARACTERS+1);
+    const name = "a".repeat(MAX_INSPECTED_NAME_CHARACTERS + 1);
     const data = await nameguard.inspectName(name);
 
     expect(data.name).toBe(name);
     expect(data.inspected).toBe(false);
   });
+});
 
+describe("bulkInspectNames", () => {
   it("should fetch the consolidated NameGuard reports of multiple names", async () => {
-    const data = await nameguard.bulkInspectNames([
-      "notrab.eth",
-      "vitalik.eth",
-    ]);
+    const data = await nameguard.bulkInspectNames(["notrab.eth", "vitalik.eth"]);
 
     expect(data.results?.length).toBe(2);
     expect(data.results?.[0].inspected).toBe(true);
   });
+});
 
+describe("inspectNamehash", () => {
   it("should throw an error if invalid namehash provided", async () => {
-    await expect(
-      nameguard.inspectNamehash("0x1234567890abcdef"),
-    ).rejects.toThrow("Invalid Keccak256 hash format for namehash.");
+    await expect(nameguard.inspectNamehash("0x1234567890abcdef")).rejects.toThrow(
+      "Invalid Keccak256 hash format for namehash."
+    );
   });
+});
 
+describe("inspectLabelhash", () => {
   it("should throw an error if invalid labelhash provided", async () => {
-    await expect(
-      nameguard.inspectLabelhash("0x1234567890abcdef"),
-    ).rejects.toThrow("Invalid Keccak256 hash format for labelhash.");
+    await expect(nameguard.inspectLabelhash("0x1234567890abcdef")).rejects.toThrow(
+      "Invalid Keccak256 hash format for labelhash."
+    );
   });
+});
 
+describe("inspectGrapheme", () => {
   it("should analyze a single grapheme", async () => {
     const data = await nameguard.inspectGrapheme("ą");
 
     expect(data.grapheme).toBe("ą");
     expect(data.canonical_grapheme).toBe("a");
   });
+});
 
+describe("getSecurePrimaryName", () => {
   it("should analyze a primary name", async () => {
     const data = await nameguard.getSecurePrimaryName(
       "0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5",
@@ -75,16 +82,6 @@ describe("NameGuard", () => {
     expect(data.nameguard_report).toBeNull();
   });
 
-  it("should check a fake ENS name", async () => {
-    const data = await nameguard.fakeEthNameCheck(
-      "0x495f947276749ce646f68ac8c248420045cb7b5e",
-      "61995921128521442959106650131462633744885269624153038309795231243542768648193",
-      { title: "nick.eth" },
-    );
-
-    expect(data.status).toBe("impersonated_eth_name");
-  });
-
   it("getSecurePrimaryName: normalized - unlikely impersonation", async () => {
     const data = await nameguard.getSecurePrimaryName(
       "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
@@ -92,7 +89,7 @@ describe("NameGuard", () => {
     );
 
     expect(data.primary_name_status).toBe("normalized");
-    expect(data.impersonation_status).toBe("unlikely");
+    expect(data.impersonation_estimate).toBe("unlikely");
     expect(data.primary_name).toBe("vitalik.eth");
     expect(data.display_name).toBe("vitalik.eth");
     expect(data.nameguard_report).not.toBeNull();
@@ -107,7 +104,7 @@ describe("NameGuard", () => {
     );
 
     expect(data.primary_name_status).toBe("normalized");
-    expect(data.impersonation_status).toBe("potential");
+    expect(data.impersonation_estimate).toBe("potential");
     expect(data.primary_name).toBe("vitalìk.eth");
     expect(data.display_name).toBe("vitalìk.eth");
     expect(data.nameguard_report).not.toBeNull();
@@ -122,7 +119,7 @@ describe("NameGuard", () => {
     );
 
     expect(data.primary_name_status).toBe("normalized");
-    expect(data.impersonation_status).toBe("unlikely");
+    expect(data.impersonation_estimate).toBe("unlikely");
     expect(data.primary_name).toBe("poet.base.eth");
     expect(data.display_name).toBe("poet.base.eth");
     expect(data.nameguard_report).not.toBeNull();
@@ -137,7 +134,7 @@ describe("NameGuard", () => {
     );
 
     expect(data.primary_name_status).toBe("no_primary_name");
-    expect(data.impersonation_status).toBeNull();
+    expect(data.impersonation_estimate).toBeNull();
     expect(data.primary_name).toBeNull();
     expect(data.display_name).toBe("Unnamed d8da");
     expect(data.nameguard_report).toBeNull();
@@ -150,7 +147,7 @@ describe("NameGuard", () => {
     );
 
     expect(data.primary_name_status).toBe("unnormalized");
-    expect(data.impersonation_status).toBeNull();
+    expect(data.impersonation_estimate).toBeNull();
     expect(data.primary_name).toBeNull();
     expect(data.display_name).toBe("Unnamed fa9a");
     expect(data.nameguard_report).not.toBeNull();
@@ -165,7 +162,7 @@ describe("NameGuard", () => {
     );
 
     expect(data.primary_name_status).toBe("unnormalized");
-    expect(data.impersonation_status).toBeNull();
+    expect(data.impersonation_estimate).toBeNull();
     expect(data.primary_name).toBeNull();
     expect(data.display_name).toBe("Unnamed af73");
     expect(data.nameguard_report).not.toBeNull();
@@ -180,7 +177,7 @@ describe("NameGuard", () => {
     );
 
     expect(data.primary_name_status).toBe("unnormalized");
-    expect(data.impersonation_status).toBeNull();
+    expect(data.impersonation_estimate).toBeNull();
     expect(data.primary_name).toBeNull();
     expect(data.display_name).toBe("Unnamed f537");
     expect(data.nameguard_report).not.toBeNull();
@@ -195,7 +192,7 @@ describe("NameGuard", () => {
     );
 
     expect(data.primary_name_status).toBe("normalized");
-    expect(data.impersonation_status).toBe("unlikely");
+    expect(data.impersonation_estimate).toBe("unlikely");
     expect(data.primary_name).toBe("vincξnt.eth");
     expect(data.display_name).toBe("vincΞnt.eth");
     expect(data.nameguard_report).not.toBeNull();
@@ -210,11 +207,23 @@ describe("NameGuard", () => {
     );
 
     expect(data.primary_name_status).toBe("unnormalized");
-    expect(data.impersonation_status).toBeNull();
+    expect(data.impersonation_estimate).toBeNull();
     expect(data.primary_name).toBeNull();
     expect(data.display_name).toBe("Unnamed 744e");
     expect(data.nameguard_report).not.toBeNull();
     expect(data.nameguard_report?.name).toBe("hello<world>!.eth");
     expect(data.nameguard_report?.canonical_name).toBeNull();
+  });
+});
+
+describe("fakeEthNameCheck", () => {
+  it("should check a fake ENS name", async () => {
+    const data = await nameguard.fakeEthNameCheck(
+      "0x495f947276749ce646f68ac8c248420045cb7b5e",
+      "61995921128521442959106650131462633744885269624153038309795231243542768648193",
+      { title: "nick.eth" }
+    );
+
+    expect(data.status).toBe("impersonated_eth_name");
   });
 });

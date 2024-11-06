@@ -7,15 +7,11 @@ const PROVIDER_URI_MAINNET = process.env.PROVIDER_URI_MAINNET;
 const PROVIDER_URI_SEPOLIA = process.env.PROVIDER_URI_SEPOLIA;
 
 if (!PROVIDER_URI_MAINNET) {
-  throw new Error(
-    "The PROVIDER_URI_MAINNET environment variable is not defined.",
-  );
+  console.warn("PROVIDER_URI_MAINNET is not defined. Defaulting to viem's default provider, which may have rate limiting and other performance limitations.");
 }
 
 if (!PROVIDER_URI_SEPOLIA) {
-  throw new Error(
-    "The PROVIDER_URI_SEPOLIA environment variable is not defined.",
-  );
+  console.warn("PROVIDER_URI_SEPOLIA is not defined. Defaulting to viem's default provider, which may have rate limiting and other performance limitations.");
 }
 
 /**
@@ -34,7 +30,7 @@ describe("NameGuardJS", () => {
 
     const localNameguard = createClient({
       // not a real endpoint, will error if used
-      endpoint: INVALID_NAMEGUARD_API_ENDPOINT,
+      nameguardEndpoint: INVALID_NAMEGUARD_API_ENDPOINT,
       publicClient,
     });
 
@@ -53,7 +49,7 @@ describe("NameGuardJS", () => {
 
     const localNameguard = createClient({
       // not a real endpoint, will error if used
-      endpoint: INVALID_NAMEGUARD_API_ENDPOINT,
+      nameguardEndpoint: INVALID_NAMEGUARD_API_ENDPOINT,
       publicClient
     });
 

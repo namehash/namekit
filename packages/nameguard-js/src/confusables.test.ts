@@ -1,7 +1,12 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeAll } from "vitest";
 import { isGraphemeConfusable, getCanonical } from "./confusables";
+import { initializeData } from "./data";
 
 describe("confusables", () => {
+  beforeAll(() => {
+    initializeData();
+  });
+
   it("should check if ASCII is confusable", () => {
     expect(isGraphemeConfusable("a")).toBe(false);
     expect(isGraphemeConfusable("A")).toBe(true);

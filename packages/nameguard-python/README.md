@@ -1,7 +1,7 @@
 # NameGuard Python
 
 ![Tests](https://github.com/namehash/namekit/actions/workflows/nameguard-python-unit-tests.yml/badge.svg?branch=main)
-![Coverage](https://github.com/namehash/namekit/raw/packages/nameguard-python/coverage_badge.svg)
+![Coverage](https://raw.githubusercontent.com/namehash/namekit/refs/heads/main/packages/nameguard-python/coverage_badge.svg)
 
 The NameHash team is proud to present NameGuard, a tool for identifying and preventing malicious use of ENS names.
 

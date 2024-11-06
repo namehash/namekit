@@ -10,7 +10,7 @@ from ens_normalize import is_ens_normalized, ens_cure, DisallowedSequence, ens_p
 import requests
 from label_inspector.inspector import Inspector
 from label_inspector.config import initialize_inspector_config
-from label_inspector.models import InspectorConfusableGraphemeResult
+from label_inspector.models import InspectorConfusableGraphemeResult, InspectorResult
 from web3 import HTTPProvider
 from web3.exceptions import ContractLogicError
 from dotenv import load_dotenv
@@ -31,7 +31,7 @@ from nameguard.models import (
     SecurePrimaryNameStatus,
     FakeEthNameCheckStatus,
     FakeEthNameCheckResult,
-    ImpersonationStatus,
+    ImpersonationEstimate,
     ConsolidatedNameGuardReport,
     Rating,
     ConfusableGuardReport,
@@ -182,7 +182,7 @@ class NameGuard:
         # optimization
         self.eth_label = self._inspector.analyse_label('eth', simple_confusables=True, omit_cure=True)
 
-    def analyse_label(self, label: str):
+    def analyse_label(self, label: str) -> InspectorResult:
         if label == 'eth':
             return self.eth_label
         return self._inspector.analyse_label(label, simple_confusables=True, omit_cure=True)
@@ -270,6 +270,9 @@ class NameGuard:
         name_checks = agg_checks(name_checks)
 
         # -- DNA checks --
+
+        # After the aggregation of all previous checks, run the Do-Not-Aggregate checks.
+        # These checks are run on every entity (grapheme/label/name) separately.
 
         for check_g, check_l, check_n in DNA_CHECKS:
             for label_i, label_analysis in enumerate(labels_analysis):
@@ -460,33 +463,33 @@ class NameGuard:
         nameguard_report = None
         if domain is None:
             status = SecurePrimaryNameStatus.NO_PRIMARY_NAME
-            impersonation_status = None
+            impersonation_estimate = None
         else:
             nameguard_report = await self.inspect_name(network_name, domain)
 
             if nameguard_report.highest_risk and nameguard_report.highest_risk.check.name == Check.UNINSPECTED.name:
                 status = SecurePrimaryNameStatus.UNINSPECTED
-                impersonation_status = None
+                impersonation_estimate = None
             elif nameguard_report.normalization == Normalization.UNNORMALIZED:
                 status = SecurePrimaryNameStatus.UNNORMALIZED
-                impersonation_status = None
+                impersonation_estimate = None
             else:
                 display_name = nameguard_report.beautiful_name
                 status = SecurePrimaryNameStatus.NORMALIZED
                 primary_name = domain
 
-                impersonation_status = (
-                    ImpersonationStatus.UNLIKELY
+                impersonation_estimate = (
+                    ImpersonationEstimate.UNLIKELY
                     if any(
                         check.check == 'impersonation_risk' and check.status == CheckStatus.PASS
                         for check in nameguard_report.checks
                     )
-                    else ImpersonationStatus.POTENTIAL
+                    else ImpersonationEstimate.POTENTIAL
                 )
 
         return SecurePrimaryNameResult(
             primary_name=primary_name,
-            impersonation_status=impersonation_status,
+            impersonation_estimate=impersonation_estimate,
             display_name=display_name,
             primary_name_status=status,
             nameguard_report=nameguard_report if return_nameguard_report else None,
