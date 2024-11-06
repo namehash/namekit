@@ -11,7 +11,7 @@ export const Checkbox = ({
   return (
     <label
       className={cc([
-        "nk-relative nk-flex nk-items-start nk-flex-row",
+        "nk-relative nk-items-center nk-flex-row nk-inline-flex",
         disabled ? "nk-cursor-default" : "nk-cursor-pointer",
       ])}
     >
