@@ -83,9 +83,8 @@ export const WithDescriptiveText: Story = {
         <p>Accept Terms & Conditions</p>
         <p
           style={{
-            color: "#6B7280",
-            fontSize: "0.875rem",
-            lineHeight: "1.25rem",
+            color: "gray",
+            fontWeight: "normal",
           }}
         >
           I agree to the Terms of Service and Privacy Policy. By checking this
@@ -105,9 +104,8 @@ export const DisabledWithDescriptiveText: Story = {
         <p>Accept Terms & Conditions</p>
         <p
           style={{
-            color: "#6B7280",
-            fontSize: "0.875rem",
-            lineHeight: "1.25rem",
+            color: "gray",
+            fontWeight: "normal",
           }}
         >
           I agree to the Terms of Service and Privacy Policy. By checking this
