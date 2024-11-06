@@ -8,8 +8,6 @@ const meta: Meta<typeof Checkbox> = {
   argTypes: {
     disabled: { control: "boolean" },
     checked: { control: "boolean" },
-    className: { control: "text" },
-    id: { control: "text" },
   },
 };
 
@@ -96,7 +94,6 @@ export const WithDescriptiveText: Story = {
         </p>
       </>
     ),
-    id: "checkbox-with-description",
     disabled: false,
   },
 };
@@ -119,7 +116,6 @@ export const DisabledWithDescriptiveText: Story = {
         </p>
       </>
     ),
-    id: "checkbox-with-description",
     disabled: true,
   },
 };
