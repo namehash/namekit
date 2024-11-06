@@ -71,63 +71,68 @@ export const SettingsModal = () => {
                       Adjust these settings based on your preferences.
                     </legend>
                     <div className="space-y-4">
-                      <Checkbox
-                        id="attempt-ens-normalization"
-                        aria-describedby="attempt-ens-normalization-description"
-                        name="attempt-ens-normalization"
-                        checked={localSettings.attemptEnsNormalization}
-                        onChange={(e) =>
-                          setLocalSettings((prev) => ({
-                            ...prev,
-                            attemptEnsNormalization: e.target.checked,
-                          }))
-                        }
-                      >
-                        <p>Attempt normalization</p>
-                        <p className="text-gray-500 text-sm leading-5 font-normal">
+                      <div>
+                        <Checkbox
+                          id="attempt-ens-normalization"
+                          aria-describedby="attempt-ens-normalization-description"
+                          name="attempt-ens-normalization"
+                          checked={localSettings.attemptEnsNormalization}
+                          onChange={(e) =>
+                            setLocalSettings((prev) => ({
+                              ...prev,
+                              attemptEnsNormalization: e.target.checked,
+                            }))
+                          }
+                        >
+                          <p>Attempt normalization</p>
+                        </Checkbox>
+                        <p className="text-gray-500 text-sm leading-5 font-normal ml-7">
                           Attempt ENS Normalization before inspecting search
                           queries. If normalization fails the raw search query
                           will be inspected instead.
                         </p>
-                      </Checkbox>
+                      </div>
 
-                      <Checkbox
-                        id="assume-tld"
-                        aria-describedby="assume-tld-description"
-                        name="assume-tld"
-                        checked={localSettings.assumedTld === "eth"}
-                        onChange={(e) =>
-                          setLocalSettings((prev) => ({
-                            ...prev,
-                            assumedTld: e.target.checked ? "eth" : null,
-                          }))
-                        }
-                      >
-                        <p>Assume ".eth"</p>
-                        <p className="text-gray-500 text-sm leading-5 font-normal">
-                          Automatically adds “.eth” as an assumed top-level
+                      <div>
+                        <Checkbox
+                          id="assume-tld"
+                          aria-describedby="assume-tld-description"
+                          name="assume-tld"
+                          checked={localSettings.assumedTld === "eth"}
+                          onChange={(e) =>
+                            setLocalSettings((prev) => ({
+                              ...prev,
+                              assumedTld: e.target.checked ? "eth" : null,
+                            }))
+                          }
+                        >
+                          <p>Assume ".eth"</p>
+                        </Checkbox>
+                        <p className="text-gray-500 text-sm leading-5 font-normal ml-7">
+                          Automatically adds ".eth" as an assumed top-level
                           name.
                         </p>
-                      </Checkbox>
-
-                      <Checkbox
-                        id="trim-whitespace"
-                        aria-describedby="trim-whitespace-description"
-                        name="trim-whitespace"
-                        checked={localSettings.trimWhitespace}
-                        onChange={(e) =>
-                          setLocalSettings((prev) => ({
-                            ...prev,
-                            trimWhitespace: e.target.checked,
-                          }))
-                        }
-                      >
-                        <p>Trim whitespace</p>
-                        <p className="text-gray-500 text-sm leading-5 font-normal">
+                      </div>
+                      <div>
+                        <Checkbox
+                          id="trim-whitespace"
+                          aria-describedby="trim-whitespace-description"
+                          name="trim-whitespace"
+                          checked={localSettings.trimWhitespace}
+                          onChange={(e) =>
+                            setLocalSettings((prev) => ({
+                              ...prev,
+                              trimWhitespace: e.target.checked,
+                            }))
+                          }
+                        >
+                          <p>Trim whitespace</p>
+                        </Checkbox>
+                        <p className="text-gray-500 text-sm leading-5 font-normal ml-7">
                           Remove any leading or trailing whitespace characters
                           before performing inspection.
                         </p>
-                      </Checkbox>
+                      </div>
                     </div>
                   </fieldset>
 
