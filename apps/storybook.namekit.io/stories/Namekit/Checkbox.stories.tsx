@@ -46,13 +46,6 @@ export const DisabledChecked: Story = {
   },
 };
 
-export const WithLabel: Story = {
-  args: {
-    children: "Checkbox",
-    disabled: true,
-  },
-};
-
 export const CustomStyling: Story = {
   args: {
     style: {
@@ -66,21 +59,26 @@ export const CustomStyling: Story = {
   },
 };
 
-export const EnabledWithLabel: Story = {
+export const WithLabel: Story = {
   args: {
-    children: "Enabled Checkbox",
-    disabled: false,
+    children: "Accept Terms & Conditions",
   },
 };
 
 export const DisabledWithLabel: Story = {
   args: {
-    children: "Disabled Checkbox",
+    children: "Accept Terms & Conditions",
     disabled: true,
   },
 };
 
-export const CheckboxWithDescriptiveText: Story = {
+export const WithCustomLabel: Story = {
+  args: {
+    children: <p style={{ color: "red" }}>Accept Terms & Conditions</p>,
+  },
+};
+
+export const WithDescriptiveText: Story = {
   args: {
     children: (
       <>
@@ -103,7 +101,7 @@ export const CheckboxWithDescriptiveText: Story = {
   },
 };
 
-export const DisabledCheckboxWithDescriptiveText: Story = {
+export const DisabledWithDescriptiveText: Story = {
   args: {
     children: (
       <>
