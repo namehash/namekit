@@ -39,11 +39,10 @@
     }
   },
   "dependencies": {
-    "@headlessui-float/react": "0.11.4",
-    "@headlessui/react": "1.7.17",
     "@namehash/ens-utils": "workspace:*",
     "@namehash/ens-webfont": "workspace:*",
-    "classcat": "5.0.5"
+    "classcat": "5.0.5",
+    "react-tooltip": "5.26.3"
   },
   "devDependencies": {
     "@namekit/tsconfig": "workspace:*",
