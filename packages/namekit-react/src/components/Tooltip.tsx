@@ -39,6 +39,7 @@ export function Tooltip({
       <ReactTooltip
         id={id}
         clickable
+        positionStrategy="fixed"
         place={placement}
         opacity={1}
         delayHide={0}

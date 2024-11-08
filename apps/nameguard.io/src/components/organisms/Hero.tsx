@@ -82,7 +82,7 @@ export function Hero() {
         <p className="text-center not-italic font-light text-gray-500 text-lg leading-7">
           Identify hidden risks or limitations in an ENS name
         </p>
-        <div className="relative w-full h-10 group">
+        <div className="overflow-hidden w-full h-10 group">
           <div className="z-10 absolute top-0 w-full h-full pointer-events-none shadow-[inset_45px_0_25px_-20px_rgba(249,250,251,0.97),inset_-45px_0_25px_-20px_rgba(249,250,251,0.97)]"></div>
           <HeroCarousel />
         </div>
