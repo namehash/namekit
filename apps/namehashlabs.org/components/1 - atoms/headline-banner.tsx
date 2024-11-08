@@ -17,8 +17,7 @@ export const HeadlineBanner = () => {
         link="namehashlabs/namehashlabs"
       >
         <Link target="_blank" variant="underline" size="small">
-          <span className="hidden sm:block">Book a meeting</span>
-          <span className="block sm:hidden w-max">Follow us</span>
+          Book a meeting
         </Link>
       </CalendarButton>
     </div>
