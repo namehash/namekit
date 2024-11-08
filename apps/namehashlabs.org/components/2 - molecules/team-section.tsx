@@ -36,7 +36,7 @@ export const TeamSection = () => {
   return (
     <section
       id="meetOurTeamSection"
-      className=" justify-center lg:flex px-5 lg:px-[112px] w-full xl:justify-between lg:border-none"
+      className=" justify-center lg:flex px-5 lg:px-[50px] w-full xl:justify-between lg:border-none"
     >
       <div className="max-w-[1216px] xl:flex m-auto w-full border-b border-gray-200 py-6 lg:py-20">
         <div className="flex flex-col max-[635px] items-center justify-center mb-[60px] xl:max-w-[448px] xl:justify-start xl:items-start">

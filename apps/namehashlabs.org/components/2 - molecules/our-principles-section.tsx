@@ -8,7 +8,7 @@ export const OurPrinciplesSection = () => {
   return (
     <section
       id="ourPrinciplesSection"
-      className="lg:px-[112px] w-full px-5 md:px-20 py-20"
+      className="lg:px-[50px] w-full px-5 md:px-20 py-20"
     >
       <div className="flex flex-col items-center justify-center max-w-[1216px] m-auto">
         <PreSectionText>What Guides us</PreSectionText>

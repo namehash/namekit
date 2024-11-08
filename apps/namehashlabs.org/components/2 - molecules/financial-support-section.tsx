@@ -7,7 +7,7 @@ export const FinancialSupportSection = () => {
   return (
     <section
       id="financialSupportSection"
-      className="lg:px-[112px] w-full flex flex-col items-center justify-center px-5 py-20 "
+      className="lg:px-[50px] w-full flex flex-col items-center justify-center px-5 py-20 "
     >
       <div
         className="flex flex-col gap-5 items-center justify-center w-full max-w-[1216px] py-8 px-5 rounded-[8px] border border-gray-200"

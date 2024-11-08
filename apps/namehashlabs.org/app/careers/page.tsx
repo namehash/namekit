@@ -15,7 +15,7 @@ const isRolesListEmpty = !rolesData.roles.length;
 
 export default function Page() {
   return (
-    <section className="w-full pt-20 lg:pb-20 pb-5 px-5 lg:px-[112px]">
+    <section className="w-full pt-20 lg:pb-20 pb-5 px-5 lg:px-[50px]">
       <ColorfulBg className="absolute top-0 left-0 w-full z-[-1]" />
       <div className="flex flex-col items-start lg:gap-3 gap-2 lg:mt-[100px] lg:pb-[120px] py-[60px] m-auto max-w-[1216px] border-b">
         <p className="text-xs leading-4 font-medium tracking-wide uppercase text-gray-500">
