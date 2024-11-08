@@ -27,13 +27,13 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <main className="flex flex-col items-center justify-between">
+    <main className="flex w-full flex-col items-center justify-between">
       <div className="mt-20 w-full">
-        <div className="w-full px-5 lg:px-[112px] bg-gray-50 flex items-center justify-center">
+        <div className="w-full px-5 bg-gray-50 flex items-center justify-center">
           <section className="w-full max-w-[1216px]">
             <ProductComponent
               title="ENS Referral Program"
-              subtitle="The power of a protocol lies not only in its technology, but in the strength of its community. Passionate about ENS? Become an ENS Referrer, help grow ENS, and start earning."
+              subtitle="Passionate about helping ENS grow? Share your voice with this community survey and let's shape the future of the ENS Referral Program together."
               illustration={
                 <Image
                   quality={100}
@@ -44,8 +44,10 @@ export default function Page() {
                   alt="hero"
                 />
               }
-              greenLabelText="Proposal pending"
-              buttonUrl="https://docs.google.com/document/d/1srqcho7PFyMBUDQTxxlH_eZqrt5x_EEB-PF2LfpYvIg/edit?usp=sharing"
+              calendarButtonText="Meet us at DevCon"
+              greenLabelText="Collecting Community Input"
+              buttonText="Share your voice"
+              buttonUrl="https://www.deform.cc/"
             />
           </section>
         </div>
@@ -70,6 +72,7 @@ export default function Page() {
                     buttonUrl={item.buttonUrl}
                     buttonText={item.buttonText}
                     greenLabelText={item.greenLabelText}
+                    grayLabelText={item.grayLabelText}
                     isInverted={index % 3 === 2}
                   />
                 </div>
@@ -90,6 +93,7 @@ export interface ItemProps {
   buttonUrl?: string;
   buttonText?: string;
   greenLabelText?: string;
+  grayLabelText?: string;
 }
 
 const Item = ({
@@ -99,6 +103,7 @@ const Item = ({
   buttonUrl,
   buttonText,
   greenLabelText,
+  grayLabelText,
 }: ItemProps) => {
   return (
     <div
@@ -123,6 +128,13 @@ const Item = ({
               </p>
             </span>
           )}
+          {grayLabelText && (
+            <span className="px-3 py-0.5 bg-gray-100 border border-gray-50 rounded-full">
+              <p className="text-sm leading-5 font-medium text-gray-800 font-variant-normal">
+                {grayLabelText}
+              </p>
+            </span>
+          )}
         </div>
         <p className="text-lg leading-7 font-light text-gray-500">{text}</p>
       </div>
@@ -141,11 +153,12 @@ const Item = ({
 const items: ItemProps[] = [
   {
     icon: <DocumentTextIcon className="h-6 w-6 text-gray-400 m-auto" />,
-    title: "Abstract Proposal Document",
-    text: "Review the design rationale for important decisions in how a proposed ENS Referral Program might function.",
-    buttonText: "Review the temp check",
+    title: "Temp Check (ENS v1)",
+    text: "ENSv2 is expected to simplify the technical implementation of an ENS Referral Program. Therefore, the ideas in this ENS V1 Referral Program proposal are out of date, but are retained here for reference purposes.",
+    buttonText: "Review the ENS V1 temp check",
     buttonUrl:
       "https://docs.google.com/document/d/1srqcho7PFyMBUDQTxxlH_eZqrt5x_EEB-PF2LfpYvIg/edit?usp=sharing",
+    grayLabelText: "Deprecated",
   },
   {
     icon: <FigmaIcon className="h-6 w-6 text-gray-400 m-auto" />,

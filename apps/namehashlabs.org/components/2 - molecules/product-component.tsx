@@ -2,6 +2,7 @@ import { Balancer } from "react-wrap-balancer";
 import { SectionText } from "../1 - atoms";
 import cc from "classcat";
 import { Button, Link } from "@namehash/namekit-react";
+import { CalendarButton } from "@namehash/internal";
 
 export interface ProductProps {
   title: string;
@@ -11,6 +12,8 @@ export interface ProductProps {
   isInverted?: boolean;
   buttonUrl?: string;
   greenLabelText?: string;
+  buttonText?: string;
+  calendarButtonText?: string;
 }
 
 export const ProductComponent = ({
@@ -21,6 +24,8 @@ export const ProductComponent = ({
   isInverted,
   buttonUrl,
   greenLabelText,
+  buttonText = "Join the discussion",
+  calendarButtonText = "Learn more",
 }: ProductProps) => {
   return (
     <section
@@ -63,15 +68,26 @@ export const ProductComponent = ({
               <Balancer>{subtitle}</Balancer>
             </SectionText>
 
-            {buttonUrl && (
-              <div className="flex justify-center lg:justify-start">
-                <Button asChild>
-                  <Link href={buttonUrl}>
-                    Join the discussion <Link.ExternalIcon />
-                  </Link>
-                </Button>
-              </div>
-            )}
+            <div className="flex gap-3">
+              {buttonUrl && (
+                <div className="flex justify-center lg:justify-start">
+                  <Button asChild>
+                    <Link href={buttonUrl}>
+                      {buttonText} <Link.ExternalIcon />
+                    </Link>
+                  </Button>
+                </div>
+              )}
+
+              {calendarButtonText && (
+                <CalendarButton
+                  variant="ghost"
+                  link="namehashlabs/namehashlabs"
+                >
+                  {calendarButtonText}
+                </CalendarButton>
+              )}
+            </div>
           </div>
         </div>
         <div className="lg:w-1/2 w-full  lg:mt-0 mt-5 relative flex items-center justify-center">
