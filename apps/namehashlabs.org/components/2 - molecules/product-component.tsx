@@ -68,10 +68,13 @@ export const ProductComponent = ({
               <Balancer>{subtitle}</Balancer>
             </SectionText>
 
-            <div className="flex gap-3">
+            <div className="flex w-full md:w-auto gap-3 items-center lg:flex-row flex-col">
               {buttonUrl && (
-                <div className="flex justify-center lg:justify-start">
-                  <Button asChild>
+                <div className="flex justify-center lg:justify-start w-full md:w-auto">
+                  <Button
+                    className="md:w-auto w-full items-center justify-center"
+                    asChild
+                  >
                     <Link href={buttonUrl}>
                       {buttonText} <Link.ExternalIcon />
                     </Link>
@@ -83,6 +86,7 @@ export const ProductComponent = ({
                 <CalendarButton
                   variant="ghost"
                   link="namehashlabs/namehashlabs"
+                  className="md:w-auto w-full"
                 >
                   {calendarButtonText}
                 </CalendarButton>
