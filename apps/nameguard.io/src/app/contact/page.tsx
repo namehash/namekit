@@ -1,21 +1,23 @@
 import { type Metadata } from "next";
 import { ContactSection } from "@/components/organisms/ContactUsSection";
 
-export default function Page() {
-  return <ContactSection />;
-}
-
+const title = "Contact Us";
 const description = "Contact NameGuard.";
 
 export const metadata: Metadata = {
-  title: "Contact Us",
+  title,
   description,
   openGraph: {
-    title: "NameGuard - Contact Us",
+    title,
     description,
+    url: "/contact",
   },
   twitter: {
-    title: "NameGuard - Contact Us",
+    title,
     description,
   },
 };
+
+export default function Page() {
+  return <ContactSection />;
+}
