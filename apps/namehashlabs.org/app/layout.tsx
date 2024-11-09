@@ -41,6 +41,7 @@ export const metadata: Metadata = {
       default: title,
     },
     description,
+    url: "/",
   },
   twitter: {
     ...defaultMetaTwitter,
