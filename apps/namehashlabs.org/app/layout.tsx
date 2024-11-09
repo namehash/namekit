@@ -3,7 +3,6 @@ import "@namehash/namekit-react/styles.css";
 import "@namehash/ens-webfont";
 
 import type { Metadata } from "next";
-import { Metadata as NamehashMetadata } from "@namehash/internal";
 import { Inter } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
@@ -12,21 +11,22 @@ import { HeadlineBanner } from "@/components/1 - atoms";
 import { Header } from "@/components/2 - molecules/header";
 import { Footer } from "@/components/2 - molecules";
 
+import {
+  baseUrl,
+  siteName,
+  defaultMetaTitle as title,
+  defaultMetaDescription as description,
+  defaultMetaKeywords as keywords,
+  defaultMetaOpengraph,
+  defaultMetaTwitter,
+} from "./shared-metadata";
+
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const siteName = "NameHash Labs";
-const title = "NameHash Labs - Helping ENS Grow";
-const description =
-  "NameHash Labs builds open source public goods that drive the global adoption of ENS.";
-const keywords = ["ens", "web3", "eth", "nameguard", "namekit", "namehash"];
-
-const baseUrl = "https://namehashlabs.org";
-
 export const metadata: Metadata = {
-  ...NamehashMetadata.defaultMetdata,
   metadataBase: new URL(baseUrl),
   title: {
     template: `${siteName} - %s`,
@@ -35,16 +35,15 @@ export const metadata: Metadata = {
   description,
   keywords,
   openGraph: {
-    ...NamehashMetadata.defaultMetdata.openGraph,
+    ...defaultMetaOpengraph,
     title: {
       template: `${siteName} - %s`,
       default: title,
     },
     description,
-    siteName,
   },
   twitter: {
-    ...NamehashMetadata.defaultMetdata.twitter,
+    ...defaultMetaTwitter,
     title: {
       template: `${siteName} - %s`,
       default: title,

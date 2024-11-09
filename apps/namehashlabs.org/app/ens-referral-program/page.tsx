@@ -1,7 +1,6 @@
 import { type Metadata } from "next";
 import Image from "next/image";
 import cc from "classcat";
-import { Metadata as NamehashMetadata } from "@namehash/internal";
 
 import { DocumentTextIcon } from "@heroicons/react/24/solid";
 import { FigmaIcon } from "@/components/1 - atoms/icons/figma-icon";
@@ -9,24 +8,24 @@ import { GithubIcon } from "@/components/1 - atoms/icons/github-icon";
 import { ProductComponent } from "@/components/2 - molecules/product-component";
 import { Button, Link } from "@namehash/namekit-react";
 
+import { defaultMetaOpengraph, defaultMetaTwitter } from "../shared-metadata";
+
 const title = "ENS Referral Program Proposal";
 const description =
   "Join the discussion about an ENS Referral Program and help ENS grow.";
 
 export const metadata: Metadata = {
-  ...NamehashMetadata.defaultMetdata,
   title,
   description,
   keywords: ["ens", "web3", "eth", "referral program"],
   openGraph: {
-    ...NamehashMetadata.defaultMetdata.openGraph,
+    ...defaultMetaOpengraph,
     title,
     description,
     url: "/ens-referral-program",
-    siteName: "NameHash Labs",
   },
   twitter: {
-    ...NamehashMetadata.defaultMetdata.twitter,
+    ...defaultMetaTwitter,
     title,
     description,
   },
