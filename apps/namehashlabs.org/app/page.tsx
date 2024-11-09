@@ -9,14 +9,6 @@ import { IntroducingNamekit } from "@/components/2 - molecules/introducing-namek
 import { OurSuportersSection } from "@/components/2 - molecules/our-supporters-section";
 import { TestimonialsSection } from "@/components/2 - molecules/testimonials-section";
 import { TheVisionSection } from "@/components/2 - molecules/the-vision-section";
-import { type Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "NameHash Labs - Helping ENS Grow",
-  description:
-    "NameHash Labs builds open source public goods that drive the global adoption of ENS.",
-  keywords: ["nameguard", "normalization", "ens", "web3", "eth"],
-};
 
 export default function Page() {
   return (

@@ -7,6 +7,7 @@ import { Title404 } from "@/components/1 - atoms/404-title";
 
 export const metadata: Metadata = {
   title: "Not Found",
+  description: "We can't seem to find the page you're looking for.",
 };
 
 export default function NotFound() {

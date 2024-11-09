@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { nameguard } from "@namehash/nameguard";
 import { NGReport } from "@/components/molecules";
+import {
+  defaultMetaOpengraph,
+  defaultMetaTwitter,
+} from "@/app/shared-metadata";
 
 type Props = {
   params: { name: string };
@@ -13,14 +17,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!name) return notFound();
 
   const decodedName = decodeURIComponent(name);
+  const title = decodedName;
+  const description = `NameGuard Report for ${decodedName}`;
+  const url = `/inspect/${name}`;
 
   return {
-    title: `Report for ${decodedName}`,
-    twitter: {
-      title: `Report for ${decodedName}`,
-    },
+    title,
+    description,
     openGraph: {
-      title: `Report for ${decodedName}`,
+      ...defaultMetaOpengraph,
+      title,
+      description,
+      url,
+    },
+    twitter: {
+      ...defaultMetaTwitter,
+      title,
+      description,
     },
   };
 }
