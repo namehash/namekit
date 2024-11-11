@@ -7,7 +7,7 @@ import { Button, Link } from "@namehash/namekit-react";
 
 export const BrandAssets = () => {
   return (
-    <section className="w-full py-20 px-5 lg:px-[112px] h-full flex justify-center">
+    <section className="w-full py-20 px-5 lg:px-[50px] h-full flex justify-center">
       <ColorfulBg className="absolute top-0 left-0 w-full z-[-1]" />
       <div className="w-full max-w-[1216px]">
         <div className="flex flex-col lg:mt-[100px] lg:mb-[120px] mt-[60px] mb-[60px] gap-3 ">

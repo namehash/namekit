@@ -12,7 +12,7 @@ export const OurSuportersSection = () => {
   return (
     <section
       id="ourSuportersSection"
-      className="lg:px-[112px] w-full flex flex-col items-center bg-gray-50 justify-center px-5 py-20 border-t border-b border-gray-200"
+      className="lg:px-[50px] w-full flex flex-col items-center bg-gray-50 justify-center px-5 py-20 border-t border-b border-gray-200"
     >
       <div className="flex flex-col gap-3">
         <PreSectionText>ETHEREUM COMMUNITY SUPPORTED</PreSectionText>

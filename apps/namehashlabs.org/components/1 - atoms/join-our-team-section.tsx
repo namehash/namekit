@@ -8,7 +8,7 @@ export const JoinOurTeamSection = () => {
   return (
     <section
       id="joinOurTeam"
-      className="px-5 lg:px-[112px] pb-5 pt-[60px] mx-auto lg:py-[86px]"
+      className="px-5 lg:px-[50px] pb-5 pt-[60px] mx-auto lg:py-[86px]"
     >
       <div className="m-auto max-w-[1216px] flex flex-col lg:flex-row justify-between items-center ">
         <div className="mt-6 mx-auto flex justify-center">

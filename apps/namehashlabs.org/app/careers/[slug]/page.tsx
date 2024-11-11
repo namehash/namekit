@@ -61,7 +61,7 @@ export default function Page({ params }: Props) {
   }
 
   return (
-    <section className="w-full lg:pb-20 pb-5 px-5 lg:px-[112px]">
+    <section className="w-full lg:pb-20 pb-5 px-5 lg:px-[50px]">
       <RolePage {...role} />
     </section>
   );
