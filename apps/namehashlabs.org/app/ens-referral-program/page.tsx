@@ -53,7 +53,7 @@ export default function Page() {
               calendarButtonText="Meet us at DevCon"
               greenLabelText="Collecting Community Input"
               buttonText="Share your voice"
-              buttonUrl="https://www.deform.cc/"
+              buttonUrl="https://app.deform.cc/form/bac7c954-c419-4a81-a84f-97fa05f0a898"
             />
           </section>
         </div>
