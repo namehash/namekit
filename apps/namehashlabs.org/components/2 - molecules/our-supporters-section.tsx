@@ -1,12 +1,12 @@
 "use client";
 
-import { PreSectionText, SectionText, SectionTitle } from "../1 - atoms";
+import { PreSectionText } from "@/components/1 - atoms";
 import { Balancer } from "react-wrap-balancer";
 import { useEffect, useState } from "react";
 import { Profile, getCachedProfile } from "@/data/ensProfiles";
 import { AvatarSize, UltimateENSAvatar } from ".";
 import { getNameHashLabsAvatarCallbacks } from "@/lib/client/nh-labs-avatar";
-import { Button, Link } from "@namehash/namekit-react";
+import { Button, Heading, Link, Text } from "@namehash/namekit-react";
 
 export const OurSuportersSection = () => {
   return (
@@ -14,15 +14,15 @@ export const OurSuportersSection = () => {
       id="ourSuportersSection"
       className="lg:px-[50px] w-full flex flex-col items-center bg-gray-50 justify-center px-5 py-20 border-t border-b border-gray-200"
     >
-      <div className="flex flex-col gap-3">
+      <div className="flex items-center flex-col gap-3">
         <PreSectionText>ETHEREUM COMMUNITY SUPPORTED</PreSectionText>
-        <SectionTitle>Our supporters</SectionTitle>
-        <SectionText className="text-center">
+        <Heading>Our supporters</Heading>
+        <Text as="p" className="text-lg text-gray-500">
           <Balancer>
             Thank you to our amazing supporters who also believe in helping ENS
             grow.
           </Balancer>
-        </SectionText>
+        </Text>
       </div>
 
       <div className="grid xl:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 mt-20 place-content-stretch w-full max-w-[1216px]">
