@@ -1,11 +1,10 @@
 import {
   ColorfulBg,
   PreSectionText,
-  SectionTitle,
-  SectionText,
   AirplaneIllustration,
 } from "@/components/atoms/";
 import { CalendarButton, ContactUsForm } from "@namehash/internal";
+import { Heading, Text } from "@namehash/namekit-react";
 
 export const ContactSection = () => {
   return (
@@ -38,14 +37,13 @@ export const ContactSection = () => {
       </div>
       <div className="w-full flex flex-col lg:flex-row m-auto gap-10 max-w-7xl">
         <div className="lg:w-1/2 w-full flex flex-col gap-3 items-start">
-          <SectionTitle className="text-3xl lg:text-4xl font-bold">
-            Let&apos;s chat
-          </SectionTitle>
-          <SectionText className="text-gray-500 text-lg">
+          <Heading as="h1">Let&apos;s chat</Heading>
+
+          <Text as="p" className="!text-gray-500 !text-lg font-light">
             If you have questions, ideas, or share a passion for NameGuard and
             would like to explore collaboration, please don&apos;t hesitate to
             reach out to us.
-          </SectionText>
+          </Text>
           <div className="w-full">
             <AirplaneIllustration />
           </div>
