@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { Heading, Text } from "@namehash/namekit-react";
 import { PreSectionText } from "@/components/1 - atoms";
-import { ColorfulBg } from "../1 - atoms/colorful-bg";
+import { ColorfulBg } from "@/components/1 - atoms/colorful-bg";
 import { CalendarButton, ContactUsForm } from "@namehash/internal";
 
 export const ContactSection = () => {
