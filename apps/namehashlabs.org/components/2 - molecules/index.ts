@@ -8,3 +8,4 @@ export * from "./team-section";
 export * from "./footer";
 export * from "./avatar-with-tooltip";
 export * from "./ultimate-ens-avatar";
+export * from "./referral-product-component";
