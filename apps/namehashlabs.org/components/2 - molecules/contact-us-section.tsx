@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
-import { PreSectionText, SectionText, SectionTitle } from "../1 - atoms";
+import { Heading, Text } from "@namehash/namekit-react";
+import { PreSectionText } from "@/components/1 - atoms";
 import { ColorfulBg } from "../1 - atoms/colorful-bg";
 import { CalendarButton, ContactUsForm } from "@namehash/internal";
 
@@ -14,13 +15,13 @@ export const ContactSection = () => {
 
       <div className="w-full flex lg:flex-row flex-col justify-between lg:items-center sm:items-start items-center rounded-[8px] bg-gradient-to-r lg:px-10 lg:py-8 p-5 mb-20 from-[#2D2D2D] to-black">
         <div className="flex flex-col gap-2 mb-4 lg:mb-0">
-          <h3 className="text-2xl leading-8 font-semibold text-white">
+          <Heading as="h3" className="text-white">
             Discuss an integration
-          </h3>
-          <p className="text-lg leading-7 font-normal text-gray-500">
+          </Heading>
+          <Text className="text-gray-500 !text-lg">
             Schedule a call with us to discuss integration with any of our
             products
-          </p>
+          </Text>
         </div>
         <div className="w-full lg:w-auto">
           <CalendarButton
@@ -34,14 +35,13 @@ export const ContactSection = () => {
       </div>
       <div className="w-full flex flex-col lg:flex-row m-auto gap-10 max-w-7xl">
         <div className="lg:w-1/2 w-full flex flex-col gap-3 items-start">
-          <SectionTitle className="text-3xl lg:text-4xl font-bold">
-            Let&apos;s chat
-          </SectionTitle>
-          <SectionText className="text-gray-500 text-lg">
+          <Heading as="h1">Let&apos;s chat</Heading>
+
+          <Text as="p" className="text-gray-500 !text-lg font-light">
             If you have questions, ideas, or share a passion for advancing ENS
             growth and would like to explore collaboration, please don&apos;t
-            hesitate to reach out.{" "}
-          </SectionText>
+            hesitate to reach out.
+          </Text>
           <img
             className="hidden lg:block"
             src="/images/paper-airplane.png"
