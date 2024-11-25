@@ -1,5 +1,6 @@
 import { Float } from "@headlessui-float/react";
 import { Popover } from "@headlessui/react";
+import cc from "classcat";
 import React, { useState } from "react";
 
 type Props = {
@@ -7,6 +8,7 @@ type Props = {
   children: React.ReactNode;
   placement?: TooltipPlacement;
   maxTooltipWidth?: number;
+  className?: string;
 };
 
 export const DEFAULT_MAX_TOOLTIP_WIDTH = 400;
@@ -28,7 +30,7 @@ export function Tooltip({
   children,
   placement = DEFAULT_TOOLTIP_PLACEMENT,
   maxTooltipWidth = DEFAULT_MAX_TOOLTIP_WIDTH,
-
+  className,
   /*
     Props are applied to the Float component,
     which is a wrapper for the tooltip "children".
@@ -41,7 +43,7 @@ export function Tooltip({
   const handleClose = () => setOpen(false);
 
   return (
-    <Popover className="nk-flex nk-items-center">
+    <Popover className={cc(["nk-flex nk-items-center", className])}>
       <Float
         show={open}
         placement={placement} // our `TooltipPlacement` values are a subset of headlessui's `Placement` values
@@ -50,10 +52,10 @@ export function Tooltip({
         flip={10}
         arrow
         portal
-        enter="nk-transition nk-duration-200 nk-ease-out"
+        enter="nk-transition nk-duration-300 nk-ease-out nk-delay-300"
         enterFrom="nk-opacity-0 nk--translate-y-1"
         enterTo="nk-opacity-100 nk-translate-y-0"
-        leave="nk-transition nk-duration-150 nk-ease-in"
+        leave="nk-transition nk-duration-200 nk-ease-in nk-delay-0"
         leaveFrom="nk-opacity-100 nk-translate-y-0"
         leaveTo="nk-opacity-0 nk--translate-y-1"
         {...props}
