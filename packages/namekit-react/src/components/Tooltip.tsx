@@ -9,6 +9,7 @@ type Props = {
   placement?: TooltipPlacement;
   maxTooltipWidth?: number;
   className?: string;
+  withDelay?: boolean;
 };
 
 export const DEFAULT_MAX_TOOLTIP_WIDTH = 400;
@@ -31,6 +32,7 @@ export function Tooltip({
   placement = DEFAULT_TOOLTIP_PLACEMENT,
   maxTooltipWidth = DEFAULT_MAX_TOOLTIP_WIDTH,
   className,
+  withDelay = false,
   /*
     Props are applied to the Float component,
     which is a wrapper for the tooltip "children".
@@ -52,7 +54,12 @@ export function Tooltip({
         flip={10}
         arrow
         portal
-        enter="nk-transition nk-duration-300 nk-ease-out nk-delay-300"
+        enter={cc([
+          "nk-transition nk-duration-300 nk-ease-out",
+          {
+            "nk-delay-300": withDelay,
+          },
+        ])}
         enterFrom="nk-opacity-0 nk--translate-y-1"
         enterTo="nk-opacity-100 nk-translate-y-0"
         leave="nk-transition nk-duration-200 nk-ease-in nk-delay-0"

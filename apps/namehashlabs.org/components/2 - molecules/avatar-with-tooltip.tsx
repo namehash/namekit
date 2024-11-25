@@ -140,6 +140,7 @@ export const AvatarWithTooltip = ({
   }
   return (
     <Tooltip
+      withDelay={true}
       placement="top"
       className={cc([
         className,
