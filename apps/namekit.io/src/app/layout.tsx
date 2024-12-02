@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import Head from "next/head";
+import { Header } from "@/components/organisms/header";
+import { NamekitFooter } from "@/components/organisms/namekit-footer";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
+const unifont = localFont({
+  src: "./fonts/unifont.otf",
+  variable: "--font-unifont",
 });
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+
+const adobeBlank = localFont({
+  src: "./fonts/AdobeBlank.ttf",
+  variable: "--font-adobe-blank",
 });
 
 export const metadata: Metadata = {
@@ -25,10 +27,43 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" type="image/svg+xml" sizes="any" href="/favicon.svg" />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+
+        {/* Fonts */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+      </Head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${unifont.variable} ${adobeBlank.variable} antialiased`}
       >
+        <Header />
         {children}
+        <NamekitFooter />
       </body>
     </html>
   );

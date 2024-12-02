@@ -1,6 +1,11 @@
 // import { NameKitPage } from "../components/05-pages";
-import { type NextPage } from "next";
+
+import { NameKitPage } from "@/components/pages/namekit";
 
 export default function Home() {
-  return <div>Hello</div>;
+  return (
+    <div>
+      <NameKitPage />
+    </div>
+  );
 }
