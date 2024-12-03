@@ -2,6 +2,44 @@ import fetch from "cross-fetch";
 
 const DEFAULT_ENDPOINT = "http://100.24.45.225/";
 
+export const NameGeneratorGroupingCategory = {
+  related: "related",
+  wordplay: "wordplay",
+  alternates: "alternates",
+  emojify: "emojify",
+  expand: "expand",
+  gowild: "gowild",
+  other: "other",
+} as const;
+
+export type NameGeneratorGroupingCategory =
+  (typeof NameGeneratorGroupingCategory)[keyof typeof NameGeneratorGroupingCategory];
+
+export interface NameGeneratorSuggestion {
+  name: string;
+  tokenized_label: string[];
+  metadata: {
+    pipeline_name: string;
+    interpretation: string[];
+    cached_status: string;
+    categories: string[];
+    cached_interesting_score: number;
+    applied_strategies: string[][];
+    collection_title: string;
+    collection_id: string;
+    grouping_category: NameGeneratorGroupingCategory;
+  };
+}
+
+export interface NameGeneratorCategory {
+  suggestions: NameGenerator[];
+}
+
+export interface NamesGeneratedGroupedByCategory {
+  categories: NameGeneratorCategory[];
+  all_tokenizations: [];
+}
+
 export interface NameGeneratorOptions {
   namegeneratorEndpoint?: string;
 }
@@ -24,6 +62,37 @@ export class NameGenerator {
   }: NameGeneratorOptions = {}) {
     this.namegeneratorEndpoint = new URL(namegeneratorEndpoint);
     this.abortController = new AbortController();
+  }
+
+  public groupedByCategory(
+    label: string,
+  ): Promise<NamesGeneratedGroupedByCategory> {
+    const metadata = true;
+    const sorter = "weighted-sampling";
+    const min_suggestions = 100;
+    const max_suggestions = 100;
+    const min_primary_fraction = 0.1;
+    const mode = "full";
+    const enable_learning_to_rank = true;
+    const name_diversity_ratio = 0.5;
+    const max_per_type = 2;
+
+    const payload = {
+      label,
+      metadata,
+      sorter,
+      min_suggestions,
+      max_suggestions,
+      min_primary_fraction,
+      params: {
+        mode,
+        enable_learning_to_rank,
+        name_diversity_ratio,
+        max_per_type,
+      },
+    };
+
+    return this.rawRequest(`grouped-by-category`, "POST", payload);
   }
 
   async rawRequest(
