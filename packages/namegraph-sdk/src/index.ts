@@ -6,6 +6,16 @@ export interface NameGraphOptions {
   namegraphEndpoint?: string;
 }
 
+export interface CountCollectionsResponse {
+  metadata: {
+    total_number_of_matched_collections: number;
+    processing_time_ms: number;
+    elasticsearch_processing_time_ms: number;
+    elasticsearch_communication_time_ms: number;
+  };
+  count: number;
+}
+
 class NameGraphError extends Error {
   constructor(
     public status: number,
@@ -22,6 +32,19 @@ export class NameGraph {
   constructor({ namegraphEndpoint = DEFAULT_ENDPOINT }: NameGraphOptions = {}) {
     this.namegraphEndpoint = new URL(namegraphEndpoint);
     this.abortController = new AbortController();
+  }
+
+  public countCollectionsByString(
+    query: string,
+  ): Promise<CountCollectionsResponse> {
+    const mode = "instant";
+
+    const payload = {
+      query,
+      mode,
+    };
+
+    return this.rawRequest("/count_collections_by_string", "POST", payload);
   }
 
   async rawRequest(
