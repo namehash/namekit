@@ -1,5 +1,5 @@
 ---
-"@namehash/namegenerator": minor
+"@namehash/namegraph-sdk": minor
 ---
 
-Create package and NameGenerator client
+Create package and NameGraph client

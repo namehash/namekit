@@ -2,11 +2,11 @@ import fetch from "cross-fetch";
 
 const DEFAULT_ENDPOINT = "http://100.24.45.225/";
 
-export interface NameGeneratorOptions {
-  namegeneratorEndpoint?: string;
+export interface NameGraphOptions {
+  namegraphEndpoint?: string;
 }
 
-class NameGeneratorError extends Error {
+class NameGraphError extends Error {
   constructor(
     public status: number,
     message?: string,
@@ -15,14 +15,12 @@ class NameGeneratorError extends Error {
   }
 }
 
-export class NameGenerator {
-  private namegeneratorEndpoint: URL;
+export class NameGraph {
+  private namegraphEndpoint: URL;
   private abortController: AbortController;
 
-  constructor({
-    namegeneratorEndpoint = DEFAULT_ENDPOINT,
-  }: NameGeneratorOptions = {}) {
-    this.namegeneratorEndpoint = new URL(namegeneratorEndpoint);
+  constructor({ namegraphEndpoint = DEFAULT_ENDPOINT }: NameGraphOptions = {}) {
+    this.namegraphEndpoint = new URL(namegraphEndpoint);
     this.abortController = new AbortController();
   }
 
@@ -32,7 +30,7 @@ export class NameGenerator {
     body: object = {},
     headers: object = {},
   ): Promise<any> {
-    const url = new URL(path, this.namegeneratorEndpoint);
+    const url = new URL(path, this.namegraphEndpoint);
 
     const options: RequestInit = {
       method,
@@ -50,7 +48,7 @@ export class NameGenerator {
     const response = await fetch(url, options);
 
     if (!response.ok) {
-      throw new NameGeneratorError(
+      throw new NameGraphError(
         response.status,
         `Failed to perform request to ${path}.`,
       );
@@ -66,10 +64,10 @@ export class NameGenerator {
   }
 }
 
-export function createClient(options?: NameGeneratorOptions) {
-  return new NameGenerator(options);
+export function createClient(options?: NameGraphOptions) {
+  return new NameGraph(options);
 }
 
 const defaultClient = createClient();
 
-export const namegenerator = defaultClient;
+export const namegraph = defaultClient;
