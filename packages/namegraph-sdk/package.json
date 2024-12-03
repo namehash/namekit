@@ -1,20 +1,20 @@
 {
-  "name": "@namehash/namegenerator",
-  "description": "A lightweight JavaScript client for the NameGenerator API.",
+  "name": "@namehash/namegraph-sdk",
+  "description": "A lightweight JavaScript client for the namegraph API.",
   "version": "0.0.1",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/namehash/namekit.git",
-    "directory": "packages/namegenerator-sdk"
+    "directory": "packages/namegraph-sdk"
   },
-  "homepage": "https://github.com/namehash/namekit/tree/main/packages/namegenerator-sdk",
+  "homepage": "https://github.com/namehash/namekit/tree/main/packages/namegraph-sdk",
   "keywords": [
     "ENS",
     "NameKit",
     "NameHash",
     "NameGuard",
-    "NameGenerator",
+    "NameGraph",
     "NFT"
   ],
   "type": "module",

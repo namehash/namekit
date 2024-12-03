@@ -416,7 +416,7 @@ importers:
 
   packages/ens-webfont: {}
 
-  packages/namegenerator-sdk:
+  packages/namegraph-sdk:
     dependencies:
       cross-fetch:
         specifier: 4.0.0
