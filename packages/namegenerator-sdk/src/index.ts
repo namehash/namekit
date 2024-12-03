@@ -20,19 +20,19 @@ export interface NameGeneratorSuggestion {
   tokenized_label: string[];
   metadata: {
     pipeline_name: string;
-    interpretation: string[];
+    interpretation: (string | null)[];
     cached_status: string;
     categories: string[];
-    cached_interesting_score: number;
+    cached_interesting_score: number | null;
     applied_strategies: string[][];
-    collection_title: string;
-    collection_id: string;
-    grouping_category: NameGeneratorGroupingCategory;
+    collection_title: string | null;
+    collection_id: string | null;
+    grouping_category: NameGeneratorGroupingCategory | null;
   };
 }
 
 export interface NameGeneratorCategory {
-  suggestions: NameGenerator[];
+  suggestions: NameGeneratorSuggestion[];
 }
 
 export interface NamesGeneratedGroupedByCategory {
