@@ -63,7 +63,7 @@ export interface NameGraphSuggestion {
     applied_strategies: string[][];
     collection_title: string | null;
     collection_id: string | null;
-    grouping_category: NameGraphGroupingCategory | null;
+    grouping_category: string | null;
   };
 }
 
@@ -71,9 +71,13 @@ export interface NameGraphCategory {
   suggestions: NameGraphSuggestion[];
 }
 
-export interface NameGraphNamesGeneratedGroupedByCategoryResponse {
+export interface NameGraphGroupedByCategoryResponse {
   categories: NameGraphCategory[];
   all_tokenizations: [];
+}
+
+export interface NameGraphSuggestionsByCategoryResponse {
+  name: string;
 }
 
 export interface NameGraphCountCollectionsResponse {
@@ -171,7 +175,7 @@ export class NameGraph {
 
   public groupedByCategory(
     label: string,
-  ): Promise<NameGraphNamesGeneratedGroupedByCategoryResponse> {
+  ): Promise<NameGraphGroupedByCategoryResponse> {
     const sorter = "weighted-sampling";
     const min_suggestions = 100;
     const max_suggestions = 100;
@@ -199,9 +203,7 @@ export class NameGraph {
     return this.rawRequest(`grouped-by-category`, "POST", payload);
   }
 
-  public suggestionsByCategory(
-    label: string,
-  ): Promise<NameGraphNamesGeneratedGroupedByCategoryResponse> {
+  public suggestionsByCategory(label: string): Promise<NameGraphSuggestion[]> {
     const mode = "full";
 
     const categoriesQueryConfig: TypedNameGraphGroupingCategoryParams = {
