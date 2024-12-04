@@ -1,0 +1,112 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "NameKit",
+  "theme": "quill",
+  "logo": {
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg"
+  },
+  "favicon": "/favicon.png",
+  "backgroundImage": "/background.png",
+  "colors": {
+    "primary": "#00AA67",
+    "light": "#00AA67",
+    "dark": "#00AA67",
+    "anchors": {
+      "from": "#FF7F57",
+      "to": "#9563FF"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "Support",
+      "url": "mailto:hello@namehashlabs.org"
+    }
+  ],
+  "topbarCtaButton": {
+    "type": "github",
+    "url": "https://github.com/namehash/namekit"
+  },
+  "tabs": [
+    {
+      "name": "NameGuard",
+      "url": "nameguard"
+    },
+    {
+      "name": "NameRank",
+      "url": "namerank"
+    },
+    {
+      "name": "NameGenerator",
+      "url": "namegenerator"
+    }
+  ],
+  "openapi": "https://api.nameguard.io/openapi.json",
+  "navigation": [
+    {
+      "group": "NameKit",
+      "pages": ["introduction"]
+    },
+    {
+      "group": "NameGuard",
+      "pages": [
+        "nameguard/introduction",
+        "nameguard/quickstart",
+        "nameguard/specification",
+        "nameguard/chains",
+        "nameguard/self-hosting"
+      ]
+    },
+    {
+      "group": "SDK",
+      "pages": [
+        "nameguard/sdk/js/setup",
+        "nameguard/sdk/js/typescript",
+        {
+          "group": "Checks",
+          "pages": [
+            "nameguard/sdk/js/inspect-name",
+            "nameguard/sdk/js/bulk-inspect-names",
+            "nameguard/sdk/js/inspect-namehash",
+            "nameguard/sdk/js/inspect-labelhash",
+            "nameguard/sdk/js/secure-primary-name",
+            "nameguard/sdk/js/fake-eth-name-check",
+            "nameguard/sdk/js/inspect-grapheme"
+          ]
+        }
+      ]
+    },
+    {
+      "group": "API",
+      "pages": [
+        "nameguard/api-reference/introduction",
+        {
+          "group": "Endpoints",
+          "pages": [
+            "nameguard/api-reference/inspect-name",
+            "nameguard/api-reference/bulk-inspect-names",
+            "nameguard/api-reference/inspect-namehash",
+            "nameguard/api-reference/inspect-labelhash",
+            "nameguard/api-reference/secure-primary-name",
+            "nameguard/api-reference/fake-eth-name-check",
+            "nameguard/api-reference/inspect-grapheme"
+          ]
+        }
+      ]
+    },
+
+    {
+      "group": "NameRank",
+      "pages": ["namerank/introduction"]
+    },
+
+    {
+      "group": "NameGenerator",
+      "pages": ["namegenerator/introduction"]
+    }
+  ],
+  "footerSocials": {
+    "twitter": "https://x.com/NamehashLabs",
+    "github": "https://github.com/namehash"
+  }
+}
