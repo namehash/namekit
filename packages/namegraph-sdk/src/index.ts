@@ -175,6 +175,16 @@ export class NameGraph {
     return this.rawRequest("count_collections_by_string", "POST", payload);
   }
 
+  public countCollectionsByMember(
+    label: string,
+  ): Promise<NameGraphCountCollectionsResponse> {
+    const payload = {
+      label,
+    };
+
+    return this.rawRequest("count_collections_by_member", "POST", payload);
+  }
+
   async rawRequest(
     path: string,
     method: string = "GET",
