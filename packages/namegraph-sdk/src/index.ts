@@ -162,6 +162,23 @@ export class NameGraph {
     return this.rawRequest(`grouped-by-category`, "POST", payload);
   }
 
+  public sampleCollectionMembers(
+    collection_id: string,
+  ): Promise<NameGraphSuggestion[]> {
+    const metadata = true;
+    const max_sample_size = 5;
+    const seed = 5;
+
+    const payload = {
+      collection_id,
+      metadata,
+      max_sample_size,
+      seed,
+    };
+
+    return this.rawRequest("sample_collection_members", "POST", payload);
+  }
+
   public countCollectionsByString(
     query: string,
   ): Promise<NameGraphCountCollectionsResponse> {
