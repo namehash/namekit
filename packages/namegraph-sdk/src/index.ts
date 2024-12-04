@@ -50,6 +50,16 @@ export interface NameGraphCountCollectionsResponse {
   count: number;
 }
 
+export interface NameGraphCollectionsByMemberResponse {
+  metadata: {
+    total_number_of_matched_collections: number;
+    processing_time_ms: number;
+    elasticsearch_processing_time_ms: number;
+    elasticsearch_communication_time_ms: number;
+  };
+  collections: NameGraphSuggestion[];
+}
+
 export interface NameGraphOptions {
   namegraphEndpoint?: string;
 }
@@ -173,6 +183,27 @@ export class NameGraph {
     };
 
     return this.rawRequest("count_collections_by_string", "POST", payload);
+  }
+
+  public findCollectionsByMember(
+    label: string,
+  ): Promise<NameGraphCollectionsByMemberResponse> {
+    const mode = "instant";
+    const limit_names = 10;
+    const offset = 0;
+    const sort_order = "AI";
+    const max_results = 3;
+
+    const payload = {
+      limit_names,
+      offset,
+      sort_order,
+      label,
+      mode,
+      max_results,
+    };
+
+    return this.rawRequest("find_collections_by_member", "POST", payload);
   }
 
   async rawRequest(
