@@ -2,6 +2,44 @@ import fetch from "cross-fetch";
 
 const DEFAULT_ENDPOINT = "http://100.24.45.225/";
 
+export const NameGraphGroupingCategory = {
+  related: "related",
+  wordplay: "wordplay",
+  alternates: "alternates",
+  emojify: "emojify",
+  expand: "expand",
+  gowild: "gowild",
+  other: "other",
+} as const;
+
+export type NameGraphGroupingCategory =
+  (typeof NameGraphGroupingCategory)[keyof typeof NameGraphGroupingCategory];
+
+export interface NameGraphSuggestion {
+  name: string;
+  tokenized_label: string[];
+  metadata: {
+    pipeline_name: string;
+    interpretation: (string | null)[];
+    cached_status: string;
+    categories: string[];
+    cached_interesting_score: number | null;
+    applied_strategies: string[][];
+    collection_title: string | null;
+    collection_id: string | null;
+    grouping_category: NameGraphGroupingCategory | null;
+  };
+}
+
+export interface NameGraphCategory {
+  suggestions: NameGraphSuggestion[];
+}
+
+export interface NamesGeneratedGroupedByCategory {
+  categories: NameGraphCategory[];
+  all_tokenizations: [];
+}
+
 export interface NameGraphOptions {
   namegraphEndpoint?: string;
 }
@@ -22,6 +60,37 @@ export class NameGraph {
   constructor({ namegraphEndpoint = DEFAULT_ENDPOINT }: NameGraphOptions = {}) {
     this.namegraphEndpoint = new URL(namegraphEndpoint);
     this.abortController = new AbortController();
+  }
+
+  public groupedByCategory(
+    label: string,
+  ): Promise<NamesGeneratedGroupedByCategory> {
+    const metadata = true;
+    const sorter = "weighted-sampling";
+    const min_suggestions = 100;
+    const max_suggestions = 100;
+    const min_primary_fraction = 0.1;
+    const mode = "full";
+    const enable_learning_to_rank = true;
+    const name_diversity_ratio = 0.5;
+    const max_per_type = 2;
+
+    const payload = {
+      label,
+      metadata,
+      sorter,
+      min_suggestions,
+      max_suggestions,
+      min_primary_fraction,
+      params: {
+        mode,
+        enable_learning_to_rank,
+        name_diversity_ratio,
+        max_per_type,
+      },
+    };
+
+    return this.rawRequest(`grouped-by-category`, "POST", payload);
   }
 
   async rawRequest(
