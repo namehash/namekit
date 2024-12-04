@@ -35,9 +35,19 @@ export interface NameGraphCategory {
   suggestions: NameGraphSuggestion[];
 }
 
-export interface NamesGeneratedGroupedByCategory {
+export interface NameGraphNamesGeneratedGroupedByCategoryResponse {
   categories: NameGraphCategory[];
   all_tokenizations: [];
+}
+
+export interface NameGraphCountCollectionsResponse {
+  metadata: {
+    total_number_of_matched_collections: number;
+    processing_time_ms: number;
+    elasticsearch_processing_time_ms: number;
+    elasticsearch_communication_time_ms: number;
+  };
+  count: number;
 }
 
 export interface NameGraphOptions {
@@ -123,7 +133,7 @@ export class NameGraph {
 
   public groupedByCategory(
     label: string,
-  ): Promise<NamesGeneratedGroupedByCategory> {
+  ): Promise<NameGraphNamesGeneratedGroupedByCategoryResponse> {
     const metadata = true;
     const sorter = "weighted-sampling";
     const min_suggestions = 100;
@@ -150,6 +160,19 @@ export class NameGraph {
     };
 
     return this.rawRequest(`grouped-by-category`, "POST", payload);
+  }
+
+  public countCollectionsByString(
+    query: string,
+  ): Promise<NameGraphCountCollectionsResponse> {
+    const mode = "instant";
+
+    const payload = {
+      query,
+      mode,
+    };
+
+    return this.rawRequest("count_collections_by_string", "POST", payload);
   }
 
   async rawRequest(
