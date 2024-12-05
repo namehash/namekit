@@ -71,15 +71,26 @@ export interface NameGraphCategory {
   suggestions: NameGraphSuggestion[];
 }
 
+export interface NameGraphRelatedCollectionsSummarizedResponse {
+  collection_id: string;
+  collection_title: string;
+  collection_members_count: number;
+}
+
 export interface NameGraphGroupedByCategoryResponse {
   categories: NameGraphCategory[];
   all_tokenizations: [];
 }
 
-export interface NameGraphSuggestionsByCategoryResponse {
+export interface NameGraphFetchTopCollectionMembersResponse {
+  suggestions: NameGraphSuggestion[];
   name: string;
+  type: string;
+  collection_id: string;
+  collection_title: string;
+  collection_members_count: string;
+  related_collections: NameGraphRelatedCollectionsSummarizedResponse[];
 }
-
 export interface NameGraphCountCollectionsResponse {
   metadata: {
     total_number_of_matched_collections: number;
@@ -201,6 +212,21 @@ export class NameGraph {
     };
 
     return this.rawRequest(`grouped-by-category`, "POST", payload);
+  }
+
+  public fetchTopCollectionMembers(
+    collection_id: string,
+  ): Promise<NameGraphFetchTopCollectionMembersResponse> {
+    const metadata = true;
+    const max_recursive_related_collections = 3;
+
+    const payload = {
+      metadata,
+      collection_id,
+      max_recursive_related_collections,
+    };
+
+    return this.rawRequest("fetch_top_collection_members", "POST", payload);
   }
 
   public suggestionsByCategory(label: string): Promise<NameGraphSuggestion[]> {
