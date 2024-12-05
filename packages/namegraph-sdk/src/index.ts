@@ -340,6 +340,27 @@ export class NameGraph {
     return this.rawRequest(`suggestions_by_category`, "POST", payload);
   }
 
+  public scrambleCollectionTokens(
+    collection_id: string,
+  ): Promise<NameGraphSuggestion[]> {
+    const metadata = true;
+    const method = "left-right-shuffle-with-unigrams";
+    const n_top_members = 25;
+    const max_suggestions = 10;
+    const seed = 0;
+
+    const payload = {
+      collection_id,
+      metadata,
+      method,
+      n_top_members,
+      max_suggestions,
+      seed,
+    };
+
+    return this.rawRequest("scramble_collection_tokens", "POST", payload);
+  }
+
   public countCollectionsByString(
     query: string,
   ): Promise<NameGraphCountCollectionsResponse> {
