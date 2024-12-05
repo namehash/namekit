@@ -7,6 +7,7 @@ export const NameGraphGroupingCategory = {
   wordplay: "wordplay",
   alternates: "alternates",
   emojify: "emojify",
+  community: "community",
   expand: "expand",
   gowild: "gowild",
   other: "other",
@@ -14,6 +15,41 @@ export const NameGraphGroupingCategory = {
 
 export type NameGraphGroupingCategory =
   (typeof NameGraphGroupingCategory)[keyof typeof NameGraphGroupingCategory];
+
+// Grouping categories params for req body
+export type NameGraphGroupingCategoryParams = {
+  min_suggestions: number;
+  max_suggestions: number;
+};
+
+export type NameGraphOtherCategoryParams = NameGraphGroupingCategoryParams & {
+  min_total_suggestions: number;
+};
+
+export type NameGraphRelatedCategoryParams = {
+  max_related_collections: number;
+  max_names_per_related_collection: number;
+  max_recursive_related_collections: number;
+  enable_learning_to_rank: boolean;
+  name_diversity_ratio: number | null;
+  max_per_type: number | null;
+};
+
+export type AllNameGraphGroupingCategoryParamsPossible =
+  | NameGraphGroupingCategoryParams
+  | NameGraphOtherCategoryParams
+  | NameGraphRelatedCategoryParams;
+
+export type TypedNameGraphGroupingCategoryParams = {
+  [NameGraphGroupingCategory.related]: NameGraphRelatedCategoryParams;
+  [NameGraphGroupingCategory.wordplay]: NameGraphGroupingCategoryParams;
+  [NameGraphGroupingCategory.alternates]: NameGraphGroupingCategoryParams;
+  [NameGraphGroupingCategory.emojify]: NameGraphGroupingCategoryParams;
+  [NameGraphGroupingCategory.community]: NameGraphGroupingCategoryParams;
+  [NameGraphGroupingCategory.expand]: NameGraphGroupingCategoryParams;
+  [NameGraphGroupingCategory.gowild]: NameGraphGroupingCategoryParams;
+  [NameGraphGroupingCategory.other]: NameGraphOtherCategoryParams;
+};
 
 export interface NameGraphSuggestion {
   name: string;
@@ -27,7 +63,7 @@ export interface NameGraphSuggestion {
     applied_strategies: string[][];
     collection_title: string | null;
     collection_id: string | null;
-    grouping_category: NameGraphGroupingCategory | null;
+    grouping_category: string | null;
   };
 }
 
@@ -41,7 +77,7 @@ export interface NameGraphRelatedCollectionsSummarizedResponse {
   collection_members_count: number;
 }
 
-export interface NameGraphNamesGeneratedGroupedByCategoryResponse {
+export interface NameGraphGroupedByCategoryResponse {
   categories: NameGraphCategory[];
   all_tokenizations: [];
 }
@@ -55,7 +91,6 @@ export interface NameGraphFetchTopCollectionMembersResponse {
   collection_members_count: string;
   related_collections: NameGraphRelatedCollectionsSummarizedResponse[];
 }
-
 export interface NameGraphCountCollectionsResponse {
   metadata: {
     total_number_of_matched_collections: number;
@@ -107,6 +142,8 @@ class NameGraphError extends Error {
   }
 }
 
+const DEFAULT_METADATA = true;
+
 export class NameGraph {
   private namegraphEndpoint: URL;
   private abortController: AbortController;
@@ -149,8 +186,7 @@ export class NameGraph {
 
   public groupedByCategory(
     label: string,
-  ): Promise<NameGraphNamesGeneratedGroupedByCategoryResponse> {
-    const metadata = true;
+  ): Promise<NameGraphGroupedByCategoryResponse> {
     const sorter = "weighted-sampling";
     const min_suggestions = 100;
     const max_suggestions = 100;
@@ -162,7 +198,7 @@ export class NameGraph {
 
     const payload = {
       label,
-      metadata,
+      metadata: DEFAULT_METADATA,
       sorter,
       min_suggestions,
       max_suggestions,
@@ -191,6 +227,61 @@ export class NameGraph {
     };
 
     return this.rawRequest("fetch_top_collection_members", "POST", payload);
+  }
+
+  public suggestionsByCategory(label: string): Promise<NameGraphSuggestion[]> {
+    const mode = "full";
+
+    const categoriesQueryConfig: TypedNameGraphGroupingCategoryParams = {
+      [NameGraphGroupingCategory.related]: {
+        enable_learning_to_rank: true,
+        max_names_per_related_collection: 10,
+        max_per_type: 2,
+        max_recursive_related_collections: 3,
+        max_related_collections: 6,
+        name_diversity_ratio: 0.5,
+      },
+      [NameGraphGroupingCategory.wordplay]: {
+        max_suggestions: 10,
+        min_suggestions: 2,
+      },
+      [NameGraphGroupingCategory.alternates]: {
+        max_suggestions: 10,
+        min_suggestions: 2,
+      },
+      [NameGraphGroupingCategory.emojify]: {
+        max_suggestions: 10,
+        min_suggestions: 2,
+      },
+      [NameGraphGroupingCategory.community]: {
+        max_suggestions: 10,
+        min_suggestions: 2,
+      },
+      [NameGraphGroupingCategory.expand]: {
+        max_suggestions: 10,
+        min_suggestions: 2,
+      },
+      [NameGraphGroupingCategory.gowild]: {
+        max_suggestions: 10,
+        min_suggestions: 2,
+      },
+      [NameGraphGroupingCategory.other]: {
+        max_suggestions: 10,
+        min_suggestions: 6,
+        min_total_suggestions: 50,
+      },
+    };
+
+    const payload = {
+      label,
+      categories: categoriesQueryConfig,
+      params: {
+        mode,
+        metadata: DEFAULT_METADATA,
+      },
+    };
+
+    return this.rawRequest(`suggestions_by_category`, "POST", payload);
   }
 
   public countCollectionsByString(
