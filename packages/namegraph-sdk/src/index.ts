@@ -1,6 +1,6 @@
 import fetch from "cross-fetch";
 
-const DEFAULT_ENDPOINT = "http://100.24.45.225/";
+const DEFAULT_ENDPOINT = "http://api.namegraph.dev/";
 
 export const NameGraphGroupingCategory = {
   related: "related",
