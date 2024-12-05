@@ -71,15 +71,26 @@ export interface NameGraphCategory {
   suggestions: NameGraphSuggestion[];
 }
 
+export interface NameGraphRelatedCollectionsSummarizedResponse {
+  collection_id: string;
+  collection_title: string;
+  collection_members_count: number;
+}
+
 export interface NameGraphGroupedByCategoryResponse {
   categories: NameGraphCategory[];
   all_tokenizations: [];
 }
 
-export interface NameGraphSuggestionsByCategoryResponse {
+export interface NameGraphFetchTopCollectionMembersResponse {
+  suggestions: NameGraphSuggestion[];
   name: string;
+  type: string;
+  collection_id: string;
+  collection_title: string;
+  collection_members_count: string;
+  related_collections: NameGraphRelatedCollectionsSummarizedResponse[];
 }
-
 export interface NameGraphCountCollectionsResponse {
   metadata: {
     total_number_of_matched_collections: number;
@@ -88,6 +99,16 @@ export interface NameGraphCountCollectionsResponse {
     elasticsearch_communication_time_ms: number;
   };
   count: number;
+}
+
+export interface NameGraphCollectionsByMemberResponse {
+  metadata: {
+    total_number_of_matched_collections: number;
+    processing_time_ms: number;
+    elasticsearch_processing_time_ms: number;
+    elasticsearch_communication_time_ms: number;
+  };
+  collections: NameGraphSuggestion[];
 }
 
 export interface NameGraphOptions {
@@ -111,7 +132,7 @@ export interface Collection {
   avatar_image: string;
 }
 
-export interface FindCollectionsByStringResponse {
+export interface FindCollectionsResponse {
   metadata: {
     total_number_of_matched_collections: number;
     processing_time_ms: number;
@@ -140,37 +161,6 @@ export class NameGraph {
   constructor({ namegraphEndpoint = DEFAULT_ENDPOINT }: NameGraphOptions = {}) {
     this.namegraphEndpoint = new URL(namegraphEndpoint);
     this.abortController = new AbortController();
-  }
-
-  public findCollectionsByString(
-    query: string,
-  ): Promise<FindCollectionsByStringResponse> {
-    const offset = 0;
-    const mode = "instant";
-    const limit_names = 10;
-    const max_per_type = 3;
-    const sort_order = "AI";
-    const min_other_collections = 0;
-    const max_other_collections = 3;
-    const max_total_collections = 6;
-    const name_diversity_ratio = 0.5;
-    const max_related_collections = 3;
-
-    const payload = {
-      limit_names,
-      offset,
-      sort_order,
-      max_related_collections,
-      max_per_type,
-      name_diversity_ratio,
-      min_other_collections,
-      max_other_collections,
-      max_total_collections,
-      query,
-      mode,
-    };
-
-    return this.rawRequest("find_collections_by_string", "POST", payload);
   }
 
   public groupedByCategory(
@@ -218,6 +208,81 @@ export class NameGraph {
     };
 
     return this.rawRequest("sample_collection_members", "POST", payload);
+  }
+
+  public findCollectionsByString(
+    query: string,
+  ): Promise<FindCollectionsResponse> {
+    const offset = 0;
+    const mode = "instant";
+    const limit_names = 10;
+    const max_per_type = 3;
+    const sort_order = "AI";
+    const min_other_collections = 0;
+    const max_other_collections = 3;
+    const max_total_collections = 6;
+    const name_diversity_ratio = 0.5;
+    const max_related_collections = 3;
+
+    const payload = {
+      limit_names,
+      offset,
+      sort_order,
+      max_related_collections,
+      max_per_type,
+      name_diversity_ratio,
+      min_other_collections,
+      max_other_collections,
+      max_total_collections,
+      query,
+      mode,
+    };
+
+    return this.rawRequest("find_collections_by_string", "POST", payload);
+  }
+
+  public findCollectionsByCollection(
+    collection_id: string,
+  ): Promise<FindCollectionsResponse> {
+    const limit_names = 10;
+    const offset = 0;
+    const sort_order = "AI";
+    const max_related_collections = 3;
+    const max_per_type = 3;
+    const name_diversity_ratio = 0.5;
+    const min_other_collections = 0;
+    const max_other_collections = 3;
+    const max_total_collections = 6;
+
+    const payload = {
+      limit_names,
+      offset,
+      sort_order,
+      max_related_collections,
+      max_per_type,
+      name_diversity_ratio,
+      min_other_collections,
+      max_other_collections,
+      max_total_collections,
+      collection_id,
+    };
+
+    return this.rawRequest("find_collections_by_collection", "POST", payload);
+  }
+
+  public fetchTopCollectionMembers(
+    collection_id: string,
+  ): Promise<NameGraphFetchTopCollectionMembersResponse> {
+    const metadata = true;
+    const max_recursive_related_collections = 3;
+
+    const payload = {
+      metadata,
+      collection_id,
+      max_recursive_related_collections,
+    };
+
+    return this.rawRequest("fetch_top_collection_members", "POST", payload);
   }
 
   public suggestionsByCategory(label: string): Promise<NameGraphSuggestion[]> {
@@ -286,6 +351,27 @@ export class NameGraph {
     };
 
     return this.rawRequest("count_collections_by_string", "POST", payload);
+  }
+
+  public findCollectionsByMember(
+    label: string,
+  ): Promise<NameGraphCollectionsByMemberResponse> {
+    const mode = "instant";
+    const limit_names = 10;
+    const offset = 0;
+    const sort_order = "AI";
+    const max_results = 3;
+
+    const payload = {
+      limit_names,
+      offset,
+      sort_order,
+      label,
+      mode,
+      max_results,
+    };
+
+    return this.rawRequest("find_collections_by_member", "POST", payload);
   }
 
   async rawRequest(
