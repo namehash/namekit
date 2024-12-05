@@ -132,7 +132,7 @@ export interface Collection {
   avatar_image: string;
 }
 
-export interface FindCollectionsByStringResponse {
+export interface FindCollectionsResponse {
   metadata: {
     total_number_of_matched_collections: number;
     processing_time_ms: number;
@@ -163,37 +163,6 @@ export class NameGraph {
     this.abortController = new AbortController();
   }
 
-  public findCollectionsByString(
-    query: string,
-  ): Promise<FindCollectionsByStringResponse> {
-    const offset = 0;
-    const mode = "instant";
-    const limit_names = 10;
-    const max_per_type = 3;
-    const sort_order = "AI";
-    const min_other_collections = 0;
-    const max_other_collections = 3;
-    const max_total_collections = 6;
-    const name_diversity_ratio = 0.5;
-    const max_related_collections = 3;
-
-    const payload = {
-      limit_names,
-      offset,
-      sort_order,
-      max_related_collections,
-      max_per_type,
-      name_diversity_ratio,
-      min_other_collections,
-      max_other_collections,
-      max_total_collections,
-      query,
-      mode,
-    };
-
-    return this.rawRequest("find_collections_by_string", "POST", payload);
-  }
-
   public groupedByCategory(
     label: string,
   ): Promise<NameGraphGroupedByCategoryResponse> {
@@ -222,6 +191,66 @@ export class NameGraph {
     };
 
     return this.rawRequest(`grouped-by-category`, "POST", payload);
+  }
+
+  public findCollectionsByString(
+    query: string,
+  ): Promise<FindCollectionsResponse> {
+    const offset = 0;
+    const mode = "instant";
+    const limit_names = 10;
+    const max_per_type = 3;
+    const sort_order = "AI";
+    const min_other_collections = 0;
+    const max_other_collections = 3;
+    const max_total_collections = 6;
+    const name_diversity_ratio = 0.5;
+    const max_related_collections = 3;
+
+    const payload = {
+      limit_names,
+      offset,
+      sort_order,
+      max_related_collections,
+      max_per_type,
+      name_diversity_ratio,
+      min_other_collections,
+      max_other_collections,
+      max_total_collections,
+      query,
+      mode,
+    };
+
+    return this.rawRequest("find_collections_by_string", "POST", payload);
+  }
+
+  public findCollectionsByCollection(
+    collection_id: string,
+  ): Promise<FindCollectionsResponse> {
+    const limit_names = 10;
+    const offset = 0;
+    const sort_order = "AI";
+    const max_related_collections = 3;
+    const max_per_type = 3;
+    const name_diversity_ratio = 0.5;
+    const min_other_collections = 0;
+    const max_other_collections = 3;
+    const max_total_collections = 6;
+
+    const payload = {
+      limit_names,
+      offset,
+      sort_order,
+      max_related_collections,
+      max_per_type,
+      name_diversity_ratio,
+      min_other_collections,
+      max_other_collections,
+      max_total_collections,
+      collection_id,
+    };
+
+    return this.rawRequest("find_collections_by_collection", "POST", payload);
   }
 
   public fetchTopCollectionMembers(
