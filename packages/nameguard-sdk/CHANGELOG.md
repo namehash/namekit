@@ -1,5 +1,13 @@
 # @namehash/nameguard
 
+## 0.7.0
+
+### Minor Changes
+
+- 47de3ad: - Rename `ImpersonationStatus` to `ImpersonationEstimate` to better manage expectations.
+  - Rename `endpoint` param to `nameguardEndpoint` when creating a NameGuard Client for more self-documenting code.
+  - Refined unit tests.
+
 ## 0.6.0
 
 ### Minor Changes
