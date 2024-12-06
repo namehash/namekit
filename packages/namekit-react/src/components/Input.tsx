@@ -25,7 +25,7 @@ const sizeClasses = {
 };
 
 const slotBaseClasses =
-  "nk-h-full nk-justify-center nk-flex nk-items-center nk-select-none";
+  "nk-h-full nk-justify-center nk-flex nk-items-center nk-select-none nk-cursor-text";
 
 const slotColorClasses = {
   primary: "nk-text-gray-500",
@@ -45,12 +45,12 @@ const getVariantClasses = (
 
   const stateClasses = disabled
     ? {
-        primary: "nk-text-gray-500 nk-bg-gray-50",
-        secondary: "nk-text-gray-500 nk-bg-gray-200",
+        primary: "nk-text-gray-500 nk-bg-gray-50 nk-cursor-default",
+        secondary: "nk-text-gray-500 nk-bg-gray-200 nk-cursor-default",
       }
     : {
-        primary: "nk-bg-white hover:nk-border-gray-400",
-        secondary: "nk-bg-gray-100 hover:nk-border-gray-300",
+        primary: "nk-bg-white hover:nk-border-gray-400 nk-cursor-text",
+        secondary: "nk-bg-gray-100 hover:nk-border-gray-300 nk-cursor-text",
       };
 
   return cc([baseClasses[variant], stateClasses[variant]]);
@@ -85,7 +85,7 @@ export const Input: React.FC<InputProps> & { Slot: React.FC<SlotProps> } = ({
   ]);
 
   const inputClasses = cc([
-    "nk-ring-0 focus:nk-outline-none nk-w-full h-full placeholder:nk-text-gray-500 nk-bg-transparent nk-border-red-300 nk-flex-1",
+    "nk-ring-0 nk-p-0 focus:nk-outline-none focus:nk-ring-0 focus:nk-ring-offset-0 nk-w-full h-full placeholder:nk-text-gray-500 nk-bg-transparent nk-outline-none nk-border-0 nk-flex-1",
     hasSlot && slotPosition === "left" ? "nk-pl-2" : "nk-pr-2",
   ]);
 
