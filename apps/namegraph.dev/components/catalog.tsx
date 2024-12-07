@@ -67,7 +67,7 @@ export function Catalog({ onJsonChange }: CatalogProps) {
           />
           {hasJSONFormatError ? (
             <p className="underline text-red-400 text-xs mx-auto text-center pt-6">
-              Please review the JSON above, it is in the wrong format
+              Please review the JSON above as it is in the wrong format
             </p>
           ) : null}
         </div>
