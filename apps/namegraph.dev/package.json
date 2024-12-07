@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@namehash/namekit-react": "0.8.0",
     "@radix-ui/react-scroll-area": "^1.2.1",
     "@radix-ui/react-slot": "^1.1.0",
     "class-variance-authority": "^0.7.1",
