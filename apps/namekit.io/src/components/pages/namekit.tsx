@@ -9,7 +9,9 @@
 // import { getCalApi } from "@calcom/embed-react";
 // import { useEffect } from "react";
 
+import { BuildUiSection } from "../organisms/build-ui-section";
 import { HeroSection } from "../organisms/hero-section";
+import { TheVisionSection } from "../organisms/the-vision-section";
 
 export const NameKitPage = () => {
   // useEffect(() => {
@@ -34,8 +36,8 @@ export const NameKitPage = () => {
     <div>
       {/* <Layout> */}
       <HeroSection />
-      {/* <TheVisionSection /> */}
-      {/* <BuildUiSection /> */}
+      <TheVisionSection />
+      <BuildUiSection />
       {/* <ServicesSection /> */}
       {/* <BuildFutureSection /> */}
       {/* <RoadMap /> */}
