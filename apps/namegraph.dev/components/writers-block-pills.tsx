@@ -1,8 +1,7 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
+import { WritersBlockPill } from "./writers-block-pill";
 import { WritersBlockSuggestion } from "@/lib/utils";
-import { WritersBlockPill } from "./writersBlockPill";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { useEffect } from "react";

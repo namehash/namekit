@@ -2,13 +2,13 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Github } from "lucide-react";
 import Link from "next/link";
-import { NameHashLabsLogo } from "@/components/NamehashLabsLogo";
-import { ServiceProviderBadge } from "@/components/serviceProviderBadge";
-import { EmailIcon } from "../components/EmailIcon";
-import { GithubIcon } from "@/components/GithubIcon";
-import { TwitterIcon } from "@/components/TwitterIcon";
-import { FarcasterIcon } from "@/components/FarcasterIcon";
-import { TelegramIcon } from "@/components/TelegramIcon";
+import { NameHashLabsLogo } from "@/components/namehash-labs-logo";
+import { ServiceProviderBadge } from "@/components/service-provider-badge";
+import { EmailIcon } from "../components/email-icon";
+import { GithubIcon } from "@/components/github-icon";
+import { TwitterIcon } from "@/components/twitter-icon";
+import { FarcasterIcon } from "@/components/farcaster-icon";
+import { TelegramIcon } from "@/components/telegram-icon";
 import { Button } from "@/components/ui/button";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -36,19 +36,19 @@ const footerProducts = [
 const footerResources = [
   {
     name: "Contact us",
-    href: "/contact",
+    href: "https://namehashlabs.org/contact",
   },
   {
     name: "Careers",
-    href: "/careers",
+    href: "https://namehashlabs.org/careers",
   },
   {
     name: "Partners",
-    href: "/partners",
+    href: "https://namehashlabs.org/partners",
   },
   {
     name: "Brand assets",
-    href: "/brand-assets",
+    href: "https://namehashlabs.org/brand-assets",
   },
 ];
 
@@ -69,7 +69,7 @@ export default function RootLayout({
                     href="/"
                     className="text-black not-italic font-bold text-[22.683px] leading-[22.683px] tracking-[-0.907px] sm:text-[27.816px] sm:leading-[27.816px] sm:tracking-[-1.113px]"
                   >
-                    NameGuard
+                    NameGraph
                   </a>
                 </div>
               </div>
@@ -77,7 +77,7 @@ export default function RootLayout({
                 <div className="hidden items-center justify-center lg:flex gap-2">
                   <div className="hidden items-center justify-center xl:flex gap-2">
                     <Button variant="ghost" asChild>
-                      <Link href="https://api.nameguard.io/docs">Docs</Link>
+                      <Link href="http://100.24.45.225/docs">Docs</Link>
                     </Button>
 
                     <Button variant="ghost" asChild>
@@ -89,7 +89,9 @@ export default function RootLayout({
                   </div>
 
                   <Button variant="ghost" asChild>
-                    <a href="/contact">Contact</a>
+                    <a href="https://namehashlabs.org/contact" target="_blank">
+                      Contact
+                    </a>
                   </Button>
                 </div>
               </div>

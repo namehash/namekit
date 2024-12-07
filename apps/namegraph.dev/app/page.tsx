@@ -1,6 +1,6 @@
 "use client";
 
-import { WritersBlockPills } from "../components/writersBlockPills";
+import { WritersBlockPills } from "../components/writers-block-pills";
 import { Catalog } from "../components/catalog";
 import { useEffect } from "react";
 import {
@@ -39,7 +39,7 @@ export default function Home() {
             onIdeate={() => ideate(collectionsToConsider)}
           />
         </div>
-        <div className="w-full lg:w-[400px]">
+        <div className="w-full lg:w-[600px]">
           <Catalog onJsonChange={onCatalogChange} />
         </div>
       </div>
