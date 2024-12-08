@@ -276,6 +276,9 @@ importers:
       react-dom:
         specifier: 19.0.0-rc-66855b96-20241106
         version: 19.0.0-rc-66855b96-20241106(react@19.0.0-rc-66855b96-20241106)
+      react-wrap-balancer:
+        specifier: 1.1.1
+        version: 1.1.1(react@19.0.0-rc-66855b96-20241106)
     devDependencies:
       '@heroicons/react':
         specifier: 2.0.18
@@ -12718,6 +12721,10 @@ snapshots:
   react-wrap-balancer@1.1.1(react@18.3.1):
     dependencies:
       react: 18.3.1
+
+  react-wrap-balancer@1.1.1(react@19.0.0-rc-66855b96-20241106):
+    dependencies:
+      react: 19.0.0-rc-66855b96-20241106
 
   react@18.3.1:
     dependencies:

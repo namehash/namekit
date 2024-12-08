@@ -10,7 +10,10 @@
 // import { useEffect } from "react";
 
 import { BuildUiSection } from "../organisms/build-ui-section";
+import { BuildFutureSection } from "../organisms/building-future-section";
+import { GetYourWeb3NameSection } from "../organisms/get-your-web3-name-section";
 import { HeroSection } from "../organisms/hero-section";
+import { ServicesSection } from "../organisms/services-section";
 import { TheVisionSection } from "../organisms/the-vision-section";
 
 export const NameKitPage = () => {
@@ -38,14 +41,14 @@ export const NameKitPage = () => {
       <HeroSection />
       <TheVisionSection />
       <BuildUiSection />
-      {/* <ServicesSection /> */}
-      {/* <BuildFutureSection /> */}
+      <ServicesSection />
+      <BuildFutureSection />
       {/* <RoadMap /> */}
-      {/* <GetYourWeb3NameSection
-          title="Ready to get started?"
-          description="Our team is standing by to answer your questions and find the right solution for you"
-          buttonText="Schedule a call"
-        /> */}
+      <GetYourWeb3NameSection
+        title="Ready to get started?"
+        description="Our team is standing by to answer your questions and find the right solution for you"
+        buttonText="Schedule a call"
+      />
       {/* </Layout> */}
     </div>
   );
