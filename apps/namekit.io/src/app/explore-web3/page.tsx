@@ -9,14 +9,14 @@ import { SolanaLogo } from "@/components/atoms/icons/explore-web3-lp/solana-logo
 import { DogecoinText } from "@/components/atoms/icons/explore-web3-lp/dogecoin-text";
 import { PayLogo } from "@/components/atoms/icons/explore-web3-lp/pay-logo";
 import { MirrorIcon } from "@/components/atoms/icons/explore-web3-lp/mirror-icon";
-import { HeroicSection } from "@/components/molecules/explore-web3/heroic-section";
-import { SocialMessagingSection } from "@/components/molecules/explore-web3/social-messaging-section";
+import { HeroicSection } from "@/components/molecules/heroic-section";
+import { SocialMessagingSection } from "@/components/molecules/social-messaging-section";
 import { ExploreWeb3ProductSection } from "@/components/organisms/explore-web3-product-section";
-import { MetaverseSection } from "@/components/molecules/explore-web3/metaverse-section";
-import { BuySellSection } from "@/components/molecules/explore-web3/buy-sell-section";
-import { IdentitySection } from "@/components/molecules/explore-web3/identity-section";
-import { Web3WebsiteSection } from "@/components/molecules/explore-web3/web3-website-section";
-import { PortableIdentitySection } from "@/components/molecules/explore-web3/portable-identity-section";
+import { MetaverseSection } from "@/components/molecules/metaverse-section";
+import { BuySellSection } from "@/components/molecules/buy-sell-section";
+import { IdentitySection } from "@/components/molecules/identity-section";
+import { Web3WebsiteSection } from "@/components/molecules/web3-website-section";
+import { PortableIdentitySection } from "@/components/molecules/portable-identity-section";
 
 const title = "Explore Web3 - Explore the Exciting World of Web3";
 const description =

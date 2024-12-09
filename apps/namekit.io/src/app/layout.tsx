@@ -38,7 +38,6 @@ export const metadata: Metadata = {
       { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
     ],
   },
-  themeColor: "#ffffff",
   other: {
     "msapplication-TileColor": "#da532c",
   },
