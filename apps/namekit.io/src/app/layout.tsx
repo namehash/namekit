@@ -60,6 +60,7 @@ export default function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+        <script src="https://app.cal.com/embed.js" async></script>
       </Head>
       <body
         className={`${inter.variable} ${unifont.variable} ${adobeBlank.variable} antialiased`}

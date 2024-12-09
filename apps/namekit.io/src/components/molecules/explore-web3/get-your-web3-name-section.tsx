@@ -1,5 +1,6 @@
+import CalButton from "../../01-atoms/namekit-landing-page/cal-button";
 import Image from "next/image";
-import CalButton from "../atoms/namekit-landing-page/cal-button";
+
 interface GetYourWeb3NameSectionProps {
   title: string;
   description: string;
@@ -39,7 +40,7 @@ export const GetYourWeb3NameSection = ({
             {description}
           </p>
           <CalButton className="text-sm lg:text-[16px] leading-[24px] mt-5 bg-white z-20 text-black px-[16px] py-[9px] lg:px-[25px] lg:py-[13px] rounded-[8px] hover:bg-gray-50 transition-colors duration-200">
-            Schedule a call
+            {buttonText}
           </CalButton>
         </div>
       </div>
