@@ -1,7 +1,5 @@
-"use client";
-
-import { useEffect, useRef } from "react";
 import { getCalApi } from "@calcom/embed-react";
+import { useEffect } from "react";
 import {
   BuildFutureSection,
   BuildUiSection,
@@ -12,35 +10,23 @@ import {
 } from "@/components/organisms";
 
 export const NameKitPage = () => {
-  const calApiInitialized = useRef(false);
-
-  useEffect(() => {
-    if (typeof window !== "undefined" && !calApiInitialized.current) {
-      calApiInitialized.current = true;
-
-      const initCal = async () => {
-        try {
-          const cal = await getCalApi();
-          cal("ui", {
-            cssVarsPerTheme: {
-              light: {
-                "--brand-color": "#000000",
-              },
-              dark: {
-                "--brand-color": "#000000",
-              },
-            },
-            hideEventTypeDetails: false,
-            layout: "month_view",
-          });
-        } catch (error) {
-          console.error("Failed to initialize Cal.com:", error);
-        }
-      };
-
-      initCal();
-    }
-  }, []);
+  // useEffect(() => {
+  //   (async function () {
+  //     const cal = await getCalApi();
+  //     cal("ui", {
+  //       cssVarsPerTheme: {
+  //         light: {
+  //           "--brand-color": "#000000",
+  //         },
+  //         dark: {
+  //           "--brand-color": "#000000",
+  //         },
+  //       },
+  //       hideEventTypeDetails: false,
+  //       layout: "month_view",
+  //     });
+  //   })();
+  // }, []);
 
   return (
     <div>
