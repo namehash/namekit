@@ -2,7 +2,7 @@
 import { CommandLineIcon, PaintBrushIcon } from "@heroicons/react/24/solid";
 import { RocketLaunchIcon } from "@heroicons/react/24/outline";
 import { Balancer } from "react-wrap-balancer";
-import IconLabel from "../atoms/namekit-landing-page/icon-label";
+import IconLabel from "../atoms/icon-label";
 import { GithubIcon } from "../atoms";
 
 interface ItemProps {

@@ -24,17 +24,17 @@ import OpenSeaIcon from "../atoms/icons/opensea-icon";
 import { X2y2Icon } from "../atoms/icons/x2y2-icon";
 import { LooksRareIcon } from "../atoms/icons/looksrare-icon";
 import { NamestoneLogo } from "../atoms/icons/explore-web3-lp/namestone-logo";
-import LensProtocolLogo from "../atoms/namekit-landing-page/icons/lens-protocol-logo";
-import FarcasterLogo from "../atoms/namekit-landing-page/icons/farcaster-logo";
-import EfpLogo from "../atoms/namekit-landing-page/icons/efp-logo";
-import XmtpLogo from "../atoms/namekit-landing-page/icons/xmtp-logo";
-import WalletConnectLogo from "../atoms/namekit-landing-page/icons/wallet-connect-logo";
-import PushLogo from "../atoms/namekit-landing-page/icons/push-logo";
-import StabilityAiLogo from "../atoms/namekit-landing-page/icons/stability-ai-logo";
-import UnrugableLogo from "../atoms/namekit-landing-page/icons/unruggable-logo";
-import NamespaceLogo from "../atoms/namekit-landing-page/icons/namespace-logo";
-import RaribleIcon from "../atoms/namekit-landing-page/icons/rarible-icon";
-import CoinbaseNftIcon from "../atoms/namekit-landing-page/icons/coinbase-nft-icon";
+import LensProtocolLogo from "../atoms/icons/lens-protocol-logo";
+import FarcasterLogo from "../atoms/icons/farcaster-logo";
+import EfpLogo from "../atoms/icons/efp-logo";
+import XmtpLogo from "../atoms/icons/xmtp-logo";
+import WalletConnectLogo from "../atoms/icons/wallet-connect-logo";
+import PushLogo from "../atoms/icons/push-logo";
+import StabilityAiLogo from "../atoms/icons/stability-ai-logo";
+import UnrugableLogo from "../atoms/icons/unruggable-logo";
+import NamespaceLogo from "../atoms/icons/namespace-logo";
+import RaribleIcon from "../atoms/icons/rarible-icon";
+import CoinbaseNftIcon from "../atoms/icons/coinbase-nft-icon";
 interface ServiceProps {
   label: {
     icon: React.ReactElement;

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import CalButton from "../atoms/namekit-landing-page/cal-button";
+import CalButton from "../atoms/cal-button";
 interface GetYourWeb3NameSectionProps {
   title: string;
   description: string;
