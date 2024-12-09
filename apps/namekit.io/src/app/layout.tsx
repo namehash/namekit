@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
-import "./fonts.css";
+import "./../styles/globals.css";
+import "./../styles/fonts.css";
 
 import Head from "next/head";
 import { Header } from "@/components/organisms/header";
@@ -9,12 +9,12 @@ import { NamekitFooter } from "@/components/organisms/namekit-footer";
 import { Inter } from "next/font/google";
 
 const unifont = localFont({
-  src: "./fonts/unifont.otf",
+  src: "../../public/fonts/unifont.otf",
   variable: "--font-unifont",
 });
 
 const adobeBlank = localFont({
-  src: "./fonts/AdobeBlank.ttf",
+  src: "../../public/fonts/AdobeBlank.ttf",
   variable: "--font-adobe-blank",
 });
 

@@ -1,5 +1,5 @@
 import Balancer from "react-wrap-balancer";
-import React, { useState } from "react";
+import React from "react";
 import cc from "classcat";
 import {
   ArrowPathIcon,

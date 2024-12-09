@@ -813,14 +813,14 @@ When using this, you will likely need to set font-variation-settings explicitly,
 @font-face {
   font-family: "Unifont";
   font-display: block;
-  src: url("./fonts/Unifont.otf");
+  src: url("/fonts/Unifont.otf");
 }
 
 /* For testing purposes only, used in /pages/font-test.tsx as a fallback */
 @font-face {
   font-family: "Adobe Blank";
   font-display: block;
-  src: url("./fonts/AdobeBlank.ttf");
+  src: url("../../public/fonts/AdobeBlank.ttf");
 }
 
 /* Checkout tailwind.config.js to see project fonts being used */
