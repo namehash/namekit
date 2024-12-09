@@ -15,7 +15,6 @@ import { Fragment } from "react";
 import Link from "next/link";
 import cc from "classcat";
 import { useScreenSize } from "@/hooks/useScreenSize";
-import { NamehashIcon } from "../atoms/icons/namehash-icon";
 
 /*
   Commented out from v1.0
@@ -28,11 +27,6 @@ export const Header = () => {
     const dispatch = useAppDispatch();
   */
 
-  const NamehashMobileNavigationLinks = [
-    {
-      element: <Link href="/explore">Explore</Link>,
-    },
-  ];
   const NamekitMobileNavigationLinks = [
     /*
       Commented out for first NameKit LP release
