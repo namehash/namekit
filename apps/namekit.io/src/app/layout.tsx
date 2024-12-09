@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import "./fonts.css";
+
 import Head from "next/head";
 import { Header } from "@/components/organisms/header";
 import { NamekitFooter } from "@/components/organisms/namekit-footer";
+import { Inter } from "next/font/google";
 
 const unifont = localFont({
   src: "./fonts/unifont.otf",
@@ -13,6 +16,11 @@ const unifont = localFont({
 const adobeBlank = localFont({
   src: "./fonts/AdobeBlank.ttf",
   variable: "--font-adobe-blank",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
 });
 
 export const metadata: Metadata = {
@@ -37,7 +45,7 @@ export default function RootLayout({
         />
       </Head>
       <body
-        className={`${unifont.variable} ${adobeBlank.variable} antialiased`}
+        className={`${inter.variable} ${unifont.variable} ${adobeBlank.variable} antialiased`}
       >
         <Header />
         {children}
