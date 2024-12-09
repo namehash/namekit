@@ -1,5 +1,3 @@
-import { getCalApi } from "@calcom/embed-react";
-import { useEffect } from "react";
 import {
   BuildFutureSection,
   BuildUiSection,
