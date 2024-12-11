@@ -1,5 +1,20 @@
 # @namehash/nameguard-js
 
+## 0.8.0
+
+### Minor Changes
+
+- 47de3ad: - Optimize startup time by lazily initializing in-memory data models.
+  - Refine documentation.
+  - Refine unit tests.
+  - Warn about likely timeout errors if Etherum provider environment variable is not set when - running unit tests.
+  - Upgrade to the latest NameGuard SDK.
+
+### Patch Changes
+
+- Updated dependencies [47de3ad]
+  - @namehash/nameguard@0.7.0
+
 ## 0.7.0
 
 ### Minor Changes
