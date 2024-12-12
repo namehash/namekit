@@ -1,7 +1,6 @@
 import fetch from "cross-fetch";
 import {
   DEFAULT_ENDPOINT,
-  metadata,
   NameGraphFindCollectionsResponse,
   NameGraphCollectionByMemberResponse,
   NameGraphCountCollectionsResponse,
@@ -9,25 +8,24 @@ import {
   NameGraphFetchTopCollectionMembersResponse,
   NameGraphGroupedByCategoryResponse,
   NameGraphGroupingCategory,
-  NameGraphConstructorParams,
+  NameGraphOptions,
   NameGraphSuggestion,
   TypedNameGraphGroupingCategoriesParams,
-  min_suggestions,
-  max_suggestions,
-  full_mode,
-  enable_learning_to_rank,
-  name_diversity_ratio,
-  max_per_type,
-  instant_mode,
+  DEFAULT_METADATA,
+  DEFAULT_MIN_SUGGESTIONS,
+  DEFAULT_MAX_SUGGESTIONS,
+  DEFAULT_FULL_MODE,
+  DEFAULT_ENABLE_LEARNING_TO_RANK,
+  DEFAULT_NAME_DIVERSITY_RATIO,
+  DEFAULT_MAX_PER_TYPE,
+  DEFAULT_INSTANT_MODE,
 } from "./utils";
 
 export class NameGraph {
   private namegraphEndpoint: URL;
   private abortController: AbortController;
 
-  constructor({
-    namegraphEndpoint = DEFAULT_ENDPOINT,
-  }: NameGraphConstructorParams = {}) {
+  constructor({ namegraphEndpoint = DEFAULT_ENDPOINT }: NameGraphOptions = {}) {
     this.namegraphEndpoint = new URL(namegraphEndpoint);
     this.abortController = new AbortController();
   }
@@ -40,16 +38,16 @@ export class NameGraph {
 
     const payload = {
       label,
-      metadata,
+      metadata: DEFAULT_METADATA,
       sorter,
-      min_suggestions,
-      max_suggestions,
+      min_suggestions: DEFAULT_MIN_SUGGESTIONS,
+      max_suggestions: DEFAULT_MAX_SUGGESTIONS,
       min_primary_fraction,
       params: {
-        mode: full_mode,
-        enable_learning_to_rank,
-        name_diversity_ratio,
-        max_per_type,
+        mode: DEFAULT_FULL_MODE,
+        enable_learning_to_rank: DEFAULT_ENABLE_LEARNING_TO_RANK,
+        name_diversity_ratio: DEFAULT_NAME_DIVERSITY_RATIO,
+        max_per_type: DEFAULT_MAX_PER_TYPE,
       },
     };
 
@@ -59,7 +57,7 @@ export class NameGraph {
   public suggestionsByCategory(label: string): Promise<NameGraphSuggestion[]> {
     const categoriesQueryConfig: TypedNameGraphGroupingCategoriesParams = {
       [NameGraphGroupingCategory.related]: {
-        enable_learning_to_rank,
+        enable_learning_to_rank: DEFAULT_ENABLE_LEARNING_TO_RANK,
         max_names_per_related_collection: 10,
         max_per_type: 2,
         max_recursive_related_collections: 3,
@@ -101,8 +99,8 @@ export class NameGraph {
       label,
       categories: categoriesQueryConfig,
       params: {
-        mode: full_mode,
-        metadata,
+        mode: DEFAULT_FULL_MODE,
+        metadata: DEFAULT_METADATA,
       },
     };
 
@@ -117,7 +115,7 @@ export class NameGraph {
 
     const payload = {
       collection_id,
-      metadata,
+      metadata: DEFAULT_METADATA,
       max_sample_size,
       seed,
     };
@@ -150,7 +148,7 @@ export class NameGraph {
 
     const payload = {
       collection_id,
-      metadata,
+      metadata: DEFAULT_METADATA,
       method,
       n_top_members,
       max_suggestions,
@@ -196,7 +194,7 @@ export class NameGraph {
   ): Promise<NameGraphCountCollectionsResponse> {
     const payload = {
       query,
-      mode: instant_mode,
+      mode: DEFAULT_INSTANT_MODE,
     };
 
     return this.rawRequest("count_collections_by_string", "POST", payload);
@@ -254,7 +252,7 @@ export class NameGraph {
       offset,
       sort_order,
       label,
-      mode: instant_mode,
+      mode: DEFAULT_INSTANT_MODE,
       max_results,
     };
 
@@ -301,10 +299,10 @@ export class NameGraph {
   }
 }
 
-export function createClient(options?: NameGraphConstructorParams) {
+export function createNameGraphClient(options?: NameGraphOptions) {
   return new NameGraph(options);
 }
 
-const defaultClient = createClient();
+const defaultClient = createNameGraphClient();
 
 export const namegraph = defaultClient;

@@ -156,18 +156,18 @@ export class NameGraphError extends Error {
   }
 }
 
-export type NameGraphConstructorParams = {
+export type NameGraphOptions = {
   namegraphEndpoint?: string;
 };
 
 /**
  * NameGraph Endpoints related code
  **/
-export const metadata = true;
-export const min_suggestions = 100;
-export const max_suggestions = 100;
-export const full_mode = "full";
-export const instant_mode = "instant";
-export const enable_learning_to_rank = true;
-export const name_diversity_ratio = 0.5;
-export const max_per_type = 2;
+export const DEFAULT_METADATA = true;
+export const DEFAULT_MIN_SUGGESTIONS = 100;
+export const DEFAULT_MAX_SUGGESTIONS = 100;
+export const DEFAULT_FULL_MODE = "full";
+export const DEFAULT_INSTANT_MODE = "instant";
+export const DEFAULT_ENABLE_LEARNING_TO_RANK = true;
+export const DEFAULT_NAME_DIVERSITY_RATIO = 0.5;
+export const DEFAULT_MAX_PER_TYPE = 2;
