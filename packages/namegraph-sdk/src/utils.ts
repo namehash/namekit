@@ -171,3 +171,73 @@ export const DEFAULT_INSTANT_MODE = "instant";
 export const DEFAULT_ENABLE_LEARNING_TO_RANK = true;
 export const DEFAULT_NAME_DIVERSITY_RATIO = 0.5;
 export const DEFAULT_MAX_PER_TYPE = 2;
+
+/**
+ * Writers block suggestions and collections
+ */
+export type WritersBlockSuggestion = {
+  collectionName: string;
+  suggestedName: string;
+  tokenizedSuggestedName: string[];
+};
+
+export type WritersBlockName = {
+  normalized_name: string;
+  tokenized_name: string[];
+};
+
+export type WritersBlockCollection = {
+  collection_id: string;
+  collection_name: string;
+  names: WritersBlockName[];
+};
+
+const getRandomElementOfArray = <Type>(array: Type[]): Type =>
+  array[Math.floor(Math.random() * array.length)];
+
+const getRandomWritersBlockSuggestion = (
+  array: WritersBlockCollection[],
+): WritersBlockSuggestion => {
+  const rawWritersBlockSuggestion = getRandomElementOfArray(array);
+  const rawName = getRandomElementOfArray(rawWritersBlockSuggestion.names);
+  return {
+    collectionName: rawWritersBlockSuggestion.collection_name,
+    suggestedName: rawName.normalized_name,
+    tokenizedSuggestedName: rawName.tokenized_name,
+  };
+};
+
+/**
+ * Gets one suggestion for each catalog's collections until suggestionsCount is reached.
+ * @param suggestionsCount max suggestions that will be returned
+ * @param catalog a catalog of collections to be sampled
+ * @returns an array of suggestions based on the catalog given. If no catalog is given, default catalog is used.
+ */
+export const sampleWritersBlockSuggestions = (
+  suggestionsCount: number,
+  catalog: WritersBlockCollection[],
+): WritersBlockSuggestion[] => {
+  const uniqueCollectionsNames = new Set();
+  const uniqueSuggestionsNames = new Set();
+  const result = [];
+
+  while (
+    result.length !== suggestionsCount &&
+    result.length !== catalog.length
+  ) {
+    const writersBlockSuggestion = getRandomWritersBlockSuggestion(catalog);
+
+    if (
+      uniqueCollectionsNames.has(writersBlockSuggestion.collectionName) ||
+      uniqueSuggestionsNames.has(writersBlockSuggestion.suggestedName)
+    ) {
+      continue;
+    } else {
+      uniqueCollectionsNames.add(writersBlockSuggestion.collectionName);
+      uniqueSuggestionsNames.add(writersBlockSuggestion.suggestedName);
+      result.push(writersBlockSuggestion);
+    }
+  }
+
+  return result;
+};

@@ -1,4 +1,4 @@
-import { WritersBlockCollection } from "./utils";
+import { WritersBlockCollection } from "@namehash/namegraph-sdk/utils";
 
 export const writersBlockSuggestions: WritersBlockCollection[] = [
   {

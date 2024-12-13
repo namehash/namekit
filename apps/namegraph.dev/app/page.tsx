@@ -3,13 +3,13 @@
 import { WritersBlockPills } from "../components/writers-block-pills";
 import { Catalog } from "../components/catalog";
 import { useEffect } from "react";
+import { useState } from "react";
+import { writersBlockSuggestions } from "@/lib/writers-block-suggestions";
 import {
   sampleWritersBlockSuggestions,
   WritersBlockCollection,
   WritersBlockSuggestion,
-} from "@/lib/utils";
-import { useState } from "react";
-import { writersBlockSuggestions } from "@/lib/writers-block-suggestions";
+} from "@namehash/namegraph-sdk/utils";
 
 export default function Home() {
   const [suggestions, setSuggestions] = useState<WritersBlockSuggestion[]>([]);
