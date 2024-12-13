@@ -37,7 +37,7 @@ const suggestions = await namegraph.groupedByCategory("zeus");
 ### Client Configuration
 
 ```typescript
-const client = createClient({
+const client = createNameGraphClient({
   namegraphEndpoint: "http://custom-api.endpoint.com", // Optional, defaults to http://api.namegraph.dev/
 });
 ```

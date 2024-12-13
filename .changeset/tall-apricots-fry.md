@@ -2,4 +2,4 @@
 "@namehash/namegraph-sdk": minor
 ---
 
-Update code organization in NameGraph SDK
+Add README to NameGraph SDK and update package's code organization
