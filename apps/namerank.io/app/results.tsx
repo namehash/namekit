@@ -11,6 +11,8 @@ interface ResultsProps {
 }
 
 export default async function Results({ name }: ResultsProps) {
+  if (!name) return null;
+
   const result = await namerank.inspectName(name, {});
 
   if (!result.namerank || !result.namerank.analysis) {

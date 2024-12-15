@@ -24,7 +24,6 @@ export default async function Home(props: HomeProps) {
           <Results name={labelForAnalysis} />
         </Suspense>
       )}
-      {/* {name && <Results name={name} />} */}
     </div>
   );
 }
