@@ -1,49 +1,85 @@
-import { analyzeNameRank } from "./actions";
+import { createClient } from "@namehash/namerank";
+import { Indicator } from "./indicator";
+
+const namerank = createClient({
+  namerankEndpoint:
+    "https://izzkysqb6d6qzhnpv4ybqyty2e0ktjwe.lambda-url.us-east-1.on.aws/namerank",
+});
 
 interface ResultsProps {
   name: string;
 }
 
 export default async function Results({ name }: ResultsProps) {
-  const result = await analyzeNameRank(name);
+  const result = await namerank.inspectName(encodeURIComponent(name), {});
+  // const result = use(fetchNameRank(name));
+
+  if (!result.namerank || !result.namerank.analysis) {
+    return <p>=Please try again.</p>;
+  }
 
   const topTokenization = result.namerank.analysis.top_tokenization || [];
 
   return (
-    <div>
-      <h2 className="text-xl font-bold mb-2">
-        Label For Analysis: {result.namerank.analysis.inspection.label}
-      </h2>
+    <div className="space-y-6">
+      <div>
+        <h3 className="text-lg font-semibold mb-2">Label For Analysis</h3>
 
-      <h3 className="text-lg font-semibold mb-2">Top Tokenization</h3>
-      <div className="flex items-center mb-4">
-        {topTokenization.length > 0 ? (
-          topTokenization.map((token, index) => (
-            <span
-              key={index}
-              className="bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold mr-2"
-            >
-              {token || "..."}
-            </span>
-          ))
-        ) : (
-          <span className="text-gray-500">No tokenization available</span>
-        )}
+        <p className="flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm">
+          {result.namerank.analysis.inspection.label}
+        </p>
       </div>
 
-      <h3 className="text-lg font-semibold mb-2">Alternative Tokenizations</h3>
-      {result.namerank.analysis.tokenizations.map((tokenization, index) => (
-        <div key={index} className="flex items-center mb-2">
-          {tokenization.tokens.map((token, tokenIndex) => (
-            <span
-              key={tokenIndex}
-              className="bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold mr-2"
-            >
-              {token || "..."}
-            </span>
-          ))}
+      <div>
+        <h3 className="text-lg font-semibold mb-2">Top Tokenization</h3>
+        <div className="flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm">
+          {topTokenization.length > 0 ? (
+            topTokenization.map((token, index) => (
+              <span
+                key={index}
+                className={`rounded px-3 py-1 text-sm border font-semibold mr-2 ${
+                  token ? "bg-white border-gray-200" : "bg-gray-200 opacity-30"
+                }`}
+              >
+                {token || "..."}
+              </span>
+            ))
+          ) : (
+            <span className="text-gray-500">No tokenization available</span>
+          )}
+          {result.namerank.analysis.top_tokenization && (
+            <div className="ml-auto">
+              <Indicator value={result.namerank.purity_score} />
+            </div>
+          )}
         </div>
-      ))}
+      </div>
+
+      <div>
+        <h3 className="text-lg font-semibold mb-2">
+          Alternative Tokenizations
+        </h3>
+        {result.namerank.analysis.tokenizations.map((tokenization, index) => (
+          <div
+            key={index}
+            className="flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm"
+          >
+            {tokenization.tokens.map((token: string, tokenIndex: any) => (
+              <span
+                key={tokenIndex}
+                className={`rounded px-3 py-1 text-sm border font-semibold mr-2 ${
+                  token ? "bg-white border-gray-200" : "bg-gray-200 opacity-30"
+                }`}
+              >
+                {token || "..."}
+              </span>
+            ))}
+            <div className="ml-auto">
+              <Indicator value={tokenization.log_probability} />
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

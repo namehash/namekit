@@ -12,16 +12,19 @@ interface HomeProps {
 
 export default async function Home(props: HomeProps) {
   const searchParams = await props.searchParams;
-  const fullName = searchParams?.name || "lightwalker";
-  const name = fullName.includes(".") ? fullName.split(".")[0] : fullName;
+  const name = searchParams?.name || "";
+  const labelForAnalysis = name.includes(".") ? name.split(".")[0] : name;
 
   return (
     <div className="max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">NameRank</h1>
-      <Form />
-      <Suspense fallback={<Skeleton />}>
-        <Results name={name} />
-      </Suspense>
+      <h1 className="text-2xl font-bold mb-6">NameRank</h1>
+      <Form initialName={name} />
+      {labelForAnalysis && (
+        <Suspense fallback={<Skeleton label={labelForAnalysis} />}>
+          <Results name={labelForAnalysis} />
+        </Suspense>
+      )}
+      {/* {name && <Results name={name} />} */}
     </div>
   );
 }

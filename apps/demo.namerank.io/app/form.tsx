@@ -1,8 +1,9 @@
 "use client";
 
-import { FormEvent, useRef } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
 import { analyzeNameRank } from "./actions";
+import { useRouter } from "next/navigation";
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -10,16 +11,22 @@ function SubmitButton() {
   return (
     <button
       type="submit"
-      className="bg-blue-500 text-white p-2 rounded"
+      className="bg-black text-white p-3 rounded flex-shrink-0"
       disabled={pending}
     >
-      {pending ? "Analyzing..." : "Analyze"}
+      {pending ? "Tokenizing..." : "Tokenize"}
     </button>
   );
 }
 
-export function Form() {
+type FormProps = {
+  initialName?: string;
+};
+
+export function Form({ initialName = "" }: FormProps) {
+  const [error, setError] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
+  const router = useRouter();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -27,21 +34,28 @@ export function Form() {
     const formData = new FormData(event.currentTarget);
     const name = formData.get("name") as string;
 
-    await analyzeNameRank(name);
-
-    formRef.current?.reset();
+    try {
+      await analyzeNameRank(name);
+      router.push(`/?name=${encodeURIComponent(name)}`);
+    } catch (error) {
+      setError((error as Error).message);
+    }
   };
 
   return (
-    <form onSubmit={handleSubmit} ref={formRef} className="mb-4">
-      <input
-        type="text"
-        name="name"
-        placeholder="Enter a name"
-        className="border p-2 mr-2"
-        required
-      />
-      <SubmitButton />
+    <form onSubmit={handleSubmit} ref={formRef} className="mb-6">
+      <div className="flex items-center">
+        <input
+          type="text"
+          name="name"
+          placeholder="Enter a name"
+          className="border p-3 mr-2 w-full"
+          required
+          defaultValue={initialName}
+        />
+        <SubmitButton />
+      </div>
+      {error && <p className="text-red-500 mt-2">{error}</p>}
     </form>
   );
 }
