@@ -9,7 +9,7 @@ import { NamekitFooter } from "@/components/organisms/namekit-footer";
 import { Inter } from "next/font/google";
 
 const unifont = localFont({
-  src: "../../public/fonts/unifont.otf",
+  src: "../../public/fonts/Unifont.otf",
   variable: "--font-unifont",
 });
 

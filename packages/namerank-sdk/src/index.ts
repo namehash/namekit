@@ -3,13 +3,13 @@ import { Network, NameGuardReport } from "@namehash/nameguard";
 
 const ETH_TLD = "eth";
 
-enum LabelStatus {
-  Normalized = 'normalized',
-  Unnormalized = 'unnormalized',
-  Unknown = 'unknown'
+export enum LabelStatus {
+  Normalized = "normalized",
+  Unnormalized = "unnormalized",
+  Unknown = "unknown",
 }
 
-interface NLPLabelAnalysis {
+export interface NLPLabelAnalysis {
   inspection: any;
   status: LabelStatus;
   probability: number;
@@ -19,13 +19,13 @@ interface NLPLabelAnalysis {
   tokenizations: Record<string, any>[];
 }
 
-interface NameRankReport {
+export interface NameRankReport {
   purity_score: number;
   interesting_score: number;
   analysis?: NLPLabelAnalysis;
 }
 
-interface NameRankResponse {
+export interface NameRankResponse {
   namerank: NameRankReport;
   nameguard: NameGuardReport;
 }
@@ -40,7 +40,7 @@ class NameRankError extends Error {
   }
 }
 
-const DEFAULT_ENDPOINT = "https://api.nameguard.io/namerank";
+const DEFAULT_ENDPOINT = "https://api.namerank.io/";
 const DEFAULT_NETWORK: Network = "mainnet";
 const DEFAULT_INSPECT_LABELHASH_PARENT = ETH_TLD;
 export const DEFAULT_COMPUTE_NAMEGUARD_REPORT = false;
@@ -91,7 +91,9 @@ export class NameRank {
     options?: InspectNameOptions,
   ): Promise<NameRankResponse> {
     const network_name = this.network;
-    return this.rawRequest("inspect-name", "POST", { name /*, network_name */ });
+    return this.rawRequest("inspect-name", "POST", {
+      name /*, network_name */,
+    });
   }
 
   /**
