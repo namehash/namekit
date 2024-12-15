@@ -1,5 +1,5 @@
 const LOG_PROB_GOOD = -1.0;
-const LOG_PROB_WARNING = -2.0;
+const LOG_PROB_WARNING = -10.0;
 
 interface IndicatorProps {
   value: number;
@@ -16,5 +16,9 @@ export const Indicator = ({ value }: IndicatorProps) => {
     }
   };
 
-  return <div className={`w-5 h-5 rounded-full ${getColorClass(value)}`} />;
+  return (
+    <div className="w-32 h-5 border border-gray-300 p-1 rounded overflow-hidden">
+      <div className={`h-full ${getColorClass(value)} rounded-sm`} />
+    </div>
+  );
 };
