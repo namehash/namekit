@@ -14,6 +14,8 @@
     "namehashlabs.org",
     "nameguard-api",
     "@namehash/seo",
-    "@namehash/internal"
+    "@namehash/internal",
+    "namerank.io",
+    "namekit.io"
   ]
 }
