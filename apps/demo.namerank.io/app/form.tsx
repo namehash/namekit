@@ -2,7 +2,6 @@
 
 import { FormEvent, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
-import { analyzeNameRank } from "./actions";
 import { useRouter } from "next/navigation";
 
 function SubmitButton() {
@@ -35,7 +34,6 @@ export function Form({ initialName = "" }: FormProps) {
     const name = formData.get("name") as string;
 
     try {
-      await analyzeNameRank(name);
       router.push(`/?name=${encodeURIComponent(name)}`);
     } catch (error) {
       setError((error as Error).message);
