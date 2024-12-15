@@ -11,9 +11,6 @@ export default {
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
         inter: ["Inter", "Adobe Blank"],
-        unifont: ["Unifont", "Adobe Blank"],
-        notoBlack: ["Noto Emoji", "Adobe Blank"],
-        notoEmoji: ["Noto Color Emoji", "Adobe Blank"],
       },
     },
   },
