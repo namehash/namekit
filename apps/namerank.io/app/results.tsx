@@ -11,8 +11,7 @@ interface ResultsProps {
 }
 
 export default async function Results({ name }: ResultsProps) {
-  const result = await namerank.inspectName(encodeURIComponent(name), {});
-  // const result = use(fetchNameRank(name));
+  const result = await namerank.inspectName(name, {});
 
   if (!result.namerank || !result.namerank.analysis) {
     return <p>=Please try again.</p>;
@@ -25,7 +24,7 @@ export default async function Results({ name }: ResultsProps) {
       <div>
         <h3 className="text-lg font-semibold mb-2">Label For Analysis</h3>
 
-        <p className="flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm">
+        <p className="ens-webfont flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm">
           {result.namerank.analysis.inspection.label}
         </p>
       </div>
@@ -37,7 +36,7 @@ export default async function Results({ name }: ResultsProps) {
             topTokenization.map((token, index) => (
               <span
                 key={index}
-                className={`rounded px-3 py-1 text-sm border font-semibold mr-2 ${
+                className={`ens-webfont rounded px-3 py-1 text-sm border font-semibold mr-2 ${
                   token ? "bg-white border-gray-200" : "bg-gray-200 opacity-30"
                 }`}
               >
@@ -49,7 +48,7 @@ export default async function Results({ name }: ResultsProps) {
           )}
           {result.namerank.analysis.top_tokenization && (
             <div className="ml-auto">
-              <Indicator value={result.namerank.purity_score} />
+              <Indicator value={result.namerank.analysis.log_probability} />
             </div>
           )}
         </div>
@@ -67,7 +66,7 @@ export default async function Results({ name }: ResultsProps) {
             {tokenization.tokens.map((token: string, tokenIndex: any) => (
               <span
                 key={tokenIndex}
-                className={`rounded px-3 py-1 text-sm border font-semibold mr-2 ${
+                className={`ens-webfont rounded px-3 py-1 text-sm border font-semibold mr-2 ${
                   token ? "bg-white border-gray-200" : "bg-gray-200 opacity-30"
                 }`}
               >

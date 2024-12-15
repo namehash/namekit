@@ -47,7 +47,7 @@ export function Form({ initialName = "" }: FormProps) {
           type="text"
           name="name"
           placeholder="Enter a name"
-          className="border p-3 mr-2 w-full"
+          className="border p-3 mr-2 w-full nens-webfont"
           required
           defaultValue={initialName}
         />
