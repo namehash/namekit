@@ -186,7 +186,7 @@ const ExploreWeb3: NextPage = () => {
             width={710}
             height={480}
             alt="mirror"
-            src={"/images/explore-web3/Illustration-cripto.png"}
+            src={"/images/explore-web3/Illustration-crypto.png"}
           />
         }
       />
