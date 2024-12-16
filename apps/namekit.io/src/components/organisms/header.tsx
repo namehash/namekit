@@ -14,7 +14,6 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 import Link from "next/link";
 import cc from "classcat";
-import { useScreenSize } from "@/hooks/useScreenSize";
 
 /*
   Commented out from v1.0
@@ -68,8 +67,6 @@ export const Header = () => {
     },
   ];
 
-  const { isTablet } = useScreenSize();
-
   return (
     <Popover
       as="header"
@@ -121,8 +118,8 @@ export const Header = () => {
                       {/* <div className="z-10 flex items-center justify-between bg-black"> */}
                       <div className="bg-black w-full justify-between flex fixed p-4 top-0 left-0 max-w-[390px]">
                         <NamekitLogo
-                          textcolor={isTablet ? "white" : "black"}
-                          backgroundcolor={isTablet ? "black" : "white"}
+                          textcolor={"white"}
+                          backgroundcolor={"black"}
                         />
                         <Popover.Button>
                           <span className="sr-only">Close menu</span>
