@@ -5,7 +5,7 @@ import cc from "classcat";
 import { DocumentTextIcon } from "@heroicons/react/24/solid";
 import { FigmaIcon } from "@/components/1 - atoms/icons/figma-icon";
 import { GithubIcon } from "@/components/1 - atoms/icons/github-icon";
-import { ProductComponent } from "@/components/2 - molecules/product-component";
+import { ReferralProductComponent } from "@/components/2 - molecules/referral-product-component";
 import { Button, Link } from "@namehash/namekit-react";
 
 import { defaultMetaOpengraph, defaultMetaTwitter } from "../shared-metadata";
@@ -37,7 +37,7 @@ export default function Page() {
       <div className="mt-20 w-full">
         <div className="w-full lg:px-[50px] px-5 bg-gray-50 flex items-center justify-center">
           <section className="w-full max-w-[1216px]">
-            <ProductComponent
+            <ReferralProductComponent
               title="ENS Referral Program"
               subtitle="Passionate about helping ENS grow? Share your voice with this community survey and let's shape the future of the ENS Referral Program together."
               illustration={
