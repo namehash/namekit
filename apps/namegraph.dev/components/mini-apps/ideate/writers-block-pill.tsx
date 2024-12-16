@@ -1,7 +1,7 @@
 "use client";
 
-import { WritersBlockSuggestion } from "@/lib/utils";
-import Skeleton from "./skeleton";
+import Skeleton from "@/components/skeleton";
+import { WritersBlockSuggestion } from "@namehash/namegraph-sdk/utils";
 
 export const WritersBlockPill = ({
   suggestion,

@@ -1,47 +1,34 @@
 "use client";
 
-import { WritersBlockPills } from "../components/writers-block-pills";
-import { Catalog } from "../components/catalog";
-import { useEffect } from "react";
-import { useState } from "react";
-import { writersBlockSuggestions } from "@/lib/writers-block-suggestions";
-import {
-  sampleWritersBlockSuggestions,
-  WritersBlockCollection,
-  WritersBlockSuggestion,
-} from "@namehash/namegraph-sdk/utils";
+import Link from "next/link";
 
 export default function Home() {
-  const [suggestions, setSuggestions] = useState<WritersBlockSuggestion[]>([]);
-  const [collectionsToConsider, setCollectionsToConsider] = useState<
-    WritersBlockCollection[]
-  >([]);
-
-  const ideate = (catalog: WritersBlockCollection[]) => {
-    const wbSuggestions = sampleWritersBlockSuggestions(5, catalog);
-    setSuggestions(wbSuggestions);
-  };
-
-  const onCatalogChange = (parsedJSON: any) => {
-    setCollectionsToConsider(parsedJSON);
-  };
-
-  useEffect(() => {
-    ideate(writersBlockSuggestions);
-  }, []);
-
   return (
-    <div className="container mx-auto py-8">
-      <div className="flex flex-col lg:flex-row gap-8">
-        <div className="flex-1">
-          <WritersBlockPills
-            suggestions={suggestions}
-            onIdeate={() => ideate(collectionsToConsider)}
-          />
-        </div>
-        <div className="w-full lg:w-[600px]">
-          <Catalog onJsonChange={onCatalogChange} />
-        </div>
+    <div className="container mx-auto py-16">
+      <div className="max-w-4xl flex flex-col mx-auto">
+        <h1 className="text-2xl font-semibold mb-12">
+          Welcome to NameGraph mini-apps
+        </h1>
+        <p className="mb-8">
+          Here you will be able to access different examples of how you can make
+          usage of NameGraph SDK
+        </p>
+
+        <ul>
+          <h2 className="mb-4 font-medium">Mini-apps:</h2>
+          <li className="flex space-x-1">
+            <p>+</p>
+            <Link href="/ideate" className="underline">
+              Ideate
+            </Link>
+          </li>
+          <li className="flex space-x-1">
+            <p>+</p>
+            <Link href="/scramble" className="underline">
+              Scramble
+            </Link>
+          </li>
+        </ul>
       </div>
     </div>
   );

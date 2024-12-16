@@ -1,10 +1,10 @@
 "use client";
 
-import { WritersBlockPill } from "./writers-block-pill";
-import { WritersBlockSuggestion } from "@/lib/utils";
-import { Button } from "./ui/button";
+import { Button } from "../../ui/button";
 import { useState } from "react";
 import { useEffect } from "react";
+import { WritersBlockSuggestion } from "@namehash/namegraph-sdk/utils";
+import { WritersBlockPill } from "./writers-block-pill";
 
 interface WritersBlockPillsProps {
   suggestions: WritersBlockSuggestion[];
@@ -24,7 +24,7 @@ export function WritersBlockPills({
   }, [suggestions]);
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-12 text-center">
+    <>
       <h1 className="text-2xl font-semibold mb-4">Check out what&apos;s hot</h1>
       <p className="text-gray-500 mb-8">
         Check out some suggestions from the community.
@@ -42,6 +42,6 @@ export function WritersBlockPills({
           </div>
         </div>
       ) : null}
-    </div>
+    </>
   );
 }
