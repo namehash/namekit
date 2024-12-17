@@ -13,10 +13,10 @@ yarn add namegraph-sdk
 ## Quick Start
 
 ```typescript
-import { createClient } from "namegraph-sdk";
+import { createNameGraphClient } from "namegraph-sdk";
 
 // Create a client instance
-const client = createClient();
+const client = createNameGraphClient();
 
 // Or use the default client
 import { namegraph } from "namegraph-sdk";
