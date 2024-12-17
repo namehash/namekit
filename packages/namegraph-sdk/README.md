@@ -1,6 +1,6 @@
 # NameGraph SDK
 
-A TypeScript SDK for interacting with the NameGraph APIs, providing access to the world's largest collection of word-wiki names. This SDK enables easy integration with the NameGraph API endpoints for name and collection suggestions.
+A TypeScript SDK for interacting with the NameGraph APIs, providing access to the world's largest collection of names. This SDK enables easy integration with the NameGraph API endpoints for name and collection suggestions.
 
 ## Installation
 
