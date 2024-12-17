@@ -1,36 +1,22 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# namekit.io
 
-## Getting Started
+This repository contains all of the code for the [namekit.io](https://namekit.io) website. The website is built using [Next.js](https://nextjs.org), and is deployed to Vercel.
 
-First, run the development server:
+## Local Development
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+You must clone the full monorepo and install dependencies with PNPM before you can run it locally:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. `git clone https://github.com/namehash/namekit.git`
+2. `pnpm install` (run from the root directory of the monorepo)
+3. `cd apps/namekit.io`
+4. `pnpm dev`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deploy
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This repository is connected to the Vercel project [`namekit-website`](https://vercel.com/namehash/namekit-website), and any pull request automatically receives a preview environment. When a PR is merged to the main branch, the production instance is automatically updated.
 
-## Learn More
+## License
 
-To learn more about Next.js, take a look at the following resources:
+Licensed under the MIT License, Copyright © 2023-present [NameHash Labs](https://namehashlabs.org).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See [LICENSE](./LICENSE) for more information.

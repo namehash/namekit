@@ -19,7 +19,6 @@
   "main": "index.css",
   "files": [
     "index.css",
-    "Unifont.otf",
     "LICENSE"
   ],
   "publishConfig": {
