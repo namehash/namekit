@@ -1,5 +1,4 @@
 ---
-"namegraph.dev": minor
 "@namekit/tsconfig": minor
 "@namehash/ens-utils": minor
 "@namehash/ens-webfont": minor
