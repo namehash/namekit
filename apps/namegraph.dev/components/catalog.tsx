@@ -2,12 +2,11 @@
 
 import { useRef, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { WritersBlockCollection, WritersBlockSuggestion } from "@/lib/utils";
 import { writersBlockSuggestions } from "@/lib/writers-block-suggestions";
 import { Tooltip } from "@namehash/namekit-react/client";
 import { InfoIcon } from "lucide-react";
+import { WritersBlockCollection } from "@namehash/namegraph-sdk/utils";
 
 interface CatalogProps {
   onJsonChange: (parsedJson: any) => void;

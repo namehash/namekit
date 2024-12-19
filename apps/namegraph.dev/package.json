@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@namehash/namegraph-sdk": "workspace:*",
     "@namehash/namekit-react": "workspace:*",
     "@radix-ui/react-scroll-area": "^1.2.1",
     "@radix-ui/react-slot": "^1.1.0",
