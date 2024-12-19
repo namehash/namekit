@@ -56,7 +56,7 @@ resource "aws_lambda_function" "nameguard_lambda" {
   function_name = "nameguard-lambda-${var.env}"
   role          = aws_iam_role.iam_for_lambda.arn
   memory_size = "1769"
-  timeout = 30
+  timeout = 60
   package_type = "Image"
   image_uri = var.image_uri
   architectures = ["arm64"]
