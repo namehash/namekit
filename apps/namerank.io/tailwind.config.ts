@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import defaultTheme from "tailwindcss/defaultTheme";
 
 export default {
   content: [
@@ -8,9 +9,13 @@ export default {
   ],
   theme: {
     extend: {
+      textShadow: {
+        sm: "0 1px 2px var(--tw-shadow-color)",
+        DEFAULT: "0 2px 4px var(--tw-shadow-color)",
+        lg: "0 8px 16px var(--tw-shadow-color)",
+      },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        inter: ["Inter", "Adobe Blank"],
+        sans: ["var(--font-inter)", ...defaultTheme.fontFamily.sans],
       },
     },
   },
