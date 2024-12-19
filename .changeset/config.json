@@ -16,6 +16,7 @@
     "@namehash/seo",
     "@namehash/internal",
     "namerank.io",
-    "namekit.io"
+    "namekit.io",
+    "namegraph.dev"
   ]
 }
