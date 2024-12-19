@@ -97,6 +97,9 @@ importers:
 
   apps/namegraph.dev:
     dependencies:
+      '@heroicons/react':
+        specifier: 2.2.0
+        version: 2.2.0(react@18.3.1)
       '@namehash/namegraph-sdk':
         specifier: workspace:*
         version: link:../../packages/namegraph-sdk
@@ -112,6 +115,9 @@ importers:
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
+      classcat:
+        specifier: 5.0.5
+        version: 5.0.5
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -127,6 +133,9 @@ importers:
       react:
         specifier: ^18
         version: 18.3.1
+      react-debounce-input:
+        specifier: 3.3.0
+        version: 3.3.0(react@18.3.1)
       react-dom:
         specifier: ^18
         version: 18.3.1(react@18.3.1)
@@ -1792,6 +1801,11 @@ packages:
     resolution: {integrity: sha512-FuzFN+BsHa+7OxbvAERtgBTNeZpUjgM/MIizfVkSCL2/edriN0Hx/DWRCR//aPYwO5QX/YlgLGXk+E3PcfZwjA==}
     peerDependencies:
       react: '>= 16'
+
+  '@heroicons/react@2.2.0':
+    resolution: {integrity: sha512-LMcepvRaS9LYHJGsF0zzmgKCUim/X3N/DQKc4jepAXJ7l8QxJ1PmxJzqplF2Z3FE4PqBAIGyJAQ/w4B5dsqbtQ==}
+    peerDependencies:
+      react: '>= 16 || ^19.0.0-rc'
 
   '@humanwhocodes/config-array@0.13.0':
     resolution: {integrity: sha512-DZLEEqFWQFiyK6h5YIeynKx7JlvCYWL0cImfSRXZ9l4Sg2efkFGTuFf6vzXjK1cq6IYkU+Eg/JizXw+TD2vRNw==}
@@ -5226,6 +5240,9 @@ packages:
   lodash._reinterpolate@3.0.0:
     resolution: {integrity: sha512-xYHt68QRoYGjeeM/XOE1uJtvXQAgvszfBhjV4yvsQH0u2i9I6cI6c6/eG4Hh3UAOVn0y/xAXwmTzEay49Q//HA==}
 
+  lodash.debounce@4.0.8:
+    resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
+
   lodash.defaults@4.2.0:
     resolution: {integrity: sha512-qjxPLHd3r5DnsdGacqOMU6pb/avJzdh9tFX2ymgoZE27BmjXrNy/y4LoaiTeAb+O3gL8AfpJGtqfX/ae2leYYQ==}
 
@@ -6061,6 +6078,11 @@ packages:
     engines: {node: '>=10.18'}
     peerDependencies:
       react: ^16.3.0 || ^17.0.1 || ^18.0.0
+
+  react-debounce-input@3.3.0:
+    resolution: {integrity: sha512-VEqkvs8JvY/IIZvh71Z0TC+mdbxERvYF33RcebnodlsUZ8RSgyKe2VWaHXv4+/8aoOgXLxWrdsYs2hDhcwbUgA==}
+    peerDependencies:
+      react: ^15.3.0 || 16 || 17 || 18
 
   react-docgen-typescript@2.2.2:
     resolution: {integrity: sha512-tvg2ZtOpOi6QDwsb3GZhOjDkkX0h8Z2gipvTg6OVMUyoYoURhEiRNePT8NZItTVCDh39JJHnLdfCOkzoLbFnTg==}
@@ -8916,6 +8938,10 @@ snapshots:
       react: 18.3.1
 
   '@heroicons/react@2.1.5(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
+
+  '@heroicons/react@2.2.0(react@18.3.1)':
     dependencies:
       react: 18.3.1
 
@@ -13129,6 +13155,8 @@ snapshots:
 
   lodash._reinterpolate@3.0.0: {}
 
+  lodash.debounce@4.0.8: {}
+
   lodash.defaults@4.2.0: {}
 
   lodash.difference@4.5.0: {}
@@ -13932,6 +13960,12 @@ snapshots:
     dependencies:
       react: 18.3.1
       tween-functions: 1.2.0
+
+  react-debounce-input@3.3.0(react@18.3.1):
+    dependencies:
+      lodash.debounce: 4.0.8
+      prop-types: 15.8.1
+      react: 18.3.1
 
   react-docgen-typescript@2.2.2(typescript@5.6.2):
     dependencies:

@@ -1,6 +1,5 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Github } from "lucide-react";
 import Link from "next/link";
 import { NameHashLabsLogo } from "@/components/footer/namehash-labs-logo";
 import { ServiceProviderBadge } from "@/components/footer/service-provider-badge";
@@ -10,6 +9,7 @@ import { TwitterIcon } from "@/components/footer/twitter-icon";
 import { FarcasterIcon } from "@/components/footer/farcaster-icon";
 import { TelegramIcon } from "@/components/footer/telegram-icon";
 import { Button } from "@/components/ui/button";
+import "@namehash/namekit-react/styles.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

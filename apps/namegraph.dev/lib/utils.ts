@@ -30,13 +30,13 @@ interface openRelatedCollectionProps {
   collection_id: string;
 }
 
-interface NameGraphRelatedCollection {
+export interface NameGraphRelatedCollection {
   collection_id: string;
   collection_title: string;
   collection_members_count: number;
 }
 
-interface NameGraphSuggestionCategory {
+export interface NameGraphSuggestionCategory {
   type: NameGraphGroupingCategory;
   // NameGraph API guarantees "name" will always be a normalized name
   name: string;
@@ -50,7 +50,7 @@ const NameGraphSuggestionCategoryTypes = Object.values(
   NameGraphGroupingCategory,
 );
 
-interface NameGraphRelatedSuggestionCategory
+export interface NameGraphRelatedSuggestionCategory
   extends NameGraphSuggestionCategory {
   collection_members_count: number;
   collection_title: string;
@@ -122,7 +122,9 @@ export const generateNamesByQuery = async (
 
   const payload = {
     label: input.label,
-    params: {},
+    params: {
+      mode: "full",
+    },
     categories: categoriesWithParams,
   };
 

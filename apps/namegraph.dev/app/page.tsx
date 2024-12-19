@@ -15,17 +15,16 @@ export default function Home() {
         </p>
 
         <ul>
-          <h2 className="mb-4 font-medium">Mini-apps:</h2>
           <li className="flex space-x-1">
-            <p>+</p>
-            <Link href="/ideate" className="underline">
+            <p>➡️</p>
+            <Link href="/ideate" className="hover:underline">
               Ideate
             </Link>
           </li>
           <li className="flex space-x-1">
-            <p>+</p>
-            <Link href="/scramble" className="underline">
-              Scramble
+            <p>➡️</p>
+            <Link href="/explore-collections" className="hover:underline">
+              Explore collections
             </Link>
           </li>
         </ul>

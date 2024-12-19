@@ -271,6 +271,7 @@ export class NameGraph {
       method,
       headers: {
         "Content-Type": "application/json",
+        Accept: "application/json",
         ...headers,
       },
       signal: this.abortController.signal,
