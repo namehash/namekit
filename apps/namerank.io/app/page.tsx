@@ -16,8 +16,7 @@ export default async function Home(props: HomeProps) {
   const labelForAnalysis = name.includes(".") ? name.split(".")[0] : name;
 
   return (
-    <div className="max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">NameRank</h1>
+    <div className="max-w-3xl mx-auto px-6">
       <Form initialName={name} />
       {labelForAnalysis && (
         <Suspense fallback={<Skeleton label={labelForAnalysis} />}>

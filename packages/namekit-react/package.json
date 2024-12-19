@@ -1,7 +1,7 @@
 {
   "name": "@namehash/namekit-react",
   "description": "React UI components for building on NameKit.",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "license": "MIT",
   "type": "commonjs",
   "repository": {

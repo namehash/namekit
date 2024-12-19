@@ -128,6 +128,7 @@ export default function RootLayout({
                         return (
                           <li key={product.name} className="my-2">
                             <a
+                              className="transition cursor-pointer text-sm text-gray-500 hover:text-black"
                               target={
                                 product.href.startsWith("/")
                                   ? "_self"
@@ -151,6 +152,7 @@ export default function RootLayout({
                         return (
                           <li key={resource.name} className="my-2">
                             <a
+                              className="transition cursor-pointer text-sm text-gray-500 hover:text-black"
                               key={resource.name}
                               target={
                                 resource.href.startsWith("/")
@@ -171,7 +173,7 @@ export default function RootLayout({
 
               <div className="lg:border-t lg:border-gray-200 w-full flex flex-col lg:flex-row lg:justify-between gap-5 pt-5">
                 <p className="text-gray-500 text-sm leading-5 font-normal">
-                  © NameHash Labs. All Rights Reserved
+                  &copy; NameHash Labs. All Rights Reserved
                 </p>
 
                 <div className="flex gap-3">
@@ -180,7 +182,7 @@ export default function RootLayout({
                     target="_blank"
                     aria-label="Twitter"
                   >
-                    <TwitterIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200" />
+                    <TwitterIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200 fill-current" />
                   </Link>
 
                   <Link
@@ -188,7 +190,7 @@ export default function RootLayout({
                     target="_blank"
                     aria-label="Github"
                   >
-                    <GithubIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200" />
+                    <GithubIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200 fill-current" />
                   </Link>
 
                   <Link
@@ -196,7 +198,7 @@ export default function RootLayout({
                     target="_blank"
                     aria-label="Farcaster"
                   >
-                    <FarcasterIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200" />
+                    <FarcasterIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200 fill-current" />
                   </Link>
 
                   <Link
@@ -204,11 +206,11 @@ export default function RootLayout({
                     target="_blank"
                     aria-label="Telegram"
                   >
-                    <TelegramIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200" />
+                    <TelegramIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200 fill-current" />
                   </Link>
 
                   <Link href="mailto:hello@namehashlabs.org" aria-label="Email">
-                    <EmailIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200" />
+                    <EmailIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200 fill-current" />
                   </Link>
                 </div>
 
@@ -218,7 +220,10 @@ export default function RootLayout({
                     <span className="text-[#EF4444] mx-1">{"❤️"}</span>
                     by
                   </span>
-                  <a className="!text-black" href="/">
+                  <a
+                    className="cursor-pointer text-black underline decoration-current underline-offset-[4px] transition-all duration-200 hover:underline-offset-[2px]"
+                    href="/"
+                  >
                     NameHash Labs
                   </a>
                 </div>
