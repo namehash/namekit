@@ -15,7 +15,7 @@ export default function IdeatePage() {
   const [suggestions, setSuggestions] = useState<WritersBlockSuggestion[]>([]);
   const [collectionsToConsider, setCollectionsToConsider] = useState<
     WritersBlockCollection[]
-  >([]);
+  >(writersBlockSuggestions);
 
   const ideate = (catalog: WritersBlockCollection[]) => {
     const wbSuggestions = sampleWritersBlockSuggestions(5, catalog);

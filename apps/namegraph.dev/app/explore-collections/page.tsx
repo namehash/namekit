@@ -14,7 +14,7 @@ import { DebounceInput } from "react-debounce-input";
 import { useEffect, useState } from "react";
 import lodash from "lodash";
 
-export const SUGGESTION_CATEGORY_CLASSNAME = "suggestionCategory";
+const SUGGESTION_CATEGORY_CLASSNAME = "suggestionCategory";
 
 export default function ExploreCollectionsPage() {
   const [nameIdeas, setNameIdeas] =
