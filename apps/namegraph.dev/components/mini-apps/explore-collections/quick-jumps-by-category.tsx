@@ -13,11 +13,13 @@ import {
 } from "@/lib/utils";
 
 interface QuickJumpsByCategoryProps {
+  search: string;
   activeCategoryID: string;
   nameIdeas: null | NameGraphGroupedByCategoryResponse;
 }
 
 export const QuickJumpsByCategory = ({
+  search,
   nameIdeas,
   activeCategoryID,
 }: QuickJumpsByCategoryProps) => {
@@ -60,12 +62,16 @@ export const QuickJumpsByCategory = ({
     }
   }, [quickJumpCategories]);
 
+  useEffect(() => {
+    setLoadingQuickJumpPills(true);
+  }, [search]);
+
   if (nameIdeas?.categories === null) return null;
 
   return (
     <div className="w-full px-3 relative bg-white border-b border-gray-300 pt-3 border-t">
       <h2 className="text-lg font-regular mb-4 text-center">
-        📚 Collections and name ideas found ⬇️
+        📚 Collections and name ideas found for <b>{search}</b> ⬇️
       </h2>
       {!quickJumpCategories || loadingQuickJumpPills ? (
         <div className="mx-3 px-2 mb-3 md:px-7 lg:px-12">
