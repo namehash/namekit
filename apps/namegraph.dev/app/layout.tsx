@@ -1,6 +1,5 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Github } from "lucide-react";
 import Link from "next/link";
 import { NameHashLabsLogo } from "@/components/namehash-labs-logo";
 import { ServiceProviderBadge } from "@/components/service-provider-badge";
@@ -10,6 +9,7 @@ import { TwitterIcon } from "@/components/twitter-icon";
 import { FarcasterIcon } from "@/components/farcaster-icon";
 import { TelegramIcon } from "@/components/telegram-icon";
 import { Button } from "@/components/ui/button";
+import NextLink from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -63,7 +63,7 @@ export default function RootLayout({
         <div className="min-h-screen flex flex-col">
           <header className="sticky bg-white top-0 w-full z-20 border-b border-gray-300 h-[56px] py-[9px] sm:h-[70px] sm:py-4 select-none">
             <div className="max-w-7xl mx-auto items-center justify-between flex flex-row px-6">
-              <div className="flex flex-row lg:gap-2 xl:gap-7 justify-between items-center">
+              <div className="flex flex-row justify-between items-center">
                 <div className="flex flex-row justify-between items-center gap-1 cursor-pointer flex-shrink-0 pr-2">
                   <a
                     href="/"
@@ -72,12 +72,19 @@ export default function RootLayout({
                     NameGraph
                   </a>
                 </div>
+                <NextLink href="/">
+                  <div className="relative -top-1.5 bg-black w-fit h-fit p-[2.8px] rounded-[2.8px] flex-shrink-0">
+                    <p className="text-white not-italic font-semibold pb-[0.5px] text-[6.857px] leading-[7.619px] sm:text-[8.409px] sm:leading-[9.343px]">
+                      beta
+                    </p>
+                  </div>
+                </NextLink>
               </div>
               <div className="flex flex-row items-center justify-between md:gap-5 h-[40px]">
                 <div className="hidden items-center justify-center lg:flex gap-2">
                   <div className="hidden items-center justify-center xl:flex gap-2">
                     <Button variant="ghost" asChild>
-                      <Link href="http://100.24.45.225/docs">Docs</Link>
+                      <Link href="http://api.namegraph.dev/docs">Docs</Link>
                     </Button>
 
                     <Button variant="ghost" asChild>
