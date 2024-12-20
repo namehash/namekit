@@ -1,6 +1,6 @@
 # NameGraph SDK
 
-A TypeScript SDK for interacting with the NameGraph APIs, providing access to the world's largest collection of word-wiki names. This SDK enables easy integration with the NameGraph API endpoints for name and collection suggestions.
+A TypeScript SDK for interacting with the NameGraph APIs, providing access to the world's largest collection of names. This SDK enables easy integration with the NameGraph API endpoints for name and collection suggestions.
 
 ## Installation
 
@@ -13,10 +13,10 @@ yarn add namegraph-sdk
 ## Quick Start
 
 ```typescript
-import { createClient } from "namegraph-sdk";
+import { createNameGraphClient } from "namegraph-sdk";
 
 // Create a client instance
-const client = createClient();
+const client = createNameGraphClient();
 
 // Or use the default client
 import { namegraph } from "namegraph-sdk";
@@ -38,7 +38,7 @@ const suggestions = await namegraph.groupedByCategory("zeus");
 
 ```typescript
 const client = createNameGraphClient({
-  namegraphEndpoint: "http://custom-api.endpoint.com", // Optional, defaults to http://api.namegraph.dev/
+  namegraphEndpoint: "https://custom-api.endpoint.com", // Optional, defaults to https://api.namegraph.dev/
 });
 ```
 

@@ -1,22 +1,22 @@
-import { Inter } from "next/font/google";
 import "./globals.css";
+import "@namehash/ens-webfont";
+
+import { Inter } from "next/font/google";
 import Link from "next/link";
-import { NameHashLabsLogo } from "@/components/footer/namehash-labs-logo";
-import { ServiceProviderBadge } from "@/components/footer/service-provider-badge";
-import { EmailIcon } from "../components/footer/email-icon";
-import { GithubIcon } from "@/components/footer/github-icon";
-import { TwitterIcon } from "@/components/footer/twitter-icon";
-import { FarcasterIcon } from "@/components/footer/farcaster-icon";
-import { TelegramIcon } from "@/components/footer/telegram-icon";
-import { Button } from "@/components/ui/button";
-import "@namehash/namekit-react/styles.css";
-import NextLink from "next/link";
+import { NameHashLabsLogo } from "@/components/namehash-labs-logo";
+import { ServiceProviderBadge } from "@/components/service-provider-badge";
+import { EmailIcon } from "../components/email-icon";
+import { GithubIcon } from "@/components/github-icon";
+import { TwitterIcon } from "@/components/twitter-icon";
+import { FarcasterIcon } from "@/components/farcaster-icon";
+import { TelegramIcon } from "@/components/telegram-icon";
+import type { Metadata } from "next";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-  title: "NameGraph",
-  description: "Explore and discover names",
+export const metadata: Metadata = {
+  title: "NameRank Demo",
+  description: "Tokenize and analyze names with NameRank demo",
 };
 
 const footerProducts = [
@@ -30,7 +30,7 @@ const footerProducts = [
   },
   {
     name: "ENS Referral Program",
-    href: "/ens-referral-program",
+    href: "https://namehashlabs.org/ens-referral-program",
   },
 ];
 
@@ -64,48 +64,41 @@ export default function RootLayout({
         <div className="min-h-screen flex flex-col">
           <header className="sticky bg-white top-0 w-full z-20 border-b border-gray-300 h-[56px] py-[9px] sm:h-[70px] sm:py-4 select-none">
             <div className="max-w-7xl mx-auto items-center justify-between flex flex-row px-6">
-              <div className="flex flex-row justify-between items-center">
-                <div className="flex flex-row justify-between items-center gap-1 cursor-pointer flex-shrink-0 pr-2">
+              <div className="flex flex-row lg:gap-2 xl:gap-7 justify-between items-center">
+                <div className="flex flex-row justify-between items-center gap-1 cursor-pointer flex-shri0 pr-2">
                   <a
                     href="/"
                     className="text-black not-italic font-bold text-[22.683px] leading-[22.683px] tracking-[-0.907px] sm:text-[27.816px] sm:leading-[27.816px] sm:tracking-[-1.113px]"
                   >
-                    NameGraph
+                    NameRank
                   </a>
                 </div>
-                <NextLink href="/">
-                  <div className="relative -top-1.5 bg-black w-fit h-fit p-[2.8px] rounded-[2.8px] flex-shrink-0">
-                    <p className="text-white not-italic font-semibold pb-[0.5px] text-[6.857px] leading-[7.619px] sm:text-[8.409px] sm:leading-[9.343px]">
-                      beta
-                    </p>
-                  </div>
-                </NextLink>
               </div>
               <div className="flex flex-row items-center justify-between md:gap-5 h-[40px]">
                 <div className="hidden items-center justify-center lg:flex gap-2">
                   <div className="hidden items-center justify-center xl:flex gap-2">
-                    <Button variant="ghost" asChild>
-                      <Link href="http://api.namegraph.dev/docs">Docs</Link>
-                    </Button>
+                    {/* <Button variant="ghost" asChild>
+                      <Link href="http://100.24.45.225/docs">Docs</Link>
+                    </Button> */}
 
-                    <Button variant="ghost" asChild>
+                    {/* <Button variant="ghost" asChild>
                       <Link href="https://github.com/namehash/namekit">
                         <GithubIcon className="hidden md:block fill-current" />{" "}
                         GitHub
                       </Link>
-                    </Button>
+                    </Button> */}
                   </div>
 
-                  <Button variant="ghost" asChild>
+                  {/* <Button variant="ghost" asChild>
                     <a href="https://namehashlabs.org/contact" target="_blank">
                       Contact
                     </a>
-                  </Button>
+                  </Button> */}
                 </div>
               </div>
             </div>
           </header>
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 py-12 md:py-20">{children}</main>
           <footer className="lg:px-[50px] px-5 flex items-center justify-center w-full border-t border-gray-200">
             <div className="pt-8 pb-5 flex flex-col gap-10 items-start justify-between w-full max-w-[1216px]">
               <div className="w-full gap-5 flex flex-col lg:flex-row lg:justify-between">
