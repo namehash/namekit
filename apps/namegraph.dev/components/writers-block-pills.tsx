@@ -1,10 +1,10 @@
 "use client";
 
 import { WritersBlockPill } from "./writers-block-pill";
-import { WritersBlockSuggestion } from "@/lib/utils";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { useEffect } from "react";
+import { WritersBlockSuggestion } from "@namehash/namegraph-sdk/utils";
 
 interface WritersBlockPillsProps {
   suggestions: WritersBlockSuggestion[];

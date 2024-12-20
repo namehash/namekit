@@ -1,6 +1,5 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Github } from "lucide-react";
 import Link from "next/link";
 import { NameHashLabsLogo } from "@/components/namehash-labs-logo";
 import { ServiceProviderBadge } from "@/components/service-provider-badge";
@@ -10,6 +9,7 @@ import { TwitterIcon } from "@/components/twitter-icon";
 import { FarcasterIcon } from "@/components/farcaster-icon";
 import { TelegramIcon } from "@/components/telegram-icon";
 import { Button } from "@/components/ui/button";
+import NextLink from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -63,7 +63,7 @@ export default function RootLayout({
         <div className="min-h-screen flex flex-col">
           <header className="sticky bg-white top-0 w-full z-20 border-b border-gray-300 h-[56px] py-[9px] sm:h-[70px] sm:py-4 select-none">
             <div className="max-w-7xl mx-auto items-center justify-between flex flex-row px-6">
-              <div className="flex flex-row lg:gap-2 xl:gap-7 justify-between items-center">
+              <div className="flex flex-row justify-between items-center">
                 <div className="flex flex-row justify-between items-center gap-1 cursor-pointer flex-shrink-0 pr-2">
                   <a
                     href="/"
@@ -72,12 +72,19 @@ export default function RootLayout({
                     NameGraph
                   </a>
                 </div>
+                <NextLink href="/">
+                  <div className="relative -top-1.5 bg-black w-fit h-fit p-[2.8px] rounded-[2.8px] flex-shrink-0">
+                    <p className="text-white not-italic font-semibold pb-[0.5px] text-[6.857px] leading-[7.619px] sm:text-[8.409px] sm:leading-[9.343px]">
+                      beta
+                    </p>
+                  </div>
+                </NextLink>
               </div>
               <div className="flex flex-row items-center justify-between md:gap-5 h-[40px]">
                 <div className="hidden items-center justify-center lg:flex gap-2">
                   <div className="hidden items-center justify-center xl:flex gap-2">
                     <Button variant="ghost" asChild>
-                      <Link href="http://100.24.45.225/docs">Docs</Link>
+                      <Link href="http://api.namegraph.dev/docs">Docs</Link>
                     </Button>
 
                     <Button variant="ghost" asChild>
@@ -121,6 +128,7 @@ export default function RootLayout({
                         return (
                           <li key={product.name} className="my-2">
                             <a
+                              className="transition cursor-pointer text-sm text-gray-500 hover:text-black"
                               target={
                                 product.href.startsWith("/")
                                   ? "_self"
@@ -144,6 +152,7 @@ export default function RootLayout({
                         return (
                           <li key={resource.name} className="my-2">
                             <a
+                              className="transition cursor-pointer text-sm text-gray-500 hover:text-black"
                               key={resource.name}
                               target={
                                 resource.href.startsWith("/")
@@ -164,7 +173,7 @@ export default function RootLayout({
 
               <div className="lg:border-t lg:border-gray-200 w-full flex flex-col lg:flex-row lg:justify-between gap-5 pt-5">
                 <p className="text-gray-500 text-sm leading-5 font-normal">
-                  © NameHash Labs. All Rights Reserved
+                  &copy; NameHash Labs. All Rights Reserved
                 </p>
 
                 <div className="flex gap-3">
@@ -173,7 +182,7 @@ export default function RootLayout({
                     target="_blank"
                     aria-label="Twitter"
                   >
-                    <TwitterIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200" />
+                    <TwitterIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200 fill-current" />
                   </Link>
 
                   <Link
@@ -181,7 +190,7 @@ export default function RootLayout({
                     target="_blank"
                     aria-label="Github"
                   >
-                    <GithubIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200" />
+                    <GithubIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200 fill-current" />
                   </Link>
 
                   <Link
@@ -189,7 +198,7 @@ export default function RootLayout({
                     target="_blank"
                     aria-label="Farcaster"
                   >
-                    <FarcasterIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200" />
+                    <FarcasterIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200 fill-current" />
                   </Link>
 
                   <Link
@@ -197,11 +206,11 @@ export default function RootLayout({
                     target="_blank"
                     aria-label="Telegram"
                   >
-                    <TelegramIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200" />
+                    <TelegramIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200 fill-current" />
                   </Link>
 
                   <Link href="mailto:hello@namehashlabs.org" aria-label="Email">
-                    <EmailIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200" />
+                    <EmailIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200 fill-current" />
                   </Link>
                 </div>
 
@@ -211,7 +220,10 @@ export default function RootLayout({
                     <span className="text-[#EF4444] mx-1">{"❤️"}</span>
                     by
                   </span>
-                  <a className="!text-black" href="/">
+                  <a
+                    className="cursor-pointer text-black underline decoration-current underline-offset-[4px] transition-all duration-200 hover:underline-offset-[2px]"
+                    href="/"
+                  >
                     NameHash Labs
                   </a>
                 </div>
