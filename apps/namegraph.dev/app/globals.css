@@ -27,3 +27,23 @@
     --radius: 0.5rem;
   }
 }
+
+.collectionPill.activeQuickJumpPill {
+  background: black;
+  color: white;
+}
+
+.collectionPill.activeQuickJumpPill:hover {
+  background: #1f2937;
+}
+
+.scrollbar-hide {
+  /* IE and Edge */
+  -ms-overflow-style: none;
+  /* Firefox */
+  scrollbar-width: none;
+}
+/* Safari and Chrome */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

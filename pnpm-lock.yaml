@@ -97,6 +97,9 @@ importers:
 
   apps/namegraph.dev:
     dependencies:
+      '@heroicons/react':
+        specifier: 2.2.0
+        version: 2.2.0(react@18.3.1)
       '@namehash/namegraph-sdk':
         specifier: workspace:*
         version: link:../../packages/namegraph-sdk
@@ -112,9 +115,15 @@ importers:
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
+      classcat:
+        specifier: 5.0.5
+        version: 5.0.5
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      lodash:
+        specifier: 4.17.21
+        version: 4.17.21
       lucide-react:
         specifier: ^0.468.0
         version: 0.468.0(react@18.3.1)
@@ -124,6 +133,9 @@ importers:
       react:
         specifier: ^18
         version: 18.3.1
+      react-debounce-input:
+        specifier: 3.3.0
+        version: 3.3.0(react@18.3.1)
       react-dom:
         specifier: ^18
         version: 18.3.1(react@18.3.1)
@@ -137,6 +149,9 @@ importers:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.13)
     devDependencies:
+      '@types/lodash':
+        specifier: 4.17.13
+        version: 4.17.13
       '@types/node':
         specifier: ^20
         version: 20.17.9
@@ -1827,6 +1842,11 @@ packages:
     peerDependencies:
       react: '>= 16'
 
+  '@heroicons/react@2.2.0':
+    resolution: {integrity: sha512-LMcepvRaS9LYHJGsF0zzmgKCUim/X3N/DQKc4jepAXJ7l8QxJ1PmxJzqplF2Z3FE4PqBAIGyJAQ/w4B5dsqbtQ==}
+    peerDependencies:
+      react: '>= 16 || ^19.0.0-rc'
+
   '@humanwhocodes/config-array@0.13.0':
     resolution: {integrity: sha512-DZLEEqFWQFiyK6h5YIeynKx7JlvCYWL0cImfSRXZ9l4Sg2efkFGTuFf6vzXjK1cq6IYkU+Eg/JizXw+TD2vRNw==}
     engines: {node: '>=10.10.0'}
@@ -2920,6 +2940,9 @@ packages:
 
   '@types/lodash@4.14.202':
     resolution: {integrity: sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==}
+
+  '@types/lodash@4.17.13':
+    resolution: {integrity: sha512-lfx+dftrEZcdBPczf9d0Qv0x+j/rfNCMuC6OcfXmO8gkfeNAY88PgKUbvG56whcN23gc27yenwF6oJZXGFpYxg==}
 
   '@types/mdx@2.0.13':
     resolution: {integrity: sha512-+OWZQfAYyio6YkJb3HLxDrvnx6SWWDbC0zVPfBRzUk0/nqoDyf6dNxQi3eArPe8rJ473nobTMQ/8Zk+LxJ+Yuw==}
@@ -5255,6 +5278,9 @@ packages:
   lodash._reinterpolate@3.0.0:
     resolution: {integrity: sha512-xYHt68QRoYGjeeM/XOE1uJtvXQAgvszfBhjV4yvsQH0u2i9I6cI6c6/eG4Hh3UAOVn0y/xAXwmTzEay49Q//HA==}
 
+  lodash.debounce@4.0.8:
+    resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
+
   lodash.defaults@4.2.0:
     resolution: {integrity: sha512-qjxPLHd3r5DnsdGacqOMU6pb/avJzdh9tFX2ymgoZE27BmjXrNy/y4LoaiTeAb+O3gL8AfpJGtqfX/ae2leYYQ==}
 
@@ -6090,6 +6116,11 @@ packages:
     engines: {node: '>=10.18'}
     peerDependencies:
       react: ^16.3.0 || ^17.0.1 || ^18.0.0
+
+  react-debounce-input@3.3.0:
+    resolution: {integrity: sha512-VEqkvs8JvY/IIZvh71Z0TC+mdbxERvYF33RcebnodlsUZ8RSgyKe2VWaHXv4+/8aoOgXLxWrdsYs2hDhcwbUgA==}
+    peerDependencies:
+      react: ^15.3.0 || 16 || 17 || 18
 
   react-docgen-typescript@2.2.2:
     resolution: {integrity: sha512-tvg2ZtOpOi6QDwsb3GZhOjDkkX0h8Z2gipvTg6OVMUyoYoURhEiRNePT8NZItTVCDh39JJHnLdfCOkzoLbFnTg==}
@@ -8948,6 +8979,10 @@ snapshots:
     dependencies:
       react: 18.3.1
 
+  '@heroicons/react@2.2.0(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
+
   '@humanwhocodes/config-array@0.13.0':
     dependencies:
       '@humanwhocodes/object-schema': 2.0.3
@@ -10265,6 +10300,8 @@ snapshots:
       '@types/node': 20.17.10
 
   '@types/lodash@4.14.202': {}
+
+  '@types/lodash@4.17.13': {}
 
   '@types/mdx@2.0.13': {}
 
@@ -13140,6 +13177,8 @@ snapshots:
 
   lodash._reinterpolate@3.0.0: {}
 
+  lodash.debounce@4.0.8: {}
+
   lodash.defaults@4.2.0: {}
 
   lodash.difference@4.5.0: {}
@@ -13943,6 +13982,12 @@ snapshots:
     dependencies:
       react: 18.3.1
       tween-functions: 1.2.0
+
+  react-debounce-input@3.3.0(react@18.3.1):
+    dependencies:
+      lodash.debounce: 4.0.8
+      prop-types: 15.8.1
+      react: 18.3.1
 
   react-docgen-typescript@2.2.2(typescript@5.6.2):
     dependencies:

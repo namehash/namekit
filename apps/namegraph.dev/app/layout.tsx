@@ -1,14 +1,15 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
-import { NameHashLabsLogo } from "@/components/namehash-labs-logo";
-import { ServiceProviderBadge } from "@/components/service-provider-badge";
-import { EmailIcon } from "../components/email-icon";
-import { GithubIcon } from "@/components/github-icon";
-import { TwitterIcon } from "@/components/twitter-icon";
-import { FarcasterIcon } from "@/components/farcaster-icon";
-import { TelegramIcon } from "@/components/telegram-icon";
+import { NameHashLabsLogo } from "@/components/footer/namehash-labs-logo";
+import { ServiceProviderBadge } from "@/components/footer/service-provider-badge";
+import { EmailIcon } from "../components/footer/email-icon";
+import { GithubIcon } from "@/components/footer/github-icon";
+import { TwitterIcon } from "@/components/footer/twitter-icon";
+import { FarcasterIcon } from "@/components/footer/farcaster-icon";
+import { TelegramIcon } from "@/components/footer/telegram-icon";
 import { Button } from "@/components/ui/button";
+import "@namehash/namekit-react/styles.css";
 import NextLink from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });

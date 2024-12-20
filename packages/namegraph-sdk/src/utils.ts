@@ -1,7 +1,7 @@
 /**
  * NameGraph default endpoint
  **/
-export const DEFAULT_ENDPOINT = "http://api.namegraph.dev/";
+export const DEFAULT_ENDPOINT = "https://api.namegraph.dev/";
 
 /**
  * NameGraph grouping categories
@@ -71,10 +71,6 @@ export type NameGraphSuggestion = {
   };
 };
 
-export type NameGraphCategory = {
-  suggestions: NameGraphSuggestion[];
-};
-
 export type NameGraphRelatedCollectionResponse = {
   collection_id: string;
   collection_title: string;
@@ -82,18 +78,18 @@ export type NameGraphRelatedCollectionResponse = {
 };
 
 export type NameGraphGroupedByCategoryResponse = {
-  categories: NameGraphCategory[];
-  all_tokenizations: [];
+  categories: NameGraphFetchTopCollectionMembersResponse[];
+  all_tokenizations: string[][];
 };
 
 export type NameGraphFetchTopCollectionMembersResponse = {
   suggestions: NameGraphSuggestion[];
   name: string;
   type: string;
-  collection_id: string;
-  collection_title: string;
-  collection_members_count: string;
-  related_collections: NameGraphRelatedCollectionResponse[];
+  collection_id?: string;
+  collection_title?: string;
+  collection_members_count?: number;
+  related_collections?: NameGraphRelatedCollectionResponse[];
 };
 
 export type NameGraphCountCollectionsResponse = {
