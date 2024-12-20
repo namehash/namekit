@@ -44,7 +44,6 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@namehash/ens-utils": "workspace:*",
     "cross-fetch": "4.0.0"
   },
   "devDependencies": {
