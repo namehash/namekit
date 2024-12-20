@@ -1,5 +1,11 @@
 # @namehash/ens-utils
 
+## 1.19.0
+
+### Minor Changes
+
+- 1891ce7: release
+
 ## 1.18.0
 
 ### Minor Changes
