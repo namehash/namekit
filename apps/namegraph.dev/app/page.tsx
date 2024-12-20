@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <div className="container mx-auto py-16">
       <div className="max-w-4xl flex flex-col mx-auto">

@@ -8,7 +8,7 @@ import {
 } from "@namehash/namegraph-sdk/utils";
 import { ArrowNavigationBar } from "./arrow-navigation-bar";
 import {
-  NameGraphRelatedSuggestionCategory,
+  NameGraphRelatedCollection,
   NameGraphSuggestionCategory,
 } from "@/lib/utils";
 
@@ -24,6 +24,8 @@ export const QuickJumpsByCategory = ({
   const [quickJumpCategories, setQuickJumpCategories] = useState<
     NameGraphSuggestionCategory[] | null
   >(null);
+  const [loadingQuickJumpPills, setLoadingQuickJumpPills] =
+    useState<boolean>(true);
 
   // Start of navigation buttons logic
   const buildQuickJumpPills = () => {
@@ -50,6 +52,14 @@ export const QuickJumpsByCategory = ({
     buildQuickJumpPills();
   }, [nameIdeas?.categories]);
 
+  useEffect(() => {
+    if (quickJumpCategories) {
+      setTimeout(() => {
+        setLoadingQuickJumpPills(false);
+      }, 5000);
+    }
+  }, [quickJumpCategories]);
+
   if (nameIdeas?.categories === null) return null;
 
   return (
@@ -57,8 +67,8 @@ export const QuickJumpsByCategory = ({
       <h2 className="text-lg font-regular mb-4 text-center">
         📚 Collections and name ideas found ⬇️
       </h2>
-      {!quickJumpCategories ? (
-        <div className="mx-3 px-2 md:px-7 lg:px-12">
+      {!quickJumpCategories || loadingQuickJumpPills ? (
+        <div className="mx-3 px-2 mb-3 md:px-7 lg:px-12">
           <QuickJumpPillsSkeleton />
         </div>
       ) : (
@@ -105,7 +115,7 @@ export const QuickJumpsByCategory = ({
 const QuickJumpPillsSkeleton = () => {
   return (
     <div className="flex space-x-2">
-      {[...Array(5).fill(0)].map((idx) => (
+      {[...Array(3).fill(0)].map((idx) => (
         <Skeleton
           roundedClass="rounded-[20px]"
           className="h-9 w-32"
@@ -122,7 +132,7 @@ export const getCategoryID = (
   const postfix =
     category.type === NameGraphGroupingCategory.related
       ? `${category.name}-${
-          (category as NameGraphRelatedSuggestionCategory).collection_id
+          (category as NameGraphRelatedCollection).collection_id
         }`
       : `${category.name}`;
 
@@ -142,11 +152,11 @@ export const scrollToNameIdeasCategory = (
       const categoryElmTopPosition = Number(
         categoryElm?.getAttribute("data-category-top"),
       );
-
+      console.log(categoryElmTopPosition, categoryElm, scrollableContainer);
       if (scrollableContainer && categoryElm && categoryElmTopPosition) {
         setTimeout(() => {
           scrollableContainer.scrollTo({
-            top: -categoryElmTopPosition - 100,
+            top: categoryElmTopPosition - 375,
             behavior: "smooth",
           });
         }, 100);

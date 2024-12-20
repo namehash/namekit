@@ -11,7 +11,7 @@ import {
 import { WritersBlockPills } from "@/components/mini-apps/ideate/writers-block-pills";
 import { Catalog } from "@/components/mini-apps/ideate/catalog";
 
-export default function Home() {
+export default function IdeatePage() {
   const [suggestions, setSuggestions] = useState<WritersBlockSuggestion[]>([]);
   const [collectionsToConsider, setCollectionsToConsider] = useState<
     WritersBlockCollection[]

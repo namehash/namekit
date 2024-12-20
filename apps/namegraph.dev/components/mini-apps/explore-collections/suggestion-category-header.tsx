@@ -1,8 +1,8 @@
 import Skeleton from "@/components/skeleton";
-import { NameGraphSuggestionCategory } from "@/lib/utils";
+import { NameGraphFetchTopCollectionMembersResponse } from "@namehash/namegraph-sdk/utils";
 
 interface SuggestionCategoryHeaderProps {
-  category: NameGraphSuggestionCategory | null;
+  category: NameGraphFetchTopCollectionMembersResponse | null;
 }
 
 export const SuggestionCategoryHeader = ({

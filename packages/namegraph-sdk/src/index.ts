@@ -54,7 +54,9 @@ export class NameGraph {
     return this.rawRequest(`grouped_by_category`, "POST", payload);
   }
 
-  public suggestionsByCategory(label: string): Promise<NameGraphSuggestion[]> {
+  public suggestionsByCategory(
+    label: string,
+  ): Promise<NameGraphGroupedByCategoryResponse> {
     const categoriesQueryConfig: TypedNameGraphGroupingCategoriesParams = {
       [NameGraphGroupingCategory.related]: {
         enable_learning_to_rank: DEFAULT_ENABLE_LEARNING_TO_RANK,

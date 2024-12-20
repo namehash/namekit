@@ -1,33 +1,19 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
-
 import {
-  NameGraphFetchTopCollectionMembersResponse,
+  NameGraphGroupedByCategoryResponse,
   NameGraphGroupingCategory,
   NameGraphSuggestion,
 } from "@namehash/namegraph-sdk/utils";
 import { createNameGraphClient } from "@namehash/namegraph-sdk";
 
-interface generateNamesByQueryProps {
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+interface LabelAndModeQueryParams {
   label: string;
   mode: "full";
-}
-
-interface sampleNamesByCollectionProps {
-  collection_id: string;
-  mode: "full";
-}
-
-interface scrambleByCollectionProps {
-  collection_id: string;
-}
-
-interface openRelatedCollectionProps {
-  collection_id: string;
 }
 
 export interface NameGraphRelatedCollection {
@@ -50,16 +36,6 @@ const NameGraphSuggestionCategoryTypes = Object.values(
   NameGraphGroupingCategory,
 );
 
-export interface NameGraphRelatedSuggestionCategory
-  extends NameGraphSuggestionCategory {
-  collection_members_count: number;
-  collection_title: string;
-  collection_id: string;
-}
-export interface NameGraphSuggestionsByCategory {
-  categories: NameGraphSuggestionCategory[];
-}
-
 /**
  * Common usage NameGraphClient
  */
@@ -69,8 +45,8 @@ const NameGraphClient = createNameGraphClient();
  * Main function for fetching name suggestions from the NameGraph API.
  */
 export const generateNamesByQuery = async (
-  input: generateNamesByQueryProps,
-) => {
+  input: LabelAndModeQueryParams,
+): Promise<NameGraphSuggestion[]> => {
   if (input.label.includes("."))
     throw new Error("Invalid label for generating name suggestions");
 
@@ -137,44 +113,14 @@ export const generateNamesByQuery = async (
   return nameGeneratorSuggestions;
 };
 
-export const sampleNamesByCollection = async (
-  input: sampleNamesByCollectionProps,
-) => {
-  if (!input.collection_id)
-    throw new Error("Invalid collection ID for generating name suggestions");
+export const getCollectionsForQuery = async (
+  input: string,
+): Promise<NameGraphGroupedByCategoryResponse> => {
+  if (input.includes("."))
+    throw new Error("Invalid label for generating name suggestions");
 
   const nameGeneratorSuggestions =
-    await NameGraphClient.sampleCollectionMembers(input.collection_id);
+    await NameGraphClient.suggestionsByCategory(input);
 
   return nameGeneratorSuggestions;
-};
-
-export const scrambleByCollection = async (
-  input: scrambleByCollectionProps,
-) => {
-  if (!input.collection_id)
-    throw new Error("Invalid collection ID for generating name suggestions");
-
-  const nameGeneratorSuggestions =
-    await NameGraphClient.scrambleCollectionTokens(input.collection_id);
-
-  return nameGeneratorSuggestions;
-};
-
-export const openRelatedCollection = async (
-  input: openRelatedCollectionProps,
-) => {
-  if (!input.collection_id)
-    throw new Error("Invalid collection ID for generating name suggestions");
-
-  const nameGeneratorQueriedCollection: NameGraphFetchTopCollectionMembersResponse =
-    await NameGraphClient.fetchTopCollectionMembers(input.collection_id);
-
-  /*
-    This API always returns one category. Since we
-    reuse logics from the generateNamesByQuery function,
-    we do return the first element of the array below,
-    which is safely the only element of the array.
-  */
-  return nameGeneratorQueriedCollection;
 };

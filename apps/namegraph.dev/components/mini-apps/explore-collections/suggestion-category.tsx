@@ -1,21 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import lodash from "lodash";
+import { getCategoryID } from "./quick-jumps-by-category";
 import {
-  getCategoryID,
-  scrollToNameIdeasCategory,
-} from "./quick-jumps-by-category";
-import { NameGraphGroupingCategory } from "@namehash/namegraph-sdk/utils";
-import {
-  NameGraphRelatedCollection,
-  NameGraphSuggestionCategory,
-} from "@/lib/utils";
+  NameGraphFetchTopCollectionMembersResponse,
+  NameGraphGroupingCategory,
+  NameGraphRelatedCollectionResponse,
+} from "@namehash/namegraph-sdk/utils";
+import { NameGraphRelatedCollection } from "@/lib/utils";
 import { RecursiveRelatedCollectionPills } from "./recursive-related-collection-pills";
 import { SuggestionCategoryHeader } from "./suggestion-category-header";
 import Skeleton from "@/components/skeleton";
 
 interface SuggestionCategoryProps {
-  category: NameGraphSuggestionCategory | null; // when null we display a skeleton
+  category: NameGraphFetchTopCollectionMembersResponse | null; // when null we display a skeleton
 }
 
 /*
@@ -34,12 +32,15 @@ const CATEGORY_TOP_OFFEST_TO_CONSIDER_IT_ACTIVE = 32;
 
 export const SuggestionCategory = ({ category }: SuggestionCategoryProps) => {
   const [relatedCollectionsList, setRelatedCollectionsList] = useState<
-    NameGraphRelatedCollection[] | null
+    NameGraphRelatedCollectionResponse[] | null
   >(null);
 
   useEffect(() => {
     if (category) {
-      if (category?.type === NameGraphGroupingCategory.related) {
+      if (
+        category?.type === NameGraphGroupingCategory.related &&
+        category.related_collections
+      ) {
         setRelatedCollectionsList(category.related_collections);
       }
     }
@@ -178,24 +179,23 @@ export const SuggestionCategory = ({ category }: SuggestionCategoryProps) => {
                     : null}
                 </div>
               </div>
+              <div className="px-5 md:px-10 lg:px-[60px]">
+                {category?.type === NameGraphGroupingCategory.related ? (
+                  <>
+                    {relatedCollectionsList ? (
+                      <RecursiveRelatedCollectionPills
+                        recursiveRelatedCollections={relatedCollectionsList}
+                      />
+                    ) : (
+                      <Skeleton />
+                    )}
+                  </>
+                ) : null}
+              </div>
             </div>
           )}
         </div>
       )}
-
-      <div className="px-5 md:px-10 lg:px-[60px]">
-        {category?.type === NameGraphGroupingCategory.related ? (
-          <>
-            {relatedCollectionsList ? (
-              <RecursiveRelatedCollectionPills
-                recursiveRelatedCollections={relatedCollectionsList}
-              />
-            ) : (
-              <Skeleton />
-            )}
-          </>
-        ) : null}
-      </div>
     </>
   );
 };
