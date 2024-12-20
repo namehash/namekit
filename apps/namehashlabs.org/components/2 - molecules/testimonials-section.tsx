@@ -1,8 +1,8 @@
 "use client";
 
 import { Balancer } from "react-wrap-balancer";
-import { PreSectionText, SectionTitle } from "../1 - atoms";
-import { QuoteIcon } from "../1 - atoms/icons/quote-icon";
+import { PreSectionText } from "@/components/1 - atoms";
+import { QuoteIcon } from "@/components/1 - atoms/icons/quote-icon";
 import { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperClass, SwiperSlide } from "swiper/react";
 
@@ -13,6 +13,7 @@ import { Navigation, Autoplay } from "swiper/modules";
 import { Profile, getCachedProfile } from "@/data/ensProfiles";
 import { UltimateENSAvatar } from ".";
 import { getNameHashLabsAvatarCallbacks } from "@/lib/client/nh-labs-avatar";
+import { Heading, Text } from "@namehash/namekit-react";
 
 const testimonials: Testimonial[] = [
   {
@@ -181,7 +182,7 @@ export const TestimonialsSection = () => {
       <div className="w-full flex flex-col items-center gap-20 max-w-[1216px] m-auto">
         <div className="flex flex-col items-center gap-3">
           <PreSectionText>WHAT PEOPLE ARE SAYING</PreSectionText>
-          <SectionTitle>Testimonials</SectionTitle>
+          <Heading>Testimonials</Heading>
         </div>
         <div className="flex flex-col gap-10 items-center w-full relative">
           <div
@@ -217,12 +218,12 @@ export const TestimonialsSection = () => {
                 <SwiperSlide key={testimonial.author.ensName}>
                   <div className="w-full flex flex-col gap-10">
                     <div className="flex justify-between gap-10 items-center w-full relative lg:px-20">
-                      <div
-                        role="text"
-                        className={`text-[30px] font-light text-center leading-[44px] m-auto`}
+                      <Text
+                        as="p"
+                        className="text-3xl font-light text-center leading-[44px] m-auto"
                       >
                         <Balancer>{testimonial.text}</Balancer>
-                      </div>
+                      </Text>
                     </div>
 
                     <div className="flex gap-5 w-full mx-auto items-center justify-center sm:max-w-[350px] md:max-w-[2000px]">
@@ -237,12 +238,16 @@ export const TestimonialsSection = () => {
                       </div>
 
                       <div className="flex flex-col shrink">
-                        <p className="text-2xl leading-8 font-semibold ens-webfont">
+                        <Text
+                          as="p"
+                          className="text-2xl font-semibold ens-webfont"
+                        >
                           {testimonial.author.ensName}
-                        </p>
-                        <p className="text-lg leading-7 font-normal text-gray-500">
+                        </Text>
+
+                        <Text as="p" className="text-lg text-gray-500">
                           {testimonial.author.title}
-                        </p>
+                        </Text>
                       </div>
                     </div>
                   </div>
