@@ -601,9 +601,6 @@ importers:
 
   packages/namegraph-sdk:
     dependencies:
-      '@namehash/ens-utils':
-        specifier: workspace:*
-        version: link:../ens-utils
       cross-fetch:
         specifier: 4.0.0
         version: 4.0.0
