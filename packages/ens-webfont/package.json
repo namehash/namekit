@@ -19,8 +19,8 @@
   "main": "index.css",
   "files": [
     "index.css",
-    "LICENSE",
-    "Unifont.otf"
+    "Unifont.otf",
+    "LICENSE"
   ],
   "publishConfig": {
     "access": "public"
