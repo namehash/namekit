@@ -33,6 +33,7 @@ export const CalendarButton = ({
       data-cal-link={link}
       data-cal-config='{"layout":"month_view"}'
       {...props}
+      variant={props.variant ?? "primary"}
       className={className}
     >
       {children}
