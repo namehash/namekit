@@ -13,7 +13,7 @@ You must clone the full monorepo and install dependencies with PNPM before you c
 
 ## Deploy
 
-This repository is connected to the Vercel project [`namekit-website`](https://vercel.com/namehash/namekit-website), and any pull request automatically receives a preview environment. When a PR is merged to the main branch, the production instance is automatically updated.
+This repository is connected to the Vercel project [`namekit-website`](https://vercel.com/namehash/namekit.io), and any pull request automatically receives a preview environment. When a PR is merged to the main branch, the production instance is automatically updated.
 
 ## License
 
