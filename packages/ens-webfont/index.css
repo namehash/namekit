@@ -332,3 +332,10 @@ Font families defined by this CSS:
   font-family: "Noto Sans";
   font-display: block;
 }
+
+/* Last font to be used, provides widest unicode-range possible */
+@font-face {
+  font-family: "Unifont";
+  font-display: block;
+  src: url("./Unifont.otf");
+}

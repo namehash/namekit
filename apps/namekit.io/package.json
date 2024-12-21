@@ -11,7 +11,6 @@
   "dependencies": {
     "@calcom/embed-react": "^1.5.1",
     "@headlessui/react": "^2.2.0",
-    "@namehash/ens-webfont": "^0.6.0",
     "classcat": "5.0.5",
     "copy-to-clipboard": "3.3.3",
     "eslint-config-next": "14.2.14",
@@ -21,6 +20,7 @@
     "react-dom": "18.3.1",
     "react-hot-toast": "2.4.1",
     "@namehash/internal": "workspace:*",
+    "@namehash/ens-webfont": "workspace:*",
     "react-wrap-balancer": "1.1.1"
   },
   "devDependencies": {
