@@ -2,7 +2,7 @@ import Skeleton from "@/components/skeleton";
 import { NameGraphFetchTopCollectionMembersResponse } from "@namehash/namegraph-sdk/utils";
 
 interface SuggestionCategoryHeaderProps {
-  category: NameGraphFetchTopCollectionMembersResponse | null;
+  category: NameGraphFetchTopCollectionMembersResponse;
 }
 
 export const SuggestionCategoryHeader = ({

@@ -1,10 +1,11 @@
-import { NameGraphRelatedCollection } from "@/lib/utils";
+import Skeleton from "@/components/skeleton";
 import { ArrowNavigationBar } from "./arrow-navigation-bar";
 import { RelatedCollectionPill } from "./related-collection-pill";
-import Skeleton from "@/components/skeleton";
+import { NameGraphRelatedCollectionResponse } from "@namehash/namegraph-sdk/utils";
+import { RELATED_COLLECTION_PILLS_RESULTS_NUMBER } from "@/lib/utils";
 
 interface RecursiveRelatedCollectionPillsProps {
-  recursiveRelatedCollections: NameGraphRelatedCollection[];
+  recursiveRelatedCollections: NameGraphRelatedCollectionResponse[];
 }
 
 export const RecursiveRelatedCollectionPills = ({
@@ -17,7 +18,7 @@ export const RecursiveRelatedCollectionPills = ({
   const RelatedCollectionPillsSkeleton = (
     <div className="ml-1 flex flex-wrap items-center text-sm mt-3 gap-2">
       <p className="font-light min-w-[128px]">Check out related collections:</p>
-      {Array(3).map((idx) => (
+      {Array(RELATED_COLLECTION_PILLS_RESULTS_NUMBER).map((idx) => (
         <Skeleton key={idx} />
       ))}
     </div>

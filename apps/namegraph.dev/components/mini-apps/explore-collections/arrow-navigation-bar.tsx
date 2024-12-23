@@ -5,7 +5,7 @@ import lodash from "lodash";
 import cc from "classcat";
 
 interface ArrowNavigationBarProps {
-  centerID?: string | null;
+  centerID?: string;
   skeletonMarkup: JSX.Element;
   barContentMarkup: JSX.Element;
 }
@@ -44,11 +44,11 @@ export const ArrowNavigationBar = ({
   skeletonMarkup,
   barContentMarkup,
 }: ArrowNavigationBarProps) => {
-  const navigationBarWrapper = useRef<HTMLDivElement | null>(null);
+  const navigationBarWrapper = useRef<HTMLDivElement | undefined>(undefined);
 
-  const [showNavButtons, setShowNavButtons] = useState<ShowNavButtons | null>(
-    null,
-  );
+  const [showNavButtons, setShowNavButtons] = useState<
+    ShowNavButtons | undefined
+  >(undefined);
 
   useEffect(() => {
     setDisplayOfInfiniteShadowsAndNavigationButtons();
@@ -166,7 +166,7 @@ export const ArrowNavigationBar = ({
 
   return (
     <div
-      className={`relative flex ${showNavButtons !== null ? "space-x-1 z-20" : null}`}
+      className={`relative flex ${showNavButtons !== undefined ? "space-x-1 z-20" : null}`}
     >
       <div
         className={cc([
@@ -199,9 +199,11 @@ export const ArrowNavigationBar = ({
           arrows. Later, only the action of scrolling, which is user
           triggered, will make changes to 'showNavButtons'.
         */}
-        {showNavButtons === null && skeletonMarkup}
+        {showNavButtons === undefined && skeletonMarkup}
         {
-          <div className={`${showNavButtons === null ? "opacity-0" : null}`}>
+          <div
+            className={`${showNavButtons === undefined ? "opacity-0" : null}`}
+          >
             {barContentMarkup}
           </div>
         }

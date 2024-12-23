@@ -5,17 +5,20 @@ import {
   NameGraphFetchTopCollectionMembersResponse,
   NameGraphGroupedByCategoryResponse,
   NameGraphGroupingCategory,
+  NameGraphRelatedCollectionResponse,
 } from "@namehash/namegraph-sdk/utils";
 import { ArrowNavigationBar } from "./arrow-navigation-bar";
-import {
-  NameGraphRelatedCollection,
-  NameGraphSuggestionCategory,
-} from "@/lib/utils";
+import { NameGraphSuggestionCategoryTypes } from "@/lib/utils";
 
 interface QuickJumpsByCategoryProps {
   search: string;
   activeCategoryID: string;
-  nameIdeas: null | NameGraphGroupedByCategoryResponse;
+  /**
+   * undefined is set when component never tried querying name ideas
+   * null is set when component tried querying name ideas but failed
+   * NameGraphGroupedByCategoryResponse is set when name ideas were successfully queried
+   */
+  nameIdeas: undefined | null | NameGraphGroupedByCategoryResponse;
 }
 
 export const QuickJumpsByCategory = ({
@@ -23,9 +26,16 @@ export const QuickJumpsByCategory = ({
   nameIdeas,
   activeCategoryID,
 }: QuickJumpsByCategoryProps) => {
+  /**
+   * quickJumpCategories state:
+   *
+   * undefined is set when nameIdeas was not yet parsed
+   * null is set if nameIdeas was parsed but does not contain an array of categories
+   * NameGraphFetchTopCollectionMembersResponse[] is set if nameIdeas categories were parsed into quickJumpCategories
+   */
   const [quickJumpCategories, setQuickJumpCategories] = useState<
-    NameGraphSuggestionCategory[] | null
-  >(null);
+    undefined | null | NameGraphFetchTopCollectionMembersResponse[]
+  >(undefined);
   const [loadingQuickJumpPills, setLoadingQuickJumpPills] =
     useState<boolean>(true);
 
@@ -44,10 +54,10 @@ export const QuickJumpsByCategory = ({
     }
   };
 
-  const quickJumpTo = (category: NameGraphSuggestionCategory | null) => {
-    if (category) {
-      scrollToNameIdeasCategory(category);
-    }
+  const quickJumpTo = (
+    category: NameGraphFetchTopCollectionMembersResponse,
+  ) => {
+    scrollToNameIdeasCategory(category);
   };
 
   useEffect(() => {
@@ -71,7 +81,8 @@ export const QuickJumpsByCategory = ({
   return (
     <div className="w-full px-3 relative bg-white border-b border-gray-300 pt-3 border-t">
       <h2 className="text-lg font-regular mb-4 text-center">
-        📚 Collections and name ideas found for <b>{search}</b> ⬇️
+        📚 Collections and name ideas found for{" "}
+        <b>{search.includes(".") ? search.split(".")[0] : search}</b> ⬇️
       </h2>
       {!quickJumpCategories || loadingQuickJumpPills ? (
         <div className="mx-3 px-2 mb-3 md:px-7 lg:px-12">
@@ -84,7 +95,7 @@ export const QuickJumpsByCategory = ({
         >
           <ArrowNavigationBar
             skeletonMarkup={<QuickJumpPillsSkeleton />}
-            centerID={activeCategoryID || null}
+            centerID={activeCategoryID}
             barContentMarkup={
               <div className="flex space-x-2">
                 {/* Quick jump pills */}
@@ -120,14 +131,16 @@ export const QuickJumpsByCategory = ({
 
 const QuickJumpPillsSkeleton = () => {
   return (
-    <div className="flex space-x-2">
-      {[...Array(3).fill(0)].map((idx) => (
-        <Skeleton
-          roundedClass="rounded-[20px]"
-          className="h-9 w-32"
-          key={idx}
-        />
-      ))}
+    <div className="flex space-x-2 overflow-hidden">
+      {[...Array(NameGraphSuggestionCategoryTypes.length).fill(0)].map(
+        (idx) => (
+          <Skeleton
+            roundedClass="rounded-[20px]"
+            className="h-9 min-w-32 max-w-32"
+            key={idx}
+          />
+        ),
+      )}
     </div>
   );
 };
@@ -138,7 +151,7 @@ export const getCategoryID = (
   const postfix =
     category.type === NameGraphGroupingCategory.related
       ? `${category.name}-${
-          (category as NameGraphRelatedCollection).collection_id
+          (category as NameGraphRelatedCollectionResponse).collection_id
         }`
       : `${category.name}`;
 
@@ -146,27 +159,25 @@ export const getCategoryID = (
 };
 
 export const scrollToNameIdeasCategory = (
-  category: NameGraphSuggestionCategory | null,
+  category: NameGraphFetchTopCollectionMembersResponse,
 ) => {
-  if (category) {
-    const categoryID = getCategoryID(category);
+  const categoryID = getCategoryID(category);
 
-    if (categoryID) {
-      const scrollableContainer = document.getElementById("scrollable-elm");
-      const categoryElm = document.getElementById(categoryID);
+  if (categoryID) {
+    const scrollableContainer = document.getElementById("scrollable-elm");
+    const categoryElm = document.getElementById(categoryID);
 
-      const categoryElmTopPosition = Number(
-        categoryElm?.getAttribute("data-category-top"),
-      );
-      console.log(categoryElmTopPosition, categoryElm, scrollableContainer);
-      if (scrollableContainer && categoryElm && categoryElmTopPosition) {
-        setTimeout(() => {
-          scrollableContainer.scrollTo({
-            top: categoryElmTopPosition - 375,
-            behavior: "smooth",
-          });
-        }, 100);
-      }
+    const categoryElmTopPosition = Number(
+      categoryElm?.getAttribute("data-category-top"),
+    );
+    console.log(categoryElmTopPosition, categoryElm, scrollableContainer);
+    if (scrollableContainer && categoryElm && categoryElmTopPosition) {
+      setTimeout(() => {
+        scrollableContainer.scrollTo({
+          top: categoryElmTopPosition - 375,
+          behavior: "smooth",
+        });
+      }, 100);
     }
   }
 };

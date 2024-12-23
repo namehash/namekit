@@ -12,23 +12,38 @@ import {
 import { getCollectionsForQuery } from "@/lib/utils";
 import { DebounceInput } from "react-debounce-input";
 import { useEffect, useState } from "react";
-import lodash from "lodash";
+import lodash, { debounce } from "lodash";
 
 const SUGGESTION_CATEGORY_CLASSNAME = "suggestionCategory";
 
 export default function ExploreCollectionsPage() {
-  const [nameIdeas, setNameIdeas] =
-    useState<null | NameGraphGroupedByCategoryResponse>(null);
+  /**
+   * nameIdeas state:
+   *
+   * undefined is set when component never tried querying name ideas
+   * null is set when component tried querying name ideas but failed
+   * NameGraphGroupedByCategoryResponse is set when name ideas were successfully queried
+   */
+  const [nameIdeas, setNameIdeas] = useState<
+    undefined | null | NameGraphGroupedByCategoryResponse
+  >(undefined);
+
   const [nameIdeasLoading, setNameIdeasLoading] = useState(true);
 
   const [debouncedValue, setDebouncedValue] = useState("");
 
   useEffect(() => {
     if (debouncedValue) {
-      setNameIdeas(null);
+      let query = debouncedValue;
+      if (debouncedValue.includes(".")) {
+        query = debouncedValue.split(".")[0];
+      }
+
+      setNameIdeas(undefined);
       setNameIdeasLoading(true);
-      getCollectionsForQuery(debouncedValue)
+      getCollectionsForQuery(query)
         .then((res) => setNameIdeas(res))
+        .catch(() => setNameIdeas(null))
         .finally(() => setNameIdeasLoading(false));
     } else {
       setNameIdeasLoading(false);

@@ -7,13 +7,12 @@ import {
   NameGraphGroupingCategory,
   NameGraphRelatedCollectionResponse,
 } from "@namehash/namegraph-sdk/utils";
-import { NameGraphRelatedCollection } from "@/lib/utils";
 import { RecursiveRelatedCollectionPills } from "./recursive-related-collection-pills";
 import { SuggestionCategoryHeader } from "./suggestion-category-header";
 import Skeleton from "@/components/skeleton";
 
 interface SuggestionCategoryProps {
-  category: NameGraphFetchTopCollectionMembersResponse | null; // when null we display a skeleton
+  category: NameGraphFetchTopCollectionMembersResponse;
 }
 
 /*
@@ -32,17 +31,15 @@ const CATEGORY_TOP_OFFEST_TO_CONSIDER_IT_ACTIVE = 32;
 
 export const SuggestionCategory = ({ category }: SuggestionCategoryProps) => {
   const [relatedCollectionsList, setRelatedCollectionsList] = useState<
-    NameGraphRelatedCollectionResponse[] | null
-  >(null);
+    undefined | NameGraphRelatedCollectionResponse[]
+  >(undefined);
 
   useEffect(() => {
-    if (category) {
-      if (
-        category?.type === NameGraphGroupingCategory.related &&
-        category.related_collections
-      ) {
-        setRelatedCollectionsList(category.related_collections);
-      }
+    if (
+      category.type === NameGraphGroupingCategory.related &&
+      category.related_collections
+    ) {
+      setRelatedCollectionsList(category.related_collections);
     }
   }, [category]);
 
@@ -53,8 +50,6 @@ export const SuggestionCategory = ({ category }: SuggestionCategoryProps) => {
   }, []);
 
   const setCategoryDimensions = () => {
-    if (!category) return;
-
     const categoryElm = document.getElementById(getCategoryID(category));
     const categoryTop = categoryElm?.getBoundingClientRect().top;
     const categoryBottom = categoryElm?.getBoundingClientRect().bottom;
@@ -101,11 +96,7 @@ export const SuggestionCategory = ({ category }: SuggestionCategoryProps) => {
 
   const loadingSkeletonMarkup = (
     <div className="w-full">
-      {category ? (
-        <>{category.name}</>
-      ) : (
-        <SuggestionCategoryHeader category={category} />
-      )}
+      <>{category.name}</>
       <div className="mt-3">
         <Skeleton />
       </div>
@@ -152,50 +143,61 @@ export const SuggestionCategory = ({ category }: SuggestionCategoryProps) => {
     return `bg-[${randomColor}] ${defaultClasses}`;
   };
 
+  const [categoryPillsColors, setCategoryPillsColors] = useState<
+    undefined | string[]
+  >(undefined);
+
+  useEffect(() => {
+    if (category) {
+      const numberOfPills = category.suggestions.length;
+
+      let pillsColors = [];
+      for (let i = 0; i < numberOfPills; i++) {
+        pillsColors.push(getRandomCustomizedPill());
+      }
+
+      setCategoryPillsColors(pillsColors);
+    }
+  }, [category]);
+
   return (
-    <>
-      {!category ? (
+    <div className="px-5 md:px-10 lg:px-[60px]">
+      {category.suggestions.length === 0 ? (
         loadingSkeletonMarkup
       ) : (
-        <div className="px-5 md:px-10 lg:px-[60px]">
-          {category.suggestions.length === 0 ? (
-            loadingSkeletonMarkup
-          ) : (
-            <div>
-              <div>
-                <SuggestionCategoryHeader category={category} />
-                <div className="flex flex-col m-2 space-y-2">
-                  {category.suggestions
-                    ? category.suggestions.map((suggestion) => {
-                        return (
-                          <div
-                            className={getRandomCustomizedPill()}
-                            key={suggestion.name}
-                          >
-                            {suggestion.name}
-                          </div>
-                        );
-                      })
-                    : null}
-                </div>
-              </div>
-              <div className="px-5 md:px-10 lg:px-[60px]">
-                {category?.type === NameGraphGroupingCategory.related ? (
-                  <>
-                    {relatedCollectionsList ? (
-                      <RecursiveRelatedCollectionPills
-                        recursiveRelatedCollections={relatedCollectionsList}
-                      />
-                    ) : (
-                      <Skeleton />
-                    )}
-                  </>
-                ) : null}
-              </div>
+        <div>
+          <div>
+            <SuggestionCategoryHeader category={category} />
+            <div className="flex flex-col m-2 space-y-2">
+              {category.suggestions
+                ? category.suggestions.map((suggestion, idx) => {
+                    return (
+                      <div
+                        className={categoryPillsColors?.[idx]}
+                        key={suggestion.name}
+                      >
+                        {suggestion.name}
+                      </div>
+                    );
+                  })
+                : null}
             </div>
-          )}
+          </div>
+          <div className="px-5 md:px-10 lg:px-[60px]">
+            {category?.type === NameGraphGroupingCategory.related ? (
+              <>
+                {relatedCollectionsList ? (
+                  <RecursiveRelatedCollectionPills
+                    recursiveRelatedCollections={relatedCollectionsList}
+                  />
+                ) : (
+                  <Skeleton />
+                )}
+              </>
+            ) : null}
+          </div>
         </div>
       )}
-    </>
+    </div>
   );
 };

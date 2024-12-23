@@ -1,8 +1,8 @@
-import { NameGraphRelatedCollection } from "@/lib/utils";
+import { NameGraphRelatedCollectionResponse } from "@namehash/namegraph-sdk/utils";
 import { TruncatedText } from "@namehash/namekit-react/client";
 
 interface RelatedCollectionPillProps {
-  relatedCollection: NameGraphRelatedCollection;
+  relatedCollection: NameGraphRelatedCollectionResponse;
 }
 
 export const RelatedCollectionPill = ({

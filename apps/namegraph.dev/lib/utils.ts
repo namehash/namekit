@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import {
+  DEFAULT_FULL_MODE,
   NameGraphGroupedByCategoryResponse,
   NameGraphGroupingCategory,
   NameGraphSuggestion,
@@ -11,28 +12,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-interface LabelAndModeQueryParams {
-  label: string;
-  mode: "full";
-}
-
-export interface NameGraphRelatedCollection {
-  collection_id: string;
-  collection_title: string;
-  collection_members_count: number;
-}
-
-export interface NameGraphSuggestionCategory {
-  type: NameGraphGroupingCategory;
-  // NameGraph API guarantees "name" will always be a normalized name
-  name: string;
-  // NameGraph API guarantees "suggestions" will never be an empty list
-  suggestions: NameGraphSuggestion[];
-  related_collections: NameGraphRelatedCollection[];
-}
-
 // This array is used for checking when a category is not a "related" category
-const NameGraphSuggestionCategoryTypes = Object.values(
+export const NameGraphSuggestionCategoryTypes = Object.values(
   NameGraphGroupingCategory,
 );
 
@@ -41,20 +22,23 @@ const NameGraphSuggestionCategoryTypes = Object.values(
  */
 const NameGraphClient = createNameGraphClient();
 
+export const RELATED_COLLECTION_PILLS_RESULTS_NUMBER = 3;
+
 /**
  * Main function for fetching name suggestions from the NameGraph API.
  */
 export const generateNamesByQuery = async (
-  input: LabelAndModeQueryParams,
+  label: string,
 ): Promise<NameGraphSuggestion[]> => {
-  if (input.label.includes("."))
+  if (label.includes("."))
     throw new Error("Invalid label for generating name suggestions");
 
   // Related collections params
   const enable_learning_to_rank = true;
   const max_names_per_related_collection = 10;
   // Determines the number of collections returned in category.related_collections
-  const max_recursive_related_collections = 3;
+  const max_recursive_related_collections =
+    RELATED_COLLECTION_PILLS_RESULTS_NUMBER;
   const name_diverstity_ratio = 0.5;
   const max_related_collections = 6;
   const max_per_type = 2;
@@ -97,9 +81,9 @@ export const generateNamesByQuery = async (
   }
 
   const payload = {
-    label: input.label,
+    label,
     params: {
-      mode: "full",
+      mode: DEFAULT_FULL_MODE,
     },
     categories: categoriesWithParams,
   };
