@@ -62,7 +62,7 @@ export function Catalog({ onJsonChange }: CatalogProps) {
             value={jsonText}
             ref={catalogTextarea}
             onChange={handleJsonChange}
-            className="w-full h-full min-h-[500px] font-mono text-sm"
+            className="w-full h-full min-h-[450px] font-mono text-sm"
           />
           {hasJSONFormatError ? (
             <p className="underline text-red-400 text-xs mx-auto text-center pt-6">
