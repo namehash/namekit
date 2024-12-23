@@ -79,13 +79,13 @@ export const QuickJumpsByCategory = ({
   if (nameIdeas?.categories === null) return null;
 
   return (
-    <div className="w-full px-3 relative bg-white border-b border-gray-300 pt-3 border-t">
+    <div className="w-full px-3 relative bg-white pt-3">
       <h2 className="text-lg font-regular mb-4 text-center">
         📚 Collections and name ideas found for{" "}
         <b>{search.includes(".") ? search.split(".")[0] : search}</b> ⬇️
       </h2>
       {!quickJumpCategories || loadingQuickJumpPills ? (
-        <div className="mx-3 px-2 mb-3 md:px-7 lg:px-12">
+        <div className="mx-3 px-2 md:px-7 lg:px-12">
           <QuickJumpPillsSkeleton />
         </div>
       ) : (
@@ -131,7 +131,7 @@ export const QuickJumpsByCategory = ({
 
 const QuickJumpPillsSkeleton = () => {
   return (
-    <div className="flex space-x-2 overflow-hidden">
+    <div className="flex space-x-2 overflow-hidden ">
       {[...Array(NameGraphSuggestionCategoryTypes.length).fill(0)].map(
         (idx) => (
           <Skeleton
@@ -174,7 +174,7 @@ export const scrollToNameIdeasCategory = (
     if (scrollableContainer && categoryElm && categoryElmTopPosition) {
       setTimeout(() => {
         scrollableContainer.scrollTo({
-          top: categoryElmTopPosition - 375,
+          top: categoryElmTopPosition - 425,
           behavior: "smooth",
         });
       }, 100);
