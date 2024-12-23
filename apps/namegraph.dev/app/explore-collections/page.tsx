@@ -12,7 +12,7 @@ import {
 import { getCollectionsForQuery } from "@/lib/utils";
 import { DebounceInput } from "react-debounce-input";
 import { useEffect, useState } from "react";
-import lodash, { debounce } from "lodash";
+import lodash from "lodash";
 import { MagnifyingGlassCircleIcon } from "@heroicons/react/24/solid";
 
 const SUGGESTION_CATEGORY_CLASSNAME = "suggestionCategory";

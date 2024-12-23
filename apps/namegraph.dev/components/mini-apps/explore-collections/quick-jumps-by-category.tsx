@@ -131,7 +131,7 @@ export const QuickJumpsByCategory = ({
 
 const QuickJumpPillsSkeleton = () => {
   return (
-    <div className="flex space-x-2 overflow-hidden ">
+    <div className="flex space-x-2 overflow-hidden">
       {[...Array(NameGraphSuggestionCategoryTypes.length).fill(0)].map(
         (idx) => (
           <Skeleton
