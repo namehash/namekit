@@ -108,3 +108,21 @@ export const getCollectionsForQuery = async (
 
   return nameGeneratorSuggestions;
 };
+
+export const sampleNamesByCollectionId = async (
+  collectionId: string,
+): Promise<NameGraphSuggestion[]> => {
+  const nameGeneratorSuggestions =
+    await NameGraphClient.sampleCollectionMembers(collectionId);
+
+  return nameGeneratorSuggestions;
+};
+
+export const scrambleNamesByCollectionId = async (
+  collectionId: string,
+): Promise<NameGraphSuggestion[]> => {
+  const nameGeneratorSuggestions =
+    await NameGraphClient.scrambleCollectionTokens(collectionId);
+
+  return nameGeneratorSuggestions;
+};

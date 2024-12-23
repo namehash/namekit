@@ -27,6 +27,12 @@ export default function HomePage() {
               Explore collections
             </Link>
           </li>
+          <li className="flex space-x-1">
+            <p>➡️</p>
+            <Link href="/randomize" className="hover:underline">
+              Randomize
+            </Link>
+          </li>
         </ul>
       </div>
     </div>
