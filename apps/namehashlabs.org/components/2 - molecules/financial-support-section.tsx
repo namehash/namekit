@@ -1,7 +1,7 @@
 import { Balancer } from "react-wrap-balancer";
 import { EnsDAOLogoColored } from "../1 - atoms/icons/ens-dao-logo-colored";
 import { GitcoinLogo } from "../1 - atoms/icons/gitcoin-logo";
-import { Button } from "@namehash/namekit-react";
+import { Button, Heading } from "@namehash/namekit-react";
 
 export const FinancialSupportSection = () => {
   return (
@@ -16,12 +16,9 @@ export const FinancialSupportSection = () => {
             "linear-gradient(271deg, rgba(255, 255, 255, 0.00) 0%, #FFF 100%), linear-gradient(271deg, rgba(255, 175, 0, 0.15) 0%, rgba(241, 18, 217, 0.15) 32.29%, rgba(76, 63, 160, 0.15) 70.83%, rgba(46, 211, 198, 0.15) 95.83%)",
         }}
       >
-        <div
-          role="text"
-          className="text-2xl leading-8 font-semibold text-center"
-        >
+        <Heading as="h3">
           <Balancer>Our work has received generous support from:</Balancer>
-        </div>
+        </Heading>
         <div className="flex gap-3 items-center justify-center">
           <a target="_blank" aria-label="ENS" href="https://ensdao.org/">
             <Button variant="secondary" size="large">
