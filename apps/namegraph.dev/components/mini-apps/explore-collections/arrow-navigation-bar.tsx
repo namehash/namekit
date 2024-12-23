@@ -44,7 +44,7 @@ export const ArrowNavigationBar = ({
   skeletonMarkup,
   barContentMarkup,
 }: ArrowNavigationBarProps) => {
-  const navigationBarWrapper = useRef<HTMLDivElement | undefined>(undefined);
+  const navigationBarWrapper = useRef<HTMLDivElement | null>(null);
 
   const [showNavButtons, setShowNavButtons] = useState<
     ShowNavButtons | undefined
