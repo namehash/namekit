@@ -37,7 +37,7 @@ export function Catalog({ onJsonChange }: CatalogProps) {
   return (
     <div className="w-full border rounded-lg flex flex-col h-[600px] bg-white">
       <div className="p-4 border-b flex justify-start items-center space-x-3">
-        <h2 className="text-xl font-semibold">Writer&apos;s Block Catalog</h2>
+        <h2 className="text-xl font-semibold">A custom catalog</h2>
         <Tooltip
           trigger={
             <InfoIcon
@@ -51,8 +51,7 @@ export function Catalog({ onJsonChange }: CatalogProps) {
         >
           <div className="text-sm">
             📖 By modifying the below text you <br />
-            can customize the catalog of name
-            <br /> collections you want to ideate around 🌏
+            can customize the catalog you want to ideate around
           </div>
         </Tooltip>
       </div>

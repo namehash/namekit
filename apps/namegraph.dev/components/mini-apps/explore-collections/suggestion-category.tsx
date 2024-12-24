@@ -10,6 +10,7 @@ import {
 import { RecursiveRelatedCollectionPills } from "./recursive-related-collection-pills";
 import { SuggestionCategoryHeader } from "./suggestion-category-header";
 import Skeleton from "@/components/skeleton";
+import { getRandomColor } from "@/lib/utils";
 
 interface SuggestionCategoryProps {
   category: NameGraphFetchTopCollectionMembersResponse;
@@ -117,28 +118,10 @@ export const SuggestionCategory = ({ category }: SuggestionCategoryProps) => {
     };
   }, []);
 
-  const customizedPillsColors = [
-    "#E7DBF7",
-    "#1FA3C7",
-    "#FE097C",
-    "#FFBE00",
-    "#DB3D58",
-    "#01C69A",
-    "#8464CA",
-    "#E84233",
-    "#F5851E",
-    "#CBECEC",
-    "#FDE2CB",
-    "#F0C3F3",
-  ];
-
   const getRandomCustomizedPill = () => {
     const defaultClasses = "rounded-xl px-2.5 py-1 bg-opacity-70";
 
-    const randomColor =
-      customizedPillsColors[
-        Math.floor(Math.random() * customizedPillsColors.length)
-      ];
+    const randomColor = getRandomColor();
 
     return `bg-[${randomColor}] ${defaultClasses}`;
   };

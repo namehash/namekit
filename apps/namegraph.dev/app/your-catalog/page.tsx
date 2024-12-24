@@ -37,12 +37,11 @@ export default function IdeatePage() {
         <div className="flex-1">
           <div className="max-w-3xl mx-auto px-4 py-12 text-center">
             <h1 className="text-2xl font-semibold mb-4">
-              Check out what&apos;s hot
+              Ideate over your own name ideas catalog:
             </h1>
             <p className="text-gray-500 mb-8">
-              Check out some suggestions from the community.
-              <br /> Edit the catalog in the right to constraint the results
-              sampled.
+              Edit the catalog in the right to constraint the results your users
+              will receive.
             </p>
             <WritersBlockPills suggestions={suggestions} />
             <div className="mt-4">
