@@ -1,158 +1,25 @@
 import fetch from "cross-fetch";
-
-const DEFAULT_ENDPOINT = "https://api.namegraph.dev";
-
-export const NameGraphGroupingCategory = {
-  related: "related",
-  wordplay: "wordplay",
-  alternates: "alternates",
-  emojify: "emojify",
-  community: "community",
-  expand: "expand",
-  gowild: "gowild",
-  other: "other",
-} as const;
-
-export type NameGraphGroupingCategory =
-  (typeof NameGraphGroupingCategory)[keyof typeof NameGraphGroupingCategory];
-
-// Grouping categories params for req body
-export type NameGraphGroupingCategoryParams = {
-  min_suggestions: number;
-  max_suggestions: number;
-};
-
-export type NameGraphOtherCategoryParams = NameGraphGroupingCategoryParams & {
-  min_total_suggestions: number;
-};
-
-export type NameGraphRelatedCategoryParams = {
-  max_related_collections: number;
-  max_names_per_related_collection: number;
-  max_recursive_related_collections: number;
-  enable_learning_to_rank: boolean;
-  name_diversity_ratio: number | null;
-  max_per_type: number | null;
-};
-
-export type AllNameGraphGroupingCategoryParamsPossible =
-  | NameGraphGroupingCategoryParams
-  | NameGraphOtherCategoryParams
-  | NameGraphRelatedCategoryParams;
-
-export type TypedNameGraphGroupingCategoryParams = {
-  [NameGraphGroupingCategory.related]: NameGraphRelatedCategoryParams;
-  [NameGraphGroupingCategory.wordplay]: NameGraphGroupingCategoryParams;
-  [NameGraphGroupingCategory.alternates]: NameGraphGroupingCategoryParams;
-  [NameGraphGroupingCategory.emojify]: NameGraphGroupingCategoryParams;
-  [NameGraphGroupingCategory.community]: NameGraphGroupingCategoryParams;
-  [NameGraphGroupingCategory.expand]: NameGraphGroupingCategoryParams;
-  [NameGraphGroupingCategory.gowild]: NameGraphGroupingCategoryParams;
-  [NameGraphGroupingCategory.other]: NameGraphOtherCategoryParams;
-};
-
-export interface NameGraphSuggestion {
-  name: string;
-  tokenized_label: string[];
-  metadata: {
-    pipeline_name: string;
-    interpretation: (string | null)[];
-    cached_status: string;
-    categories: string[];
-    cached_interesting_score: number | null;
-    applied_strategies: string[][];
-    collection_title: string | null;
-    collection_id: string | null;
-    grouping_category: string | null;
-  };
-}
-
-export interface NameGraphCategory {
-  suggestions: NameGraphSuggestion[];
-}
-
-export interface NameGraphRelatedCollectionsSummarizedResponse {
-  collection_id: string;
-  collection_title: string;
-  collection_members_count: number;
-}
-
-export interface NameGraphGroupedByCategoryResponse {
-  categories: NameGraphCategory[];
-  all_tokenizations: [];
-}
-
-export interface NameGraphFetchTopCollectionMembersResponse {
-  suggestions: NameGraphSuggestion[];
-  name: string;
-  type: string;
-  collection_id: string;
-  collection_title: string;
-  collection_members_count: string;
-  related_collections: NameGraphRelatedCollectionsSummarizedResponse[];
-}
-export interface NameGraphCountCollectionsResponse {
-  metadata: {
-    total_number_of_matched_collections: number;
-    processing_time_ms: number;
-    elasticsearch_processing_time_ms: number;
-    elasticsearch_communication_time_ms: number;
-  };
-  count: number;
-}
-
-export interface NameGraphCollectionsByMemberResponse {
-  metadata: {
-    total_number_of_matched_collections: number;
-    processing_time_ms: number;
-    elasticsearch_processing_time_ms: number;
-    elasticsearch_communication_time_ms: number;
-  };
-  collections: NameGraphSuggestion[];
-}
-
-export interface NameGraphOptions {
-  namegraphEndpoint?: string;
-}
-
-export interface Collection {
-  collection_id: string;
-  title: string;
-  owner: string;
-  number_of_names: number;
-  last_updated_timestamp: number;
-  top_names: [
-    {
-      name: string;
-      namehash: string;
-    },
-  ];
-  types: [string];
-  avatar_emoji: string;
-  avatar_image: string;
-}
-
-export interface FindCollectionsResponse {
-  metadata: {
-    total_number_of_matched_collections: number;
-    processing_time_ms: number;
-    elasticsearch_processing_time_ms: number;
-    elasticsearch_communication_time_ms: number;
-  };
-  related_collections: Collection[];
-  other_collections: Collection[];
-}
-
-class NameGraphError extends Error {
-  constructor(
-    public status: number,
-    message?: string,
-  ) {
-    super(message);
-  }
-}
-
-const DEFAULT_METADATA = true;
+import {
+  DEFAULT_ENDPOINT,
+  NameGraphFindCollectionsResponse,
+  NameGraphCollectionByMemberResponse,
+  NameGraphCountCollectionsResponse,
+  NameGraphError,
+  NameGraphFetchTopCollectionMembersResponse,
+  NameGraphGroupedByCategoryResponse,
+  NameGraphGroupingCategory,
+  NameGraphOptions,
+  NameGraphSuggestion,
+  TypedNameGraphGroupingCategoriesParams,
+  DEFAULT_METADATA,
+  DEFAULT_MIN_SUGGESTIONS,
+  DEFAULT_MAX_SUGGESTIONS,
+  DEFAULT_FULL_MODE,
+  DEFAULT_ENABLE_LEARNING_TO_RANK,
+  DEFAULT_NAME_DIVERSITY_RATIO,
+  DEFAULT_MAX_PER_TYPE,
+  DEFAULT_INSTANT_MODE,
+} from "./utils";
 
 export class NameGraph {
   private namegraphEndpoint: URL;
@@ -167,130 +34,32 @@ export class NameGraph {
     label: string,
   ): Promise<NameGraphGroupedByCategoryResponse> {
     const sorter = "weighted-sampling";
-    const min_suggestions = 100;
-    const max_suggestions = 100;
     const min_primary_fraction = 0.1;
-    const mode = "full";
-    const enable_learning_to_rank = true;
-    const name_diversity_ratio = 0.5;
-    const max_per_type = 2;
 
     const payload = {
       label,
       metadata: DEFAULT_METADATA,
       sorter,
-      min_suggestions,
-      max_suggestions,
+      min_suggestions: DEFAULT_MIN_SUGGESTIONS,
+      max_suggestions: DEFAULT_MAX_SUGGESTIONS,
       min_primary_fraction,
       params: {
-        mode,
-        enable_learning_to_rank,
-        name_diversity_ratio,
-        max_per_type,
+        mode: DEFAULT_FULL_MODE,
+        enable_learning_to_rank: DEFAULT_ENABLE_LEARNING_TO_RANK,
+        name_diversity_ratio: DEFAULT_NAME_DIVERSITY_RATIO,
+        max_per_type: DEFAULT_MAX_PER_TYPE,
       },
     };
 
-    return this.rawRequest(`grouped-by-category`, "POST", payload);
+    return this.rawRequest(`grouped_by_category`, "POST", payload);
   }
 
-  public sampleCollectionMembers(
-    collection_id: string,
-  ): Promise<NameGraphSuggestion[]> {
-    const metadata = true;
-    const max_sample_size = 5;
-    const seed = 5;
-
-    const payload = {
-      collection_id,
-      metadata,
-      max_sample_size,
-      seed,
-    };
-
-    return this.rawRequest("sample_collection_members", "POST", payload);
-  }
-
-  public findCollectionsByString(
-    query: string,
-  ): Promise<FindCollectionsResponse> {
-    const offset = 0;
-    const mode = "instant";
-    const limit_names = 10;
-    const max_per_type = 3;
-    const sort_order = "AI";
-    const min_other_collections = 0;
-    const max_other_collections = 3;
-    const max_total_collections = 6;
-    const name_diversity_ratio = 0.5;
-    const max_related_collections = 3;
-
-    const payload = {
-      limit_names,
-      offset,
-      sort_order,
-      max_related_collections,
-      max_per_type,
-      name_diversity_ratio,
-      min_other_collections,
-      max_other_collections,
-      max_total_collections,
-      query,
-      mode,
-    };
-
-    return this.rawRequest("find_collections_by_string", "POST", payload);
-  }
-
-  public findCollectionsByCollection(
-    collection_id: string,
-  ): Promise<FindCollectionsResponse> {
-    const limit_names = 10;
-    const offset = 0;
-    const sort_order = "AI";
-    const max_related_collections = 3;
-    const max_per_type = 3;
-    const name_diversity_ratio = 0.5;
-    const min_other_collections = 0;
-    const max_other_collections = 3;
-    const max_total_collections = 6;
-
-    const payload = {
-      limit_names,
-      offset,
-      sort_order,
-      max_related_collections,
-      max_per_type,
-      name_diversity_ratio,
-      min_other_collections,
-      max_other_collections,
-      max_total_collections,
-      collection_id,
-    };
-
-    return this.rawRequest("find_collections_by_collection", "POST", payload);
-  }
-
-  public fetchTopCollectionMembers(
-    collection_id: string,
-  ): Promise<NameGraphFetchTopCollectionMembersResponse> {
-    const metadata = true;
-    const max_recursive_related_collections = 3;
-
-    const payload = {
-      metadata,
-      collection_id,
-      max_recursive_related_collections,
-    };
-
-    return this.rawRequest("fetch_top_collection_members", "POST", payload);
-  }
-
-  public suggestionsByCategory(label: string): Promise<NameGraphSuggestion[]> {
-    const mode = "full";
-
-    const categoriesQueryConfig: TypedNameGraphGroupingCategoryParams = {
+  public suggestionsByCategory(
+    label: string,
+  ): Promise<NameGraphGroupedByCategoryResponse> {
+    const categoriesQueryConfig: TypedNameGraphGroupingCategoriesParams = {
       [NameGraphGroupingCategory.related]: {
-        enable_learning_to_rank: true,
+        enable_learning_to_rank: DEFAULT_ENABLE_LEARNING_TO_RANK,
         max_names_per_related_collection: 10,
         max_per_type: 2,
         max_recursive_related_collections: 3,
@@ -332,7 +101,7 @@ export class NameGraph {
       label,
       categories: categoriesQueryConfig,
       params: {
-        mode,
+        mode: DEFAULT_FULL_MODE,
         metadata: DEFAULT_METADATA,
       },
     };
@@ -340,10 +109,40 @@ export class NameGraph {
     return this.rawRequest(`suggestions_by_category`, "POST", payload);
   }
 
+  public sampleCollectionMembers(
+    collection_id: string,
+  ): Promise<NameGraphSuggestion[]> {
+    const max_sample_size = 5;
+    const seed = 5;
+
+    const payload = {
+      collection_id,
+      metadata: DEFAULT_METADATA,
+      max_sample_size,
+      seed,
+    };
+
+    return this.rawRequest("sample_collection_members", "POST", payload);
+  }
+
+  public fetchTopCollectionMembers(
+    collection_id: string,
+  ): Promise<NameGraphFetchTopCollectionMembersResponse> {
+    const metadata = true;
+    const max_recursive_related_collections = 3;
+
+    const payload = {
+      metadata,
+      collection_id,
+      max_recursive_related_collections,
+    };
+
+    return this.rawRequest("fetch_top_collection_members", "POST", payload);
+  }
+
   public scrambleCollectionTokens(
     collection_id: string,
   ): Promise<NameGraphSuggestion[]> {
-    const metadata = true;
     const method = "left-right-shuffle-with-unigrams";
     const n_top_members = 25;
     const max_suggestions = 10;
@@ -351,7 +150,7 @@ export class NameGraph {
 
     const payload = {
       collection_id,
-      metadata,
+      metadata: DEFAULT_METADATA,
       method,
       n_top_members,
       max_suggestions,
@@ -361,17 +160,75 @@ export class NameGraph {
     return this.rawRequest("scramble_collection_tokens", "POST", payload);
   }
 
-  public countCollectionsByString(
+  public findCollectionsByString(
     query: string,
-  ): Promise<NameGraphCountCollectionsResponse> {
+  ): Promise<NameGraphFindCollectionsResponse> {
+    const offset = 0;
     const mode = "instant";
+    const limit_names = 10;
+    const max_per_type = 3;
+    const sort_order = "AI";
+    const min_other_collections = 0;
+    const max_other_collections = 3;
+    const max_total_collections = 6;
+    const name_diversity_ratio = 0.5;
+    const max_related_collections = 3;
 
     const payload = {
+      limit_names,
+      offset,
+      sort_order,
+      max_related_collections,
+      max_per_type,
+      name_diversity_ratio,
+      min_other_collections,
+      max_other_collections,
+      max_total_collections,
       query,
       mode,
     };
 
+    return this.rawRequest("find_collections_by_string", "POST", payload);
+  }
+
+  public countCollectionsByString(
+    query: string,
+  ): Promise<NameGraphCountCollectionsResponse> {
+    const payload = {
+      query,
+      mode: DEFAULT_INSTANT_MODE,
+    };
+
     return this.rawRequest("count_collections_by_string", "POST", payload);
+  }
+
+  public findCollectionsByCollection(
+    collection_id: string,
+  ): Promise<NameGraphFindCollectionsResponse> {
+    const limit_names = 10;
+    const offset = 0;
+    const sort_order = "AI";
+    const max_related_collections = 3;
+    const max_per_type = 3;
+    const name_diversity_ratio = 0.5;
+    const min_other_collections = 0;
+    const max_other_collections = 3;
+    const max_total_collections = 6;
+
+    const payload = {
+      limit_names,
+      offset,
+      sort_order,
+      max_related_collections,
+      max_per_type,
+      name_diversity_ratio,
+      min_other_collections,
+      max_other_collections,
+      max_total_collections,
+      collection_id,
+    };
+
+    return this.rawRequest("find_collections_by_collection", "POST", payload);
   }
 
   public countCollectionsByMember(
@@ -386,8 +243,7 @@ export class NameGraph {
 
   public findCollectionsByMember(
     label: string,
-  ): Promise<NameGraphCollectionsByMemberResponse> {
-    const mode = "instant";
+  ): Promise<NameGraphCollectionByMemberResponse> {
     const limit_names = 10;
     const offset = 0;
     const sort_order = "AI";
@@ -398,7 +254,7 @@ export class NameGraph {
       offset,
       sort_order,
       label,
-      mode,
+      mode: DEFAULT_INSTANT_MODE,
       max_results,
     };
 
@@ -417,6 +273,7 @@ export class NameGraph {
       method,
       headers: {
         "Content-Type": "application/json",
+        Accept: "application/json",
         ...headers,
       },
       signal: this.abortController.signal,
@@ -445,10 +302,10 @@ export class NameGraph {
   }
 }
 
-export function createClient(options?: NameGraphOptions) {
+export function createNameGraphClient(options?: NameGraphOptions) {
   return new NameGraph(options);
 }
 
-const defaultClient = createClient();
+const defaultClient = createNameGraphClient();
 
 export const namegraph = defaultClient;

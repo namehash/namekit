@@ -2,12 +2,11 @@
 
 import { useRef, useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { WritersBlockCollection, WritersBlockSuggestion } from "@/lib/utils";
 import { writersBlockSuggestions } from "@/lib/writers-block-suggestions";
 import { Tooltip } from "@namehash/namekit-react/client";
 import { InfoIcon } from "lucide-react";
+import { WritersBlockCollection } from "@namehash/namegraph-sdk/utils";
 
 interface CatalogProps {
   onJsonChange: (parsedJson: any) => void;
@@ -50,7 +49,7 @@ export function Catalog({ onJsonChange }: CatalogProps) {
             />
           }
         >
-          <div className="bg-white p-2 rounded-md border-2 text-sm">
+          <div className="text-sm">
             📖 By modifying the below text you <br />
             can customize the catalog of name
             <br /> collections you want to ideate around 🌏
@@ -63,7 +62,7 @@ export function Catalog({ onJsonChange }: CatalogProps) {
             value={jsonText}
             ref={catalogTextarea}
             onChange={handleJsonChange}
-            className="w-full h-full min-h-[400px] font-mono text-sm"
+            className="w-full h-full min-h-[500px] font-mono text-sm"
           />
           {hasJSONFormatError ? (
             <p className="underline text-red-400 text-xs mx-auto text-center pt-6">
