@@ -19,7 +19,7 @@
     "clsx": "^2.1.1",
     "lodash": "4.17.21",
     "lucide-react": "^0.468.0",
-    "next": "14.2.3",
+    "next": "14.2.21",
     "react": "^18",
     "react-debounce-input": "3.3.0",
     "react-dom": "^18",
