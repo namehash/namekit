@@ -27,7 +27,7 @@
     "@types/node": "^20",
     "@types/react": "18.3.1",
     "eslint": "^8",
-    "tailwindcss": "^3.4.1",
+    "tailwindcss": "3.4.13",
     "ts-prune": "^0.10.3",
     "typescript": "^5"
   }
