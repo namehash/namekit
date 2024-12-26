@@ -164,7 +164,7 @@ importers:
         specifier: 3.4.13
         version: 3.4.13
       typescript:
-        specifier: ^5
+        specifier: 5.6.2
         version: 5.6.2
 
   apps/nameguard.io:
@@ -389,7 +389,7 @@ importers:
         specifier: ^0.10.3
         version: 0.10.3
       typescript:
-        specifier: ^5
+        specifier: 5.6.2
         version: 5.6.2
 
   apps/namerank.io:
@@ -432,7 +432,7 @@ importers:
         specifier: 3.4.13
         version: 3.4.13
       typescript:
-        specifier: ^5
+        specifier: 5.6.2
         version: 5.6.2
 
   apps/storybook.namekit.io:
