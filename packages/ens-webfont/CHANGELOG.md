@@ -1,5 +1,11 @@
 # @namehash/ens-webfont
 
+## 0.7.0
+
+### Minor Changes
+
+- 1891ce7: release
+
 ## 0.6.0
 
 ### Minor Changes

@@ -1,5 +1,12 @@
 # @namehash/namegraph-sdk
 
+## 0.2.0
+
+### Minor Changes
+
+- 1891ce7: release
+- 87793a5: Add README to NameGraph SDK and update package's code organization
+
 ## 0.1.0
 
 ### Minor Changes
