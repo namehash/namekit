@@ -143,8 +143,8 @@ importers:
         specifier: 4.17.13
         version: 4.17.13
       '@types/node':
-        specifier: ^20
-        version: 20.17.10
+        specifier: 22.7.4
+        version: 22.7.4
       '@types/react':
         specifier: 18.3.1
         version: 18.3.1
@@ -374,8 +374,8 @@ importers:
         specifier: 2.0.18
         version: 2.0.18(react@18.3.1)
       '@types/node':
-        specifier: ^20
-        version: 20.17.10
+        specifier: 22.7.4
+        version: 22.7.4
       '@types/react':
         specifier: 18.3.1
         version: 18.3.1
@@ -411,8 +411,8 @@ importers:
         version: 18.3.1(react@18.3.1)
     devDependencies:
       '@types/node':
-        specifier: ^20
-        version: 20.17.10
+        specifier: 22.7.4
+        version: 22.7.4
       '@types/react':
         specifier: 18.3.1
         version: 18.3.1
@@ -2396,9 +2396,6 @@ packages:
 
   '@types/node@12.20.55':
     resolution: {integrity: sha512-J8xLz7q2OFulZ2cyGTLE1TbbZcjpno7FaN6zdJNrgAdrJ+DZzh/uFR6YrTb4C+nXakvud8Q4+rbhoIWlYQbUFQ==}
-
-  '@types/node@20.17.10':
-    resolution: {integrity: sha512-/jrvh5h6NXhEauFFexRin69nA0uHJ5gwk4iDivp/DeoEua3uwCUto6PC86IpRITBOs4+6i2I56K5x5b6WYGXHA==}
 
   '@types/node@22.7.4':
     resolution: {integrity: sha512-y+NPi1rFzDs1NdQHHToqeiX2TIS79SWEAw9GYhkkx8bD0ChpfqC+n2j5OXOCpzfojBEBt6DnEnnG9MY0zk1XLg==}
@@ -7228,10 +7225,6 @@ snapshots:
   '@types/minimatch@5.1.2': {}
 
   '@types/node@12.20.55': {}
-
-  '@types/node@20.17.10':
-    dependencies:
-      undici-types: 6.19.8
 
   '@types/node@22.7.4':
     dependencies:
