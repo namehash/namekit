@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@adraffy/ens-normalize": "1.11.0",
-    "@heroicons/react": "2.1.5",
+    "@heroicons/react": "2.2.0",
     "@namehash/ens-webfont": "workspace:*",
     "@namehash/internal": "workspace:*",
     "@namehash/namekit-react": "workspace:*",

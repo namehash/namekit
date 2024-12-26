@@ -6,7 +6,7 @@
   "types": "src/index.ts",
   "dependencies": {
     "@calcom/embed-react": "1.5.1",
-    "@heroicons/react": "2.1.5",
+    "@heroicons/react": "2.2.0",
     "@namehash/namekit-react": "workspace:*",
     "classcat": "5.0.5",
     "next": "14.2.21",
