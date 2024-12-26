@@ -36,7 +36,6 @@
   },
   "dependencies": {
     "@adraffy/ens-normalize": "1.11.0",
-    "@ethersproject/hash": "5.7.0",
     "date-fns": "3.3.1",
     "decimal.js": "10.4.3",
     "viem": "2.21.16"
