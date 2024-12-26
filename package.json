@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
-    "dev": "turbo dev",
+    "dev": "turbo dev --concurrency=15",
     "lint": "turbo lint",
     "clean": "rimraf -g \"**/node_modules\" \"**/dist\" \"**/.turbo\" \"**/.next\"",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
