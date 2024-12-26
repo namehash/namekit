@@ -130,8 +130,8 @@ importers:
         specifier: 18.3.1
         version: 18.3.1(react@18.3.1)
       shadcn:
-        specifier: 2.1.6
-        version: 2.1.6(typescript@5.6.2)
+        specifier: 2.1.8
+        version: 2.1.8(typescript@5.6.2)
       tailwind-merge:
         specifier: ^2.5.5
         version: 2.6.0
@@ -4742,8 +4742,8 @@ packages:
   setprototypeof@1.2.0:
     resolution: {integrity: sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==}
 
-  shadcn@2.1.6:
-    resolution: {integrity: sha512-Hjxw7sIhjQHnbHMSka1Dt7pkyRYzZ5dA9ANmwS6uwlouxEnqT/15AH5IzFRyyxSv352w7GS3cPL7VGd4ybvQeg==}
+  shadcn@2.1.8:
+    resolution: {integrity: sha512-UxNK1O/3otO5joqc113+tVZuSFHvVNaDjVakqCjhW89RpRSObRMBaSaaC6jvG70DhR8dJ35l907w1keUrGmWAw==}
     hasBin: true
 
   sharp@0.33.5:
@@ -9660,7 +9660,7 @@ snapshots:
 
   setprototypeof@1.2.0: {}
 
-  shadcn@2.1.6(typescript@5.6.2):
+  shadcn@2.1.8(typescript@5.6.2):
     dependencies:
       '@antfu/ni': 0.21.12
       '@babel/core': 7.26.0
