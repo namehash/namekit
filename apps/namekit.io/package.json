@@ -14,7 +14,7 @@
     "@types/react-dom": "18.3.1",
     "classcat": "5.0.5",
     "copy-to-clipboard": "3.3.3",
-    "eslint-config-next": "15.0.4",
+    "eslint-config-next": "14.2.14",
     "lottie-react": "2.4.0",
     "next": "14.2.21",
     "react": "18.3.1",
@@ -26,7 +26,7 @@
     "@heroicons/react": "2.0.18",
     "@types/node": "^20",
     "@types/react": "18.3.1",
-    "eslint": "^8",
+    "eslint": "8.57.1",
     "tailwindcss": "3.4.13",
     "ts-prune": "^0.10.3",
     "typescript": "5.6.2"
