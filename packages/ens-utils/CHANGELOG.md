@@ -1,5 +1,15 @@
 # @namehash/ens-utils
 
+## 1.19.0
+
+### Minor Changes
+
+- 1891ce7: release
+
+### Patch Changes
+
+- c748998: Remove dependency on @ethersproject/hash
+
 ## 1.18.0
 
 ### Minor Changes

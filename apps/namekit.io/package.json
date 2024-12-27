@@ -1,0 +1,36 @@
+{
+  "name": "namekit.io",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@calcom/embed-react": "^1.5.1",
+    "@headlessui/react": "^2.2.0",
+    "@types/react-dom": "18.3.1",
+    "classcat": "5.0.5",
+    "copy-to-clipboard": "3.3.3",
+    "eslint-config-next": "14.2.14",
+    "lottie-react": "2.4.0",
+    "next": "14.2.21",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "react-hot-toast": "2.4.1",
+    "@namehash/internal": "workspace:*",
+    "@namehash/ens-webfont": "workspace:*",
+    "react-wrap-balancer": "1.1.1"
+  },
+  "devDependencies": {
+    "@heroicons/react": "2.2.0",
+    "@types/node": "22.7.4",
+    "@types/react": "18.3.1",
+    "eslint": "8.57.1",
+    "tailwindcss": "3.4.13",
+    "ts-prune": "^0.10.3",
+    "typescript": "5.6.2"
+  }
+}

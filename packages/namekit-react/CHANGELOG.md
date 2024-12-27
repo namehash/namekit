@@ -1,5 +1,24 @@
 # @namehash/namekit-react
 
+## 0.10.0
+
+### Minor Changes
+
+- 1891ce7: release
+
+### Patch Changes
+
+- Updated dependencies [1891ce7]
+- Updated dependencies [c748998]
+  - @namehash/ens-utils@1.19.0
+  - @namehash/ens-webfont@0.7.0
+
+## 0.9.0
+
+### Minor Changes
+
+- d5183f1: Added className and withDelay props to Tooltip component
+
 ## 0.8.0
 
 ### Minor Changes

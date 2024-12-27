@@ -12,8 +12,10 @@
     "storybook.namekit.io",
     "examples.nameguard.io",
     "namehashlabs.org",
-    "nameguard-api",
     "@namehash/seo",
-    "@namehash/internal"
+    "@namehash/internal",
+    "namerank.io",
+    "namekit.io",
+    "namegraph.dev"
   ]
 }
