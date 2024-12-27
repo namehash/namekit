@@ -199,7 +199,8 @@ fi
 
 echo "Building Docker image..."
 cd ../../../packages/nameguard-python
-if ! docker build "../../apps/api.nameguard.io" -t nameguard; then
+cp ../../apps/api.nameguard.io/Dockerfile ./Dockerfile
+if ! docker build . -t nameguard; then
     echo "Error: Docker build failed"
     exit 1
 fi
