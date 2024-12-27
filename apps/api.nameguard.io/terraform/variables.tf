@@ -9,7 +9,7 @@ variable "image_uri" {
 }
 
 variable "domain_name" {
-  description = "Custom domain name for API Gateway"
+  description = "Custom domain name for API"
   type        = string
 }
 

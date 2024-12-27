@@ -198,10 +198,13 @@ if [ ! -f "../Dockerfile" ]; then
 fi
 
 echo "Building Docker image..."
-if ! docker build ../ -t nameguard; then
+cd ../../../packages/nameguard-python
+cp ../../apps/api.nameguard.io/Dockerfile ./Dockerfile
+if ! docker build . -t nameguard; then
     echo "Error: Docker build failed"
     exit 1
 fi
+cd ../../apps/api.nameguard.io/terraform
 
 echo "Tagging Docker image..."
 if ! docker tag nameguard:latest ${ECR_URL}:latest; then

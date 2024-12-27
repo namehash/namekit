@@ -20,7 +20,7 @@ locals {
 }
 
 resource "aws_iam_role" "iam_for_lambda" {
-  name               = "iam_for_lambda-${var.env}"
+  name               = "nameguard-lambda-role-${var.env}"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
   tags               = local.common_tags
 }
@@ -40,7 +40,7 @@ data "aws_iam_policy_document" "lambda_logging" {
 }
 
 resource "aws_iam_policy" "lambda_logging" {
-  name        = "lambda_logging-${var.env}"
+  name        = "nameguard_lambda_logging-${var.env}"
   path        = "/"
   description = "IAM policy for logging from a lambda"
   policy      = data.aws_iam_policy_document.lambda_logging.json
@@ -106,6 +106,8 @@ resource "aws_cloudfront_distribution" "api_distribution" {
       https_port             = 443
       origin_protocol_policy = "https-only"
       origin_ssl_protocols   = ["TLSv1.2"]
+      origin_read_timeout = 60
+      origin_keepalive_timeout = 60
     }
   }
 
