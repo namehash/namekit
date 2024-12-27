@@ -199,7 +199,7 @@ fi
 
 echo "Building Docker image..."
 cd ../../../packages/nameguard-python
-if ! docker build  -t nameguard; then
+if ! docker build ../../apps/api.nameguard.io/terraform -t nameguard; then
     echo "Error: Docker build failed"
     exit 1
 fi
