@@ -42,7 +42,7 @@ export default function RootLayout({
       <Head>
         <script src="https://app.cal.com/embed.js" async></script>
       </Head>
-      <body className={`${inter.variable} ens-webfont`}>
+      <body className={`${inter.variable} font-sans`}>
         <Header />
         {children}
         <NamekitFooter />
