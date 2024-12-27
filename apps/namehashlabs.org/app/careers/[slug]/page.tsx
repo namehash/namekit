@@ -4,26 +4,31 @@ import { RolePage } from "@/components/3 - organisms/role-page";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 
+import {
+  defaultMetaOpengraph,
+  defaultMetaTwitter,
+} from "../../shared-metadata";
+
 interface Props {
   params: { slug: string };
 }
 
-// Generate metadata dynamically
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = params;
 
   const role = rolesData.roles.find((role: Role) => role.slug === slug);
 
   if (!role) {
-    return {
-      title: "Role not found - NameHash Labs",
-      description: "The role you are looking for does not exist.",
-    };
+    return notFound();
   }
 
+  const title = `${role.title} Role`;
+  const description = `Join us as a ${role.title} at NameHash Labs.`;
+  const url = `/careers/${role.slug}`;
+
   return {
-    title: `${role.title} - NameHash Labs`,
-    description: `Join us as a ${role.title} at NameHash Labs.`,
+    title,
+    description,
     keywords: [
       "ens",
       "web3",
@@ -32,14 +37,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       "careers",
       role.title.toLowerCase(),
     ],
+    openGraph: {
+      ...defaultMetaOpengraph,
+      title,
+      description,
+      url,
+    },
+    twitter: {
+      ...defaultMetaTwitter,
+      title,
+      description,
+    },
   };
 }
 
 export default function Page({ params }: Props) {
-  // Destructure slug from params
   const { slug } = params;
 
-  // Find the role using the slug
   const role = rolesData.roles.find((role: Role) => role.slug === slug);
 
   if (!role) {
@@ -47,7 +61,7 @@ export default function Page({ params }: Props) {
   }
 
   return (
-    <section className="w-full lg:pb-20 pb-5 px-5 lg:px-[112px]">
+    <section className="w-full lg:pb-20 pb-5 px-5 lg:px-[50px]">
       <RolePage {...role} />
     </section>
   );

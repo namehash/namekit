@@ -467,7 +467,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
   [
     "0x89F8e4020c0dd384F13c288bc5743F963F9D8fdF",
     buildProfile({
-      ensName: "edulennert.eth",
+      ensName: "duds.eth",
       title: "Engineering",
     }),
   ],

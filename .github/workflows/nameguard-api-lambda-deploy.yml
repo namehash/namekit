@@ -23,40 +23,33 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-image-deploy-serverless:
+  build-image-deploy:
     name: Build and deploy NameGuard API Lambda
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout NameKit repo
+      - name: Checkout this repo
         uses: actions/checkout@v4
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-          cache: "pnpm"
-
-      - name: Install npm dependencies
-        # We're installing pnpm / node dependencies to make use
-        # of the Serverless framework when we build and deploy the lambda.
-        run: pnpm install --frozen-lockfile
-
-      - name: Set up QEMU
-        # This GitHub action runs on x86_64, but we want to build the lambda
-        # for arm64 for increased cost savings in AWS when we deploy it.
-        uses: docker/setup-qemu-action@v3
-        with:
-          platforms: arm64
-
-      - name: Assume AWS Role
-        # Uses GitHub OIDC provider to assume AWS role
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE}}
-          aws-region: us-east-1
+          aws-region: ${{ secrets.AWS_REGION }}
+      
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: "1.5.7"
+          terraform_wrapper: false
+    
 
       - name: Build and deploy lambda
         env:
@@ -66,49 +59,47 @@ jobs:
           ALCHEMY_URI_SEPOLIA: ${{ secrets.ALCHEMY_URI_SEPOLIA }}
           ENS_SUBGRAPH_URL_MAINNET: ${{ secrets.ENS_SUBGRAPH_URL_MAINNET }}
           ENS_SUBGRAPH_URL_SEPOLIA: ${{ secrets.ENS_SUBGRAPH_URL_SEPOLIA }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          CERTIFICATE_NAME: ${{ secrets.CERTIFICATE_NAME }}
+          HOSTED_ZONE_NAME: ${{ secrets.HOSTED_ZONE_NAME }}
         run: |
           if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
-            pnpm run deploy:prod
+          STAGE="prod"
+          DOMAIN_NAME=${{ secrets.PROD_DOMAIN_NAME }}
           elif [[ ${{ github.ref }} == 'refs/heads/staging' ]]; then
-            pnpm run deploy:staging
+          STAGE="staging"
+          DOMAIN_NAME=${{ secrets.STAGING_DOMAIN_NAME }}
           else
             echo "Deployment is only supported for main and staging branches"
             exit 1
           fi
-        working-directory: apps/api.nameguard.io
-
-      - name: Delete old images from ECR
-        env:
-          ECR_REPO: serverless-oss-nameguard-prod
-        run: |
-          ALL_IMAGES_TO_DELETE=$(aws ecr describe-images --repository-name $ECR_REPO --query 'sort_by(imageDetails,& imagePushedAt)[*].imageDigest' --filter "tagStatus=UNTAGGED" --output json )
-          len=`echo $ALL_IMAGES_TO_DELETE | jq length`
-          IMAGES_TO_DELETE=$(aws ecr describe-images --repository-name $ECR_REPO --query 'sort_by(imageDetails,& imagePushedAt)[*].imageDigest' --filter "tagStatus=UNTAGGED" --output json | jq '.[0]')
-          if [[ $len > 5 ]]; then aws ecr batch-delete-image --repository-name $ECR_REPO --image-ids imageDigest=$IMAGES_TO_DELETE; fi
+          cd terraform
+          chmod +x ./deploy_lambda.sh
+          ./deploy_lambda.sh $STAGE $AWS_REGION $DOMAIN_NAME $CERTIFICATE_NAME $HOSTED_ZONE_NAME
 
         working-directory: apps/api.nameguard.io
 
   notify:
     name: Send Slack deployment event notification
-    needs: [build-image-deploy-serverless]
+    needs: [build-image-deploy]
     runs-on: ubuntu-latest
     steps:
       - name: Output status on deployment success
-        if: ${{ needs.build-image-deploy-serverless.result == 'success'}}
+        if: ${{ needs.build-image-deploy.result == 'success'}}
         run: |
           echo "STATUS=Success  :rocket:" >> $GITHUB_ENV
           echo "TEXT=Lambda NameGuard deployed successfully! :white_check_mark:" >> $GITHUB_ENV
           echo "COLOR=good" >> $GITHUB_ENV
 
       - name: Output status on deployment failed
-        if: ${{ needs.build-image-deploy-serverless.result == 'failure' }}
+        if: ${{ needs.build-image-deploy.result == 'failure' }}
         run: |
           echo "STATUS=Failure  :x:" >> $GITHUB_ENV
           echo "TEXT=Lambda NameGuard deployment failed! :rotating_light:" >> $GITHUB_ENV
           echo "COLOR=danger" >> $GITHUB_ENV
 
       - name: Output status on deployment cancellation
-        if: ${{ needs.build-image-deploy-serverless.result == 'cancelled' }}
+        if: ${{ needs.build-image-deploy.result == 'cancelled' }}
         run: |
           echo "STATUS=Cancelled  :no_entry_sign:" >> $GITHUB_ENV
           echo "TEXT=Lambda NameGuard deployment was cancelled. :warning:" >> $GITHUB_ENV
