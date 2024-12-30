@@ -1,6 +1,6 @@
 "use client";
 
-import { IconButton } from "@namehash/namekit-react";
+import { IconButton, Text } from "@namehash/namekit-react";
 import { ChevronDown, BeansBg } from "../1 - atoms";
 import { Balancer } from "react-wrap-balancer";
 import { CalendarButton } from "@namehash/internal";
@@ -12,14 +12,11 @@ export const HeroSection = () => {
         <h1 className="lg:text-[100px] text-5xl text-center font-bold lg:leading-[120px]">
           Helping ENS grow
         </h1>
-        <div
-          role="text"
-          className="text-lg text-center text-gray-500 font-normal leading-7 mt-4 max-w-[500px]"
-        >
+        <Text as="p" className="text-lg text-gray-500 mt-4 max-w-[500px]">
           <Balancer>
             We integrate ENS onboarding into web3 wallets, apps, and games
           </Balancer>
-        </div>
+        </Text>
         <div className="flex items-center justify-center mt-10">
           <CalendarButton link="namehashlabs/namehashlabs">
             Integrate with ENS

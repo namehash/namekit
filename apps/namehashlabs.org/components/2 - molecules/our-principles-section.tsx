@@ -1,8 +1,8 @@
-import { PreSectionText, SectionText, SectionTitle } from "../1 - atoms";
-import { OpenSourceIcon } from "../1 - atoms/icons/open-source-icon";
-import { LockIcon } from "../1 - atoms/icons/lock-icon";
-import { EnsIcon } from "../1 - atoms/icons/ens-icon-gray";
-import { Link } from "@namehash/namekit-react";
+import { PreSectionText } from "@/components/1 - atoms";
+import { OpenSourceIcon } from "@/components/1 - atoms/icons/open-source-icon";
+import { LockIcon } from "@/components/1 - atoms/icons/lock-icon";
+import { EnsIcon } from "@/components/1 - atoms/icons/ens-icon-gray";
+import { Heading, Link, Text } from "@namehash/namekit-react";
 
 export const OurPrinciplesSection = () => {
   return (
@@ -12,7 +12,9 @@ export const OurPrinciplesSection = () => {
     >
       <div className="flex flex-col items-center justify-center max-w-[1216px] m-auto">
         <PreSectionText>What Guides us</PreSectionText>
-        <SectionTitle className="my-3">Our principles</SectionTitle>
+        <Heading as="h1" className="my-3">
+          Our principles
+        </Heading>
         <div className="grid lg:grid-cols-4 grid-cols-1 gap-10 mt-20 place-content-stretch">
           {principles.map((item) => {
             return (
@@ -20,10 +22,12 @@ export const OurPrinciplesSection = () => {
                 <div className="p-4 border border-gray-200 rounded-full inline-flex items-center justify-center">
                   {item.icon}
                 </div>
-                <p className="text-2xl leading-8 font-semibold mt-5 mb-3">
+                <Heading as="h3" className="mt-5 mb-3">
                   {item.title}
-                </p>
-                <SectionText>{item.description}</SectionText>
+                </Heading>
+                <Text as="p" className="text-lg text-gray-500">
+                  {item.description}
+                </Text>
               </div>
             );
           })}

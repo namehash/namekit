@@ -1,10 +1,9 @@
 import { Balancer } from "react-wrap-balancer";
-import { SectionText } from "../1 - atoms";
 import cc from "classcat";
-import { Button, Link } from "@namehash/namekit-react";
+import { Button, Link, Text } from "@namehash/namekit-react";
 import { CalendarButton } from "@namehash/internal";
 
-export interface ProductProps {
+export interface ReferralProductProps {
   title: string;
   subtitle: string;
   illustration: React.ReactElement;
@@ -16,7 +15,7 @@ export interface ProductProps {
   calendarButtonText?: string;
 }
 
-export const ProductComponent = ({
+export const ReferralProductComponent = ({
   title,
   subtitle,
   illustration,
@@ -26,7 +25,7 @@ export const ProductComponent = ({
   greenLabelText,
   buttonText = "Join the discussion",
   calendarButtonText = "Learn more",
-}: ProductProps) => {
+}: ReferralProductProps) => {
   return (
     <section
       className={cc([
@@ -64,9 +63,13 @@ export const ProductComponent = ({
                 {title}
               </h2>
             </div>
-            <SectionText className="lg:text-start text-center w-full text-lg leading-7 font-light">
+
+            <Text
+              as="p"
+              className="lg:text-start text-center w-full !text-lg text-gray-500 font-light"
+            >
               <Balancer>{subtitle}</Balancer>
-            </SectionText>
+            </Text>
 
             <div className="flex w-full md:w-auto gap-3 items-center lg:flex-row flex-col">
               {buttonUrl && (
