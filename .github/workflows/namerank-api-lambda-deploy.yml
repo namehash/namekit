@@ -1,22 +1,29 @@
-name: NameRank - Lambda Deploy
+name: NameRank API - Lambda Deploy
 
 on:
   push:
     branches:
       - main
       - staging
+    paths:
+      - "packages/namerank-python/**"
+      - "apps/api.namerank.io/**"
+      - ".github/workflows/namerank-api-lambda-deploy.yml"
   workflow_dispatch:
 
 permissions:
+  # `id-token: write` is required for the auth to AWS
   id-token: write
   contents: read
 
 concurrency:
   group: ${{ github.workflow }}
+  # `cancel-in-progress: false` creates a queue for workflow runs, such that
+  # only one instance of this workflow runs at a time.
   cancel-in-progress: false
 
 jobs:
-  build-image-deploy-serverless:
+  build-image-deploy:
     name: Build and deploy NameRank API Lambda
     runs-on: ubuntu-latest
     steps:
@@ -69,28 +76,29 @@ jobs:
           cd terraform
           chmod +x ./deploy_lambda.sh
           ./deploy_lambda.sh $STAGE $AWS_REGION $DOMAIN_NAME $CERTIFICATE_NAME $HOSTED_ZONE_NAME
+        working-directory: apps/api.namerank.io
 
   notify:
     name: Send Slack deployment event notification
-    needs: [build-image-deploy-serverless]
+    needs: [build-image-deploy]
     runs-on: ubuntu-latest
     steps:
       - name: Output status on deployment success
-        if: ${{ needs.build-image-deploy-serverless.result == 'success'}}
+        if: ${{ needs.build-image-deploy.result == 'success'}}
         run: |
           echo "STATUS=Success  :rocket:" >> $GITHUB_ENV
           echo "TEXT=Lambda NameRank deployed successfully! :white_check_mark:" >> $GITHUB_ENV
           echo "COLOR=good" >> $GITHUB_ENV
 
       - name: Output status on deployment failed
-        if: ${{ needs.build-image-deploy-serverless.result == 'failure' }}
+        if: ${{ needs.build-image-deploy.result == 'failure' }}
         run: |
           echo "STATUS=Failure  :x:" >> $GITHUB_ENV
           echo "TEXT=Lambda NameRank deployment failed! :rotating_light:" >> $GITHUB_ENV
           echo "COLOR=danger" >> $GITHUB_ENV
 
       - name: Output status on deployment cancellation
-        if: ${{ needs.build-image-deploy-serverless.result == 'cancelled' }}
+        if: ${{ needs.build-image-deploy.result == 'cancelled' }}
         run: |
           echo "STATUS=Cancelled  :no_entry_sign:" >> $GITHUB_ENV
           echo "TEXT=Lambda NameRank deployment was cancelled. :warning:" >> $GITHUB_ENV
