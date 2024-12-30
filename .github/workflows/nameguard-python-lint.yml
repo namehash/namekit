@@ -1,0 +1,31 @@
+name: NameGuard API - Lint
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/nameguard-python/**"
+  pull_request:
+    branches: ["main", "staging"]
+    paths:
+      - "packages/nameguard-python/**"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout NameKit repo
+        uses: actions/checkout@v4
+
+      - name: Ruff Check
+        uses: chartboost/ruff-action@v2
+        with:
+          version: 0.6.7
+          src: "./packages/nameguard-python"
+
+      - name: Ruff Format
+        uses: chartboost/ruff-action@v2
+        with:
+          version: 0.6.7
+          args: "format --check"
+          src: "./packages/nameguard-python"
