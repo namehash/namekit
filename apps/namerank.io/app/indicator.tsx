@@ -31,7 +31,7 @@ export const Indicator = ({ value }: IndicatorProps) => {
   };
 
 
-  const [r, g, b] = getLogProbabilityColor(val);
+  const [r, g, b] = getLogProbabilityColor(value);
   
   return (
     <div className="w-32 h-5 border border-gray-300 p-1 rounded overflow-hidden">
