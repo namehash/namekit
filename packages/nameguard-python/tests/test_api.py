@@ -322,13 +322,17 @@ def test_inspect_namehash_get(
             '0x1bc53f6413409d078ec18a29b17f981eafab341598a4e970ac9efab7d29258af',
             'unnormalized',
             '[zzz].eth',
-            marks=pytest.mark.xfail(not pytest.use_monkeypatch, reason='Subgraph stopped resolving this namehash'),
+            marks=pytest.mark.xfail(
+                not pytest.use_monkeypatch or running_lambda_tests, reason='Subgraph stopped resolving this namehash'
+            ),
         ),
         pytest.param(
             '0X1Bc53f6413409d078ec18a29b17f981eafab341598a4e970ac9efab7d29258af',
             'unnormalized',
             '[zzz].eth',
-            marks=pytest.mark.xfail(not pytest.use_monkeypatch, reason='Subgraph stopped resolving this namehash'),
+            marks=pytest.mark.xfail(
+                not pytest.use_monkeypatch or running_lambda_tests, reason='Subgraph stopped resolving this namehash'
+            ),
         ),
         # uppercase hex
     ],
@@ -452,11 +456,14 @@ def test_inspect_namehash_invalid_namehash(test_client, namehash, expected_reaso
 
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
-@pytest.mark.xfail(not pytest.use_monkeypatch, reason='Subgraph stopped resolving this namehash')
+@pytest.mark.xfail(
+    not pytest.use_monkeypatch or running_lambda_tests, reason='Subgraph stopped resolving this namehash'
+)
 def test_inspect_namehash_mismatch_error(test_client):
     network_name = 'mainnet'
     # todo: how to find registered namehash with null bytes inside?
-    namehash = '0xdffa165b6d6cfb2fa47e0d50e429380c60e7be170ba21301c22628b66653a951'  # the name looks like unknown
+    namehash = '0xdffa165b6d6cfb2fa47e0d50e429380c60e7be170ba21301c22628b66653a951'  # the name looks like unknown:
+    # [1220bab8d21e1619549d0e92f7f9100059d1a8717877ba82348bf61c06bacb46].eth
     response = test_client.post('/inspect-namehash', json={'namehash': namehash, 'network_name': network_name})
     assert response.status_code == 500
     res_json = response.json()
