@@ -30,12 +30,12 @@ export const Indicator = ({ value }: IndicatorProps) => {
     return [0, green, 0];
   };
 
-  const getLabel = (val: number): string => {
-    const [r, g, b] = getLogProbabilityColor(val);
-    
-    return (
-      <div className="w-32 h-5 border border-gray-300 p-1 rounded overflow-hidden">
-        <div className={`h-full rounded-sm`} style={{backgroundColor: `rgb(${r}, ${g}, ${b})`}} />
-      </div>
-    );
+
+  const [r, g, b] = getLogProbabilityColor(val);
+  
+  return (
+    <div className="w-32 h-5 border border-gray-300 p-1 rounded overflow-hidden">
+      <div className={`h-full rounded-sm`} style={{backgroundColor: `rgb(${r}, ${g}, ${b})`}} />
+    </div>
+  );
 };
