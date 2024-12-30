@@ -16,9 +16,26 @@ export const Indicator = ({ value }: IndicatorProps) => {
     }
   };
 
-  return (
-    <div className="w-32 h-5 border border-gray-300 p-1 rounded overflow-hidden">
-      <div className={`h-full ${getColorClass(value)} rounded-sm`} />
-    </div>
-  );
+  const getLogProbabilityColor = (val: number): [number, number, number] => {
+    // Ensure value is within bounds
+    const clampedValue = Math.max(-100, Math.min(0, val));
+    
+    // Convert -100...0 range to 0...1 range
+    const normalized = (clampedValue + 100) / 100;
+    
+    // Calculate green component (0 to 255)
+    const green = Math.floor(255 * normalized);
+    
+    // Return RGB tuple (black to green)
+    return [0, green, 0];
+  };
+
+  const getLabel = (val: number): string => {
+    const [r, g, b] = getLogProbabilityColor(val);
+    
+    return (
+      <div className="w-32 h-5 border border-gray-300 p-1 rounded overflow-hidden">
+        <div className={`h-full rounded-sm`} style={{backgroundColor: `rgb(${r}, ${g}, ${b})`}} />
+      </div>
+    );
 };
