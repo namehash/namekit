@@ -1,4 +1,4 @@
-name: NameRank API - Lint
+name: NameRank Python - Lint
 on:
   push:
     branches:

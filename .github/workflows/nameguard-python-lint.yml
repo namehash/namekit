@@ -1,4 +1,4 @@
-name: NameGuard API - Lint
+name: NameGuard Python - Lint
 on:
   push:
     branches:
