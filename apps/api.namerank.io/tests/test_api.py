@@ -6,6 +6,13 @@ from mocked_static_property import mock_static_property
 from nameguard.utils import MAX_INSPECTED_NAME_CHARACTERS
 
 
+# if mangum is not installed, do not run the api tests
+try:
+    import mangum  # noqa: F401
+except ImportError:
+    pytest.skip('mangum is not installed, skipping api tests', allow_module_level=True)
+
+
 @pytest.fixture(scope='module')
 def test_client():
     with mock_static_property():

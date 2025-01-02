@@ -29,7 +29,6 @@ lambda = ["mangum"]
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.0"
-
 uvicorn = { extras = ["standard"], version = "^0.23.2" }
 pytest-asyncio = "^0.21.1"
 pytest-cov = "^4.1.0"

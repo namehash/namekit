@@ -37,7 +37,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./apps/api.namerank.io
-        run: poetry install
+        run: poetry install --extras "lambda"
 
       - name: Run tests
         working-directory: ./apps/api.namerank.io
