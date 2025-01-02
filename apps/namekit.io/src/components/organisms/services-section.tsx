@@ -23,7 +23,6 @@ import { EnsVisionIcon } from "../atoms/icons/ensvision-icon";
 import OpenSeaIcon from "../atoms/icons/opensea-icon";
 import { X2y2Icon } from "../atoms/icons/x2y2-icon";
 import { LooksRareIcon } from "../atoms/icons/looksrare-icon";
-import { NamestoneLogo } from "../atoms/icons/explore-web3-lp/namestone-logo";
 import LensProtocolLogo from "../atoms/icons/lens-protocol-logo";
 import FarcasterLogo from "../atoms/icons/farcaster-logo";
 import EfpLogo from "../atoms/icons/efp-logo";
@@ -35,6 +34,8 @@ import UnrugableLogo from "../atoms/icons/unruggable-logo";
 import NamespaceLogo from "../atoms/icons/namespace-logo";
 import RaribleIcon from "../atoms/icons/rarible-icon";
 import CoinbaseNftIcon from "../atoms/icons/coinbase-nft-icon";
+import NamestoneLogo from "../atoms/icons/namestone-logo";
+
 interface ServiceProps {
   label: {
     icon: React.ReactElement;
@@ -80,8 +81,8 @@ export const Service = ({
           },
         ])}
       >
-        <div className="lg:w-1/2 w-full flex items-start justify-center">
-          <div className="flex-col inline-flex gap-5 lg:max-w-[568px]">
+        <div className="lg:w-1/2 w-full flex items-start justify-center font-sans">
+          <div className="flex-col inline-flex gap-5 lg:max-w-[560px]">
             <div className="justify-center lg:justify-start flex">
               <div className="gap-2 bg-black inline-flex items-center bg-opacity-5 px-4 py-2 rounded-[20px]">
                 {label.icon}
@@ -92,7 +93,7 @@ export const Service = ({
             <h2 className="text-2xl leading-8 lg:text-4xl lg:leading-10 font-bold lg:text-start text-center">
               {title}
             </h2>
-            <p className="text-gray-500 text-lg leading-7 font-normal lg:text-start text-center pr-2">
+            <p className="text-gray-500 text-lg leading-7 lg:text-start text-center pr-2">
               <Balancer>{subtitle}</Balancer>
             </p>
             {postSubtitle && <div className="w-full">{postSubtitle}</div>}

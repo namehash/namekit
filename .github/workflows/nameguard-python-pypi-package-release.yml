@@ -1,4 +1,4 @@
-name: NameGuard API - PyPI Package Release
+name: NameGuard Python - PyPI Package Release
 
 on:
   release:

@@ -13,7 +13,7 @@ export const GetYourWeb3NameSection = ({
 }: GetYourWeb3NameSectionProps) => {
   return (
     <section className="px-[20px] lg:px-[112px] pb-[22px] lg:pb-[62px]">
-      <div className="relative rounded-[8px] py-[60px] overflow-hidden justify-center flex-col items-center w-full flex bg-black text-white">
+      <div className="relative rounded-[8px] py-[60px] overflow-hidden justify-center max-w-[1216px] mx-auto flex-col items-center w-full flex bg-black text-white">
         <div
           className="z-10 w-full h-full absolute top-0"
           style={{
