@@ -1,5 +1,11 @@
 # @namehash/namerank
 
+## 0.4.0
+
+### Minor Changes
+
+- ddc211f: remove console.log
+
 ## 0.3.0
 
 ### Minor Changes
