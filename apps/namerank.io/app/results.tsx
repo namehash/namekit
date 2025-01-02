@@ -1,10 +1,5 @@
-import { createClient } from "@namehash/namerank";
+import { namerank } from "@namehash/namerank";
 import { Indicator } from "./indicator";
-
-const namerank = createClient({
-  namerankEndpoint:
-    "https://izzkysqb6d6qzhnpv4ybqyty2e0ktjwe.lambda-url.us-east-1.on.aws/namerank",
-});
 
 interface ResultsProps {
   name: string;

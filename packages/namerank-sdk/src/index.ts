@@ -69,7 +69,6 @@ export class NameRank {
     network = DEFAULT_NETWORK,
   }: NameRankOptions = {}) {
     this.namerankEndpoint = new URL(namerankEndpoint);
-    console.log(this.namerankEndpoint);
     this.network = network;
     this.abortController = new AbortController();
   }
@@ -126,7 +125,6 @@ export class NameRank {
       options.body = JSON.stringify(body);
     }
 
-    console.log(url);
     const response = await fetch(url, options);
 
     if (!response.ok) {
