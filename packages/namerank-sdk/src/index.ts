@@ -459,7 +459,7 @@ export class NameRank {
    *
    * @param {string} name The name for NameRank to inspect.
    * @param {InspectNameOptions} options The options for the inspection.
-   * @returns {Promise<NameRankReport>} A promise that resolves with the `NameRankReport` of the name.
+   * @returns {Promise<NameRankResponse>} A promise that resolves with the `NameRankResponse` of the name.
    * @example
    * const nameRankReport = await namerank.inspectName('vitalik.eth');
    */
