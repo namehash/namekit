@@ -76,7 +76,6 @@ jobs:
           cd terraform
           chmod +x ./deploy_lambda.sh
           ./deploy_lambda.sh $STAGE $AWS_REGION $DOMAIN_NAME $CERTIFICATE_NAME $HOSTED_ZONE_NAME
-
         working-directory: apps/api.nameguard.io
 
   notify:
