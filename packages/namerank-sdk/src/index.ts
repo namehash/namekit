@@ -208,7 +208,7 @@ export class NameRank {
     body: object = {},
     headers: object = {},
   ): Promise<any> {
-     // Create base URL and ensure it ends with a trailing slash
+    // Create base URL and ensure it ends with a trailing slash
     const baseUrl = new URL(this.namerankEndpoint.toString());
     if (!baseUrl.pathname.endsWith('/')) {
       baseUrl.pathname += '/';

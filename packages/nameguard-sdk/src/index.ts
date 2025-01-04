@@ -606,10 +606,13 @@ export class NameGuard {
 
     const network = this.network;
 
-    const url = new URL(
-      `inspect-namehash/${network}/${namehash}`,
-      this.nameguardEndpoint,
-    );
+    // Create base URL and ensure it ends with a trailing slash
+    const baseUrl = new URL(this.nameguardEndpoint.toString());
+    if (!baseUrl.pathname.endsWith('/')) {
+      baseUrl.pathname += '/';
+    }
+
+    const url = new URL(`inspect-namehash/${network}/${namehash}`, baseUrl);
 
     const response = await fetch(url);
 
@@ -775,7 +778,15 @@ export class NameGuard {
     body: object = {},
     headers: object = {},
   ): Promise<any> {
-    const url = new URL(path, this.nameguardEndpoint);
+    // Create base URL and ensure it ends with a trailing slash
+    const baseUrl = new URL(this.nameguardEndpoint.toString());
+    if (!baseUrl.pathname.endsWith('/')) {
+      baseUrl.pathname += '/';
+    }
+
+    // Combine base URL with path, removing any leading slash from path
+    const url = new URL(path.replace(/^\/+/, ''), baseUrl);
+
 
     const options: RequestInit = {
       method,
