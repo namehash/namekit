@@ -188,7 +188,7 @@ export class NameRank {
   ): Promise<NameRankResponse> {
     const network_name = this.network;
     // TODO: Temp fix until `api.namerank.io` is updated to return namerank api without subfolder
-    return this.rawRequest("namerank/inspect-name", "POST", {
+    return this.rawRequest("inspect-name", "POST", {
       name,
       network_name,
     });
@@ -208,7 +208,14 @@ export class NameRank {
     body: object = {},
     headers: object = {},
   ): Promise<any> {
-    const url = new URL(path, this.namerankEndpoint);
+     // Create base URL and ensure it ends with a trailing slash
+    const baseUrl = new URL(this.namerankEndpoint.toString());
+    if (!baseUrl.pathname.endsWith('/')) {
+      baseUrl.pathname += '/';
+    }
+
+    // Combine base URL with path, removing any leading slash from path
+    const url = new URL(path.replace(/^\/+/, ''), baseUrl);
 
     const options: RequestInit = {
       method,
