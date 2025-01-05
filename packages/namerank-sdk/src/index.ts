@@ -350,7 +350,7 @@ export interface NLPLabelAnalysis {
    * numbers or special characters may have a word_count of 0.
    * Note: this is not the number of words in the top_tokenization, but the minimum number of words 
    * across all valid tokenizations without gaps.
-   * Must be greater than or equal to 0.
+   * Always a non-negative integer.
    */
   word_count: number;
 
