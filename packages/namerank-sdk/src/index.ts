@@ -461,7 +461,7 @@ export class NameRank {
    * @param {InspectNameOptions} options The options for the inspection.
    * @returns {Promise<NameRankResponse>} A promise that resolves with the `NameRankResponse` of the name.
    * @example
-   * const nameRankReport = await namerank.inspectName('vitalik.eth');
+   * const nameRankResponse = await namerank.inspectName('vitalik.eth');
    */
   public inspectName(
     name: string,
