@@ -10,8 +10,10 @@ export default async function Results({ name }: ResultsProps) {
 
   const result = await namerank.inspectName(name, {});
 
+  console.log({ result });
+
   if (!result.namerank || !result.namerank.analysis) {
-    return <p>=Please try again.</p>;
+    return <p>Please try again.</p>;
   }
 
   const topTokenization = result.namerank.analysis.top_tokenization || [];
