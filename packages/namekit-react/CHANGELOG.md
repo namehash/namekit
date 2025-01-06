@@ -1,5 +1,24 @@
 # @namehash/namekit-react
 
+## 0.11.0
+
+### Minor Changes
+
+- 4141d60: Added new Checkbox component to the package. The Checkbox component allows rendering checkboxes with labels in a consistent style.
+
+## 0.10.0
+
+### Minor Changes
+
+- 1891ce7: release
+
+### Patch Changes
+
+- Updated dependencies [1891ce7]
+- Updated dependencies [c748998]
+  - @namehash/ens-utils@1.19.0
+  - @namehash/ens-webfont@0.7.0
+
 ## 0.9.0
 
 ### Minor Changes

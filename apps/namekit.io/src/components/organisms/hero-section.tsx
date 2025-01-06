@@ -4,7 +4,7 @@ import { ColorfulBackground, GithubIcon } from "../atoms";
 
 export const HeroSection = () => {
   return (
-    <section className="justify-between relative w-full pt-[80px] lg:px-10 px-5 flex flex-col items-center overflow-hidden">
+    <section className="justify-between relative w-full pt-[80px] lg:px-10 px-5 flex flex-col items-center overflow-hidden ens-webfont">
       <div className="flex-col flex items-center justify-center z-20 mb-20">
         <h1 className="animate-fadeIn text-4xl leading-10 font-bold lg:font-extrabold text-center lg:text-5xl lg:leading-[60px]">
           ENS onboarding made fun & easy

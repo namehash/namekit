@@ -1,22 +1,11 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./../styles/globals.css";
-import "./../styles/fonts.css";
+import "@namehash/ens-webfont";
 
 import Head from "next/head";
 import { Header } from "@/components/organisms/header";
 import { NamekitFooter } from "@/components/organisms/namekit-footer";
 import { Inter } from "next/font/google";
-
-const unifont = localFont({
-  src: "../../public/fonts/Unifont.otf",
-  variable: "--font-unifont",
-});
-
-const adobeBlank = localFont({
-  src: "../../public/fonts/AdobeBlank.ttf",
-  variable: "--font-adobe-blank",
-});
 
 const inter = Inter({
   subsets: ["latin"],
@@ -51,18 +40,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Head>
-        {/* Fonts */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
         <script src="https://app.cal.com/embed.js" async></script>
       </Head>
-      <body
-        className={`${inter.variable} ${unifont.variable} ${adobeBlank.variable} antialiased`}
-      >
+      <body className={`${inter.variable} font-sans`}>
         <Header />
         {children}
         <NamekitFooter />

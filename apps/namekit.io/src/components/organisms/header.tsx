@@ -1,39 +1,14 @@
 "use client";
 
 import { IconMenu, NamekitLogo, GithubIcon } from "../atoms";
-/*
-  Commented out for first NameKit LP release
-
-  import { newUserSearch } from "../features/instant-search/store/exactMatchPanel/actions";
-  import { OPEN_INSTANT_SEARCH_KEY } from "../../lib/client/constants";
-  import { useAppDispatch } from "../features/instant-search/store";
-*/
-// import { useScreenSize } from "../hooks/useScreenSize";
 import { Popover, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 import Link from "next/link";
 import cc from "classcat";
-import { useScreenSize } from "@/hooks/useScreenSize";
-
-/*
-  Commented out from v1.0
-  import { Basket } from "./basket";
-*/
 
 export const Header = () => {
-  /*
-    Commented out for first NameKit LP release
-    const dispatch = useAppDispatch();
-  */
-
   const NamekitMobileNavigationLinks = [
-    /*
-      Commented out for first NameKit LP release
-      {
-        element: <button onClick={() => dispatch(newUserSearch(OPEN_INSTANT_SEARCH_KEY))}>Claim a name</button>,
-      }
-    */
     {
       element: <Link href="/explore-web3">Explore Web3</Link>,
     },
@@ -46,12 +21,6 @@ export const Header = () => {
     },
   ];
   const NamekitDesktopNavigationLinks = [
-    /*
-      Commented out for first NameKit LP release
-      {
-        element: <button onClick={() => dispatch(newUserSearch(OPEN_INSTANT_SEARCH_KEY))}>Try now</button>,
-      }
-    */
     {
       element: <>Explore Web3</>,
       href: "/explore-web3",
@@ -67,8 +36,6 @@ export const Header = () => {
       href: "https://github.com/namehash/namekit",
     },
   ];
-
-  const { isTablet } = useScreenSize();
 
   return (
     <Popover
@@ -118,11 +85,10 @@ export const Header = () => {
                   <Popover.Panel className="[min-1180px]:hidden fixed inset-0 z-30 h-full w-4/5 bg-black max-w-[390px]">
                     return (
                     <div className="flex h-full flex-col justify-between">
-                      {/* <div className="z-10 flex items-center justify-between bg-black"> */}
                       <div className="bg-black w-full justify-between flex fixed p-4 top-0 left-0 max-w-[390px]">
                         <NamekitLogo
-                          textcolor={isTablet ? "white" : "black"}
-                          backgroundcolor={isTablet ? "black" : "white"}
+                          textcolor={"white"}
+                          backgroundcolor={"black"}
                         />
                         <Popover.Button>
                           <span className="sr-only">Close menu</span>
@@ -132,7 +98,6 @@ export const Header = () => {
                           />
                         </Popover.Button>
                       </div>
-                      {/* </div> */}
                       <div
                         className={cc([
                           "max-[375px]:py-4 pb-[120px] verySmallScreens:block flex flex-col h-full justify-center p-6 pt-[60px] overflow-y-auto scrollbar-styled verySmallScreens:overflow-y-scroll",

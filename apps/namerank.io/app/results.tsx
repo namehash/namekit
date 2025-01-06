@@ -1,10 +1,5 @@
-import { createClient } from "@namehash/namerank";
+import { namerank } from "@namehash/namerank";
 import { Indicator } from "./indicator";
-
-const namerank = createClient({
-  namerankEndpoint:
-    "https://izzkysqb6d6qzhnpv4ybqyty2e0ktjwe.lambda-url.us-east-1.on.aws/namerank",
-});
 
 interface ResultsProps {
   name: string;
@@ -16,7 +11,7 @@ export default async function Results({ name }: ResultsProps) {
   const result = await namerank.inspectName(name, {});
 
   if (!result.namerank || !result.namerank.analysis) {
-    return <p>=Please try again.</p>;
+    return <p>Please try again.</p>;
   }
 
   const topTokenization = result.namerank.analysis.top_tokenization || [];

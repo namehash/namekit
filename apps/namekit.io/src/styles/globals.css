@@ -7,6 +7,12 @@
   --foreground: #171717;
 }
 
+@layer components {
+  .animated-black-underline {
+    @apply underline underline-offset-2 decoration-gray-400 decoration-1 hover:decoration-2 hover:decoration-gray-600 transition-all;
+  }
+}
+
 body {
   color: var(--foreground);
   background: var(--background);

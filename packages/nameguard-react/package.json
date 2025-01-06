@@ -1,7 +1,7 @@
 {
   "name": "@namehash/nameguard-react",
   "description": "React UI components for building on NameGuard.",
-  "version": "0.7.2",
+  "version": "0.8.1",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -36,7 +36,7 @@
   "styles": "./dist/index.css",
   "dependencies": {
     "@headlessui/react": "1.7.17",
-    "@heroicons/react": "2.1.5",
+    "@heroicons/react": "2.2.0",
     "@namehash/ens-utils": "workspace:*",
     "@namehash/ens-webfont": "workspace:*",
     "@namehash/nameguard": "workspace:*",

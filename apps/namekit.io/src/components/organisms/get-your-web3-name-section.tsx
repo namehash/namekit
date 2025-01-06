@@ -1,5 +1,5 @@
+import { CalendarButton } from "@namehash/internal";
 import Image from "next/image";
-import CalButton from "../atoms/cal-button";
 interface GetYourWeb3NameSectionProps {
   title: string;
   description: string;
@@ -13,7 +13,7 @@ export const GetYourWeb3NameSection = ({
 }: GetYourWeb3NameSectionProps) => {
   return (
     <section className="px-[20px] lg:px-[112px] pb-[22px] lg:pb-[62px]">
-      <div className="relative rounded-[8px] py-[60px] overflow-hidden justify-center flex-col items-center w-full flex bg-black text-white">
+      <div className="relative rounded-[8px] py-[60px] overflow-hidden justify-center max-w-[1216px] mx-auto flex-col items-center w-full flex bg-black text-white">
         <div
           className="z-10 w-full h-full absolute top-0"
           style={{
@@ -38,9 +38,13 @@ export const GetYourWeb3NameSection = ({
           <p className="leading-[24px] text-[14px] lg:text-lg lg:leading-8 font-normal mb-6 max-w-[638px] text-center">
             {description}
           </p>
-          <CalButton className="text-sm lg:text-[16px] leading-[24px] mt-5 bg-white z-20 text-black px-[16px] py-[9px] lg:px-[25px] lg:py-[13px] rounded-[8px] hover:bg-gray-50 transition-colors duration-200">
+          <CalendarButton
+            className="text-sm lg:text-[16px] leading-[24px] mt-5 bg-white z-20 text-black px-[16px] py-[9px] lg:px-[25px] lg:py-[13px] rounded-[8px] hover:bg-gray-50 transition-colors duration-200"
+            variant="secondary"
+            link="namehashlabs/namekit"
+          >
             {buttonText ?? `Schedule a call`}
-          </CalButton>
+          </CalendarButton>
         </div>
       </div>
     </section>
