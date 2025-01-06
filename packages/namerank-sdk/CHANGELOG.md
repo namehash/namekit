@@ -1,5 +1,11 @@
 # @namehash/namerank
 
+## 0.6.0
+
+### Minor Changes
+
+- 5fa2d0e: use correct api endpoint
+
 ## 0.5.0
 
 ### Minor Changes
