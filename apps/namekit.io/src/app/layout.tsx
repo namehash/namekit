@@ -30,6 +30,25 @@ export const metadata: Metadata = {
   other: {
     "msapplication-TileColor": "#da532c",
   },
+  openGraph: {
+    title: "NameKit - Engaging ENS user journeys made easy",
+    description:
+      "Easily integrate rich ENS user journeys into your wallet or web3 app. Customize NameKit to match your brand and UI.",
+    images: [
+      {
+        url: "/images/namekit/og-image.png",
+        alt: "NameKit - Engaging ENS user journeys made easy",
+      },
+    ],
+    siteName: "NameKit",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "NameKit - Engaging ENS user journeys made easy",
+    description:
+      "Easily integrate rich ENS user journeys into your wallet or web3 app. Customize NameKit to match your brand and UI.",
+    images: ["/images/namekit/og-image-twitter.png"],
+  },
 };
 
 export default function RootLayout({
