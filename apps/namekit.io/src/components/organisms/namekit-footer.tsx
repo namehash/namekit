@@ -1,3 +1,4 @@
+import { Link } from "@namehash/namekit-react";
 import { GithubIcon, TwitterIcon, FarcasterIcon } from "../atoms";
 import { EnvelopeIcon } from "@heroicons/react/24/solid";
 
@@ -38,12 +39,15 @@ export const NamekitFooter = () => {
         </nav>
         <div className="inline text-xs text-gray-500">
           <p className="inline">Made with {"❤️"} by </p>
-          <a
+          <Link
+            variant="underline"
+            size="xsmall"
+            className="!text-black"
             href="https://namehashlabs.org"
-            className="animated-black-underline inline"
           >
+            {" "}
             NameHash Labs
-          </a>
+          </Link>
         </div>
       </div>
     </footer>
