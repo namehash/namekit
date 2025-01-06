@@ -34,6 +34,7 @@ export const metadata: Metadata = {
     title: "NameKit - Engaging ENS user journeys made easy",
     description:
       "Easily integrate rich ENS user journeys into your wallet or web3 app. Customize NameKit to match your brand and UI.",
+    url: "https://namekit.io",
     images: [
       {
         url: "/images/namekit/og-image.png",
