@@ -6,6 +6,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 import Link from "next/link";
 import cc from "classcat";
+import { Button } from "@namehash/namekit-react";
 
 export const Header = () => {
   const NamekitMobileNavigationLinks = [
@@ -143,14 +144,11 @@ export const Header = () => {
 
                 <nav className="lg:flex hidden lg:items-center">
                   {NamekitDesktopNavigationLinks.map((link, idx) => (
-                    <Link
-                      target="_blank"
-                      href={link.href}
-                      key={String(link.element) + idx}
-                      className="cursor-pointer rounded-md px-4 h-[38px] flex items-center justify-center text-sm font-medium text-gray-800 hover:bg-gray-100 transition focus-visible:-outline-offset-4"
-                    >
-                      {link.element}
-                    </Link>
+                    <Button variant="ghost" asChild key={idx}>
+                      <Link target="_blank" href={link.href}>
+                        {link.element}
+                      </Link>
+                    </Button>
                   ))}
                 </nav>
               </div>
