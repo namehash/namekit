@@ -12,30 +12,31 @@ export const NamekitFooter = () => {
           </p>
         </div>
         <nav className="flex items-center space-x-3">
-          <a
+          <Link
             href="https://twitter.com/NamehashLabs"
             aria-label="Twitter link"
-            className="text-sm text-gray-400 transition hover:text-gray-900 md:text-gray-500"
+            target="_blank"
           >
-            <TwitterIcon className="w-4" />
-          </a>
-          <a
+            <TwitterIcon className="w-4 text-gray-400 transition hover:text-gray-900 md:text-gray-500" />
+          </Link>
+
+          <Link
             href="https://warpcast.com/namehash"
             aria-label="Farcaster link"
-            className="text-sm text-gray-400 transition hover:text-gray-700 md:text-gray-500"
+            target="_blank"
           >
-            <FarcasterIcon />
-          </a>
-          <a
+            <FarcasterIcon className="text-gray-400 transition hover:text-gray-700 md:text-gray-500" />
+          </Link>
+          <Link
             href="https://github.com/namehash/namekit"
             aria-label="Github link"
-            className="text-sm text-gray-400 transition hover:text-gray-700 md:text-gray-500"
+            target="_blank"
           >
-            <GithubIcon className="w-5" />
-          </a>
-          <a href="mailto:hello@namehashlabs.org" aria-label="Email link">
+            <GithubIcon className="w-5 text-gray-400 transition hover:text-gray-700 md:text-gray-500" />
+          </Link>
+          <Link href="mailto:hello@namehashlabs.org" aria-label="Email link">
             <EnvelopeIcon className="h-5 w-5 text-gray-400 transition hover:text-gray-700 md:text-gray-500" />
-          </a>
+          </Link>
         </nav>
         <div className="inline text-xs text-gray-500">
           <p className="inline">Made with {"❤️"} by </p>
