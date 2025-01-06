@@ -13,7 +13,7 @@
     "@namehash/namegraph-sdk": "workspace:*",
     "@namehash/namekit-react": "workspace:*",
     "@radix-ui/react-scroll-area": "^1.2.1",
-    "@radix-ui/react-slot": "^1.1.0",
+    "@radix-ui/react-slot": "^1.1.1",
     "class-variance-authority": "^0.7.1",
     "classcat": "5.0.5",
     "clsx": "^2.1.1",

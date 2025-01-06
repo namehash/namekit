@@ -112,6 +112,9 @@ export const getCollectionsForQuery = async (
 
 export const findCollectionsByString = async (
   input: string,
+  options?: {
+    offset?: number;
+  },
 ): Promise<NameGraphFindCollectionsResponse> => {
   let query = input;
   if (input.includes(".")) {
@@ -119,7 +122,7 @@ export const findCollectionsByString = async (
   }
 
   const nameGeneratorSuggestions =
-    await NameGraphClient.findCollectionsByString(query);
+    await NameGraphClient.findCollectionsByString(query, options);
 
   return nameGeneratorSuggestions;
 };
