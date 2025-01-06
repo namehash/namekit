@@ -342,6 +342,9 @@ importers:
       '@namehash/internal':
         specifier: workspace:*
         version: link:../../internal/internal
+      '@namehash/namekit-react':
+        specifier: workspace:*
+        version: link:../../packages/namekit-react
       '@types/react-dom':
         specifier: 18.3.1
         version: 18.3.1
