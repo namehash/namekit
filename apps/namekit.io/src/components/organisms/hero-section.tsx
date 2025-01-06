@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ColorfulBackground, GithubIcon } from "../atoms";
+import { Button } from "@namehash/namekit-react";
 
 export const HeroSection = () => {
   return (
@@ -13,14 +14,12 @@ export const HeroSection = () => {
           Easily integrate rich ENS user journeys into your wallet, app, or game
         </p>
         <div className="flex items-center justify-center gap-4">
-          <Link
-            target="_blank"
-            href={"https://github.com/namehash/namekit"}
-            className="flex items-center justify-center gap-3 hover:bg-gray-100 border-gray-300 shadow-sm animate-fadeIn transition-colors duration-200 rounded-[8px] font-medium text-base leading-6 text-black bg-white px-[25px] py-[13px] text-center"
-          >
-            <GithubIcon className="w-5 h-5" />
-            GitHub
-          </Link>
+          <Button variant="secondary" size="large" asChild>
+            <Link target="_blank" href={"https://github.com/namehash/namekit"}>
+              <GithubIcon className="w-5 h-5" />
+              GitHub
+            </Link>
+          </Button>
         </div>
       </div>
 
