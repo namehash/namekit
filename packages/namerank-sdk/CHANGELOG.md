@@ -1,5 +1,11 @@
 # @namehash/namerank
 
+## 0.5.0
+
+### Minor Changes
+
+- a1842e6: feat: [sc-25972] Update NameRank SDK documentation
+
 ## 0.4.0
 
 ### Minor Changes
