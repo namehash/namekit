@@ -166,6 +166,10 @@ export class NameRank {
     network = DEFAULT_NETWORK,
   }: NameRankOptions = {}) {
     this.namerankEndpoint = new URL(namerankEndpoint);
+    // Ensure the endpoint ends with a trailing slash
+    if (!this.namerankEndpoint.pathname.endsWith('/')) {
+      this.namerankEndpoint.pathname += '/';
+    }
     this.network = network;
     this.abortController = new AbortController();
   }
@@ -207,14 +211,7 @@ export class NameRank {
     body: object = {},
     headers: object = {},
   ): Promise<any> {
-    // Create base URL and ensure it ends with a trailing slash
-    const baseUrl = new URL(this.namerankEndpoint.toString());
-    if (!baseUrl.pathname.endsWith('/')) {
-      baseUrl.pathname += '/';
-    }
-
-    // Combine base URL with path, removing any leading slash from path
-    const url = new URL(path.replace(/^\/+/, ''), baseUrl);
+    const url = new URL(path, this.namerankEndpoint);
 
     const options: RequestInit = {
       method,
