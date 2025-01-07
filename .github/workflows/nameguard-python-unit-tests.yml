@@ -1,4 +1,4 @@
-name: NameGuard API - Unit Tests
+name: NameGuard Python - Unit Tests
 on:
   schedule:
     - cron: '0 5 * * 0'

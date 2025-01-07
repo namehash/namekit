@@ -1,5 +1,23 @@
 # @namehash/namerank
 
+## 0.6.0
+
+### Minor Changes
+
+- 5fa2d0e: use correct api endpoint
+
+## 0.5.0
+
+### Minor Changes
+
+- a1842e6: feat: [sc-25972] Update NameRank SDK documentation
+
+## 0.4.0
+
+### Minor Changes
+
+- ddc211f: remove console.log
+
 ## 0.3.0
 
 ### Minor Changes

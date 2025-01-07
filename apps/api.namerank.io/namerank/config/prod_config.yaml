@@ -1,0 +1,15 @@
+app:
+  logging_level: INFO
+tokenization:
+  dictionary: words.txt
+  custom_dictionary: custom_dictionary.txt
+  domain_specific_dictionary: domain_specific_dictionary.txt
+  should_be_tokenized: should_be_tokenized.txt
+  skip_non_words: false
+  with_gaps: true
+ngrams:
+  unigrams: unigram_freq.csv
+  bigrams: bigram_freq.csv
+  custom_dictionary: custom_dictionary.txt
+  domain_specific_dictionary: domain_specific_dictionary.txt
+  custom_token_frequency: 500000
