@@ -2,6 +2,7 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import {
   DEFAULT_FULL_MODE,
+  NameGraphFindCollectionsResponse,
   NameGraphGroupedByCategoryResponse,
   NameGraphGroupingCategory,
   NameGraphSuggestion,
@@ -108,3 +109,61 @@ export const getCollectionsForQuery = async (
 
   return nameGeneratorSuggestions;
 };
+
+export const findCollectionsByString = async (
+  input: string,
+  options?: {
+    offset?: number;
+  },
+): Promise<NameGraphFindCollectionsResponse> => {
+  let query = input;
+  if (input.includes(".")) {
+    query = input.split(".")[0];
+  }
+
+  const nameGeneratorSuggestions =
+    await NameGraphClient.findCollectionsByString(query, options);
+
+  return nameGeneratorSuggestions;
+};
+
+export const sampleNamesByCollectionId = async (
+  collectionId: string,
+): Promise<NameGraphSuggestion[]> => {
+  const nameGeneratorSuggestions =
+    await NameGraphClient.sampleCollectionMembers(collectionId);
+
+  return nameGeneratorSuggestions;
+};
+
+export const scrambleNamesByCollectionId = async (
+  collectionId: string,
+): Promise<NameGraphSuggestion[]> => {
+  const nameGeneratorSuggestions =
+    await NameGraphClient.scrambleCollectionTokens(collectionId);
+
+  return nameGeneratorSuggestions;
+};
+
+/**
+ * Random nice colors pallete
+ */
+export const customizedPillsColors = [
+  "#E7DBF7",
+  "#1FA3C7",
+  "#FE097C",
+  "#FFBE00",
+  "#DB3D58",
+  "#01C69A",
+  "#8464CA",
+  "#E84233",
+  "#F5851E",
+  "#CBECEC",
+  "#FDE2CB",
+  "#F0C3F3",
+];
+
+export const getRandomColor = () =>
+  customizedPillsColors[
+    Math.floor(Math.random() * customizedPillsColors.length)
+  ];

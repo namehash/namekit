@@ -162,8 +162,11 @@ export class NameGraph {
 
   public findCollectionsByString(
     query: string,
+    options?: {
+      offset?: number;
+    },
   ): Promise<NameGraphFindCollectionsResponse> {
-    const offset = 0;
+    const offset = options?.offset || 0;
     const mode = "instant";
     const limit_names = 10;
     const max_per_type = 3;
