@@ -611,7 +611,10 @@ export class NameGuard {
 
     const network = this.network;
 
-    const url = new URL(`inspect-namehash/${network}/${namehash}`, this.nameguardEndpoint);
+    const url = new URL(
+      `inspect-namehash/${network}/${namehash}`,
+      this.nameguardEndpoint,
+    );
 
     const response = await fetch(url);
 

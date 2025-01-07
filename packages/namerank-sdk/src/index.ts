@@ -192,8 +192,7 @@ export class NameRank {
   ): Promise<NameRankResponse> {
     const network_name = this.network;
     return this.rawRequest("inspect-name", "POST", {
-      name,
-      // network_name,
+      name
     });
   }
 
