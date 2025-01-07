@@ -114,10 +114,6 @@ export const findCollectionsByString = async (
   input: string,
   options?: {
     offset?: number;
-    min_other_collections?: number;
-    max_other_collections?: number;
-    max_total_collections?: number;
-    max_related_collections?: number;
   },
 ): Promise<NameGraphFindCollectionsResponse> => {
   let query = input;
