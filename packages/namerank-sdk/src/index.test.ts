@@ -51,3 +51,16 @@ describe("inspectName edge cases", () => {
 });
 
 
+describe("NameRank constructor", () => {
+  it("should ensure endpoint ends with trailing slash", () => {
+    const client1 = createClient({
+      namerankEndpoint: "https://api.namerank.io/namerank"
+    });
+    expect(client1["namerankEndpoint"].href).toBe("https://api.namerank.io/namerank/");
+
+    const client2 = createClient({
+      namerankEndpoint: "https://api.namerank.io/namerank/"
+    });
+    expect(client2["namerankEndpoint"].href).toBe("https://api.namerank.io/namerank/");
+  });
+});
