@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  NameGraphCollection,
-  NameGraphFindCollectionsResponse,
-} from "@namehash/namegraph-sdk/utils";
+import { NameGraphCollection } from "@namehash/namegraph-sdk/utils";
 import { findCollectionsByString } from "@/lib/utils";
 import { DebounceInput } from "react-debounce-input";
 import { useEffect, useState } from "react";
@@ -393,7 +390,7 @@ export default function ExploreCollectionsPage() {
                       ) : null}
                     </div>
 
-                    <div className="z-50 xl:max-w-[400px] mt-10 xl:mt-0 xl:ml-[68px] border rounded-md border-gray-200 w-full h-fit">
+                    <div className="z-40 xl:max-w-[400px] mt-10 xl:mt-0 xl:ml-[68px] border rounded-md border-gray-200 w-full h-fit">
                       <h2 className="flex items-center text-lg font-semibold h-[47px] px-5 border border-t-0 border-r-0 border-l-0 border-gray-200">
                         Other collections
                       </h2>
