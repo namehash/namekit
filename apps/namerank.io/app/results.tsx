@@ -50,7 +50,9 @@ export default async function Results({ name }: ResultsProps) {
           )}
           {result.namerank.analysis.top_tokenization && (
             <div className="ml-auto">
-              <Indicator value={result.namerank.analysis.log_probability} />
+              <Indicator
+                log_probability={result.namerank.analysis.log_probability}
+              />
             </div>
           )}
         </div>
@@ -76,7 +78,7 @@ export default async function Results({ name }: ResultsProps) {
               </span>
             ))}
             <div className="ml-auto">
-              <Indicator value={tokenization.log_probability} />
+              <Indicator log_probability={tokenization.log_probability} />
             </div>
           </div>
         ))}
