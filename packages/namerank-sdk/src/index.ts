@@ -187,10 +187,9 @@ export class NameRank {
     options?: InspectNameOptions,
   ): Promise<NameRankResponse> {
     const network_name = this.network;
-    // TODO: Temp fix until `api.namerank.io` is updated to return namerank api without subfolder
     return this.rawRequest("inspect-name", "POST", {
       name,
-      network_name,
+      // network_name,
     });
   }
 
