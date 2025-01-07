@@ -20,6 +20,7 @@ export const Header = () => {
       ),
     },
   ];
+
   const NamekitDesktopNavigationLinks = [
     {
       element: <>Explore Web3</>,
@@ -85,11 +86,13 @@ export const Header = () => {
                   <Popover.Panel className="[min-1180px]:hidden fixed inset-0 z-30 h-full w-4/5 bg-black max-w-[390px]">
                     return (
                     <div className="flex h-full flex-col justify-between">
-                      <div className="bg-black w-full justify-between flex fixed p-4 top-0 left-0 max-w-[390px]">
-                        <NamekitLogo
-                          textcolor={"white"}
-                          backgroundcolor={"black"}
-                        />
+                      <div className="bg-black w-full justify-between flex absolute p-4 top-0 left-0 max-w-[390px]">
+                        <Link href="/">
+                          <NamekitLogo
+                            textcolor={"white"}
+                            backgroundcolor={"black"}
+                          />
+                        </Link>
                         <Popover.Button>
                           <span className="sr-only">Close menu</span>
                           <XMarkIcon
@@ -144,7 +147,6 @@ export const Header = () => {
                 <nav className="lg:flex hidden lg:items-center">
                   {NamekitDesktopNavigationLinks.map((link, idx) => (
                     <Link
-                      target="_blank"
                       href={link.href}
                       key={String(link.element) + idx}
                       className="cursor-pointer rounded-md px-4 h-[38px] flex items-center justify-center text-sm font-medium text-gray-800 hover:bg-gray-100 transition focus-visible:-outline-offset-4"
