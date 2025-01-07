@@ -164,6 +164,10 @@ export class NameGraph {
     query: string,
     options?: {
       offset?: number;
+      min_other_collections?: number;
+      max_other_collections?: number;
+      max_related_collections?: number;
+      max_total_collections?: number;
     },
   ): Promise<NameGraphFindCollectionsResponse> {
     const offset = options?.offset || 0;
@@ -171,11 +175,11 @@ export class NameGraph {
     const limit_names = 10;
     const max_per_type = 3;
     const sort_order = "AI";
-    const min_other_collections = 0;
-    const max_other_collections = 3;
-    const max_total_collections = 6;
+    const min_other_collections = options?.min_other_collections || 0;
+    const max_other_collections = options?.max_other_collections || 3;
+    const max_total_collections = options?.max_total_collections || 6;
     const name_diversity_ratio = 0.5;
-    const max_related_collections = 3;
+    const max_related_collections = options?.max_related_collections || 3;
 
     const payload = {
       limit_names,
