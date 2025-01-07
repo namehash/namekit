@@ -30,6 +30,8 @@ export const metadata: Metadata = {
   openGraph: {
     title,
     description,
+    siteName: "Namekit",
+    url: "https://namekit.io/explore-web3",
     images: [
       {
         url: "/images/explore-web3/og-image.png",
