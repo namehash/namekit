@@ -17,6 +17,9 @@ import {
   CollectionsCardsSkeleton,
   CollectionsGridSkeleton,
 } from "@/components/collections/collections-grid-skeleton";
+import { Noto_Emoji } from "next/font/google";
+
+export const notoBlack = Noto_Emoji({ preload: false });
 
 interface PaginationState {
   currentPage: number;
@@ -69,7 +72,7 @@ export default function ExploreCollectionsPage() {
     totalItems: undefined,
   });
 
-  const loadCollections = () => {
+  const loadCollections = (forNewQuery = false) => {
     if (debouncedValue) {
       let query = debouncedValue;
       if (debouncedValue.includes(".")) {
@@ -80,9 +83,9 @@ export default function ExploreCollectionsPage() {
        * Paginate over collections based on current page.
        * NameGraph SDK pagination start from 0.
        */
-      let offset = pagination.currentPage - 1;
+      let offset = forNewQuery ? 0 : pagination.currentPage - 1;
       let amountOfPagesCurrentResultsFill = 0;
-      if (collections) {
+      if (collections && !forNewQuery) {
         const numberOfResultsBeingShownPerPage = pagination.itemsPerPage;
         const totalResultsWeHaveQueried = collections.length;
         amountOfPagesCurrentResultsFill =
@@ -106,6 +109,7 @@ export default function ExploreCollectionsPage() {
             if (res) {
               setPagination({
                 ...pagination,
+                currentPage: forNewQuery ? 1 : pagination.currentPage,
                 totalItems:
                   typeof res.metadata.total_number_of_matched_collections ===
                   "number"
@@ -116,14 +120,27 @@ export default function ExploreCollectionsPage() {
               const moreCollections = res.other_collections;
               const relatedCollections = res.related_collections;
 
-              setCollections([
-                ...(collections ? collections : []),
-                ...relatedCollections,
-              ]);
-              setOtherCollections([
-                ...(otherCollections ? otherCollections : []),
-                ...moreCollections,
-              ]);
+              /**
+               * Below logic aggrupates results if query is the same
+               * and user is navigation over multiple pages of this
+               * same query. We do so to not have to load the results
+               * once loaded again, if uses comes back to the pages
+               * already visited. If query is new, only the new queried
+               * collections are stored, no past collections are grouped.
+               */
+              const collectionsArray = forNewQuery
+                ? relatedCollections
+                : [...(collections ? collections : []), ...relatedCollections];
+
+              const otherCollectionsArray = forNewQuery
+                ? moreCollections
+                : [
+                    ...(otherCollections ? otherCollections : []),
+                    ...moreCollections,
+                  ];
+
+              setCollections(collectionsArray);
+              setOtherCollections(otherCollectionsArray);
               setLoadingCollections(false);
             } else {
               setCollections(undefined);
@@ -170,17 +187,19 @@ export default function ExploreCollectionsPage() {
   }, [pagination.currentPage]);
 
   useEffect(() => {
+    setPagination({
+      ...pagination,
+      currentPage: 1,
+      totalItems: undefined,
+    });
+
     if (!debouncedValue) {
-      setPagination({
-        ...pagination,
-        currentPage: 1,
-        totalItems: undefined,
-      });
-    } else {
-      setCollections(null);
-      setLoadingCollections(true);
-      loadCollections();
+      return;
     }
+
+    setCollections(null);
+    setLoadingCollections(true);
+    loadCollections(true);
   }, [debouncedValue]);
 
   return (
@@ -311,7 +330,9 @@ export default function ExploreCollectionsPage() {
                                 className="flex justify-center items-center rounded-md bg-background h-[72px] w-[72px] bg-gray-100"
                               >
                                 <div className="relative flex items-center justify-center overflow-hidden">
-                                  <p className="text-3xl">
+                                  <p
+                                    className={`text-3xl ${notoBlack.className}`}
+                                  >
                                     {collection.avatar_emoji}
                                   </p>
                                 </div>
@@ -407,7 +428,9 @@ export default function ExploreCollectionsPage() {
                               className="flex justify-center items-center rounded-md bg-background h-[72px] w-[72px] bg-gray-100"
                             >
                               <div className="relative flex items-center justify-center overflow-hidden">
-                                <p className="text-3xl">
+                                <p
+                                  className={`text-3xl ${notoBlack.className}`}
+                                >
                                   {collection.avatar_emoji}
                                 </p>
                               </div>
@@ -441,9 +464,9 @@ export default function ExploreCollectionsPage() {
                     </div>
                   </div>
                 </>
-              ) : (
+              ) : !loadCollections && !debouncedValue && !collections ? (
                 <>Error</>
-              )}
+              ) : null}
             </>
           )}
         </div>
