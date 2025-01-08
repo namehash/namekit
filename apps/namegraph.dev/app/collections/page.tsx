@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable react-hooks/exhaustive-deps */
 
 import { NameGraphCollection } from "@namehash/namegraph-sdk/utils";
 import { findCollectionsByString } from "@/lib/utils";
@@ -19,7 +20,7 @@ import {
 } from "@/components/collections/collections-grid-skeleton";
 import { Noto_Emoji } from "next/font/google";
 
-export const notoBlack = Noto_Emoji({ preload: false });
+const notoBlack = Noto_Emoji({ preload: false });
 
 interface PaginationState {
   currentPage: number;
