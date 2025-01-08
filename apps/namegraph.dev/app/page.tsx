@@ -11,7 +11,9 @@ export default function HomePage() {
         </h1>
         <p className="mb-8">
           📔 NameGraph makes it possible for your application to be connected to
-          hundreds of thousands of name ideas.
+          more than 21 millions of name ideas spread into 414 thousand
+          collections of names.
+          <br />
           <br />
           🔮 Boost the ideas of your users for profile naming or anything - make
           it with a single SDK method call.
