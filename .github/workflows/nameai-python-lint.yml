@@ -4,11 +4,11 @@ on:
     branches:
       - main
     paths:
-      - "apps/api.nameai.io/**"
+      - "apps/api.nameai.dev/**"
   pull_request:
     branches: ["main", "staging"]
     paths:
-      - "apps/api.nameai.io/**"
+      - "apps/api.nameai.dev/**"
 
 jobs:
   lint:
@@ -21,11 +21,11 @@ jobs:
         uses: chartboost/ruff-action@v1
         with:
           version: 0.6.7
-          src: "./apps/api.nameai.io"
+          src: "./apps/api.nameai.dev"
 
       - name: Ruff Format
         uses: chartboost/ruff-action@v1
         with:
           version: 0.6.7
           args: "format --check"
-          src: "./apps/api.nameai.io"
+          src: "./apps/api.nameai.dev"

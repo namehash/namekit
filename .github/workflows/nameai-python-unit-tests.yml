@@ -5,13 +5,13 @@ on:
     branches:
       - main
     paths:
-      - "apps/api.nameai.io/**"
+      - "apps/api.nameai.dev/**"
   pull_request:
     branches:
       - main
       - staging
     paths:
-      - "apps/api.nameai.io/**"
+      - "apps/api.nameai.dev/**"
 
 jobs:
   test:
@@ -36,9 +36,9 @@ jobs:
           cache: "poetry"
 
       - name: Install dependencies
-        working-directory: ./apps/api.nameai.io
+        working-directory: ./apps/api.nameai.dev
         run: poetry install --extras "lambda"
 
       - name: Run tests
-        working-directory: ./apps/api.nameai.io
+        working-directory: ./apps/api.nameai.dev
         run: poetry run pytest -vv
