@@ -218,7 +218,7 @@ if ! docker push ${ECR_URL}:latest; then
     exit 1
 fi
 
-IMAGE_URI="${ECR_URL}:latest"
+IMAGE_URI=`docker inspect --format='{{index .RepoDigests 0}}' ${ECR_URL}:latest`
 echo "Using Image URI: ${IMAGE_URI}"
 
 # Export individual environment variables for Terraform
