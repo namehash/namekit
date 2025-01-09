@@ -2,8 +2,8 @@ from fastapi import FastAPI, Path
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from enum import Enum
-from namerank.namerank import NameRank
-from namerank.models import NameRankResponse
+from nameai.namerank import NameRank
+from nameai.models import NameRankResponse
 
 
 class ApiVersion(str, Enum):
@@ -11,12 +11,12 @@ class ApiVersion(str, Enum):
 
 
 app = FastAPI(
-    title='NameRank API',
+    title='NameAI API',
     version=ApiVersion.V08_BETA.value,
-    description="""Welcome to NameRank, an extension of NameGuard developed by [NameHash Labs](https://namehashlabs.org) to provide NLP analysis and scoring for Ethereum Name Service (ENS) names.
+    description="""Welcome to NameAI, an extension of NameGuard developed by [NameHash Labs](https://namehashlabs.org) to provide NLP analysis and scoring for Ethereum Name Service (ENS) names.
 
 ## Documentation
-These documentation pages focus specifically on the NameRank API. For information on the NameGuard Library, SDK, and UI Kit, please refer to the [NameKit GitHub repository](https://github.com/namehash/namekit).
+These documentation pages focus specifically on the NameAI API. For information on the NameGuard Library, SDK, and UI Kit, please refer to the [NameKit GitHub repository](https://github.com/namehash/namekit).
 
 """,
 )

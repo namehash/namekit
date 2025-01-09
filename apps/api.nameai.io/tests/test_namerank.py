@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING
 import pytest
 
 if TYPE_CHECKING:
-    from namerank.namerank import NameRank
+    from nameai.namerank import NameRank
 
 from mocked_static_property import mock_static_property
 
@@ -10,7 +10,7 @@ from mocked_static_property import mock_static_property
 @pytest.fixture(scope='module')
 def namerank():
     with mock_static_property():
-        from namerank.namerank import NameRank
+        from nameai.namerank import NameRank
 
         return NameRank()
 

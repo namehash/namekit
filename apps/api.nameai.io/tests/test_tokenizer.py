@@ -10,9 +10,9 @@ from mocked_static_property import mock_static_property
 @contextmanager
 def init_tokenizer(overrides):
     with mock_static_property():
-        from namerank.all_tokenizer import AllTokenizer
+        from nameai.all_tokenizer import AllTokenizer
 
-        with initialize_config_module(version_base=None, config_module='namerank.config'):
+        with initialize_config_module(version_base=None, config_module='nameai.config'):
             config = compose(config_name='prod_config', overrides=overrides)
             tokenizer = AllTokenizer(config)
             yield tokenizer
@@ -203,7 +203,7 @@ def test_all_tokenizer_custom_dict():
 
 def test_all_tokenizer_quality():
     with init_tokenizer([]) as tokenizer:
-        from namerank.data import get_resource_path
+        from nameai.data import get_resource_path
 
         for multiword in open(get_resource_path('should_be_tokenized.txt')):
             multiword = multiword.strip()

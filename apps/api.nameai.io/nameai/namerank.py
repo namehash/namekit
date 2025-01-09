@@ -1,7 +1,7 @@
-from namerank.nlp_inspector import NLPInspector
-from namerank.scorer import Scorer
-from namerank.config import load_namerank_config
-from namerank.models import (
+from nameai.nlp_inspector import NLPInspector
+from nameai.scorer import Scorer
+from nameai.config import load_namerank_config
+from nameai.models import (
     NameRankResponse,
     NameRankReport,
     NLPLabelAnalysis,

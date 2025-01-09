@@ -7,7 +7,7 @@ import omegaconf
 
 @contextmanager
 def initialize_namerank_config(config_name: Literal['prod_config']):
-    with initialize_config_module(version_base=None, config_module='namerank.config'):
+    with initialize_config_module(version_base=None, config_module='nameai.config'):
         config = compose(config_name=config_name)
         yield config
 

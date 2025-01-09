@@ -198,13 +198,13 @@ if [ ! -f "../Dockerfile" ]; then
 fi
 
 echo "Building Docker image..."
-if ! docker build ../ -t namerank; then
+if ! docker build ../ -t nameai; then
     echo "Error: Docker build failed"
     exit 1
 fi
 
 echo "Tagging Docker image..."
-if ! docker tag namerank:latest ${ECR_URL}:latest; then
+if ! docker tag nameai:latest ${ECR_URL}:latest; then
     echo "Error: Failed to tag Docker image"
     exit 1
 fi

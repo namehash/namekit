@@ -1,4 +1,4 @@
-from namerank.namerank_api import app as namerank_app
+from nameai.namerank_api import app as namerank_app
 from nameguard.web_api import app as nameguard_app
 from mangum import Mangum
 

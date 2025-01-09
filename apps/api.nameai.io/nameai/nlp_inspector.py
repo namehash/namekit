@@ -4,12 +4,12 @@ from typing import Optional
 from label_inspector.inspector import Inspector
 from label_inspector.config import initialize_inspector_config
 
-from namerank.models import (
+from nameai.models import (
     NLPLabelAnalysis,
     LabelStatus,
 )
-from namerank.all_tokenizer import AllTokenizer
-from namerank.ngrams import Ngrams
+from nameai.all_tokenizer import AllTokenizer
+from nameai.ngrams import Ngrams
 
 
 def init_inspector():

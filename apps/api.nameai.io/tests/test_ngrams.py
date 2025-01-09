@@ -7,9 +7,9 @@ from mocked_static_property import mock_static_property
 @contextmanager
 def init_ngrams(overrides=None):
     with mock_static_property():
-        from namerank.ngrams import Ngrams
+        from nameai.ngrams import Ngrams
 
-        with initialize_config_module(version_base=None, config_module='namerank.config'):
+        with initialize_config_module(version_base=None, config_module='nameai.config'):
             config = compose(config_name='prod_config', overrides=overrides)
             ngrams = Ngrams(config)
             yield ngrams
@@ -18,10 +18,10 @@ def init_ngrams(overrides=None):
 @contextmanager
 def init_ngrams_tokenizer(overrides=None):
     with mock_static_property():
-        from namerank.ngrams import Ngrams
-        from namerank.all_tokenizer import AllTokenizer
+        from nameai.ngrams import Ngrams
+        from nameai.all_tokenizer import AllTokenizer
 
-        with initialize_config_module(version_base=None, config_module='namerank.config'):
+        with initialize_config_module(version_base=None, config_module='nameai.config'):
             config = compose(config_name='prod_config', overrides=overrides)
             ngrams = Ngrams(config)
             tokenizer = AllTokenizer(config)

@@ -1,7 +1,7 @@
 from typing import Optional, Tuple
 import re
 
-from namerank.models import NLPLabelAnalysis
+from nameai.models import NLPLabelAnalysis
 
 
 IS_NAMEHASH_REGEX = re.compile(r'^\[[0-9a-f]{64}\]$')
