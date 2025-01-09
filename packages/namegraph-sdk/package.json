@@ -1,7 +1,7 @@
 {
   "name": "@namehash/namegraph-sdk",
   "description": "A lightweight JavaScript client for the NameGraph API.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "license": "MIT",
   "repository": {
     "type": "git",

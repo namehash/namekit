@@ -3,11 +3,11 @@
 ## API
 The API extends the NameGuard API and is fully compatible with it.
 
-NameRank-specific endpoints are under the [rank.namekit.io/namerank](https://www.rank.namekit.io/namerank) path prefix.
+NameRank-specific endpoints are under the [api.namerank.io/namerank](https://www.api.namerank.io/namerank) path prefix.
 
-API documentation is available at [rank.namekit.io/namerank/docs](https://rank.namekit.io/namerank/docs) and [rank.namekit.io/docs](https://rank.namekit.io/docs) for NameGuard.
+API documentation is available at [api.namerank.io/namerank/docs](https://api.namerank.io/namerank/docs) and [api.namerank.io/docs](https://api.namerank.io/docs) for NameGuard.
 
-Lambda is publicly accessible under given domain [rank.namekit.io](https://rank.namekit.io)
+Lambda is publicly accessible under given domain [api.namerank.io](https://api.namerank.io)
 
 # AWS deploy
 ## Requirements
