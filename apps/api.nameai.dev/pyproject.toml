@@ -1,14 +1,14 @@
 [tool.poetry]
-name = "namerank"
+name = "nameai"
 version = "0.1.4"
-description = "NameHash NameRank API"
+description = "NameHash NameAI API"
 authors = ["NameHash Team <devops@namehash.io>"]
 maintainers = ["NameHash Team <devops@namehash.io>"]
-homepage = "https://www.namerank.io/"
-repository = "https://github.com/namehash/namerank"
+homepage = "https://www.nameai.dev/"
+repository = "https://github.com/namehash/nameai"
 readme = "README.md"
 license = "LICENSE"
-packages = [{ include = "namerank" }]
+packages = [{ include = "nameai" }]
 
 
 [tool.poetry.dependencies]

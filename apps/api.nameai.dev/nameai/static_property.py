@@ -3,8 +3,8 @@ from functools import wraps, cached_property
 import os
 import pickle
 import shutil
-from namerank.data import get_resource_path
-from namerank.config import initialize_namerank_config
+from nameai.data import get_resource_path
+from nameai.config import initialize_nameai_config
 
 
 R = TypeVar('R')
@@ -16,8 +16,8 @@ REGISTERED_FUNCTIONS = set()
 def static_property(func: Callable[..., R]) -> cached_property[R]:
     """
     Works like functools.cached_property, but uses pickle to store the value.
-    Data is generated manually with `python -m namerank.generate_static_data`.
-    The pickle path is `namerank/data/static/{module}.{class}.{func}.pickle`.
+    Data is generated manually with `python -m nameai.generate_static_data`.
+    The pickle path is `nameai/data/static/{module}.{class}.{func}.pickle`.
     """
     pickle_name = f'{func.__module__}.{func.__qualname__}'
 
@@ -32,7 +32,7 @@ def static_property(func: Callable[..., R]) -> cached_property[R]:
         except FileNotFoundError:
             raise FileNotFoundError(
                 f'Static data file for {pickle_name} not found. '
-                'Run `python -m namerank.generate_static_data` to generate it.'
+                'Run `python -m nameai.generate_static_data` to generate it.'
             )
 
     # register function for static data generation
@@ -48,11 +48,11 @@ def generate_static_data():
     Generates static data for all registered static_property functions.
     Writes the data to `{DATA_DIR}/{module}.{class}.{func}.pickle`
     """
-    with initialize_namerank_config('prod_config') as config:
+    with initialize_nameai_config('prod_config') as config:
         print('Removing old static data')
         shutil.rmtree(DATA_DIR, ignore_errors=True)
         os.makedirs(DATA_DIR, exist_ok=False)
-        import namerank.namerank  # noqa: F401
+        import nameai.name_ai  # noqa: F401
 
         for module, class_name, func_name, func in REGISTERED_FUNCTIONS:
             print(f'Generating {module}.{class_name}.{func_name}')

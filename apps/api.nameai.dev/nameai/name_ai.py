@@ -1,31 +1,31 @@
-from namerank.nlp_inspector import NLPInspector
-from namerank.scorer import Scorer
-from namerank.config import load_namerank_config
-from namerank.models import (
-    NameRankResponse,
-    NameRankReport,
+from nameai.nlp_inspector import NLPInspector
+from nameai.scorer import Scorer
+from nameai.config import load_nameai_config
+from nameai.models import (
+    NameAIResponse,
+    NameAIReport,
     NLPLabelAnalysis,
 )
 
 from nameguard import NameGuard
 
 
-class NameRank:
+class NameAI:
     def __init__(self, config=None):
         if config is None:
-            config = load_namerank_config('prod_config')
+            config = load_nameai_config('prod_config')
         self.nlp_inspector = NLPInspector(config)
         self.nameguard = NameGuard()
         self.scorer = Scorer()
 
-    def inspect_label(self, label: str) -> NameRankResponse:
+    def inspect_label(self, label: str) -> NameAIResponse:
         nameguard_report = self.nameguard.inspect_name_sync(label)
 
         if nameguard_report.inspected:
             nlp_analysis = self.nlp_inspector.nlp_analyse_label(label)
             purity, interesting = self.scorer.score_label(nlp_analysis)
 
-            namerank_report = NameRankReport(
+            nameai_report = NameAIReport(
                 purity_score=purity,
                 interesting_score=interesting,
                 analysis=NLPLabelAnalysis(
@@ -39,18 +39,18 @@ class NameRank:
                 ),
             )
         else:
-            namerank_report = NameRankReport(
+            nameai_report = NameAIReport(
                 purity_score=0,
                 interesting_score=0,
                 analysis=None,
             )
 
-        return NameRankResponse(
-            namerank=namerank_report,
+        return NameAIResponse(
+            nameai=nameai_report,
             nameguard=nameguard_report,
         )
 
-    def inspect_name(self, name: str) -> NameRankResponse:
+    def inspect_name(self, name: str) -> NameAIResponse:
         labels = [] if len(name) == 0 else name.split('.')
 
         if len(labels) == 0:
@@ -65,7 +65,7 @@ class NameRank:
         nameguard_report = self.nameguard.inspect_name_sync(labels[0])
         if nameguard_report.inspected:
             nlp_analysis = self.nlp_inspector.nlp_analyse_label(labels[0])
-            namerank_report = NameRankReport(
+            nameai_report = NameAIReport(
                 purity_score=0,
                 interesting_score=0,
                 analysis=NLPLabelAnalysis(
@@ -79,13 +79,13 @@ class NameRank:
                 ),
             )
         else:
-            namerank_report = NameRankReport(
+            nameai_report = NameAIReport(
                 purity_score=0,
                 interesting_score=0,
                 analysis=None,
             )
 
-        return NameRankResponse(
-            namerank=namerank_report,
+        return NameAIResponse(
+            nameai=nameai_report,
             nameguard=nameguard_report,
         )

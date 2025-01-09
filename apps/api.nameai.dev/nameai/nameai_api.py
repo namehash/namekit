@@ -2,8 +2,8 @@ from fastapi import FastAPI, Path
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from enum import Enum
-from namerank.namerank import NameRank
-from namerank.models import NameRankResponse
+from nameai.name_ai import NameAI
+from nameai.models import NameAIResponse
 
 
 class ApiVersion(str, Enum):
@@ -11,12 +11,12 @@ class ApiVersion(str, Enum):
 
 
 app = FastAPI(
-    title='NameRank API',
+    title='NameAI API',
     version=ApiVersion.V08_BETA.value,
-    description="""Welcome to NameRank, an extension of NameGuard developed by [NameHash Labs](https://namehashlabs.org) to provide NLP analysis and scoring for Ethereum Name Service (ENS) names.
+    description="""Welcome to NameAI, an extension of NameGuard developed by [NameHash Labs](https://namehashlabs.org) to provide NLP analysis and scoring for Ethereum Name Service (ENS) names.
 
 ## Documentation
-These documentation pages focus specifically on the NameRank API. For information on the NameGuard Library, SDK, and UI Kit, please refer to the [NameKit GitHub repository](https://github.com/namehash/namekit).
+These documentation pages focus specifically on the NameAI API. For information on the NameGuard Library, SDK, and UI Kit, please refer to the [NameKit GitHub repository](https://github.com/namehash/namekit).
 
 """,
 )
@@ -29,7 +29,7 @@ app.add_middleware(
     allow_headers=['*'],
 )
 
-nrank = NameRank()
+nrank = NameAI()
 
 
 # -- inspect-label --
@@ -52,7 +52,7 @@ async def inspect_label_get(
         description='Label to inspect. Should be url-encoded (except when using the Swagger UI).',
         examples=['vitalìk'],
     ),
-) -> NameRankResponse:
+) -> NameAIResponse:
     """
     ## Inspects a single label with NameRank and NameGuard.
 
@@ -71,7 +71,7 @@ async def inspect_label_get(
     tags=['label'],
     summary='Inspect Label',
 )
-async def inspect_label_post(request: InspectLabelRequest) -> NameRankResponse:
+async def inspect_label_post(request: InspectLabelRequest) -> NameAIResponse:
     """
     ## Inspects a single label with NameRank and NameGuard.
 
@@ -86,7 +86,7 @@ async def inspect_label_post(request: InspectLabelRequest) -> NameRankResponse:
 
 
 @app.get('/inspect-label', include_in_schema=False)
-async def inspect_label_empty() -> NameRankResponse:
+async def inspect_label_empty() -> NameAIResponse:
     return nrank.inspect_label('')
 
 
@@ -110,7 +110,7 @@ async def inspect_name_get(
         description='**Name should be url-encoded (except when using the Swagger UI). Name can be empty.**',
         examples=['vitalìk.eth'],
     ),
-) -> NameRankResponse:
+) -> NameAIResponse:
     """
     ## Inspects a single name with NameRank and NameGuard.
 
@@ -138,7 +138,7 @@ async def inspect_name_get(
     tags=['name'],
     summary='Inspect Name',
 )
-async def inspect_name_post(request: InspectNameRequest) -> NameRankResponse:
+async def inspect_name_post(request: InspectNameRequest) -> NameAIResponse:
     """
     ## Inspects a single name with NameRank and NameGuard.
 
@@ -162,5 +162,5 @@ async def inspect_name_post(request: InspectNameRequest) -> NameRankResponse:
 
 
 @app.get('/inspect-name', include_in_schema=False)
-async def inspect_name_empty() -> NameRankResponse:
+async def inspect_name_empty() -> NameAIResponse:
     return nrank.inspect_name('')

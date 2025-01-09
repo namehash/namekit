@@ -1,13 +1,13 @@
-# NameRank
+# NameAI
 
 ## API
 The API extends the NameGuard API and is fully compatible with it.
 
-NameRank-specific endpoints are under the [api.namerank.io/namerank](https://www.api.namerank.io/namerank) path prefix.
+NameAI-specific endpoints are under the [api.nameai.dev/nameai](https://www.api.nameai.dev/nameai) path prefix.
 
-API documentation is available at [api.namerank.io/namerank/docs](https://api.namerank.io/namerank/docs) and [api.namerank.io/docs](https://api.namerank.io/docs) for NameGuard.
+API documentation is available at [api.nameai.dev/nameai/docs](https://api.nameai.dev/nameai/docs) and [api.nameai.dev/docs](https://api.nameai.dev/docs) for NameGuard.
 
-Lambda is publicly accessible under given domain [api.namerank.io](https://api.namerank.io)
+Lambda is publicly accessible under given domain [api.nameai.dev](https://api.nameai.dev)
 
 # AWS deploy
 ## Requirements
@@ -94,16 +94,16 @@ You can add these secrets in your GitHub repository settings under the "Secrets"
 
 
 # Getting Started
-This section is describing how to setup running NameRank instance on local environment
+This section is describing how to setup running NameAI instance on local environment
 
 ## Environment variables
-NameRank requires certain env variables propagated for it's NameGuard subcomponent.
+NameAI requires certain env variables propagated for it's NameGuard subcomponent.
 Those variables are defined and described in [.env.example](./.env.example) file which is a point of reference.
-Script responsible for running local NameRank instance is expecting those variables to be poulated in .env file before execution.
+Script responsible for running local NameAI instance is expecting those variables to be poulated in .env file before execution.
 
 ## Requirements
 python3 with pip installed on local env
 
 ## Scripts
-Running [start-local.sh](./start-local.sh) script will result in creating running NameRank instance on local environment.
+Running [start-local.sh](./start-local.sh) script will result in creating running NameAI instance on local environment.
 This instance can be reached under [localhost:8000](localhost:8000) 
