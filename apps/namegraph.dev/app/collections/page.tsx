@@ -151,7 +151,7 @@ export default function ExploreCollectionsPage() {
               const relatedCollections = res.related_collections;
 
               /**
-               * Below logic aggrupates results if query is the same
+               * Below logic aggregates results if query is the same
                * and user is navigation over multiple pages of this
                * same query. We do so to not have to load the results
                * once loaded again, if uses comes back to the pages
