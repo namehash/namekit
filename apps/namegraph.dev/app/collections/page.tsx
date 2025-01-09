@@ -20,11 +20,17 @@ import {
 } from "@/components/collections/collections-grid-skeleton";
 import { useQueryParams } from "@/components/use-query-params";
 import { Noto_Emoji } from "next/font/google";
+import { Link } from "@namehash/namekit-react";
 
 const notoBlack = Noto_Emoji({ preload: false });
 interface NavigationConfig {
   itemsPerPage: number;
   totalItems?: number;
+}
+
+interface CollectionsData {
+  other_collections: NameGraphCollection[];
+  related_collections: NameGraphCollection[];
 }
 
 export default function ExploreCollectionsPage() {
@@ -70,31 +76,14 @@ export default function ExploreCollectionsPage() {
    * NameGraphCollection[] is set when collections that were retrieved were grouped and state was set
    */
   const [collections, setCollections] = useState<
-    undefined | null | NameGraphCollection[]
+    undefined | null | Record<number, CollectionsData | null | undefined>
   >(undefined);
-  /**
-   * collectionsToDisplay state:
-   *
-   * undefined is set when component never tried querying collections
-   * null is set when no collections were retrieved from NameGraph SDK for currentSearch
-   * NameGraphCollection[] is set when collections that were retrieved were grouped and state was set
-   *
-   * This array reserves the collections sliced by the current page considering navigationConfig.itemsPerPage
-   */
-  const [collectionsToDisplay, setCollectionsToDisplay] = useState<
-    undefined | null | NameGraphCollection[]
-  >(undefined);
+  const [collectionsQueriedStandFor, setCollectionsQueriedStandFor] =
+    useState("");
 
-  /**
-   * other collections state:
-   *
-   * undefined is set when component never tried querying other collections
-   * null is set when no other collections were retrieved from NameGraph SDK for currentSearch
-   * NameGraphCollection[] is set when other collections that were retrieved were grouped and state was set
-   */
-  const [otherCollections, setOtherCollections] = useState<
-    undefined | null | NameGraphCollection[]
-  >(undefined);
+  useEffect(() => {
+    console.log(collections);
+  }, [collections]);
 
   const [loadingCollections, setLoadingCollections] = useState(true);
 
@@ -111,111 +100,79 @@ export default function ExploreCollectionsPage() {
         query = params.search.split(".")[0];
       }
 
+      const MAX_RELATED_COLLECTIONS = 20;
+      const OTHER_COLLECTIONS_NUMBER = 5;
+
       /**
-       * Paginate over collections based on current page.
-       * NameGraph SDK pagination start from 0.
+       * This is the case where we have already queried the results for
+       * a given page, which is being visited once again and for which
+       * we have already stored its necessary data inside collections
        */
-      let offset = Number(params.page);
-      let amountOfPagesCurrentResultsFill = 0;
-      if (collections) {
-        const numberOfResultsBeingShownPerPage = navigationConfig.itemsPerPage;
-        const totalResultsWeHaveQueried = collections.length;
-        amountOfPagesCurrentResultsFill =
-          totalResultsWeHaveQueried / numberOfResultsBeingShownPerPage;
+      if (collectionsQueriedStandFor && !!collections?.[params.page]) {
+        return;
       }
 
-      if (offset + 1 > amountOfPagesCurrentResultsFill) {
-        const MAX_RELATED_COLLECTIONS = 20;
-        const OTHER_COLLECTIONS_NUMBER = 20;
+      setLoadingCollections(true);
+      setCollectionsQueriedStandFor(query);
+      findCollectionsByString(query, {
+        offset: params.page - 1,
+        max_total_collections:
+          MAX_RELATED_COLLECTIONS + OTHER_COLLECTIONS_NUMBER,
+        /**
+         * Please note how the number of collections one page show is
+         * strategically aligned with ITEMS_PER_PAGE_OPTIONS.
+         */
+        max_related_collections: MAX_RELATED_COLLECTIONS,
+        max_other_collections: OTHER_COLLECTIONS_NUMBER,
+        min_other_collections: OTHER_COLLECTIONS_NUMBER,
+      })
+        .then((res) => {
+          if (res) {
+            const MAX_COLLECTIONS_NUMBER_NAME_API_CAN_DOCUMENT = 1000;
 
-        setLoadingCollections(true);
-        findCollectionsByString(query, {
-          offset,
-          max_total_collections:
-            MAX_RELATED_COLLECTIONS + OTHER_COLLECTIONS_NUMBER,
-          /**
-           * Please note how the number of collections one page show is
-           * strategically aligned with ITEMS_PER_PAGE_OPTIONS.
-           */
-          max_related_collections: MAX_RELATED_COLLECTIONS,
-          max_other_collections: OTHER_COLLECTIONS_NUMBER,
-          min_other_collections: OTHER_COLLECTIONS_NUMBER,
+            setNavigationConfig({
+              ...navigationConfig,
+              totalItems:
+                typeof res.metadata.total_number_of_matched_collections ===
+                "number"
+                  ? res.metadata.total_number_of_matched_collections
+                  : /**
+                     * NameAPI makes usage of a stringified "+1000" for
+                     * res.metadata.total_number_of_matched_collections
+                     * if there are more than 1000 collections this query
+                     * is contained in. Since this is a different data type
+                     * and we are handling number operations with totalItems,
+                     * we are here normalizing this use case to use the number 1000
+                     */
+                    MAX_COLLECTIONS_NUMBER_NAME_API_CAN_DOCUMENT,
+            });
+
+            const moreCollections = res.other_collections;
+            const relatedCollections = res.related_collections;
+
+            setCollections({
+              ...collections,
+              [params.page]: {
+                related_collections: relatedCollections,
+                other_collections: moreCollections,
+              },
+            });
+            setLoadingCollections(false);
+          } else {
+            setCollections(undefined);
+          }
         })
-          .then((res) => {
-            if (res) {
-              const MAX_COLLECTIONS_NUMBER_NAME_API_CAN_DOCUMENT = 1000;
-
-              setNavigationConfig({
-                ...navigationConfig,
-                totalItems:
-                  typeof res.metadata.total_number_of_matched_collections ===
-                  "number"
-                    ? res.metadata.total_number_of_matched_collections
-                    : /**
-                       * NameAPI makes usage of a stringified "+1000" for
-                       * res.metadata.total_number_of_matched_collections
-                       * if there are more than 1000 collections this query
-                       * is contained in. Since this is a different data type
-                       * and we are handling number operations with totalItems,
-                       * we are here normalizing this use case to use the number 1000
-                       */
-                      MAX_COLLECTIONS_NUMBER_NAME_API_CAN_DOCUMENT,
-              });
-
-              const moreCollections = res.other_collections;
-              const relatedCollections = res.related_collections;
-
-              /**
-               * Below logic aggregates results if query is the same
-               * and user is navigation over multiple pages of this
-               * same query. We do so to not have to load the results
-               * once loaded again, if uses comes back to the pages
-               * already visited. If query is new, only the new queried
-               * collections are stored, no past collections are grouped.
-               */
-              const collectionsArray =
-                params.page !== DEFAULT_COLLECTIONS_PARAMS.page
-                  ? relatedCollections
-                  : [
-                      ...(collections ? collections : []),
-                      ...relatedCollections,
-                    ];
-
-              setCollections(collectionsArray);
-              setOtherCollections(moreCollections);
-              setLoadingCollections(false);
-            } else {
-              setCollections(undefined);
-            }
-          })
-          .catch(() => {
-            setCollections(null);
-            setOtherCollections(null);
+        .catch(() => {
+          setCollections({
+            ...collections,
+            [params.page]: null,
           });
-      }
+        });
     } else {
       setCollections(null);
       setLoadingCollections(false);
     }
   };
-
-  const sliceCollectionsList = () => {
-    if (collections) {
-      setCollectionsToDisplay(
-        collections?.slice(
-          Number(params.page) * navigationConfig.itemsPerPage -
-            navigationConfig.itemsPerPage,
-          Number(params.page) * navigationConfig.itemsPerPage,
-        ),
-      );
-    } else {
-      setCollectionsToDisplay(null);
-    }
-  };
-
-  useEffect(() => {
-    sliceCollectionsList();
-  }, [collections, params.page]);
 
   useEffect(() => {
     setNavigationConfig({
@@ -233,15 +190,7 @@ export default function ExploreCollectionsPage() {
   }, [params.search]);
 
   useEffect(() => {
-    /**
-     * This makes the load of collections only be done here for
-     * queries that are being navigated throught, which means,
-     * for queries where user is navigating to page 2, 3, 4
-     * or so on. For page 1 queries the load of results
-     * is being done right above this useEffect block
-     */
-    if (Number(params.page) !== DEFAULT_COLLECTIONS_PARAMS.page)
-      loadCollections();
+    loadCollections();
   }, [params.page]);
 
   /**
@@ -307,9 +256,9 @@ export default function ExploreCollectionsPage() {
 
             {params.search && (
               <>
-                {loadingCollections && !collections ? (
+                {loadingCollections && !collections?.[params.page] ? (
                   <CollectionsGridSkeleton />
-                ) : collectionsToDisplay ? (
+                ) : collections ? (
                   <>
                     <div className="w-full flex flex-col xl:flex-row">
                       <div className="w-full">
@@ -342,7 +291,7 @@ export default function ExploreCollectionsPage() {
                               </div>
                             ) : null}
                           </div>
-                          {collections?.length ? (
+                          {collections[params.page] ? (
                             <div className="flex space-x-3 items-center">
                               <div className="text-sm text-gray-500">
                                 Sort by
@@ -377,50 +326,53 @@ export default function ExploreCollectionsPage() {
                             <div className="flex flex-col space-y-7 my-8">
                               <CollectionsCardsSkeleton />
                             </div>
-                          ) : (
-                            collectionsToDisplay.map((collection) => (
-                              <div
-                                key={collection.collection_id}
-                                className="border border-l-0 border-r-0 border-b-0 pt-3 border-gray-200 flex items-start gap-[18px]"
-                              >
-                                <div
-                                  style={{
-                                    border: "1px solid rgba(0, 0, 0, 0.05)",
-                                  }}
-                                  className="flex justify-center items-center rounded-md bg-background h-[72px] w-[72px] bg-gray-100"
+                          ) : collections[params.page] ? (
+                            collections[params.page]?.related_collections.map(
+                              (collection) => (
+                                <Link
+                                  key={collection.collection_id}
+                                  href={`/collections/${collection.collection_id}`}
+                                  className="!no-underline group cursor-pointer border border-l-0 border-r-0 border-b-0 pt-3 border-gray-200 flex items-start gap-[18px]"
                                 >
-                                  <div className="relative flex items-center justify-center overflow-hidden">
-                                    <p
-                                      className={`text-3xl ${notoBlack.className}`}
-                                    >
-                                      {collection.avatar_emoji}
-                                    </p>
-                                  </div>
-                                </div>
-                                <div className="flex-1 overflow-hidden">
-                                  <h3 className="text-sm font-semibold">
-                                    {collection.title}
-                                  </h3>
-                                  <p className="text-xs text-gray-500 mb-2 truncate">
-                                    by {collection.owner}
-                                  </p>
-                                  <div className="relative">
-                                    <div className="flex gap-2">
-                                      {collection.top_names.map((tag) => (
-                                        <span
-                                          key={tag.namehash}
-                                          className="bg-gray-100 text-sm px-2 py-1 bg-muted rounded-full"
-                                        >
-                                          {tag.name}
-                                        </span>
-                                      ))}
+                                  <div
+                                    style={{
+                                      border: "1px solid rgba(0, 0, 0, 0.05)",
+                                    }}
+                                    className="group-hover:bg-gray-300 group-hover:transition flex justify-center items-center rounded-md bg-background h-[72px] w-[72px] bg-gray-100"
+                                  >
+                                    <div className="relative flex items-center justify-center overflow-hidden">
+                                      <p
+                                        className={`text-3xl ${notoBlack.className}`}
+                                      >
+                                        {collection.avatar_emoji}
+                                      </p>
                                     </div>
-                                    <div className="bg-gradient-white-to-transparent absolute right-0 top-0 w-40 h-full"></div>
                                   </div>
-                                </div>
-                              </div>
-                            ))
-                          )}
+                                  <div className="flex-1 overflow-hidden">
+                                    <h3 className="text-sm font-semibold">
+                                      {collection.title}
+                                    </h3>
+                                    <p className="text-xs text-gray-500 mb-2 truncate">
+                                      by {collection.owner}
+                                    </p>
+                                    <div className="relative">
+                                      <div className="flex gap-2">
+                                        {collection.top_names.map((tag) => (
+                                          <span
+                                            key={tag.namehash}
+                                            className="bg-gray-100 text-sm px-2 py-1 bg-muted rounded-full"
+                                          >
+                                            {tag.name}
+                                          </span>
+                                        ))}
+                                      </div>
+                                      <div className="bg-gradient-white-to-transparent absolute right-0 top-0 w-40 h-full"></div>
+                                    </div>
+                                  </div>
+                                </Link>
+                              ),
+                            )
+                          ) : null}
                         </div>
                         {/* Pagination */}
                         {navigationConfig.totalItems ? (
@@ -464,51 +416,54 @@ export default function ExploreCollectionsPage() {
                         <h2 className="flex items-center text-lg font-semibold h-[47px] px-5 border border-t-0 border-r-0 border-l-0 border-gray-200">
                           Other collections
                         </h2>
-                        {otherCollections ? (
-                          otherCollections.map((collection) => (
-                            <div
-                              key={collection.collection_id}
-                              className="px-5 py-3 flex items-start gap-[18px]"
-                            >
-                              <div
-                                style={{
-                                  border: "1px solid rgba(0, 0, 0, 0.05)",
-                                }}
-                                className="flex justify-center items-center rounded-md bg-background h-[72px] w-[72px] bg-gray-100"
+                        {collections[params.page] ? (
+                          collections[params.page]?.other_collections.map(
+                            (collection) => (
+                              <Link
+                                key={collection.collection_id}
+                                href={`/collections/${collection.collection_id}`}
+                                className="!no-underline group rounded-lg cursor-pointer px-5 py-3 flex items-start gap-[18px]"
                               >
-                                <div className="relative flex items-center justify-center overflow-hidden">
-                                  <p
-                                    className={`text-3xl ${notoBlack.className}`}
-                                  >
-                                    {collection.avatar_emoji}
-                                  </p>
-                                </div>
-                              </div>
-                              <div className="flex-1 overflow-hidden">
-                                <h3 className="text-sm font-semibold">
-                                  {collection.title}
-                                </h3>
-                                <p className="text-xs text-gray-500 mb-2 truncate">
-                                  by {collection.owner}
-                                </p>
-                                <div className="relative">
-                                  <div className="flex gap-2">
-                                    {collection.top_names.map((tag) => (
-                                      <span
-                                        key={tag.namehash}
-                                        className="bg-gray-100 text-sm px-2 py-1 bg-muted rounded-full"
-                                      >
-                                        {tag.name}
-                                      </span>
-                                    ))}
+                                <div
+                                  style={{
+                                    border: "1px solid rgba(0, 0, 0, 0.05)",
+                                  }}
+                                  className="group-hover:bg-gray-300 group-hover:transition flex justify-center items-center rounded-md bg-background h-[72px] w-[72px] bg-gray-100"
+                                >
+                                  <div className="relative flex items-center justify-center overflow-hidden">
+                                    <p
+                                      className={`text-3xl ${notoBlack.className}`}
+                                    >
+                                      {collection.avatar_emoji}
+                                    </p>
                                   </div>
-                                  <div className="bg-gradient-white-to-transparent absolute right-0 top-0 w-40 h-full"></div>
                                 </div>
-                              </div>
-                            </div>
-                          ))
+                                <div className="flex-1 overflow-hidden">
+                                  <h3 className="text-sm font-semibold">
+                                    {collection.title}
+                                  </h3>
+                                  <p className="text-xs text-gray-500 mb-2 truncate">
+                                    by {collection.owner}
+                                  </p>
+                                  <div className="relative">
+                                    <div className="flex gap-2">
+                                      {collection.top_names.map((tag) => (
+                                        <span
+                                          key={tag.namehash}
+                                          className="bg-gray-100 text-sm px-2 py-1 bg-muted rounded-full"
+                                        >
+                                          {tag.name}
+                                        </span>
+                                      ))}
+                                    </div>
+                                    <div className="bg-gradient-white-to-transparent absolute right-0 top-0 w-40 h-full"></div>
+                                  </div>
+                                </div>
+                              </Link>
+                            ),
+                          )
                         ) : (
-                          <div>No collections found</div>
+                          <div className="p-3 px-5">No collections found</div>
                         )}
                       </div>
                     </div>

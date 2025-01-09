@@ -38,7 +38,7 @@ export const CollectionsGridSkeleton = () => {
 export const CollectionsCardsSkeleton = () => {
   return (
     <>
-      {[...Array(10).keys()].map((collection) => {
+      {[...Array(5).keys()].map((collection) => {
         return (
           <div key={collection}>
             <CollectionCardSkeleton />

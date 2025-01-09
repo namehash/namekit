@@ -198,6 +198,23 @@ export class NameGraph {
     return this.rawRequest("find_collections_by_string", "POST", payload);
   }
 
+  public fetchCollectionMembers(
+    collection_id: string,
+    options?: {
+      offset?: number;
+      limit?: number;
+    },
+  ): Promise<NameGraphFetchTopCollectionMembersResponse> {
+    const payload = {
+      collection_id,
+      offset: options?.offset || 0,
+      limit: options?.limit || 10,
+      metadata: true,
+    };
+
+    return this.rawRequest("fetch_collection_members", "POST", payload);
+  }
+
   public countCollectionsByString(
     query: string,
   ): Promise<NameGraphCountCollectionsResponse> {
