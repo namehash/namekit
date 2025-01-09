@@ -10,7 +10,7 @@ export default function HomePage() {
           Acknowledge the power of NameGraph SDK
         </h1>
         <p className="mb-8">
-          📔 NameGraph makes it possible for your application to be connected to
+          📔 NameGraph empowers ENS registrar apps to build new name discovery user experiences.
           Surf more than 21 million name ideas across more than 400,000
           name collections, or generate infinite related name suggestions.
           <br />
