@@ -7,7 +7,7 @@ export default function HomePage() {
     <div className="container mx-auto py-16">
       <div className="max-w-4xl flex flex-col mx-auto text-center">
         <h1 className="text-2xl font-semibold mb-2">
-          Solve 'writer's block' in your ENS registrar app
+          Solve &apos;writer&apos;s block&apos; in your ENS registrar app
         </h1>
         <h2 className="text-lg font-regular mb-12">
           Help your users discover ENS names they love with NameGraph.
