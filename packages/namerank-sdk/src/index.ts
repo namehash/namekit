@@ -134,7 +134,7 @@ class NameRankError extends Error {
   }
 }
 
-const DEFAULT_ENDPOINT = "https://api.namerank.io/namerank";
+const DEFAULT_ENDPOINT = "https://api.namerank.io/";
 const DEFAULT_NETWORK: Network = "mainnet";
 const DEFAULT_INSPECT_LABELHASH_PARENT = ETH_TLD;
 export const DEFAULT_COMPUTE_NAMEGUARD_REPORT = false;
@@ -166,6 +166,10 @@ export class NameRank {
     network = DEFAULT_NETWORK,
   }: NameRankOptions = {}) {
     this.namerankEndpoint = new URL(namerankEndpoint);
+    // Ensure the endpoint ends with a trailing slash
+    if (!this.namerankEndpoint.pathname.endsWith('/')) {
+      this.namerankEndpoint.pathname += '/';
+    }
     this.network = network;
     this.abortController = new AbortController();
   }
@@ -187,10 +191,8 @@ export class NameRank {
     options?: InspectNameOptions,
   ): Promise<NameRankResponse> {
     const network_name = this.network;
-    // TODO: Temp fix until `api.namerank.io` is updated to return namerank api without subfolder
-    return this.rawRequest("namerank/inspect-name", "POST", {
-      name,
-      network_name,
+    return this.rawRequest("inspect-name", "POST", {
+      name
     });
   }
 

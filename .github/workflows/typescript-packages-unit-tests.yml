@@ -31,6 +31,7 @@ jobs:
           - "nameguard-js"
           - "nameguard-react"
           - "namekit-react"
+          - "namerank-sdk"
 
     name: Test ${{ matrix.package }}
     runs-on: ubuntu-latest
