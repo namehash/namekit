@@ -1,5 +1,16 @@
 # @namehash/namerank
 
+## 0.7.0
+
+### Minor Changes
+
+- 8fd3dcb: feat: [sc-25941] Custom API Root Path with subfolder
+
+### Patch Changes
+
+- Updated dependencies [8fd3dcb]
+  - @namehash/nameguard@0.9.0
+
 ## 0.6.0
 
 ### Minor Changes
