@@ -33,8 +33,8 @@
       "url": "nameguard"
     },
     {
-      "name": "NameRank",
-      "url": "namerank"
+      "name": "NameAI",
+      "url": "nameai"
     },
     {
       "name": "NameGenerator",
@@ -96,8 +96,8 @@
     },
 
     {
-      "group": "NameRank",
-      "pages": ["namerank/introduction"]
+      "group": "NameAI",
+      "pages": ["nameai/introduction"]
     },
 
     {
