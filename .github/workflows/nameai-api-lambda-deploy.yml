@@ -1,4 +1,4 @@
-name: NameRank API - Lambda Deploy
+name: NameAI API - Lambda Deploy
 
 on:
   push:
@@ -6,9 +6,9 @@ on:
       - main
       - staging
     paths:
-      - "packages/namerank-python/**"
-      - "apps/api.namerank.io/**"
-      - ".github/workflows/namerank-api-lambda-deploy.yml"
+      - "packages/nameai-python/**"
+      - "apps/api.nameai.io/**"
+      - ".github/workflows/nameai-api-lambda-deploy.yml"
   workflow_dispatch:
 
 permissions:
@@ -24,7 +24,7 @@ concurrency:
 
 jobs:
   build-image-deploy:
-    name: Build and deploy NameRank API Lambda
+    name: Build and deploy NameAI API Lambda
     runs-on: ubuntu-latest
     steps:
       - name: Checkout this repo
@@ -60,7 +60,7 @@ jobs:
           ENS_SUBGRAPH_URL_MAINNET: ${{ secrets.ENS_SUBGRAPH_URL_MAINNET }}
           ENS_SUBGRAPH_URL_SEPOLIA: ${{ secrets.ENS_SUBGRAPH_URL_SEPOLIA }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
-          CERTIFICATE_NAME: ${{ secrets.NAMERANK_CERTIFICATE_NAME }}
+          CERTIFICATE_NAME: ${{ secrets.NAMERANK_CERTIFICATE_NAME }}  # todo: rename secrets to NAMEAI_* (?)
           HOSTED_ZONE_NAME: ${{ secrets.NAMERANK_HOSTED_ZONE_NAME }}
         run: |
           if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
@@ -76,7 +76,7 @@ jobs:
           cd terraform
           chmod +x ./deploy_lambda.sh
           ./deploy_lambda.sh $STAGE $AWS_REGION $DOMAIN_NAME $CERTIFICATE_NAME $HOSTED_ZONE_NAME
-        working-directory: apps/api.namerank.io
+        working-directory: apps/api.nameai.io
 
   notify:
     name: Send Slack deployment event notification
@@ -87,21 +87,21 @@ jobs:
         if: ${{ needs.build-image-deploy.result == 'success'}}
         run: |
           echo "STATUS=Success  :rocket:" >> $GITHUB_ENV
-          echo "TEXT=Lambda NameRank deployed successfully! :white_check_mark:" >> $GITHUB_ENV
+          echo "TEXT=Lambda NameAI deployed successfully! :white_check_mark:" >> $GITHUB_ENV
           echo "COLOR=good" >> $GITHUB_ENV
 
       - name: Output status on deployment failed
         if: ${{ needs.build-image-deploy.result == 'failure' }}
         run: |
           echo "STATUS=Failure  :x:" >> $GITHUB_ENV
-          echo "TEXT=Lambda NameRank deployment failed! :rotating_light:" >> $GITHUB_ENV
+          echo "TEXT=Lambda NameAI deployment failed! :rotating_light:" >> $GITHUB_ENV
           echo "COLOR=danger" >> $GITHUB_ENV
 
       - name: Output status on deployment cancellation
         if: ${{ needs.build-image-deploy.result == 'cancelled' }}
         run: |
           echo "STATUS=Cancelled  :no_entry_sign:" >> $GITHUB_ENV
-          echo "TEXT=Lambda NameRank deployment was cancelled. :warning:" >> $GITHUB_ENV
+          echo "TEXT=Lambda NameAI deployment was cancelled. :warning:" >> $GITHUB_ENV
           echo "COLOR=warning" >> $GITHUB_ENV
 
       - name: Send deployment status Slack notification
@@ -113,7 +113,7 @@ jobs:
             {
               attachments: [{
                 color: '${{ env.COLOR }}',
-                title: 'Lambda NameRank deployment.',
+                title: 'Lambda NameAI deployment.',
                 text: '${{ env.TEXT }}',
                 fields: [
                 {
