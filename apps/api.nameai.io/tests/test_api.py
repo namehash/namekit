@@ -35,7 +35,7 @@ def test_included_nameguard(test_client):
 def test_empty_label(test_client):
     response = test_client.get('/inspect-label')
     assert response.status_code == 200
-    assert response.json()['nameai']['analysis']['inspection']['label'] == ''
+    assert response.json()['namerank']['analysis']['inspection']['label'] == ''
 
 
 def test_inspect_name_post_long(test_client):
@@ -47,7 +47,7 @@ def test_inspect_name_post_long(test_client):
     res_json = response.json()
     assert res_json['nameguard']['highest_risk']['check'] == 'normalized'
     assert res_json['nameguard']['inspected']
-    assert res_json['nameai']['analysis']['status'] == 'unnormalized'
+    assert res_json['namerank']['analysis']['status'] == 'unnormalized'
     pprint(res_json)
 
 
@@ -61,7 +61,7 @@ def test_inspect_name_post_too_long(test_client):
     assert res_json['nameguard']['highest_risk']['check'] == 'uninspected'
     assert res_json['nameguard']['normalization'] == 'unnormalized'
     assert not res_json['nameguard']['inspected']
-    assert res_json['nameai']['analysis'] is None
+    assert res_json['namerank']['analysis'] is None
     pprint(res_json)
 
 
@@ -74,5 +74,5 @@ def test_inspect_name_post_too_long_normalized(test_client):
     res_json = response.json()
     assert res_json['nameguard']['highest_risk']['check'] == 'uninspected'
     assert res_json['nameguard']['normalization'] == 'normalized'
-    assert res_json['nameai']['analysis'] is None
+    assert res_json['namerank']['analysis'] is None
     pprint(res_json)
