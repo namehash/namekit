@@ -1,4 +1,3 @@
-// hooks/useQueryParams.ts
 "use client";
 import { useCallback } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
@@ -21,7 +20,6 @@ export function useQueryParams<T extends Record<string, string>>(
       }
     });
 
-    // Merge with default values for any missing parameters
     return {
       ...defaultValues,
       ...params,
@@ -33,7 +31,7 @@ export function useQueryParams<T extends Record<string, string>>(
       const params = new URLSearchParams(searchParams);
       const currentParams = getParams();
 
-      // First, apply the updates to our current state
+      // Apply the updates to our current state
       const newState = { ...currentParams, ...updates };
 
       // Clear existing params

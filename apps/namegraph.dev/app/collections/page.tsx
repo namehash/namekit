@@ -18,8 +18,8 @@ import {
   CollectionsCardsSkeleton,
   CollectionsGridSkeleton,
 } from "@/components/collections/collections-grid-skeleton";
-import { Noto_Emoji } from "next/font/google";
 import { useQueryParams } from "@/components/use-query-params";
+import { Noto_Emoji } from "next/font/google";
 
 const notoBlack = Noto_Emoji({ preload: false });
 
