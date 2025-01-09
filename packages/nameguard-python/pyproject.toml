@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nameguard"
-version = "0.1.11"
+version = "0.1.12"
 description = "Security \"x-ray\" for ENS names"
 authors = ["NameHash Team <devops@namehash.io>"]
 maintainers = ["NameHash Team <devops@namehash.io>"]
