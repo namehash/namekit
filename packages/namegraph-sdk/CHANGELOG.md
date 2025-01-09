@@ -1,5 +1,11 @@
 # @namehash/namegraph-sdk
 
+## 0.3.0
+
+### Minor Changes
+
+- 1ac2b6d: Introduced offset customization for findCollectionsByString
+
 ## 0.2.0
 
 ### Minor Changes
