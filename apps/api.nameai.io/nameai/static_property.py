@@ -4,7 +4,7 @@ import os
 import pickle
 import shutil
 from nameai.data import get_resource_path
-from nameai.config import initialize_namerank_config
+from nameai.config import initialize_nameai_config
 
 
 R = TypeVar('R')
@@ -48,11 +48,11 @@ def generate_static_data():
     Generates static data for all registered static_property functions.
     Writes the data to `{DATA_DIR}/{module}.{class}.{func}.pickle`
     """
-    with initialize_namerank_config('prod_config') as config:
+    with initialize_nameai_config('prod_config') as config:
         print('Removing old static data')
         shutil.rmtree(DATA_DIR, ignore_errors=True)
         os.makedirs(DATA_DIR, exist_ok=False)
-        import nameai.namerank  # noqa: F401
+        import nameai.name_ai  # noqa: F401
 
         for module, class_name, func_name, func in REGISTERED_FUNCTIONS:
             print(f'Generating {module}.{class_name}.{func_name}')

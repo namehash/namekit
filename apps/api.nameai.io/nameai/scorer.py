@@ -120,7 +120,7 @@ class Scorer:
     def word_count(self, label_analysis: NLPLabelAnalysis) -> Optional[int]:
         return label_analysis.word_count
 
-    def short_label_bonus(self, label_analysis: NLPLabelAnalysis) -> int:
+    def short_label_bonus(self, label_analysis: NLPLabelAnalysis) -> float:
         return 1 - (
             min(self.label_length(label_analysis), 99) / 100
             + min(len(label_analysis.inspection.label), 99) / 10000
