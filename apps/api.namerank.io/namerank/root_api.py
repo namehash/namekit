@@ -3,9 +3,9 @@ from nameguard.web_api import app as nameguard_app
 from mangum import Mangum
 
 # root app
-app = nameguard_app
+app = namerank_app
 
-# namerank as sub-app
-app.mount('/namerank', namerank_app)
+# nameguard as sub-app
+app.mount('/nameguard', nameguard_app)
 
 handler = Mangum(app)

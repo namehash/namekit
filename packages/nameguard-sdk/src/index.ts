@@ -517,6 +517,11 @@ export class NameGuard {
     network = DEFAULT_NETWORK,
   }: NameGuardOptions = {}) {
     this.nameguardEndpoint = new URL(nameguardEndpoint);
+    // Ensure the endpoint ends with a trailing slash
+    if (!this.nameguardEndpoint.pathname.endsWith('/')) {
+      this.nameguardEndpoint.pathname += '/';
+    }
+
     this.network = network;
     this.abortController = new AbortController();
   }
