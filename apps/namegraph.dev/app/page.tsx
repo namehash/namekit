@@ -12,7 +12,7 @@ export default function HomePage() {
         <p className="mb-8">
           📔 NameGraph makes it possible for your application to be connected to
           Surf more than 21 million name ideas across more than 400,000
-          collections of names.
+          name collections, or generate infinite related name suggestions.
           <br />
           <br />
           🔮 Boost the ideas of your users for profile naming or anything - make
