@@ -22,7 +22,6 @@ import { useQueryParams } from "@/components/use-query-params";
 import { Noto_Emoji } from "next/font/google";
 
 const notoBlack = Noto_Emoji({ preload: false });
-
 interface NavigationConfig {
   itemsPerPage: number;
   totalItems?: number;
@@ -37,9 +36,10 @@ export default function ExploreCollectionsPage() {
     MostRecent = "Most recent",
     MorePopular = "More popular",
   }
+  const DEFAULT_PAGE_NUMBER = 1;
   const DEFAULT_COLLECTIONS_PARAMS: Record<string, any> = {
     search: "",
-    page: 1,
+    page: DEFAULT_PAGE_NUMBER,
     orderBy: Object.keys(ResultsOrderBy)[0],
   };
   type DefaultDomainFiltersType = typeof DEFAULT_COLLECTIONS_PARAMS;
@@ -50,7 +50,7 @@ export default function ExploreCollectionsPage() {
   const handleSearch = (searchTerm: string) => {
     setParams({
       search: searchTerm,
-      page: 1, // Resets page when search changes
+      page: DEFAULT_PAGE_NUMBER, // Resets page when search changes
     });
   };
 
@@ -98,12 +98,13 @@ export default function ExploreCollectionsPage() {
 
   const [loadingCollections, setLoadingCollections] = useState(true);
 
+  const DEFAULT_ITEMS_PER_PAGE = 20;
   const [navigationConfig, setNavigationConfig] = useState<NavigationConfig>({
-    itemsPerPage: 20,
+    itemsPerPage: DEFAULT_ITEMS_PER_PAGE,
     totalItems: undefined,
   });
 
-  const loadCollections = (forNewQuery = false) => {
+  const loadCollections = () => {
     if (params.search) {
       let query = params.search;
       if (params.search.includes(".")) {
@@ -114,9 +115,9 @@ export default function ExploreCollectionsPage() {
        * Paginate over collections based on current page.
        * NameGraph SDK pagination start from 0.
        */
-      let offset = forNewQuery ? 0 : Number(params.page) - 1;
+      let offset = Number(params.page);
       let amountOfPagesCurrentResultsFill = 0;
-      if (collections && !forNewQuery) {
+      if (collections) {
         const numberOfResultsBeingShownPerPage = navigationConfig.itemsPerPage;
         const totalResultsWeHaveQueried = collections.length;
         amountOfPagesCurrentResultsFill =
@@ -124,27 +125,41 @@ export default function ExploreCollectionsPage() {
       }
 
       if (offset + 1 > amountOfPagesCurrentResultsFill) {
+        const MAX_RELATED_COLLECTIONS = 20;
+        const OTHER_COLLECTIONS_NUMBER = 20;
+
         setLoadingCollections(true);
         findCollectionsByString(query, {
           offset,
-          max_total_collections: 25,
+          max_total_collections:
+            MAX_RELATED_COLLECTIONS + OTHER_COLLECTIONS_NUMBER,
           /**
            * Please note how the number of collections one page show is
            * strategically aligned with ITEMS_PER_PAGE_OPTIONS.
            */
-          max_related_collections: 20,
-          max_other_collections: 5,
-          min_other_collections: 5,
+          max_related_collections: MAX_RELATED_COLLECTIONS,
+          max_other_collections: OTHER_COLLECTIONS_NUMBER,
+          min_other_collections: OTHER_COLLECTIONS_NUMBER,
         })
           .then((res) => {
             if (res) {
+              const MAX_COLLECTIONS_NUMBER_NAME_API_CAN_DOCUMENT = 1000;
+
               setNavigationConfig({
                 ...navigationConfig,
                 totalItems:
                   typeof res.metadata.total_number_of_matched_collections ===
                   "number"
                     ? res.metadata.total_number_of_matched_collections
-                    : 1000,
+                    : /**
+                       * NameAPI makes usage of a stringified "+1000" for
+                       * res.metadata.total_number_of_matched_collections
+                       * if there are more than 1000 collections this query
+                       * is contained in. Since this is a different data type
+                       * and we are handling number operations with totalItems,
+                       * we are here normalizing this use case to use the number 1000
+                       */
+                      MAX_COLLECTIONS_NUMBER_NAME_API_CAN_DOCUMENT,
               });
 
               const moreCollections = res.other_collections;
@@ -158,19 +173,16 @@ export default function ExploreCollectionsPage() {
                * already visited. If query is new, only the new queried
                * collections are stored, no past collections are grouped.
                */
-              const collectionsArray = forNewQuery
-                ? relatedCollections
-                : [...(collections ? collections : []), ...relatedCollections];
-
-              const otherCollectionsArray = forNewQuery
-                ? moreCollections
-                : [
-                    ...(otherCollections ? otherCollections : []),
-                    ...moreCollections,
-                  ];
+              const collectionsArray =
+                params.page !== DEFAULT_COLLECTIONS_PARAMS.page
+                  ? relatedCollections
+                  : [
+                      ...(collections ? collections : []),
+                      ...relatedCollections,
+                    ];
 
               setCollections(collectionsArray);
-              setOtherCollections(otherCollectionsArray);
+              setOtherCollections(moreCollections);
               setLoadingCollections(false);
             } else {
               setCollections(undefined);
@@ -190,18 +202,11 @@ export default function ExploreCollectionsPage() {
   const sliceCollectionsList = () => {
     if (collections) {
       setCollectionsToDisplay(
-        collections
-          /**
-           * In short, the sliced piece is getting a number of collections
-           * from all collection results. This piece gets the current piece
-           * to display (X number of collections) based on ITEMS_PER_PAGE_OPTIONS
-           * chose by the user.
-           */
-          ?.slice(
-            Number(params.page) * navigationConfig.itemsPerPage -
-              navigationConfig.itemsPerPage,
-            Number(params.page) * navigationConfig.itemsPerPage,
-          ),
+        collections?.slice(
+          Number(params.page) * navigationConfig.itemsPerPage -
+            navigationConfig.itemsPerPage,
+          Number(params.page) * navigationConfig.itemsPerPage,
+        ),
       );
     } else {
       setCollectionsToDisplay(null);
@@ -224,7 +229,7 @@ export default function ExploreCollectionsPage() {
 
     setCollections(null);
     setLoadingCollections(true);
-    loadCollections(true);
+    loadCollections();
   }, [params.search]);
 
   useEffect(() => {
@@ -238,6 +243,31 @@ export default function ExploreCollectionsPage() {
     if (Number(params.page) !== DEFAULT_COLLECTIONS_PARAMS.page)
       loadCollections();
   }, [params.page]);
+
+  /**
+   * Navigation helper functions
+   */
+  const isFirstCollectionsPageForCurrentQuery = () => {
+    return Number(params.page) === 1;
+  };
+  const isLastCollectionsPageForCurrentQuery = () => {
+    if (navigationConfig.totalItems) {
+      return (
+        Number(params.page) !== 1 &&
+        Number(params.page) * navigationConfig.itemsPerPage >
+          navigationConfig.totalItems
+      );
+    } else return false;
+  };
+
+  const getNavigationPageTextGuide = () => {
+    return navigationConfig.totalItems
+      ? `${(Number(params.page) - 1) * navigationConfig.itemsPerPage + 1}-${Math.min(
+          Number(params.page) * navigationConfig.itemsPerPage,
+          navigationConfig.totalItems,
+        )} of ${navigationConfig.totalItems} collections`
+      : "No collections found";
+  };
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -287,19 +317,13 @@ export default function ExploreCollectionsPage() {
                         <div className="max-w-[756px] w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5">
                           <div className="flex items-center">
                             <div className="text-lg font-semibold mr-2.5">
-                              {navigationConfig.totalItems
-                                ? `${(Number(params.page) - 1) * navigationConfig.itemsPerPage + 1}-${Math.min(
-                                    Number(params.page) *
-                                      navigationConfig.itemsPerPage,
-                                    navigationConfig.totalItems,
-                                  )} of ${navigationConfig.totalItems} collections`
-                                : "No collections found"}
+                              {getNavigationPageTextGuide()}
                             </div>
                             {navigationConfig.totalItems ? (
                               <div className="flex">
                                 <Button
                                   className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50 disabled:hover:bg-white"
-                                  disabled={Number(params.page) === 1}
+                                  disabled={isFirstCollectionsPageForCurrentQuery()}
                                   onClick={() =>
                                     handlePageChange(Number(params.page) - 1)
                                   }
@@ -308,12 +332,7 @@ export default function ExploreCollectionsPage() {
                                 </Button>
                                 <Button
                                   className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50"
-                                  disabled={
-                                    Number(params.page) !== 1 &&
-                                    Number(params.page) *
-                                      navigationConfig.itemsPerPage >
-                                      navigationConfig.totalItems
-                                  }
+                                  disabled={isLastCollectionsPageForCurrentQuery()}
                                   onClick={() =>
                                     handlePageChange(Number(params.page) + 1)
                                   }
@@ -407,18 +426,12 @@ export default function ExploreCollectionsPage() {
                         {navigationConfig.totalItems ? (
                           <div className="flex items-center justify-between border border-gray-200 border-l-0 border-r-0 border-b-0 mt-3 pt-3">
                             <div className="text-sm text-gray-500 mr-2.5">
-                              {navigationConfig.totalItems
-                                ? `${(Number(params.page) - 1) * navigationConfig.itemsPerPage + 1}-${Math.min(
-                                    Number(params.page) *
-                                      navigationConfig.itemsPerPage,
-                                    navigationConfig.totalItems,
-                                  )} of ${navigationConfig.totalItems} collections`
-                                : "No collections found"}
+                              {getNavigationPageTextGuide()}
                             </div>
                             <div className="flex items-center gap-2">
                               <Button
                                 className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
-                                disabled={Number(params.page) === 1}
+                                disabled={isFirstCollectionsPageForCurrentQuery()}
                                 onClick={() =>
                                   setNavigationConfig((prev) => ({
                                     ...prev,
@@ -431,12 +444,7 @@ export default function ExploreCollectionsPage() {
                               </Button>
                               <Button
                                 className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
-                                disabled={
-                                  Number(params.page) !== 1 &&
-                                  Number(params.page) *
-                                    navigationConfig.itemsPerPage >
-                                    navigationConfig.totalItems
-                                }
+                                disabled={isLastCollectionsPageForCurrentQuery()}
                                 onClick={() =>
                                   setNavigationConfig((prev) => ({
                                     ...prev,
