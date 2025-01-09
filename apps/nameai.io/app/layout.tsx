@@ -15,8 +15,8 @@ import type { Metadata } from "next";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "NameRank Demo",
-  description: "Tokenize and analyze names with NameRank demo",
+  title: "NameAI",
+  description: "Tokenize and analyze names with NameAI demo",
 };
 
 const footerProducts = [
@@ -70,7 +70,7 @@ export default function RootLayout({
                     href="/"
                     className="text-black not-italic font-bold text-[22.683px] leading-[22.683px] tracking-[-0.907px] sm:text-[27.816px] sm:leading-[27.816px] sm:tracking-[-1.113px]"
                   >
-                    NameRank
+                    NameAI
                   </a>
                 </div>
               </div>
