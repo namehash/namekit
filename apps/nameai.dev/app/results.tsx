@@ -1,10 +1,5 @@
-import { createClient } from "@namehash/namerank";
+import { namerank } from "@namehash/namerank";
 import { Indicator } from "./indicator";
-
-const namerank = createClient({
-  namerankEndpoint:
-    "https://izzkysqb6d6qzhnpv4ybqyty2e0ktjwe.lambda-url.us-east-1.on.aws/namerank",
-});
 
 interface ResultsProps {
   name: string;
@@ -16,7 +11,7 @@ export default async function Results({ name }: ResultsProps) {
   const result = await namerank.inspectName(name, {});
 
   if (!result.namerank || !result.namerank.analysis) {
-    return <p>=Please try again.</p>;
+    return <p>Please try again.</p>;
   }
 
   const topTokenization = result.namerank.analysis.top_tokenization || [];
@@ -50,7 +45,9 @@ export default async function Results({ name }: ResultsProps) {
           )}
           {result.namerank.analysis.top_tokenization && (
             <div className="ml-auto">
-              <Indicator value={result.namerank.analysis.log_probability} />
+              <Indicator
+                log_probability={result.namerank.analysis.log_probability}
+              />
             </div>
           )}
         </div>
@@ -76,7 +73,7 @@ export default async function Results({ name }: ResultsProps) {
               </span>
             ))}
             <div className="ml-auto">
-              <Indicator value={tokenization.log_probability} />
+              <Indicator log_probability={tokenization.log_probability} />
             </div>
           </div>
         ))}

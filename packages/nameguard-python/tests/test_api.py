@@ -948,7 +948,7 @@ def test_primary_name_get_emoji(test_client):
 def test_invalid_unicode(test_client):
     with pytest.raises(UnicodeEncodeError):
         # throws inside httpx
-        test_client.get('/inspect-grapheme/\uD801\uDC37')
+        test_client.get('/inspect-grapheme/\ud801\udc37')
 
 
 @pytest.mark.parametrize(
