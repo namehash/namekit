@@ -2,7 +2,7 @@
   "name": "@namehash/namerank",
   "private": true,
   "description": "A lightweight JavaScript client for the NameRank API.",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "license": "MIT",
   "repository": {
     "type": "git",
