@@ -37,6 +37,11 @@ describe("bulkInspectNames", () => {
 });
 
 describe("inspectNamehash", () => {
+  it("should return the name for a valid namehash", async () => {
+    const data = await nameguard.inspectNamehash("0xEe6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835");
+    expect(data.name).toBe("vitalik.eth");
+  });
+
   it("should throw an error if invalid namehash provided", async () => {
     await expect(nameguard.inspectNamehash("0x1234567890abcdef")).rejects.toThrow(
       "Invalid Keccak256 hash format for namehash."
