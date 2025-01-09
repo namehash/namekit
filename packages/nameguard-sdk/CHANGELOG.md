@@ -1,5 +1,11 @@
 # @namehash/nameguard
 
+## 0.9.0
+
+### Minor Changes
+
+- 8fd3dcb: feat: [sc-25941] Custom API Root Path with subfolder
+
 ## 0.8.0
 
 ### Minor Changes

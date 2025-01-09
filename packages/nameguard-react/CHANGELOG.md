@@ -1,5 +1,12 @@
 # @namehash/nameguard-react
 
+## 0.8.2
+
+### Patch Changes
+
+- Updated dependencies [8fd3dcb]
+  - @namehash/nameguard@0.9.0
+
 ## 0.8.1
 
 ### Patch Changes
