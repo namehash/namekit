@@ -60,15 +60,15 @@ jobs:
           ENS_SUBGRAPH_URL_MAINNET: ${{ secrets.ENS_SUBGRAPH_URL_MAINNET }}
           ENS_SUBGRAPH_URL_SEPOLIA: ${{ secrets.ENS_SUBGRAPH_URL_SEPOLIA }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
-          CERTIFICATE_NAME: ${{ secrets.NAMERANK_CERTIFICATE_NAME }}  # todo: rename secrets to NAMEAI_* (?)
-          HOSTED_ZONE_NAME: ${{ secrets.NAMERANK_HOSTED_ZONE_NAME }}
+          CERTIFICATE_NAME: ${{ secrets.NAMEAI_CERTIFICATE_NAME }}
+          HOSTED_ZONE_NAME: ${{ secrets.NAMEAI_HOSTED_ZONE_NAME }}
         run: |
           if [[ ${{ github.ref }} == 'refs/heads/main' ]]; then
           STAGE="prod"
-          DOMAIN_NAME=${{ secrets.NAMERANK_PROD_DOMAIN_NAME }}
+          DOMAIN_NAME=${{ secrets.NAMEAI_PROD_DOMAIN_NAME }}
           elif [[ ${{ github.ref }} == 'refs/heads/staging' ]]; then
           STAGE="staging"
-          DOMAIN_NAME=${{ secrets.NAMERANK_STAGING_DOMAIN_NAME }}
+          DOMAIN_NAME=${{ secrets.NAMEAI_STAGING_DOMAIN_NAME }}
           else
             echo "Deployment is only supported for main and staging branches"
             exit 1
