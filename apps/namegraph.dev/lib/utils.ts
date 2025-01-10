@@ -2,6 +2,7 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import {
   DEFAULT_FULL_MODE,
+  NameGraphCollection,
   NameGraphFetchTopCollectionMembersResponse,
   NameGraphFindCollectionsResponse,
   NameGraphGroupedByCategoryResponse,
@@ -147,6 +148,14 @@ export const fetchCollectionMembers = async (
   );
 
   return nameGeneratorSuggestions;
+};
+
+export const getCollectionById = async (
+  collection_id: string,
+): Promise<NameGraphCollection> => {
+  const collectionById = await NameGraphClient.getCollectionById(collection_id);
+
+  return collectionById;
 };
 
 export const sampleNamesByCollectionId = async (

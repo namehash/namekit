@@ -20,6 +20,7 @@ import {
   DEFAULT_MAX_PER_TYPE,
   DEFAULT_INSTANT_MODE,
   NameGraphSortOrderOptions,
+  NameGraphCollection,
 } from "./utils";
 
 export class NameGraph {
@@ -285,6 +286,16 @@ export class NameGraph {
     };
 
     return this.rawRequest("find_collections_by_member", "POST", payload);
+  }
+
+  public getCollectionById(
+    collection_id: string,
+  ): Promise<NameGraphCollection> {
+    const payload = {
+      collection_id,
+    };
+
+    return this.rawRequest("get_collection_by_id", "POST", payload);
   }
 
   async rawRequest(
