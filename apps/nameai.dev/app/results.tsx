@@ -1,4 +1,4 @@
-import { namerank } from "@namehash/namerank";
+import { nameai } from "@namehash/nameai";
 import { Indicator } from "./indicator";
 
 interface ResultsProps {
@@ -8,7 +8,7 @@ interface ResultsProps {
 export default async function Results({ name }: ResultsProps) {
   if (!name) return null;
 
-  const result = await namerank.inspectName(name, {});
+  const result = await nameai.inspectName(name, {});
 
   if (!result.namerank || !result.namerank.analysis) {
     return <p>Please try again.</p>;

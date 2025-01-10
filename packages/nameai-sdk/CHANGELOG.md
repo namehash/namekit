@@ -1,4 +1,4 @@
-# @namehash/namerank
+# @namehash/nameai
 
 ## 0.7.0
 

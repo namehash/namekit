@@ -1,21 +1,21 @@
 {
-  "name": "@namehash/namerank",
+  "name": "@namehash/nameai",
   "private": true,
-  "description": "A lightweight JavaScript client for the NameRank API.",
+  "description": "A lightweight JavaScript client for the NameAI API.",
   "version": "0.7.0",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/namehash/namekit.git",
-    "directory": "packages/namerank-sdk"
+    "directory": "packages/nameai-sdk"
   },
-  "homepage": "https://github.com/namehash/namekit/tree/main/packages/namerank-sdk",
+  "homepage": "https://github.com/namehash/namekit/tree/main/packages/nameai-sdk",
   "keywords": [
     "ENS",
     "NameKit",
     "NameHash",
     "NameGuard",
-    "NameRank",
+    "NameAI",
     "NFT"
   ],
   "type": "module",
