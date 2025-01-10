@@ -6,6 +6,7 @@ import {
   NameGraphFindCollectionsResponse,
   NameGraphGroupedByCategoryResponse,
   NameGraphGroupingCategory,
+  NameGraphSortOrderOptions,
   NameGraphSuggestion,
 } from "@namehash/namegraph-sdk/utils";
 import { createNameGraphClient } from "@namehash/namegraph-sdk";
@@ -119,6 +120,7 @@ export const findCollectionsByString = async (
     max_other_collections?: number;
     max_total_collections?: number;
     max_related_collections?: number;
+    sort_order?: NameGraphSortOrderOptions;
   },
 ): Promise<NameGraphFindCollectionsResponse> => {
   let query = input;

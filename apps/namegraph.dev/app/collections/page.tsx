@@ -1,7 +1,10 @@
 "use client";
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import { NameGraphCollection } from "@namehash/namegraph-sdk/utils";
+import {
+  NameGraphCollection,
+  NameGraphSortOrderOptions,
+} from "@namehash/namegraph-sdk/utils";
 import { findCollectionsByString } from "@/lib/utils";
 import { DebounceInput } from "react-debounce-input";
 import { Suspense, useEffect, useState } from "react";
@@ -29,24 +32,30 @@ interface NavigationConfig {
 }
 
 interface CollectionsData {
+  sort_order: NameGraphSortOrderOptions;
   other_collections: NameGraphCollection[];
   related_collections: NameGraphCollection[];
 }
+
+const FromNameGraphSortOrderToDropdownTextContent: Record<
+  NameGraphSortOrderOptions,
+  string
+> = {
+  [NameGraphSortOrderOptions.AI]: "AI with Learning to Rank",
+  [NameGraphSortOrderOptions.AZ]: "A-Z (asc)",
+  [NameGraphSortOrderOptions.ZA]: "Z-A (des)",
+  [NameGraphSortOrderOptions.ES]: "Default scoring",
+};
 
 export default function ExploreCollectionsPage() {
   /**
    * Table query
    */
-  enum ResultsOrderBy {
-    AiMatch = "AI match",
-    MostRecent = "Most recent",
-    MorePopular = "More popular",
-  }
   const DEFAULT_PAGE_NUMBER = 1;
   const DEFAULT_COLLECTIONS_PARAMS: Record<string, any> = {
     search: "",
     page: DEFAULT_PAGE_NUMBER,
-    orderBy: Object.keys(ResultsOrderBy)[0],
+    orderBy: NameGraphSortOrderOptions.AI,
   };
   type DefaultDomainFiltersType = typeof DEFAULT_COLLECTIONS_PARAMS;
   const { params, setParams } = useQueryParams<DefaultDomainFiltersType>(
@@ -60,7 +69,7 @@ export default function ExploreCollectionsPage() {
     });
   };
 
-  const handleOrderBy = (orderBy: string) => {
+  const handleOrderBy = (orderBy: NameGraphSortOrderOptions) => {
     setParams({ orderBy });
   };
 
@@ -80,10 +89,6 @@ export default function ExploreCollectionsPage() {
   >(undefined);
   const [collectionsQueriedStandFor, setCollectionsQueriedStandFor] =
     useState("");
-
-  useEffect(() => {
-    console.log(collections);
-  }, [collections]);
 
   const [loadingCollections, setLoadingCollections] = useState(true);
 
@@ -106,9 +111,20 @@ export default function ExploreCollectionsPage() {
       /**
        * This is the case where we have already queried the results for
        * a given page, which is being visited once again and for which
-       * we have already stored its necessary data inside collections
+       * we have already stored its necessary data inside collections.
+       *
+       * There is no need then to re-do a load collections query.
+       *
+       * Of course this is only true if both the query and the sorting
+       * algorithm lastly used are the same. If any of these have changes,
+       * we do the loadCollections query once again and update the page's results.
        */
-      if (collectionsQueriedStandFor && !!collections?.[params.page]) {
+      if (
+        !!collectionsQueriedStandFor &&
+        collectionsQueriedStandFor === params.search &&
+        !!collections?.[params.page] &&
+        params.orderBy == collections?.[params.page]?.sort_order
+      ) {
         return;
       }
 
@@ -116,6 +132,7 @@ export default function ExploreCollectionsPage() {
       setCollectionsQueriedStandFor(query);
       findCollectionsByString(query, {
         offset: params.page - 1,
+        sort_order: params.orderBy,
         max_total_collections:
           MAX_RELATED_COLLECTIONS + OTHER_COLLECTIONS_NUMBER,
         /**
@@ -153,13 +170,17 @@ export default function ExploreCollectionsPage() {
             setCollections({
               ...collections,
               [params.page]: {
+                sort_order: params.orderBy,
                 related_collections: relatedCollections,
                 other_collections: moreCollections,
               },
             });
             setLoadingCollections(false);
           } else {
-            setCollections(undefined);
+            setCollections({
+              ...collections,
+              [params.page]: null,
+            });
           }
         })
         .catch(() => {
@@ -191,7 +212,7 @@ export default function ExploreCollectionsPage() {
 
   useEffect(() => {
     loadCollections();
-  }, [params.page]);
+  }, [params.page, params.orderBy]);
 
   /**
    * Navigation helper functions
@@ -297,24 +318,32 @@ export default function ExploreCollectionsPage() {
                                 Sort by
                               </div>
                               <Select
-                                defaultValue={Object.keys(ResultsOrderBy)[0]}
+                                defaultValue={
+                                  params.orderBy || NameGraphSortOrderOptions.AI
+                                }
                                 onValueChange={(newValue) =>
-                                  handleOrderBy(newValue as ResultsOrderBy)
+                                  handleOrderBy(
+                                    newValue as NameGraphSortOrderOptions,
+                                  )
                                 }
                               >
                                 <SelectTrigger className="w-[180px]">
                                   <SelectValue placeholder="Sort by" />
                                 </SelectTrigger>
                                 <SelectContent>
-                                  {Object.entries(ResultsOrderBy).map(
-                                    ([key, value]) => {
-                                      return (
-                                        <SelectItem key={key} value={key}>
-                                          {value}
-                                        </SelectItem>
-                                      );
-                                    },
-                                  )}
+                                  {Object.entries(
+                                    FromNameGraphSortOrderToDropdownTextContent,
+                                  ).map(([key]) => {
+                                    return (
+                                      <SelectItem key={key} value={key}>
+                                        {
+                                          FromNameGraphSortOrderToDropdownTextContent[
+                                            key as NameGraphSortOrderOptions
+                                          ]
+                                        }
+                                      </SelectItem>
+                                    );
+                                  })}
                                 </SelectContent>
                               </Select>
                             </div>

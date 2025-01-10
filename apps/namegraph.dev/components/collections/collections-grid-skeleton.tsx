@@ -35,16 +35,20 @@ export const CollectionsGridSkeleton = () => {
   );
 };
 
+const NUMBER_OF_SKELETONS_OF_COLLECTION_CARDS = 5;
+
 export const CollectionsCardsSkeleton = () => {
   return (
     <>
-      {[...Array(5).keys()].map((collection) => {
-        return (
-          <div key={collection}>
-            <CollectionCardSkeleton />
-          </div>
-        );
-      })}
+      {[...Array(NUMBER_OF_SKELETONS_OF_COLLECTION_CARDS).keys()].map(
+        (collection) => {
+          return (
+            <div key={collection}>
+              <CollectionCardSkeleton />
+            </div>
+          );
+        },
+      )}
     </>
   );
 };

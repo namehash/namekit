@@ -19,6 +19,7 @@ import {
   DEFAULT_NAME_DIVERSITY_RATIO,
   DEFAULT_MAX_PER_TYPE,
   DEFAULT_INSTANT_MODE,
+  NameGraphSortOrderOptions,
 } from "./utils";
 
 export class NameGraph {
@@ -168,13 +169,14 @@ export class NameGraph {
       max_other_collections?: number;
       max_related_collections?: number;
       max_total_collections?: number;
+      sort_order?: NameGraphSortOrderOptions;
     },
   ): Promise<NameGraphFindCollectionsResponse> {
     const offset = options?.offset || 0;
     const mode = "instant";
     const limit_names = 10;
     const max_per_type = 3;
-    const sort_order = "AI";
+    const sort_order = options?.sort_order || NameGraphSortOrderOptions.AI;
     const min_other_collections = options?.min_other_collections || 0;
     const max_other_collections = options?.max_other_collections || 3;
     const max_total_collections = options?.max_total_collections || 6;
