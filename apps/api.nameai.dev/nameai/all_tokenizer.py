@@ -2,8 +2,8 @@ import collections
 from typing import Tuple, Iterable
 import ahocorasick
 
-from namerank.data import get_resource_path
-from namerank.static_property import static_property
+from nameai.data import get_resource_path
+from nameai.static_property import static_property
 
 
 class Gap(str):

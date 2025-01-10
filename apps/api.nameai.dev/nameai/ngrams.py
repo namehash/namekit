@@ -1,8 +1,8 @@
 import csv
 import math
 from typing import Optional
-from namerank.data import get_resource_path
-from namerank.static_property import static_property
+from nameai.data import get_resource_path
+from nameai.static_property import static_property
 
 
 ALPHA = 0.4

@@ -2,7 +2,7 @@ import pytest
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from namerank.nlp_inspector import NLPInspector
+    from nameai.nlp_inspector import NLPInspector
 
 from mocked_static_property import mock_static_property
 
@@ -10,10 +10,10 @@ from mocked_static_property import mock_static_property
 @pytest.fixture(scope='module')
 def nlp_inspector():
     with mock_static_property():
-        from namerank.nlp_inspector import NLPInspector
-        from namerank.config import load_namerank_config
+        from nameai.nlp_inspector import NLPInspector
+        from nameai.config import load_nameai_config
 
-        return NLPInspector(load_namerank_config('prod_config'))
+        return NLPInspector(load_nameai_config('prod_config'))
 
 
 # this is xfail in original inspector

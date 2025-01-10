@@ -3,11 +3,11 @@
 ## API
 The API extends the NameGuard API and is fully compatible with it.
 
-NameAI-specific endpoints are under the [api.nameai.io/nameai](https://www.api.nameai.io/nameai) path prefix.
+NameAI-specific endpoints are under the [api.nameai.dev/nameai](https://www.api.nameai.dev/nameai) path prefix.
 
-API documentation is available at [api.nameai.io/nameai/docs](https://api.nameai.io/nameai/docs) and [api.nameai.io/docs](https://api.nameai.io/docs) for NameGuard.
+API documentation is available at [api.nameai.dev/nameai/docs](https://api.nameai.dev/nameai/docs) and [api.nameai.dev/docs](https://api.nameai.dev/docs) for NameGuard.
 
-Lambda is publicly accessible under given domain [api.nameai.io](https://api.nameai.io)
+Lambda is publicly accessible under given domain [api.nameai.dev](https://api.nameai.dev)
 
 # AWS deploy
 ## Requirements

@@ -1,17 +1,17 @@
-name: NameRank Python - Unit Tests
+name: NameAI Python - Unit Tests
 
 on:
   push:
     branches:
       - main
     paths:
-      - "apps/api.namerank.io/**"
+      - "apps/api.nameai.dev/**"
   pull_request:
     branches:
       - main
       - staging
     paths:
-      - "apps/api.namerank.io/**"
+      - "apps/api.nameai.dev/**"
 
 jobs:
   test:
@@ -36,9 +36,9 @@ jobs:
           cache: "poetry"
 
       - name: Install dependencies
-        working-directory: ./apps/api.namerank.io
+        working-directory: ./apps/api.nameai.dev
         run: poetry install --extras "lambda"
 
       - name: Run tests
-        working-directory: ./apps/api.namerank.io
+        working-directory: ./apps/api.nameai.dev
         run: poetry run pytest -vv

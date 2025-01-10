@@ -46,7 +46,7 @@ class NLPLabelAnalysis(BaseModel):
     )
 
 
-class NameRankReport(BaseModel):
+class NameAIReport(BaseModel):
     purity_score: float = Field(
         title='Purity score of the input',
         description='Score indicating the purity/cleanliness of the name. For single labels, returns the score directly. For 2-label names (e.g., "nick.eth"), returns the score for the first label ("nick"). For 3 or more labels, returns 0. If the label is not inspected, this field will be 0. The score ranges from 0.0 to 1.0 inclusive, where 0.0 indicates lowest purity and 1.0 indicates highest purity.',
@@ -64,14 +64,14 @@ class NameRankReport(BaseModel):
     )
 
 
-class NameRankRequest(inspector_models.InspectorSingleRequest):
+class NameAIRequest(inspector_models.InspectorSingleRequest):
     pass
 
 
-class NameRankResponse(BaseModel):
+class NameAIResponse(BaseModel):
     """
-    Represents the combined response from NameRank and NameGuard analyses.
+    Represents the combined response from NameAI and NameGuard analyses.
     """
 
-    namerank: NameRankReport = Field(description='The NameRank analysis report on the first label of the input name')
+    nameai: NameAIReport = Field(description='The NameAI analysis report on the first label of the input name')
     nameguard: NameGuardReport = Field(description='The NameGuard analysis report')

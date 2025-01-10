@@ -14,5 +14,5 @@ def mocked_static_property(func):
 
 @contextmanager
 def mock_static_property():
-    with patch('namerank.static_property.static_property', mocked_static_property):
+    with patch('nameai.static_property.static_property', mocked_static_property):
         yield
