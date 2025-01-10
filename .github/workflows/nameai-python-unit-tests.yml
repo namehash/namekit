@@ -1,0 +1,44 @@
+name: NameAI Python - Unit Tests
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "apps/api.nameai.dev/**"
+  pull_request:
+    branches:
+      - main
+      - staging
+    paths:
+      - "apps/api.nameai.dev/**"
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - name: Checkout NameKit repo
+        uses: actions/checkout@v4
+      
+      - name: Install poetry
+        run: pipx install poetry
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "poetry"
+
+      - name: Install dependencies
+        working-directory: ./apps/api.nameai.dev
+        run: poetry install --extras "lambda"
+
+      - name: Run tests
+        working-directory: ./apps/api.nameai.dev
+        run: poetry run pytest -vv
