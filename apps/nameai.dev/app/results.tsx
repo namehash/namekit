@@ -10,11 +10,11 @@ export default async function Results({ name }: ResultsProps) {
 
   const result = await nameai.inspectName(name, {});
 
-  if (!result.namerank || !result.namerank.analysis) {
+  if (!result.nameai || !result.nameai.analysis) {
     return <p>Please try again.</p>;
   }
 
-  const topTokenization = result.namerank.analysis.top_tokenization || [];
+  const topTokenization = result.nameai.analysis.top_tokenization || [];
 
   return (
     <div className="space-y-6">
@@ -22,7 +22,7 @@ export default async function Results({ name }: ResultsProps) {
         <h3 className="text-lg font-semibold mb-2">Label For Analysis</h3>
 
         <p className="ens-webfont flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm">
-          {result.namerank.analysis.inspection.label}
+          {result.nameai.analysis.inspection.label}
         </p>
       </div>
 
@@ -43,10 +43,10 @@ export default async function Results({ name }: ResultsProps) {
           ) : (
             <span className="text-gray-500">No tokenization available</span>
           )}
-          {result.namerank.analysis.top_tokenization && (
+          {result.nameai.analysis.top_tokenization && (
             <div className="ml-auto">
               <Indicator
-                log_probability={result.namerank.analysis.log_probability}
+                log_probability={result.nameai.analysis.log_probability}
               />
             </div>
           )}
@@ -57,7 +57,7 @@ export default async function Results({ name }: ResultsProps) {
         <h3 className="text-lg font-semibold mb-2">
           Alternative Tokenizations
         </h3>
-        {result.namerank.analysis.tokenizations.map((tokenization, index) => (
+        {result.nameai.analysis.tokenizations.map((tokenization, index) => (
           <div
             key={index}
             className="flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm"
