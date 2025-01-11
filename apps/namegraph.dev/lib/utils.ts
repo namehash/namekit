@@ -135,6 +135,15 @@ export const findCollectionsByString = async (
   return nameGeneratorSuggestions;
 };
 
+export const findCollectionsByCollection = async (
+  collection_id: string,
+): Promise<NameGraphFindCollectionsResponse> => {
+  const nameGeneratorSuggestions =
+    await NameGraphClient.findCollectionsByCollection(collection_id);
+
+  return nameGeneratorSuggestions;
+};
+
 export const fetchCollectionMembers = async (
   collection_id: string,
   options?: {
@@ -160,18 +169,24 @@ export const getCollectionById = async (
 
 export const sampleNamesByCollectionId = async (
   collectionId: string,
+  options?: {
+    seed?: number;
+  },
 ): Promise<NameGraphSuggestion[]> => {
   const nameGeneratorSuggestions =
-    await NameGraphClient.sampleCollectionMembers(collectionId);
+    await NameGraphClient.sampleCollectionMembers(collectionId, options);
 
   return nameGeneratorSuggestions;
 };
 
 export const scrambleNamesByCollectionId = async (
   collectionId: string,
+  options?: {
+    seed?: number;
+  },
 ): Promise<NameGraphSuggestion[]> => {
   const nameGeneratorSuggestions =
-    await NameGraphClient.scrambleCollectionTokens(collectionId);
+    await NameGraphClient.scrambleCollectionTokens(collectionId, options);
 
   return nameGeneratorSuggestions;
 };

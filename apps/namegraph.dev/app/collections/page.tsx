@@ -414,10 +414,7 @@ export default function ExploreCollectionsPage() {
                                 className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
                                 disabled={isFirstCollectionsPageForCurrentQuery()}
                                 onClick={() =>
-                                  setNavigationConfig((prev) => ({
-                                    ...prev,
-                                    currentPage: Number(params.page) - 1,
-                                  }))
+                                  handlePageChange(Number(params.page) - 1)
                                 }
                               >
                                 <ChevronLeft />
@@ -427,10 +424,7 @@ export default function ExploreCollectionsPage() {
                                 className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
                                 disabled={isLastCollectionsPageForCurrentQuery()}
                                 onClick={() =>
-                                  setNavigationConfig((prev) => ({
-                                    ...prev,
-                                    currentPage: Number(params.page) + 1,
-                                  }))
+                                  handlePageChange(Number(params.page) + 1)
                                 }
                               >
                                 Next

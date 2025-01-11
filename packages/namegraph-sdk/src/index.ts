@@ -113,9 +113,12 @@ export class NameGraph {
 
   public sampleCollectionMembers(
     collection_id: string,
+    options?: {
+      seed?: number;
+    },
   ): Promise<NameGraphSuggestion[]> {
     const max_sample_size = 5;
-    const seed = 5;
+    const seed = options?.seed || 0;
 
     const payload = {
       collection_id,
@@ -144,11 +147,14 @@ export class NameGraph {
 
   public scrambleCollectionTokens(
     collection_id: string,
+    options?: {
+      seed?: number;
+    },
   ): Promise<NameGraphSuggestion[]> {
     const method = "left-right-shuffle-with-unigrams";
     const n_top_members = 25;
     const max_suggestions = 10;
-    const seed = 0;
+    const seed = options?.seed || 0;
 
     const payload = {
       collection_id,
