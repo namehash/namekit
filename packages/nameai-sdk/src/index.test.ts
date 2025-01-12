@@ -52,17 +52,17 @@ describe("inspectName edge cases", () => {
 describe("NameAI constructor", () => {
   it("should ensure endpoint ends with trailing slash", () => {
     const client1 = createClient({
-      nameaiEndpoint: "https://api.nameai.io/nameai",
+      nameaiEndpoint: "https://api.nameai.dev/nameai",
     });
     expect(client1["nameaiEndpoint"].href).toBe(
-      "https://api.nameai.io/nameai/",
+      "https://api.nameai.dev/nameai/",
     );
 
     const client2 = createClient({
-      nameaiEndpoint: "https://api.nameai.io/nameai/",
+      nameaiEndpoint: "https://api.nameai.dev/nameai/",
     });
     expect(client2["nameaiEndpoint"].href).toBe(
-      "https://api.nameai.io/nameai/",
+      "https://api.nameai.dev/nameai/",
     );
   });
 });
