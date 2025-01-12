@@ -1,5 +1,11 @@
 # @namehash/nameai
 
+## 1.0.1
+
+### Patch Changes
+
+- 2ccb923: fix rename nameai
+
 ## 1.0.0
 
 ### Major Changes
