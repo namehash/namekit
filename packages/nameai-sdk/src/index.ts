@@ -134,7 +134,7 @@ class NameAIError extends Error {
   }
 }
 
-const DEFAULT_ENDPOINT = "https://api.nameai.io/";
+const DEFAULT_ENDPOINT = "https://api.nameai.dev/";
 const DEFAULT_NETWORK: Network = "mainnet";
 const DEFAULT_INSPECT_LABELHASH_PARENT = ETH_TLD;
 export const DEFAULT_COMPUTE_NAMEGUARD_REPORT = false;
