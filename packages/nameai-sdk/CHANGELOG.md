@@ -1,5 +1,11 @@
 # @namehash/nameai
 
+## 1.0.0
+
+### Major Changes
+
+- 51abae9: Release NameAI
+
 ## 0.7.0
 
 ### Minor Changes
