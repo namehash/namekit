@@ -90,9 +90,9 @@ importers:
       '@namehash/ens-webfont':
         specifier: workspace:*
         version: link:../../packages/ens-webfont
-      '@namehash/namerank':
+      '@namehash/nameai':
         specifier: workspace:*
-        version: link:../../packages/namerank-sdk
+        version: link:../../packages/nameai-sdk
       next:
         specifier: 14.2.21
         version: 14.2.21(@babel/core@7.24.5)(@opentelemetry/api@1.4.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -601,6 +601,34 @@ importers:
 
   packages/ens-webfont: {}
 
+  packages/nameai-sdk:
+    dependencies:
+      '@namehash/ens-utils':
+        specifier: workspace:*
+        version: link:../ens-utils
+      '@namehash/nameguard':
+        specifier: workspace:*
+        version: link:../nameguard-sdk
+      cross-fetch:
+        specifier: 4.0.0
+        version: 4.0.0
+    devDependencies:
+      '@namekit/tsconfig':
+        specifier: workspace:*
+        version: link:../../internal/tsconfig
+      '@types/node':
+        specifier: 22.7.4
+        version: 22.7.4
+      tsup:
+        specifier: 8.3.5
+        version: 8.3.5(jiti@2.4.1)(postcss@8.4.47)(typescript@5.6.2)(yaml@2.4.2)
+      typescript:
+        specifier: 5.6.2
+        version: 5.6.2
+      vitest:
+        specifier: 1.6.0
+        version: 1.6.0(@types/node@22.7.4)(terser@5.36.0)
+
   packages/namegraph-sdk:
     dependencies:
       cross-fetch:
@@ -794,34 +822,6 @@ importers:
       typescript:
         specifier: 5.6.2
         version: 5.6.2
-
-  packages/namerank-sdk:
-    dependencies:
-      '@namehash/ens-utils':
-        specifier: workspace:*
-        version: link:../ens-utils
-      '@namehash/nameguard':
-        specifier: workspace:*
-        version: link:../nameguard-sdk
-      cross-fetch:
-        specifier: 4.0.0
-        version: 4.0.0
-    devDependencies:
-      '@namekit/tsconfig':
-        specifier: workspace:*
-        version: link:../../internal/tsconfig
-      '@types/node':
-        specifier: 22.7.4
-        version: 22.7.4
-      tsup:
-        specifier: 8.3.5
-        version: 8.3.5(jiti@2.4.1)(postcss@8.4.47)(typescript@5.6.2)(yaml@2.4.2)
-      typescript:
-        specifier: 5.6.2
-        version: 5.6.2
-      vitest:
-        specifier: 1.6.0
-        version: 1.6.0(@types/node@22.7.4)(terser@5.36.0)
 
 packages:
 
@@ -8902,7 +8902,7 @@ snapshots:
 
   execa@8.0.1:
     dependencies:
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.6
       get-stream: 8.0.1
       human-signals: 5.0.0
       is-stream: 3.0.0

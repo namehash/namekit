@@ -89,7 +89,7 @@ export interface NLPLabelAnalysis {
   tokenizations: Tokenization[];
 }
 
-export interface NameRankReport {
+export interface NameAIReport {
   /**
    * Score indicating the purity/cleanliness of the name. For single labels, returns the score directly. For 2-label names (e.g., "nick.eth"), returns the
    * score for the first label ("nick"). For 3 or more labels, returns 0. If the label is not inspected,
@@ -116,16 +116,16 @@ export interface NameRankReport {
   analysis?: NLPLabelAnalysis;
 }
 
-export interface NameRankResponse {
-  /** The NameRank analysis report */
-  namerank: NameRankReport;
+export interface NameAIResponse {
+  /** The NameAI analysis report */
+  nameai: NameAIReport;
 
   /** The NameGuard security analysis report */
   nameguard: NameGuardReport;
 }
 
 // TODO: Let's apply more formalization to this error class.
-class NameRankError extends Error {
+class NameAIError extends Error {
   constructor(
     public status: number,
     message?: string,
@@ -134,7 +134,7 @@ class NameRankError extends Error {
   }
 }
 
-const DEFAULT_ENDPOINT = "https://api.namerank.io/";
+const DEFAULT_ENDPOINT = "https://api.nameai.io/";
 const DEFAULT_NETWORK: Network = "mainnet";
 const DEFAULT_INSPECT_LABELHASH_PARENT = ETH_TLD;
 export const DEFAULT_COMPUTE_NAMEGUARD_REPORT = false;
@@ -146,9 +146,9 @@ export const MAX_INSPECTED_NAME_CHARACTERS = 200;
 /** includes duplicated unknown labels */
 const MAX_INSPECTED_NAME_UNKNOWN_LABELS = 5;
 
-export interface NameRankOptions {
-  /** The endpoint URL for the NameRank API */
-  namerankEndpoint?: string;
+export interface NameAIOptions {
+  /** The endpoint URL for the NameAI API */
+  nameaiEndpoint?: string;
 
   /** The Ethereum network to use for name resolution */
   network?: Network;
@@ -156,48 +156,48 @@ export interface NameRankOptions {
 
 interface InspectNameOptions {}
 
-export class NameRank {
-  private namerankEndpoint: URL;
+export class NameAI {
+  private nameaiEndpoint: URL;
   protected network: Network;
   private abortController: AbortController;
 
   constructor({
-    namerankEndpoint = DEFAULT_ENDPOINT,
+    nameaiEndpoint = DEFAULT_ENDPOINT,
     network = DEFAULT_NETWORK,
-  }: NameRankOptions = {}) {
-    this.namerankEndpoint = new URL(namerankEndpoint);
+  }: NameAIOptions = {}) {
+    this.nameaiEndpoint = new URL(nameaiEndpoint);
     // Ensure the endpoint ends with a trailing slash
-    if (!this.namerankEndpoint.pathname.endsWith('/')) {
-      this.namerankEndpoint.pathname += '/';
+    if (!this.nameaiEndpoint.pathname.endsWith("/")) {
+      this.nameaiEndpoint.pathname += "/";
     }
     this.network = network;
     this.abortController = new AbortController();
   }
 
   /**
-   * Inspects a single name with NameRank.
+   * Inspects a single name with NameAI.
    *
    * If `name` includes unknown labels then this function will attempt automated labelhash resolution through the ENS Subgraph
    * using the network specified in the `NameGuard` instance. Therefore the returned `name` may not match the provided `name`, but is guaranteed to have a matching `namehash`.
    *
-   * @param {string} name The name for NameRank to inspect.
+   * @param {string} name The name for NameAI to inspect.
    * @param {InspectNameOptions} options The options for the inspection.
-   * @returns {Promise<NameRankResponse>} A promise that resolves with the `NameRankResponse` of the name.
+   * @returns {Promise<NameAIResponse>} A promise that resolves with the `NameAIResponse` of the name.
    * @example
-   * const nameRankResponse = await namerank.inspectName('vitalik.eth');
+   * const nameaiResponse = await nameai.inspectName('vitalik.eth');
    */
   public inspectName(
     name: string,
     options?: InspectNameOptions,
-  ): Promise<NameRankResponse> {
+  ): Promise<NameAIResponse> {
     const network_name = this.network;
     return this.rawRequest("inspect-name", "POST", {
-      name
+      name,
     });
   }
 
   /**
-   * Performs a raw HTTP request to the NameRank API.
+   * Performs a raw HTTP request to the NameAI API.
    * @param {string} path The API endpoint path.
    * @param {string} method The HTTP method (e.g., 'GET', 'POST').
    * @param {object} body The request body for POST requests.
@@ -210,7 +210,7 @@ export class NameRank {
     body: object = {},
     headers: object = {},
   ): Promise<any> {
-    const url = new URL(path, this.namerankEndpoint);
+    const url = new URL(path, this.nameaiEndpoint);
 
     const options: RequestInit = {
       method,
@@ -228,7 +228,7 @@ export class NameRank {
     const response = await fetch(url, options);
 
     if (!response.ok) {
-      throw new NameRankError(
+      throw new NameAIError(
         response.status,
         `Failed to perform request to ${path}.`,
       );
@@ -245,24 +245,24 @@ export class NameRank {
 }
 
 /**
- * Creates a new instance of a NameRank client.
+ * Creates a new instance of a NameAI client.
  *
- * @param {NameRankOptions} [options] - Configuration options for NameRank.
+ * @param {NameAIOptions} [options] - Configuration options for NameAI.
  * @example
- * import { createClient } from '@namehash/namerank';
- * const namerank = createClient({ ... })
+ * import { createClient } from '@namehash/nameai';
+ * const nameai = createClient({ ... })
  */
-export function createClient(options?: NameRankOptions) {
-  return new NameRank(options);
+export function createClient(options?: NameAIOptions) {
+  return new NameAI(options);
 }
 
 const defaultClient = createClient();
 
 /**
- * `NameRank` provides methods to inspect and rank ENS names.
+ * `NameAI` provides methods to inspect and rank ENS names.
  * It can inspect individual names or batch names.
  * @example
- * import { namerank } from '@namehash/namerank';
- * const nameRankResponse = await namerank.inspectName('vitalik.eth');
+ * import { nameai } from '@namehash/nameai';
+ * const nameaiResponse = await nameai.inspectName('vitalik.eth');
  */
-export const namerank = defaultClient;
+export const nameai = defaultClient;
