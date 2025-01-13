@@ -75,7 +75,7 @@ DOMAIN_NAME="$3"
 CERTIFICATE_NAME="$4"
 HOSTED_ZONE_NAME="$5"
 
-APPLICATION_NAME="nameguard-${STAGE}"
+APPLICATION_NAME="nameai-${STAGE}"
 S3_BUCKET_NAME="${APPLICATION_NAME}-terraform"
 ECR_NAME="${APPLICATION_NAME}-ecr"
 
@@ -198,16 +198,13 @@ if [ ! -f "../Dockerfile" ]; then
 fi
 
 echo "Building Docker image..."
-cd ../../../packages/nameguard-python
-cp ../../apps/api.nameguard.io/Dockerfile ./Dockerfile
-if ! docker build . -t nameguard; then
+if ! docker build ../ -t nameai; then
     echo "Error: Docker build failed"
     exit 1
 fi
-cd ../../apps/api.nameguard.io/terraform
 
 echo "Tagging Docker image..."
-if ! docker tag nameguard:latest ${ECR_URL}:latest; then
+if ! docker tag nameai:latest ${ECR_URL}:latest; then
     echo "Error: Failed to tag Docker image"
     exit 1
 fi

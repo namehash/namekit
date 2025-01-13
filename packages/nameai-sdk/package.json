@@ -1,20 +1,20 @@
 {
-  "name": "@namehash/namegraph-sdk",
-  "description": "A lightweight JavaScript client for the NameGraph API.",
-  "version": "0.3.0",
+  "name": "@namehash/nameai",
+  "description": "A lightweight JavaScript client for the NameAI API.",
+  "version": "1.0.1",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/namehash/namekit.git",
-    "directory": "packages/namegraph-sdk"
+    "directory": "packages/nameai-sdk"
   },
-  "homepage": "https://github.com/namehash/namekit/tree/main/packages/namegraph-sdk",
+  "homepage": "https://github.com/namehash/namekit/tree/main/packages/nameai-sdk",
   "keywords": [
     "ENS",
     "NameKit",
     "NameHash",
     "NameGuard",
-    "NameGraph",
+    "NameAI",
     "NFT"
   ],
   "type": "module",
@@ -23,11 +23,6 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "default": "./dist/index.js"
-    },
-    "./utils": {
-      "types": "./dist/utils.d.ts",
-      "import": "./dist/utils.js",
-      "default": "./dist/utils.js"
     }
   },
   "main": "./dist/index.js",
@@ -44,6 +39,8 @@
     "test": "vitest"
   },
   "dependencies": {
+    "@namehash/ens-utils": "workspace:*",
+    "@namehash/nameguard": "workspace:*",
     "cross-fetch": "4.0.0"
   },
   "devDependencies": {

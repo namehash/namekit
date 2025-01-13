@@ -1,27 +1,26 @@
 [tool.poetry]
-name = "nameguard"
-version = "0.1.12"
-description = "Security \"x-ray\" for ENS names"
+name = "nameai"
+version = "0.1.4"
+description = "NameHash NameAI API"
 authors = ["NameHash Team <devops@namehash.io>"]
 maintainers = ["NameHash Team <devops@namehash.io>"]
-homepage = "https://nameguard.io"
-repository = "https://github.com/namehash/namekit"
+homepage = "https://www.nameai.dev/"
+repository = "https://github.com/namehash/nameai"
 readme = "README.md"
 license = "LICENSE"
-packages = [{ include = "nameguard" }]
+packages = [{ include = "nameai" }]
 
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.13"
+python = ">=3.10,<3.13"
 ens-label-inspector = "^0.2.14"
+nameguard = "^0.1.12"
 fastapi = "^0.115.4"
 mangum = { version = "^0.17.0", optional = true }
-web3 = "6.11.1"
-eth-typing = "^4.4.0"
-hexbytes = "^0.3.1"
 httpx = "^0.25.0"
 python-dotenv = "^1.0.0"
-aiohttp = ">=3.10.11"
+pyahocorasick = "^2.0.0"
+setuptools = "^75.1.0"
 
 
 [tool.poetry.extras]
@@ -30,32 +29,31 @@ lambda = ["mangum"]
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.0"
-flake8 = "^6.1.0"
 uvicorn = { extras = ["standard"], version = "^0.23.2" }
 pytest-asyncio = "^0.21.1"
 pytest-cov = "^4.1.0"
-pytest-retry = "^1.5.0"
-ruff = "^0.6.0"
-pre-commit = "^3.5.0"
-coverage-badge = "^1.1.0"
+pytest-timeouts = "^1.2.1"
+ruff = "^0.6.5"
+pre-commit = "^3.6.2"
+
 
 [tool.ruff]
 line-length = 120
 target-version = "py39"
 
-[tool.ruff.lint.per-file-ignores]
-"__init__.py" = ["F401"] # imported but unused
-"tests/*.py" = ["E741"]  # ambiguous variable name
 
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
 
 [tool.ruff.lint.flake8-quotes]
 docstring-quotes = "double"
 inline-quotes = "single"
 multiline-quotes = "double"
 
+
 [tool.ruff.format]
-# Prefer single quotes over double quotes.
 quote-style = "single"
+
 
 [build-system]
 requires = ["poetry-core"]
