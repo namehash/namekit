@@ -63,3 +63,7 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+* {
+  font-display: swap;
+}

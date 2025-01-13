@@ -2,9 +2,12 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import {
   DEFAULT_FULL_MODE,
+  NameGraphCollection,
+  NameGraphFetchTopCollectionMembersResponse,
   NameGraphFindCollectionsResponse,
   NameGraphGroupedByCategoryResponse,
   NameGraphGroupingCategory,
+  NameGraphSortOrderOptions,
   NameGraphSuggestion,
 } from "@namehash/namegraph-sdk/utils";
 import { createNameGraphClient } from "@namehash/namegraph-sdk";
@@ -114,6 +117,11 @@ export const findCollectionsByString = async (
   input: string,
   options?: {
     offset?: number;
+    min_other_collections?: number;
+    max_other_collections?: number;
+    max_total_collections?: number;
+    max_related_collections?: number;
+    sort_order?: NameGraphSortOrderOptions;
   },
 ): Promise<NameGraphFindCollectionsResponse> => {
   let query = input;
@@ -127,20 +135,58 @@ export const findCollectionsByString = async (
   return nameGeneratorSuggestions;
 };
 
+export const findCollectionsByCollection = async (
+  collection_id: string,
+): Promise<NameGraphFindCollectionsResponse> => {
+  const nameGeneratorSuggestions =
+    await NameGraphClient.findCollectionsByCollection(collection_id);
+
+  return nameGeneratorSuggestions;
+};
+
+export const fetchCollectionMembers = async (
+  collection_id: string,
+  options?: {
+    offset?: number;
+    limit?: number;
+  },
+): Promise<NameGraphFetchTopCollectionMembersResponse> => {
+  const nameGeneratorSuggestions = await NameGraphClient.fetchCollectionMembers(
+    collection_id,
+    options,
+  );
+
+  return nameGeneratorSuggestions;
+};
+
+export const getCollectionById = async (
+  collection_id: string,
+): Promise<NameGraphCollection> => {
+  const collectionById = await NameGraphClient.getCollectionById(collection_id);
+
+  return collectionById;
+};
+
 export const sampleNamesByCollectionId = async (
   collectionId: string,
+  options?: {
+    seed?: number;
+  },
 ): Promise<NameGraphSuggestion[]> => {
   const nameGeneratorSuggestions =
-    await NameGraphClient.sampleCollectionMembers(collectionId);
+    await NameGraphClient.sampleCollectionMembers(collectionId, options);
 
   return nameGeneratorSuggestions;
 };
 
 export const scrambleNamesByCollectionId = async (
   collectionId: string,
+  options?: {
+    seed?: number;
+  },
 ): Promise<NameGraphSuggestion[]> => {
   const nameGeneratorSuggestions =
-    await NameGraphClient.scrambleCollectionTokens(collectionId);
+    await NameGraphClient.scrambleCollectionTokens(collectionId, options);
 
   return nameGeneratorSuggestions;
 };
