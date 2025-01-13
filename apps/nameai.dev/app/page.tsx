@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 
-import { Form } from "./form";
+import { RankForm } from "./rank-form";
 import Results from "./results";
 import { Skeleton } from "./skeleton";
 
@@ -17,7 +17,7 @@ export default async function Home(props: HomeProps) {
 
   return (
     <div className="max-w-3xl mx-auto px-6">
-      <Form initialName={name} />
+      <RankForm initialName={name} />
       {labelForAnalysis && (
         <Suspense fallback={<Skeleton label={labelForAnalysis} />}>
           <Results name={labelForAnalysis} />
