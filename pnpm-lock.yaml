@@ -26,12 +26,6 @@ importers:
 
   apps/ensnode.io:
     dependencies:
-      '@calcom/embed-react':
-        specifier: ^1.5.1
-        version: 1.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@headlessui/react':
-        specifier: ^2.2.0
-        version: 2.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@namehash/ens-webfont':
         specifier: workspace:*
         version: link:../../packages/ens-webfont
@@ -47,9 +41,6 @@ importers:
       classcat:
         specifier: 5.0.5
         version: 5.0.5
-      copy-to-clipboard:
-        specifier: 3.3.3
-        version: 3.3.3
       eslint-config-next:
         specifier: 14.2.14
         version: 14.2.14(eslint@8.57.1)(typescript@5.6.2)
@@ -62,13 +53,7 @@ importers:
       react-dom:
         specifier: 18.3.1
         version: 18.3.1(react@18.3.1)
-      react-wrap-balancer:
-        specifier: 1.1.1
-        version: 1.1.1(react@18.3.1)
     devDependencies:
-      '@heroicons/react':
-        specifier: 2.2.0
-        version: 2.2.0(react@18.3.1)
       '@types/node':
         specifier: 22.7.4
         version: 22.7.4
