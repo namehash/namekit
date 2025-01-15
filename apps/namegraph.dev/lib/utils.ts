@@ -10,6 +10,7 @@ import {
   NameGraphGroupingCategory,
   NameGraphSortOrderOptions,
   NameGraphSuggestion,
+  ScrambleMethod,
 } from "@namehash/namegraph-sdk/utils";
 import { createNameGraphClient } from "@namehash/namegraph-sdk";
 
@@ -199,6 +200,7 @@ export const scrambleNamesByCollectionId = async (
   collectionId: string,
   options?: {
     seed?: number;
+    method?: ScrambleMethod;
   },
 ): Promise<NameGraphSuggestion[]> => {
   const nameGeneratorSuggestions =

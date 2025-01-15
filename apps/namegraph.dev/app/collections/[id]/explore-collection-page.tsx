@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable react-hooks/exhaustive-deps */
 
 import {
   fetchCollectionMembers,
@@ -11,6 +12,7 @@ import {
   NameGraphCollection,
   NameGraphFindCollectionsResponse,
   NameGraphSuggestion,
+  ScrambleMethod,
 } from "@namehash/namegraph-sdk/utils";
 import { useEffect, useState } from "react";
 import { Noto_Emoji } from "next/font/google";
@@ -20,6 +22,13 @@ import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
 import Skeleton from "@/components/skeleton";
 import { CollectionCard } from "@/components/collections/collection-card";
 import { Tooltip } from "@namehash/namekit-react/client";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const notoBlack = Noto_Emoji({ preload: false });
 
@@ -31,6 +40,16 @@ interface NavigationConfig {
 interface SuggestionsData {
   suggestions: NameGraphSuggestion[];
 }
+
+const FromNameGraphScrambleMethodToDropdownTextContent: Record<
+  ScrambleMethod,
+  string
+> = {
+  [ScrambleMethod["full-shuffle"]]: "Full Shuffle",
+  [ScrambleMethod["left-right-shuffle"]]: "Left - Right Shuffle",
+  [ScrambleMethod["left-right-shuffle-with-unigrams"]]:
+    "Left - Right Shuffle with Unigrams",
+};
 
 export const ExploreCollectionPage = ({ id }: { id: string }) => {
   const [loadingCollection, setLoadingCollection] = useState(true);
@@ -154,12 +173,19 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
     }
   };
 
+  const [scrambleMethod, setScrambleMethod] = useState<ScrambleMethod>(
+    ScrambleMethod["left-right-shuffle-with-unigrams"],
+  );
+
   const scramble = () => {
     if (id) {
       const randomSeed = Number(Number(Math.random() * 10).toFixed(0));
 
       setLoadingScramble(true);
-      scrambleNamesByCollectionId(id, { seed: randomSeed })
+      scrambleNamesByCollectionId(id, {
+        seed: randomSeed,
+        method: scrambleMethod,
+      })
         .then((res) => {
           setScrambledNameIdeas(res);
         })
@@ -437,7 +463,31 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                           >
                             <p>Scrambling names means creating </p>
                           </Tooltip>
-
+                          <Select
+                            defaultValue={scrambleMethod}
+                            onValueChange={(newValue) =>
+                              setScrambleMethod(newValue as ScrambleMethod)
+                            }
+                          >
+                            <SelectTrigger className="w-[180px]">
+                              <SelectValue placeholder="Sort by" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {Object.entries(
+                                FromNameGraphScrambleMethodToDropdownTextContent,
+                              ).map(([key]) => {
+                                return (
+                                  <SelectItem key={key} value={key}>
+                                    {
+                                      FromNameGraphScrambleMethodToDropdownTextContent[
+                                        key as ScrambleMethod
+                                      ]
+                                    }
+                                  </SelectItem>
+                                );
+                              })}
+                            </SelectContent>
+                          </Select>
                           <Button onClick={scramble}>
                             Scramble name ideas
                           </Button>

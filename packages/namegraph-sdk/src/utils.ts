@@ -245,3 +245,12 @@ export const sampleWritersBlockSuggestions = (
 
   return result;
 };
+
+export const ScrambleMethod = {
+  "left-right-shuffle": "left-right-shuffle",
+  "left-right-shuffle-with-unigrams": "left-right-shuffle-with-unigrams",
+  "full-shuffle": "full-shuffle",
+} as const;
+
+export type ScrambleMethod =
+  (typeof ScrambleMethod)[keyof typeof ScrambleMethod];
