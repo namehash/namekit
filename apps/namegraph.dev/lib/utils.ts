@@ -3,12 +3,14 @@ import { twMerge } from "tailwind-merge";
 import {
   DEFAULT_FULL_MODE,
   NameGraphCollection,
+  NameGraphCollectionByMemberResponse,
   NameGraphFetchTopCollectionMembersResponse,
   NameGraphFindCollectionsResponse,
   NameGraphGroupedByCategoryResponse,
   NameGraphGroupingCategory,
   NameGraphSortOrderOptions,
   NameGraphSuggestion,
+  ScrambleMethod,
 } from "@namehash/namegraph-sdk/utils";
 import { createNameGraphClient } from "@namehash/namegraph-sdk";
 
@@ -159,6 +161,21 @@ export const fetchCollectionMembers = async (
   return nameGeneratorSuggestions;
 };
 
+export const findCollectionsByMember = async (
+  query: string,
+  options?: {
+    offset?: number;
+    max_results?: number;
+    limit_names?: number;
+    sort_order?: NameGraphSortOrderOptions;
+  },
+): Promise<NameGraphCollectionByMemberResponse> => {
+  const nameGeneratorSuggestions =
+    await NameGraphClient.findCollectionsByMember(query, options);
+
+  return nameGeneratorSuggestions;
+};
+
 export const getCollectionById = async (
   collection_id: string,
 ): Promise<NameGraphCollection> => {
@@ -183,6 +200,7 @@ export const scrambleNamesByCollectionId = async (
   collectionId: string,
   options?: {
     seed?: number;
+    method?: ScrambleMethod;
   },
 ): Promise<NameGraphSuggestion[]> => {
   const nameGeneratorSuggestions =

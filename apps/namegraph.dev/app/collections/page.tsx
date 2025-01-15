@@ -5,9 +5,10 @@ import {
   NameGraphCollection,
   NameGraphSortOrderOptions,
 } from "@namehash/namegraph-sdk/utils";
-import { findCollectionsByString } from "@/lib/utils";
+import { findCollectionsByMember, findCollectionsByString } from "@/lib/utils";
 import { DebounceInput } from "react-debounce-input";
 import { Suspense, useEffect, useState } from "react";
+import { Toggle } from "@/components/ui/toggle";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -22,10 +23,8 @@ import {
   CollectionsGridSkeleton,
 } from "@/components/collections/collections-grid-skeleton";
 import { useQueryParams } from "@/components/use-query-params";
-import { Noto_Emoji } from "next/font/google";
-import { Link } from "@namehash/namekit-react";
+import { CollectionCard } from "@/components/collections/collection-card";
 
-const notoBlack = Noto_Emoji({ preload: false });
 interface NavigationConfig {
   itemsPerPage: number;
   totalItems?: number;
@@ -33,7 +32,7 @@ interface NavigationConfig {
 
 interface CollectionsData {
   sort_order: NameGraphSortOrderOptions;
-  other_collections: NameGraphCollection[];
+  other_collections: NameGraphCollection[] | null;
   related_collections: NameGraphCollection[];
 }
 
@@ -56,6 +55,7 @@ export default function ExploreCollectionsPage() {
     search: "",
     page: DEFAULT_PAGE_NUMBER,
     orderBy: NameGraphSortOrderOptions.AI,
+    exactMatch: false,
   };
   type DefaultDomainFiltersType = typeof DEFAULT_COLLECTIONS_PARAMS;
   const { params, setParams } = useQueryParams<DefaultDomainFiltersType>(
@@ -67,14 +67,45 @@ export default function ExploreCollectionsPage() {
       search: searchTerm,
       page: DEFAULT_PAGE_NUMBER, // Resets page when search changes
     });
+
+    setNavigationConfig({
+      ...navigationConfig,
+      totalItems: undefined,
+    });
+
+    if (!params.search) {
+      return;
+    }
+
+    setCollections(null);
+    setLoadingCollections(true);
+
+    queryCollections({
+      search: params.search || "",
+      orderBy: params.orderBy || NameGraphSortOrderOptions.AI,
+      page: params.page || 1,
+      exactMatch: params.exactMatch,
+    });
   };
 
   const handleOrderBy = (orderBy: NameGraphSortOrderOptions) => {
     setParams({ orderBy });
+    queryCollections({
+      search: params.search || "",
+      orderBy: orderBy || NameGraphSortOrderOptions.AI,
+      page: params.page || 1,
+      exactMatch: params.exactMatch,
+    });
   };
 
   const handlePageChange = (page: number) => {
     setParams({ page });
+    queryCollections({
+      search: params.search || "",
+      orderBy: params.orderBy || NameGraphSortOrderOptions.AI,
+      page: page || 1,
+      exactMatch: params.exactMatch,
+    });
   };
 
   /**
@@ -87,8 +118,15 @@ export default function ExploreCollectionsPage() {
   const [collections, setCollections] = useState<
     undefined | null | Record<number, CollectionsData | null | undefined>
   >(undefined);
-  const [collectionsQueriedStandFor, setCollectionsQueriedStandFor] =
-    useState("");
+  const [lastQueryDone, setLastQueryDone] = useState<{
+    search: string;
+    exactMatch: boolean;
+  }>({ search: params.search || "", exactMatch: params.exactMatch || false });
+
+  useEffect(() => {
+    console.log("New values for collections results:");
+    console.log(collections, params);
+  }, [collections]);
 
   const [loadingCollections, setLoadingCollections] = useState(true);
 
@@ -98,13 +136,21 @@ export default function ExploreCollectionsPage() {
     totalItems: undefined,
   });
 
-  const loadCollections = () => {
+  interface QueryCollectionsParam {
+    exactMatch: boolean;
+    orderBy: NameGraphSortOrderOptions;
+    search: string;
+    page: number;
+  }
+
+  const queryCollections = (params: QueryCollectionsParam) => {
     if (params.search) {
       let query = params.search;
       if (params.search.includes(".")) {
         query = params.search.split(".")[0];
       }
 
+      const MAX_COLLECTIONS_FOR_EXACT_MATCH = 10;
       const MAX_RELATED_COLLECTIONS = 20;
       const OTHER_COLLECTIONS_NUMBER = 5;
 
@@ -117,102 +163,151 @@ export default function ExploreCollectionsPage() {
        *
        * Of course this is only true if both the query and the sorting
        * algorithm lastly used are the same. If any of these have changes,
-       * we do the loadCollections query once again and update the page's results.
+       * we do the queryCollections query once again and update the page's results.
        */
       if (
-        !!collectionsQueriedStandFor &&
-        collectionsQueriedStandFor === params.search &&
+        !!lastQueryDone &&
+        lastQueryDone.search === params.search &&
         !!collections?.[params.page] &&
-        params.orderBy == collections?.[params.page]?.sort_order
+        params.orderBy == collections?.[params.page]?.sort_order &&
+        params.exactMatch === lastQueryDone.exactMatch
       ) {
         return;
       }
 
       setLoadingCollections(true);
-      setCollectionsQueriedStandFor(query);
-      findCollectionsByString(query, {
-        offset: params.page - 1,
-        sort_order: params.orderBy,
-        max_total_collections:
-          MAX_RELATED_COLLECTIONS + OTHER_COLLECTIONS_NUMBER,
-        /**
-         * Please note how the number of collections one page show is
-         * strategically aligned with ITEMS_PER_PAGE_OPTIONS.
-         */
-        max_related_collections: MAX_RELATED_COLLECTIONS,
-        max_other_collections: OTHER_COLLECTIONS_NUMBER,
-        min_other_collections: OTHER_COLLECTIONS_NUMBER,
-      })
-        .then((res) => {
-          if (res) {
-            const MAX_COLLECTIONS_NUMBER_NAME_API_CAN_DOCUMENT = 1000;
 
-            setNavigationConfig({
-              ...navigationConfig,
-              totalItems:
-                typeof res.metadata.total_number_of_matched_collections ===
-                "number"
-                  ? res.metadata.total_number_of_matched_collections
-                  : /**
-                     * NameAPI makes usage of a stringified "+1000" for
-                     * res.metadata.total_number_of_matched_collections
-                     * if there are more than 1000 collections this query
-                     * is contained in. Since this is a different data type
-                     * and we are handling number operations with totalItems,
-                     * we are here normalizing this use case to use the number 1000
-                     */
-                    MAX_COLLECTIONS_NUMBER_NAME_API_CAN_DOCUMENT,
-            });
+      if (params.exactMatch) {
+        findCollectionsByMember(query, {
+          offset: (params.page - 1) * navigationConfig.itemsPerPage,
+          sort_order: params.orderBy,
+          limit_names: MAX_COLLECTIONS_FOR_EXACT_MATCH,
+          /**
+           * Please note how the number of collections one page show is
+           * strategically aligned with ITEMS_PER_PAGE_OPTIONS.
+           */
+          max_results: MAX_COLLECTIONS_FOR_EXACT_MATCH,
+        })
+          .then((res) => {
+            if (res) {
+              const MAX_COLLECTIONS_NUMBER_NAME_API_CAN_DOCUMENT = 1000;
 
-            const moreCollections = res.other_collections;
-            const relatedCollections = res.related_collections;
+              setNavigationConfig({
+                ...navigationConfig,
+                totalItems:
+                  typeof res.metadata.total_number_of_matched_collections ===
+                  "number"
+                    ? res.metadata.total_number_of_matched_collections
+                    : /**
+                       * NameAPI makes usage of a stringified "+1000" for
+                       * res.metadata.total_number_of_matched_collections
+                       * if there are more than 1000 collections this query
+                       * is contained in. Since this is a different data type
+                       * and we are handling number operations with totalItems,
+                       * we are here normalizing this use case to use the number 1000
+                       */
+                      MAX_COLLECTIONS_NUMBER_NAME_API_CAN_DOCUMENT,
+              });
 
-            setCollections({
-              ...collections,
-              [params.page]: {
-                sort_order: params.orderBy,
-                related_collections: relatedCollections,
-                other_collections: moreCollections,
-              },
-            });
-            setLoadingCollections(false);
-          } else {
+              const relatedCollections = res.collections;
+
+              setCollections({
+                ...collections,
+                [params.page]: {
+                  sort_order: params.orderBy,
+                  related_collections: relatedCollections,
+                  other_collections: null,
+                },
+              });
+            } else {
+              setCollections({
+                ...collections,
+                [params.page]: null,
+              });
+            }
+          })
+          .catch(() => {
             setCollections({
               ...collections,
               [params.page]: null,
             });
-          }
-        })
-        .catch(() => {
-          setCollections({
-            ...collections,
-            [params.page]: null,
+          })
+          .finally(() => {
+            setLoadingCollections(false);
           });
-        });
+      } else {
+        findCollectionsByString(query, {
+          offset: (params.page - 1) * navigationConfig.itemsPerPage,
+          sort_order: params.orderBy,
+          max_total_collections:
+            MAX_RELATED_COLLECTIONS + OTHER_COLLECTIONS_NUMBER,
+          /**
+           * Please note how the number of collections one page show is
+           * strategically aligned with ITEMS_PER_PAGE_OPTIONS.
+           */
+          max_related_collections: MAX_RELATED_COLLECTIONS,
+          max_other_collections: OTHER_COLLECTIONS_NUMBER,
+          min_other_collections: OTHER_COLLECTIONS_NUMBER,
+        })
+          .then((res) => {
+            if (res) {
+              const MAX_COLLECTIONS_NUMBER_NAME_API_CAN_DOCUMENT = 1000;
+
+              setNavigationConfig({
+                ...navigationConfig,
+                totalItems:
+                  typeof res.metadata.total_number_of_matched_collections ===
+                  "number"
+                    ? res.metadata.total_number_of_matched_collections
+                    : /**
+                       * NameAPI makes usage of a stringified "+1000" for
+                       * res.metadata.total_number_of_matched_collections
+                       * if there are more than 1000 collections this query
+                       * is contained in. Since this is a different data type
+                       * and we are handling number operations with totalItems,
+                       * we are here normalizing this use case to use the number 1000
+                       */
+                      MAX_COLLECTIONS_NUMBER_NAME_API_CAN_DOCUMENT,
+              });
+
+              const moreCollections = res.other_collections;
+              const relatedCollections = res.related_collections;
+
+              setCollections({
+                ...collections,
+                [params.page]: {
+                  sort_order: params.orderBy,
+                  related_collections: relatedCollections,
+                  other_collections: moreCollections,
+                },
+              });
+            } else {
+              setCollections({
+                ...collections,
+                [params.page]: null,
+              });
+            }
+          })
+          .catch(() => {
+            setCollections({
+              ...collections,
+              [params.page]: null,
+            });
+          })
+          .finally(() => {
+            setLoadingCollections(false);
+          });
+      }
+
+      setLastQueryDone({
+        search: params.search,
+        exactMatch: params.exactMatch,
+      });
     } else {
       setCollections(null);
       setLoadingCollections(false);
     }
   };
-
-  useEffect(() => {
-    setNavigationConfig({
-      ...navigationConfig,
-      totalItems: undefined,
-    });
-
-    if (!params.search) {
-      return;
-    }
-
-    setCollections(null);
-    setLoadingCollections(true);
-    loadCollections();
-  }, [params.search]);
-
-  useEffect(() => {
-    loadCollections();
-  }, [params.page, params.orderBy]);
 
   /**
    * Navigation helper functions
@@ -223,9 +318,8 @@ export default function ExploreCollectionsPage() {
   const isLastCollectionsPageForCurrentQuery = () => {
     if (navigationConfig.totalItems) {
       return (
-        Number(params.page) !== 1 &&
-        Number(params.page) * navigationConfig.itemsPerPage >
-          navigationConfig.totalItems
+        Number(params.page) * navigationConfig.itemsPerPage >=
+        navigationConfig.totalItems
       );
     } else return false;
   };
@@ -236,8 +330,14 @@ export default function ExploreCollectionsPage() {
           Number(params.page) * navigationConfig.itemsPerPage,
           navigationConfig.totalItems,
         )} of ${navigationConfig.totalItems} collections`
-      : "No collections found";
+      : !loadingCollections
+        ? "No collections found"
+        : "";
   };
+
+  useEffect(() => {
+    handleSearch(params.search);
+  }, [params.search]);
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -284,7 +384,9 @@ export default function ExploreCollectionsPage() {
                     <div className="w-full flex flex-col xl:flex-row">
                       <div className="w-full">
                         {/* Collection Count and Sort */}
-                        <div className="max-w-[756px] w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5">
+                        <div
+                          className={`w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5 ${!collections[params.page]?.other_collections ? "" : "max-w-[756px]"}`}
+                        >
                           <div className="flex items-center">
                             <div className="text-lg font-semibold mr-2.5">
                               {getNavigationPageTextGuide()}
@@ -312,93 +414,86 @@ export default function ExploreCollectionsPage() {
                               </div>
                             ) : null}
                           </div>
-                          {collections[params.page] ? (
-                            <div className="flex space-x-3 items-center">
-                              <div className="text-sm text-gray-500">
-                                Sort by
+
+                          <div className="flex space-x-4">
+                            {collections[params.page] ? (
+                              <div className="flex text-gray-200 border rounded-lg">
+                                <Toggle
+                                  pressed={params.exactMatch}
+                                  onPressedChange={(pressed) => {
+                                    setNavigationConfig({
+                                      ...navigationConfig,
+                                      totalItems: undefined,
+                                    });
+                                    setParams({ exactMatch: pressed });
+                                    queryCollections({
+                                      search: params.search || "",
+                                      orderBy:
+                                        params.orderBy ||
+                                        NameGraphSortOrderOptions.AI,
+                                      page: params.page || 1,
+                                      exactMatch: pressed,
+                                    });
+                                  }}
+                                >
+                                  Exact Match
+                                </Toggle>
                               </div>
-                              <Select
-                                defaultValue={
-                                  params.orderBy || NameGraphSortOrderOptions.AI
-                                }
-                                onValueChange={(newValue) =>
-                                  handleOrderBy(
-                                    newValue as NameGraphSortOrderOptions,
-                                  )
-                                }
-                              >
-                                <SelectTrigger className="w-[180px]">
-                                  <SelectValue placeholder="Sort by" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  {Object.entries(
-                                    FromNameGraphSortOrderToDropdownTextContent,
-                                  ).map(([key]) => {
-                                    return (
-                                      <SelectItem key={key} value={key}>
-                                        {
-                                          FromNameGraphSortOrderToDropdownTextContent[
-                                            key as NameGraphSortOrderOptions
-                                          ]
-                                        }
-                                      </SelectItem>
-                                    );
-                                  })}
-                                </SelectContent>
-                              </Select>
-                            </div>
-                          ) : null}
+                            ) : null}
+                            {collections[params.page] ? (
+                              <div className="flex space-x-3 items-center">
+                                <div className="text-sm text-gray-500">
+                                  Sort by
+                                </div>
+                                <Select
+                                  defaultValue={
+                                    params.orderBy ||
+                                    NameGraphSortOrderOptions.AI
+                                  }
+                                  onValueChange={(newValue) =>
+                                    handleOrderBy(
+                                      newValue as NameGraphSortOrderOptions,
+                                    )
+                                  }
+                                >
+                                  <SelectTrigger className="w-[180px]">
+                                    <SelectValue placeholder="Sort by" />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    {Object.entries(
+                                      FromNameGraphSortOrderToDropdownTextContent,
+                                    ).map(([key]) => {
+                                      return (
+                                        <SelectItem key={key} value={key}>
+                                          {
+                                            FromNameGraphSortOrderToDropdownTextContent[
+                                              key as NameGraphSortOrderOptions
+                                            ]
+                                          }
+                                        </SelectItem>
+                                      );
+                                    })}
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                            ) : null}
+                          </div>
                         </div>
                         {/* Collections List */}
-                        <div className="w-full max-w-[756px] space-y-4">
+                        <div
+                          className={`w-full ${!collections[params.page]?.other_collections ? "" : "max-w-[756px]"}`}
+                        >
                           {loadingCollections ? (
-                            <div className="flex flex-col space-y-7 my-8">
+                            <div className="flex flex-col">
                               <CollectionsCardsSkeleton />
                             </div>
                           ) : collections[params.page] ? (
                             collections[params.page]?.related_collections.map(
                               (collection) => (
-                                <Link
+                                <CollectionCard
                                   key={collection.collection_id}
-                                  href={`/collections/${collection.collection_id}`}
-                                  className="!no-underline group cursor-pointer border border-l-0 border-r-0 border-b-0 pt-3 border-gray-200 flex items-start gap-[18px]"
-                                >
-                                  <div
-                                    style={{
-                                      border: "1px solid rgba(0, 0, 0, 0.05)",
-                                    }}
-                                    className="group-hover:bg-gray-300 group-hover:transition flex justify-center items-center rounded-md bg-background h-[72px] w-[72px] bg-gray-100"
-                                  >
-                                    <div className="relative flex items-center justify-center overflow-hidden">
-                                      <p
-                                        className={`text-3xl ${notoBlack.className}`}
-                                      >
-                                        {collection.avatar_emoji}
-                                      </p>
-                                    </div>
-                                  </div>
-                                  <div className="flex-1 overflow-hidden">
-                                    <h3 className="text-sm font-semibold">
-                                      {collection.title}
-                                    </h3>
-                                    <p className="text-xs text-gray-500 mb-2 truncate">
-                                      by {collection.owner}
-                                    </p>
-                                    <div className="relative">
-                                      <div className="flex gap-2">
-                                        {collection.top_names.map((tag) => (
-                                          <span
-                                            key={tag.namehash}
-                                            className="bg-gray-100 text-sm px-2 py-1 bg-muted rounded-full"
-                                          >
-                                            {tag.name}
-                                          </span>
-                                        ))}
-                                      </div>
-                                      <div className="bg-gradient-white-to-transparent absolute right-0 top-0 w-40 h-full"></div>
-                                    </div>
-                                  </div>
-                                </Link>
+                                  collection={collection}
+                                />
                               ),
                             )
                           ) : null}
@@ -435,63 +530,26 @@ export default function ExploreCollectionsPage() {
                         ) : null}
                       </div>
 
-                      <div className="z-40 xl:max-w-[400px] mt-10 xl:mt-0 xl:ml-[68px] border rounded-md border-gray-200 w-full h-fit">
-                        <h2 className="flex items-center text-lg font-semibold h-[47px] px-5 border border-t-0 border-r-0 border-l-0 border-gray-200">
-                          Other collections
-                        </h2>
-                        {collections[params.page] ? (
-                          collections[params.page]?.other_collections.map(
-                            (collection) => (
-                              <Link
-                                key={collection.collection_id}
-                                href={`/collections/${collection.collection_id}`}
-                                className="!no-underline group rounded-lg cursor-pointer px-5 py-3 flex items-start gap-[18px]"
-                              >
-                                <div
-                                  style={{
-                                    border: "1px solid rgba(0, 0, 0, 0.05)",
-                                  }}
-                                  className="group-hover:bg-gray-300 group-hover:transition flex justify-center items-center rounded-md bg-background h-[72px] w-[72px] bg-gray-100"
-                                >
-                                  <div className="relative flex items-center justify-center overflow-hidden">
-                                    <p
-                                      className={`text-3xl ${notoBlack.className}`}
-                                    >
-                                      {collection.avatar_emoji}
-                                    </p>
-                                  </div>
-                                </div>
-                                <div className="flex-1 overflow-hidden">
-                                  <h3 className="text-sm font-semibold">
-                                    {collection.title}
-                                  </h3>
-                                  <p className="text-xs text-gray-500 mb-2 truncate">
-                                    by {collection.owner}
-                                  </p>
-                                  <div className="relative">
-                                    <div className="flex gap-2">
-                                      {collection.top_names.map((tag) => (
-                                        <span
-                                          key={tag.namehash}
-                                          className="bg-gray-100 text-sm px-2 py-1 bg-muted rounded-full"
-                                        >
-                                          {tag.name}
-                                        </span>
-                                      ))}
-                                    </div>
-                                    <div className="bg-gradient-white-to-transparent absolute right-0 top-0 w-40 h-full"></div>
-                                  </div>
-                                </div>
-                              </Link>
-                            ),
-                          )
-                        ) : (
-                          <div className="p-3 px-5">No collections found</div>
-                        )}
-                      </div>
+                      {collections[params.page]?.other_collections && (
+                        <div className="z-40 xl:max-w-[400px] mt-10 xl:mt-0 xl:ml-[68px] border rounded-md border-gray-200 w-full h-fit">
+                          <h2 className="flex items-center text-lg font-semibold h-[47px] px-5 border border-t-0 border-r-0 border-l-0 border-gray-200">
+                            Other collections
+                          </h2>
+                          <div className="px-5">
+                            {collections[params.page]?.other_collections?.map(
+                              (collection) => (
+                                <CollectionCard
+                                  key={collection.collection_id}
+                                  collection={collection}
+                                />
+                              ),
+                            )}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </>
-                ) : !loadCollections && !params.search && !collections ? (
+                ) : !params.search && !collections ? (
                   <>Error</>
                 ) : null}
               </>
