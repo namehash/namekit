@@ -37,7 +37,7 @@ export const CollectionCard = ({
             {collection.top_names.map((tag) => (
               <span
                 key={tag.namehash}
-                className="bg-gray-100 text-sm px-2 py-1 bg-muted rounded-full"
+                className="max-h-[28px] w-max bg-gray-100 text-sm px-2 py-1 bg-muted rounded-full"
               >
                 {tag.name}
               </span>

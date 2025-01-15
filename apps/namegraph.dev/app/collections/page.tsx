@@ -81,18 +81,29 @@ export default function ExploreCollectionsPage() {
     setLoadingCollections(true);
 
     queryCollections({
+      search: params.search || "",
+      orderBy: params.orderBy || NameGraphSortOrderOptions.AI,
+      page: params.page || 1,
       exactMatch: params.exactMatch,
     });
   };
 
   const handleOrderBy = (orderBy: NameGraphSortOrderOptions) => {
     setParams({ orderBy });
-    queryCollections({ exactMatch: params.exactMatch });
+    queryCollections({
+      search: params.search || "",
+      orderBy: orderBy || NameGraphSortOrderOptions.AI,
+      page: params.page || 1,
+      exactMatch: params.exactMatch,
+    });
   };
 
   const handlePageChange = (page: number) => {
     setParams({ page });
     queryCollections({
+      search: params.search || "",
+      orderBy: params.orderBy || NameGraphSortOrderOptions.AI,
+      page: page || 1,
       exactMatch: params.exactMatch,
     });
   };
@@ -112,6 +123,11 @@ export default function ExploreCollectionsPage() {
     exactMatch: boolean;
   }>({ search: params.search || "", exactMatch: params.exactMatch || false });
 
+  useEffect(() => {
+    console.log("New values for collections results:");
+    console.log(collections, params);
+  }, [collections]);
+
   const [loadingCollections, setLoadingCollections] = useState(true);
 
   const DEFAULT_ITEMS_PER_PAGE = 20;
@@ -120,7 +136,14 @@ export default function ExploreCollectionsPage() {
     totalItems: undefined,
   });
 
-  const queryCollections = ({ exactMatch }: { exactMatch: boolean }) => {
+  interface QueryCollectionsParam {
+    exactMatch: boolean;
+    orderBy: NameGraphSortOrderOptions;
+    search: string;
+    page: number;
+  }
+
+  const queryCollections = (params: QueryCollectionsParam) => {
     if (params.search) {
       let query = params.search;
       if (params.search.includes(".")) {
@@ -144,7 +167,7 @@ export default function ExploreCollectionsPage() {
        */
       if (
         !!lastQueryDone &&
-        lastQueryDone === params.search &&
+        lastQueryDone.search === params.search &&
         !!collections?.[params.page] &&
         params.orderBy == collections?.[params.page]?.sort_order &&
         params.exactMatch === lastQueryDone.exactMatch
@@ -153,9 +176,8 @@ export default function ExploreCollectionsPage() {
       }
 
       setLoadingCollections(true);
-      setLastQueryDone(query);
 
-      if (exactMatch) {
+      if (params.exactMatch) {
         findCollectionsByMember(query, {
           offset: (params.page - 1) * navigationConfig.itemsPerPage,
           sort_order: params.orderBy,
@@ -276,6 +298,11 @@ export default function ExploreCollectionsPage() {
             setLoadingCollections(false);
           });
       }
+
+      setLastQueryDone({
+        search: params.search,
+        exactMatch: params.exactMatch,
+      });
     } else {
       setCollections(null);
       setLoadingCollections(false);
@@ -303,7 +330,9 @@ export default function ExploreCollectionsPage() {
           Number(params.page) * navigationConfig.itemsPerPage,
           navigationConfig.totalItems,
         )} of ${navigationConfig.totalItems} collections`
-      : "No collections found";
+      : !loadingCollections
+        ? "No collections found"
+        : "";
   };
 
   useEffect(() => {
@@ -390,9 +419,21 @@ export default function ExploreCollectionsPage() {
                             {collections[params.page] ? (
                               <div className="flex text-gray-200 border rounded-lg">
                                 <Toggle
+                                  pressed={params.exactMatch}
                                   onPressedChange={(pressed) => {
+                                    setNavigationConfig({
+                                      ...navigationConfig,
+                                      totalItems: undefined,
+                                    });
                                     setParams({ exactMatch: pressed });
-                                    queryCollections({ exactMatch: pressed });
+                                    queryCollections({
+                                      search: params.search || "",
+                                      orderBy:
+                                        params.orderBy ||
+                                        NameGraphSortOrderOptions.AI,
+                                      page: params.page || 1,
+                                      exactMatch: pressed,
+                                    });
                                   }}
                                 >
                                   Exact Match

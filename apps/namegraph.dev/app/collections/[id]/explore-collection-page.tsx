@@ -337,7 +337,7 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                       key={suggestion.name}
                                       className="bg-gray-100 rounded-full groupp-2 px-4 flex items-start"
                                     >
-                                      <div className="relative flex items-center justify-center overflow-hidden">
+                                      <div className="max-h-[20px] relative flex items-center justify-center overflow-hidden">
                                         {suggestion.name}
                                       </div>
                                     </div>
