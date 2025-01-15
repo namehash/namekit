@@ -3,7 +3,7 @@ import Skeleton from "../skeleton";
 export const CollectionsGridSkeleton = () => {
   return (
     <div className="w-full flex flex-col xl:flex-row max-w-7xl xl:space-x-0">
-      <div className="w-full flex flex-col space-y-6 items-start">
+      <div className="w-full flex flex-col space-y-2.5 items-start">
         <div className="mt-2 md:mt-0 flex flex-col md:flex-row justify-between w-full mb-2">
           <div className="flex">
             <div className="flex mr-2.5">
@@ -23,10 +23,10 @@ export const CollectionsGridSkeleton = () => {
         </div>
       </div>
       <div className="relative z-50 xl:max-w-[400px] mt-10 xl:mt-0 border rounded-md border-gray-200 w-full h-fit">
-        <div className="flex items-center h-[47px] border border-gray-200 border-t-0 border-r-0 border-l-0">
-          <Skeleton className="w-[260px] h-7 px-5" />
+        <div className="px-5 py-[13px] border border-gray-200 border-r-0 border-l-0 border-t-0">
+          <Skeleton className="w-[80px] h-5" />
         </div>
-        <div className="px-5 py-3 gap-[18px] space-y-6 overflow-hidden">
+        <div className="px-5 overflow-hidden pb-[10px]">
           <CollectionsCardsSkeleton />
         </div>
         <div className="bg-gradient-white-to-transparent absolute right-0 top-[47px] w-20 h-full"></div>
@@ -39,7 +39,7 @@ const NUMBER_OF_SKELETONS_OF_COLLECTION_CARDS = 5;
 
 export const CollectionsCardsSkeleton = () => {
   return (
-    <>
+    <div className="flex flex-col space-y-2.5">
       {[...Array(NUMBER_OF_SKELETONS_OF_COLLECTION_CARDS).keys()].map(
         (collection) => {
           return (
@@ -49,17 +49,17 @@ export const CollectionsCardsSkeleton = () => {
           );
         },
       )}
-    </>
+    </div>
   );
 };
 
 const CollectionCardSkeleton = () => {
   return (
-    <div className="flex">
+    <div className="flex h-[86px] py-3">
       <div>
-        <Skeleton className="w-[72px] h-[72px]" />
+        <Skeleton className="w-[73px] h-[73px]" />
       </div>
-      <div className="w-full flex flex-col justify-start space-y-2 ml-4 items-start">
+      <div className="w-full flex flex-col justify-start space-y-2 ml-[18px] items-start">
         <Skeleton className="w-[100px] md:w-[200px] h-4 mr-auto" />
         <Skeleton className="w-[180px] md:w-[320px] h-3 mr-auto" />
         <div className="flex gap-2 relative">

@@ -21,6 +21,7 @@ import {
   DEFAULT_INSTANT_MODE,
   NameGraphSortOrderOptions,
   NameGraphCollection,
+  ScrambleMethod,
 } from "./utils";
 
 export class NameGraph {
@@ -118,7 +119,8 @@ export class NameGraph {
     },
   ): Promise<NameGraphSuggestion[]> {
     const max_sample_size = 5;
-    const seed = options?.seed || 0;
+    const random_seed = Number(Number(Math.random() * 10).toFixed(0));
+    const seed = options?.seed || random_seed;
 
     const payload = {
       collection_id,
@@ -149,12 +151,15 @@ export class NameGraph {
     collection_id: string,
     options?: {
       seed?: number;
+      method?: ScrambleMethod;
     },
   ): Promise<NameGraphSuggestion[]> {
-    const method = "left-right-shuffle-with-unigrams";
+    const default_method = ScrambleMethod["left-right-shuffle-with-unigrams"];
+    const method = options?.method || default_method;
     const n_top_members = 25;
     const max_suggestions = 10;
-    const seed = options?.seed || 0;
+    const random_seed = Number(Number(Math.random() * 10).toFixed(0));
+    const seed = options?.seed || random_seed;
 
     const payload = {
       collection_id,
@@ -276,11 +281,17 @@ export class NameGraph {
 
   public findCollectionsByMember(
     label: string,
+    options?: {
+      offset?: number;
+      max_results?: number;
+      limit_names?: number;
+      sort_order?: NameGraphSortOrderOptions;
+    },
   ): Promise<NameGraphCollectionByMemberResponse> {
-    const limit_names = 10;
-    const offset = 0;
-    const sort_order = "AI";
-    const max_results = 3;
+    const limit_names = options?.limit_names || 10;
+    const offset = options?.offset || 0;
+    const sort_order = options?.sort_order || NameGraphSortOrderOptions.AI;
+    const max_results = options?.max_results || 3;
 
     const payload = {
       limit_names,
