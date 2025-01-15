@@ -18,6 +18,8 @@ import { useQueryParams } from "@/components/use-query-params";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
 import Skeleton from "@/components/skeleton";
+import { CollectionCard } from "@/components/collections/collection-card";
+import { Tooltip } from "@namehash/namekit-react/client";
 
 const notoBlack = Noto_Emoji({ preload: false });
 
@@ -84,9 +86,6 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
     loadCollectionMembers();
     loadCollectionRelatedCollections();
   }, [id]);
-  useEffect(() => {
-    console.log(collectionMembers);
-  }, [collectionMembers]);
 
   const loadCollectionMembers = () => {
     if (!!collectionMembers?.[params.page]) {
@@ -95,7 +94,7 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
 
     setLoadingCollectionMembers(true);
     fetchCollectionMembers(id, {
-      offset: params.page - 1,
+      offset: (params.page - 1) * navigationConfig.itemsPerPage,
     })
       .then((res) => {
         if (res) {
@@ -221,9 +220,8 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
   const isLastCollectionsPageForCurrentQuery = () => {
     if (navigationConfig.totalItems) {
       return (
-        Number(params.page) !== 1 &&
-        Number(params.page) * navigationConfig.itemsPerPage >
-          navigationConfig.totalItems
+        Number(params.page) * navigationConfig.itemsPerPage >=
+        navigationConfig.totalItems
       );
     } else return false;
   };
@@ -280,7 +278,7 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
             {/* Collections List */}
             <div className="w-full space-y-4">
               {loadingCollection ? (
-                <div className="flex flex-col space-y-7 my-8">
+                <div className="w-full h-full flex flex-col justify-center items-center my-8 animate-spin">
                   <Loader />
                 </div>
               ) : collection ? (
@@ -289,50 +287,52 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                     <div className="w-full">
                       <div className="w-full mb-8">
                         <div className="w-full flex flex-col space-y-4 p-3 rounded-xl border border-gray-200">
-                          <div className="w-full">
-                            {/* Collection Count and Sort */}
-                            <div className="max-w-[756px] w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5">
-                              <div className="flex items-center">
-                                <div className="text-lg font-semibold mr-2.5">
-                                  {getNavigationPageTextGuide()}
-                                </div>
-                                {navigationConfig.totalItems ? (
-                                  <div className="flex">
-                                    <Button
-                                      className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50 disabled:hover:bg-white"
-                                      disabled={isFirstCollectionsPageForCurrentQuery()}
-                                      onClick={() =>
-                                        handlePageChange(
-                                          Number(params.page) - 1,
-                                        )
-                                      }
-                                    >
-                                      <ChevronLeft className="w-6 h-6 text-black" />
-                                    </Button>
-                                    <Button
-                                      className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50"
-                                      disabled={isLastCollectionsPageForCurrentQuery()}
-                                      onClick={() =>
-                                        handlePageChange(
-                                          Number(params.page) + 1,
-                                        )
-                                      }
-                                    >
-                                      <ChevronRight className="w-6 h-6 text-black" />
-                                    </Button>
+                          <div className="w-full h-[517px] flex flex-col justify-start">
+                            <div className="h-full">
+                              {/* Collection Count and Sort */}
+                              <div className="max-w-[756px] w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5">
+                                <div className="flex items-center">
+                                  <div className="text-lg font-semibold mr-2.5">
+                                    {getNavigationPageTextGuide()}
                                   </div>
-                                ) : null}
-                              </div>
-                            </div>
-                            {/* Collections List */}
-                            <div className="w-full max-w-[756px] space-y-4">
-                              {loadingCollectionMembers ? (
-                                <div className="flex flex-col space-y-7 my-8">
-                                  <Loader />
+                                  {navigationConfig.totalItems ? (
+                                    <div className="flex">
+                                      <Button
+                                        className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50 disabled:hover:bg-white"
+                                        disabled={isFirstCollectionsPageForCurrentQuery()}
+                                        onClick={() =>
+                                          handlePageChange(
+                                            Number(params.page) - 1,
+                                          )
+                                        }
+                                      >
+                                        <ChevronLeft className="w-6 h-6 text-black" />
+                                      </Button>
+                                      <Button
+                                        className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50"
+                                        disabled={isLastCollectionsPageForCurrentQuery()}
+                                        onClick={() =>
+                                          handlePageChange(
+                                            Number(params.page) + 1,
+                                          )
+                                        }
+                                      >
+                                        <ChevronRight className="w-6 h-6 text-black" />
+                                      </Button>
+                                    </div>
+                                  ) : null}
                                 </div>
-                              ) : collectionMembers ? (
-                                collectionMembers[params.page]?.suggestions.map(
-                                  (suggestion) => (
+                              </div>
+                              {/* Collections List */}
+                              <div className="w-full h-full max-w-[756px] space-y-4">
+                                {loadingCollectionMembers ? (
+                                  <div className="flex flex-col w-full mt-auto justify-center items-center animate-spin h-[370px]">
+                                    <Loader />
+                                  </div>
+                                ) : collectionMembers ? (
+                                  collectionMembers[
+                                    params.page
+                                  ]?.suggestions.map((suggestion) => (
                                     <div
                                       key={suggestion.name}
                                       className="bg-gray-100 rounded-full groupp-2 px-4 flex items-start"
@@ -341,67 +341,73 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                         {suggestion.name}
                                       </div>
                                     </div>
-                                  ),
-                                )
+                                  ))
+                                ) : null}
+                              </div>
+                            </div>
+                            <div className="mt-auto">
+                              {/* Pagination */}
+                              {navigationConfig.totalItems ? (
+                                <div className="flex items-center justify-between border border-gray-200 border-l-0 border-r-0 border-b-0 mt-3 p-3">
+                                  <div className="text-sm text-gray-500 mr-2.5">
+                                    {getNavigationPageTextGuide()}
+                                  </div>
+                                  <div className="flex items-center gap-2">
+                                    <Button
+                                      className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
+                                      disabled={isFirstCollectionsPageForCurrentQuery()}
+                                      onClick={() =>
+                                        handlePageChange(
+                                          Number(params.page) - 1,
+                                        )
+                                      }
+                                    >
+                                      <ChevronLeft />
+                                      Prev
+                                    </Button>
+                                    <Button
+                                      className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
+                                      disabled={isLastCollectionsPageForCurrentQuery()}
+                                      onClick={() =>
+                                        handlePageChange(
+                                          Number(params.page) + 1,
+                                        )
+                                      }
+                                    >
+                                      Next
+                                      <ChevronRight />
+                                    </Button>
+                                  </div>
+                                </div>
                               ) : null}
                             </div>
-                            {/* Pagination */}
-                            {navigationConfig.totalItems ? (
-                              <div className="flex items-center justify-between border border-gray-200 border-l-0 border-r-0 border-b-0 mt-3 pt-3">
-                                <div className="text-sm text-gray-500 mr-2.5">
-                                  {getNavigationPageTextGuide()}
-                                </div>
-                                <div className="flex items-center gap-2">
-                                  <Button
-                                    className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
-                                    disabled={isFirstCollectionsPageForCurrentQuery()}
-                                    onClick={() =>
-                                      handlePageChange(Number(params.page) - 1)
-                                    }
-                                  >
-                                    <ChevronLeft />
-                                    Prev
-                                  </Button>
-                                  <Button
-                                    className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
-                                    disabled={isLastCollectionsPageForCurrentQuery()}
-                                    onClick={() =>
-                                      handlePageChange(Number(params.page) + 1)
-                                    }
-                                  >
-                                    Next
-                                    <ChevronRight />
-                                  </Button>
-                                </div>
-                              </div>
-                            ) : null}
                           </div>
                         </div>
                       </div>
-                      <div className="border border-gray-200 rounded-lg p-3">
-                        <div className="flex flex-col space-y-4">
-                          <p className="font-semibold text-lg">
-                            Interact with this collection
-                          </p>
-                          <div className="flex space-x-4">
-                            <Button onClick={scramble}>
-                              Scramble name ideas
-                            </Button>
+                      <div className="w-full border border-gray-200 rounded-lg">
+                        <div className="w-full flex border border-l-0 border-t-0 border-r-0 px-3 py-3 justify-between items-center">
+                          <Tooltip
+                            trigger={
+                              <p className="font-semibold text-lg w-full">
+                                Sample names
+                              </p>
+                            }
+                          >
+                            <p>Sampling names means creating </p>
+                          </Tooltip>
 
-                            <Button onClick={ideate}>Sample name ideas</Button>
-                          </div>
+                          <Button onClick={ideate}>Sample name ideas</Button>
                         </div>
                         <div className="flex flex-col space-y-8 mt-4">
-                          {scrambledNameIdeas ? (
-                            <div className="flex flex-col border border-gray-200 rounded-xl p-3">
-                              <div className="text-lg underline font-semibold mb-4 pl-2">
-                                Scrambled name ideas
-                              </div>
-                              {loadingScramble ? (
-                                <Loader />
+                          {sampledNameIdeas ? (
+                            <div className="flex flex-col rounded-xl py-3 h-[200px]">
+                              {loadingIdeate ? (
+                                <div className="flex flex-col w-full h-full justify-center items-center animate-spin">
+                                  <Loader />
+                                </div>
                               ) : (
-                                <div className="flex flex-wrap gap-3">
-                                  {scrambledNameIdeas?.map((suggestion) => {
+                                <div className="flex flex-wrap gap-3 pl-3">
+                                  {sampledNameIdeas?.map((suggestion) => {
                                     return (
                                       <div
                                         key={suggestion.name}
@@ -417,17 +423,35 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                               )}
                             </div>
                           ) : null}
+                        </div>
+                      </div>
 
-                          {sampledNameIdeas ? (
-                            <div className="flex flex-col border border-gray-200 rounded-xl p-3">
-                              <div className="text-lg underline font-semibold mb-4 pl-2">
-                                Sampled name ideas
-                              </div>
-                              {loadingIdeate ? (
-                                <Loader />
+                      <div className="w-full border border-gray-200 rounded-lg mt-8">
+                        <div className="w-full flex border border-l-0 border-t-0 border-r-0 px-3 py-3 justify-between items-center">
+                          <Tooltip
+                            trigger={
+                              <p className="font-semibold text-lg w-full">
+                                Scramble names
+                              </p>
+                            }
+                          >
+                            <p>Scrambling names means creating </p>
+                          </Tooltip>
+
+                          <Button onClick={scramble}>
+                            Scramble name ideas
+                          </Button>
+                        </div>
+                        <div className="flex flex-col space-y-8 mt-4">
+                          {scrambledNameIdeas ? (
+                            <div className="flex flex-col rounded-xl py-3 h-[200px]">
+                              {loadingScramble ? (
+                                <div className="flex flex-col w-full h-full justify-center items-center animate-spin">
+                                  <Loader />
+                                </div>
                               ) : (
-                                <div className="flex flex-wrap gap-3">
-                                  {sampledNameIdeas?.map((suggestion) => {
+                                <div className="flex flex-wrap gap-3 pl-3">
+                                  {scrambledNameIdeas?.map((suggestion) => {
                                     return (
                                       <div
                                         key={suggestion.name}
@@ -452,111 +476,42 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                         <h2 className="flex items-center text-lg font-semibold h-[47px] px-5 border border-t-0 border-r-0 border-l-0 border-gray-200">
                           Related collections
                         </h2>
-                        {relatedCollections ? (
-                          relatedCollections.related_collections.map(
-                            (collection) => (
-                              <div
-                                key={collection.collection_id}
-                                className="!no-underline group rounded-lg cursor-pointer px-5 py-3 flex items-start gap-[18px]"
-                              >
-                                <div
-                                  style={{
-                                    border: "1px solid rgba(0, 0, 0, 0.05)",
-                                  }}
-                                  className="group-hover:bg-gray-300 group-hover:transition flex justify-center items-center rounded-md bg-background h-[72px] w-[72px] bg-gray-100"
-                                >
-                                  <div className="relative flex items-center justify-center overflow-hidden">
-                                    <p
-                                      className={`text-3xl ${notoBlack.className}`}
-                                    >
-                                      {collection.avatar_emoji}
-                                    </p>
-                                  </div>
-                                </div>
-                                <div className="flex-1 overflow-hidden">
-                                  <h3 className="text-sm font-semibold">
-                                    {collection.title}
-                                  </h3>
-                                  <p className="text-xs text-gray-500 mb-2 truncate">
-                                    by {collection.owner}
-                                  </p>
-                                  <div className="relative">
-                                    <div className="flex gap-2">
-                                      {collection.top_names.map((tag) => (
-                                        <span
-                                          key={tag.namehash}
-                                          className="bg-gray-100 text-sm px-2 py-1 bg-muted rounded-full"
-                                        >
-                                          {tag.name}
-                                        </span>
-                                      ))}
-                                    </div>
-                                    <div className="bg-gradient-white-to-transparent absolute right-0 top-0 w-40 h-full"></div>
-                                  </div>
-                                </div>
-                              </div>
-                            ),
-                          )
-                        ) : (
-                          <div className="p-3 px-5">
-                            No name suggestions found
-                          </div>
-                        )}
+
+                        <div className="px-5">
+                          {relatedCollections ? (
+                            relatedCollections.related_collections.map(
+                              (collection) => (
+                                <CollectionCard
+                                  key={collection.collection_id}
+                                  collection={collection}
+                                />
+                              ),
+                            )
+                          ) : (
+                            <div className="p-3 px-5">
+                              No name suggestions found
+                            </div>
+                          )}
+                        </div>
                       </div>
                       <div className="z-40 border rounded-md border-gray-200 w-full h-fit">
                         <h2 className="flex items-center text-lg font-semibold h-[47px] px-5 border border-t-0 border-r-0 border-l-0 border-gray-200">
                           Other collections
                         </h2>
-                        {relatedCollections ? (
-                          relatedCollections.other_collections.map(
-                            (collection) => (
-                              <div
-                                key={collection.collection_id}
-                                className="!no-underline group rounded-lg cursor-pointer px-5 py-3 flex items-start gap-[18px]"
-                              >
-                                <div
-                                  style={{
-                                    border: "1px solid rgba(0, 0, 0, 0.05)",
-                                  }}
-                                  className="group-hover:bg-gray-300 group-hover:transition flex justify-center items-center rounded-md bg-background h-[72px] w-[72px] bg-gray-100"
-                                >
-                                  <div className="relative flex items-center justify-center overflow-hidden">
-                                    <p
-                                      className={`text-3xl ${notoBlack.className}`}
-                                    >
-                                      {collection.avatar_emoji}
-                                    </p>
-                                  </div>
-                                </div>
-                                <div className="flex-1 overflow-hidden">
-                                  <h3 className="text-sm font-semibold">
-                                    {collection.title}
-                                  </h3>
-                                  <p className="text-xs text-gray-500 mb-2 truncate">
-                                    by {collection.owner}
-                                  </p>
-                                  <div className="relative">
-                                    <div className="flex gap-2">
-                                      {collection.top_names.map((tag) => (
-                                        <span
-                                          key={tag.namehash}
-                                          className="bg-gray-100 text-sm px-2 py-1 bg-muted rounded-full"
-                                        >
-                                          {tag.name}
-                                        </span>
-                                      ))}
-                                    </div>
-                                    <div className="bg-gradient-white-to-transparent absolute right-0 top-0 w-40 h-full"></div>
-                                  </div>
-                                </div>
-                              </div>
-                            ),
-                          )
-                        ) : (
-                          <div className="p-3 px-5">
-                            No name suggestions found
-                          </div>
-                        )}
+                        <div className="px-5">
+                          {relatedCollections ? (
+                            relatedCollections.other_collections.map(
+                              (collection) => (
+                                <CollectionCard
+                                  key={collection.collection_id}
+                                  collection={collection}
+                                />
+                              ),
+                            )
+                          ) : (
+                            <div className="p-3">No name suggestions found</div>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>

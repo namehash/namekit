@@ -3,6 +3,7 @@ import { twMerge } from "tailwind-merge";
 import {
   DEFAULT_FULL_MODE,
   NameGraphCollection,
+  NameGraphCollectionByMemberResponse,
   NameGraphFetchTopCollectionMembersResponse,
   NameGraphFindCollectionsResponse,
   NameGraphGroupedByCategoryResponse,
@@ -155,6 +156,21 @@ export const fetchCollectionMembers = async (
     collection_id,
     options,
   );
+
+  return nameGeneratorSuggestions;
+};
+
+export const findCollectionsByMember = async (
+  query: string,
+  options?: {
+    offset?: number;
+    max_results?: number;
+    limit_names?: number;
+    sort_order?: NameGraphSortOrderOptions;
+  },
+): Promise<NameGraphCollectionByMemberResponse> => {
+  const nameGeneratorSuggestions =
+    await NameGraphClient.findCollectionsByMember(query, options);
 
   return nameGeneratorSuggestions;
 };

@@ -109,7 +109,7 @@ export type NameGraphCollectionByMemberResponse = {
     elasticsearch_processing_time_ms: number;
     elasticsearch_communication_time_ms: number;
   };
-  collections: NameGraphSuggestion[];
+  collections: NameGraphCollection[];
 };
 
 export type NameGraphCollection = {

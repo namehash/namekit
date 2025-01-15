@@ -276,11 +276,17 @@ export class NameGraph {
 
   public findCollectionsByMember(
     label: string,
+    options?: {
+      offset?: number;
+      max_results?: number;
+      limit_names?: number;
+      sort_order?: NameGraphSortOrderOptions;
+    },
   ): Promise<NameGraphCollectionByMemberResponse> {
-    const limit_names = 10;
-    const offset = 0;
-    const sort_order = "AI";
-    const max_results = 3;
+    const limit_names = options?.limit_names || 10;
+    const offset = options?.offset || 0;
+    const sort_order = options?.sort_order || NameGraphSortOrderOptions.AI;
+    const max_results = options?.max_results || 3;
 
     const payload = {
       limit_names,
