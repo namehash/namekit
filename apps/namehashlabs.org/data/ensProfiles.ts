@@ -486,18 +486,29 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     }),
   ],
   [
-    "0xE0E6c173E79E040D6B9f8160Ce4771b127982cA5",
-    buildProfile({
-      ensName: "ilfurioso.eth",
-      title: "Engineering",
-    }),
-  ],
-  [
     "0xB6616C9eA0AbE063d3c4433691e8361FFb482099",
     buildProfile({
       ensName: "santapolukord.eth",
       title: "Outreach",
       displayName: "Santa Polukord",
+    }),
+  ],
+  [
+    "0xbD4cd9Ae5BfF533bF4Ee926EEddC3DCA5e2cDb4C",
+    buildProfile({
+      ensName: "shrugs.eth",
+      title: "Engineering",
+      displayName: "Matt Condon",
+      twitterProfile: "https://x.com/mattgcondon",
+    }),
+  ],
+  [
+    "0x8d3B2c5B93716508639E3CcFE2A3DB58AF540B66",
+    buildProfile({
+      ensName: "tko.box",
+      title: "Engineering",
+      displayName: "Tomasz Kopacki",
+      twitterProfile: "https://x.com/0xTko",
     }),
   ],
 ]);
