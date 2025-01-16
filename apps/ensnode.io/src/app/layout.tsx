@@ -3,12 +3,13 @@ import "../styles/globals.css";
 import "@namehash/namekit-react/styles.css";
 import "@namehash/ens-webfont";
 
-import Head from "next/head";
 import { Inter } from "next/font/google";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
+  preload: true,
 });
 
 export const metadata: Metadata = {
@@ -48,9 +49,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Head>
-        <script src="https://app.cal.com/embed.js" async></script>
-      </Head>
       <body className={`${inter.variable} font-sans min-h-screen`}>
         {children}
       </body>

@@ -213,9 +213,9 @@ const products: ProductProps[] = [
   {
     title: "ENSNode",
     subtitle:
-      "Unlock new opportunities for ENS support in your web3 app with ENS Node, your gateway to a seamless fusion of richest on-chain and off-chain data from across the ENS ecosystem.",
+      "Unlock new opportunities for ENS support in your web3 app with ENSNode, your gateway to a seamless fusion of richest onchain and offchain data from across the ENS ecosystem.",
     label: {
-      title: "Developer API tooling",
+      title: "ENS Developer Tooling",
       icon: <ChartBarSquareIcon className="h-5 w-5 text-gray-500" />,
     },
     illustration: (
@@ -228,7 +228,8 @@ const products: ProductProps[] = [
         alt="hero"
       />
     ),
-    greenLabelText: "Coming soon",
+    buttonLabel: "Learn more",
+    buttonUrl: "https://ensnode.io",
     sectionId: "ens-node",
   },
 ];
