@@ -43,7 +43,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       ensName: "nick.eth",
       title: "Lead developer of ENS & Ethereum Foundation alum",
       displayName: "Nick Johnson",
-      twitterProfile: "https://twitter.com/nicksdjohnson",
+      twitterProfile: "https://x.com/nicksdjohnson",
     }),
   ],
   [
@@ -52,7 +52,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       ensName: "avsa.eth",
       title: "Ethereum Foundation Alumni & Co-founder of ENS",
       displayName: "Alex Van de Sande",
-      twitterProfile: "https://twitter.com/avsa",
+      twitterProfile: "https://x.com/avsa",
     }),
   ],
   [
@@ -61,7 +61,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       ensName: "validator.eth",
       title: "Community and Ecosystem Lead at ENS",
       displayName: "Kevin Gaspar",
-      twitterProfile: "https://twitter.com/ValidatorEth",
+      twitterProfile: "https://x.com/ValidatorEth",
     }),
   ],
   [
@@ -71,7 +71,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       title:
         "The fun, simple, & secure way to explore Web3, NFTs, & Ethereum 🌈",
       displayName: "Rainbow",
-      twitterProfile: "https://twitter.com/rainbowdotme",
+      twitterProfile: "https://x.com/rainbowdotme",
     }),
   ],
   [
@@ -80,7 +80,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       ensName: "mikedemarais.eth",
       title: "Co-founder of Rainbow Wallet",
       displayName: "Mike Demarais",
-      twitterProfile: "https://twitter.com/mikedemarais",
+      twitterProfile: "https://x.com/mikedemarais",
     }),
   ],
   [
@@ -88,7 +88,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     buildProfile({
       ensName: "inzhoop.eth",
       title: "Independent startup working on smart mobile wallet for Ethereum",
-      twitterProfile: "https://twitter.com/inzhoop",
+      twitterProfile: "https://x.com/inzhoop",
     }),
   ],
   [
@@ -98,7 +98,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       title:
         "Director of Marketing and Strategic Initiatives at Metamask and Consensys",
       displayName: "Jordan Spence",
-      twitterProfile: "https://twitter.com/spencecoin",
+      twitterProfile: "https://x.com/spencecoin",
     }),
   ],
   [
@@ -108,7 +108,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       title:
         "Building Ethereum Follow Protocol & Creator of Sign-In w/ Ethereum",
       displayName: "Brantly Millegan",
-      twitterProfile: "https://twitter.com/BrantlyMillegan",
+      twitterProfile: "https://x.com/BrantlyMillegan",
     }),
   ],
   [
@@ -116,7 +116,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     buildProfile({
       ensName: "chainlinkgod.eth",
       title: "Chainlink Community Ambassador",
-      twitterProfile: "https://twitter.com/ChainLinkGod",
+      twitterProfile: "https://x.com/ChainLinkGod",
     }),
   ],
   [
@@ -125,7 +125,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       ensName: "cory.eth",
       title: "Founder of OpenAvatar",
       displayName: "Cory Gabrielsen",
-      twitterProfile: "https://twitter.com/cory_eth",
+      twitterProfile: "https://x.com/cory_eth",
     }),
   ],
   [
@@ -134,7 +134,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       ensName: "poap.eth",
       title: "Bookmarks for your life",
       displayName: "Proof of Attendance Protocol",
-      twitterProfile: "https://twitter.com/poapxyz",
+      twitterProfile: "https://x.com/poapxyz",
     }),
   ],
   [
@@ -144,7 +144,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       title:
         "Cofounder Giveth, CommonsStack, GeneralMagic, Dappnode & DECENTRAL",
       displayName: "Griff Green",
-      twitterProfile: "https://twitter.com/thegrifft",
+      twitterProfile: "https://x.com/thegrifft",
     }),
   ],
   [
@@ -152,7 +152,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     buildProfile({
       ensName: "coltron.eth",
       title: "ENS Public Goods Steward",
-      twitterProfile: "https://twitter.com/Coltron_eth",
+      twitterProfile: "https://x.com/Coltron_eth",
     }),
   ],
   [
@@ -160,7 +160,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     buildProfile({
       ensName: "simona.eth",
       title: "ENS Public Goods Steward, Governance at DELV & Optimism",
-      twitterProfile: "https://twitter.com/Sim_Pop",
+      twitterProfile: "https://x.com/Sim_Pop",
     }),
   ],
   [
@@ -169,7 +169,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       ensName: "ceresstation.eth",
       title: "Co-founder Gitcoin & Kernel",
       displayName: "Scott Moore",
-      twitterProfile: "https://twitter.com/notscottmoore",
+      twitterProfile: "https://x.com/notscottmoore",
     }),
   ],
   [
@@ -177,7 +177,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     buildProfile({
       ensName: "liubenben.eth",
       title: "Building ensuser.com for the Chinese ENS Community",
-      twitterProfile: "https://twitter.com/forlbb",
+      twitterProfile: "https://x.com/forlbb",
     }),
   ],
   [
@@ -185,7 +185,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     buildProfile({
       ensName: "garypalmerjr.eth",
       title: "ENS Advocate and Founder of Web3Domains",
-      twitterProfile: "https://twitter.com/garypalmerjr",
+      twitterProfile: "https://x.com/garypalmerjr",
     }),
   ],
   [
@@ -193,7 +193,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     buildProfile({
       ensName: "master.eth",
       title: "ENS Advocate",
-      twitterProfile: "https://twitter.com/seekmine",
+      twitterProfile: "https://x.com/seekmine",
     }),
   ],
   [
@@ -201,7 +201,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     buildProfile({
       ensName: "superphiz.eth",
       title: "Ethereum Decentralized Staking Advocate",
-      twitterProfile: "https://twitter.com/superphiz",
+      twitterProfile: "https://x.com/superphiz",
     }),
   ],
   [
@@ -210,7 +210,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       ensName: "jalil.eth",
       title: "Intangible things at Visualize Value.",
       displayName: "Jalil Wahdatehagh",
-      twitterProfile: "https://twitter.com/jalil_eth",
+      twitterProfile: "https://x.com/jalil_eth",
     }),
   ],
   [
@@ -218,7 +218,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     buildProfile({
       ensName: "bosco.eth",
       title: "Love Freedom and Public Goods 💚",
-      twitterProfile: "https://twitter.com/amboscoboinik",
+      twitterProfile: "https://x.com/amboscoboinik",
     }),
   ],
   [
@@ -226,7 +226,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     buildProfile({
       ensName: "krypto.eth",
       title: "Poland ENS Master",
-      twitterProfile: "https://twitter.com/CryptoDodoPL",
+      twitterProfile: "https://x.com/CryptoDodoPL",
     }),
   ],
   [
@@ -235,7 +235,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       ensName: "wslyvh.eth",
       title: "Events at Ethereum Foundation",
       displayName: "Wesley",
-      twitterProfile: "https://twitter.com/wslyvh",
+      twitterProfile: "https://x.com/wslyvh",
     }),
   ],
   [
@@ -244,7 +244,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       ensName: "premm.eth",
       title: "Founder at Unruggable Labs, ENS Fellow",
       displayName: "Prem Makeig",
-      twitterProfile: "https://twitter.com/nxt3d",
+      twitterProfile: "https://x.com/nxt3d",
     }),
   ],
   [
@@ -253,7 +253,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       ensName: "fireeyesdao.eth",
       title: "Delegate for Optimism, ENS, GitCoin, Rocket Pool, & Safe",
       displayName: "Fire Eyes DAO",
-      twitterProfile: "https://twitter.com/fireeyesgov",
+      twitterProfile: "https://x.com/fireeyesgov",
     }),
   ],
   [
@@ -261,7 +261,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     buildProfile({
       ensName: "spikewatanabe.eth",
       title: "ENS Delegate & experienced investment banker",
-      twitterProfile: "https://twitter.com/spikewatanabe",
+      twitterProfile: "https://x.com/spikewatanabe",
     }),
   ],
   [
@@ -270,7 +270,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       ensName: "alextnetto.eth",
       title: "Co-founder of Blockful, building public goods for DAOs",
       displayName: "Alex Netto",
-      twitterProfile: "https://twitter.com/alextnetto",
+      twitterProfile: "https://x.com/alextnetto",
     }),
   ],
   [
@@ -279,7 +279,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       ensName: "elbagococina.eth",
       title:
         "Co-founder Karpatkey, Core Treasury for GnosisDAO, Balancer, ENS, CoWSwap, and Lido",
-      twitterProfile: "https://twitter.com/elbagococina",
+      twitterProfile: "https://x.com/elbagococina",
     }),
   ],
   [
@@ -288,7 +288,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       ensName: "she256.eth",
       title:
         "Nonprofit dedicated to increasing diversity in the blockchain space",
-      twitterProfile: "https://twitter.com/she_256",
+      twitterProfile: "https://x.com/she_256",
     }),
   ],
   [
@@ -296,7 +296,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     buildProfile({
       ensName: "limes.eth",
       title: "ENS DAO Steward & Secretary - Growth at Layer3",
-      twitterProfile: "https://twitter.com/limes_eth",
+      twitterProfile: "https://x.com/limes_eth",
     }),
   ],
   [
@@ -304,7 +304,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     buildProfile({
       ensName: "nimi.eth",
       title: "Your personal web3 page",
-      twitterProfile: "https://twitter.com/0xNimi",
+      twitterProfile: "https://x.com/0xNimi",
     }),
   ],
   [
@@ -314,7 +314,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       title:
         "Founder of Rotki, the portfolio tracker that protects your privacy",
       displayName: "Lefteris Karapetsas",
-      twitterProfile: "https://twitter.com/LefterisJP",
+      twitterProfile: "https://x.com/LefterisJP",
     }),
   ],
   [
@@ -323,7 +323,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       ensName: "mihal.eth",
       title: "Blockchain Engineer",
       displayName: "David Mihal",
-      twitterProfile: "https://twitter.com/dmihal",
+      twitterProfile: "https://x.com/dmihal",
     }),
   ],
   [
@@ -331,7 +331,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     buildProfile({
       ensName: "ethlimo.eth",
       title: "Privacy-preserving ENS gateway",
-      twitterProfile: "https://twitter.com/eth_limo",
+      twitterProfile: "https://x.com/eth_limo",
     }),
   ],
   [
@@ -340,7 +340,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       ensName: "gregskril.eth",
       title: "Developer at ENS Labs",
       displayName: "Greg Skriloff",
-      twitterProfile: "https://twitter.com/gregskril",
+      twitterProfile: "https://x.com/gregskril",
     }),
   ],
   [
@@ -348,7 +348,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     buildProfile({
       ensName: "taytems.eth",
       title: "Developer at ENS Labs",
-      twitterProfile: "https://twitter.com/taytemss",
+      twitterProfile: "https://x.com/taytemss",
     }),
   ],
   [
@@ -356,7 +356,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     buildProfile({
       ensName: "184.eth",
       title: "Support at ENS Labs & ENS Ecosystem Steward",
-      twitterProfile: "https://twitter.com/184eth",
+      twitterProfile: "https://x.com/184eth",
     }),
   ],
   [
@@ -365,7 +365,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       ensName: "matoken.eth",
       title: "Developer at ENS Labs",
       displayName: "Makoto Inoue",
-      twitterProfile: "https://twitter.com/makoto_inoue",
+      twitterProfile: "https://x.com/makoto_inoue",
     }),
   ],
   [
@@ -374,7 +374,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       ensName: "jefflau.eth",
       title: "Core Team Leader - ENS Labs",
       displayName: "Jeff Lau",
-      twitterProfile: "https://twitter.com/_jefflau",
+      twitterProfile: "https://x.com/_jefflau",
     }),
   ],
   [
@@ -382,7 +382,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     buildProfile({
       ensName: "james.eth",
       title: "DAO Governance",
-      twitterProfile: "https://twitter.com/blockchainjames",
+      twitterProfile: "https://x.com/blockchainjames",
     }),
   ],
   [
@@ -390,7 +390,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     buildProfile({
       ensName: "lightwalker.eth",
       title: "Founder at NameHash Labs",
-      twitterProfile: "https://twitter.com/lightwalker_eth",
+      twitterProfile: "https://x.com/lightwalker_eth",
     }),
   ],
   [
@@ -398,7 +398,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     buildProfile({
       ensName: "caldonia.eth",
       title: "Founder at NameHash Labs",
-      twitterProfile: "https://twitter.com/caldonia_eth",
+      twitterProfile: "https://x.com/caldonia_eth",
     }),
   ],
   [
@@ -406,7 +406,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     buildProfile({
       ensName: "kwrobel.eth",
       title: "Engineering",
-      twitterProfile: "https://twitter.com/kwrobel_eth",
+      twitterProfile: "https://x.com/kwrobel_eth",
     }),
   ],
   [
@@ -415,7 +415,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       ensName: "notrab.eth",
       title: "Engineering",
       displayName: "Jamie Barton",
-      twitterProfile: "https://twitter.com/notrab",
+      twitterProfile: "https://x.com/notrab",
     }),
   ],
   [
@@ -423,7 +423,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     buildProfile({
       ensName: "theloner.eth",
       title: "UX/UI Design",
-      twitterProfile: "https://twitter.com/theloner_eth",
+      twitterProfile: "https://x.com/theloner_eth",
     }),
   ],
   [
@@ -431,7 +431,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     buildProfile({
       ensName: "frankind.eth",
       title: "Engineering",
-      twitterProfile: "https://twitter.com/frankind_eth",
+      twitterProfile: "https://x.com/frankind_eth",
     }),
   ],
   [
@@ -498,8 +498,8 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     buildProfile({
       ensName: "shrugs.eth",
       title: "Engineering",
-      displayName: "Matt Condon",
-      twitterProfile: "https://x.com/mattgcondon",
+      displayName: "one of the many matts",
+      twitterProfile: "https://x.com/1ofthemanymatts",
     }),
   ],
   [
