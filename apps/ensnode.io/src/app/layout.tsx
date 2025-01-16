@@ -50,9 +50,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Head>
-        <script src="https://app.cal.com/embed.js" async></script>
-      </Head>
       <body className={`${inter.variable} font-sans min-h-screen`}>
         {children}
       </body>

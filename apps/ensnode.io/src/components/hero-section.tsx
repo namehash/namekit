@@ -3,7 +3,7 @@ import { ExternalLinkIcon, GithubIcon } from "./icons";
 
 export const HeroSection = () => {
   return (
-    <section className="animate-fadeIn justify-center h-screen relative w-full lg:px-10 px-5 flex flex-col items-center overflow-hidden ens-webfont">
+    <section className="animate-fadeIn justify-center h-screen relative w-full lg:px-10 px-5 flex flex-col items-center overflow-hidden">
       <h1 className="text-4xl leading-10 font-bold lg:font-extrabold text-center lg:text-5xl flex items-center justify-center gap-2">
         ENSNode
         <span className="text-sm px-2 py-0.5 -translate-y-1 -translate-x-1 bg-black text-white rounded-full">
