@@ -1,0 +1,30 @@
+{
+  "name": "ensnode.io",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@types/react-dom": "18.3.1",
+    "classcat": "5.0.5",
+    "eslint-config-next": "14.2.14",
+    "next": "14.2.21",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "@namehash/internal": "workspace:*",
+    "@namehash/ens-webfont": "workspace:*",
+    "@namehash/namekit-react": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "22.7.4",
+    "@types/react": "18.3.1",
+    "eslint": "8.57.1",
+    "tailwindcss": "3.4.13",
+    "ts-prune": "^0.10.3",
+    "typescript": "5.6.2"
+  }
+}
