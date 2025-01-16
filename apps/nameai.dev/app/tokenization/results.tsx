@@ -21,14 +21,14 @@ export default async function Results({ name }: ResultsProps) {
       <div>
         <h3 className="text-lg font-semibold mb-2">Label For Analysis</h3>
 
-        <p className="ens-webfont flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm">
+        <p className="bg-white ens-webfont flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm">
           {result.nameai.analysis.inspection.label}
         </p>
       </div>
 
       <div>
         <h3 className="text-lg font-semibold mb-2">Top Tokenization</h3>
-        <div className="flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm">
+        <div className="bg-white flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm">
           {topTokenization.length > 0 ? (
             topTokenization.map((token, index) => (
               <span
@@ -60,7 +60,7 @@ export default async function Results({ name }: ResultsProps) {
         {result.nameai.analysis.tokenizations.map((tokenization, index) => (
           <div
             key={index}
-            className="flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm"
+            className="bg-white flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm"
           >
             {tokenization.tokens.map((token: string, tokenIndex: any) => (
               <span

@@ -1,4 +1,5 @@
 import "./globals.css";
+import "@namehash/namekit-react/styles.css";
 import "@namehash/ens-webfont";
 
 import { Inter } from "next/font/google";
@@ -11,6 +12,7 @@ import { TwitterIcon } from "@/components/twitter-icon";
 import { FarcasterIcon } from "@/components/farcaster-icon";
 import { TelegramIcon } from "@/components/telegram-icon";
 import type { Metadata } from "next";
+import { Button } from "@namehash/namekit-react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -53,6 +55,17 @@ const footerResources = [
   },
 ];
 
+const demoLinks = [
+  {
+    text: "Tokenization",
+    href: "/tokenization",
+  },
+  {
+    text: "AI Sort",
+    href: "/sort",
+  },
+];
+
 export default function RootLayout({
   children,
 }: {
@@ -66,39 +79,26 @@ export default function RootLayout({
             <div className="max-w-7xl mx-auto items-center justify-between flex flex-row px-6">
               <div className="flex flex-row lg:gap-2 xl:gap-7 justify-between items-center">
                 <div className="flex flex-row justify-between items-center gap-1 cursor-pointer flex-shri0 pr-2">
-                  <a
+                  <Link
                     href="/"
                     className="text-black not-italic font-bold text-[22.683px] leading-[22.683px] tracking-[-0.907px] sm:text-[27.816px] sm:leading-[27.816px] sm:tracking-[-1.113px]"
                   >
                     NameAI
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="flex flex-row items-center justify-between md:gap-5 h-[40px]">
-                <div className="hidden items-center justify-center lg:flex gap-2">
-                  <div className="hidden items-center justify-center xl:flex gap-2">
-                    {/* <Button variant="ghost" asChild>
-                      <Link href="http://100.24.45.225/docs">Docs</Link>
-                    </Button> */}
-
-                    {/* <Button variant="ghost" asChild>
-                      <Link href="https://github.com/namehash/namekit">
-                        <GithubIcon className="hidden md:block fill-current" />{" "}
-                        GitHub
-                      </Link>
-                    </Button> */}
-                  </div>
-
-                  {/* <Button variant="ghost" asChild>
-                    <a href="https://namehashlabs.org/contact" target="_blank">
-                      Contact
-                    </a>
-                  </Button> */}
+                <div className="items-center justify-center flex gap-2">
+                  {demoLinks.map((link) => (
+                    <Button key={link.text} variant="ghost" asChild>
+                      <Link href={link.href}>{link.text}</Link>
+                    </Button>
+                  ))}
                 </div>
               </div>
             </div>
           </header>
-          <main className="flex-1 py-12 md:py-20">{children}</main>
+          <main>{children}</main>
           <footer className="lg:px-[50px] px-5 flex items-center justify-center w-full border-t border-gray-200">
             <div className="pt-8 pb-5 flex flex-col gap-10 items-start justify-between w-full max-w-[1216px]">
               <div className="w-full gap-5 flex flex-col lg:flex-row lg:justify-between">

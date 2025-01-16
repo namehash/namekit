@@ -93,6 +93,9 @@ importers:
       '@namehash/nameai':
         specifier: workspace:*
         version: link:../../packages/nameai-sdk
+      '@namehash/namekit-react':
+        specifier: workspace:*
+        version: link:../../packages/namekit-react
       next:
         specifier: 14.2.21
         version: 14.2.21(@babel/core@7.24.5)(@opentelemetry/api@1.4.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
