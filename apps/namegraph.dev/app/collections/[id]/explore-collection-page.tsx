@@ -114,6 +114,7 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
     setLoadingCollectionMembers(true);
     fetchCollectionMembers(id, {
       offset: (params.page - 1) * navigationConfig.itemsPerPage,
+      limit: navigationConfig.itemsPerPage,
     })
       .then((res) => {
         if (res) {
