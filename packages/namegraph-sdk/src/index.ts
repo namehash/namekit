@@ -19,6 +19,9 @@ import {
   DEFAULT_NAME_DIVERSITY_RATIO,
   DEFAULT_MAX_PER_TYPE,
   DEFAULT_INSTANT_MODE,
+  NameGraphSortOrderOptions,
+  NameGraphCollection,
+  ScrambleMethod,
 } from "./utils";
 
 export class NameGraph {
@@ -111,9 +114,13 @@ export class NameGraph {
 
   public sampleCollectionMembers(
     collection_id: string,
+    options?: {
+      seed?: number;
+    },
   ): Promise<NameGraphSuggestion[]> {
     const max_sample_size = 5;
-    const seed = 5;
+    const random_seed = Number(Number(Math.random() * 10).toFixed(0));
+    const seed = options?.seed || random_seed;
 
     const payload = {
       collection_id,
@@ -142,11 +149,17 @@ export class NameGraph {
 
   public scrambleCollectionTokens(
     collection_id: string,
+    options?: {
+      seed?: number;
+      method?: ScrambleMethod;
+    },
   ): Promise<NameGraphSuggestion[]> {
-    const method = "left-right-shuffle-with-unigrams";
+    const default_method = ScrambleMethod["left-right-shuffle-with-unigrams"];
+    const method = options?.method || default_method;
     const n_top_members = 25;
     const max_suggestions = 10;
-    const seed = 0;
+    const random_seed = Number(Number(Math.random() * 10).toFixed(0));
+    const seed = options?.seed || random_seed;
 
     const payload = {
       collection_id,
@@ -162,17 +175,25 @@ export class NameGraph {
 
   public findCollectionsByString(
     query: string,
+    options?: {
+      offset?: number;
+      min_other_collections?: number;
+      max_other_collections?: number;
+      max_related_collections?: number;
+      max_total_collections?: number;
+      sort_order?: NameGraphSortOrderOptions;
+    },
   ): Promise<NameGraphFindCollectionsResponse> {
-    const offset = 0;
+    const offset = options?.offset || 0;
     const mode = "instant";
     const limit_names = 10;
     const max_per_type = 3;
-    const sort_order = "AI";
-    const min_other_collections = 0;
-    const max_other_collections = 3;
-    const max_total_collections = 6;
+    const sort_order = options?.sort_order || NameGraphSortOrderOptions.AI;
+    const min_other_collections = options?.min_other_collections || 0;
+    const max_other_collections = options?.max_other_collections || 3;
+    const max_total_collections = options?.max_total_collections || 6;
     const name_diversity_ratio = 0.5;
-    const max_related_collections = 3;
+    const max_related_collections = options?.max_related_collections || 3;
 
     const payload = {
       limit_names,
@@ -189,6 +210,23 @@ export class NameGraph {
     };
 
     return this.rawRequest("find_collections_by_string", "POST", payload);
+  }
+
+  public fetchCollectionMembers(
+    collection_id: string,
+    options?: {
+      offset?: number;
+      limit?: number;
+    },
+  ): Promise<NameGraphFetchTopCollectionMembersResponse> {
+    const payload = {
+      collection_id,
+      offset: options?.offset || 0,
+      limit: options?.limit || 10,
+      metadata: true,
+    };
+
+    return this.rawRequest("fetch_collection_members", "POST", payload);
   }
 
   public countCollectionsByString(
@@ -243,11 +281,17 @@ export class NameGraph {
 
   public findCollectionsByMember(
     label: string,
+    options?: {
+      offset?: number;
+      max_results?: number;
+      limit_names?: number;
+      sort_order?: NameGraphSortOrderOptions;
+    },
   ): Promise<NameGraphCollectionByMemberResponse> {
-    const limit_names = 10;
-    const offset = 0;
-    const sort_order = "AI";
-    const max_results = 3;
+    const limit_names = options?.limit_names || 10;
+    const offset = options?.offset || 0;
+    const sort_order = options?.sort_order || NameGraphSortOrderOptions.AI;
+    const max_results = options?.max_results || 3;
 
     const payload = {
       limit_names,
@@ -259,6 +303,16 @@ export class NameGraph {
     };
 
     return this.rawRequest("find_collections_by_member", "POST", payload);
+  }
+
+  public getCollectionById(
+    collection_id: string,
+  ): Promise<NameGraphCollection> {
+    const payload = {
+      collection_id,
+    };
+
+    return this.rawRequest("get_collection_by_id", "POST", payload);
   }
 
   async rawRequest(

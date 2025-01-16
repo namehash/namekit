@@ -484,10 +484,10 @@ async def test_impersonation_risk(nameguard: NameGuard):
 @pytest.mark.asyncio
 async def test_invalid_unicode(nameguard: NameGuard):
     with pytest.raises(UnicodeEncodeError):
-        await nameguard.inspect_name('mainnet', '\uD801\uDC37')
+        await nameguard.inspect_name('mainnet', '\ud801\udc37')
 
     with pytest.raises(UnicodeEncodeError):
-        Web3.keccak(text='\uD801\uDC37')
+        Web3.keccak(text='\ud801\udc37')
 
 
 def test_grapheme_codepoints(nameguard: NameGuard):

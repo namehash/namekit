@@ -2,9 +2,15 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import {
   DEFAULT_FULL_MODE,
+  NameGraphCollection,
+  NameGraphCollectionByMemberResponse,
+  NameGraphFetchTopCollectionMembersResponse,
+  NameGraphFindCollectionsResponse,
   NameGraphGroupedByCategoryResponse,
   NameGraphGroupingCategory,
+  NameGraphSortOrderOptions,
   NameGraphSuggestion,
+  ScrambleMethod,
 } from "@namehash/namegraph-sdk/utils";
 import { createNameGraphClient } from "@namehash/namegraph-sdk";
 
@@ -108,3 +114,120 @@ export const getCollectionsForQuery = async (
 
   return nameGeneratorSuggestions;
 };
+
+export const findCollectionsByString = async (
+  input: string,
+  options?: {
+    offset?: number;
+    min_other_collections?: number;
+    max_other_collections?: number;
+    max_total_collections?: number;
+    max_related_collections?: number;
+    sort_order?: NameGraphSortOrderOptions;
+  },
+): Promise<NameGraphFindCollectionsResponse> => {
+  let query = input;
+  if (input.includes(".")) {
+    query = input.split(".")[0];
+  }
+
+  const nameGeneratorSuggestions =
+    await NameGraphClient.findCollectionsByString(query, options);
+
+  return nameGeneratorSuggestions;
+};
+
+export const findCollectionsByCollection = async (
+  collection_id: string,
+): Promise<NameGraphFindCollectionsResponse> => {
+  const nameGeneratorSuggestions =
+    await NameGraphClient.findCollectionsByCollection(collection_id);
+
+  return nameGeneratorSuggestions;
+};
+
+export const fetchCollectionMembers = async (
+  collection_id: string,
+  options?: {
+    offset?: number;
+    limit?: number;
+  },
+): Promise<NameGraphFetchTopCollectionMembersResponse> => {
+  const nameGeneratorSuggestions = await NameGraphClient.fetchCollectionMembers(
+    collection_id,
+    options,
+  );
+
+  return nameGeneratorSuggestions;
+};
+
+export const findCollectionsByMember = async (
+  query: string,
+  options?: {
+    offset?: number;
+    max_results?: number;
+    limit_names?: number;
+    sort_order?: NameGraphSortOrderOptions;
+  },
+): Promise<NameGraphCollectionByMemberResponse> => {
+  const nameGeneratorSuggestions =
+    await NameGraphClient.findCollectionsByMember(query, options);
+
+  return nameGeneratorSuggestions;
+};
+
+export const getCollectionById = async (
+  collection_id: string,
+): Promise<NameGraphCollection> => {
+  const collectionById = await NameGraphClient.getCollectionById(collection_id);
+
+  return collectionById;
+};
+
+export const sampleNamesByCollectionId = async (
+  collectionId: string,
+  options?: {
+    seed?: number;
+  },
+): Promise<NameGraphSuggestion[]> => {
+  const nameGeneratorSuggestions =
+    await NameGraphClient.sampleCollectionMembers(collectionId, options);
+
+  return nameGeneratorSuggestions;
+};
+
+export const scrambleNamesByCollectionId = async (
+  collectionId: string,
+  options?: {
+    seed?: number;
+    method?: ScrambleMethod;
+  },
+): Promise<NameGraphSuggestion[]> => {
+  const nameGeneratorSuggestions =
+    await NameGraphClient.scrambleCollectionTokens(collectionId, options);
+
+  return nameGeneratorSuggestions;
+};
+
+/**
+ * Random nice colors pallete
+ */
+export const customizedPillsColors = [
+  "#E7DBF7",
+  "#1FA3C7",
+  "#FE097C",
+  "#FFBE00",
+  "#DB3D58",
+  "#01C69A",
+  "#8464CA",
+  "#E84233",
+  "#F5851E",
+  "#CBECEC",
+  "#FDE2CB",
+  "#F0C3F3",
+];
+
+export const getRandomColor = () =>
+  customizedPillsColors[
+    Math.floor(Math.random() * customizedPillsColors.length)
+  ];

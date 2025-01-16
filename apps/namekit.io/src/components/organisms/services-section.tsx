@@ -535,11 +535,12 @@ const services: ServiceProps[] = [
   {
     title: "ENSNode",
     subtitle:
-      "NameKit seamlessly integrates with the (soon to be) open sourced ENSNode backend. ENSNode powers many of the special features in NameKit and accelerates your ENS integrations by removing a lot of the complexity you would otherwise encounter. Integrate with our free APIs or run everything in your own infrastructure.",
+      "NameKit is planned to integrate with an ENSNode backend that you can host in your own infrastructure. ENSNode will power many of the special features in NameKit and accelerate your ENS integrations by removing a lot of the complexity you would otherwise encounter.",
     label: {
-      title: "Developer API tooling",
+      title: "ENS Developer Tooling",
       icon: <ChartBarSquareIcon className="h-5 w-5 text-gray-500" />,
     },
+    buttonUrl: "https://ensnode.io",
     illustration: (
       <Image
         quality={100}
@@ -547,7 +548,7 @@ const services: ServiceProps[] = [
         height={360}
         loading="lazy"
         src="/images/namekit/ens-node-illustration.png"
-        alt="ENS Node Architecture Overview"
+        alt="ENSNode Architecture Overview"
       />
     ),
   },

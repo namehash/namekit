@@ -1,0 +1,31 @@
+name: NameAI Python - Lint
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "apps/api.nameai.dev/**"
+  pull_request:
+    branches: ["main", "staging"]
+    paths:
+      - "apps/api.nameai.dev/**"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout NameKit repo
+        uses: actions/checkout@v4
+
+      - name: Ruff Check
+        uses: chartboost/ruff-action@v1
+        with:
+          version: 0.6.7
+          src: "./apps/api.nameai.dev"
+
+      - name: Ruff Format
+        uses: chartboost/ruff-action@v1
+        with:
+          version: 0.6.7
+          args: "format --check"
+          src: "./apps/api.nameai.dev"

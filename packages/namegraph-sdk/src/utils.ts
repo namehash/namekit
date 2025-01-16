@@ -109,7 +109,7 @@ export type NameGraphCollectionByMemberResponse = {
     elasticsearch_processing_time_ms: number;
     elasticsearch_communication_time_ms: number;
   };
-  collections: NameGraphSuggestion[];
+  collections: NameGraphCollection[];
 };
 
 export type NameGraphCollection = {
@@ -167,6 +167,14 @@ export const DEFAULT_INSTANT_MODE = "instant";
 export const DEFAULT_ENABLE_LEARNING_TO_RANK = true;
 export const DEFAULT_NAME_DIVERSITY_RATIO = 0.5;
 export const DEFAULT_MAX_PER_TYPE = 2;
+export const NameGraphSortOrderOptions = {
+  AI: "AI",
+  AZ: "A-Z",
+  ZA: "Z-A",
+  ES: "ES",
+} as const;
+export type NameGraphSortOrderOptions =
+  (typeof NameGraphSortOrderOptions)[keyof typeof NameGraphSortOrderOptions];
 
 /**
  * Writers block suggestions and collections
@@ -237,3 +245,12 @@ export const sampleWritersBlockSuggestions = (
 
   return result;
 };
+
+export const ScrambleMethod = {
+  "left-right-shuffle": "left-right-shuffle",
+  "left-right-shuffle-with-unigrams": "left-right-shuffle-with-unigrams",
+  "full-shuffle": "full-shuffle",
+} as const;
+
+export type ScrambleMethod =
+  (typeof ScrambleMethod)[keyof typeof ScrambleMethod];
