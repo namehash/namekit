@@ -7,7 +7,7 @@ export const HeroSection = () => {
       <h1 className="text-4xl leading-10 font-bold lg:font-extrabold text-center lg:text-5xl flex items-center justify-center gap-2">
         ENSNode
         <span className="text-sm px-2 py-0.5 -translate-y-1 -translate-x-1 bg-black text-white rounded-full">
-          Alpha
+          alpha
         </span>
       </h1>
       <p className=" text-gray-500 mb-10 mt-2 text-lg leading-7 font-normal text-center">
