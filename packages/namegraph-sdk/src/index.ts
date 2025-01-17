@@ -119,8 +119,7 @@ export class NameGraph {
     },
   ): Promise<NameGraphSuggestion[]> {
     const max_sample_size = 5;
-    const random_seed = Number(Number(Math.random() * 10).toFixed(0));
-    const seed = options?.seed || random_seed;
+    const seed = options?.seed;
 
     const payload = {
       collection_id,
@@ -158,8 +157,7 @@ export class NameGraph {
     const method = options?.method || default_method;
     const n_top_members = 25;
     const max_suggestions = 10;
-    const random_seed = Number(Number(Math.random() * 10).toFixed(0));
-    const seed = options?.seed || random_seed;
+    const seed = options?.seed;
 
     const payload = {
       collection_id,
