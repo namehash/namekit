@@ -104,14 +104,14 @@ export interface NameAIReport {
    * this field will be 0. The score ranges from 0.0 to 1.0 inclusive, where 0.0 indicates least interesting
    * and 1.0 indicates most interesting.
    */
-  interesting_score: number;
+  sort_score: number;
 
   /**
    * The result of the NLP analysis on the label. This field will be undefined when the name is uninspected.
    * A name is considered uninspected when either:
    * 1. The count of unknown labels (distinct or non-distinct) exceeds MAX_INSPECTED_NAME_UNKNOWN_LABELS (5)
    * 2. The count of characters in the name (including dots) exceeds MAX_INSPECTED_NAME_CHARACTERS (200)
-   * When a name is uninspected, both purity_score and interesting_score will be 0, and nameguard.inspected will be false.
+   * When a name is uninspected, both purity_score and sort_score will be 0, and nameguard.inspected will be false.
    */
   analysis?: NLPLabelAnalysis;
 }
