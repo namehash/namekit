@@ -188,7 +188,7 @@ export class NameGraph {
     const mode = "instant";
     const limit_names = 10;
     const max_per_type = 3;
-    const sort_order = options?.sort_order || NameGraphSortOrderOptions.AI;
+    const sort_order = options?.sort_order || NameGraphSortOrderOptions.AI_LTR;
     const min_other_collections = options?.min_other_collections || 0;
     const max_other_collections = options?.max_other_collections || 3;
     const max_total_collections = options?.max_total_collections || 6;
@@ -245,7 +245,7 @@ export class NameGraph {
   ): Promise<NameGraphFindCollectionsResponse> {
     const limit_names = 10;
     const offset = 0;
-    const sort_order = "AI";
+    const sort_order = "AI-LTR";
     const max_related_collections = 3;
     const max_per_type = 3;
     const name_diversity_ratio = 0.5;
@@ -290,7 +290,7 @@ export class NameGraph {
   ): Promise<NameGraphCollectionByMemberResponse> {
     const limit_names = options?.limit_names || 10;
     const offset = options?.offset || 0;
-    const sort_order = options?.sort_order || NameGraphSortOrderOptions.AI;
+    const sort_order = options?.sort_order || NameGraphSortOrderOptions.AI_LTR;
     const max_results = options?.max_results || 3;
 
     const payload = {
