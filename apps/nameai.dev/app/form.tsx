@@ -52,6 +52,7 @@ export function Form({ initialValue = "", onSubmit }: FormProps) {
           className="ens-webfont flex-1"
           required
           defaultValue={initialValue}
+          autoComplete="off"
         />
         <SubmitButton />
       </div>
