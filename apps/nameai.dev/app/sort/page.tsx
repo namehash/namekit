@@ -49,7 +49,7 @@ export default async function SortPage() {
 const title = "AI Sort";
 const description = "Bring names more likely to be interesting to the top.";
 
-export const meta: Metadata = {
+export const metadata: Metadata = {
   title,
   description,
   openGraph: {
