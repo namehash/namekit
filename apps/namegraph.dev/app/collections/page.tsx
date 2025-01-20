@@ -40,10 +40,10 @@ const FromNameGraphSortOrderToDropdownTextContent: Record<
   NameGraphSortOrderOptions,
   string
 > = {
-  [NameGraphSortOrderOptions.AI_LTR]: "AI",
+  [NameGraphSortOrderOptions.AI]: "AI with Learning to Rank",
   [NameGraphSortOrderOptions.AZ]: "A-Z (asc)",
-  [NameGraphSortOrderOptions.ZA]: "Z-A (des)",
-  [NameGraphSortOrderOptions.AI]: "Default scoring",
+  [NameGraphSortOrderOptions.ZA]: "Z-A (desc)",
+  [NameGraphSortOrderOptions.RELEVANCE]: "Relevance",
 };
 
 export default function ExploreCollectionsPage() {
@@ -54,7 +54,7 @@ export default function ExploreCollectionsPage() {
   const DEFAULT_COLLECTIONS_PARAMS: Record<string, any> = {
     search: "",
     page: DEFAULT_PAGE_NUMBER,
-    orderBy: NameGraphSortOrderOptions.AI_LTR,
+    orderBy: NameGraphSortOrderOptions.AI,
     exactMatch: false,
   };
   type DefaultDomainFiltersType = typeof DEFAULT_COLLECTIONS_PARAMS;
@@ -82,7 +82,7 @@ export default function ExploreCollectionsPage() {
 
     queryCollections({
       search: params.search || "",
-      orderBy: params.orderBy || NameGraphSortOrderOptions.AI_LTR,
+      orderBy: params.orderBy || NameGraphSortOrderOptions.AI,
       page: params.page || 1,
       exactMatch: params.exactMatch,
     });
@@ -92,7 +92,7 @@ export default function ExploreCollectionsPage() {
     setParams({ orderBy });
     queryCollections({
       search: params.search || "",
-      orderBy: orderBy || NameGraphSortOrderOptions.AI_LTR,
+      orderBy: orderBy || NameGraphSortOrderOptions.AI,
       page: params.page || 1,
       exactMatch: params.exactMatch,
     });
@@ -102,7 +102,7 @@ export default function ExploreCollectionsPage() {
     setParams({ page });
     queryCollections({
       search: params.search || "",
-      orderBy: params.orderBy || NameGraphSortOrderOptions.AI_LTR,
+      orderBy: params.orderBy || NameGraphSortOrderOptions.AI,
       page: page || 1,
       exactMatch: params.exactMatch,
     });
@@ -430,7 +430,7 @@ export default function ExploreCollectionsPage() {
                                       search: params.search || "",
                                       orderBy:
                                         params.orderBy ||
-                                        NameGraphSortOrderOptions.AI_LTR,
+                                        NameGraphSortOrderOptions.AI,
                                       page: params.page || 1,
                                       exactMatch: pressed,
                                     });
@@ -448,7 +448,7 @@ export default function ExploreCollectionsPage() {
                                 <Select
                                   defaultValue={
                                     params.orderBy ||
-                                    NameGraphSortOrderOptions.AI_LTR
+                                    NameGraphSortOrderOptions.AI
                                   }
                                   onValueChange={(newValue) =>
                                     handleOrderBy(

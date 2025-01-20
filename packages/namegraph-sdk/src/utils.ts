@@ -168,10 +168,10 @@ export const DEFAULT_ENABLE_LEARNING_TO_RANK = true;
 export const DEFAULT_NAME_DIVERSITY_RATIO = 0.5;
 export const DEFAULT_MAX_PER_TYPE = 2;
 export const NameGraphSortOrderOptions = {
-  AI_LTR: "AI-LTR",
+  AI: "AI",
   AZ: "A-Z",
   ZA: "Z-A",
-  AI: "AI",
+  RELEVANCE: "Relevance",
 } as const;
 export type NameGraphSortOrderOptions =
   (typeof NameGraphSortOrderOptions)[keyof typeof NameGraphSortOrderOptions];
