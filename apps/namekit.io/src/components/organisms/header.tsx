@@ -20,6 +20,13 @@ export const Header = () => {
         </Link>
       ),
     },
+    {
+      element: (
+        <Link target="_blank" href="https://alpha.namekit.io">
+          Try the Alpha
+        </Link>
+      ),
+    },
   ];
 
   const NamekitDesktopNavigationLinks = [
@@ -114,9 +121,11 @@ export const Header = () => {
                           {NamekitMobileNavigationLinks.map((link, idx) => (
                             <li
                               key={String(link.element) + idx}
-                              className="cursor-pointer text-lg font-medium text-white"
+                              className="cursor-pointer text-lg font-medium text-white w-full"
                             >
-                              {link.element}
+                              <Button className="w-full" asChild>
+                                {link.element}
+                              </Button>
                             </li>
                           ))}
                         </ul>
