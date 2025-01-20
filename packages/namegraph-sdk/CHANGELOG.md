@@ -1,5 +1,16 @@
 # @namehash/namegraph-sdk
 
+## 0.4.0
+
+### Minor Changes
+
+- 343bbe9: Update NameGraph SDK to include new API methods
+- 61f3849: Add fetchCollectionsByMember method in NameGraph SDK package
+
+### Patch Changes
+
+- 23ce8d7: default seed for scrambleCollectionTokens
+
 ## 0.3.0
 
 ### Minor Changes
