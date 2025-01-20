@@ -6,7 +6,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 import Link from "next/link";
 import cc from "classcat";
-import { Button } from "@namehash/namekit-react";
+import { Button, IconButton } from "@namehash/namekit-react";
 
 export const Header = () => {
   const NamekitMobileNavigationLinks = [
@@ -95,11 +95,13 @@ export const Header = () => {
                           />
                         </Link>
                         <Popover.Button>
-                          <span className="sr-only">Close menu</span>
-                          <XMarkIcon
-                            className="block h-6 w-6 text-white"
-                            aria-hidden="true"
-                          />
+                          <IconButton>
+                            <span className="sr-only">Close menu</span>
+                            <XMarkIcon
+                              className="block h-6 w-6 text-white"
+                              aria-hidden="true"
+                            />
+                          </IconButton>
                         </Popover.Button>
                       </div>
                       <div
