@@ -36,6 +36,7 @@ import RaribleIcon from "../atoms/icons/rarible-icon";
 import CoinbaseNftIcon from "../atoms/icons/coinbase-nft-icon";
 import NamestoneLogo from "../atoms/icons/namestone-logo";
 import { Button, Heading, Link, Text } from "@namehash/namekit-react";
+import { ExploreNameGraphForm } from "../molecules/explore-namegraph-form";
 
 interface ServiceProps {
   label: {
@@ -322,7 +323,7 @@ const services: ServiceProps[] = [
         loading="lazy"
       />
     ),
-    // additionalContent: <ExploreNameGraphForm />,
+    additionalContent: <ExploreNameGraphForm />,
   },
   {
     title: "NameGuard integration",
