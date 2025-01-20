@@ -1,4 +1,5 @@
 import { CalendarButton } from "@namehash/internal";
+import { Heading, Text } from "@namehash/namekit-react";
 import Image from "next/image";
 interface GetYourWeb3NameSectionProps {
   title: string;
@@ -32,12 +33,13 @@ export const GetYourWeb3NameSection = ({
           />
         ))}
         <div className="p-[20px] flex justify-center items-center flex-col z-20">
-          <h3 className="mb-4 text-[24px] leading-[32px] lg:text-4xl lg:leading-10 font-bold text-center">
+          <Heading className="mb-4 text-[24px] leading-[32px] lg:text-4xl lg:leading-10 font-bold text-center">
             {title}
-          </h3>
-          <p className="leading-[24px] text-[14px] lg:text-lg lg:leading-8 font-normal mb-6 max-w-[638px] text-center">
+          </Heading>
+
+          <Text className="leading-[24px] text-[14px] lg:text-lg lg:leading-8 font-normal mb-6 max-w-[638px] text-center">
             {description}
-          </p>
+          </Text>
           <CalendarButton
             className="text-sm lg:text-[16px] leading-[24px] mt-5 bg-white z-20 text-black px-[16px] py-[9px] lg:px-[25px] lg:py-[13px] rounded-[8px] hover:bg-gray-50 transition-colors duration-200"
             variant="secondary"
