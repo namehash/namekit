@@ -17,6 +17,11 @@ export const HeroSection = () => {
           Easily integrate rich ENS user journeys into your wallet, app, or game
         </Text>
         <div className="flex items-center justify-center gap-4 animate-fadeIn">
+          <Button variant="primary" size="large" asChild>
+            <Link target="_blank" href="https://alpha.namekit.io">
+              Try now
+            </Link>
+          </Button>
           <Button variant="secondary" size="large" asChild>
             <Link target="_blank" href={"https://github.com/namehash/namekit"}>
               <GithubIcon className="w-5 h-5" />
