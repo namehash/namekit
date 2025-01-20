@@ -14,11 +14,11 @@ class Scorer:
 
     def score_label(self, label_analysis: NLPLabelAnalysis) -> Tuple[float, float]:
         """
-        Calculates the purity_score and interesting_score of the label.
-        Returns (purity_score, interesting_score).
+        Calculates the purity_score and sort_score of the label.
+        Returns (purity_score, sort_score).
         """
         purity = None
-        interesting = None
+        sort_score = None
 
         if self.label_is_unknown(label_analysis):
             # first check namehash because it is detected as not normalized
@@ -49,12 +49,12 @@ class Scorer:
                 purity = 11
             elif self.word_count(label_analysis) == 0:
                 purity = 12
-            # everything above will have purity == interesting
+            # everything above will have purity == sort_score
             elif self.word_count(label_analysis) > 0:
                 if not label_analysis.probability:
-                    interesting = 13
+                    sort_score = 13
                 else:
-                    interesting = 13 + min(-1 / label_analysis.log_probability, 1.0)
+                    sort_score = 13 + min(-1 / label_analysis.log_probability, 1.0)
 
                 if self.word_count(label_analysis) >= 4:
                     purity = 13
@@ -68,13 +68,13 @@ class Scorer:
             if purity is not None:
                 purity += self.short_label_bonus(label_analysis)
 
-        if interesting is None:
-            interesting = purity
+        if sort_score is None:
+            sort_score = purity
 
-        if purity is None or interesting is None:
+        if purity is None or sort_score is None:
             raise ValueError('error in scorer algorithm')
 
-        return purity / 17, interesting / 14
+        return purity / 17, sort_score / 14
 
     def label_length(self, label_analysis: NLPLabelAnalysis) -> int:
         # not using char_length because it is only available in the normalized response model

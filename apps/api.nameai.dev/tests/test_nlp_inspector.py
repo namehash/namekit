@@ -31,7 +31,7 @@ def test_inspector_tokenize(nlp_inspector: 'NLPInspector', input, output):
     assert tokenized_labels[0]['tokens'] == tuple(output)
 
 
-def test_inspector_interesting_score_precision(nlp_inspector: 'NLPInspector'):
+def test_inspector_sort_score_precision(nlp_inspector: 'NLPInspector'):
     lab1 = 'mrscopcake'
     lab2 = 'likemrscopcake'
     resp1 = nlp_inspector.nlp_analyse_label(lab1)
@@ -47,7 +47,7 @@ def test_inspector_prob_when_word_count_null_0(nlp_inspector: 'NLPInspector'):
     assert resp.log_probability < -100000
 
 
-def test_inspector_interesting_score(nlp_inspector: 'NLPInspector'):
+def test_inspector_sort_score(nlp_inspector: 'NLPInspector'):
     lab1 = 'ilikeyourcat'
     lab2 = 'catlikeiyour'
     resp1 = nlp_inspector.nlp_analyse_label(lab1)

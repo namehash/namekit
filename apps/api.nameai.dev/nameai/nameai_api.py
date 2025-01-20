@@ -124,7 +124,7 @@ async def inspect_name_get(
 
     For names with multiple labels:
     - If the name has 2 labels (e.g., "nick.eth"), the analysis is performed on the first label ("nick").
-    - For 3 or more labels, only the first label is analyzed, but the NameRank scores (purity and interesting) are set to 0.
+    - For 3 or more labels, only the first label is analyzed, but the NameRank scores (purity and sort score) are set to 0.
 
     This endpoint does not perform automated labelhash resolution.
 
@@ -152,7 +152,7 @@ async def inspect_name_post(request: InspectNameRequest) -> NameAIResponse:
 
     For names with multiple labels:
     - If the name has 2 labels (e.g., "nick.eth"), the analysis is performed on the first label ("nick").
-    - For 3 or more labels, only the first label is analyzed, but the NameRank scores (purity and interesting) are set to 0.
+    - For 3 or more labels, only the first label is analyzed, but the NameRank scores (purity and sort score) are set to 0.
 
     This endpoint does not perform automated labelhash resolution.
 
