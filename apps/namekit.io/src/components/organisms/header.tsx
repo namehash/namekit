@@ -6,7 +6,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 import Link from "next/link";
 import cc from "classcat";
-import { Button } from "@namehash/namekit-react";
+import { Button, IconButton } from "@namehash/namekit-react";
 
 export const Header = () => {
   const NamekitMobileNavigationLinks = [
@@ -17,6 +17,13 @@ export const Header = () => {
       element: (
         <Link href="https://github.com/namehash/namekit" target="_blank">
           GitHub
+        </Link>
+      ),
+    },
+    {
+      element: (
+        <Link target="_blank" href="https://alpha.namekit.io">
+          Try the Alpha
         </Link>
       ),
     },
@@ -95,11 +102,13 @@ export const Header = () => {
                           />
                         </Link>
                         <Popover.Button>
-                          <span className="sr-only">Close menu</span>
-                          <XMarkIcon
-                            className="block h-6 w-6 text-white"
-                            aria-hidden="true"
-                          />
+                          <IconButton>
+                            <span className="sr-only">Close menu</span>
+                            <XMarkIcon
+                              className="block h-6 w-6 text-white"
+                              aria-hidden="true"
+                            />
+                          </IconButton>
                         </Popover.Button>
                       </div>
                       <div
@@ -112,9 +121,11 @@ export const Header = () => {
                           {NamekitMobileNavigationLinks.map((link, idx) => (
                             <li
                               key={String(link.element) + idx}
-                              className="cursor-pointer text-lg font-medium text-white"
+                              className="cursor-pointer text-lg font-medium text-white w-full"
                             >
-                              {link.element}
+                              <Button className="w-full" asChild>
+                                {link.element}
+                              </Button>
                             </li>
                           ))}
                         </ul>
