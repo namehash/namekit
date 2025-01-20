@@ -53,6 +53,7 @@ export function Form({ initialValue = "", onSubmit }: FormProps) {
           required
           defaultValue={initialValue}
           autoComplete="off"
+          data-1p-ignore
         />
         <SubmitButton />
       </div>
