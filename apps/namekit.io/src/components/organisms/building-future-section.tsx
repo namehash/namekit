@@ -4,6 +4,7 @@ import { RocketLaunchIcon } from "@heroicons/react/24/outline";
 import { Balancer } from "react-wrap-balancer";
 import IconLabel from "../atoms/icon-label";
 import { GithubIcon } from "../atoms";
+import { Heading, Text } from "@namehash/namekit-react";
 
 interface ItemProps {
   icon: React.ReactNode;
@@ -15,10 +16,13 @@ const Item = ({ icon, title, description }: ItemProps) => {
   return (
     <div className="flex flex-col items-start p-4 text-center py-4">
       <div className="p-2 border border-gray-300 rounded-full">{icon}</div>
-      <h2 className="text-lg leading-6 font-semibold mt-5">{title}</h2>
-      <p className="text-sm leading-6 font-normal text-start text-gray-500 mt-2">
+      <Heading className="font-semibold" as="h5">
+        {title}
+      </Heading>
+
+      <Text className="text-gray-500 leading-6 text-start text-sm mt-2">
         {description}
-      </p>
+      </Text>
     </div>
   );
 };
@@ -52,16 +56,16 @@ export const BuildFutureSection = () => {
           title="In Progress"
           icon={<RocketLaunchIcon className="w-5 h-5 text-gray-500" />}
         />
-        <h3 className="text-center text-4xl leading-10 font-bold">
-          What we’re building
-        </h3>
-        <p className="text-lg leading-7 font-normal text-gray-500 text-center">
+
+        <Heading>What we&apos;re building</Heading>
+
+        <Text className="text-gray-500 text-center text-lg">
           <Balancer>
             NameKit is currently in its alpha phase. Stay tuned for the beta
-            where we will begin open sourcing everything! We’ll soon be sharing
-            all of NameKit with the global developer community.
+            where we will begin open sourcing everything! We&apos;ll soon be
+            sharing all of NameKit with the global developer community.
           </Balancer>
-        </p>
+        </Text>
       </div>
       <div className="grid lg:grid-cols-3 grid-cols-1 justify-items-center max-w-[1216px]">
         {items.map((item, index) => (

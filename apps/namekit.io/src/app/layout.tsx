@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./../styles/globals.css";
+import "@namehash/namekit-react/styles.css";
 import "@namehash/ens-webfont";
 
 import Head from "next/head";
