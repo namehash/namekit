@@ -3,10 +3,9 @@ import "./../styles/globals.css";
 import "@namehash/namekit-react/styles.css";
 import "@namehash/ens-webfont";
 
-import Head from "next/head";
 import { Header } from "@/components/organisms/header";
-import { NamekitFooter } from "@/components/organisms/namekit-footer";
 import { Inter } from "next/font/google";
+import { Footer } from "@namehash/internal";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -60,13 +59,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Head>
-        <script src="https://app.cal.com/embed.js" async></script>
-      </Head>
-      <body className={`${inter.variable} font-sans`}>
+      <body
+        className={`${inter.variable} font-sans min-h-screen flex flex-col`}
+      >
         <Header />
-        {children}
-        <NamekitFooter />
+        <main className="flex-grow">{children}</main>
+        <Footer />
       </body>
     </html>
   );
