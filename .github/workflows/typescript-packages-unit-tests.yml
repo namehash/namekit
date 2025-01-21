@@ -1,6 +1,7 @@
 name: TypeScript Packages - Unit
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
