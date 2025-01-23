@@ -24,6 +24,8 @@ import {
 } from "@/components/collections/collections-grid-skeleton";
 import { useQueryParams } from "@/components/use-query-params";
 import { CollectionCard } from "@/components/collections/collection-card";
+import { buildENSName } from "@namehash/ens-utils";
+import { Link } from "@namehash/namekit-react";
 
 interface NavigationConfig {
   itemsPerPage: number;
@@ -122,11 +124,6 @@ export default function ExploreCollectionsPage() {
     search: string;
     exactMatch: boolean;
   }>({ search: params.search || "", exactMatch: params.exactMatch || false });
-
-  useEffect(() => {
-    console.log("New values for collections results:");
-    console.log(collections, params);
-  }, [collections]);
 
   const [loadingCollections, setLoadingCollections] = useState(true);
 
@@ -347,9 +344,14 @@ export default function ExploreCollectionsPage() {
             <h1 className="text-sm text-gray-500">
               Collection search results for
             </h1>
-            <h2 className="text-3xl font-bold mb-5 leading-9 truncate">
-              {params.search ? params.search : "______"}
-            </h2>
+            <div className="mt-1 mb-3">
+              <Link
+                href={`/name/${buildENSName(params.search.replace(" ", "")).name}`}
+                className="!text-3xl font-bold mb-5 leading-9 truncate"
+              >
+                {params.search ? params.search : "______"}
+              </Link>
+            </div>
 
             {/* Search Bar */}
             <div className="relative mb-10">

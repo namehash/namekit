@@ -29,6 +29,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Link } from "@namehash/namekit-react";
+import { buildENSName } from "@namehash/ens-utils";
 
 const notoBlack = Noto_Emoji({ preload: false });
 
@@ -360,14 +362,15 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                   collectionMembers[
                                     params.page
                                   ]?.suggestions.map((suggestion) => (
-                                    <div
+                                    <Link
+                                      href={`/name/${buildENSName(suggestion.name.replace(" ", "")).name}`}
+                                      className="bg-gray-100 rounded-full group-2 px-4 py-1 flex items-start"
                                       key={suggestion.name}
-                                      className="bg-gray-100 rounded-full groupp-2 px-4 flex items-start"
                                     >
                                       <div className="max-h-[20px] relative flex items-center justify-center overflow-hidden">
                                         {suggestion.name}
                                       </div>
-                                    </div>
+                                    </Link>
                                   ))
                                 ) : null}
                               </div>
@@ -436,14 +439,15 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                 <div className="flex flex-wrap gap-3 pl-3">
                                   {sampledNameIdeas?.map((suggestion) => {
                                     return (
-                                      <div
+                                      <Link
+                                        href={`/name/${buildENSName(suggestion.name.replace(" ", "")).name}`}
                                         key={suggestion.name}
-                                        className="bg-gray-100 rounded-full groupp-2 px-4 flex items-start"
+                                        className="bg-gray-100 rounded-full group-2 px-4 flex items-start"
                                       >
                                         <div className="relative flex items-center justify-center overflow-hidden">
                                           {suggestion.name}
                                         </div>
-                                      </div>
+                                      </Link>
                                     );
                                   })}
                                 </div>
@@ -504,14 +508,15 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                 <div className="flex flex-wrap gap-3 pl-3">
                                   {scrambledNameIdeas?.map((suggestion) => {
                                     return (
-                                      <div
+                                      <Link
+                                        href={`/name/${buildENSName(suggestion.name.replace(" ", "")).name}`}
                                         key={suggestion.name}
-                                        className="bg-gray-100 rounded-full groupp-2 px-4 flex items-start"
+                                        className="bg-gray-100 rounded-full group-2 px-4 flex items-start"
                                       >
                                         <div className="relative flex items-center justify-center overflow-hidden">
                                           {suggestion.name}
                                         </div>
-                                      </div>
+                                      </Link>
                                     );
                                   })}
                                 </div>
