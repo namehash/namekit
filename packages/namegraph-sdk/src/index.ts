@@ -243,7 +243,7 @@ export class NameGraph {
   ): Promise<NameGraphFindCollectionsResponse> {
     const limit_names = 10;
     const offset = 0;
-    const sort_order = "AI";
+    const sort_order = NameGraphSortOrderOptions.RELEVANCE;
     const max_related_collections = 3;
     const max_per_type = 3;
     const name_diversity_ratio = 0.5;

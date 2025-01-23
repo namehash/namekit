@@ -42,8 +42,8 @@ const FromNameGraphSortOrderToDropdownTextContent: Record<
 > = {
   [NameGraphSortOrderOptions.AI]: "AI with Learning to Rank",
   [NameGraphSortOrderOptions.AZ]: "A-Z (asc)",
-  [NameGraphSortOrderOptions.ZA]: "Z-A (des)",
-  [NameGraphSortOrderOptions.ES]: "Default scoring",
+  [NameGraphSortOrderOptions.ZA]: "Z-A (desc)",
+  [NameGraphSortOrderOptions.RELEVANCE]: "Relevance",
 };
 
 export default function ExploreCollectionsPage() {

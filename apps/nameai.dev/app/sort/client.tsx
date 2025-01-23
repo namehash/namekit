@@ -20,12 +20,12 @@ export function Client({ initialLabels }: { initialLabels: LabelItem[] }) {
         const result = await nameai.inspectName(label);
         const newLabelItem = {
           label,
-          interestingScore: result.nameai.interesting_score,
+          sortScore: result.nameai.sort_score,
         };
         setLabels((prevLabels) => {
           const updatedLabels = [...prevLabels, newLabelItem];
           return updatedLabels.sort(
-            (a, b) => b.interestingScore - a.interestingScore,
+            (a, b) => b.sortScore - a.sortScore,
           );
         });
       } else {

@@ -18,7 +18,7 @@ def nameai():
 def test_normalized(nameai: 'NameAI'):
     result = nameai.inspect_label('nick')
     assert abs(result.nameai.purity_score - 0.9976234705882353) < 0.0001, result.nameai.purity_score
-    assert abs(result.nameai.interesting_score - 0.9354685918689098) < 0.0001, result.nameai.interesting_score
+    assert abs(result.nameai.sort_score - 0.9354685918689098) < 0.0001, result.nameai.sort_score
     assert result.nameai.analysis.status == 'normalized'
     assert abs(result.nameai.analysis.probability - 0.0000317942695746393) < 0.0001, result.nameai.analysis.probability
     assert (
@@ -32,25 +32,25 @@ def test_name(nameai: 'NameAI'):
     result = nameai.inspect_name('')
     assert result.nameai.analysis.inspection.label == ''
     assert result.nameai.purity_score == 0
-    assert result.nameai.interesting_score == 0
+    assert result.nameai.sort_score == 0
     assert result.nameai.analysis.status == 'normalized'
 
     result = nameai.inspect_name('nick')
     assert result.nameai.analysis.inspection.label == 'nick'
     assert abs(result.nameai.purity_score - 0.9976234705882353) < 0.0001, result.nameai.purity_score
-    assert abs(result.nameai.interesting_score - 0.9354685918689098) < 0.0001, result.nameai.interesting_score
+    assert abs(result.nameai.sort_score - 0.9354685918689098) < 0.0001, result.nameai.sort_score
     assert result.nameai.analysis.status == 'normalized'
 
     result = nameai.inspect_name('nick.eth')
     assert result.nameai.analysis.inspection.label == 'nick'
     assert abs(result.nameai.purity_score - 0.9976234705882353) < 0.0001, result.nameai.purity_score
-    assert abs(result.nameai.interesting_score - 0.9354685918689098) < 0.0001, result.nameai.interesting_score
+    assert abs(result.nameai.sort_score - 0.9354685918689098) < 0.0001, result.nameai.sort_score
     assert result.nameai.analysis.status == 'normalized'
 
     result = nameai.inspect_name('nick.eth.eth')
     assert result.nameai.analysis.inspection.label == 'nick'
     assert result.nameai.purity_score == 0
-    assert result.nameai.interesting_score == 0
+    assert result.nameai.sort_score == 0
     assert result.nameai.analysis.status == 'normalized'
 
 
