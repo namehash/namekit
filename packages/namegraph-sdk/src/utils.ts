@@ -63,7 +63,7 @@ export type NameGraphSuggestion = {
     interpretation: (string | null)[];
     cached_status: string;
     categories: string[];
-    cached_interesting_score: number | null;
+    cached_sort_score: number | null;
     applied_strategies: string[][];
     collection_title: string | null;
     collection_id: string | null;
