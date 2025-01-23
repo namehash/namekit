@@ -26,7 +26,7 @@ from typing import Optional, Union, Tuple, cast
 
 from ens.constants import ENS_EXTENDED_RESOLVER_INTERFACE_ID, EMPTY_SHA3_BYTES
 from ens.ens import _resolver_supports_interface, ENS
-from ens.exceptions import ENSValidationError
+from ens.exceptions import ENSValidationError, ENSValueError
 from ens.utils import address_to_reverse_domain, is_empty_name, is_none_or_zero_address, Web3
 
 # from ens.utils import normalize_name
@@ -39,17 +39,17 @@ from web3.contract import Contract
 def label_to_hash(label: str) -> HexBytes:
     # label = normalize_name(label)
     if '.' in label:
-        raise ValueError(f"Cannot generate hash for label {label!r} with a '.'")
+        raise ENSValueError(f"Cannot generate hash for label {label!r} with a '.'")
     return Web3().keccak(text=label)
 
 
 def normal_name_to_hash(name: str) -> HexBytes:
     """
-    This method will not normalize the name. 'normal' name here means the name
-    should already be normalized before calling this method.
+    Hashes a pre-normalized name.
+    The normalization of the name is a prerequisite and is not handled by this function.
 
-    :param name:            the name to hash - should already be normalized
-    :return: namehash       the hash of the name
+    :param str name: A normalized name string to be hashed.
+    :return: namehash - the hash of the name
     :rtype: HexBytes
     """
     node = EMPTY_SHA3_BYTES
@@ -71,7 +71,7 @@ def raw_name_to_hash(name: str) -> HexBytes:
     behind the scenes. For advanced usage, it is a helpful utility.
 
     This normalizes the name with `nameprep
-    <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-137.md#name-syntax>`_
+    <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-137.md#name-syntax>`_  # blocklint: pragma # noqa: E501
     before hashing.
 
     :param str name: ENS name to hash
@@ -85,7 +85,7 @@ def raw_name_to_hash(name: str) -> HexBytes:
 
 
 def ens_encode_name(name: str) -> bytes:
-    """
+    r"""
     Encode a name according to DNS standards specified in section 3.1
     of RFC1035 with the following validations:
 
@@ -135,9 +135,7 @@ class OurENS(ENS):
 
         # To be absolutely certain of the name, via reverse resolution,
         # the address must match in the forward resolution
-        result = name if to_checksum_address(address) == self.address(name) else None
-
-        return result
+        return name if to_checksum_address(address) == self.address(name) else None
 
     def resolver(self, name: str) -> Optional['Contract']:
         """
@@ -154,7 +152,7 @@ class OurENS(ENS):
     def namehash(name: str) -> HexBytes:
         return raw_name_to_hash(name)
 
-    def _resolve(self, name: str, fn_name: str = 'addr') -> Optional[Union[ChecksumAddress, str]]:
+    def _resolve(self, name: str, fn_name: str = 'addr') -> Optional[Union[ChecksumAddress, str]]:  # OK
         # normal_name = normalize_name(name)
         normal_name = name
         resolver, current_name = self._get_resolver(normal_name, fn_name)
@@ -167,9 +165,9 @@ class OurENS(ENS):
         if _resolver_supports_interface(resolver, ENS_EXTENDED_RESOLVER_INTERFACE_ID):
             contract_func_with_args = (fn_name, [node])
 
-            calldata = resolver.encode_abi()(*contract_func_with_args)
+            calldata = resolver.encode_abi(*contract_func_with_args)
             contract_call_result = resolver.caller.resolve(
-                ens_encode_name(normal_name),  # TODO ens_encode_name
+                ens_encode_name(normal_name),
                 calldata,
             )
             result = self._decode_ensip10_resolve_data(contract_call_result, resolver, fn_name)
