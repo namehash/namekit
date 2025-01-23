@@ -4,14 +4,14 @@ import { createClient, MAX_INSPECTED_NAME_CHARACTERS } from ".";
 
 const nameai = createClient({
   // undefined will default to the production endpoint
-  nameaiEndpoint: process.env.NAMERANK_API_URI,
+  nameaiEndpoint: process.env.NAMEAI_API_URI,
 });
 
 // No mocking (we should probably mock)
 // Test urlencoded
 
 describe("inspectName", () => {
-  it("should fetch the NameRank report for a single name", async () => {
+  it("should fetch the NameAI report for a single name", async () => {
     const data = await nameai.inspectName("vitalìk.eth");
 
     expect(data.nameai.purity_score).toBeCloseTo(0.28995870588235295, 2);

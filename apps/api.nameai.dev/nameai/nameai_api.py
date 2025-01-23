@@ -54,10 +54,10 @@ async def inspect_label_get(
     ),
 ) -> NameAIResponse:
     """
-    ## Inspects a single label with NameRank and NameGuard.
+    ## Inspects a single label with NameAI and NameGuard.
 
-    Returns a `NameRankResponse` including:
-    1. A `NameRankReport` with NLP analysis and scoring for the label.
+    Returns a `NameAIResponse` including:
+    1. A `NameAIReport` with NLP analysis and scoring for the label.
        If the label is not inspected (e.g., due to length issues), the NLP analysis will be undefined.
     2. A `NameGuardReport` with details of all checks performed on the label.
 
@@ -73,10 +73,10 @@ async def inspect_label_get(
 )
 async def inspect_label_post(request: InspectLabelRequest) -> NameAIResponse:
     """
-    ## Inspects a single label with NameRank and NameGuard.
+    ## Inspects a single label with NameAI and NameGuard.
 
-    Returns a `NameRankResponse` including:
-    1. A `NameRankReport` with NLP analysis and scoring for the label.
+    Returns a `NameAIResponse` including:
+    1. A `NameAIReport` with NLP analysis and scoring for the label.
        If the label is not inspected (e.g., due to length issues), the NLP analysis will be None.
     2. A `NameGuardReport` with details of all checks performed on the label.
 
@@ -112,10 +112,10 @@ async def inspect_name_get(
     ),
 ) -> NameAIResponse:
     """
-    ## Inspects a single name with NameRank and NameGuard.
+    ## Inspects a single name with NameAI and NameGuard.
 
-    Returns a `NameRankResponse` including:
-    1. A `NameRankReport` with NLP analysis and scoring for the first label of the name.
+    Returns a `NameAIResponse` including:
+    1. A `NameAIReport` with NLP analysis and scoring for the first label of the name.
        If the name is not inspected (e.g., due to length issues), the NLP analysis will be None.
     2. A `NameGuardReport` with details of all checks performed on the name, including:
        - Consolidated checks on labels and graphemes in the name.
@@ -124,11 +124,11 @@ async def inspect_name_get(
 
     For names with multiple labels:
     - If the name has 2 labels (e.g., "nick.eth"), the analysis is performed on the first label ("nick").
-    - For 3 or more labels, only the first label is analyzed, but the NameRank scores (purity and sort score) are set to 0.
+    - For 3 or more labels, only the first label is analyzed, but the NameAI scores (purity and sort score) are set to 0.
 
     This endpoint does not perform automated labelhash resolution.
 
-    If the `name` is uninspected, the `NameGuardReport` component of the `NameRankResponse` will have the `inspected` field equal to `false`.
+    If the `name` is uninspected, the `NameGuardReport` component of the `NameAIResponse` will have the `inspected` field equal to `false`.
     """
     return nrank.inspect_name(name)
 
@@ -140,10 +140,10 @@ async def inspect_name_get(
 )
 async def inspect_name_post(request: InspectNameRequest) -> NameAIResponse:
     """
-    ## Inspects a single name with NameRank and NameGuard.
+    ## Inspects a single name with NameAI and NameGuard.
 
-    Returns a `NameRankResponse` including:
-    1. A `NameRankReport` with NLP analysis and scoring for the first label of the name.
+    Returns a `NameAIResponse` including:
+    1. A `NameAIReport` with NLP analysis and scoring for the first label of the name.
        If the name is not inspected (e.g., due to length issues), the NLP analysis will be None.
     2. A `NameGuardReport` with details of all checks performed on the name, including:
        - Consolidated checks on labels and graphemes in the name.
@@ -152,11 +152,11 @@ async def inspect_name_post(request: InspectNameRequest) -> NameAIResponse:
 
     For names with multiple labels:
     - If the name has 2 labels (e.g., "nick.eth"), the analysis is performed on the first label ("nick").
-    - For 3 or more labels, only the first label is analyzed, but the NameRank scores (purity and sort score) are set to 0.
+    - For 3 or more labels, only the first label is analyzed, but the NameAI scores (purity and sort score) are set to 0.
 
     This endpoint does not perform automated labelhash resolution.
 
-    If the `name` is uninspected, the `NameGuardReport` component of the `NameRankResponse` will have the `inspected` field equal to `false`.
+    If the `name` is uninspected, the `NameGuardReport` component of the `NameAIResponse` will have the `inspected` field equal to `false`.
     """
     return nrank.inspect_name(request.name)
 
