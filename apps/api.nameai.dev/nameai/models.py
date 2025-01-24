@@ -8,7 +8,7 @@ from nameguard.models import NameGuardReport
 class LabelStatus(str, Enum):
     normalized = 'normalized'
     unnormalized = 'unnormalized'
-    unknown = 'unknown'
+    # unknown = 'unknown' # not implemented yet
 
 
 class NLPLabelAnalysis(BaseModel):
@@ -53,9 +53,9 @@ class NameAIReport(BaseModel):
         ge=0.0,
         le=1.0,
     )
-    interesting_score: float = Field(
-        title='Interesting score of the input',
-        description='Score indicating how interesting/memorable the name is. For single labels, returns the score directly. For 2-label names (e.g., "nick.eth"), returns the score for the first label ("nick"). For 3 or more labels, returns 0. If the label is not inspected, this field will be 0. The score ranges from 0.0 to 1.0 inclusive, where 0.0 indicates least interesting and 1.0 indicates most interesting.',
+    sort_score: float = Field(
+        title='Sort score of the input',
+        description='Score indicating the relative ranking of the name. For single labels, returns the score directly. For 2-label names (e.g., "nick.eth"), returns the score for the first label ("nick"). For 3 or more labels, returns 0. If the label is not inspected, this field will be 0. The score ranges from 0.0 to 1.0 inclusive, where 0.0 indicates lowest rank and 1.0 indicates highest rank.',
         ge=0.0,
         le=1.0,
     )

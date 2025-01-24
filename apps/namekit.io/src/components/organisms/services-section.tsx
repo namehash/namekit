@@ -35,6 +35,7 @@ import NamespaceLogo from "../atoms/icons/namespace-logo";
 import RaribleIcon from "../atoms/icons/rarible-icon";
 import CoinbaseNftIcon from "../atoms/icons/coinbase-nft-icon";
 import NamestoneLogo from "../atoms/icons/namestone-logo";
+import { Button, Heading, Link, Text } from "@namehash/namekit-react";
 
 interface ServiceProps {
   label: {
@@ -86,27 +87,25 @@ export const Service = ({
             <div className="justify-center lg:justify-start flex">
               <div className="gap-2 bg-black inline-flex items-center bg-opacity-5 px-4 py-2 rounded-[20px]">
                 {label.icon}
-                <p>{label.title}</p>
+                <Text>{label.title}</Text>
               </div>
             </div>
 
-            <h2 className="text-2xl leading-8 lg:text-4xl lg:leading-10 font-bold lg:text-start text-center">
+            <Heading className="text-2xl g:text-4xl lg:text-start text-center">
               {title}
-            </h2>
-            <p className="text-gray-500 text-lg leading-7 lg:text-start text-center pr-2">
+            </Heading>
+
+            <Text className="text-lg text-gray-500 lg:text-start text-center pr-2">
               <Balancer>{subtitle}</Balancer>
-            </p>
+            </Text>
             {postSubtitle && <div className="w-full">{postSubtitle}</div>}
             {buttonUrl && (
-              <div className="flex lg:justify-start justify-center">
-                <a
-                  href={buttonUrl}
-                  target="_blank"
-                  className="border rounded-[8px] bg-black text-white px-4 py-2 transition-colors duration-200 hover:bg-gray-800 inline-flex items-center justify-center"
-                >
-                  Learn more
-                  <ExternalLinkIcon className="ml-3" />
-                </a>
+              <div>
+                <Button asChild>
+                  <Link href={buttonUrl} target="_blank">
+                    Learn more <ExternalLinkIcon className="ml-3" />
+                  </Link>
+                </Button>
               </div>
             )}
             {additionalContent && <>{additionalContent}</>}
@@ -154,13 +153,14 @@ const EarnFutureComponent = () => {
             </div>
           </div>
 
-          <h3 className="mb-1 text-lg leading-7 font-semibold">
+          <Heading as="h5">
             Craft your own unique premium pricing strategies
-          </h3>
-          <p className="text-sm leading-6 font-normal text-gray-500">
+          </Heading>
+
+          <Text className="text-sm text-gray-500">
             Offer unique value propositions for your community and be rewarded
             by setting price premiums above base name rates.
-          </p>
+          </Text>
         </div>
       </div>
 
@@ -184,13 +184,14 @@ const EarnFutureComponent = () => {
             </div>
           </div>
 
-          <h3 className="mb-1 text-lg leading-7 font-semibold">
+          <Heading className="mb-1" as="h5">
             Revenue sharing
-          </h3>
-          <p className="text-sm leading-6 font-normal text-gray-500">
+          </Heading>
+
+          <Text className="leading-6 text-sm text-gray-500">
             NameKit will automatically integrate with potential future ENS
             Referrer Programs.
-          </p>
+          </Text>
         </div>
         <div className="rounded-[12px] w-full border border-gray-200 py-4 px-5 flex flex-col bg-white z-20">
           <div className="mb-3">
@@ -199,12 +200,13 @@ const EarnFutureComponent = () => {
             </div>
           </div>
 
-          <h3 className="mb-1 text-lg leading-7 font-semibold">
+          <Heading className="mb-1" as="h5">
             Sell AI-generated avatars
-          </h3>
-          <p className="text-sm leading-6 font-normal text-gray-500">
+          </Heading>
+
+          <Text className="leading-6 text-sm text-gray-500">
             Customize the price of generating a tailored avatar for your users.
-          </p>
+          </Text>
         </div>
         <div className="rounded-[12px] w-full border border-gray-200 py-4 px-5 flex flex-col bg-white z-20">
           <div className="mb-3">
@@ -213,12 +215,12 @@ const EarnFutureComponent = () => {
             </div>
           </div>
 
-          <h3 className="mb-1 text-lg leading-7 font-semibold">
-            Automate name renewals
-          </h3>
-          <p className="text-sm leading-6 font-normal text-gray-500">
+          <Heading className="mb-1" as="h5">
+            Automate name renewals{" "}
+          </Heading>
+          <Text className="leading-6 text-sm text-gray-500">
             Define customized price premiums for auto-renewal services.
-          </p>
+          </Text>
         </div>
         <div className="rounded-[12px] w-full border border-gray-200 py-4 px-5 flex flex-col bg-white z-20">
           <div className="mb-3">
@@ -227,13 +229,13 @@ const EarnFutureComponent = () => {
             </div>
           </div>
 
-          <h3 className="mb-1 text-lg leading-7 font-semibold">
-            Custom revenue sharing rates
-          </h3>
-          <p className="text-sm leading-6 font-normal text-gray-500">
+          <Heading className="mb-1" as="h5">
+            Custom revenue sharing rates{" "}
+          </Heading>
+          <Text className="leading-6 text-sm text-gray-500">
             Monetize secondary market listings – earn $$ when a name sells
             through your app.
-          </p>
+          </Text>
         </div>
       </div>
       <div
@@ -271,9 +273,9 @@ const services: ServiceProps[] = [
       "Millions of the most desirable names are already taken. But don’t worry. Hope isn’t lost. The name you love could still be yours for the right price. NameKit automatically aggregates data across web3 about names listed for sale. Offers to buy a name through NameKit automatically appear across all major marketplaces.",
     postSubtitle: (
       <div className="flex flex-col gap-4">
-        <p className="text-gray-500 text-lg leading-7 font-normal lg:text-start text-center">
+        <Text className="text-lg leading-6 text-gray-500">
           Automatic integrations with:
-        </p>
+        </Text>
         <div className="flex flex-wrap gap-x-6 gap-y-4 items-center justify-center lg:justify-start">
           <EnsVisionIcon />
           <OpenSeaIcon />
@@ -281,9 +283,9 @@ const services: ServiceProps[] = [
           <X2y2Icon />
           <LooksRareIcon />
           <CoinbaseNftIcon />
-          <p className="text-lg leading-6 font-normal text-gray-500">
+          <Text className="text-lg leading-6 text-gray-500">
             + more than 10 more
-          </p>
+          </Text>
         </div>
       </div>
     ),
@@ -346,26 +348,27 @@ const services: ServiceProps[] = [
     title: "ENS names for your community",
     subtitle: (
       <>
-        Expand your brand’s reach and build community by issuing subnames.
+        Expand your brand&apos;s reach and build community by issuing subnames.
         NameKit integrates with your preferred strategy for subname
-        issuance—whether it’s offchain, L2s, or L1. Name searches in NameKit
-        default to “.eth” as the default root, but you can customize to
-        “.yourbrand.eth” or “.cb.id”{" "}
-        <a
+        issuance—whether it&apos;s offchain, L2s, or L1. Name searches in
+        NameKit default to &quot;.eth&quot; as the default root, but you can
+        customize to &quot;.yourbrand.eth&quot; or &quot;.cb.id&quot;{" "}
+        <Link
+          size="large"
+          variant="underline"
           target="_blank"
           href="https://profile.coinbase.com/"
-          className="underline hover:text-black transition-colors duration-200"
         >
           as done by Coinbase
-        </a>
+        </Link>
         .
       </>
     ),
     postSubtitle: (
       <div className="flex flex-col gap-4">
-        <p className="text-gray-500 text-lg leading-7 font-normal lg:text-start text-center">
+        <Text className="text-lg leading-6 text-gray-500 lg:text-start text-center">
           Composable integrations with:
-        </p>
+        </Text>
         <div className="flex flex-wrap gap-x-6 gap-y-4 items-center justify-center lg:justify-start">
           <NamestoneLogo />
           <NamespaceLogo />
@@ -413,9 +416,9 @@ const services: ServiceProps[] = [
       "Harness the power of the pixel. Immerse your users in an interactive, video game-inspired 'create your player' user journeys to shape their unique ENS identity.",
     postSubtitle: (
       <div className="flex flex-col gap-4">
-        <p className="text-gray-500 text-lg leading-7 font-normal lg:text-start text-center">
+        <Text className="text-lg leading-6 text-gray-500 lg:text-start text-center">
           Composable integrations with:
-        </p>
+        </Text>
         <div className="flex flex-wrap gap-x-6 gap-y-4 items-center justify-center lg:justify-start">
           <StabilityAiLogo />
         </div>
@@ -442,9 +445,9 @@ const services: ServiceProps[] = [
       "It's more than just a name – it's your web3 identity. Provide your community the ability to craft their perfect profile, showcase shared connections, and discover other like-minded frens.",
     postSubtitle: (
       <div className="flex flex-col gap-4">
-        <p className="text-gray-500 text-lg leading-7 font-normal lg:text-start text-center">
+        <Text className="text-lg leading-6 text-gray-500 lg:text-start text-center">
           Composable integrations with:
-        </p>
+        </Text>
         <div className="flex flex-wrap gap-x-6 gap-y-4 items-center justify-center lg:justify-start">
           <LensProtocolLogo />
           <FarcasterLogo />
@@ -481,9 +484,9 @@ const services: ServiceProps[] = [
       "Provide your community with access to their interoperable web3 inbox directly inside of your application so they can bring their messages with them everywhere they go.",
     postSubtitle: (
       <div className="flex flex-col gap-4">
-        <p className="text-gray-500 text-lg leading-7 font-normal lg:text-start text-center">
+        <Text className="text-lg leading-6 text-gray-500 lg:text-start text-center">
           Composable integrations with:
-        </p>
+        </Text>
         <div className="flex flex-wrap gap-x-6 gap-y-4 items-center justify-center lg:justify-start">
           <XmtpLogo />
           <Image
