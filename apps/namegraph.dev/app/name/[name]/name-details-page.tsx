@@ -13,6 +13,14 @@ import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
 import { CollectionCard } from "@/components/collections/collection-card";
 import { findCollectionsByMember, findCollectionsByString } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { FromNameGraphSortOrderToDropdownTextContent } from "@/app/collections/page";
 
 interface NavigationConfig {
   itemsPerPage: number;
@@ -100,6 +108,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
         !!currentCollectionsToConsider?.[params.page] &&
         params.orderBy ==
           currentCollectionsToConsider?.[params.page]?.sort_order;
+
       if (currentPageWasLoaded) {
         return;
       }
@@ -144,6 +153,11 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
               });
 
               const relatedCollections = res.collections;
+
+              if (relatedCollections.length === 0) {
+                setRelatedCollectionsByMembership(null);
+                return;
+              }
 
               setRelatedCollectionsByMembership({
                 ...relatedCollectionsByMembership,
@@ -214,6 +228,11 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
               const moreCollections = res.other_collections;
               const relatedCollections = res.related_collections;
 
+              if (relatedCollections.length === 0) {
+                setRelatedCollectionsByConcept(null);
+                return;
+              }
+
               setRelatedCollectionsByConcept({
                 ...relatedCollectionsByConcept,
                 [params.page]: {
@@ -247,7 +266,10 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
    */
   const DEFAULT_PAGE_NUMBER = 1;
   const DEFAULT_COLLECTIONS_PARAMS: Record<string, any> = {
-    page: DEFAULT_PAGE_NUMBER,
+    page: {
+      [NameRelatedCollectionsTabs.ByConcept]: DEFAULT_PAGE_NUMBER,
+      [NameRelatedCollectionsTabs.ByMembership]: DEFAULT_PAGE_NUMBER,
+    },
     activeTab: DEFAULT_ACTIVE_TAB,
     orderBy: DEFAULT_SORTING_ORDER,
   };
@@ -257,9 +279,16 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
   );
 
   const handlePageChange = (page: number) => {
-    setParams({ page });
+    setParams({
+      page: {
+        ...params.page,
+        [(params.activeTab as NameRelatedCollectionsTabs) ||
+        DEFAULT_ACTIVE_TAB]: page,
+      },
+    });
+
     queryCollections({
-      page: page || 1,
+      page: page || DEFAULT_PAGE_NUMBER,
       activeTab: params.activeTab || DEFAULT_ACTIVE_TAB,
     });
   };
@@ -269,9 +298,10 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
   };
 
   useEffect(() => {
-    handlePageChange(1);
     queryCollections({
-      page: 1,
+      page:
+        params.page[params.activeTab || DEFAULT_ACTIVE_TAB] ||
+        DEFAULT_PAGE_NUMBER,
       activeTab: params.activeTab,
     });
   }, [params.activeTab]);
@@ -287,8 +317,9 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
       [NameRelatedCollectionsTabs.ByMembership]: undefined,
     },
   });
+
   const isFirstCollectionsPageForCurrentQuery = () => {
-    return Number(params.page) === 1;
+    return Number(params.page[params.activeTab || DEFAULT_ACTIVE_TAB]) === 1;
   };
   const isLastCollectionsPageForCurrentQuery = () => {
     if (navigationConfig.totalItems) {
@@ -299,7 +330,9 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
 
       if (totalItems) {
         return (
-          Number(params.page) * navigationConfig.itemsPerPage >= totalItems
+          Number(params.page[params.activeTab || DEFAULT_ACTIVE_TAB]) *
+            navigationConfig.itemsPerPage >=
+          totalItems
         );
       }
     } else return false;
@@ -313,8 +346,9 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
       }
 
       if (totalItems) {
-        return `${(Number(params.page) - 1) * navigationConfig.itemsPerPage + 1}-${Math.min(
-          Number(params.page) * navigationConfig.itemsPerPage,
+        return `${(Number(params.page[params.activeTab || DEFAULT_ACTIVE_TAB]) - 1) * navigationConfig.itemsPerPage + 1}-${Math.min(
+          Number(params.page[params.activeTab || DEFAULT_ACTIVE_TAB]) *
+            navigationConfig.itemsPerPage,
           totalItems,
         )} of ${totalItems} name suggestions`;
       }
@@ -323,16 +357,20 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
     }
   };
 
-  useEffect(() => {
-    queryCollections({
-      page: params.page || DEFAULT_PAGE_NUMBER,
-      activeTab: params.activeTab || DEFAULT_ACTIVE_TAB,
-    });
-  }, [params.page]);
-
   const FromTabNameToTabLabel = {
     [NameRelatedCollectionsTabs.ByConcept]: "By concept",
     [NameRelatedCollectionsTabs.ByMembership]: "By membership",
+  };
+
+  const handleOrderBy = (orderBy: NameGraphSortOrderOptions) => {
+    setParams({ orderBy });
+    queryCollections({
+      activeTab: params.activeTab || DEFAULT_ACTIVE_TAB,
+      page:
+        params.page[params.activeTab || DEFAULT_ACTIVE_TAB] ||
+        DEFAULT_PAGE_NUMBER,
+      orderBy,
+    });
   };
 
   return (
@@ -349,38 +387,76 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
           <div className="w-full">
             {/* Collections List */}
             <div className="w-full space-y-4">
-              <Tabs
-                defaultValue={params.activeTab || DEFAULT_ACTIVE_TAB}
-                className="w-[350px]"
-              >
-                <TabsList>
-                  {Object.entries(NameRelatedCollectionsTabs).map(
-                    ([key, value]) => {
-                      return (
-                        <TabsTrigger
-                          key={value}
-                          value={key as NameRelatedCollectionsTabs}
-                          onClick={() =>
-                            handleActiveTabChange(
-                              key as NameRelatedCollectionsTabs,
-                            )
-                          }
-                        >
-                          {
-                            FromTabNameToTabLabel[
+              <Tabs defaultValue={params.activeTab || DEFAULT_ACTIVE_TAB}>
+                <div className="flex justify-between flex-col space-y-4 md:space-y-0 md:flex-row">
+                  <TabsList>
+                    {Object.entries(NameRelatedCollectionsTabs).map(
+                      ([key, value]) => {
+                        return (
+                          <TabsTrigger
+                            key={value}
+                            value={key as NameRelatedCollectionsTabs}
+                            onClick={() =>
+                              handleActiveTabChange(
+                                key as NameRelatedCollectionsTabs,
+                              )
+                            }
+                          >
+                            {
+                              FromTabNameToTabLabel[
+                                key as NameRelatedCollectionsTabs
+                              ]
+                            }
+                            {navigationConfig.totalItems?.[
                               key as NameRelatedCollectionsTabs
-                            ]
-                          }
-                        </TabsTrigger>
-                      );
-                    },
-                  )}
-                </TabsList>
+                            ] !== undefined ? (
+                              <span className="ml-3 border border-gray-400 px-2 rounded-full">
+                                {
+                                  navigationConfig.totalItems?.[
+                                    key as NameRelatedCollectionsTabs
+                                  ]
+                                }
+                              </span>
+                            ) : null}
+                          </TabsTrigger>
+                        );
+                      },
+                    )}
+                  </TabsList>
+                  <Select
+                    defaultValue={
+                      params.orderBy || NameGraphSortOrderOptions.AI
+                    }
+                    onValueChange={(newValue) =>
+                      handleOrderBy(newValue as NameGraphSortOrderOptions)
+                    }
+                  >
+                    <SelectTrigger className="w-[180px]">
+                      <SelectValue placeholder="Sort by" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Object.entries(
+                        FromNameGraphSortOrderToDropdownTextContent,
+                      ).map(([key]) => {
+                        return (
+                          <SelectItem key={key} value={key}>
+                            {
+                              FromNameGraphSortOrderToDropdownTextContent[
+                                key as NameGraphSortOrderOptions
+                              ]
+                            }
+                          </SelectItem>
+                        );
+                      })}
+                    </SelectContent>
+                  </Select>
+                </div>
                 {Object.entries(NameRelatedCollectionsTabs).map(
                   ([key, value]) => {
                     return (
                       <TabsContent
                         key={value}
+                        className="w-full"
                         value={key as NameRelatedCollectionsTabs}
                       >
                         {key === NameRelatedCollectionsTabs.ByConcept ? (
@@ -394,8 +470,8 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                 <div className="w-full flex flex-col xl:flex-row space-y-8 xl:space-x-8 xl:space-y-0">
                                   <div className="w-full">
                                     <div className="w-full mb-8">
-                                      <div className="w-full flex flex-col space-y-4 p-3 rounded-xl border border-gray-200">
-                                        <div className="w-full h-[877px] flex flex-col justify-start">
+                                      <div className="w-full flex flex-col space-y-4 p-3 rounded-xl">
+                                        <div className="w-full flex flex-col justify-start">
                                           <div className="h-full">
                                             {/* Collection Count and Sort */}
                                             <div className="max-w-[756px] w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5">
@@ -410,8 +486,12 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                                       disabled={isFirstCollectionsPageForCurrentQuery()}
                                                       onClick={() =>
                                                         handlePageChange(
-                                                          Number(params.page) -
-                                                            1,
+                                                          Number(
+                                                            params.page[
+                                                              params.activeTab ||
+                                                                DEFAULT_ACTIVE_TAB
+                                                            ],
+                                                          ) - 1,
                                                         )
                                                       }
                                                     >
@@ -422,8 +502,12 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                                       disabled={isLastCollectionsPageForCurrentQuery()}
                                                       onClick={() =>
                                                         handlePageChange(
-                                                          Number(params.page) +
-                                                            1,
+                                                          Number(
+                                                            params.page[
+                                                              params.activeTab ||
+                                                                DEFAULT_ACTIVE_TAB
+                                                            ],
+                                                          ) + 1,
                                                         )
                                                       }
                                                     >
@@ -440,10 +524,16 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                                   <Loader />
                                                 </div>
                                               ) : relatedCollectionsByConcept[
-                                                  params.page
+                                                  params.page[
+                                                    params.activeTab ||
+                                                      DEFAULT_ACTIVE_TAB
+                                                  ]
                                                 ] ? (
                                                 relatedCollectionsByConcept[
-                                                  params.page
+                                                  params.page[
+                                                    params.activeTab ||
+                                                      DEFAULT_ACTIVE_TAB
+                                                  ]
                                                 ]?.related_collections.map(
                                                   (collection) => (
                                                     <CollectionCard
@@ -470,7 +560,12 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                                     disabled={isFirstCollectionsPageForCurrentQuery()}
                                                     onClick={() =>
                                                       handlePageChange(
-                                                        Number(params.page) - 1,
+                                                        Number(
+                                                          params.page[
+                                                            params.activeTab ||
+                                                              DEFAULT_ACTIVE_TAB
+                                                          ],
+                                                        ) - 1,
                                                       )
                                                     }
                                                   >
@@ -482,7 +577,12 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                                     disabled={isLastCollectionsPageForCurrentQuery()}
                                                     onClick={() =>
                                                       handlePageChange(
-                                                        Number(params.page) + 1,
+                                                        Number(
+                                                          params.page[
+                                                            params.activeTab ||
+                                                              DEFAULT_ACTIVE_TAB
+                                                          ],
+                                                        ) + 1,
                                                       )
                                                     }
                                                   >
@@ -528,8 +628,12 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                                       disabled={isFirstCollectionsPageForCurrentQuery()}
                                                       onClick={() =>
                                                         handlePageChange(
-                                                          Number(params.page) -
-                                                            1,
+                                                          Number(
+                                                            params.page[
+                                                              params.activeTab ||
+                                                                DEFAULT_ACTIVE_TAB
+                                                            ],
+                                                          ) - 1,
                                                         )
                                                       }
                                                     >
@@ -540,8 +644,12 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                                       disabled={isLastCollectionsPageForCurrentQuery()}
                                                       onClick={() =>
                                                         handlePageChange(
-                                                          Number(params.page) +
-                                                            1,
+                                                          Number(
+                                                            params.page[
+                                                              params.activeTab ||
+                                                                DEFAULT_ACTIVE_TAB
+                                                            ],
+                                                          ) + 1,
                                                         )
                                                       }
                                                     >
@@ -558,10 +666,16 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                                   <Loader />
                                                 </div>
                                               ) : relatedCollectionsByMembership[
-                                                  params.page
+                                                  params.page[
+                                                    params.activeTab ||
+                                                      DEFAULT_ACTIVE_TAB
+                                                  ]
                                                 ] ? (
                                                 relatedCollectionsByMembership[
-                                                  params.page
+                                                  params.page[
+                                                    params.activeTab ||
+                                                      DEFAULT_ACTIVE_TAB
+                                                  ]
                                                 ]?.related_collections.map(
                                                   (collection) => (
                                                     <CollectionCard
@@ -588,7 +702,12 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                                     disabled={isFirstCollectionsPageForCurrentQuery()}
                                                     onClick={() =>
                                                       handlePageChange(
-                                                        Number(params.page) - 1,
+                                                        Number(
+                                                          params.page[
+                                                            params.activeTab ||
+                                                              DEFAULT_ACTIVE_TAB
+                                                          ],
+                                                        ) - 1,
                                                       )
                                                     }
                                                   >
@@ -600,7 +719,12 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                                     disabled={isLastCollectionsPageForCurrentQuery()}
                                                     onClick={() =>
                                                       handlePageChange(
-                                                        Number(params.page) + 1,
+                                                        Number(
+                                                          params.page[
+                                                            params.activeTab ||
+                                                              DEFAULT_ACTIVE_TAB
+                                                          ],
+                                                        ) + 1,
                                                       )
                                                     }
                                                   >
@@ -617,7 +741,11 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                   </div>
                                 </div>
                               </div>
-                            ) : null}
+                            ) : (
+                              <p className="mt-8 text-sm ml-2">
+                                No related collections where found for this name
+                              </p>
+                            )}
                           </>
                         )}
                       </TabsContent>

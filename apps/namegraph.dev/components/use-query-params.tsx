@@ -2,21 +2,47 @@
 import { useCallback } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
-type DefaultValues<T> = Partial<Record<keyof T, string>>;
+type QueryValue = string | Record<string, any> | null;
+type DefaultValues<T> = Partial<Record<keyof T, QueryValue>>;
 
-export function useQueryParams<T extends Record<string, string>>(
+export function useQueryParams<T extends Record<string, QueryValue>>(
   defaultValues: DefaultValues<T>,
 ) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
+  const parseValue = (value: string): QueryValue => {
+    if (!value.includes(",")) return value;
+
+    try {
+      const parts = value.split(",");
+      const obj = {} as Record<string, any>;
+
+      parts.forEach((part) => {
+        const [key, val] = part.split(":");
+        obj[key] = isNaN(Number(val)) ? val : Number(val);
+      });
+
+      return obj;
+    } catch {
+      return value;
+    }
+  };
+
+  const stringifyValue = (value: QueryValue): string => {
+    if (typeof value !== "object" || value === null) return String(value);
+
+    return Object.entries(value)
+      .map(([k, v]) => `${k}:${v}`)
+      .join(",");
+  };
+
   const getParams = useCallback(() => {
     const params = {} as Partial<T>;
     searchParams.forEach((value, key) => {
-      // Only set the param if it's a valid key of T
       if (Object.prototype.hasOwnProperty.call(defaultValues, key)) {
-        params[key as keyof T] = value as T[keyof T];
+        params[key as keyof T] = parseValue(value) as T[keyof T];
       }
     });
 
@@ -30,18 +56,14 @@ export function useQueryParams<T extends Record<string, string>>(
     (updates: Partial<T>, options?: { replace?: boolean }) => {
       const params = new URLSearchParams(searchParams);
       const currentParams = getParams();
-
-      // Apply the updates to our current state
       const newState = { ...currentParams, ...updates };
 
-      // Clear existing params
       Array.from(params.keys()).forEach((key) => params.delete(key));
 
-      // Only add params that differ from defaults
       Object.entries(newState).forEach(([key, value]) => {
         const defaultValue = defaultValues[key as keyof T];
         if (value !== defaultValue) {
-          params.set(key, value as string);
+          params.set(key, stringifyValue(value));
         }
       });
 

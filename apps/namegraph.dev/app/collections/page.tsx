@@ -7,7 +7,7 @@ import {
 } from "@namehash/namegraph-sdk/utils";
 import { findCollectionsByMember, findCollectionsByString } from "@/lib/utils";
 import { DebounceInput } from "react-debounce-input";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useContext, useEffect, useState } from "react";
 import { Toggle } from "@/components/ui/toggle";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,6 +26,7 @@ import { useQueryParams } from "@/components/use-query-params";
 import { CollectionCard } from "@/components/collections/collection-card";
 import { buildENSName } from "@namehash/ens-utils";
 import { Link } from "@namehash/namekit-react";
+import { PreferredSufixContext } from "@/components/preferred-sufix-context";
 
 interface NavigationConfig {
   itemsPerPage: number;
@@ -38,7 +39,7 @@ interface CollectionsData {
   related_collections: NameGraphCollection[];
 }
 
-const FromNameGraphSortOrderToDropdownTextContent: Record<
+export const FromNameGraphSortOrderToDropdownTextContent: Record<
   NameGraphSortOrderOptions,
   string
 > = {
@@ -63,6 +64,8 @@ export default function ExploreCollectionsPage() {
   const { params, setParams } = useQueryParams<DefaultDomainFiltersType>(
     DEFAULT_COLLECTIONS_PARAMS,
   );
+
+  const { preferredSufix } = useContext(PreferredSufixContext);
 
   const handleSearch = (searchTerm: string) => {
     setParams({
