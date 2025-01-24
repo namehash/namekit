@@ -31,10 +31,10 @@ export function Form({ initialValue = "", onSubmit }: FormProps) {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
-    const name = formData.get("name") as string;
+    const label = formData.get("label") as string;
 
     try {
-      onSubmit(name);
+      onSubmit(label);
       if (formRef.current) formRef.current.reset();
     } catch (error) {
       setError((error as Error).message);
@@ -46,7 +46,7 @@ export function Form({ initialValue = "", onSubmit }: FormProps) {
       <div className="flex items-center justify-center space-x-2 flex-1">
         <Input
           type="text"
-          name="name"
+          name="label"
           placeholder="Add a label"
           // className="border p-3 mr-2 w-full ens-webfont rounded"
           className="ens-webfont flex-1"
