@@ -36,10 +36,10 @@ export const CollectionCard = ({
           <div className="flex gap-2">
             {collection.top_labels.map((tag) => (
               <span
-                key={tag.namehash}
+                key={tag.label} //FIXME
                 className="max-h-[28px] w-max bg-gray-100 text-sm px-2 py-1 bg-muted rounded-full"
               >
-                {tag.name}
+                {tag.label}
               </span>
             ))}
           </div>
