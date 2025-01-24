@@ -15,7 +15,7 @@ describe("inspectName", () => {
     const data = await nameai.inspectName("vitalìk.eth");
 
     expect(data.nameai.purity_score).toBeCloseTo(0.28995870588235295, 2);
-    expect(data.nameai.interesting_score).toBeCloseTo(0.3520927142857143, 2);
+    expect(data.nameai.sort_score).toBeCloseTo(0.3520927142857143, 2);
   });
 });
 
@@ -30,7 +30,7 @@ describe("inspectName edge cases", () => {
     const longName = "a".repeat(MAX_INSPECTED_NAME_CHARACTERS + 1) + ".eth";
     const data = await nameai.inspectName(longName);
     expect(data.nameai.purity_score).toBe(0);
-    expect(data.nameai.interesting_score).toBe(0);
+    expect(data.nameai.sort_score).toBe(0);
   });
 
   it("should handle empty name", async () => {

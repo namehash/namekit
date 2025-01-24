@@ -63,7 +63,7 @@ export type NameGraphSuggestion = {
     interpretation: (string | null)[];
     cached_status: string;
     categories: string[];
-    cached_interesting_score: number | null;
+    cached_sort_score: number | null;
     applied_strategies: string[][];
     collection_title: string | null;
     collection_id: string | null;
@@ -168,10 +168,14 @@ export const DEFAULT_ENABLE_LEARNING_TO_RANK = true;
 export const DEFAULT_NAME_DIVERSITY_RATIO = 0.5;
 export const DEFAULT_MAX_PER_TYPE = 2;
 export const NameGraphSortOrderOptions = {
+  /** Use intelligent endpoint-specific ranking (e.g. with Learning to Rank) */
   AI: "AI",
-  AZ: "A-Z",
+  /** Sort by title alphabetically ascending */
+  AZ: "A-Z", 
+  /** Sort by title alphabetically descending */
   ZA: "Z-A",
-  ES: "ES",
+  /** Use relevance ranking */
+  RELEVANCE: "Relevance",
 } as const;
 export type NameGraphSortOrderOptions =
   (typeof NameGraphSortOrderOptions)[keyof typeof NameGraphSortOrderOptions];
