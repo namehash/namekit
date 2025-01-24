@@ -269,7 +269,7 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
   useEffect(() => {
     setNavigationConfig({
       ...navigationConfig,
-      totalItems: collection?.number_of_names || undefined,
+      totalItems: collection?.number_of_labels || undefined,
     });
   }, [collection]);
 
@@ -361,11 +361,11 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                     params.page
                                   ]?.suggestions.map((suggestion) => (
                                     <div
-                                      key={suggestion.name}
+                                      key={suggestion.label}
                                       className="bg-gray-100 rounded-full groupp-2 px-4 flex items-start"
                                     >
                                       <div className="max-h-[20px] relative flex items-center justify-center overflow-hidden">
-                                        {suggestion.name}
+                                        {suggestion.label}
                                       </div>
                                     </div>
                                   ))
@@ -437,11 +437,11 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                   {sampledNameIdeas?.map((suggestion) => {
                                     return (
                                       <div
-                                        key={suggestion.name}
+                                        key={suggestion.label}
                                         className="bg-gray-100 rounded-full groupp-2 px-4 flex items-start"
                                       >
                                         <div className="relative flex items-center justify-center overflow-hidden">
-                                          {suggestion.name}
+                                          {suggestion.label}
                                         </div>
                                       </div>
                                     );
@@ -505,11 +505,11 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                   {scrambledNameIdeas?.map((suggestion) => {
                                     return (
                                       <div
-                                        key={suggestion.name}
+                                        key={suggestion.label}
                                         className="bg-gray-100 rounded-full groupp-2 px-4 flex items-start"
                                       >
                                         <div className="relative flex items-center justify-center overflow-hidden">
-                                          {suggestion.name}
+                                          {suggestion.label}
                                         </div>
                                       </div>
                                     );
