@@ -1,5 +1,4 @@
 ---
-"namegraph.dev": patch
 "@namehash/namegraph-sdk": patch
 ---
 
