@@ -252,7 +252,7 @@ export const sampleWritersBlockSuggestions = (
 export const ScrambleMethod = {
   "left-right-shuffle": "left-right-shuffle",
   "left-right-shuffle-with-unigrams": "left-right-shuffle-with-unigrams",
-  "full-shuffle": "full-shuffle"
+  "full-shuffle": "full-shuffle",
 } as const;
 
 export type ScrambleMethod =
