@@ -8,7 +8,7 @@ from nameguard.models import NameGuardReport
 class LabelStatus(str, Enum):
     normalized = 'normalized'
     unnormalized = 'unnormalized'
-    unknown = 'unknown'
+    # unknown = 'unknown' # not implemented yet
 
 
 class NLPLabelAnalysis(BaseModel):

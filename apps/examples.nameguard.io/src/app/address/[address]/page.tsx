@@ -9,7 +9,7 @@ export default async function Page({
 }) {
   const { address } = params;
 
-  const data = await nameguard.getSecurePrimaryName(address);
+  const data = await nameguard.getSecurePrimaryName(address, { returnNameGuardReport: true });
 
   return (
     <div className="flex w-full flex-col h-screen overflow-hidden">

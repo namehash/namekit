@@ -41,7 +41,7 @@ def labelhash_in_name(x: str) -> bool:
 
 
 def hexbytes_to_int(hb: HexBytes) -> int:
-    return int(hb.hex(), base=16)
+    return int(hb.to_0x_hex(), base=16)
 
 
 def int_to_hexstr(n: int, hex_len=64) -> str:
@@ -69,7 +69,7 @@ def int_to_hexstr(n: int, hex_len=64) -> str:
 
 
 def labelhash_from_label(label: str) -> str:
-    return Web3().keccak(text=label).hex()
+    return Web3().keccak(text=label).to_0x_hex()
 
 
 def namehash_from_name(name: str) -> str:
@@ -86,13 +86,13 @@ def namehash_from_name(name: str) -> str:
             else:
                 labelhash = Web3().keccak(text=label)
             node = Web3().keccak(node + labelhash)
-    return node.hex()
+    return node.to_0x_hex()
 
 
 def namehash_from_labelhash(labelhash_hexstr: str, parent_name='eth') -> str:
     parent_namehash_hexstr = namehash_from_name(parent_name)
     node = Web3().keccak(HexBytes(parent_namehash_hexstr) + HexBytes(labelhash_hexstr))
-    return node.hex()
+    return node.to_0x_hex()
 
 
 def validate_token_id(token_id: str) -> str:
