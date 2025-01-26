@@ -194,7 +194,7 @@ export class NameGraph {
     const max_related_collections = options?.max_related_collections || 3;
 
     const payload = {
-      limit_labels: limit_labels,
+      limit_labels,
       offset,
       sort_order,
       max_related_collections,
@@ -252,7 +252,7 @@ export class NameGraph {
     const max_total_collections = 6;
 
     const payload = {
-      limit_labels: limit_labels,
+      limit_labels,
       offset,
       sort_order,
       max_related_collections,
