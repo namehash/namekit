@@ -199,7 +199,7 @@ export class NameGraph {
       sort_order,
       max_related_collections,
       max_per_type,
-      label_diversity_ratio: label_diversity_ratio,
+      label_diversity_ratio,
       min_other_collections,
       max_other_collections,
       max_total_collections,
@@ -257,7 +257,7 @@ export class NameGraph {
       sort_order,
       max_related_collections,
       max_per_type,
-      label_diversity_ratio: label_diversity_ratio,
+      label_diversity_ratio,
       min_other_collections,
       max_other_collections,
       max_total_collections,
@@ -292,7 +292,7 @@ export class NameGraph {
     const max_results = options?.max_results || 3;
 
     const payload = {
-      limit_labels: limit_labels,
+      limit_labels,
       offset,
       sort_order,
       label,
