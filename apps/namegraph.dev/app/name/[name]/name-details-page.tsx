@@ -21,6 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { FromNameGraphSortOrderToDropdownTextContent } from "@/app/collections/page";
+import { Link } from "@namehash/namekit-react";
 
 interface NavigationConfig {
   itemsPerPage: number;
@@ -29,7 +30,6 @@ interface NavigationConfig {
 
 interface CollectionsData {
   sort_order: NameGraphSortOrderOptions;
-  other_collections: NameGraphCollection[] | null;
   related_collections: NameGraphCollection[];
 }
 
@@ -69,6 +69,10 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
     useState<
       undefined | null | Record<number, CollectionsData | null | undefined>
     >(undefined);
+
+  const [otherCollections, setOtherCollections] = useState<
+    NameGraphCollection[] | undefined
+  >(undefined);
 
   interface QueryNameRelatedCollectionsParams {
     activeTab: NameRelatedCollectionsTabs;
@@ -164,7 +168,6 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                 [params.page]: {
                   sort_order: params.orderBy || DEFAULT_SORTING_ORDER,
                   related_collections: relatedCollections,
-                  other_collections: null,
                 },
               });
             } else {
@@ -233,12 +236,13 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                 return;
               }
 
+              setOtherCollections([...moreCollections]);
+
               setRelatedCollectionsByConcept({
                 ...relatedCollectionsByConcept,
                 [params.page]: {
                   sort_order: params.orderBy || DEFAULT_SORTING_ORDER,
                   related_collections: relatedCollections,
-                  other_collections: moreCollections,
                 },
               });
             } else {
@@ -758,6 +762,37 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
           </div>
         </div>
       </div>
+      {otherCollections ? (
+        <div className="max-w-7xl mx-auto p-6">
+          <div className="w-full rounded-lg border border-gray-200">
+            <p className="text-[18px] font-semibold px-5 py-2.5 border-b border-gray-200">
+              Explore other names
+            </p>
+            {otherCollections.map((collection) => {
+              return (
+                <div key={collection.collection_id}>
+                  <p className="py-3 px-5 font-semibold text-sm text-gray-500">
+                    {collection.title}
+                  </p>
+                  <div className="flex flex-col">
+                    {collection.top_names.slice(0, 3).map((topName) => {
+                      return (
+                        <Link
+                          key={topName.name}
+                          href={`/name/${topName.name}`}
+                          className="p-5 border-t border-gray-200 font-semibold text-base text-black"
+                        >
+                          {topName.name}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };

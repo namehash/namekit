@@ -85,7 +85,14 @@ export default function RootLayout({
               <div className="flex flex-row items-center justify-between md:gap-5 h-[40px]">
                 <div className="hidden items-center justify-center lg:flex gap-2">
                   <div className="hidden items-center justify-center xl:flex gap-2">
-                    <SufixSelect />
+                    {/* 
+                      This section is currently commented out as
+                      NameGraph API does not support dotted queries.
+                      
+                      e.g. something.anything
+
+                      <SufixSelect />
+                    */}
 
                     <Button variant="ghost" asChild>
                       <Link href="http://api.namegraph.dev/docs">Docs</Link>
