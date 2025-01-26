@@ -13,7 +13,7 @@ export type Sufixes = (typeof Sufixes)[keyof typeof Sufixes];
 export const DEFAULT_SUFIX = Sufixes.ETH;
 
 export const PreferredSufixContext = createContext({
-  preferredSufix: DEFAULT_SUFIX,
+  preferredSufix: DEFAULT_SUFIX as Sufixes,
   updatePreferredSufix: (_: Sufixes) => {},
 });
 

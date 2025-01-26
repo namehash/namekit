@@ -5,7 +5,11 @@ import {
   NameGraphCollection,
   NameGraphSortOrderOptions,
 } from "@namehash/namegraph-sdk/utils";
-import { findCollectionsByMember, findCollectionsByString } from "@/lib/utils";
+import {
+  findCollectionsByMember,
+  findCollectionsByString,
+  FromNameGraphSortOrderToDropdownTextContent,
+} from "@/lib/utils";
 import { DebounceInput } from "react-debounce-input";
 import { Suspense, useContext, useEffect, useState } from "react";
 import { Toggle } from "@/components/ui/toggle";
@@ -38,16 +42,6 @@ interface CollectionsData {
   other_collections: NameGraphCollection[] | null;
   related_collections: NameGraphCollection[];
 }
-
-export const FromNameGraphSortOrderToDropdownTextContent: Record<
-  NameGraphSortOrderOptions,
-  string
-> = {
-  [NameGraphSortOrderOptions.AI]: "AI with Learning to Rank",
-  [NameGraphSortOrderOptions.AZ]: "A-Z (asc)",
-  [NameGraphSortOrderOptions.ZA]: "Z-A (desc)",
-  [NameGraphSortOrderOptions.RELEVANCE]: "Relevance",
-};
 
 export default function ExploreCollectionsPage() {
   /**

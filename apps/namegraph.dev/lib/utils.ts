@@ -231,3 +231,13 @@ export const getRandomColor = () =>
   customizedPillsColors[
     Math.floor(Math.random() * customizedPillsColors.length)
   ];
+
+export const FromNameGraphSortOrderToDropdownTextContent: Record<
+  NameGraphSortOrderOptions,
+  string
+> = {
+  [NameGraphSortOrderOptions.AI]: "AI with Learning to Rank",
+  [NameGraphSortOrderOptions.AZ]: "A-Z (asc)",
+  [NameGraphSortOrderOptions.ZA]: "Z-A (desc)",
+  [NameGraphSortOrderOptions.RELEVANCE]: "Relevance",
+};

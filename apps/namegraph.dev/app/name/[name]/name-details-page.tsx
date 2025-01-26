@@ -11,7 +11,11 @@ import { Button } from "@/components/ui/button";
 import { useQueryParams } from "@/components/use-query-params";
 import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
 import { CollectionCard } from "@/components/collections/collection-card";
-import { findCollectionsByMember, findCollectionsByString } from "@/lib/utils";
+import {
+  findCollectionsByMember,
+  findCollectionsByString,
+  FromNameGraphSortOrderToDropdownTextContent,
+} from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Select,
@@ -20,7 +24,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { FromNameGraphSortOrderToDropdownTextContent } from "@/app/collections/page";
 import { Link } from "@namehash/namekit-react";
 
 interface NavigationConfig {
