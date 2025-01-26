@@ -167,7 +167,7 @@ export default function RandomizePage() {
                               <TruncatedText
                                 maxDisplayWidth={180}
                                 key={i}
-                                text={suggestion.name}
+                                text={suggestion.label}
                               />
                             ))}
                         </div>
@@ -198,7 +198,7 @@ export default function RandomizePage() {
                             <TruncatedText
                               maxDisplayWidth={180}
                               key={i}
-                              text={suggestion.name}
+                              text={suggestion.label}
                             />
                           ))}
                         </div>
@@ -229,7 +229,7 @@ export default function RandomizePage() {
                             <TruncatedText
                               maxDisplayWidth={180}
                               key={i}
-                              text={suggestion.name}
+                              text={suggestion.label}
                             />
                           ))}
                         </div>

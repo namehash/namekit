@@ -16,7 +16,7 @@ import {
   DEFAULT_MAX_SUGGESTIONS,
   DEFAULT_FULL_MODE,
   DEFAULT_ENABLE_LEARNING_TO_RANK,
-  DEFAULT_NAME_DIVERSITY_RATIO,
+  DEFAULT_LABEL_DIVERSITY_RATIO,
   DEFAULT_MAX_PER_TYPE,
   DEFAULT_INSTANT_MODE,
   NameGraphSortOrderOptions,
@@ -49,7 +49,7 @@ export class NameGraph {
       params: {
         mode: DEFAULT_FULL_MODE,
         enable_learning_to_rank: DEFAULT_ENABLE_LEARNING_TO_RANK,
-        name_diversity_ratio: DEFAULT_NAME_DIVERSITY_RATIO,
+        label_diversity_ratio: DEFAULT_LABEL_DIVERSITY_RATIO,
         max_per_type: DEFAULT_MAX_PER_TYPE,
       },
     };
@@ -67,7 +67,7 @@ export class NameGraph {
         max_per_type: 2,
         max_recursive_related_collections: 3,
         max_related_collections: 6,
-        name_diversity_ratio: 0.5,
+        label_diversity_ratio: 0.5,
       },
       [NameGraphGroupingCategory.wordplay]: {
         max_suggestions: 10,
@@ -184,22 +184,22 @@ export class NameGraph {
   ): Promise<NameGraphFindCollectionsResponse> {
     const offset = options?.offset || 0;
     const mode = "instant";
-    const limit_names = 10;
+    const limit_labels = 10;
     const max_per_type = 3;
     const sort_order = options?.sort_order || NameGraphSortOrderOptions.AI;
     const min_other_collections = options?.min_other_collections || 0;
     const max_other_collections = options?.max_other_collections || 3;
     const max_total_collections = options?.max_total_collections || 6;
-    const name_diversity_ratio = 0.5;
+    const label_diversity_ratio = 0.5;
     const max_related_collections = options?.max_related_collections || 3;
 
     const payload = {
-      limit_names,
+      limit_labels,
       offset,
       sort_order,
       max_related_collections,
       max_per_type,
-      name_diversity_ratio,
+      label_diversity_ratio,
       min_other_collections,
       max_other_collections,
       max_total_collections,
@@ -241,23 +241,23 @@ export class NameGraph {
   public findCollectionsByCollection(
     collection_id: string,
   ): Promise<NameGraphFindCollectionsResponse> {
-    const limit_names = 10;
+    const limit_labels = 10;
     const offset = 0;
     const sort_order = NameGraphSortOrderOptions.RELEVANCE;
     const max_related_collections = 3;
     const max_per_type = 3;
-    const name_diversity_ratio = 0.5;
+    const label_diversity_ratio = 0.5;
     const min_other_collections = 0;
     const max_other_collections = 3;
     const max_total_collections = 6;
 
     const payload = {
-      limit_names,
+      limit_labels,
       offset,
       sort_order,
       max_related_collections,
       max_per_type,
-      name_diversity_ratio,
+      label_diversity_ratio,
       min_other_collections,
       max_other_collections,
       max_total_collections,
@@ -282,17 +282,17 @@ export class NameGraph {
     options?: {
       offset?: number;
       max_results?: number;
-      limit_names?: number;
+      limit_labels?: number;
       sort_order?: NameGraphSortOrderOptions;
     },
   ): Promise<NameGraphCollectionByMemberResponse> {
-    const limit_names = options?.limit_names || 10;
+    const limit_labels = options?.limit_labels || 10;
     const offset = options?.offset || 0;
     const sort_order = options?.sort_order || NameGraphSortOrderOptions.AI;
     const max_results = options?.max_results || 3;
 
     const payload = {
-      limit_names,
+      limit_labels,
       offset,
       sort_order,
       label,

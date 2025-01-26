@@ -166,7 +166,7 @@ export const findCollectionsByMember = async (
   options?: {
     offset?: number;
     max_results?: number;
-    limit_names?: number;
+    limit_labels?: number;
     sort_order?: NameGraphSortOrderOptions;
   },
 ): Promise<NameGraphCollectionByMemberResponse> => {
