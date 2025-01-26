@@ -466,30 +466,105 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                         className="w-full"
                         value={key as NameRelatedCollectionsTabs}
                       >
-                        {key === NameRelatedCollectionsTabs.ByConcept ? (
-                          <>
-                            {loadingCollectionByConcept ? (
-                              <div className="w-full h-full flex flex-col justify-center items-center my-8 animate-spin">
-                                <Loader />
-                              </div>
-                            ) : relatedCollectionsByConcept ? (
-                              <div>
-                                <div className="w-full flex flex-col xl:flex-row space-y-8 xl:space-x-8 xl:space-y-0">
-                                  <div className="w-full">
-                                    <div className="w-full mb-8">
-                                      <div className="w-full flex flex-col space-y-4 p-3 rounded-xl">
-                                        <div className="w-full flex flex-col justify-start">
-                                          <div className="h-full">
-                                            {/* Collection Count and Sort */}
-                                            <div className="max-w-[756px] w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5">
-                                              <div className="flex items-center">
-                                                <div className="text-lg font-semibold mr-2.5">
-                                                  {getNavigationPageTextGuide()}
+                        <div className="min-h-[400px]">
+                          {key === NameRelatedCollectionsTabs.ByConcept ? (
+                            <>
+                              {loadingCollectionByConcept ? (
+                                <div className="h-[400px] w-full flex flex-col justify-center items-center my-8 animate-spin">
+                                  <Loader />
+                                </div>
+                              ) : relatedCollectionsByConcept ? (
+                                <div>
+                                  <div className="w-full flex flex-col xl:flex-row space-y-8 xl:space-x-8 xl:space-y-0">
+                                    <div className="w-full">
+                                      <div className="w-full mb-8">
+                                        <div className="w-full flex flex-col space-y-4 p-3 rounded-xl border border-gray-200">
+                                          <div className="w-full flex flex-col justify-start">
+                                            <div className="h-full">
+                                              {/* Collection Count and Sort */}
+                                              <div className="max-w-[756px] w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5">
+                                                <div className="flex items-center">
+                                                  <div className="text-lg font-semibold mr-2.5">
+                                                    {getNavigationPageTextGuide()}
+                                                  </div>
+                                                  {navigationConfig.totalItems ? (
+                                                    <div className="flex">
+                                                      <Button
+                                                        className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50 disabled:hover:bg-white"
+                                                        disabled={isFirstCollectionsPageForCurrentQuery()}
+                                                        onClick={() =>
+                                                          handlePageChange(
+                                                            Number(
+                                                              params.page[
+                                                                params.activeTab ||
+                                                                  DEFAULT_ACTIVE_TAB
+                                                              ],
+                                                            ) - 1,
+                                                          )
+                                                        }
+                                                      >
+                                                        <ChevronLeft className="w-6 h-6 text-black" />
+                                                      </Button>
+                                                      <Button
+                                                        className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50"
+                                                        disabled={isLastCollectionsPageForCurrentQuery()}
+                                                        onClick={() =>
+                                                          handlePageChange(
+                                                            Number(
+                                                              params.page[
+                                                                params.activeTab ||
+                                                                  DEFAULT_ACTIVE_TAB
+                                                              ],
+                                                            ) + 1,
+                                                          )
+                                                        }
+                                                      >
+                                                        <ChevronRight className="w-6 h-6 text-black" />
+                                                      </Button>
+                                                    </div>
+                                                  ) : null}
                                                 </div>
-                                                {navigationConfig.totalItems ? (
-                                                  <div className="flex">
+                                              </div>
+                                              {/* Collections List */}
+                                              <div className="w-full h-full max-w-[756px] space-y-4">
+                                                {loadingCollectionByConcept ? (
+                                                  <div className="my-20 flex flex-col w-full mt-auto justify-center items-center animate-spin h-[370px]">
+                                                    <Loader />
+                                                  </div>
+                                                ) : relatedCollectionsByConcept[
+                                                    params.page[
+                                                      params.activeTab ||
+                                                        DEFAULT_ACTIVE_TAB
+                                                    ]
+                                                  ] ? (
+                                                  relatedCollectionsByConcept[
+                                                    params.page[
+                                                      params.activeTab ||
+                                                        DEFAULT_ACTIVE_TAB
+                                                    ]
+                                                  ]?.related_collections.map(
+                                                    (collection) => (
+                                                      <CollectionCard
+                                                        key={
+                                                          collection.collection_id
+                                                        }
+                                                        collection={collection}
+                                                      />
+                                                    ),
+                                                  )
+                                                ) : null}
+                                              </div>
+                                            </div>
+                                            <div className="mt-auto">
+                                              {/* Pagination */}
+                                              {navigationConfig.totalItems ? (
+                                                <div className="flex items-center justify-between border border-gray-200 border-l-0 border-r-0 border-b-0 mt-3 p-3">
+                                                  <div className="text-sm text-gray-500 mr-2.5">
+                                                    {getNavigationPageTextGuide()}
+                                                  </div>
+                                                  <div className="flex items-center gap-2">
                                                     <Button
-                                                      className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50 disabled:hover:bg-white"
+                                                      className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
                                                       disabled={isFirstCollectionsPageForCurrentQuery()}
                                                       onClick={() =>
                                                         handlePageChange(
@@ -502,10 +577,11 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                                         )
                                                       }
                                                     >
-                                                      <ChevronLeft className="w-6 h-6 text-black" />
+                                                      <ChevronLeft />
+                                                      Prev
                                                     </Button>
                                                     <Button
-                                                      className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50"
+                                                      className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
                                                       disabled={isLastCollectionsPageForCurrentQuery()}
                                                       onClick={() =>
                                                         handlePageChange(
@@ -518,120 +594,119 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                                         )
                                                       }
                                                     >
-                                                      <ChevronRight className="w-6 h-6 text-black" />
+                                                      Next
+                                                      <ChevronRight />
                                                     </Button>
                                                   </div>
-                                                ) : null}
-                                              </div>
-                                            </div>
-                                            {/* Collections List */}
-                                            <div className="w-full h-full max-w-[756px] space-y-4">
-                                              {loadingCollectionByConcept ? (
-                                                <div className="flex flex-col w-full mt-auto justify-center items-center animate-spin h-[370px]">
-                                                  <Loader />
                                                 </div>
-                                              ) : relatedCollectionsByConcept[
-                                                  params.page[
-                                                    params.activeTab ||
-                                                      DEFAULT_ACTIVE_TAB
-                                                  ]
-                                                ] ? (
-                                                relatedCollectionsByConcept[
-                                                  params.page[
-                                                    params.activeTab ||
-                                                      DEFAULT_ACTIVE_TAB
-                                                  ]
-                                                ]?.related_collections.map(
-                                                  (collection) => (
-                                                    <CollectionCard
-                                                      key={
-                                                        collection.collection_id
-                                                      }
-                                                      collection={collection}
-                                                    />
-                                                  ),
-                                                )
                                               ) : null}
                                             </div>
-                                          </div>
-                                          <div className="mt-auto">
-                                            {/* Pagination */}
-                                            {navigationConfig.totalItems ? (
-                                              <div className="flex items-center justify-between border border-gray-200 border-l-0 border-r-0 border-b-0 mt-3 p-3">
-                                                <div className="text-sm text-gray-500 mr-2.5">
-                                                  {getNavigationPageTextGuide()}
-                                                </div>
-                                                <div className="flex items-center gap-2">
-                                                  <Button
-                                                    className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
-                                                    disabled={isFirstCollectionsPageForCurrentQuery()}
-                                                    onClick={() =>
-                                                      handlePageChange(
-                                                        Number(
-                                                          params.page[
-                                                            params.activeTab ||
-                                                              DEFAULT_ACTIVE_TAB
-                                                          ],
-                                                        ) - 1,
-                                                      )
-                                                    }
-                                                  >
-                                                    <ChevronLeft />
-                                                    Prev
-                                                  </Button>
-                                                  <Button
-                                                    className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
-                                                    disabled={isLastCollectionsPageForCurrentQuery()}
-                                                    onClick={() =>
-                                                      handlePageChange(
-                                                        Number(
-                                                          params.page[
-                                                            params.activeTab ||
-                                                              DEFAULT_ACTIVE_TAB
-                                                          ],
-                                                        ) + 1,
-                                                      )
-                                                    }
-                                                  >
-                                                    Next
-                                                    <ChevronRight />
-                                                  </Button>
-                                                </div>
-                                              </div>
-                                            ) : null}
                                           </div>
                                         </div>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                            ) : null}
-                          </>
-                        ) : (
-                          <>
-                            {loadingCollectionsByMembership ? (
-                              <div className="w-full h-full flex flex-col justify-center items-center my-8 animate-spin">
-                                <Loader />
-                              </div>
-                            ) : relatedCollectionsByMembership ? (
-                              <div>
-                                <div className="w-full flex flex-col xl:flex-row space-y-8 xl:space-x-8 xl:space-y-0">
-                                  <div className="w-full">
-                                    <div className="w-full mb-8">
-                                      <div className="w-full flex flex-col space-y-4 p-3 rounded-xl border border-gray-200">
-                                        <div className="w-full h-[877px] flex flex-col justify-start">
-                                          <div className="h-full">
-                                            {/* Collection Count and Sort */}
-                                            <div className="max-w-[756px] w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5">
-                                              <div className="flex items-center">
-                                                <div className="text-lg font-semibold mr-2.5">
-                                                  {getNavigationPageTextGuide()}
+                              ) : null}
+                            </>
+                          ) : (
+                            <>
+                              {loadingCollectionsByMembership ? (
+                                <div className="h-[400px] w-full flex flex-col justify-center items-center animate-spin">
+                                  <Loader />
+                                </div>
+                              ) : relatedCollectionsByMembership ? (
+                                <div>
+                                  <div className="w-full flex flex-col xl:flex-row space-y-8 xl:space-x-8 xl:space-y-0">
+                                    <div className="w-full">
+                                      <div className="w-full mb-8">
+                                        <div className="w-full flex flex-col space-y-4 p-3 rounded-xl border border-gray-200">
+                                          <div className="w-full flex flex-col justify-start">
+                                            <div className="h-full">
+                                              {/* Collection Count and Sort */}
+                                              <div className="max-w-[756px] w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5">
+                                                <div className="flex items-center">
+                                                  <div className="text-lg font-semibold mr-2.5">
+                                                    {getNavigationPageTextGuide()}
+                                                  </div>
+                                                  {navigationConfig.totalItems ? (
+                                                    <div className="flex">
+                                                      <Button
+                                                        className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50 disabled:hover:bg-white"
+                                                        disabled={isFirstCollectionsPageForCurrentQuery()}
+                                                        onClick={() =>
+                                                          handlePageChange(
+                                                            Number(
+                                                              params.page[
+                                                                params.activeTab ||
+                                                                  DEFAULT_ACTIVE_TAB
+                                                              ],
+                                                            ) - 1,
+                                                          )
+                                                        }
+                                                      >
+                                                        <ChevronLeft className="w-6 h-6 text-black" />
+                                                      </Button>
+                                                      <Button
+                                                        className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50"
+                                                        disabled={isLastCollectionsPageForCurrentQuery()}
+                                                        onClick={() =>
+                                                          handlePageChange(
+                                                            Number(
+                                                              params.page[
+                                                                params.activeTab ||
+                                                                  DEFAULT_ACTIVE_TAB
+                                                              ],
+                                                            ) + 1,
+                                                          )
+                                                        }
+                                                      >
+                                                        <ChevronRight className="w-6 h-6 text-black" />
+                                                      </Button>
+                                                    </div>
+                                                  ) : null}
                                                 </div>
-                                                {navigationConfig.totalItems ? (
-                                                  <div className="flex">
+                                              </div>
+                                              {/* Collections List */}
+                                              <div className="w-full h-full max-w-[756px] space-y-4">
+                                                {loadingCollectionsByMembership ? (
+                                                  <div className="flex flex-col w-full mt-auto justify-center items-center animate-spin h-[370px]">
+                                                    <Loader />
+                                                  </div>
+                                                ) : relatedCollectionsByMembership[
+                                                    params.page[
+                                                      params.activeTab ||
+                                                        DEFAULT_ACTIVE_TAB
+                                                    ]
+                                                  ] ? (
+                                                  relatedCollectionsByMembership[
+                                                    params.page[
+                                                      params.activeTab ||
+                                                        DEFAULT_ACTIVE_TAB
+                                                    ]
+                                                  ]?.related_collections.map(
+                                                    (collection) => (
+                                                      <CollectionCard
+                                                        key={
+                                                          collection.collection_id
+                                                        }
+                                                        collection={collection}
+                                                      />
+                                                    ),
+                                                  )
+                                                ) : null}
+                                              </div>
+                                            </div>
+                                            <div className="mt-auto">
+                                              {/* Pagination */}
+                                              {navigationConfig.totalItems ? (
+                                                <div className="flex items-center justify-between border border-gray-200 border-l-0 border-r-0 border-b-0 mt-3 p-3">
+                                                  <div className="text-sm text-gray-500 mr-2.5">
+                                                    {getNavigationPageTextGuide()}
+                                                  </div>
+                                                  <div className="flex items-center gap-2">
                                                     <Button
-                                                      className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50 disabled:hover:bg-white"
+                                                      className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
                                                       disabled={isFirstCollectionsPageForCurrentQuery()}
                                                       onClick={() =>
                                                         handlePageChange(
@@ -644,10 +719,11 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                                         )
                                                       }
                                                     >
-                                                      <ChevronLeft className="w-6 h-6 text-black" />
+                                                      <ChevronLeft />
+                                                      Prev
                                                     </Button>
                                                     <Button
-                                                      className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50"
+                                                      className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
                                                       disabled={isLastCollectionsPageForCurrentQuery()}
                                                       onClick={() =>
                                                         handlePageChange(
@@ -660,101 +736,28 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                                         )
                                                       }
                                                     >
-                                                      <ChevronRight className="w-6 h-6 text-black" />
+                                                      Next
+                                                      <ChevronRight />
                                                     </Button>
                                                   </div>
-                                                ) : null}
-                                              </div>
-                                            </div>
-                                            {/* Collections List */}
-                                            <div className="w-full h-full max-w-[756px] space-y-4">
-                                              {loadingCollectionsByMembership ? (
-                                                <div className="flex flex-col w-full mt-auto justify-center items-center animate-spin h-[370px]">
-                                                  <Loader />
                                                 </div>
-                                              ) : relatedCollectionsByMembership[
-                                                  params.page[
-                                                    params.activeTab ||
-                                                      DEFAULT_ACTIVE_TAB
-                                                  ]
-                                                ] ? (
-                                                relatedCollectionsByMembership[
-                                                  params.page[
-                                                    params.activeTab ||
-                                                      DEFAULT_ACTIVE_TAB
-                                                  ]
-                                                ]?.related_collections.map(
-                                                  (collection) => (
-                                                    <CollectionCard
-                                                      key={
-                                                        collection.collection_id
-                                                      }
-                                                      collection={collection}
-                                                    />
-                                                  ),
-                                                )
                                               ) : null}
                                             </div>
-                                          </div>
-                                          <div className="mt-auto">
-                                            {/* Pagination */}
-                                            {navigationConfig.totalItems ? (
-                                              <div className="flex items-center justify-between border border-gray-200 border-l-0 border-r-0 border-b-0 mt-3 p-3">
-                                                <div className="text-sm text-gray-500 mr-2.5">
-                                                  {getNavigationPageTextGuide()}
-                                                </div>
-                                                <div className="flex items-center gap-2">
-                                                  <Button
-                                                    className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
-                                                    disabled={isFirstCollectionsPageForCurrentQuery()}
-                                                    onClick={() =>
-                                                      handlePageChange(
-                                                        Number(
-                                                          params.page[
-                                                            params.activeTab ||
-                                                              DEFAULT_ACTIVE_TAB
-                                                          ],
-                                                        ) - 1,
-                                                      )
-                                                    }
-                                                  >
-                                                    <ChevronLeft />
-                                                    Prev
-                                                  </Button>
-                                                  <Button
-                                                    className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
-                                                    disabled={isLastCollectionsPageForCurrentQuery()}
-                                                    onClick={() =>
-                                                      handlePageChange(
-                                                        Number(
-                                                          params.page[
-                                                            params.activeTab ||
-                                                              DEFAULT_ACTIVE_TAB
-                                                          ],
-                                                        ) + 1,
-                                                      )
-                                                    }
-                                                  >
-                                                    Next
-                                                    <ChevronRight />
-                                                  </Button>
-                                                </div>
-                                              </div>
-                                            ) : null}
                                           </div>
                                         </div>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                            ) : (
-                              <p className="mt-8 text-sm ml-2">
-                                No related collections where found for this name
-                              </p>
-                            )}
-                          </>
-                        )}
+                              ) : (
+                                <p className="mt-8 text-sm ml-2">
+                                  No related collections where found for this
+                                  name
+                                </p>
+                              )}
+                            </>
+                          )}
+                        </div>
                       </TabsContent>
                     );
                   },
