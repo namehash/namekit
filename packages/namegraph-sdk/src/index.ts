@@ -59,6 +59,7 @@ export class NameGraph {
 
   public suggestionsByCategory(
     label: string,
+    withoutRelatedCollections = false,
   ): Promise<NameGraphGroupedByCategoryResponse> {
     const categoriesQueryConfig: TypedNameGraphGroupingCategoriesParams = {
       [NameGraphGroupingCategory.related]: {
@@ -66,7 +67,7 @@ export class NameGraph {
         max_names_per_related_collection: 10,
         max_per_type: 2,
         max_recursive_related_collections: 3,
-        max_related_collections: 6,
+        max_related_collections: withoutRelatedCollections ? 0 : 6,
         name_diversity_ratio: 0.5,
       },
       [NameGraphGroupingCategory.wordplay]: {

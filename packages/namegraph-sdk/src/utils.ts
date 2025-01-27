@@ -56,7 +56,7 @@ export type TypedNameGraphGroupingCategoriesParams = {
  * NameGraph API Response types
  **/
 export type NameGraphSuggestion = {
-  name: string;
+  label: string;
   tokenized_label: string[];
   metadata: {
     pipeline_name: string;
@@ -116,12 +116,11 @@ export type NameGraphCollection = {
   collection_id: string;
   title: string;
   owner: string;
-  number_of_names: number;
+  number_of_labels: number;
   last_updated_timestamp: number;
-  top_names: [
+  top_labels: [
     {
-      name: string;
-      namehash: string;
+      label: string;
     },
   ];
   types: [string];
@@ -171,7 +170,7 @@ export const NameGraphSortOrderOptions = {
   /** Use intelligent endpoint-specific ranking (e.g. with Learning to Rank) */
   AI: "AI",
   /** Sort by title alphabetically ascending */
-  AZ: "A-Z", 
+  AZ: "A-Z",
   /** Sort by title alphabetically descending */
   ZA: "Z-A",
   /** Use relevance ranking */
