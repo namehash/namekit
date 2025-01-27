@@ -1,6 +1,5 @@
-import { Suspense } from "react";
 import type { Metadata } from "next";
-import { RankForm } from "./rank-form";
+import { Form } from "./form";
 import { Heading, Text } from "@namehash/namekit-react";
 import {
   defaultMetaOpengraph,
@@ -26,7 +25,7 @@ export default async function TokenizePage(props: Props) {
         </Text>
       </div>
 
-      <RankForm />
+      <Form initialValue={label} />
     </div>
   );
 }

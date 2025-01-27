@@ -15,7 +15,8 @@
     "@namehash/namekit-react": "workspace:*",
     "next": "15.1.1-canary.5",
     "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "react-dom": "19.0.0",
+    "sonner": "1.5.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.2",
