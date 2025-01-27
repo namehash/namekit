@@ -42,8 +42,8 @@ const FromNameGraphSortOrderToDropdownTextContent: Record<
 > = {
   [NameGraphSortOrderOptions.AI]: "AI with Learning to Rank",
   [NameGraphSortOrderOptions.AZ]: "A-Z (asc)",
-  [NameGraphSortOrderOptions.ZA]: "Z-A (des)",
-  [NameGraphSortOrderOptions.ES]: "Default scoring",
+  [NameGraphSortOrderOptions.ZA]: "Z-A (desc)",
+  [NameGraphSortOrderOptions.RELEVANCE]: "Relevance",
 };
 
 export default function ExploreCollectionsPage() {
@@ -181,7 +181,7 @@ export default function ExploreCollectionsPage() {
         findCollectionsByMember(query, {
           offset: (params.page - 1) * navigationConfig.itemsPerPage,
           sort_order: params.orderBy,
-          limit_names: MAX_COLLECTIONS_FOR_EXACT_MATCH,
+          limit_labels: MAX_COLLECTIONS_FOR_EXACT_MATCH,
           /**
            * Please note how the number of collections one page show is
            * strategically aligned with ITEMS_PER_PAGE_OPTIONS.

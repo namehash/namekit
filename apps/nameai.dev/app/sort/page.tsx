@@ -10,7 +10,7 @@ import {
 
 export interface LabelItem {
   label: string;
-  interestingScore: number;
+  sortScore: number;
 }
 
 const defaultLabels = ["vitalik", "ethereum", "web3", "blockchain", "defi"];
@@ -21,12 +21,12 @@ async function getInitialLabelsItems(): Promise<LabelItem[]> {
       const result = await nameai.inspectName(label);
       return {
         label,
-        interestingScore: result.nameai.interesting_score,
+        sortScore: result.nameai.sort_score,
       };
     }),
   );
 
-  return loadedNames.sort((a, b) => b.interestingScore - a.interestingScore);
+  return loadedNames.sort((a, b) => b.sortScore - a.sortScore);
 }
 
 export default async function SortPage() {

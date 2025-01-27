@@ -114,6 +114,7 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
     setLoadingCollectionMembers(true);
     fetchCollectionMembers(id, {
       offset: (params.page - 1) * navigationConfig.itemsPerPage,
+      limit: navigationConfig.itemsPerPage,
     })
       .then((res) => {
         if (res) {
@@ -268,7 +269,7 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
   useEffect(() => {
     setNavigationConfig({
       ...navigationConfig,
-      totalItems: collection?.number_of_names || undefined,
+      totalItems: collection?.number_of_labels || undefined,
     });
   }, [collection]);
 
@@ -313,7 +314,7 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                     <div className="w-full">
                       <div className="w-full mb-8">
                         <div className="w-full flex flex-col space-y-4 p-3 rounded-xl border border-gray-200">
-                          <div className="w-full h-[517px] flex flex-col justify-start">
+                          <div className="w-full h-[877px] flex flex-col justify-start">
                             <div className="h-full">
                               {/* Collection Count and Sort */}
                               <div className="max-w-[756px] w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5">
@@ -360,11 +361,11 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                     params.page
                                   ]?.suggestions.map((suggestion) => (
                                     <div
-                                      key={suggestion.name}
+                                      key={suggestion.label}
                                       className="bg-gray-100 rounded-full groupp-2 px-4 flex items-start"
                                     >
                                       <div className="max-h-[20px] relative flex items-center justify-center overflow-hidden">
-                                        {suggestion.name}
+                                        {suggestion.label}
                                       </div>
                                     </div>
                                   ))
@@ -436,11 +437,11 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                   {sampledNameIdeas?.map((suggestion) => {
                                     return (
                                       <div
-                                        key={suggestion.name}
+                                        key={suggestion.label}
                                         className="bg-gray-100 rounded-full groupp-2 px-4 flex items-start"
                                       >
                                         <div className="relative flex items-center justify-center overflow-hidden">
-                                          {suggestion.name}
+                                          {suggestion.label}
                                         </div>
                                       </div>
                                     );
@@ -504,11 +505,11 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                   {scrambledNameIdeas?.map((suggestion) => {
                                     return (
                                       <div
-                                        key={suggestion.name}
+                                        key={suggestion.label}
                                         className="bg-gray-100 rounded-full groupp-2 px-4 flex items-start"
                                       >
                                         <div className="relative flex items-center justify-center overflow-hidden">
-                                          {suggestion.name}
+                                          {suggestion.label}
                                         </div>
                                       </div>
                                     );

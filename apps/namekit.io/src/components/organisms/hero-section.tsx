@@ -1,26 +1,28 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ColorfulBackground, GithubIcon } from "../atoms";
+import { Button, Heading, Text } from "@namehash/namekit-react";
 
 export const HeroSection = () => {
   return (
     <section className="justify-between relative w-full pt-[80px] lg:px-10 px-5 flex flex-col items-center overflow-hidden ens-webfont">
       <div className="flex-col flex items-center justify-center z-20 mb-20">
-        <h1 className="animate-fadeIn text-4xl leading-10 font-bold lg:font-extrabold text-center lg:text-5xl lg:leading-[60px]">
+        <Heading
+          as="h1"
+          className="animate-fadeIn text-4xl leading-10 font-bold lg:font-extrabold lg:text-5xl lg:leading-[60px]"
+        >
           ENS onboarding made fun & easy
-        </h1>
-        <p className="animate-fadeIn text-gray-500 my-5 text-lg leading-7 font-normal text-center">
+        </Heading>
+        <Text as="p" className="animate-fadeIn text-gray-500 my-5 text-lg">
           Easily integrate rich ENS user journeys into your wallet, app, or game
-        </p>
-        <div className="flex items-center justify-center gap-4">
-          <Link
-            target="_blank"
-            href={"https://github.com/namehash/namekit"}
-            className="flex items-center justify-center gap-3 hover:bg-gray-100 border-gray-300 shadow-sm animate-fadeIn transition-colors duration-200 rounded-[8px] font-medium text-base leading-6 text-black bg-white px-[25px] py-[13px] text-center"
-          >
-            <GithubIcon className="w-5 h-5" />
-            GitHub
-          </Link>
+        </Text>
+        <div className="flex items-center justify-center gap-4 animate-fadeIn">
+          <Button variant="secondary" size="large" asChild>
+            <Link target="_blank" href={"https://github.com/namehash/namekit"}>
+              <GithubIcon className="w-5 h-5" />
+              GitHub
+            </Link>
+          </Button>
         </div>
       </div>
 
