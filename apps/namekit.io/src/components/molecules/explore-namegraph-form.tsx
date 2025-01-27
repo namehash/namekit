@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@namehash/namekit-react";
 import { useState } from "react";
 
 export const ExploreNameGraphForm = () => {
@@ -31,12 +32,9 @@ export const ExploreNameGraphForm = () => {
           type="text"
           value={exploreNameGraphInput}
         />
-        <button
-          type="submit"
-          className="hover:bg-gray-800 transition w-full lg:w-[224px] font-medium text-white bg-black rounded-xl shadow py-2.5"
-        >
+        <Button type="submit" variant="primary" className="w-full lg:w-[224px]">
           Get Name Ideas
-        </button>
+        </Button>
       </form>
     </div>
   );
