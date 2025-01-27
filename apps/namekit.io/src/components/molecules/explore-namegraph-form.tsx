@@ -8,7 +8,11 @@ export const ExploreNameGraphForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!exploreNameGraphInput.trim()) return;
+
+    if (!exploreNameGraphInput.trim()) {
+      window.open("https://www.namegraph.dev/collections", "_blank");
+      return;
+    }
 
     const encodedSearch = encodeURIComponent(exploreNameGraphInput);
     window.open(
