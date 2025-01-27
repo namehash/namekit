@@ -11,7 +11,7 @@ import {
   FromNameGraphSortOrderToDropdownTextContent,
 } from "@/lib/utils";
 import { DebounceInput } from "react-debounce-input";
-import { Suspense, useContext, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Toggle } from "@/components/ui/toggle";
 import { Button } from "@/components/ui/button";
 import {
@@ -30,7 +30,7 @@ import { useQueryParams } from "@/components/use-query-params";
 import { CollectionCard } from "@/components/collections/collection-card";
 import { buildENSName } from "@namehash/ens-utils";
 import { Link } from "@namehash/namekit-react";
-import { PreferredSufixContext } from "@/components/preferred-sufix-context";
+import { NameWithDefaultSuffix } from "@/components/collections/name-with-default-suffix";
 
 interface NavigationConfig {
   itemsPerPage: number;
@@ -58,8 +58,6 @@ export default function ExploreCollectionsPage() {
   const { params, setParams } = useQueryParams<DefaultDomainFiltersType>(
     DEFAULT_COLLECTIONS_PARAMS,
   );
-
-  const { preferredSufix } = useContext(PreferredSufixContext);
 
   const handleSearch = (searchTerm: string) => {
     setParams({
@@ -346,7 +344,11 @@ export default function ExploreCollectionsPage() {
                 href={`/name/${buildENSName(params.search.replace(" ", "")).name}`}
                 className="!text-3xl font-bold mb-5 leading-9 truncate"
               >
-                {params.search ? params.search : "______"}
+                {params.search ? (
+                  <NameWithDefaultSuffix name={params.search} />
+                ) : (
+                  "______"
+                )}
               </Link>
             </div>
 

@@ -37,9 +37,11 @@ export const CollectionsGridSkeleton = () => {
 
 const NUMBER_OF_SKELETONS_OF_COLLECTION_CARDS = 5;
 
-export const CollectionsCardsSkeleton = () => {
+export const CollectionsCardsSkeleton = ({
+  className = "flex flex-col space-y-2.5",
+}) => {
   return (
-    <div className="flex flex-col space-y-2.5">
+    <div className={className}>
       {[...Array(NUMBER_OF_SKELETONS_OF_COLLECTION_CARDS).keys()].map(
         (collection) => {
           return (

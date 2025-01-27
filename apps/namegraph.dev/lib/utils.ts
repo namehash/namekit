@@ -13,6 +13,12 @@ import {
   ScrambleMethod,
 } from "@namehash/namegraph-sdk/utils";
 import { createNameGraphClient } from "@namehash/namegraph-sdk";
+import {
+  availableSuffixes,
+  DEFAULT_PREFFERED_SUFFIX,
+  PREFERRED_SUFFIX_KEY,
+  Suffixes,
+} from "@/components/suffix-select";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -105,12 +111,15 @@ export const generateNamesByQuery = async (
 
 export const getCollectionsForQuery = async (
   input: string,
+  withoutRelatedCollections = false,
 ): Promise<NameGraphGroupedByCategoryResponse> => {
   if (input.includes("."))
     throw new Error("Invalid label for generating name suggestions");
 
-  const nameGeneratorSuggestions =
-    await NameGraphClient.suggestionsByCategory(input);
+  const nameGeneratorSuggestions = await NameGraphClient.suggestionsByCategory(
+    input,
+    withoutRelatedCollections,
+  );
 
   return nameGeneratorSuggestions;
 };

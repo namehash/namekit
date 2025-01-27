@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/select";
 import { Link } from "@namehash/namekit-react";
 import { buildENSName } from "@namehash/ens-utils";
+import { NameWithDefaultSuffix } from "@/components/collections/name-with-default-suffix";
 
 const notoBlack = Noto_Emoji({ preload: false });
 
@@ -271,9 +272,15 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
   useEffect(() => {
     setNavigationConfig({
       ...navigationConfig,
-      totalItems: collection?.number_of_names || undefined,
+      totalItems: collection?.number_of_labels || undefined,
     });
   }, [collection]);
+
+  const getNormalizedAndTrimmedName = (
+    suggestion: NameGraphSuggestion,
+  ): string => {
+    return buildENSName(suggestion.label.replace(" ", "")).name;
+  };
 
   return (
     <div className="mx-auto py-8 w-full">
@@ -363,12 +370,14 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                     params.page
                                   ]?.suggestions.map((suggestion) => (
                                     <Link
-                                      href={`/name/${buildENSName(suggestion.name.replace(" ", "")).name}`}
+                                      href={`/name/${getNormalizedAndTrimmedName(suggestion)}`}
                                       className="bg-gray-100 rounded-full group-2 px-4 py-1 flex items-start"
-                                      key={suggestion.name}
+                                      key={suggestion.label}
                                     >
                                       <div className="max-h-[20px] relative flex items-center justify-center overflow-hidden">
-                                        {suggestion.name}
+                                        <NameWithDefaultSuffix
+                                          name={suggestion.label}
+                                        />
                                       </div>
                                     </Link>
                                   ))
@@ -440,12 +449,14 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                   {sampledNameIdeas?.map((suggestion) => {
                                     return (
                                       <Link
-                                        href={`/name/${buildENSName(suggestion.name.replace(" ", "")).name}`}
-                                        key={suggestion.name}
+                                        href={`/name/${getNormalizedAndTrimmedName(suggestion)}`}
+                                        key={suggestion.label}
                                         className="bg-gray-100 rounded-full group-2 px-4 flex items-start"
                                       >
                                         <div className="relative flex items-center justify-center overflow-hidden">
-                                          {suggestion.name}
+                                          <NameWithDefaultSuffix
+                                            name={suggestion.label}
+                                          />
                                         </div>
                                       </Link>
                                     );
@@ -509,12 +520,14 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                   {scrambledNameIdeas?.map((suggestion) => {
                                     return (
                                       <Link
-                                        href={`/name/${buildENSName(suggestion.name.replace(" ", "")).name}`}
-                                        key={suggestion.name}
+                                        href={`/name/${getNormalizedAndTrimmedName(suggestion)}`}
+                                        key={suggestion.label}
                                         className="bg-gray-100 rounded-full group-2 px-4 flex items-start"
                                       >
                                         <div className="relative flex items-center justify-center overflow-hidden">
-                                          {suggestion.name}
+                                          <NameWithDefaultSuffix
+                                            name={suggestion.label}
+                                          />
                                         </div>
                                       </Link>
                                     );

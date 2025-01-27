@@ -3,6 +3,7 @@
 
 import {
   NameGraphCollection,
+  NameGraphFetchTopCollectionMembersResponse,
   NameGraphSortOrderOptions,
 } from "@namehash/namegraph-sdk/utils";
 import { useEffect, useState } from "react";
@@ -15,6 +16,7 @@ import {
   findCollectionsByMember,
   findCollectionsByString,
   FromNameGraphSortOrderToDropdownTextContent,
+  getCollectionsForQuery,
 } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -25,6 +27,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Link } from "@namehash/namekit-react";
+import { NameWithDefaultSuffix } from "@/components/collections/name-with-default-suffix";
+import { CollectionsCardsSkeleton } from "@/components/collections/collections-grid-skeleton";
 
 interface NavigationConfig {
   itemsPerPage: number;
@@ -73,8 +77,8 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
       undefined | null | Record<number, CollectionsData | null | undefined>
     >(undefined);
 
-  const [otherCollections, setOtherCollections] = useState<
-    NameGraphCollection[] | undefined
+  const [otherCategories, setOtherCategories] = useState<
+    NameGraphFetchTopCollectionMembersResponse[] | undefined
   >(undefined);
 
   interface QueryNameRelatedCollectionsParams {
@@ -231,15 +235,12 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                 },
               });
 
-              const moreCollections = res.other_collections;
               const relatedCollections = res.related_collections;
 
               if (relatedCollections.length === 0) {
                 setRelatedCollectionsByConcept(null);
                 return;
               }
-
-              setOtherCollections([...moreCollections]);
 
               setRelatedCollectionsByConcept({
                 ...relatedCollectionsByConcept,
@@ -325,6 +326,45 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
     },
   });
 
+  useEffect(() => {
+    const activeTab = params.activeTab || DEFAULT_ACTIVE_TAB;
+
+    if (
+      /**
+       * If the results of both tabs are already
+       * loaded, we load the other categories results
+       */
+      navigationConfig.totalItems &&
+      navigationConfig.totalItems[NameRelatedCollectionsTabs.ByConcept] &&
+      navigationConfig.totalItems[NameRelatedCollectionsTabs.ByMembership]
+    ) {
+      getCollectionsForQuery(name, true)
+        .then((res) => {
+          console.log(res, res.categories);
+          setOtherCategories(res.categories);
+        })
+        .catch((err) => {
+          console.error(err);
+          setOtherCategories([]);
+        });
+    } else if (
+      /**
+       * If the main results are already loaded
+       * we load the results for the hidden tab
+       */
+      navigationConfig.totalItems &&
+      navigationConfig.totalItems[activeTab as NameRelatedCollectionsTabs]
+    ) {
+      queryCollections({
+        activeTab: getOppositeTab(),
+        page:
+          params.page[params.activeTab || DEFAULT_ACTIVE_TAB] ||
+          DEFAULT_PAGE_NUMBER,
+        orderBy: params.orderBy,
+      });
+    }
+  }, [navigationConfig?.totalItems]);
+
   const isFirstCollectionsPageForCurrentQuery = () => {
     return Number(params.page[params.activeTab || DEFAULT_ACTIVE_TAB]) === 1;
   };
@@ -369,6 +409,27 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
     [NameRelatedCollectionsTabs.ByMembership]: "By membership",
   };
 
+  /**
+   * This serves for us to query results in a wise manner:
+   * We first query results for visible tab and later on for
+   * hidden tab. This is necessary as we want to show the count
+   * of results of both tabs as soon as possible. This is also wise
+   * as we prioritize, always, querying first the results that will be
+   * displayed in visitor's UI and later on the results that he/she can visit.
+   */
+  const getOppositeTab = (): NameRelatedCollectionsTabs => {
+    const activeTab = params.activeTab || DEFAULT_ACTIVE_TAB;
+
+    switch (activeTab) {
+      case NameRelatedCollectionsTabs.ByConcept:
+        return NameRelatedCollectionsTabs.ByMembership;
+      case NameRelatedCollectionsTabs.ByMembership:
+        return NameRelatedCollectionsTabs.ByConcept;
+      default:
+        return NameRelatedCollectionsTabs.ByMembership;
+    }
+  };
+
   const handleOrderBy = (orderBy: NameGraphSortOrderOptions) => {
     setParams({ orderBy });
     queryCollections({
@@ -386,7 +447,11 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
         <div className="flex space-x-4 mb-8">
           <div>
             <div className="text-3xl font-semibold mb-4">
-              {name ? name : <Skeleton className="w-40 h-8" />}
+              {name ? (
+                <NameWithDefaultSuffix name={name} />
+              ) : (
+                <Skeleton className="w-40 h-8" />
+              )}
             </div>
           </div>
         </div>
@@ -396,7 +461,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
             <div className="w-full space-y-4">
               <Tabs defaultValue={params.activeTab || DEFAULT_ACTIVE_TAB}>
                 <div className="flex justify-between flex-col space-y-4 md:space-y-0 md:flex-row">
-                  <TabsList>
+                  <TabsList className="w-max">
                     {Object.entries(NameRelatedCollectionsTabs).map(
                       ([key, value]) => {
                         return (
@@ -417,14 +482,16 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                             {navigationConfig.totalItems?.[
                               key as NameRelatedCollectionsTabs
                             ] !== undefined ? (
-                              <span className="ml-3 border border-gray-400 px-2 rounded-full">
+                              <span className="w-16 ml-3 border border-gray-400 rounded-full">
                                 {
                                   navigationConfig.totalItems?.[
                                     key as NameRelatedCollectionsTabs
                                   ]
                                 }
                               </span>
-                            ) : null}
+                            ) : (
+                              <Skeleton className="ml-3 w-16 h-6" />
+                            )}
                           </TabsTrigger>
                         );
                       },
@@ -466,12 +533,16 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                         className="w-full"
                         value={key as NameRelatedCollectionsTabs}
                       >
-                        <div className="min-h-[400px]">
+                        <div className="min-h-[400px] overflow-hidden">
                           {key === NameRelatedCollectionsTabs.ByConcept ? (
                             <>
                               {loadingCollectionByConcept ? (
-                                <div className="h-[400px] w-full flex flex-col justify-center items-center my-8 animate-spin">
-                                  <Loader />
+                                <div className="w-full flex flex-col justify-center items-center">
+                                  <div className="w-full flex flex-col space-y-4 p-3 rounded-xl mb-8 border border-gray-200">
+                                    <Skeleton className="w-[350px] my-2 h-6 mr-auto" />
+                                    <CollectionsCardsSkeleton className="flex flex-col space-y-[30px]" />
+                                    <CollectionsCardsSkeleton />
+                                  </div>
                                 </div>
                               ) : relatedCollectionsByConcept ? (
                                 <div>
@@ -528,8 +599,8 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                               {/* Collections List */}
                                               <div className="w-full h-full max-w-[756px] space-y-4">
                                                 {loadingCollectionByConcept ? (
-                                                  <div className="my-20 flex flex-col w-full mt-auto justify-center items-center animate-spin h-[370px]">
-                                                    <Loader />
+                                                  <div className="my-20 flex flex-col w-full mt-auto justify-center items-center">
+                                                    <CollectionsCardsSkeleton />
                                                   </div>
                                                 ) : relatedCollectionsByConcept[
                                                     params.page[
@@ -612,8 +683,12 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                           ) : (
                             <>
                               {loadingCollectionsByMembership ? (
-                                <div className="h-[400px] w-full flex flex-col justify-center items-center animate-spin">
-                                  <Loader />
+                                <div className="w-full flex flex-col justify-center items-center">
+                                  <div className="w-full flex flex-col space-y-4 p-3 rounded-xl mb-8 border border-gray-200">
+                                    <Skeleton className="w-[350px] my-2 h-6 mr-auto" />
+                                    <CollectionsCardsSkeleton className="flex flex-col space-y-[30px]" />
+                                    <CollectionsCardsSkeleton />
+                                  </div>
                                 </div>
                               ) : relatedCollectionsByMembership ? (
                                 <div>
@@ -670,8 +745,8 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                               {/* Collections List */}
                                               <div className="w-full h-full max-w-[756px] space-y-4">
                                                 {loadingCollectionsByMembership ? (
-                                                  <div className="flex flex-col w-full mt-auto justify-center items-center animate-spin h-[370px]">
-                                                    <Loader />
+                                                  <div className="flex flex-col w-full mt-auto justify-center items-center">
+                                                    <CollectionsCardsSkeleton />
                                                   </div>
                                                 ) : relatedCollectionsByMembership[
                                                     params.page[
@@ -768,27 +843,27 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
           </div>
         </div>
       </div>
-      {otherCollections ? (
+      {otherCategories?.length ? (
         <div className="max-w-7xl mx-auto p-6">
           <div className="w-full rounded-lg border border-gray-200">
             <p className="text-[18px] font-semibold px-5 py-2.5 border-b border-gray-200">
               Explore other names
             </p>
-            {otherCollections.map((collection) => {
+            {otherCategories.map((collection) => {
               return (
                 <div key={collection.collection_id}>
                   <p className="py-3 px-5 font-semibold text-sm text-gray-500">
-                    {collection.title}
+                    {collection.name}
                   </p>
                   <div className="flex flex-col">
-                    {collection.top_names.slice(0, 3).map((topName) => {
+                    {collection.suggestions.slice(0, 3).map((suggestion) => {
                       return (
                         <Link
-                          key={topName.name}
-                          href={`/name/${topName.name}`}
+                          key={suggestion.label}
+                          href={`/name/${suggestion.label}`}
                           className="p-5 border-t border-gray-200 font-semibold text-base text-black"
                         >
-                          {topName.name}
+                          <NameWithDefaultSuffix name={suggestion.label} />
                         </Link>
                       );
                     })}

@@ -11,7 +11,7 @@ import { TelegramIcon } from "@/components/footer/telegram-icon";
 import { Button } from "@/components/ui/button";
 import "@namehash/namekit-react/styles.css";
 import NextLink from "next/link";
-import { SufixSelect } from "@/components/sufix-select";
+import { SuffixSelect } from "@/components/suffix-select";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -83,17 +83,9 @@ export default function RootLayout({
                 </NextLink>
               </div>
               <div className="flex flex-row items-center justify-between md:gap-5 h-[40px]">
+                <SuffixSelect />
                 <div className="hidden items-center justify-center lg:flex gap-2">
                   <div className="hidden items-center justify-center xl:flex gap-2">
-                    {/* 
-                      This section is currently commented out as
-                      NameGraph API does not support dotted queries.
-                      
-                      e.g. something.anything
-
-                      <SufixSelect />
-                    */}
-
                     <Button variant="ghost" asChild>
                       <Link href="http://api.namegraph.dev/docs">Docs</Link>
                     </Button>
