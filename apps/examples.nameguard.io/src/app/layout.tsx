@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Link from "next/link";
 import { Suspense } from "react";
-
+import "@namehash/nameguard-react/styles.css";
 import "./globals.css";
 import { Avatar } from "./components/Avatar";
 import { SecurePrimaryName } from "./components/SecurePrimaryName";
@@ -86,7 +86,9 @@ export default function RootLayout({
                     className="flex items-center border-0 border-b border-gray-200 outline-blue outline-b-0 h-min cursor-pointer p-4 hover:bg-gray-200 space-x-3 font-mono"
                   >
                     <Avatar address={address} />
-                    <Suspense fallback={<SecurePrimaryNameLoading address={address} />}>
+                    <Suspense
+                      fallback={<SecurePrimaryNameLoading address={address} />}
+                    >
                       <SecurePrimaryName address={address} />
                     </Suspense>
                   </Link>

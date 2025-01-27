@@ -37,7 +37,7 @@ export type NameGraphRelatedCategoryParams = {
   max_names_per_related_collection: number;
   max_recursive_related_collections: number;
   enable_learning_to_rank: boolean;
-  name_diversity_ratio: number | null;
+  label_diversity_ratio: number | null;
   max_per_type: number | null;
 };
 
@@ -56,14 +56,14 @@ export type TypedNameGraphGroupingCategoriesParams = {
  * NameGraph API Response types
  **/
 export type NameGraphSuggestion = {
-  name: string;
+  label: string;
   tokenized_label: string[];
   metadata: {
     pipeline_name: string;
     interpretation: (string | null)[];
     cached_status: string;
     categories: string[];
-    cached_interesting_score: number | null;
+    cached_sort_score: number | null;
     applied_strategies: string[][];
     collection_title: string | null;
     collection_id: string | null;
@@ -116,12 +116,11 @@ export type NameGraphCollection = {
   collection_id: string;
   title: string;
   owner: string;
-  number_of_names: number;
+  number_of_labels: number;
   last_updated_timestamp: number;
-  top_names: [
+  top_labels: [
     {
-      name: string;
-      namehash: string;
+      label: string;
     },
   ];
   types: [string];
@@ -165,13 +164,17 @@ export const DEFAULT_MAX_SUGGESTIONS = 100;
 export const DEFAULT_FULL_MODE = "full";
 export const DEFAULT_INSTANT_MODE = "instant";
 export const DEFAULT_ENABLE_LEARNING_TO_RANK = true;
-export const DEFAULT_NAME_DIVERSITY_RATIO = 0.5;
+export const DEFAULT_LABEL_DIVERSITY_RATIO = 0.5;
 export const DEFAULT_MAX_PER_TYPE = 2;
 export const NameGraphSortOrderOptions = {
+  /** Use intelligent endpoint-specific ranking (e.g. with Learning to Rank) */
   AI: "AI",
-  AZ: "A-Z",
+  /** Sort by title alphabetically ascending */
+  AZ: "A-Z", 
+  /** Sort by title alphabetically descending */
   ZA: "Z-A",
-  ES: "ES",
+  /** Use relevance ranking */
+  RELEVANCE: "Relevance",
 } as const;
 export type NameGraphSortOrderOptions =
   (typeof NameGraphSortOrderOptions)[keyof typeof NameGraphSortOrderOptions];

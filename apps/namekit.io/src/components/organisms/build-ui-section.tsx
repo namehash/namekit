@@ -5,6 +5,7 @@ import Image from "next/image";
 import cc from "classcat";
 import { useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import { Heading, Text } from "@namehash/namekit-react";
 
 enum Color {
   Blue = "blue",
@@ -21,13 +22,12 @@ export const BuildUiSection = () => {
     <section className="justify-center relative w-full lg:pt-[100px] pt-10 lg:px-28 px-5 flex items-start overflow-hidden">
       <div className="h-full flex flex-col w-full items-center justify-between z-20">
         <div className="flex flex-col items-center">
-          <h2 className="text-2xl leading-8 lg:text-4xl lg:leading-10 font-bold text-center">
-            Customize to match your brand and UI
-          </h2>
-          <p className="mt-5 text-lg leading-7 font-normal text-gray-500 text-center">
+          <Heading>Customize to match your brand and UI</Heading>
+
+          <Text className="mt-5 text-lg text-gray-500">
             Integrate into your “host app” via UI Kit, SDK, or APIs depending on
             preference
-          </p>
+          </Text>
 
           <div className="rounded-[32px] border border-gray-200 bg-white inline-flex p-2 gap-2 lg:mt-8 mt-5">
             <button
