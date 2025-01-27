@@ -63,7 +63,7 @@ export class NameGraph {
     const categoriesQueryConfig: TypedNameGraphGroupingCategoriesParams = {
       [NameGraphGroupingCategory.related]: {
         enable_learning_to_rank: DEFAULT_ENABLE_LEARNING_TO_RANK,
-        max_names_per_related_collection: 10,
+        max_labels_per_related_collection: 10,
         max_per_type: 2,
         max_recursive_related_collections: 3,
         max_related_collections: 6,

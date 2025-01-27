@@ -34,7 +34,7 @@ export type NameGraphOtherCategoryParams = NameGraphGroupingCategoryParams & {
 
 export type NameGraphRelatedCategoryParams = {
   max_related_collections: number;
-  max_names_per_related_collection: number;
+  max_labels_per_related_collection: number;
   max_recursive_related_collections: number;
   enable_learning_to_rank: boolean;
   label_diversity_ratio: number | null;
