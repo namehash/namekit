@@ -1,12 +1,8 @@
 import { Indicator } from "./indicator";
+import { type NameAIReport } from "@namehash/nameai";
 
-interface ResultsProps {
-  label: string;
-  analysis: any;
-}
-
-export function Results({ label, analysis }: ResultsProps) {
-  const topTokenization = analysis.top_tokenization || [];
+export function Results({ analysis }: NameAIReport) {
+  const topTokenization = analysis?.top_tokenization || [];
 
   return (
     <div className="space-y-6">
@@ -14,7 +10,7 @@ export function Results({ label, analysis }: ResultsProps) {
         <h3 className="text-lg font-semibold mb-2">Label For Analysis</h3>
 
         <p className="bg-white ens-webfont flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm">
-          {analysis.inspection.label}
+          {analysis?.inspection.label}
         </p>
       </div>
 
@@ -35,7 +31,7 @@ export function Results({ label, analysis }: ResultsProps) {
           ) : (
             <span className="text-gray-500">No tokenization available</span>
           )}
-          {analysis.top_tokenization && (
+          {analysis?.top_tokenization && (
             <div className="ml-auto">
               <Indicator log_probability={analysis.log_probability} />
             </div>
@@ -47,7 +43,7 @@ export function Results({ label, analysis }: ResultsProps) {
         <h3 className="text-lg font-semibold mb-2">
           Alternative Tokenizations
         </h3>
-        {analysis.tokenizations.map((tokenization, index) => (
+        {analysis?.tokenizations.map((tokenization, index) => (
           <div
             key={index}
             className="bg-white flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm"

@@ -76,7 +76,7 @@ export function RankForm() {
       {isPending && <Skeleton label={inputValue} />}
 
       {!isPending && state.success && state.label && state.analysis && (
-        <Results label={state.label} analysis={state.analysis} />
+        <Results analysis={state.analysis} />
       )}
     </>
   );
