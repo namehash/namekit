@@ -22,7 +22,7 @@ export const ExploreNameGraphForm = () => {
   };
 
   return (
-    <div className="bg-gray-50 py-4 px-5 rounded-[12px] my-5">
+    <div className="bg-gray-50 py-4 px-5 rounded-[12px] my-5 w-full">
       <p className="mb-1 text-lg font-semibold">Explore the NameGraph</p>
       <form
         onSubmit={handleSubmit}
