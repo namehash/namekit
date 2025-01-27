@@ -1,20 +1,12 @@
-import { nameai } from "@namehash/nameai";
 import { Indicator } from "./indicator";
 
 interface ResultsProps {
-  name: string;
+  label: string;
+  analysis: any;
 }
 
-export default async function Results({ name }: ResultsProps) {
-  if (!name) return null;
-
-  const result = await nameai.inspectName(name, {});
-
-  if (!result.nameai || !result.nameai.analysis) {
-    return <p>Please try again.</p>;
-  }
-
-  const topTokenization = result.nameai.analysis.top_tokenization || [];
+export function Results({ label, analysis }: ResultsProps) {
+  const topTokenization = analysis.top_tokenization || [];
 
   return (
     <div className="space-y-6">
@@ -22,7 +14,7 @@ export default async function Results({ name }: ResultsProps) {
         <h3 className="text-lg font-semibold mb-2">Label For Analysis</h3>
 
         <p className="bg-white ens-webfont flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm">
-          {result.nameai.analysis.inspection.label}
+          {analysis.inspection.label}
         </p>
       </div>
 
@@ -43,11 +35,9 @@ export default async function Results({ name }: ResultsProps) {
           ) : (
             <span className="text-gray-500">No tokenization available</span>
           )}
-          {result.nameai.analysis.top_tokenization && (
+          {analysis.top_tokenization && (
             <div className="ml-auto">
-              <Indicator
-                log_probability={result.nameai.analysis.log_probability}
-              />
+              <Indicator log_probability={analysis.log_probability} />
             </div>
           )}
         </div>
@@ -57,7 +47,7 @@ export default async function Results({ name }: ResultsProps) {
         <h3 className="text-lg font-semibold mb-2">
           Alternative Tokenizations
         </h3>
-        {result.nameai.analysis.tokenizations.map((tokenization, index) => (
+        {analysis.tokenizations.map((tokenization, index) => (
           <div
             key={index}
             className="bg-white flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm"
