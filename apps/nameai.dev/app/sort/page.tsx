@@ -1,7 +1,12 @@
 import { nameai } from "@namehash/nameai";
 import { Heading, Text } from "@namehash/namekit-react";
+import type { Metadata } from "next";
 
 import { Client } from "./client";
+import {
+  defaultMetaOpengraph,
+  defaultMetaTwitter,
+} from "@/app/shared-metadata";
 
 export interface LabelItem {
   label: string;
@@ -40,3 +45,22 @@ export default async function SortPage() {
     </div>
   );
 }
+
+const title = "AI Sort";
+const description = "Bring names more likely to be interesting to the top.";
+
+export const metadata: Metadata = {
+  title,
+  description,
+  openGraph: {
+    ...defaultMetaOpengraph,
+    title,
+    description,
+    url: "/sort",
+  },
+  twitter: {
+    ...defaultMetaTwitter,
+    title,
+    description,
+  },
+};

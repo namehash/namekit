@@ -34,10 +34,10 @@ export type NameGraphOtherCategoryParams = NameGraphGroupingCategoryParams & {
 
 export type NameGraphRelatedCategoryParams = {
   max_related_collections: number;
-  max_names_per_related_collection: number;
+  max_labels_per_related_collection: number;
   max_recursive_related_collections: number;
   enable_learning_to_rank: boolean;
-  name_diversity_ratio: number | null;
+  label_diversity_ratio: number | null;
   max_per_type: number | null;
 };
 
@@ -164,7 +164,7 @@ export const DEFAULT_MAX_SUGGESTIONS = 100;
 export const DEFAULT_FULL_MODE = "full";
 export const DEFAULT_INSTANT_MODE = "instant";
 export const DEFAULT_ENABLE_LEARNING_TO_RANK = true;
-export const DEFAULT_NAME_DIVERSITY_RATIO = 0.5;
+export const DEFAULT_LABEL_DIVERSITY_RATIO = 0.5;
 export const DEFAULT_MAX_PER_TYPE = 2;
 export const NameGraphSortOrderOptions = {
   /** Use intelligent endpoint-specific ranking (e.g. with Learning to Rank) */
