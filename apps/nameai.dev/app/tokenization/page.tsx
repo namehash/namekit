@@ -45,13 +45,15 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const searchParams = await props.searchParams;
   const label = searchParams?.label || "";
 
-  if (!label) return notFound();
-
   const labelForAnalysis = label.includes(".") ? label.split(".")[0] : label;
 
-  const title = `Label tokenization for ${labelForAnalysis}`;
+  const title = labelForAnalysis
+    ? `Label tokenization for ${labelForAnalysis}`
+    : "Label Tokenization";
   const description = "Discover the words that otherwise hidden in labels";
-  const url = `/tokenization?label=${labelForAnalysis}`;
+  const url = labelForAnalysis
+    ? `/tokenization?label=${labelForAnalysis}`
+    : "/tokenization";
 
   return {
     title,
