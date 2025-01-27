@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@namehash/namekit-react";
+import { Button, Input } from "@namehash/namekit-react";
 import { useState } from "react";
 
 export const ExploreNameGraphForm = () => {
@@ -26,17 +26,20 @@ export const ExploreNameGraphForm = () => {
       <p className="mb-1 text-lg font-semibold">Explore the NameGraph</p>
       <form
         onSubmit={handleSubmit}
-        className="flex flex-col lg:flex-row lg:space-x-3 lg:my-4"
+        className="flex flex-col lg:flex-row lg:space-x-3 space-y-3 lg:space-y-0 lg:my-4"
       >
-        <input
-          onChange={(e) => setExploreNameGraphInput(e.target.value)}
-          className="ens-webfont my-3 focus:outline-none hover:border-gray-400 transition lg:my-0 rounded-lg placeholder:text-gray-400 py-2.5 px-3 w-full border border-gray-300"
-          placeholder="Your search..."
-          name="exploreNameGraph"
-          type="text"
-          value={exploreNameGraphInput}
-        />
-        <Button type="submit" variant="primary" className="w-full lg:w-[224px]">
+        <div className="flex-1">
+          <Input
+            onChange={(e) => setExploreNameGraphInput(e.target.value)}
+            className="w-full py-3 px-3 min-w-0 flex-1"
+            placeholder="Your search..."
+            name="exploreNameGraph"
+            type="text"
+            value={exploreNameGraphInput}
+          />
+        </div>
+
+        <Button className="justify-center" type="submit" variant="primary">
           Get Name Ideas
         </Button>
       </form>
