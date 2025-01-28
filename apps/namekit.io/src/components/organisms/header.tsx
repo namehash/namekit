@@ -62,7 +62,7 @@ export const Header = () => {
       {({ open }) => (
         <Fragment>
           {/* TIP: This component renders 2 different markups, one for mobile and other for desktop devices */}
-          <div className="lg:px-0 mx-auto max-w-6xl px-6">
+          <div className="lg:px-0 mx-auto max-w-[1216px] px-6">
             <div className="flex h-[56px] items-center lg:h-[70px]">
               {/* Shared markup */}
               <div

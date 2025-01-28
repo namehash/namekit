@@ -147,7 +147,7 @@ export const ServicesSection = () => {
 const EarnFutureComponent = () => {
   return (
     <div className="w-full">
-      <div className="grid grid-cols-1 gap-4 w-full xl:w-[656px]">
+      <div className="grid grid-cols-1 gap-4 w-full xl:max-w-[656px]">
         <div className="rounded-[12px] w-full border border-gray-200 py-4 px-5 flex flex-col mb-4 bg-white z-20">
           <div className="mb-3">
             <div className="p-2.5 rounded-full border border-gray-200 inline-flex justify-center items-center">
@@ -166,7 +166,7 @@ const EarnFutureComponent = () => {
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-4 gap-3 w-full xl:w-[656px]">
+      <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-4 gap-3 w-full xl:max-w-[656px]">
         <div className="rounded-[12px] w-full border border-gray-200 py-4 px-5 flex flex-col bg-white z-20">
           <div className="mb-3">
             <div className="p-2.5 rounded-full border border-gray-200 inline-flex justify-center items-center">
