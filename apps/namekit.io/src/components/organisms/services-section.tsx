@@ -98,10 +98,12 @@ export const Service = ({
             <Text className="text-lg text-gray-500 lg:text-start text-center pr-2">
               <Balancer>{subtitle}</Balancer>
             </Text>
-            {postSubtitle && <div className="w-full">{postSubtitle}</div>}
+            {postSubtitle && (
+              <div className="w-full flex justify-center">{postSubtitle}</div>
+            )}
             {buttonUrl && (
-              <div>
-                <Button asChild>
+              <div className="w-full flex justify-center lg:justify-start">
+                <Button className="" asChild>
                   <Link href={buttonUrl} target="_blank">
                     Learn more <ExternalLinkIcon className="ml-3" />
                   </Link>
