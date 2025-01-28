@@ -51,6 +51,15 @@ const report = await nameai.inspectName("vitalik.eth");
     sort_score: 0.35,
     
     analysis: {  // undefined for uninspected names
+      // The normalization status of the name (normalized, unnormalized, or unknown)
+      status: "normalized",
+      
+      // Details about the inspected name component
+      inspection: {
+        label: "vitalik",
+        // ... other inspection details
+      },
+      
       // Text meaningfulness (0.0 to 1.0)
       probability: 0.95,
       
