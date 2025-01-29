@@ -13,7 +13,7 @@ export function SortedList({ labels }: { labels: LabelItem[] }) {
           <span className="font-bold">{item.label}</span>
           <div className="flex items-center gap-2">
             <span className="text-sm text-gray-600">
-              {item.interestingScore.toFixed(4)}
+              {item.sortScore.toFixed(4)}
             </span>
           </div>
         </li>

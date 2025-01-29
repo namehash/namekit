@@ -23,11 +23,11 @@ class NameAI:
 
         if nameguard_report.inspected:
             nlp_analysis = self.nlp_inspector.nlp_analyse_label(label)
-            purity, interesting = self.scorer.score_label(nlp_analysis)
+            purity, sort_score = self.scorer.score_label(nlp_analysis)
 
             nameai_report = NameAIReport(
                 purity_score=purity,
-                interesting_score=interesting,
+                sort_score=sort_score,
                 analysis=NLPLabelAnalysis(
                     inspection=nlp_analysis.inspection,
                     status=nlp_analysis.status,
@@ -41,7 +41,7 @@ class NameAI:
         else:
             nameai_report = NameAIReport(
                 purity_score=0,
-                interesting_score=0,
+                sort_score=0,
                 analysis=None,
             )
 
@@ -67,7 +67,7 @@ class NameAI:
             nlp_analysis = self.nlp_inspector.nlp_analyse_label(labels[0])
             nameai_report = NameAIReport(
                 purity_score=0,
-                interesting_score=0,
+                sort_score=0,
                 analysis=NLPLabelAnalysis(
                     inspection=nlp_analysis.inspection,
                     status=nlp_analysis.status,
@@ -81,7 +81,7 @@ class NameAI:
         else:
             nameai_report = NameAIReport(
                 purity_score=0,
-                interesting_score=0,
+                sort_score=0,
                 analysis=None,
             )
 

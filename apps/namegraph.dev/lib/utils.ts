@@ -41,7 +41,7 @@ export const generateNamesByQuery = async (
 
   // Related collections params
   const enable_learning_to_rank = true;
-  const max_names_per_related_collection = 10;
+  const max_labels_per_related_collection = 10;
   // Determines the number of collections returned in category.related_collections
   const max_recursive_related_collections =
     RELATED_COLLECTION_PILLS_RESULTS_NUMBER;
@@ -67,7 +67,7 @@ export const generateNamesByQuery = async (
       Object.assign(categoryParams, {
         ...categoryParams,
         max_recursive_related_collections,
-        max_names_per_related_collection,
+        max_labels_per_related_collection,
         max_related_collections,
         enable_learning_to_rank,
         name_diverstity_ratio,
@@ -166,7 +166,7 @@ export const findCollectionsByMember = async (
   options?: {
     offset?: number;
     max_results?: number;
-    limit_names?: number;
+    limit_labels?: number;
     sort_order?: NameGraphSortOrderOptions;
   },
 ): Promise<NameGraphCollectionByMemberResponse> => {
