@@ -28,5 +28,5 @@ export const NameWithDefaultSuffix = ({ name }: { name: string }) => {
       : availableSuffixes[DEFAULT_PREFFERED_SUFFIX],
   );
 
-  return <>{name + suffix}</>;
+  return name + suffix;
 };

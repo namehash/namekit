@@ -1,5 +1,4 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React from "react";
 import cc from "classcat";
 import {
   AvatarRoundedCorners,
@@ -9,18 +8,18 @@ import {
   getRoundedCornerDimension,
   NftAvatarLoadingMethod,
 } from "./avatar-utils";
-import { FastAverageColor } from "fast-average-color";
-import { DomainCardProps } from "../DomainCard";
-import { DomainName } from "./parse-name";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useScreenSize } from "./useScreenSize";
-import { NotNormalizedNameNftAvatar } from "./NotNormalizedNameAvatar";
-import { NormalizedNameNftAvatar } from "./NormalizedNameNftAvatar";
-import { LoadingNftAvatar } from "./LoadingNftAvatar";
+import { NotNormalizedNameNftAvatar } from "./not-normalized-name";
+import { NormalizedNameNftAvatar } from "./normalized-name";
+import { LoadingNftAvatar } from "./loading-nft-avatar";
+import { EnsOutlineIcon } from "./ens-outline-icon";
+import { DisplayedName, DisplayedNameConfig } from "./displayed-name";
+import { ENSName, Normalization } from "@namehash/ens-utils";
+import { FastAverageColor } from "fast-average-color";
 import { isSafari } from "react-device-detect";
-import { EnsOutlineIcon } from "./ENSOutlineIcon";
-import { DisplayedName, DisplayedNameConfig } from "./DisplayedName";
-// import { Atropos } from "atropos/react";
+import Image from "next/image";
+import Atropos from "atropos/react";
 
 /*
   Launch Readiness Removal: NFT Details Page is not ready!
@@ -31,8 +30,7 @@ import { DisplayedName, DisplayedNameConfig } from "./DisplayedName";
 interface AvatarProps {
   onAverageColorDiscovery?: (averageColor: string) => void;
   loadingMethod?: NftAvatarLoadingMethod;
-  name: DomainName | null; // when null show loading skeleton
-  domainCard: DomainCardProps | null; // when null show loading skeleton
+  name: ENSName | null; // when null show loading skeleton
   ensStampsConfig?: ENSStampsConfig;
   nameDoesntExist?: boolean;
   withLink: boolean;
@@ -55,7 +53,6 @@ export const NftAvatar = ({
   name,
   is3d,
   withLink,
-  domainCard,
   nameDoesntExist,
   ensStampsConfig,
   onAverageColorDiscovery,
@@ -83,7 +80,7 @@ export const NftAvatar = ({
     useState(false);
 
   const [srcUrl, setSrcUrl] = useState<string>(
-    !!name ? `https://metadata.ens.domains/mainnet/avatar/${name.slug}` : `/`,
+    !!name ? `https://metadata.ens.domains/mainnet/avatar/${name.name}` : `/`,
   );
 
   const handleLoading = () => {
@@ -121,12 +118,17 @@ export const NftAvatar = ({
   const setCustomShadowColor = async () => {
     if (imageRef.current) {
       const wrapperElm: HTMLImageElement = imageRef.current;
-      const wrapperElmChildren = wrapperElm.children[0];
-      const imageElm = wrapperElmChildren.children[0];
+      const imageElm = wrapperElm.children[0];
 
-      const averageAvatarColor = await fac.getColorAsync(
-        imageElm as HTMLImageElement,
-      );
+      console.log("wrapperElm", wrapperElm);
+      console.log("imageElm", imageElm);
+
+      let averageAvatarColor;
+      if (imageElm) {
+        averageAvatarColor = await fac.getColorAsync(
+          imageElm as HTMLImageElement,
+        );
+      }
 
       if (averageAvatarColor) {
         setShadowColor(averageAvatarColor.rgb);
@@ -140,11 +142,11 @@ export const NftAvatar = ({
 
   useEffect(() => {
     if (!!name && !loadedImage && !imageLoadError) {
-      setSrcUrl(`https://metadata.ens.domains/mainnet/avatar/${name.slug}`);
+      setSrcUrl(`https://metadata.ens.domains/mainnet/avatar/${name.name}`);
       handleLoading();
     }
 
-    if (name && !name?.normalizedName) {
+    if (name && name.normalization !== Normalization.Normalized) {
       setStopDisplayingLoadingState(true);
     }
   }, [name]);
@@ -166,7 +168,7 @@ export const NftAvatar = ({
   }, [shadowColor, loadedImage, imageLoadError, nameFontSizeIsCalculated]);
 
   const AvatarLayout =
-    (domainCard?.name && name && !name?.normalizedName) ||
+    (name && name.name && name.normalization !== Normalization.Normalized) ||
     // &&  !domainCard?.name.normalizedName
     (nameDoesntExist && name) ? (
       <NotNormalizedNameNftAvatar
@@ -197,7 +199,7 @@ export const NftAvatar = ({
         <div
           className={cc([
             avatarBorderRadius,
-            "aspect-square overflow-hidden flex-shrink-0 z-20 relative",
+            "aspect-square overflow-hidden flex-shri0 z-20 relative",
           ])}
         >
           <div
@@ -333,16 +335,16 @@ export const NftAvatar = ({
               ref={imageRef}
             >
               {name && (
-                <img
-                  // unoptimized
+                <Image
+                  unoptimized
                   src={srcUrl}
-                  // layout="fill"
+                  layout="fill"
                   onError={handleError}
                   onLoad={handleLoading}
                   data-atropos-offset="2"
+                  onLoadingComplete={handleLoaded}
                   crossOrigin="anonymous"
                   className={avatarBorderRadius}
-                  // onLoadingComplete={handleLoaded}
                   alt={`${name && name.displayName} NFT Avatar`}
                 />
               )}
@@ -357,26 +359,21 @@ export const NftAvatar = ({
     (!name && stopDisplayingLoadingState)
   ) {
     if (is3d) {
-      const AnimatedAvatar =
-        // <Atropos className={size}>
-        { AvatarLayout };
-      {
-        /* </Atropos>; */
-      }
+      const AnimatedAvatar = <Atropos className={size}>{AvatarLayout}</Atropos>;
 
       return (
         <>
           {withLink && name
             ? /*
-            Launch Readiness Removal: NFT Details Page is not ready!
+             Launch Readiness Removal: NFT Details Page is not ready!
 
-              <Link
-                href={`/name/${name.slug}`}
-                className="w-full flex justify-center mt-auto"
-              >
-                {AnimatedAvatar}
-              </Link>
-          */
+               <Link
+                 href={`/name/${name.slug}`}
+                 className="w-full flex justify-center mt-auto"
+               >
+                 {AnimatedAvatar}
+               </Link>
+           */
               AnimatedAvatar
             : AnimatedAvatar}
         </>

@@ -12,5 +12,3 @@ export {
   CurrencySymbolSize,
 } from "./components/CurrencySymbol/CurrencySymbol";
 export { TruncatedText } from "./components/TruncatedText";
-export { AvatarSize } from "./components/NFTAvatar/avatar-utils";
-export { NftAvatar } from "./components/NFTAvatar/NFTAvatar";

@@ -110,7 +110,7 @@ export const NotNormalizedNameNftAvatar = ({
             >
               {nameDoesntExist
                 ? "Not found"
-                : normalization === Normalization.unknown
+                : normalization === Normalization.Unknown
                   ? "Unknown name"
                   : "Invalid name"}
             </text>

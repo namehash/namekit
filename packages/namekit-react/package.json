@@ -47,8 +47,6 @@
     "@namehash/nameguard": "0.9.0",
     "atropos": "1.0.2",
     "classcat": "5.0.5",
-    "fast-average-color": "9.4.0",
-    "react-device-detect": "2.2.3",
     "viem": "2.21.16"
   },
   "devDependencies": {

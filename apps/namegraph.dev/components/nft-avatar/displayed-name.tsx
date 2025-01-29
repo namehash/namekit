@@ -8,6 +8,9 @@ import { useEffect, useRef, useState } from "react";
     import Link from "next/link";
 */
 import cc from "classcat";
+import { ENSName, Normalization } from "@namehash/ens-utils";
+import { DomainName } from "./parse-name";
+import { DomainCardProps } from "../../../../packages/namekit-react/src/components/DomainCard";
 
 interface DisplayedNameProps {
   /*
@@ -19,7 +22,7 @@ interface DisplayedNameProps {
   maxFontSize?: number;
   isClickableLink?: boolean;
   fontConfigClasses?: DisplayedNameConfig;
-  domainName: DomainName | null; // when null we show the skeleton
+  domainName: ENSName | null; // when null we show the skeleton
 
   /*
     Used to confirm that a name is unnormalized:
@@ -27,7 +30,7 @@ interface DisplayedNameProps {
     When null, the name doesn't exist in the blockchain;
     When undefined, the DomainCard query was not yet finished.
   */
-  domainCard?: DomainCard | null;
+  domainCard?: DomainCardProps | null;
   /*
     With 'parentReferenceForFontResizing' set, the displayed name font-size keeps decreasing
     until it fits the 'linesToFitDisplayedName' value, stoping the resizing process there then.
@@ -393,11 +396,13 @@ export const DisplayedName = ({
           "w-full break-all inline",
           {
             "text-red-800":
-              (!domainName.normalizedName &&
-                domainCard &&
-                domainCard?.nameGuardResult.normalization !==
-                  Normalization.normalized) ||
-              (!domainName.normalizedName && domainCard === null),
+              (domainName.normalization !== Normalization.Normalized &&
+                domainCard) ||
+              // &&
+              // domainCard?.nameGuardResult.normalization !==
+              //   Normalization.Normalized
+              (domainName.normalization !== Normalization.Normalized &&
+                domainCard === null),
           },
           fontConfigClasses,
         ])}
