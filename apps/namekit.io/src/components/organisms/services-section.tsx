@@ -36,6 +36,7 @@ import RaribleIcon from "../atoms/icons/rarible-icon";
 import CoinbaseNftIcon from "../atoms/icons/coinbase-nft-icon";
 import NamestoneLogo from "../atoms/icons/namestone-logo";
 import { Button, Heading, Link, Text } from "@namehash/namekit-react";
+import { ExploreNameGraphForm } from "../molecules/explore-namegraph-form";
 
 interface ServiceProps {
   label: {
@@ -83,7 +84,7 @@ export const Service = ({
         ])}
       >
         <div className="lg:w-1/2 w-full flex items-start justify-center font-sans">
-          <div className="flex-col inline-flex gap-5 lg:max-w-[560px]">
+          <div className="flex-col inline-flex justify-center items-center lg:items-start gap-5 lg:max-w-[560px]">
             <div className="justify-center lg:justify-start flex">
               <div className="gap-2 bg-black inline-flex items-center bg-opacity-5 px-4 py-2 rounded-[20px]">
                 {label.icon}
@@ -100,8 +101,8 @@ export const Service = ({
             </Text>
             {postSubtitle && <div className="w-full">{postSubtitle}</div>}
             {buttonUrl && (
-              <div>
-                <Button asChild>
+              <div className="w-full lg:w-auto">
+                <Button className="w-full justify-center" asChild>
                   <Link href={buttonUrl} target="_blank">
                     Learn more <ExternalLinkIcon className="ml-3" />
                   </Link>
@@ -322,7 +323,7 @@ const services: ServiceProps[] = [
         loading="lazy"
       />
     ),
-    // additionalContent: <ExploreNameGraphForm />,
+    additionalContent: <ExploreNameGraphForm />,
   },
   {
     title: "NameGuard integration",
