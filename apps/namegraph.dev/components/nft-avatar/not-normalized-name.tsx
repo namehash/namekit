@@ -1,7 +1,7 @@
 import React from "react";
-import { Normalization } from "@namehash/ens-utils";
-import { AvatarSize, getRoundedCornerDimension } from "./avatar-utils";
+import { AvatarSize } from "./avatar-utils";
 import { useScreenSize } from "./useScreenSize";
+import { Normalization } from "@namehash/ens-utils";
 import cc from "classcat";
 
 interface NotNormalizedNameNftAvatarProps {
@@ -21,7 +21,7 @@ export const NotNormalizedNameNftAvatar = ({
   return (
     <div className={`${size} mx-auto relative`}>
       <div
-        className={`${getRoundedCornerDimension(size)} ${
+        className={`rounded-[36px] ${
           isSmaller && "border-[#6b72801a] border"
         } ${
           !isSmaller && "shadow-[0_0_30px_3px_rgba(248,113,113,0.6)]"

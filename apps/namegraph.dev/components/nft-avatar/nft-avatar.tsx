@@ -18,6 +18,7 @@ import { ENSName, Normalization } from "@namehash/ens-utils";
 import { FastAverageColor } from "fast-average-color";
 import { isSafari } from "react-device-detect";
 import Image from "next/image";
+// @ts-ignore
 import Atropos from "atropos/react";
 
 /*
