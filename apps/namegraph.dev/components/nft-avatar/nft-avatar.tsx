@@ -1,11 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import cc from "classcat";
 import {
-  AvatarRoundedCorners,
   AvatarSize,
-  AvatarType,
   DEFAULT_AVATAR_SHADOW,
-  getRoundedCornerDimension,
   NftAvatarLoadingMethod,
 } from "./avatar-utils";
 import React, { useEffect, useRef, useState } from "react";
@@ -71,9 +68,7 @@ export const NftAvatar = ({
   const [withText] = useState<boolean>(
     size === AvatarSize.BIG || size === AvatarSize.HUGE,
   );
-  const [avatarBorderRadius] = useState<AvatarRoundedCorners | undefined>(
-    getRoundedCornerDimension(AvatarType.NFT, size),
-  );
+  const avatarBorderRadius = "rounded-[36px]";
   const [nameFontSizeIsCalculated, setNameFontSizeIsCalculated] =
     useState(false);
   const [stopDisplayingLoadingState, setStopDisplayingLoadingState] =

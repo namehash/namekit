@@ -1,10 +1,6 @@
 import React from "react";
 import { Normalization } from "@namehash/ens-utils";
-import {
-  AvatarSize,
-  AvatarType,
-  getRoundedCornerDimension,
-} from "./avatar-utils";
+import { AvatarSize, getRoundedCornerDimension } from "./avatar-utils";
 import { useScreenSize } from "./useScreenSize";
 import cc from "classcat";
 
@@ -25,7 +21,7 @@ export const NotNormalizedNameNftAvatar = ({
   return (
     <div className={`${size} mx-auto relative`}>
       <div
-        className={`${getRoundedCornerDimension(AvatarType.NFT, size)} ${
+        className={`${getRoundedCornerDimension(size)} ${
           isSmaller && "border-[#6b72801a] border"
         } ${
           !isSmaller && "shadow-[0_0_30px_3px_rgba(248,113,113,0.6)]"
@@ -45,18 +41,11 @@ export const NotNormalizedNameNftAvatar = ({
             width="480"
             height="480"
             fill={isSmaller ? "#FFF" : "#F87171"}
-            rx={isSmaller ? "48" : isDesktop ? "22" : isTablet ? "36" : "48"}
+            rx="52"
           />
         </g>
         <g data-atropos-offset="-2">
-          <rect
-            x="0"
-            y="0"
-            width="480"
-            height="480"
-            fill="#FEE2E2"
-            rx={isSmaller ? "60" : isDesktop ? "22" : isTablet ? "36" : "48"}
-          />
+          <rect x="0" y="0" width="480" height="480" fill="#FEE2E2" rx="52" />
         </g>
         <g
           className={cc([

@@ -31,8 +31,8 @@ import { CollectionsCardsSkeleton } from "@/components/collections/collections-g
 import { buildENSName } from "@namehash/ens-utils";
 import { NameWithDefaultSuffix } from "@/components/collections/name-with-default-suffix";
 import { NftAvatar } from "@/components/nft-avatar/nft-avatar";
-import { AvatarSize } from "@/components/nft-avatar/avatar-utils";
 import { ens_normalize } from "@adraffy/ens-normalize";
+import { AvatarSize } from "@/components/nft-avatar/avatar-utils";
 
 interface NavigationConfig {
   itemsPerPage: number;
@@ -458,8 +458,8 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
         <div className="mx-auto">
           <NftAvatar
             name={buildENSName(NameWithDefaultSuffix({ name: label }))}
-            withLink={false}
             size={AvatarSize.HUGE}
+            withLink={false}
             is3d={true}
           />
         </div>
