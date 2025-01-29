@@ -25,7 +25,7 @@ export default function Animation() {
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.domElement.style.position = 'absolute';
-    renderer.domElement.style.zIndex = '10'; // Higher than text container
+    renderer.domElement.style.zIndex = '10'; // Keep canvas behind the text
     containerRef.current.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
@@ -187,7 +187,7 @@ export default function Animation() {
         container.style.transform = 'translate(-50%, -50%)';
         container.style.width = '100%';
         container.style.opacity = '0';
-        container.style.zIndex = '1';
+        container.style.zIndex = '20'; // Increased z-index to be higher than the canvas
         container.style.pointerEvents = 'none';
         containerRef.current.appendChild(container);
         this.container = container;
