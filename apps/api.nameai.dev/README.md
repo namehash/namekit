@@ -3,6 +3,7 @@
 ## API
 The API extends the NameGuard API and is fully compatible with it.
 
+NameAI-specific endpoints are under the [api.nameai.dev](https://api.nameai.dev) path prefix and
 NameGuard-specific endpoints are under the [api.nameai.dev/nameguard](https://api.nameai.dev/nameguard) path prefix.
 
 API documentation is available at [api.nameai.dev/docs](https://api.nameai.dev/docs) for NameAI and [api.nameai.dev/nameguard/docs](https://api.nameai.dev/nameguard/docs) for NameGuard.
