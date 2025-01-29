@@ -12,9 +12,12 @@
     "@namehash/ens-webfont": "workspace:*",
     "@namehash/nameai": "workspace:*",
     "@namehash/namekit-react": "workspace:*",
+    "gsap": "3.12.7",
     "next": "14.2.21",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "three": "0.172.0",
+    "three.meshline": "1.4.0"
   },
   "devDependencies": {
     "@types/node": "22.7.4",
