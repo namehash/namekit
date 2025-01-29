@@ -194,13 +194,13 @@ export default function Animation() {
 
         // Render React components into the container
         ReactDOM.render(
-          <div className="space-y-3 text-center z-[-1]">
+          <div className="space-y-3 text-center px-5">
             <div>
-            <Heading as="h1" className="text-white !text-6xl">
-              Enable new ENS user
+            <Heading as="h1" className="text-white lg:!text-6xl max-w-[600px] mx-auto">
+              Enable new ENS user experiences
             </Heading>
-              <Heading as="h1" className="text-white !text-6xl">
-                experiences
+              <Heading as="h1" className="text-white lg:!text-6xl">
+                
               </Heading>
             </div>
 
