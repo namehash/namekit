@@ -27,8 +27,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Link } from "@namehash/namekit-react";
-import { NameWithDefaultSuffix } from "@/components/collections/name-with-default-suffix";
 import { CollectionsCardsSkeleton } from "@/components/collections/collections-grid-skeleton";
+import { AvatarSize, NftAvatar } from "@namehash/namekit-react/client";
+import { Normalization } from "@namehash/ens-utils";
+import { NameWithDefaultSuffix } from "@/components/collections/name-with-default-suffix";
 
 interface NavigationConfig {
   itemsPerPage: number;
@@ -129,7 +131,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
         findCollectionsByMember(query, {
           offset: (params.page - 1) * navigationConfig.itemsPerPage,
           sort_order: params.orderBy,
-          limit_names: MAX_COLLECTIONS_FOR_EXACT_MATCH,
+          limit_labels: MAX_COLLECTIONS_FOR_EXACT_MATCH,
           /**
            * Please note how the number of collections one page show is
            * strategically aligned with ITEMS_PER_PAGE_OPTIONS.
@@ -455,6 +457,23 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
             </div>
           </div>
         </div>
+        <NftAvatar
+          name={{
+            namehash: "",
+            slug: "vitalik.eth",
+            displayName: "vitalik.eth",
+            normalizedName: Normalization.Normalized,
+            labelName: "",
+            labelHash: "",
+            unwrappedTokenId: BigInt(0),
+            wrappedTokenId: BigInt(0),
+          }}
+          domainCard={{
+            name,
+          }}
+          withLink={false}
+          size={AvatarSize.SMALL}
+        />
         <div className="flex space-x-4">
           <div className="w-full">
             {/* Collections List */}
