@@ -9,14 +9,22 @@ export const HeroSection = () => {
       <div className="flex-col flex items-center justify-center z-20 mb-20">
         <Heading
           as="h1"
-          className="animate-fadeIn text-4xl leading-10 font-bold lg:font-extrabold lg:text-5xl lg:leading-[60px]"
+          className="animate-fadeIn text-4xl leading-10 font-bold lg:font-extrabold lg:text-5xl lg:leading-[60px] text-center"
         >
           ENS onboarding made fun & easy
         </Heading>
-        <Text as="p" className="animate-fadeIn text-gray-500 my-5 text-lg">
+        <Text
+          as="p"
+          className="animate-fadeIn text-gray-500 my-5 text-lg text-center"
+        >
           Easily integrate rich ENS user journeys into your wallet, app, or game
         </Text>
         <div className="flex items-center justify-center gap-4 animate-fadeIn">
+          <Button variant="primary" size="large" asChild>
+            <Link target="_blank" href="https://alpha.namekit.io">
+              Try now
+            </Link>
+          </Button>
           <Button variant="secondary" size="large" asChild>
             <Link target="_blank" href={"https://github.com/namehash/namekit"}>
               <GithubIcon className="w-5 h-5" />

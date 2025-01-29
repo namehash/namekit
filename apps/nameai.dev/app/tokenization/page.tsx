@@ -1,15 +1,10 @@
-import { Suspense } from "react";
 import type { Metadata } from "next";
-
-import { RankForm } from "./rank-form";
-import Results from "./results";
-import { Skeleton } from "../skeleton";
+import { Form } from "./form";
 import { Heading, Text } from "@namehash/namekit-react";
 import {
   defaultMetaOpengraph,
   defaultMetaTwitter,
 } from "@/app/shared-metadata";
-import { notFound } from "next/navigation";
 
 interface Props {
   searchParams?: Promise<{
@@ -20,7 +15,6 @@ interface Props {
 export default async function TokenizePage(props: Props) {
   const searchParams = await props.searchParams;
   const label = searchParams?.label || "";
-  const labelForAnalysis = label.includes(".") ? label.split(".")[0] : label;
 
   return (
     <div className="max-w-3xl mx-auto px-6 flex-1 py-12 md:py-20">
@@ -31,12 +25,7 @@ export default async function TokenizePage(props: Props) {
         </Text>
       </div>
 
-      <RankForm initialLabel={label} />
-      {labelForAnalysis && (
-        <Suspense fallback={<Skeleton label={labelForAnalysis} />}>
-          <Results name={labelForAnalysis} />
-        </Suspense>
-      )}
+      <Form initialValue={label} />
     </div>
   );
 }

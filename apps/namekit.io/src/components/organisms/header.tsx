@@ -6,7 +6,7 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 import Link from "next/link";
 import cc from "classcat";
-import { Button } from "@namehash/namekit-react";
+import { Button, IconButton } from "@namehash/namekit-react";
 
 export const Header = () => {
   const NamekitMobileNavigationLinks = [
@@ -17,6 +17,13 @@ export const Header = () => {
       element: (
         <Link href="https://github.com/namehash/namekit" target="_blank">
           GitHub
+        </Link>
+      ),
+    },
+    {
+      element: (
+        <Link target="_blank" href="https://alpha.namekit.io">
+          Try the Alpha
         </Link>
       ),
     },
@@ -55,7 +62,7 @@ export const Header = () => {
       {({ open }) => (
         <Fragment>
           {/* TIP: This component renders 2 different markups, one for mobile and other for desktop devices */}
-          <div className="lg:px-0 mx-auto max-w-6xl px-6">
+          <div className="lg:px-0 mx-auto max-w-[1216px] px-6">
             <div className="flex h-[56px] items-center lg:h-[70px]">
               {/* Shared markup */}
               <div
@@ -71,8 +78,13 @@ export const Header = () => {
               <div className="inline-flex">
                 {/* Mobile markup */}
                 <Popover.Button className="lg:hidden relative z-30 mr-4 focus:outline-none focus-visible:outline-2 focus-visible:outline-black">
-                  <span className="sr-only">Open menu</span>
-                  <IconMenu className="w-5 stroke-current" aria-hidden="true" />
+                  <IconButton variant="ghost">
+                    <span className="sr-only">Open menu</span>
+                    <IconMenu
+                      className="w-5 stroke-current"
+                      aria-hidden="true"
+                    />
+                  </IconButton>
                 </Popover.Button>
                 <Transition
                   as={Fragment}
@@ -95,11 +107,13 @@ export const Header = () => {
                           />
                         </Link>
                         <Popover.Button>
-                          <span className="sr-only">Close menu</span>
-                          <XMarkIcon
-                            className="block h-6 w-6 text-white"
-                            aria-hidden="true"
-                          />
+                          <IconButton>
+                            <span className="sr-only">Close menu</span>
+                            <XMarkIcon
+                              className="block h-6 w-6 text-white"
+                              aria-hidden="true"
+                            />
+                          </IconButton>
                         </Popover.Button>
                       </div>
                       <div
@@ -112,9 +126,11 @@ export const Header = () => {
                           {NamekitMobileNavigationLinks.map((link, idx) => (
                             <li
                               key={String(link.element) + idx}
-                              className="cursor-pointer text-lg font-medium text-white"
+                              className="cursor-pointer text-lg font-medium text-white w-full"
                             >
-                              {link.element}
+                              <Button className="w-full" asChild>
+                                {link.element}
+                              </Button>
                             </li>
                           ))}
                         </ul>
@@ -136,14 +152,16 @@ export const Header = () => {
 
               {/* Desktop markup */}
               <div className="flex w-full items-center justify-end space-x-2 lg:pr-2 xl:pr-0">
-                <Link
-                  aria-label="GitHub link"
-                  href={"https://github.com/namehash/namekit"}
-                  target="_blank"
-                  className="p-[7px]"
-                >
-                  <GithubIcon className="w-5 h-5 lg:hidden" />
-                </Link>
+                <IconButton asChild variant="ghost">
+                  <Link
+                    aria-label="GitHub link"
+                    href={"https://github.com/namehash/namekit"}
+                    target="_blank"
+                    className="p-[7px]"
+                  >
+                    <GithubIcon className="w-5 h-5 lg:hidden" />
+                  </Link>
+                </IconButton>
 
                 <nav className="lg:flex hidden lg:items-center">
                   {NamekitDesktopNavigationLinks.map((link, idx) => (

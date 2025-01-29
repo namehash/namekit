@@ -13,6 +13,7 @@ import { FarcasterIcon } from "@/components/farcaster-icon";
 import { TelegramIcon } from "@/components/telegram-icon";
 import type { Metadata } from "next";
 import { Button } from "@namehash/namekit-react";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -257,6 +258,7 @@ export default function RootLayout({
             </div>
           </footer>
         </div>
+        <Toaster position="top-center" richColors />
       </body>
     </html>
   );
