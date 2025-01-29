@@ -59,7 +59,7 @@ export default function Animation() {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    const COLORS = ["#4062BB", "#52489C", "#59C3C3", "#F45B69"];
+    const COLORS = ["#0080BC", "#CEE1E8", "#007C23", "#F53293"];
 
     class WindLine extends THREE.Mesh {
       constructor({
