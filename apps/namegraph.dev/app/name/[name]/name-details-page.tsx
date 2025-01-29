@@ -457,14 +457,16 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
       <div className="p-6 flex justify-start flex-col w-full">
         <div className="mx-auto">
           <NftAvatar
-            name={buildENSName(NameWithDefaultSuffix({ name: label }))}
+            name={buildENSName(
+              NameWithDefaultSuffix({ name: label, reloadOnChange: true }),
+            )}
             size={AvatarSize.HUGE}
             withLink={false}
             is3d={true}
           />
         </div>
         {otherCategories?.length ? (
-          <div className="lg:px-8 mx-auto w-full mt-12">
+          <div className="lg:px-4 mx-auto w-full mt-12">
             <div className="w-full rounded-lg border border-gray-200">
               <p className="text-[18px] font-semibold px-5 py-2.5 border-b border-gray-200">
                 Explore other names

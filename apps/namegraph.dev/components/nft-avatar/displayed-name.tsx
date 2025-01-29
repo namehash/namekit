@@ -187,7 +187,7 @@ export const DisplayedName = ({
     return {
       labels,
       firstLabel: labels[0],
-      labelsAfterFirstDot: labels.slice(1).join(""),
+      labelsAfterFirstDot: labels.slice(1, labels.length),
     };
   };
 
@@ -313,7 +313,11 @@ export const DisplayedName = ({
               { hidden: shouldClampName },
             ])}
           >
-            .{getNameLabels(domainName.displayName).labelsAfterFirstDot}
+            {getNameLabels(domainName.displayName).labelsAfterFirstDot.map(
+              (label) => {
+                return <>.{label}</>;
+              },
+            )}
           </span>
         </p>
       </div>
@@ -355,7 +359,11 @@ export const DisplayedName = ({
                 { hidden: shouldClampName },
               ])}
             >
-              .{getNameLabels(domainName.displayName).labelsAfterFirstDot}
+              {getNameLabels(domainName.displayName).labelsAfterFirstDot.map(
+                (label) => {
+                  return <>.{label}</>;
+                },
+              )}
             </span>
           )}
         </p>
@@ -398,9 +406,6 @@ export const DisplayedName = ({
             "text-red-800":
               (domainName.normalization !== Normalization.Normalized &&
                 domainCard) ||
-              // &&
-              // domainCard?.nameGuardResult.normalization !==
-              //   Normalization.Normalized
               (domainName.normalization !== Normalization.Normalized &&
                 domainCard === null),
           },
