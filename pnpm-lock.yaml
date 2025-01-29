@@ -139,6 +139,9 @@ importers:
       '@adraffy/ens-normalize':
         specifier: 1.11.0
         version: 1.11.0
+      '@heroicons/react':
+        specifier: 2.2.0
+        version: 2.2.0(react@19.0.0)
       '@namehash/ens-webfont':
         specifier: workspace:*
         version: link:../../packages/ens-webfont
@@ -179,6 +182,9 @@ importers:
       postcss:
         specifier: 8.4.47
         version: 8.4.47
+      tailwind-scrollbar-hide:
+        specifier: 1.1.7
+        version: 1.1.7
       tailwindcss:
         specifier: 3.4.13
         version: 3.4.13
@@ -6597,6 +6603,10 @@ snapshots:
   '@heroicons/react@2.2.0(react@18.3.1)':
     dependencies:
       react: 18.3.1
+
+  '@heroicons/react@2.2.0(react@19.0.0)':
+    dependencies:
+      react: 19.0.0
 
   '@humanwhocodes/config-array@0.13.0':
     dependencies:

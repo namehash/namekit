@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState, useEffect } from "react";
+import { useActionState, useState, useEffect, useRef } from "react";
 import { Input, Button } from "@namehash/namekit-react";
 import { ens_normalize } from "@adraffy/ens-normalize";
 import { toast } from "sonner";
@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { analyzeLabel } from "./actions";
 import { Results } from "./results";
 import { Skeleton } from "../skeleton";
+import { QuickSearch } from "../quicksearch";
 
 type ActionState = {
   error?: string;
@@ -31,6 +32,16 @@ export function Form({ initialValue }: { initialValue?: string }) {
     initialState,
   );
   const [normalizedLabel, setNormalizedLabel] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const handleExampleClick = (example: string) => {
+    setInputValue(example);
+    setTimeout(() => {
+      if (formRef.current) {
+        formRef.current.requestSubmit();
+      }
+    }, 0);
+  };
 
   useEffect(() => {
     if (inputValue) {
@@ -69,7 +80,7 @@ export function Form({ initialValue }: { initialValue?: string }) {
 
   return (
     <>
-      <form action={formAction} className="mb-6">
+      <form ref={formRef} action={formAction} className="mb-6">
         <div className="flex items-start justify-center space-x-2 flex-1">
           <Input
             type="text"
@@ -87,6 +98,10 @@ export function Form({ initialValue }: { initialValue?: string }) {
           </Button>
         </div>
       </form>
+
+      <div className="mb-8">
+        <QuickSearch handleClick={handleExampleClick} />
+      </div>
 
       {isPending && <Skeleton label={normalizedLabel} />}
 
