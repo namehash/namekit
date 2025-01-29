@@ -182,6 +182,9 @@ importers:
 
   apps/namegraph.dev:
     dependencies:
+      '@adraffy/ens-normalize':
+        specifier: 1.11.0
+        version: 1.11.0
       '@heroicons/react':
         specifier: 2.2.0
         version: 2.2.0(react@18.3.1)

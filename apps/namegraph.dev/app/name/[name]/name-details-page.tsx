@@ -29,6 +29,7 @@ import {
 import { Link } from "@namehash/namekit-react";
 import { NameWithDefaultSuffix } from "@/components/collections/name-with-default-suffix";
 import { CollectionsCardsSkeleton } from "@/components/collections/collections-grid-skeleton";
+import { ens_normalize } from "@adraffy/ens-normalize";
 
 interface NavigationConfig {
   itemsPerPage: number;
@@ -49,6 +50,8 @@ type NameRelatedCollectionsTabs =
   (typeof NameRelatedCollectionsTabs)[keyof typeof NameRelatedCollectionsTabs];
 
 export const NameDetailsPage = ({ name }: { name: string }) => {
+  const normalizedName = ens_normalize(decodeURI(name));
+
   const DEFAULT_SORTING_ORDER = NameGraphSortOrderOptions.AI;
   const DEFAULT_ACTIVE_TAB = NameRelatedCollectionsTabs.ByConcept;
 
@@ -88,10 +91,10 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
   }
 
   const queryCollections = (params: QueryNameRelatedCollectionsParams) => {
-    if (name) {
-      let query = name;
-      if (name.includes(".")) {
-        query = name.split(".")[0];
+    if (normalizedName) {
+      let query = normalizedName;
+      if (normalizedName.includes(".")) {
+        query = normalizedName.split(".")[0];
       }
 
       const MAX_COLLECTIONS_FOR_EXACT_MATCH = 10;
@@ -338,7 +341,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
       navigationConfig.totalItems[NameRelatedCollectionsTabs.ByConcept] &&
       navigationConfig.totalItems[NameRelatedCollectionsTabs.ByMembership]
     ) {
-      getCollectionsForQuery(name, true)
+      getCollectionsForQuery(normalizedName, true)
         .then((res) => {
           console.log(res, res.categories);
           setOtherCategories(res.categories);
@@ -447,8 +450,8 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
         <div className="flex space-x-4 mb-8">
           <div>
             <div className="text-3xl font-semibold mb-4">
-              {name ? (
-                <NameWithDefaultSuffix name={name} />
+              {normalizedName ? (
+                <NameWithDefaultSuffix name={normalizedName} />
               ) : (
                 <Skeleton className="w-40 h-8" />
               )}
