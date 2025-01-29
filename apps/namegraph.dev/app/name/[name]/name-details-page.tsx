@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import Skeleton from "@/components/skeleton";
 import { Button } from "@/components/ui/button";
 import { useQueryParams } from "@/components/use-query-params";
-import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { CollectionCard } from "@/components/collections/collection-card";
 import {
   findCollectionsByMember,
@@ -28,10 +28,11 @@ import {
 } from "@/components/ui/select";
 import { Link } from "@namehash/namekit-react";
 import { CollectionsCardsSkeleton } from "@/components/collections/collections-grid-skeleton";
-import { buildENSName, Normalization } from "@namehash/ens-utils";
+import { buildENSName } from "@namehash/ens-utils";
 import { NameWithDefaultSuffix } from "@/components/collections/name-with-default-suffix";
 import { NftAvatar } from "@/components/nft-avatar/nft-avatar";
 import { AvatarSize } from "@/components/nft-avatar/avatar-utils";
+import { ens_normalize } from "@adraffy/ens-normalize";
 
 interface NavigationConfig {
   itemsPerPage: number;
@@ -52,7 +53,14 @@ type NameRelatedCollectionsTabs =
   (typeof NameRelatedCollectionsTabs)[keyof typeof NameRelatedCollectionsTabs];
 
 export const NameDetailsPage = ({ name }: { name: string }) => {
-  const DEFAULT_SORTING_ORDER = NameGraphSortOrderOptions.RELEVANCE;
+  let label = name;
+  try {
+    label = ens_normalize(decodeURI(name));
+  } catch {
+    console.error(`Error: ${name} is not normalized`);
+  }
+
+  const DEFAULT_SORTING_ORDER = NameGraphSortOrderOptions.AI;
   const DEFAULT_ACTIVE_TAB = NameRelatedCollectionsTabs.ByConcept;
 
   const [loadingCollectionsByMembership, setLoadingCollectionsByMembership] =
@@ -91,10 +99,10 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
   }
 
   const queryCollections = (params: QueryNameRelatedCollectionsParams) => {
-    if (name) {
-      let query = name;
-      if (name.includes(".")) {
-        query = name.split(".")[0];
+    if (label) {
+      let query = label;
+      if (label.includes(".")) {
+        query = label.split(".")[0];
       }
 
       const MAX_COLLECTIONS_FOR_EXACT_MATCH = 10;
@@ -341,7 +349,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
       navigationConfig.totalItems[NameRelatedCollectionsTabs.ByConcept] &&
       navigationConfig.totalItems[NameRelatedCollectionsTabs.ByMembership]
     ) {
-      getCollectionsForQuery(name, true)
+      getCollectionsForQuery(label, true)
         .then((res) => {
           console.log(res, res.categories);
           setOtherCategories(res.categories);
@@ -449,14 +457,14 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
       <div className="p-6 flex justify-start flex-col w-full">
         <div className="mx-auto">
           <NftAvatar
-            name={buildENSName(NameWithDefaultSuffix({ name }))}
+            name={buildENSName(NameWithDefaultSuffix({ name: label }))}
             withLink={false}
             size={AvatarSize.HUGE}
             is3d={true}
           />
         </div>
         {otherCategories?.length ? (
-          <div className="mx-auto w-full mt-12">
+          <div className="lg:px-8 mx-auto w-full mt-12">
             <div className="w-full rounded-lg border border-gray-200">
               <p className="text-[18px] font-semibold px-5 py-2.5 border-b border-gray-200">
                 Explore other names
@@ -491,9 +499,9 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
         <div className="mx-auto p-6">
           <div className="flex space-x-4 mb-8">
             <div>
-              <div className="text-3xl font-semibold mb-4">
-                {name ? (
-                  <NameWithDefaultSuffix name={name} />
+              <div className="text-3xl font-semibold mb-4 break-all">
+                {label ? (
+                  <NameWithDefaultSuffix name={label} />
                 ) : (
                   <Skeleton className="w-40 h-8" />
                 )}

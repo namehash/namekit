@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@adraffy/ens-normalize": "1.11.0",
     "@heroicons/react": "2.2.0",
     "@namehash/ens-utils": "workspace:*",
     "@namehash/namegraph-sdk": "workspace:*",
