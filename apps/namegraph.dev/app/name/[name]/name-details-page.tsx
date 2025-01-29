@@ -49,7 +49,7 @@ type NameRelatedCollectionsTabs =
   (typeof NameRelatedCollectionsTabs)[keyof typeof NameRelatedCollectionsTabs];
 
 export const NameDetailsPage = ({ name }: { name: string }) => {
-  const DEFAULT_SORTING_ORDER = NameGraphSortOrderOptions.RELEVANCE;
+  const DEFAULT_SORTING_ORDER = NameGraphSortOrderOptions.AI;
   const DEFAULT_ACTIVE_TAB = NameRelatedCollectionsTabs.ByConcept;
 
   const [loadingCollectionsByMembership, setLoadingCollectionsByMembership] =
