@@ -1,4 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+"use client";
+
 import React from "react";
 import { useEffect, useRef, useState } from "react";
 
@@ -9,7 +11,6 @@ import { useEffect, useRef, useState } from "react";
 */
 import cc from "classcat";
 import { ENSName, Normalization } from "@namehash/ens-utils";
-import { DomainName } from "./parse-name";
 import { DomainCardProps } from "../../../../packages/namekit-react/src/components/DomainCard";
 
 interface DisplayedNameProps {

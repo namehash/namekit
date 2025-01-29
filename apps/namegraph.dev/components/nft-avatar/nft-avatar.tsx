@@ -1,4 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+"use client";
+
 import cc from "classcat";
 import {
   AvatarSize,
@@ -337,9 +339,9 @@ export const NftAvatar = ({
                   onError={handleError}
                   onLoad={handleLoading}
                   data-atropos-offset="2"
-                  onLoadingComplete={handleLoaded}
                   crossOrigin="anonymous"
                   className={avatarBorderRadius}
+                  onLoadingComplete={handleLoaded}
                   alt={`${name && name.displayName} NFT Avatar`}
                 />
               )}

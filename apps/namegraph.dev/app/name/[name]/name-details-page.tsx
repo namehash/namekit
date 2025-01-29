@@ -455,16 +455,18 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
   return (
     <div className="max-w-7xl flex flex-col space-y-8 lg:space-y-0 lg:space-x-8 lg:flex-row mx-auto py-8 w-full">
       <div className="p-6 flex justify-start flex-col w-full">
-        <div className="mx-auto">
-          <NftAvatar
-            name={buildENSName(
-              NameWithDefaultSuffix({ name: label, reloadOnChange: true }),
-            )}
-            size={AvatarSize.HUGE}
-            withLink={false}
-            is3d={true}
-          />
-        </div>
+        {NameWithDefaultSuffix({ name: label }) ? (
+          <div className="mx-auto">
+            <NftAvatar
+              name={buildENSName(
+                NameWithDefaultSuffix({ name: label, reloadOnChange: true }),
+              )}
+              size={AvatarSize.HUGE}
+              withLink={false}
+              is3d={true}
+            />
+          </div>
+        ) : null}
         {otherCategories?.length ? (
           <div className="lg:px-4 mx-auto w-full mt-12">
             <div className="w-full rounded-lg border border-gray-200">

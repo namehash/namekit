@@ -1,7 +1,8 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import {
   availableSuffixes,
-  DEFAULT_PREFFERED_SUFFIX,
   PREFERRED_SUFFIX_KEY,
   Suffixes,
 } from "../suffix-select";
@@ -11,7 +12,7 @@ export const NameWithDefaultSuffix = ({
   reloadOnChange,
 }: {
   name: string;
-  reloadOnChange: boolean;
+  reloadOnChange?: boolean;
 }) => {
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -31,7 +32,7 @@ export const NameWithDefaultSuffix = ({
       ? availableSuffixes[
           window.localStorage.getItem(PREFERRED_SUFFIX_KEY) as Suffixes
         ]
-      : availableSuffixes[DEFAULT_PREFFERED_SUFFIX],
+      : "",
   );
 
   /**
