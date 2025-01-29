@@ -3,6 +3,7 @@
 import { useActionState, useState, useEffect } from "react";
 import { Input, Button } from "@namehash/namekit-react";
 import { ens_normalize } from "@adraffy/ens-normalize";
+import { toast } from "sonner";
 
 import { analyzeLabel } from "./actions";
 import { Results } from "./results";
@@ -29,10 +30,12 @@ export function Form({ initialValue }: { initialValue?: string }) {
     analyzeLabel,
     initialState,
   );
+  const [normalizedLabel, setNormalizedLabel] = useState("");
 
   useEffect(() => {
     if (inputValue) {
       let error = null;
+      let normalized = "";
 
       if (inputValue.includes(" ")) {
         error = "Remove spaces from the label";
@@ -40,7 +43,8 @@ export function Form({ initialValue }: { initialValue?: string }) {
         error = "Enter only 1 label (no '.')";
       } else {
         try {
-          ens_normalize(inputValue);
+          normalized = ens_normalize(inputValue);
+          setNormalizedLabel(normalized);
           setClientError(null);
         } catch (error) {
           error = "Enter a valid ENS label value";
@@ -50,8 +54,15 @@ export function Form({ initialValue }: { initialValue?: string }) {
       setClientError(error);
     } else {
       setClientError(null);
+      setNormalizedLabel("");
     }
   }, [inputValue]);
+
+  useEffect(() => {
+    if (state.error) {
+      toast.error(state.error);
+    }
+  }, [state.error]);
 
   const isSubmitDisabled =
     isPending || !!clientError || inputValue.trim() === "";
@@ -63,13 +74,12 @@ export function Form({ initialValue }: { initialValue?: string }) {
           <Input
             type="text"
             name="label"
-            placeholder="Add a label"
+            placeholder="Enter a label"
             className="ens-webfont flex-1"
             required
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             autoComplete="off"
-            data-1p-ignore
             error={clientError ?? ""}
           />
           <Button type="submit" disabled={isSubmitDisabled} className="!py-1.5">
@@ -78,7 +88,7 @@ export function Form({ initialValue }: { initialValue?: string }) {
         </div>
       </form>
 
-      {isPending && <Skeleton label={inputValue} />}
+      {isPending && <Skeleton label={normalizedLabel} />}
 
       {!isPending && state.success && state.label && state.analysis && (
         // @ts-expect-error

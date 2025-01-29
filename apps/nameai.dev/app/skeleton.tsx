@@ -8,57 +8,57 @@ export function Skeleton({ label }: SkeletonProps) {
       <div>
         <h3 className="text-lg font-semibold mb-2">Label For Analysis</h3>
 
-        <p className="bg-white flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm ens-webfont">
+        <p className="bg-white flex items-center px-3 py-1.5 border border-gray-300 rounded mb-3 shadow-sm ens-webfont h-12">
           {label}
         </p>
       </div>
 
       <div>
-        <h3 className="text-lg font-semibold mb-2">Top Tokenization</h3>
-        <div className="bg-white flex items-center p-3 h-12 border border-gray-300 rounded mb-3 shadow-sm">
+        <h3 className="text-lg font-semibold mb-2">Recommended Tokenization</h3>
+        <div className="bg-white flex items-center px-3 py-1.5 border border-gray-300 rounded mb-3 shadow-sm h-12">
           <div className="animate-pulse flex space-between items-center w-full">
-            <div className="flex space-x-1.5">
-              <div className="h-5 bg-gray-200 rounded w-10"></div>
-              <div className="h-5 bg-gray-200 rounded w-12"></div>
-              <div className="h-5 bg-gray-200 rounded w-6"></div>
+            <div className="flex space-x-2">
+              <div className="bg-gray-200 rounded px-3 py-1 text-sm border font-semibold h-[28px] w-10"></div>
+              <div className="bg-gray-200 rounded px-3 py-1 text-sm border font-semibold h-[28px] w-16"></div>
+              <div className="bg-gray-200 rounded px-3 py-1 text-sm border font-semibold h-[28px] w-8"></div>
             </div>
-            <div className="w-32 ml-auto h-5 bg-gray-200 rounded"></div>
+            <div className="w-24 ml-auto h-2 bg-gray-200 rounded"></div>
           </div>
         </div>
       </div>
 
       <div>
-        <h3 className="text-lg font-semibold mb-2">
-          Alternative Tokenizations
-        </h3>
-        <div className="bg-white flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm">
+        <h3 className="text-lg font-semibold mb-2">Discovered Tokenizations</h3>
+        <div className="bg-white flex items-center px-3 py-1.5 border border-gray-300 rounded mb-3 shadow-sm h-12">
           <div className="animate-pulse flex space-between items-center w-full">
-            <div className="flex space-x-1.5">
-              <div className="h-5 bg-gray-200 rounded w-10"></div>
-              <div className="h-5 bg-gray-200 rounded w-12"></div>
-              <div className="h-5 bg-gray-200 rounded w-6"></div>
+            <div className="flex space-x-2">
+              <div className="bg-gray-200 rounded px-3 py-1 text-sm border font-semibold h-[28px] w-8"></div>
+              <div className="bg-gray-200 rounded px-3 py-1 text-sm border font-semibold h-[28px] w-16"></div>
+              <div className="bg-gray-200 rounded px-3 py-1 text-sm border font-semibold h-[28px] w-12"></div>
+              <div className="bg-gray-200 rounded px-3 py-1 text-sm border font-semibold h-[28px] w-8"></div>
             </div>
-            <div className="w-32 ml-auto h-5 bg-gray-200 rounded"></div>
+            <div className="w-24 ml-auto h-2 bg-gray-200 rounded"></div>
           </div>
         </div>
-        <div className="bg-white flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm">
+        <div className="bg-white flex items-center px-3 py-1.5 border border-gray-300 rounded mb-3 shadow-sm h-12">
           <div className="animate-pulse flex space-between items-center w-full">
-            <div className="flex space-x-1.5">
-              <div className="h-5 bg-gray-200 rounded w-10"></div>
-              <div className="h-5 bg-gray-200 rounded w-12"></div>
-              <div className="h-5 bg-gray-200 rounded w-6"></div>
+            <div className="flex space-x-2">
+              <div className="bg-gray-200 rounded px-3 py-1 text-sm border font-semibold h-[28px] w-10"></div>
+              <div className="bg-gray-200 rounded px-3 py-1 text-sm border font-semibold h-[28px] w-16"></div>
+              <div className="bg-gray-200 rounded px-3 py-1 text-sm border font-semibold h-[28px] w-20"></div>
+              <div className="bg-gray-200 rounded px-3 py-1 text-sm border font-semibold h-[28px] w-8"></div>
             </div>
-            <div className="w-32 ml-auto h-5 bg-gray-200 rounded"></div>
+            <div className="w-24 ml-auto h-2 bg-gray-200 rounded"></div>
           </div>
         </div>
-        <div className="bg-white flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm">
+        <div className="bg-white flex items-center px-3 py-1.5 border border-gray-300 rounded mb-3 shadow-sm h-12">
           <div className="animate-pulse flex space-between items-center w-full">
-            <div className="flex space-x-1.5">
-              <div className="h-5 bg-gray-200 rounded w-10"></div>
-              <div className="h-5 bg-gray-200 rounded w-12"></div>
-              <div className="h-5 bg-gray-200 rounded w-6"></div>
+            <div className="flex space-x-2">
+              <div className="bg-gray-200 rounded px-3 py-1 text-sm border font-semibold h-[28px] w-8"></div>
+              <div className="bg-gray-200 rounded px-3 py-1 text-sm border font-semibold h-[28px] w-20"></div>
+              <div className="bg-gray-200 rounded px-3 py-1 text-sm border font-semibold h-[28px] w-16"></div>
             </div>
-            <div className="w-32 ml-auto h-5 bg-gray-200 rounded"></div>
+            <div className="w-24 ml-auto h-2 bg-gray-200 rounded"></div>
           </div>
         </div>
       </div>

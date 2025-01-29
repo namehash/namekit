@@ -31,13 +31,12 @@ export function Form({
         <Input
           type="text"
           name="label"
-          placeholder="Add a label"
+          placeholder="Enter a label"
           className="ens-webfont flex-1"
           required
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           autoComplete="off"
-          data-1p-ignore
           error={clientError ?? ""}
         />
         <Button type="submit" disabled={isSubmitDisabled} className="!py-1.5">
