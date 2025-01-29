@@ -6,7 +6,7 @@ import * as THREE from "three";
 import { MeshLine, MeshLineMaterial } from "three.meshline";
 // Optionally GSAP for animations
 import { gsap } from "gsap";
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Heading, Text } from "@namehash/namekit-react";
 
 export default function Animation() {
@@ -187,26 +187,27 @@ export default function Animation() {
         container.style.transform = 'translate(-50%, -50%)';
         container.style.width = '100%';
         container.style.opacity = '0';
-        container.style.zIndex = '1'; // Lower than canvas
+        container.style.zIndex = '1';
         container.style.pointerEvents = 'none';
         containerRef.current.appendChild(container);
         this.container = container;
 
-        // Render React components into the container
-        ReactDOM.render(
+        // Create a root using createRoot
+        this.root = createRoot(container);
+        
+        // Use root.render instead of ReactDOM.render
+        this.root.render(
           <div className="space-y-3 text-center px-5">
             <div>
-            <Heading as="h1" className="text-white lg:!text-6xl max-w-[600px] mx-auto">
-              Enable new ENS user experiences
-            </Heading>
+              <Heading as="h1" className="text-white lg:!text-6xl max-w-[600px] mx-auto">
+                Enable new ENS user experiences
+              </Heading>
               <Heading as="h1" className="text-white lg:!text-6xl">
                 
               </Heading>
             </div>
-
             <Text className="text-gray-400">What will you build?</Text>
-          </div>,
-          container
+          </div>
         );
       }
 
@@ -270,8 +271,8 @@ export default function Animation() {
       if (containerRef.current) {
         containerRef.current.removeChild(renderer.domElement);
         const textContainer = containerRef.current.querySelector('[data-animated-text]');
-        if (textContainer) {
-          ReactDOM.unmountComponentAtNode(textContainer);
+        if (textContainer && this.root) {
+          this.root.unmount();
           textContainer.remove();
         }
       }
