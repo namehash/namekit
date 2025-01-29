@@ -1,17 +1,23 @@
 import { Suspense } from "react";
+import type { Metadata } from "next";
 
 import { RankForm } from "./rank-form";
 import Results from "./results";
 import { Skeleton } from "../skeleton";
 import { Heading, Text } from "@namehash/namekit-react";
+import {
+  defaultMetaOpengraph,
+  defaultMetaTwitter,
+} from "@/app/shared-metadata";
+import { notFound } from "next/navigation";
 
-interface TokenizePageProps {
+interface Props {
   searchParams?: Promise<{
     label?: string;
   }>;
 }
 
-export default async function TokenizePage(props: TokenizePageProps) {
+export default async function TokenizePage(props: Props) {
   const searchParams = await props.searchParams;
   const label = searchParams?.label || "";
   const labelForAnalysis = label.includes(".") ? label.split(".")[0] : label;
@@ -33,4 +39,35 @@ export default async function TokenizePage(props: TokenizePageProps) {
       )}
     </div>
   );
+}
+
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const searchParams = await props.searchParams;
+  const label = searchParams?.label || "";
+
+  const labelForAnalysis = label.includes(".") ? label.split(".")[0] : label;
+
+  const title = labelForAnalysis
+    ? `Label tokenization for ${labelForAnalysis}`
+    : "Label Tokenization";
+  const description = "Discover the words that otherwise hidden in labels";
+  const url = labelForAnalysis
+    ? `/tokenization?label=${labelForAnalysis}`
+    : "/tokenization";
+
+  return {
+    title,
+    description,
+    openGraph: {
+      ...defaultMetaOpengraph,
+      title,
+      description,
+      url,
+    },
+    twitter: {
+      ...defaultMetaTwitter,
+      title,
+      description,
+    },
+  };
 }

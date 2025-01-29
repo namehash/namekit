@@ -1,5 +1,11 @@
 # @namehash/nameai
 
+## 1.1.0
+
+### Minor Changes
+
+- 864f03a: Rename NameRank
+
 ## 1.0.1
 
 ### Patch Changes

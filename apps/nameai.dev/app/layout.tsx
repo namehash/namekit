@@ -16,9 +16,41 @@ import { Button } from "@namehash/namekit-react";
 
 const inter = Inter({ subsets: ["latin"] });
 
+import {
+  baseUrl,
+  siteName,
+  defaultMetaTitle as title,
+  defaultMetaDescription as description,
+  defaultMetaKeywords as keywords,
+  defaultMetaOpengraph,
+  defaultMetaTwitter,
+} from "./shared-metadata";
+
 export const metadata: Metadata = {
-  title: "NameAI",
-  description: "Tokenize and analyze names with NameAI demo",
+  metadataBase: new URL(baseUrl),
+  title: {
+    template: `${siteName} - %s`,
+    default: title,
+  },
+  description,
+  keywords,
+  openGraph: {
+    ...defaultMetaOpengraph,
+    title: {
+      template: `${siteName} - %s`,
+      default: title,
+    },
+    description,
+    url: "/",
+  },
+  twitter: {
+    ...defaultMetaTwitter,
+    title: {
+      template: `${siteName} - %s`,
+      default: title,
+    },
+    description,
+  },
 };
 
 const footerProducts = [
