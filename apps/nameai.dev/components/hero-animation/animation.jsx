@@ -6,6 +6,8 @@ import * as THREE from "three";
 import { MeshLine, MeshLineMaterial } from "three.meshline";
 // Optionally GSAP for animations
 import { gsap } from "gsap";
+import ReactDOM from 'react-dom';
+import { Heading, Text } from "@namehash/namekit-react";
 
 export default function Animation() {
   const containerRef = useRef();
@@ -22,6 +24,8 @@ export default function Animation() {
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.domElement.style.position = 'absolute';
+    renderer.domElement.style.zIndex = '10'; // Higher than text container
     containerRef.current.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
@@ -106,11 +110,11 @@ export default function Animation() {
           }),
         );
 
-        // Random start position
+        // Modify the random z position to have a wider range
         this.position.set(
           getRandomFloat(-10, 10),
           getRandomFloat(-6, 5),
-          getRandomFloat(-2, 10),
+          getRandomFloat(-10, 10), // Changed from (-2, 10) to (-10, 10) for more depth variation
         );
         this.speed = speed;
         // Where we consider the "line done"
@@ -175,23 +179,39 @@ export default function Animation() {
     // (requires a font asset)
     // ----------------------
     class AnimatedText {
-      constructor(text, { color = "#000" } = {}) {
-        const div = document.createElement('div');
-        div.style.position = 'absolute';
-        div.style.left = '50%';
-        div.style.top = '50%';
-        div.style.transform = 'translate(-50%, -50%)';
-        div.style.color = color;
-        div.style.fontSize = '2rem';
-        div.style.fontFamily = 'sans-serif';
-        div.style.opacity = '0';
-        div.textContent = text;
-        containerRef.current.appendChild(div);
-        this.element = div;
+      constructor() {
+        const container = document.createElement('div');
+        container.style.position = 'absolute';
+        container.style.left = '50%';
+        container.style.top = '50%';
+        container.style.transform = 'translate(-50%, -50%)';
+        container.style.width = '100%';
+        container.style.opacity = '0';
+        container.style.zIndex = '1'; // Lower than canvas
+        container.style.pointerEvents = 'none';
+        containerRef.current.appendChild(container);
+        this.container = container;
+
+        // Render React components into the container
+        ReactDOM.render(
+          <div className="space-y-3 text-center z-[-1]">
+            <div>
+            <Heading as="h1" className="text-white !text-6xl">
+              Enable new ENS user
+            </Heading>
+              <Heading as="h1" className="text-white !text-6xl">
+                experiences
+              </Heading>
+            </div>
+
+            <Text className="text-gray-400">What will you build?</Text>
+          </div>,
+          container
+        );
       }
 
       show(duration = 0.6) {
-        gsap.to(this.element, {
+        gsap.to(this.container, {
           opacity: 1,
           y: 0,
           duration,
@@ -207,9 +227,7 @@ export default function Animation() {
 
     // Create the text after some delay
     setTimeout(() => {
-      const text = new AnimatedText("Animated Dashed Lines", {
-        color: "#ffffff"
-      });
+      const text = new AnimatedText();
       text.show();
     }, 1000);
 
@@ -245,21 +263,33 @@ export default function Animation() {
     // ----------------------
     // Cleanup on Unmount
     // ----------------------
-    return () => {
+    const cleanup = () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener("resize", onWindowResize);
       document.body.removeEventListener("mousemove", onMouseMove);
       if (containerRef.current) {
         containerRef.current.removeChild(renderer.domElement);
+        const textContainer = containerRef.current.querySelector('[data-animated-text]');
+        if (textContainer) {
+          ReactDOM.unmountComponentAtNode(textContainer);
+          textContainer.remove();
+        }
       }
       renderer.dispose();
-      const textElements = containerRef.current.querySelectorAll('#animated-text');
-      textElements.forEach(el => el.remove());
     };
+    return cleanup;
   }, []); // run once on mount
 
   return (
-    <div id="animated-text" ref={containerRef} style={{ width: "100%", height: "100%" }}>
+    <div 
+      id="animated-text" 
+      ref={containerRef} 
+      style={{ 
+        width: "100%", 
+        height: "100%",
+        position: "relative" // Add this to establish a stacking context
+      }}
+    >
       {/* The Three.js canvas will be appended here */}
     </div>
   );
