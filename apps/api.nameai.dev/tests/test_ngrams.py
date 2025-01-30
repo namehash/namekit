@@ -120,3 +120,24 @@ def test_gap_prob():
             if None not in (tok1, tok2):
                 break
         assert ngrams.sequence_probability(tok1) < ngrams.sequence_probability(tok2)
+
+
+def test_all_tokenizer_quality():
+    with init_ngrams_tokenizer([]) as (ngrams, tokenizer):
+        from nameai.data import get_resource_path
+        import json
+
+        # Load tokenization quality test cases
+        with open(get_resource_path('tests/tokenization_quality.json')) as f:
+            quality_tests = json.load(f)
+
+        for input_text, expected_tokens in quality_tests.items():
+            tokenized_labels = list(tokenizer.tokenize(input_text))
+            expected_tuple = tuple(expected_tokens)
+            if expected_tuple != tokenized_labels[0]:
+                print(input_text)
+                print(tokenized_labels[0])
+                print(expected_tuple)
+                print(ngrams.sequence_probability(tokenized_labels[0]))
+                print(ngrams.sequence_probability(expected_tuple))
+                print()
