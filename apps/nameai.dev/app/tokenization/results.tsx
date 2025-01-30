@@ -1,5 +1,7 @@
-import { Indicator } from "./indicator";
 import { type NameAIReport } from "@namehash/nameai";
+
+import { Indicator } from "./indicator";
+import { ProbabilityHeader } from "../skeleton";
 
 export function Results({ analysis }: NameAIReport) {
   const topTokenization = analysis?.top_tokenization || [];
@@ -15,7 +17,11 @@ export function Results({ analysis }: NameAIReport) {
       </div>
 
       <div>
-        <h3 className="text-lg font-semibold mb-2">Recommended Tokenization</h3>
+        <div className="flex justify-between items-center mb-3">
+          <h3 className="text-lg font-semibold">Recommended Tokenization</h3>
+          <ProbabilityHeader />
+        </div>
+
         <div className="bg-white flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm h-12">
           {topTokenization.length > 0 ? (
             topTokenization.map((token, index) => (
@@ -42,7 +48,11 @@ export function Results({ analysis }: NameAIReport) {
       </div>
 
       <div>
-        <h3 className="text-lg font-semibold mb-2">Discovered Tokenizations</h3>
+        <div className="flex justify-between items-center mb-3">
+          <h3 className="text-lg font-semibold">Discovered Tokenizations</h3>
+          <ProbabilityHeader />
+        </div>
+
         {analysis?.tokenizations.length === 0 && (
           <div className="bg-white flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm h-12">
             <span className="text-gray-500">

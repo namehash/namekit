@@ -93,8 +93,13 @@ export function Form({ initialValue }: { initialValue?: string }) {
             autoComplete="off"
             error={clientError ?? ""}
           />
-          <Button type="submit" disabled={isSubmitDisabled} className="!py-1.5">
-            {isPending ? "Analyzing..." : "Analyze"}
+          <Button
+            type="submit"
+            // disabled={isSubmitDisabled}
+            className="!py-1.5"
+            loading={isPending}
+          >
+            Analyze
           </Button>
         </div>
       </form>

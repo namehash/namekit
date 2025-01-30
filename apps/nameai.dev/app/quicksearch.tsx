@@ -63,7 +63,7 @@ export function QuickSearch({ handleClick }: QuickSearchProps) {
 
   return (
     <div className="mb-10">
-      <p className="text-sm mb-3 text-balance text-center text-gray-500">
+      <p className="text-sm mb-3 text-center text-gray-500">
         or try one of the example labels below
       </p>
 

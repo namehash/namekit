@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Form } from "./form";
 import { Heading, Text } from "@namehash/namekit-react";
+import Balancer from "react-wrap-balancer";
 import {
   defaultMetaOpengraph,
   defaultMetaTwitter,
@@ -21,8 +22,10 @@ export default async function TokenizePage(props: Props) {
       <div className="text-center mb-6 md:mb-12 space-y-3">
         <Heading as="h1">Label Tokenization</Heading>
         <Text as="p" className="text-gray-500 text-balance">
-          Extract recognizable words that are otherwise &quot;smashed
-          together&quot; in labels.
+          <Balancer>
+            Extract recognizable words that are otherwise &quot;smashed
+            together&quot; in labels.
+          </Balancer>
         </Text>
       </div>
 

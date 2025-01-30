@@ -160,6 +160,9 @@ importers:
       react-dom:
         specifier: 19.0.0
         version: 19.0.0(react@19.0.0)
+      react-wrap-balancer:
+        specifier: 1.1.1
+        version: 1.1.1(react@19.0.0)
       sonner:
         specifier: 1.5.0
         version: 1.5.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -10194,6 +10197,10 @@ snapshots:
   react-wrap-balancer@1.1.1(react@18.3.1):
     dependencies:
       react: 18.3.1
+
+  react-wrap-balancer@1.1.1(react@19.0.0):
+    dependencies:
+      react: 19.0.0
 
   react@18.3.1:
     dependencies:
