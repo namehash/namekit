@@ -15,7 +15,7 @@ export type Suffixes = (typeof Suffixes)[keyof typeof Suffixes];
 export const availableSuffixes: Record<Suffixes, string> = {
   [Suffixes.ETH]: ".eth",
   [Suffixes.BOX]: ".box",
-  [Suffixes.CB]: ".cb.id",
+  [Suffixes.CB]: ".base.eth",
 };
 
 export const DEFAULT_PREFFERED_SUFFIX = Suffixes.ETH;

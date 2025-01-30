@@ -188,7 +188,7 @@ export const DisplayedName = ({
     return {
       labels,
       firstLabel: labels[0],
-      labelsAfterFirstDot: labels.slice(1, labels.length),
+      rootName: labels.slice(1, labels.length),
     };
   };
 
@@ -262,6 +262,12 @@ export const DisplayedName = ({
 
   if (domainName === null) return <div className={skeletonClasses} />;
 
+  const appendedRootName = () => {
+    return getNameLabels(domainName.displayName).rootName.map((label) => {
+      return <>.{label}</>;
+    });
+  };
+
   const displayableName = (
     <div ref={displayedNameRef} className={FontLineHeight[125].tailwindClass}>
       <div
@@ -314,11 +320,7 @@ export const DisplayedName = ({
               { hidden: shouldClampName },
             ])}
           >
-            {getNameLabels(domainName.displayName).labelsAfterFirstDot.map(
-              (label) => {
-                return <>.{label}</>;
-              },
-            )}
+            {appendedRootName()}
           </span>
         </p>
       </div>
@@ -360,11 +362,7 @@ export const DisplayedName = ({
                 { hidden: shouldClampName },
               ])}
             >
-              {getNameLabels(domainName.displayName).labelsAfterFirstDot.map(
-                (label) => {
-                  return <>.{label}</>;
-                },
-              )}
+              {appendedRootName()}
             </span>
           )}
         </p>
