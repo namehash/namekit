@@ -361,7 +361,7 @@ export default function ExploreCollectionsPage() {
                 type="text"
                 name="query"
                 autoComplete="off"
-                value={""}
+                value={params.search}
                 debounceTimeout={300}
                 placeholder="Type something"
                 onChange={(e) => handleSearch(e.target.value)}
