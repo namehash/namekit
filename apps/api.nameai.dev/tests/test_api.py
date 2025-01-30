@@ -1,6 +1,5 @@
 import pytest
 from fastapi.testclient import TestClient
-from pprint import pprint
 
 from mocked_static_property import mock_static_property
 from nameguard.utils import MAX_INSPECTED_NAME_CHARACTERS
@@ -48,7 +47,6 @@ def test_inspect_name_post_long(test_client):
     assert res_json['nameguard']['highest_risk']['check'] == 'normalized'
     assert res_json['nameguard']['inspected']
     assert res_json['nameai']['analysis']['status'] == 'unnormalized'
-    pprint(res_json)
 
 
 def test_inspect_name_post_too_long(test_client):
@@ -62,7 +60,6 @@ def test_inspect_name_post_too_long(test_client):
     assert res_json['nameguard']['normalization'] == 'unnormalized'
     assert not res_json['nameguard']['inspected']
     assert res_json['nameai']['analysis'] is None
-    pprint(res_json)
 
 
 def test_inspect_name_post_too_long_normalized(test_client):
@@ -75,4 +72,3 @@ def test_inspect_name_post_too_long_normalized(test_client):
     assert res_json['nameguard']['highest_risk']['check'] == 'uninspected'
     assert res_json['nameguard']['normalization'] == 'normalized'
     assert res_json['nameai']['analysis'] is None
-    pprint(res_json)
