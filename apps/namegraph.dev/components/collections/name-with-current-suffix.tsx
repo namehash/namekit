@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import {
   availableSuffixes,
@@ -9,9 +10,11 @@ import { useQueryParams } from "../use-query-params";
 import { DEFAULT_COLLECTIONS_PARAMS } from "./query-utils";
 
 const getCurrentSuffix = () => {
-  return availableSuffixes[
-    window.localStorage.getItem(PREFERRED_SUFFIX_KEY) as Suffixes
-  ];
+  if (typeof window !== "undefined") {
+    return availableSuffixes[
+      window.localStorage.getItem(PREFERRED_SUFFIX_KEY) as Suffixes
+    ];
+  }
 };
 
 export const getNameWithCurrentSuffix = (name: string) => {

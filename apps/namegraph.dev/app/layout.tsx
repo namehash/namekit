@@ -8,10 +8,12 @@ import { GithubIcon } from "@/components/footer/github-icon";
 import { TwitterIcon } from "@/components/footer/twitter-icon";
 import { FarcasterIcon } from "@/components/footer/farcaster-icon";
 import { TelegramIcon } from "@/components/footer/telegram-icon";
-import { Button } from "@/components/ui/button";
-import "@namehash/namekit-react/styles.css";
-import NextLink from "next/link";
 import { SuffixSelect } from "@/components/suffix-select";
+import { Providers } from "@/components/providers";
+import { Button } from "@/components/ui/button";
+import NextLink from "next/link";
+import "@namehash/namekit-react/styles.css";
+import "ethereum-identity-kit/css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -107,7 +109,10 @@ export default function RootLayout({
               </div>
             </div>
           </header>
-          <main className="flex-1">{children}</main>
+          <Providers>
+            <main className="flex-1">{children}</main>
+          </Providers>
+
           <footer className="lg:px-[50px] px-5 flex items-center justify-center w-full border-t border-gray-200">
             <div className="pt-8 pb-5 flex flex-col gap-10 items-start justify-between w-full max-w-[1216px]">
               <div className="w-full gap-5 flex flex-col lg:flex-row lg:justify-between">

@@ -2,6 +2,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import {
+  ProfileStats,
+  useProfileDetails,
+  ProfileSocials,
+} from "ethereum-identity-kit";
+import {
   DEFAULT_MAX_RELATED_COLLECTIONS,
   NameGraphCollection,
   NameGraphFetchTopCollectionMembersResponse,
@@ -28,7 +33,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Link } from "@namehash/namekit-react";
-import { NameWithCurrentSuffix } from "@/components/collections/name-with-current-suffix";
+import { getNameWithCurrentSuffix } from "@/components/collections/name-with-current-suffix";
 import { CollectionsCardsSkeleton } from "@/components/collections/collections-grid-skeleton";
 import { buildENSName } from "@namehash/ens-utils";
 import { NameWithDefaultSuffix } from "@/components/collections/name-with-default-suffix";
@@ -61,6 +66,10 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
   } catch {
     console.error(`Error: ${name} is not normalized`);
   }
+
+  const { address } = useProfileDetails({
+    addressOrName: getNameWithCurrentSuffix(name),
+  });
 
   const DEFAULT_SORTING_ORDER = NameGraphSortOrderOptions.AI;
   const DEFAULT_ACTIVE_TAB = NameRelatedCollectionsTabs.ByConcept;
@@ -470,6 +479,14 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
             />
           </div>
         ) : null}
+        <div className="mt-8 mb-4">
+          <ProfileStats addressOrName={getNameWithCurrentSuffix(name)} />
+          <ProfileSocials
+            userAddress={address}
+            name={getNameWithCurrentSuffix(name)}
+            records={{}}
+          />
+        </div>
         {otherCategories?.length ? (
           <div className="lg:px-4 mx-auto w-full mt-12">
             <div className="w-full rounded-lg border border-gray-200">

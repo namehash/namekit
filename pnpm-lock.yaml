@@ -218,6 +218,9 @@ importers:
       '@radix-ui/react-toggle':
         specifier: ^1.1.1
         version: 1.1.1(@types/react-dom@18.3.1)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@tanstack/react-query':
+        specifier: 5.65.1
+        version: 5.65.1(react@18.3.1)
       atropos:
         specifier: 1.0.2
         version: 1.0.2
@@ -230,6 +233,9 @@ importers:
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      ethereum-identity-kit:
+        specifier: 0.1.4
+        version: 0.1.4(@tanstack/react-query@5.65.1(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       fast-average-color:
         specifier: 9.3.0
         version: 9.3.0
@@ -2610,6 +2616,14 @@ packages:
     peerDependencies:
       tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1 || >= 4.0.0-alpha.20'
 
+  '@tanstack/query-core@5.65.0':
+    resolution: {integrity: sha512-Bnnq/1axf00r2grRT6gUyIkZRKzhHs+p4DijrCQ3wMlA3D3TTT71gtaSLtqnzGddj73/7X5JDGyjiSLdjvQN4w==}
+
+  '@tanstack/react-query@5.65.1':
+    resolution: {integrity: sha512-BSpjo4RQdJ75Mw3pqM1AJYNhanNxJE3ct7RmCZUAv9cUJg/Qmonzc/Xy2kKXeQA1InuKATSuc6pOZciWOF8TYQ==}
+    peerDependencies:
+      react: ^18 || ^19
+
   '@tanstack/react-virtual@3.11.2':
     resolution: {integrity: sha512-OuFzMXPF4+xZgx8UzJha0AieuMihhhaWG0tCqpp6tDzlFwOmNBPYMuLOtMJ1Tr4pXLHmgjcWhG6RlknY2oNTdQ==}
     peerDependencies:
@@ -3726,6 +3740,13 @@ packages:
   etag@1.8.1:
     resolution: {integrity: sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==}
     engines: {node: '>= 0.6'}
+
+  ethereum-identity-kit@0.1.4:
+    resolution: {integrity: sha512-QlmrBnuONCmdgZL82SatC/IA7B58I0qaKY4giM86Ybjch6SYzwpFrlEVxmIjTRDBR7qcG/XcDGMb8gWB+BZa0Q==}
+    peerDependencies:
+      '@tanstack/react-query': ^5.0.0
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
 
   execa@7.2.0:
     resolution: {integrity: sha512-UduyVP7TLB5IcAQl+OzLyLcS/l32W/GLg+AhHJ+ow40FOk2U3SAllPwR44v4vmdFwIWqpdwxxpQbF1n5ta9seA==}
@@ -7659,6 +7680,13 @@ snapshots:
       mini-svg-data-uri: 1.4.4
       tailwindcss: 3.4.13
 
+  '@tanstack/query-core@5.65.0': {}
+
+  '@tanstack/react-query@5.65.1(react@18.3.1)':
+    dependencies:
+      '@tanstack/query-core': 5.65.0
+      react: 18.3.1
+
   '@tanstack/react-virtual@3.11.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@tanstack/virtual-core': 3.11.2
@@ -9036,6 +9064,12 @@ snapshots:
   esutils@2.0.3: {}
 
   etag@1.8.1: {}
+
+  ethereum-identity-kit@0.1.4(@tanstack/react-query@5.65.1(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      '@tanstack/react-query': 5.65.1(react@18.3.1)
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   execa@7.2.0:
     dependencies:
