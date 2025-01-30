@@ -31,7 +31,10 @@ import { CollectionCard } from "@/components/collections/collection-card";
 import { buildENSName } from "@namehash/ens-utils";
 import { Link } from "@namehash/namekit-react";
 import { NameWithCurrentSuffix } from "@/components/collections/name-with-current-suffix";
-import { availableSuffixes, Suffixes } from "@/components/suffix-select";
+import {
+  DEFAULT_COLLECTIONS_PARAMS,
+  DEFAULT_PAGE_NUMBER,
+} from "@/components/collections/query-utils";
 
 interface NavigationConfig {
   itemsPerPage: number;
@@ -43,15 +46,6 @@ interface CollectionsData {
   other_collections: NameGraphCollection[] | null;
   related_collections: NameGraphCollection[];
 }
-
-const DEFAULT_PAGE_NUMBER = 1;
-export const DEFAULT_COLLECTIONS_PARAMS: Record<string, any> = {
-  search: "",
-  page: DEFAULT_PAGE_NUMBER,
-  orderBy: NameGraphSortOrderOptions.AI,
-  exactMatch: false,
-  tld: availableSuffixes[Suffixes.ETH],
-};
 
 export default function ExploreCollectionsPage() {
   /**

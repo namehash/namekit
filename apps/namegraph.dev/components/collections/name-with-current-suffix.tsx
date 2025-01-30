@@ -6,7 +6,7 @@ import {
   Suffixes,
 } from "../suffix-select";
 import { useQueryParams } from "../use-query-params";
-import { DEFAULT_COLLECTIONS_PARAMS } from "@/app/collections/page";
+import { DEFAULT_COLLECTIONS_PARAMS } from "./query-utils";
 
 const getCurrentSuffix = () => {
   return availableSuffixes[

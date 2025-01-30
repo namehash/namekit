@@ -8,12 +8,14 @@ export const PREFERRED_SUFFIX_KEY = "PREFERRED_SUFFIX";
 export const Suffixes = {
   ETH: "ETH",
   BOX: "BOX",
+  CB: "CB",
 } as const;
 export type Suffixes = (typeof Suffixes)[keyof typeof Suffixes];
 
 export const availableSuffixes: Record<Suffixes, string> = {
   [Suffixes.ETH]: ".eth",
   [Suffixes.BOX]: ".box",
+  [Suffixes.CB]: ".base.eth",
 };
 
 export const DEFAULT_PREFFERED_SUFFIX = Suffixes.ETH;
