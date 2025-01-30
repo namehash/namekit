@@ -257,3 +257,5 @@ export const ScrambleMethod = {
 
 export type ScrambleMethod =
   (typeof ScrambleMethod)[keyof typeof ScrambleMethod];
+
+export const DEFAULT_MAX_RELATED_COLLECTIONS = 6;

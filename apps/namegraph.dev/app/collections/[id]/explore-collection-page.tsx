@@ -31,7 +31,7 @@ import {
 } from "@/components/ui/select";
 import { Link } from "@namehash/namekit-react";
 import { buildENSName } from "@namehash/ens-utils";
-import { NameWithDefaultSuffix } from "@/components/collections/name-with-default-suffix";
+import { NameWithCurrentSuffix } from "@/components/collections/name-with-current-suffix";
 
 const notoBlack = Noto_Emoji({ preload: false });
 
@@ -276,12 +276,6 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
     });
   }, [collection]);
 
-  const getNormalizedAndTrimmedName = (
-    suggestion: NameGraphSuggestion,
-  ): string => {
-    return buildENSName(suggestion.label.replace(" ", "")).name;
-  };
-
   return (
     <div className="mx-auto py-8 w-full">
       <div className="max-w-7xl mx-auto p-6">
@@ -370,12 +364,12 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                     params.page
                                   ]?.suggestions.map((suggestion) => (
                                     <Link
-                                      href={`/name/${getNormalizedAndTrimmedName(suggestion)}`}
+                                      href={`/name/${buildENSName(suggestion.label).name}`}
                                       className="bg-gray-100 rounded-full group-2 px-4 py-1 flex items-start"
                                       key={suggestion.label}
                                     >
                                       <div className="max-h-[20px] relative flex items-center justify-center overflow-hidden">
-                                        <NameWithDefaultSuffix
+                                        <NameWithCurrentSuffix
                                           name={suggestion.label}
                                         />
                                       </div>
@@ -449,12 +443,12 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                   {sampledNameIdeas?.map((suggestion) => {
                                     return (
                                       <Link
-                                        href={`/name/${getNormalizedAndTrimmedName(suggestion)}`}
+                                        href={`/name/${buildENSName(suggestion.label).name}`}
                                         key={suggestion.label}
                                         className="bg-gray-100 rounded-full group-2 px-4 flex items-start"
                                       >
                                         <div className="relative flex items-center justify-center overflow-hidden">
-                                          <NameWithDefaultSuffix
+                                          <NameWithCurrentSuffix
                                             name={suggestion.label}
                                           />
                                         </div>
@@ -520,12 +514,12 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                   {scrambledNameIdeas?.map((suggestion) => {
                                     return (
                                       <Link
-                                        href={`/name/${getNormalizedAndTrimmedName(suggestion)}`}
+                                        href={`/name/${buildENSName(suggestion.label).name}`}
                                         key={suggestion.label}
                                         className="bg-gray-100 rounded-full group-2 px-4 flex items-start"
                                       >
                                         <div className="relative flex items-center justify-center overflow-hidden">
-                                          <NameWithDefaultSuffix
+                                          <NameWithCurrentSuffix
                                             name={suggestion.label}
                                           />
                                         </div>
