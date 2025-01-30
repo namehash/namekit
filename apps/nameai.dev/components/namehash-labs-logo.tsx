@@ -1,6 +1,6 @@
-import { SVGProps } from "react";
+type NameHashLabsLogoProps = React.SVGProps<SVGSVGElement>;
 
-export const NameHashLabsLogo = (props: SVGProps<SVGSVGElement>) => {
+export const NameHashLabsLogo: React.FC<NameHashLabsLogoProps> = (props) => {
   return (
     <svg
       width="128"
