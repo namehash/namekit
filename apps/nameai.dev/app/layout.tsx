@@ -250,6 +250,7 @@ export default function RootLayout({
                   <a
                     className="cursor-pointer text-black underline decoration-current underline-offset-[4px] transition-all duration-200 hover:underline-offset-[2px]"
                     href="https://namehashlabs.org"
+                    target="_blank"
                   >
                     NameHash Labs
                   </a>
