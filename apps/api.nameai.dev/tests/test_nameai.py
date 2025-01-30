@@ -68,3 +68,4 @@ def test_top_tokenization(nameai: 'NameAI'):
     assert top_tok('expertsexchange') == ['experts', 'exchange']
     # higher prob than [i, teach]
     assert top_tok('iteach') == ['it', 'each']
+    assert top_tok('vitalik') == ['vitalik']
