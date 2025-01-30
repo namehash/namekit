@@ -13,6 +13,7 @@ import { Providers } from "@/components/providers";
 import { Button } from "@/components/ui/button";
 import NextLink from "next/link";
 import "@namehash/namekit-react/styles.css";
+import "@namehash/nameguard-react/styles.css";
 import "ethereum-identity-kit/css";
 
 const inter = Inter({ subsets: ["latin"] });

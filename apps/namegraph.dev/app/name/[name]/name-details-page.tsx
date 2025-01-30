@@ -37,9 +37,12 @@ import { getNameWithCurrentSuffix } from "@/components/collections/name-with-cur
 import { CollectionsCardsSkeleton } from "@/components/collections/collections-grid-skeleton";
 import { buildENSName } from "@namehash/ens-utils";
 import { NameWithDefaultSuffix } from "@/components/collections/name-with-default-suffix";
-import { NftAvatar } from "@/components/nft-avatar/nft-avatar";
+import { NftAvatar } from "@/components/name/nft-avatar/nft-avatar";
 import { ens_normalize } from "@adraffy/ens-normalize";
-import { AvatarSize } from "@/components/nft-avatar/avatar-utils";
+import { AvatarSize } from "@/components/name/nft-avatar/avatar-utils";
+import { NameGuardSummary } from "@/components/name/nameguard-summary";
+import { nameguard, NameGuard, NameGuardReport } from "@namehash/nameguard";
+import useSWR from "swr";
 
 interface NavigationConfig {
   itemsPerPage: number;
@@ -464,9 +467,19 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
     });
   };
 
+  const { data: nameguardReport } = useSWR<NameGuardReport>(
+    getNameWithCurrentSuffix(label),
+    (n: string) => nameguard.inspectName(n),
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    },
+  );
+
   return (
     <div className="max-w-7xl flex flex-col space-y-8 lg:space-y-0 lg:space-x-8 lg:flex-row mx-auto py-8 w-full">
-      <div className="p-6 flex justify-start flex-col w-full">
+      <div className="flex justify-start flex-col mx-8 lg:mx-6 xl:mx-0">
         {NameWithDefaultSuffix({ name: label }) ? (
           <div className="mx-auto">
             <NftAvatar
@@ -479,13 +492,20 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
             />
           </div>
         ) : null}
-        <div className="mt-8 mb-4">
-          <ProfileStats addressOrName={getNameWithCurrentSuffix(name)} />
-          <ProfileSocials
-            userAddress={address}
-            name={getNameWithCurrentSuffix(name)}
-            records={{}}
-          />
+        <div className="mt-8 flex flex-col space-y-4 md:space-y-0 lg:space-y-6 md:flex-row lg:flex-col md:space-x-4 lg:space-x-0">
+          <div className="w-full flex justify-center items-center border border-gray-200 rounded-md md:w-1/2 lg:w-auto">
+            {nameguardReport ? (
+              <NameGuardSummary nameGuardReport={nameguardReport} />
+            ) : null}
+          </div>
+          <div className="h-max py-6 border border-gray-200 rounded-md md:w-1/2 lg:w-auto">
+            <ProfileStats addressOrName={getNameWithCurrentSuffix(name)} />
+            <ProfileSocials
+              userAddress={address}
+              name={getNameWithCurrentSuffix(name)}
+              records={{}}
+            />
+          </div>
         </div>
         {otherCategories?.length ? (
           <div className="lg:px-4 mx-auto w-full mt-12">
@@ -523,7 +543,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
         <div className="mx-auto p-6">
           <div className="flex space-x-4 mb-8">
             <div>
-              <div className="text-3xl font-semibold mb-4 break-all">
+              <div className="text-3xl lg:text-5xl font-bold mb-4 break-all">
                 {label ? (
                   <NameWithDefaultSuffix name={label} />
                 ) : (

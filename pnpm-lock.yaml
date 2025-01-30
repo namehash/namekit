@@ -200,6 +200,12 @@ importers:
       '@namehash/namegraph-sdk':
         specifier: workspace:*
         version: link:../../packages/namegraph-sdk
+      '@namehash/nameguard':
+        specifier: 0.9.0
+        version: 0.9.0(typescript@5.6.2)(zod@3.24.1)
+      '@namehash/nameguard-react':
+        specifier: 0.8.2
+        version: 0.8.2(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)(zod@3.24.1)
       '@namehash/namekit-react':
         specifier: workspace:*
         version: link:../../packages/namekit-react
@@ -263,6 +269,9 @@ importers:
       shadcn:
         specifier: 2.1.8
         version: 2.1.8(typescript@5.6.2)
+      swr:
+        specifier: 2.2.5
+        version: 2.2.5(react@18.3.1)
       tailwind-merge:
         specifier: ^2.5.5
         version: 2.6.0
@@ -1817,8 +1826,23 @@ packages:
   '@namehash/ens-utils@1.19.0':
     resolution: {integrity: sha512-AlKBTwFAIcNEqKTTTpNTWcQtLbXmb71oapVGmC5rygQp6GH6sdnvoa/cZYPVHUg7dds6U4kt8x1ZtAm1Ub+2gg==}
 
+  '@namehash/ens-webfont@0.7.0':
+    resolution: {integrity: sha512-Fp/u/BKPi7gm1yDpRD4YkxUTlOCIz5swWdoSgexo2ThmGU6XTgROv8UjDT53rtu1T2v9XPA7TpQ0P4GWo/k6fg==}
+
+  '@namehash/nameguard-react@0.8.2':
+    resolution: {integrity: sha512-YE3BWiVKeoXHxF5qMuYj+W4fbGOimLK7uVWF+MPreZ0npPfHkwLVUvgzDchI1GZGkY8NuVpUNo68sl611BMsyg==}
+    peerDependencies:
+      react: ^18
+      react-dom: ^18
+
   '@namehash/nameguard@0.9.0':
     resolution: {integrity: sha512-WYC3l/Xaks5mn1J3JJBjqPqK7emACPsiWaLMhYySwkLhZ6TwFEHBORaPZQ0l9QaRLdZ5dQZKKMOMLJcpK25+uA==}
+
+  '@namehash/namekit-react@0.11.0':
+    resolution: {integrity: sha512-Sa6Wy+tw7b8I/CkKXmqaIPAdAhUYIhkna4pGPrXNO1DZ4dXDopnFvXqFfrRzI95LARXq/n9Ow5xpmtiiRC22DQ==}
+    peerDependencies:
+      react: ^18
+      react-dom: ^18
 
   '@next/env@14.2.21':
     resolution: {integrity: sha512-lXcwcJd5oR01tggjWJ6SrNNYFGuOOMB9c251wUNkjCpkoXOPkDeF/15c3mnVlBqrW4JJXb2kVxDFhC4GduJt2A==}
@@ -6890,6 +6914,31 @@ snapshots:
       - utf-8-validate
       - zod
 
+  '@namehash/ens-webfont@0.7.0': {}
+
+  '@namehash/nameguard-react@0.8.2(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)(zod@3.24.1)':
+    dependencies:
+      '@headlessui/react': 1.7.17(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@heroicons/react': 2.2.0(react@18.3.1)
+      '@namehash/ens-utils': 1.19.0(typescript@5.6.2)(zod@3.24.1)
+      '@namehash/ens-webfont': 0.7.0
+      '@namehash/nameguard': 0.9.0(typescript@5.6.2)(zod@3.24.1)
+      '@namehash/namekit-react': 0.11.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)(zod@3.24.1)
+      classcat: 5.0.5
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      sonner: 1.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      swr: 2.2.5(react@18.3.1)
+      zustand: 4.5.4(@types/react@18.3.1)(react@18.3.1)
+    transitivePeerDependencies:
+      - '@types/react'
+      - bufferutil
+      - encoding
+      - immer
+      - typescript
+      - utf-8-validate
+      - zod
+
   '@namehash/nameguard@0.9.0(typescript@5.6.2)(zod@3.24.1)':
     dependencies:
       '@namehash/ens-utils': 1.19.0(typescript@5.6.2)(zod@3.24.1)
@@ -6897,6 +6946,21 @@ snapshots:
     transitivePeerDependencies:
       - bufferutil
       - encoding
+      - typescript
+      - utf-8-validate
+      - zod
+
+  '@namehash/namekit-react@0.11.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.2)(zod@3.24.1)':
+    dependencies:
+      '@headlessui-float/react': 0.11.4(@headlessui/react@1.7.17(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@headlessui/react': 1.7.17(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@namehash/ens-utils': 1.19.0(typescript@5.6.2)(zod@3.24.1)
+      '@namehash/ens-webfont': 0.7.0
+      classcat: 5.0.5
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+    transitivePeerDependencies:
+      - bufferutil
       - typescript
       - utf-8-validate
       - zod
@@ -11591,6 +11655,13 @@ snapshots:
       type-fest: 2.19.0
 
   zod@3.24.1: {}
+
+  zustand@4.5.4(@types/react@18.3.1)(react@18.3.1):
+    dependencies:
+      use-sync-external-store: 1.2.0(react@18.3.1)
+    optionalDependencies:
+      '@types/react': 18.3.1
+      react: 18.3.1
 
   zustand@4.5.4(@types/react@18.3.11)(react@18.3.1):
     dependencies:
