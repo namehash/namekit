@@ -2,6 +2,7 @@ import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import {
   DEFAULT_FULL_MODE,
+  DEFAULT_MAX_RELATED_COLLECTIONS,
   NameGraphCollection,
   NameGraphCollectionByMemberResponse,
   NameGraphFetchTopCollectionMembersResponse,
@@ -111,14 +112,14 @@ export const generateNamesByQuery = async (
 
 export const getCollectionsForQuery = async (
   input: string,
-  withoutRelatedCollections = false,
+  maxRelatedCollections = DEFAULT_MAX_RELATED_COLLECTIONS,
 ): Promise<NameGraphGroupedByCategoryResponse> => {
   if (input.includes("."))
     throw new Error("Invalid label for generating name suggestions");
 
   const nameGeneratorSuggestions = await NameGraphClient.suggestionsByCategory(
     input,
-    withoutRelatedCollections,
+    maxRelatedCollections,
   );
 
   return nameGeneratorSuggestions;

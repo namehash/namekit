@@ -30,7 +30,8 @@ import { useQueryParams } from "@/components/use-query-params";
 import { CollectionCard } from "@/components/collections/collection-card";
 import { buildENSName } from "@namehash/ens-utils";
 import { Link } from "@namehash/namekit-react";
-import { NameWithDefaultSuffix } from "@/components/collections/name-with-default-suffix";
+import { NameWithCurrentSuffix } from "@/components/collections/name-with-current-suffix";
+import { availableSuffixes, Suffixes } from "@/components/suffix-select";
 
 interface NavigationConfig {
   itemsPerPage: number;
@@ -43,17 +44,19 @@ interface CollectionsData {
   related_collections: NameGraphCollection[];
 }
 
+const DEFAULT_PAGE_NUMBER = 1;
+export const DEFAULT_COLLECTIONS_PARAMS: Record<string, any> = {
+  search: "",
+  page: DEFAULT_PAGE_NUMBER,
+  orderBy: NameGraphSortOrderOptions.AI,
+  exactMatch: false,
+  tld: availableSuffixes[Suffixes.ETH],
+};
+
 export default function ExploreCollectionsPage() {
   /**
    * Table query
    */
-  const DEFAULT_PAGE_NUMBER = 1;
-  const DEFAULT_COLLECTIONS_PARAMS: Record<string, any> = {
-    search: "",
-    page: DEFAULT_PAGE_NUMBER,
-    orderBy: NameGraphSortOrderOptions.AI,
-    exactMatch: false,
-  };
   type DefaultDomainFiltersType = typeof DEFAULT_COLLECTIONS_PARAMS;
   const { params, setParams } = useQueryParams<DefaultDomainFiltersType>(
     DEFAULT_COLLECTIONS_PARAMS,
@@ -331,6 +334,10 @@ export default function ExploreCollectionsPage() {
     handleSearch(params.search);
   }, [params.search]);
 
+  const getLabelWithoutWhitespace = (label: string): string => {
+    return buildENSName(label.replace(" ", "")).name;
+  };
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div className="mx-auto py-8 w-full">
@@ -341,11 +348,11 @@ export default function ExploreCollectionsPage() {
             </h1>
             <div className="mt-1 mb-3">
               <Link
-                href={`/name/${buildENSName(params.search.replace(" ", "")).name}`}
+                href={`/name/${getLabelWithoutWhitespace(params.search)}`}
                 className="!text-3xl font-bold mb-5 leading-9 truncate"
               >
                 {params.search ? (
-                  <NameWithDefaultSuffix name={params.search} />
+                  <NameWithCurrentSuffix name={params.search} />
                 ) : (
                   "______"
                 )}
@@ -360,7 +367,7 @@ export default function ExploreCollectionsPage() {
                 type="text"
                 name="query"
                 autoComplete="off"
-                value={params.search}
+                value={""}
                 debounceTimeout={300}
                 placeholder="Type something"
                 onChange={(e) => handleSearch(e.target.value)}

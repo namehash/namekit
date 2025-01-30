@@ -2,6 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import {
+  DEFAULT_MAX_RELATED_COLLECTIONS,
   NameGraphCollection,
   NameGraphFetchTopCollectionMembersResponse,
   NameGraphSortOrderOptions,
@@ -27,7 +28,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Link } from "@namehash/namekit-react";
-import { NameWithDefaultSuffix } from "@/components/collections/name-with-default-suffix";
+import { NameWithCurrentSuffix } from "@/components/collections/name-with-current-suffix";
 import { CollectionsCardsSkeleton } from "@/components/collections/collections-grid-skeleton";
 import { ens_normalize } from "@adraffy/ens-normalize";
 
@@ -291,6 +292,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
 
   const handlePageChange = (page: number) => {
     setParams({
+      ...params,
       page: {
         ...params.page,
         [(params.activeTab as NameRelatedCollectionsTabs) ||
@@ -305,7 +307,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
   };
 
   const handleActiveTabChange = (activeTab: NameRelatedCollectionsTabs) => {
-    setParams({ activeTab });
+    setParams({ ...params, activeTab });
   };
 
   useEffect(() => {
@@ -341,7 +343,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
       navigationConfig.totalItems[NameRelatedCollectionsTabs.ByConcept] &&
       navigationConfig.totalItems[NameRelatedCollectionsTabs.ByMembership]
     ) {
-      getCollectionsForQuery(normalizedName, true)
+      getCollectionsForQuery(normalizedName, DEFAULT_MAX_RELATED_COLLECTIONS)
         .then((res) => {
           console.log(res, res.categories);
           setOtherCategories(res.categories);
@@ -434,7 +436,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
   };
 
   const handleOrderBy = (orderBy: NameGraphSortOrderOptions) => {
-    setParams({ orderBy });
+    setParams({ ...params, orderBy });
     queryCollections({
       activeTab: params.activeTab || DEFAULT_ACTIVE_TAB,
       page:
@@ -451,7 +453,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
           <div>
             <div className="text-3xl font-semibold mb-4">
               {normalizedName ? (
-                <NameWithDefaultSuffix name={normalizedName} />
+                <NameWithCurrentSuffix name={normalizedName} />
               ) : (
                 <Skeleton className="w-40 h-8" />
               )}
@@ -866,7 +868,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                           href={`/name/${suggestion.label}`}
                           className="p-5 border-t border-gray-200 font-semibold text-base text-black"
                         >
-                          <NameWithDefaultSuffix name={suggestion.label} />
+                          <NameWithCurrentSuffix name={suggestion.label} />
                         </Link>
                       );
                     })}
