@@ -209,3 +209,27 @@ def test_all_tokenizer_quality():
             multiword = multiword.strip()
             tokenized_labels = list(tokenizer.tokenize(multiword))
             assert all([len(tokenized_label) > 1 for tokenized_label in tokenized_labels])
+
+
+def test_all_tokenizer_quality2():
+    with init_tokenizer([]) as tokenizer:
+        from nameai.data import get_resource_path
+        import json
+
+        # Load tokenization quality test cases
+        with open(get_resource_path('tests/tokenization_quality.json')) as f:
+            quality_tests = json.load(f)
+
+        failures = []
+        for input_text, expected_tokens in quality_tests.items():
+            tokenized_labels = list(tokenizer.tokenize(input_text))
+            expected_tuple = tuple(expected_tokens)
+            if expected_tuple not in tokenized_labels:
+                failures.append(f"\nInput: '{input_text}'\nExpected: {expected_tokens}\nGot: {tokenized_labels}")
+
+        if failures:
+            print('\n=== Tokenization Quality Test Failures ===')
+            for failure in failures:
+                print(failure)
+            print(f'\nTotal failures: {len(failures)} out of {len(quality_tests)} test cases')
+            assert False, 'Some tokenization quality tests failed. See above for details.'
