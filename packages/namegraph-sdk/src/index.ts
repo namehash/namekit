@@ -22,6 +22,7 @@ import {
   NameGraphSortOrderOptions,
   NameGraphCollection,
   ScrambleMethod,
+  DEFAULT_MAX_RELATED_COLLECTIONS,
 } from "./utils";
 
 export class NameGraph {
@@ -59,6 +60,7 @@ export class NameGraph {
 
   public suggestionsByCategory(
     label: string,
+    maxRelatedCollections = DEFAULT_MAX_RELATED_COLLECTIONS,
   ): Promise<NameGraphGroupedByCategoryResponse> {
     const categoriesQueryConfig: TypedNameGraphGroupingCategoriesParams = {
       [NameGraphGroupingCategory.related]: {
@@ -66,7 +68,7 @@ export class NameGraph {
         max_labels_per_related_collection: 10,
         max_per_type: 2,
         max_recursive_related_collections: 3,
-        max_related_collections: 6,
+        max_related_collections: maxRelatedCollections,
         label_diversity_ratio: 0.5,
       },
       [NameGraphGroupingCategory.wordplay]: {

@@ -170,7 +170,7 @@ export const NameGraphSortOrderOptions = {
   /** Use intelligent endpoint-specific ranking (e.g. with Learning to Rank) */
   AI: "AI",
   /** Sort by title alphabetically ascending */
-  AZ: "A-Z", 
+  AZ: "A-Z",
   /** Sort by title alphabetically descending */
   ZA: "Z-A",
   /** Use relevance ranking */
@@ -257,3 +257,5 @@ export const ScrambleMethod = {
 
 export type ScrambleMethod =
   (typeof ScrambleMethod)[keyof typeof ScrambleMethod];
+
+export const DEFAULT_MAX_RELATED_COLLECTIONS = 6;

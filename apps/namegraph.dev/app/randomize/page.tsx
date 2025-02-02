@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@namehash/namekit-react";
 import {
   getCollectionsForQuery,
+  getFirstLabelOfString,
   sampleNamesByCollectionId,
   scrambleNamesByCollectionId,
 } from "@/lib/utils";
@@ -35,10 +36,7 @@ export default function RandomizePage() {
     setSampledSuggestions(undefined);
     setScrambledSuggestions(undefined);
 
-    let query = debouncedValue;
-    if (debouncedValue.includes(".")) {
-      query = debouncedValue.split(".")[0];
-    }
+    const query = getFirstLabelOfString(debouncedValue);
 
     setSuggestions(undefined);
     getCollectionsForQuery(query)
