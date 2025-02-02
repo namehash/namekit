@@ -2,6 +2,7 @@ import { NameGraphCollection } from "@namehash/namegraph-sdk/utils";
 import { Link } from "@namehash/namekit-react";
 import { Noto_Emoji } from "next/font/google";
 import { NameWithCurrentTld } from "./name-with-current-tld";
+import { getNameDetailsPageHref } from "@/lib/utils";
 
 const notoBlack = Noto_Emoji({ preload: false });
 
@@ -42,7 +43,7 @@ export const CollectionCard = ({
             {collection.top_labels.map((tag) => (
               <Link
                 key={tag.label}
-                href={`/name/${tag.label}`}
+                href={getNameDetailsPageHref(tag.label)}
                 className="max-h-[28px] w-max bg-gray-100 !text-sm px-2 py-1 bg-muted rounded-full"
               >
                 <NameWithCurrentTld name={tag.label} />

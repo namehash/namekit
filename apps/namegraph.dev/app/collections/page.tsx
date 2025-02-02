@@ -9,6 +9,8 @@ import {
   findCollectionsByMember,
   findCollectionsByString,
   FromNameGraphSortOrderToDropdownTextContent,
+  getFirstLabelOfString,
+  getNameDetailsPageHref,
 } from "@/lib/utils";
 import { DebounceInput } from "react-debounce-input";
 import { Suspense, useEffect, useState } from "react";
@@ -147,10 +149,7 @@ export default function ExploreCollectionsPage() {
 
   const queryCollections = (payload: QueryCollectionsParam) => {
     if (payload.search) {
-      let query = payload.search;
-      if (payload.search.includes(".")) {
-        query = payload.search.split(".")[0];
-      }
+      const query = getFirstLabelOfString(payload.search);
 
       const MAX_COLLECTIONS_FOR_EXACT_MATCH = 10;
       const MAX_RELATED_COLLECTIONS = 20;
@@ -341,10 +340,6 @@ export default function ExploreCollectionsPage() {
     handleSearch(params.collectionsSearch.search);
   }, [params.collectionsSearch.search]);
 
-  const getLabelWithoutWhitespace = (label: string): string => {
-    return buildENSName(label.replace(" ", "")).name;
-  };
-
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div className="mx-auto py-8 w-full">
@@ -355,7 +350,9 @@ export default function ExploreCollectionsPage() {
             </h1>
             <div className="mt-1 mb-3">
               <Link
-                href={`/name/${getLabelWithoutWhitespace(params.collectionsSearch.search)}`}
+                href={getNameDetailsPageHref(
+                  params.collectionsSearch.search.replace(" ", ""),
+                )}
                 className="!text-3xl font-bold mb-5 leading-9 truncate"
               >
                 {params.collectionsSearch.search ? (

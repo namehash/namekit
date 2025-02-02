@@ -14,6 +14,7 @@ import {
   ScrambleMethod,
 } from "@namehash/namegraph-sdk/utils";
 import { createNameGraphClient } from "@namehash/namegraph-sdk";
+import { buildENSName } from "@namehash/ens-utils";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -130,10 +131,7 @@ export const findCollectionsByString = async (
     sort_order?: NameGraphSortOrderOptions;
   },
 ): Promise<NameGraphFindCollectionsResponse> => {
-  let query = input;
-  if (input.includes(".")) {
-    query = input.split(".")[0];
-  }
+  const query = getFirstLabelOfString(input);
 
   const nameGeneratorSuggestions =
     await NameGraphClient.findCollectionsByString(query, options);
@@ -244,4 +242,12 @@ export const FromNameGraphSortOrderToDropdownTextContent: Record<
   [NameGraphSortOrderOptions.AZ]: "A-Z (asc)",
   [NameGraphSortOrderOptions.ZA]: "Z-A (desc)",
   [NameGraphSortOrderOptions.RELEVANCE]: "Relevance",
+};
+
+export const getNameDetailsPageHref = (name: string): string => {
+  return encodeURIComponent(`/name/${buildENSName(name).name}`);
+};
+
+export const getFirstLabelOfString = (str: string) => {
+  return str.split(".")[0];
 };

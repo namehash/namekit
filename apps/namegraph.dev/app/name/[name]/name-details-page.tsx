@@ -18,6 +18,8 @@ import {
   findCollectionsByString,
   FromNameGraphSortOrderToDropdownTextContent,
   getCollectionsForQuery,
+  getFirstLabelOfString,
+  getNameDetailsPageHref,
 } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -103,10 +105,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
 
   const queryCollections = (payload: QueryNameRelatedCollectionsParams) => {
     if (label) {
-      let query = label;
-      if (label.includes(".")) {
-        query = label.split(".")[0];
-      }
+      const query = getFirstLabelOfString(label);
 
       const MAX_COLLECTIONS_FOR_EXACT_MATCH = 10;
       const MAX_RELATED_COLLECTIONS = 20;
@@ -533,7 +532,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                         return (
                           <Link
                             key={suggestion.label}
-                            href={`/name/${suggestion.label}`}
+                            href={getNameDetailsPageHref(suggestion.label)}
                             className="p-5 border-t border-gray-200 font-semibold text-base text-black"
                           >
                             <NameWithCurrentTld name={suggestion.label} />

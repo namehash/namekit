@@ -116,7 +116,25 @@ export const TldSelect = () => {
     };
   }, [params.tld.suffix]);
 
-  return (
+  const pagesToIncludeTldSelector = ["/name", "/collections"];
+  const [shouldDisplayTldSelector, setShouldDisplayTldSelector] =
+    useState(false);
+  const displayTldSelector = () => {
+    for (let x = 0; x < pagesToIncludeTldSelector.length; x++) {
+      if (window.location.href.includes(pagesToIncludeTldSelector[x])) {
+        setShouldDisplayTldSelector(true);
+        return;
+      }
+    }
+    setShouldDisplayTldSelector(false);
+  };
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      displayTldSelector();
+    }
+  }, [window?.location.href]);
+
+  return shouldDisplayTldSelector ? (
     <Select
       defaultValue={params.tld.suffix}
       onValueChange={(newValue) => updatePreferredTld(newValue as Tlds)}
@@ -134,5 +152,5 @@ export const TldSelect = () => {
         })}
       </SelectContent>
     </Select>
-  );
+  ) : null;
 };

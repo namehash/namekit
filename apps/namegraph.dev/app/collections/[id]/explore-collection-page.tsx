@@ -5,6 +5,7 @@ import {
   fetchCollectionMembers,
   findCollectionsByCollection,
   getCollectionById,
+  getNameDetailsPageHref,
   sampleNamesByCollectionId,
   scrambleNamesByCollectionId,
 } from "@/lib/utils";
@@ -367,7 +368,9 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                     params.collectionDetails.page
                                   ]?.suggestions.map((suggestion) => (
                                     <Link
-                                      href={`/name/${suggestion.label}`}
+                                      href={getNameDetailsPageHref(
+                                        suggestion.label,
+                                      )}
                                       className="bg-gray-100 rounded-full group-2 px-4 py-1 flex items-start"
                                       key={suggestion.label}
                                     >
@@ -450,7 +453,9 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                   {sampledNameIdeas?.map((suggestion) => {
                                     return (
                                       <Link
-                                        href={`/name/${suggestion.label}`}
+                                        href={getNameDetailsPageHref(
+                                          suggestion.label,
+                                        )}
                                         key={suggestion.label}
                                         className="bg-gray-100 rounded-full group-2 px-4 flex items-start"
                                       >
@@ -521,7 +526,9 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                   {scrambledNameIdeas?.map((suggestion) => {
                                     return (
                                       <Link
-                                        href={`/name/${suggestion.label}`}
+                                        href={getNameDetailsPageHref(
+                                          suggestion.label,
+                                        )}
                                         key={suggestion.label}
                                         className="bg-gray-100 rounded-full group-2 px-4 flex items-start"
                                       >
