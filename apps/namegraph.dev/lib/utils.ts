@@ -245,7 +245,7 @@ export const FromNameGraphSortOrderToDropdownTextContent: Record<
 };
 
 export const getNameDetailsPageHref = (name: string): string => {
-  return encodeURIComponent(`/name/${buildENSName(name).name}`);
+  return `/name/${encodeURIComponent(buildENSName(name).name)}`;
 };
 
 export const getFirstLabelOfString = (str: string) => {

@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "./ui/select";
 import { useQueryParams } from "./use-query-params";
@@ -116,12 +117,13 @@ export const TldSelect = () => {
     };
   }, [params.tld.suffix]);
 
+  const pathname = usePathname();
   const pagesToIncludeTldSelector = ["/name", "/collections"];
   const [shouldDisplayTldSelector, setShouldDisplayTldSelector] =
     useState(false);
   const displayTldSelector = () => {
     for (let x = 0; x < pagesToIncludeTldSelector.length; x++) {
-      if (window.location.href.includes(pagesToIncludeTldSelector[x])) {
+      if (pathname.includes(pagesToIncludeTldSelector[x])) {
         setShouldDisplayTldSelector(true);
         return;
       }
@@ -129,10 +131,8 @@ export const TldSelect = () => {
     setShouldDisplayTldSelector(false);
   };
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      displayTldSelector();
-    }
-  }, [window?.location.href]);
+    displayTldSelector();
+  }, [pathname]);
 
   return shouldDisplayTldSelector ? (
     <Select
