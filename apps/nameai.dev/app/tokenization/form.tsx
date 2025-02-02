@@ -1,12 +1,14 @@
 "use client";
 
-import { useActionState, useState, useEffect } from "react";
+import { useActionState, useState, useEffect, useRef } from "react";
 import { Input, Button } from "@namehash/namekit-react";
 import { ens_normalize } from "@adraffy/ens-normalize";
+import { toast } from "sonner";
 
 import { analyzeLabel } from "./actions";
 import { Results } from "./results";
 import { Skeleton } from "../skeleton";
+import { QuickSearch } from "../quicksearch";
 
 type ActionState = {
   error?: string;
@@ -29,10 +31,22 @@ export function Form({ initialValue }: { initialValue?: string }) {
     analyzeLabel,
     initialState,
   );
+  const [normalizedLabel, setNormalizedLabel] = useState("");
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const handleExampleClick = (example: string) => {
+    setInputValue(example);
+    setTimeout(() => {
+      if (formRef.current) {
+        formRef.current.requestSubmit();
+      }
+    }, 0);
+  };
 
   useEffect(() => {
     if (inputValue) {
       let error = null;
+      let normalized = "";
 
       if (inputValue.includes(" ")) {
         error = "Remove spaces from the label";
@@ -40,7 +54,8 @@ export function Form({ initialValue }: { initialValue?: string }) {
         error = "Enter only 1 label (no '.')";
       } else {
         try {
-          ens_normalize(inputValue);
+          normalized = ens_normalize(inputValue);
+          setNormalizedLabel(normalized);
           setClientError(null);
         } catch (error) {
           error = "Enter a valid ENS label value";
@@ -50,35 +65,50 @@ export function Form({ initialValue }: { initialValue?: string }) {
       setClientError(error);
     } else {
       setClientError(null);
+      setNormalizedLabel("");
     }
   }, [inputValue]);
+
+  useEffect(() => {
+    if (state.error) {
+      toast.error(state.error);
+    }
+  }, [state.error]);
 
   const isSubmitDisabled =
     isPending || !!clientError || inputValue.trim() === "";
 
   return (
     <>
-      <form action={formAction} className="mb-6">
+      <form ref={formRef} action={formAction} className="mb-6">
         <div className="flex items-start justify-center space-x-2 flex-1">
           <Input
             type="text"
             name="label"
-            placeholder="Add a label"
+            placeholder="Enter a label"
             className="ens-webfont flex-1"
             required
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             autoComplete="off"
-            data-1p-ignore
             error={clientError ?? ""}
           />
-          <Button type="submit" disabled={isSubmitDisabled} className="!py-1.5">
-            {isPending ? "Analyzing..." : "Analyze"}
+          <Button
+            type="submit"
+            // disabled={isSubmitDisabled}
+            className="!py-1.5"
+            loading={isPending}
+          >
+            Analyze
           </Button>
         </div>
       </form>
 
-      {isPending && <Skeleton label={inputValue} />}
+      <div className="mb-8">
+        <QuickSearch handleClick={handleExampleClick} />
+      </div>
+
+      {isPending && <Skeleton label={normalizedLabel} />}
 
       {!isPending && state.success && state.label && state.analysis && (
         // @ts-expect-error

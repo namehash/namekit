@@ -1,5 +1,7 @@
-import { Indicator } from "./indicator";
 import { type NameAIReport } from "@namehash/nameai";
+
+import { Indicator } from "./indicator";
+import { ProbabilityHeader } from "../skeleton";
 
 export function Results({ analysis }: NameAIReport) {
   const topTokenization = analysis?.top_tokenization || [];
@@ -9,14 +11,18 @@ export function Results({ analysis }: NameAIReport) {
       <div>
         <h3 className="text-lg font-semibold mb-2">Label For Analysis</h3>
 
-        <p className="bg-white ens-webfont flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm">
+        <p className="bg-white ens-webfont flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm h-12">
           {analysis?.inspection.label}
         </p>
       </div>
 
       <div>
-        <h3 className="text-lg font-semibold mb-2">Top Tokenization</h3>
-        <div className="bg-white flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm">
+        <div className="flex justify-between items-center mb-3">
+          <h3 className="text-lg font-semibold">Recommended Tokenization</h3>
+          <ProbabilityHeader />
+        </div>
+
+        <div className="bg-white flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm h-12">
           {topTokenization.length > 0 ? (
             topTokenization.map((token, index) => (
               <span
@@ -29,7 +35,9 @@ export function Results({ analysis }: NameAIReport) {
               </span>
             ))
           ) : (
-            <span className="text-gray-500">No tokenization available</span>
+            <span className="text-gray-500">
+              Insufficient confidence to recommend.
+            </span>
           )}
           {analysis?.top_tokenization && (
             <div className="ml-auto">
@@ -40,13 +48,22 @@ export function Results({ analysis }: NameAIReport) {
       </div>
 
       <div>
-        <h3 className="text-lg font-semibold mb-2">
-          Alternative Tokenizations
-        </h3>
+        <div className="flex justify-between items-center mb-3">
+          <h3 className="text-lg font-semibold">Discovered Tokenizations</h3>
+          <ProbabilityHeader />
+        </div>
+
+        {analysis?.tokenizations.length === 0 && (
+          <div className="bg-white flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm h-12">
+            <span className="text-gray-500">
+              No tokenizations were discovered.
+            </span>
+          </div>
+        )}
         {analysis?.tokenizations.map((tokenization, index) => (
           <div
             key={index}
-            className="bg-white flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm"
+            className="bg-white flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm h-12"
           >
             {tokenization.tokens.map((token: string, tokenIndex: any) => (
               <span

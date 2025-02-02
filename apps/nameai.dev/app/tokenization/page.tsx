@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Form } from "./form";
 import { Heading, Text } from "@namehash/namekit-react";
+import Balancer from "react-wrap-balancer";
 import {
   defaultMetaOpengraph,
   defaultMetaTwitter,
@@ -20,8 +21,11 @@ export default async function TokenizePage(props: Props) {
     <div className="max-w-3xl mx-auto px-6 flex-1 py-12 md:py-20">
       <div className="text-center mb-6 md:mb-12 space-y-3">
         <Heading as="h1">Label Tokenization</Heading>
-        <Text as="p" className="text-gray-500">
-          Discover the words that otherwise hidden in labels.
+        <Text as="p" className="text-gray-500 text-balance">
+          <Balancer>
+            Extract recognizable words that are otherwise &quot;smashed
+            together&quot; in labels.
+          </Balancer>
         </Text>
       </div>
 
@@ -39,7 +43,8 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const title = labelForAnalysis
     ? `Label tokenization for ${labelForAnalysis}`
     : "Label Tokenization";
-  const description = "Discover the words that otherwise hidden in labels";
+  const description =
+    'Extract recognizable words that are otherwise "smashed together" in labels.';
   const url = labelForAnalysis
     ? `/tokenization?label=${labelForAnalysis}`
     : "/tokenization";
