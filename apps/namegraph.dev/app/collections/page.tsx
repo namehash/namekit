@@ -26,15 +26,12 @@ import {
   CollectionsCardsSkeleton,
   CollectionsGridSkeleton,
 } from "@/components/collections/collections-grid-skeleton";
-import { useQueryParams } from "@/components/use-query-params";
 import { CollectionCard } from "@/components/collections/collection-card";
 import { buildENSName } from "@namehash/ens-utils";
 import { Link } from "@namehash/namekit-react";
-import { NameWithCurrentSuffix } from "@/components/collections/name-with-current-suffix";
-import {
-  DEFAULT_COLLECTIONS_PARAMS,
-  DEFAULT_PAGE_NUMBER,
-} from "@/components/collections/query-utils";
+import { NameWithCurrentTld } from "@/components/collections/name-with-current-tld";
+import { DEFAULT_PAGE_NUMBER } from "@/components/collections/utils";
+import { useQueryParams } from "@/components/use-query-params";
 
 interface NavigationConfig {
   itemsPerPage: number;
@@ -51,54 +48,67 @@ export default function ExploreCollectionsPage() {
   /**
    * Table query
    */
-  type DefaultDomainFiltersType = typeof DEFAULT_COLLECTIONS_PARAMS;
-  const { params, setParams } = useQueryParams<DefaultDomainFiltersType>(
-    DEFAULT_COLLECTIONS_PARAMS,
-  );
+  const { params, setParams } = useQueryParams();
 
   const handleSearch = (searchTerm: string) => {
-    setParams({
-      search: searchTerm,
-      page: DEFAULT_PAGE_NUMBER, // Resets page when search changes
-    });
-
     setNavigationConfig({
       ...navigationConfig,
       totalItems: undefined,
     });
 
-    if (!params.search) {
+    if (!searchTerm) {
       return;
     }
+
+    setParams({
+      ...params,
+      collectionsSearch: {
+        ...params.collectionsSearch,
+        search: searchTerm,
+        page: DEFAULT_PAGE_NUMBER, // Resets page when search changes
+      },
+    });
 
     setCollections(null);
     setLoadingCollections(true);
 
     queryCollections({
-      search: params.search || "",
-      orderBy: params.orderBy || NameGraphSortOrderOptions.AI,
-      page: params.page || 1,
-      exactMatch: params.exactMatch,
+      search: params.collectionsSearch.search || "",
+      orderBy: params.collectionsSearch.orderBy || NameGraphSortOrderOptions.AI,
+      page: params.collectionsSearch.page || 1,
+      exactMatch: params.collectionsSearch.exactMatch,
     });
   };
 
   const handleOrderBy = (orderBy: NameGraphSortOrderOptions) => {
-    setParams({ orderBy });
+    setParams({
+      ...params,
+      collectionsSearch: {
+        ...params.collectionsSearch,
+        orderBy,
+      },
+    });
     queryCollections({
-      search: params.search || "",
+      search: params.collectionsSearch.search || "",
       orderBy: orderBy || NameGraphSortOrderOptions.AI,
-      page: params.page || 1,
-      exactMatch: params.exactMatch,
+      page: params.collectionsSearch.page || 1,
+      exactMatch: params.collectionsSearch.exactMatch,
     });
   };
 
   const handlePageChange = (page: number) => {
-    setParams({ page });
+    setParams({
+      ...params,
+      collectionsSearch: {
+        ...params.collectionsSearch,
+        page: page,
+      },
+    });
     queryCollections({
-      search: params.search || "",
-      orderBy: params.orderBy || NameGraphSortOrderOptions.AI,
+      search: params.collectionsSearch.search || "",
+      orderBy: params.collectionsSearch.orderBy || NameGraphSortOrderOptions.AI,
       page: page || 1,
-      exactMatch: params.exactMatch,
+      exactMatch: params.collectionsSearch.exactMatch,
     });
   };
 
@@ -115,7 +125,10 @@ export default function ExploreCollectionsPage() {
   const [lastQueryDone, setLastQueryDone] = useState<{
     search: string;
     exactMatch: boolean;
-  }>({ search: params.search || "", exactMatch: params.exactMatch || false });
+  }>({
+    search: params.collectionsSearch.search || "",
+    exactMatch: params.collectionsSearch.exactMatch,
+  });
 
   const [loadingCollections, setLoadingCollections] = useState(true);
 
@@ -132,11 +145,11 @@ export default function ExploreCollectionsPage() {
     page: number;
   }
 
-  const queryCollections = (params: QueryCollectionsParam) => {
-    if (params.search) {
-      let query = params.search;
-      if (params.search.includes(".")) {
-        query = params.search.split(".")[0];
+  const queryCollections = (payload: QueryCollectionsParam) => {
+    if (payload.search) {
+      let query = payload.search;
+      if (payload.search.includes(".")) {
+        query = payload.search.split(".")[0];
       }
 
       const MAX_COLLECTIONS_FOR_EXACT_MATCH = 10;
@@ -156,20 +169,20 @@ export default function ExploreCollectionsPage() {
        */
       if (
         !!lastQueryDone &&
-        lastQueryDone.search === params.search &&
-        !!collections?.[params.page] &&
-        params.orderBy == collections?.[params.page]?.sort_order &&
-        params.exactMatch === lastQueryDone.exactMatch
+        lastQueryDone.search === payload.search &&
+        !!collections?.[payload.page] &&
+        payload.orderBy == collections?.[payload.page]?.sort_order &&
+        payload.exactMatch === lastQueryDone.exactMatch
       ) {
         return;
       }
 
       setLoadingCollections(true);
 
-      if (params.exactMatch) {
+      if (payload.exactMatch) {
         findCollectionsByMember(query, {
-          offset: (params.page - 1) * navigationConfig.itemsPerPage,
-          sort_order: params.orderBy,
+          offset: (payload.page - 1) * navigationConfig.itemsPerPage,
+          sort_order: payload.orderBy,
           limit_labels: MAX_COLLECTIONS_FOR_EXACT_MATCH,
           /**
            * Please note how the number of collections one page show is
@@ -202,8 +215,8 @@ export default function ExploreCollectionsPage() {
 
               setCollections({
                 ...collections,
-                [params.page]: {
-                  sort_order: params.orderBy,
+                [payload.page]: {
+                  sort_order: payload.orderBy,
                   related_collections: relatedCollections,
                   other_collections: null,
                 },
@@ -211,14 +224,14 @@ export default function ExploreCollectionsPage() {
             } else {
               setCollections({
                 ...collections,
-                [params.page]: null,
+                [payload.page]: null,
               });
             }
           })
           .catch(() => {
             setCollections({
               ...collections,
-              [params.page]: null,
+              [payload.page]: null,
             });
           })
           .finally(() => {
@@ -226,8 +239,8 @@ export default function ExploreCollectionsPage() {
           });
       } else {
         findCollectionsByString(query, {
-          offset: (params.page - 1) * navigationConfig.itemsPerPage,
-          sort_order: params.orderBy,
+          offset: (payload.page - 1) * navigationConfig.itemsPerPage,
+          sort_order: payload.orderBy,
           max_total_collections:
             MAX_RELATED_COLLECTIONS + OTHER_COLLECTIONS_NUMBER,
           /**
@@ -264,8 +277,8 @@ export default function ExploreCollectionsPage() {
 
               setCollections({
                 ...collections,
-                [params.page]: {
-                  sort_order: params.orderBy,
+                [payload.page]: {
+                  sort_order: payload.orderBy,
                   related_collections: relatedCollections,
                   other_collections: moreCollections,
                 },
@@ -273,14 +286,14 @@ export default function ExploreCollectionsPage() {
             } else {
               setCollections({
                 ...collections,
-                [params.page]: null,
+                [payload.page]: null,
               });
             }
           })
           .catch(() => {
             setCollections({
               ...collections,
-              [params.page]: null,
+              [payload.page]: null,
             });
           })
           .finally(() => {
@@ -289,8 +302,8 @@ export default function ExploreCollectionsPage() {
       }
 
       setLastQueryDone({
-        search: params.search,
-        exactMatch: params.exactMatch,
+        search: payload.search,
+        exactMatch: payload.exactMatch,
       });
     } else {
       setCollections(null);
@@ -302,12 +315,12 @@ export default function ExploreCollectionsPage() {
    * Navigation helper functions
    */
   const isFirstCollectionsPageForCurrentQuery = () => {
-    return Number(params.page) === 1;
+    return Number(params.collectionsSearch.page) === 1;
   };
   const isLastCollectionsPageForCurrentQuery = () => {
     if (navigationConfig.totalItems) {
       return (
-        Number(params.page) * navigationConfig.itemsPerPage >=
+        Number(params.collectionsSearch.page) * navigationConfig.itemsPerPage >=
         navigationConfig.totalItems
       );
     } else return false;
@@ -315,8 +328,8 @@ export default function ExploreCollectionsPage() {
 
   const getNavigationPageTextGuide = () => {
     return navigationConfig.totalItems
-      ? `${(Number(params.page) - 1) * navigationConfig.itemsPerPage + 1}-${Math.min(
-          Number(params.page) * navigationConfig.itemsPerPage,
+      ? `${(Number(params.collectionsSearch.page) - 1) * navigationConfig.itemsPerPage + 1}-${Math.min(
+          Number(params.collectionsSearch.page) * navigationConfig.itemsPerPage,
           navigationConfig.totalItems,
         )} of ${navigationConfig.totalItems} collections`
       : !loadingCollections
@@ -325,8 +338,8 @@ export default function ExploreCollectionsPage() {
   };
 
   useEffect(() => {
-    handleSearch(params.search);
-  }, [params.search]);
+    handleSearch(params.collectionsSearch.search);
+  }, [params.collectionsSearch.search]);
 
   const getLabelWithoutWhitespace = (label: string): string => {
     return buildENSName(label.replace(" ", "")).name;
@@ -342,11 +355,11 @@ export default function ExploreCollectionsPage() {
             </h1>
             <div className="mt-1 mb-3">
               <Link
-                href={`/name/${getLabelWithoutWhitespace(params.search)}`}
+                href={`/name/${getLabelWithoutWhitespace(params.collectionsSearch.search)}`}
                 className="!text-3xl font-bold mb-5 leading-9 truncate"
               >
-                {params.search ? (
-                  <NameWithCurrentSuffix name={params.search} />
+                {params.collectionsSearch.search ? (
+                  <NameWithCurrentTld name={params.collectionsSearch.search} />
                 ) : (
                   "______"
                 )}
@@ -361,13 +374,13 @@ export default function ExploreCollectionsPage() {
                 type="text"
                 name="query"
                 autoComplete="off"
-                value={params.search}
+                value={params.collectionsSearch.search}
                 debounceTimeout={300}
                 placeholder="Type something"
                 onChange={(e) => handleSearch(e.target.value)}
                 className="focus:outline-none w-full text-sm bg-white border border-gray-300 rounded-md py-2 px-4 pl-9"
               />
-              {params.search && (
+              {params.collectionsSearch.search && (
                 <Button
                   onClick={() => handleSearch("")}
                   className="absolute right-3 top-1/2 -translate-y-1/2 bg-white hover:bg-transparent text-black shadow-none p-0"
@@ -377,9 +390,10 @@ export default function ExploreCollectionsPage() {
               )}
             </div>
 
-            {params.search && (
+            {params.collectionsSearch.search && (
               <>
-                {loadingCollections && !collections?.[params.page] ? (
+                {loadingCollections &&
+                !collections?.[params.collectionsSearch.page] ? (
                   <CollectionsGridSkeleton />
                 ) : collections ? (
                   <>
@@ -387,7 +401,7 @@ export default function ExploreCollectionsPage() {
                       <div className="w-full">
                         {/* Collection Count and Sort */}
                         <div
-                          className={`w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5 ${!collections[params.page]?.other_collections ? "" : "max-w-[756px]"}`}
+                          className={`w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5 ${!collections[params.collectionsSearch.page]?.other_collections ? "" : "max-w-[756px]"}`}
                         >
                           <div className="flex items-center">
                             <div className="text-lg font-semibold mr-2.5">
@@ -399,7 +413,9 @@ export default function ExploreCollectionsPage() {
                                   className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50 disabled:hover:bg-white"
                                   disabled={isFirstCollectionsPageForCurrentQuery()}
                                   onClick={() =>
-                                    handlePageChange(Number(params.page) - 1)
+                                    handlePageChange(
+                                      Number(params.collectionsSearch.page) - 1,
+                                    )
                                   }
                                 >
                                   <ChevronLeft className="w-6 h-6 text-black" />
@@ -408,7 +424,9 @@ export default function ExploreCollectionsPage() {
                                   className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50"
                                   disabled={isLastCollectionsPageForCurrentQuery()}
                                   onClick={() =>
-                                    handlePageChange(Number(params.page) + 1)
+                                    handlePageChange(
+                                      Number(params.collectionsSearch.page) + 1,
+                                    )
                                   }
                                 >
                                   <ChevronRight className="w-6 h-6 text-black" />
@@ -418,22 +436,29 @@ export default function ExploreCollectionsPage() {
                           </div>
 
                           <div className="flex space-x-4">
-                            {collections[params.page] ? (
+                            {collections[params.collectionsSearch.page] ? (
                               <div className="flex text-gray-200 border rounded-lg">
                                 <Toggle
-                                  pressed={params.exactMatch}
+                                  pressed={params.collectionsSearch.exactMatch}
                                   onPressedChange={(pressed) => {
                                     setNavigationConfig({
                                       ...navigationConfig,
                                       totalItems: undefined,
                                     });
-                                    setParams({ exactMatch: pressed });
+                                    setParams({
+                                      ...params,
+                                      collectionsSearch: {
+                                        ...params.collectionsSearch,
+                                        exactMatch: pressed,
+                                      },
+                                    });
                                     queryCollections({
-                                      search: params.search || "",
+                                      search:
+                                        params.collectionsSearch.search || "",
                                       orderBy:
-                                        params.orderBy ||
+                                        params.collectionsSearch.orderBy ||
                                         NameGraphSortOrderOptions.AI,
-                                      page: params.page || 1,
+                                      page: params.collectionsSearch.page || 1,
                                       exactMatch: pressed,
                                     });
                                   }}
@@ -442,14 +467,14 @@ export default function ExploreCollectionsPage() {
                                 </Toggle>
                               </div>
                             ) : null}
-                            {collections[params.page] ? (
+                            {collections[params.collectionsSearch.page] ? (
                               <div className="flex space-x-3 items-center">
                                 <div className="text-sm text-gray-500">
                                   Sort by
                                 </div>
                                 <Select
                                   defaultValue={
-                                    params.orderBy ||
+                                    params.collectionsSearch.orderBy ||
                                     NameGraphSortOrderOptions.AI
                                   }
                                   onValueChange={(newValue) =>
@@ -483,21 +508,21 @@ export default function ExploreCollectionsPage() {
                         </div>
                         {/* Collections List */}
                         <div
-                          className={`w-full ${!collections[params.page]?.other_collections ? "" : "max-w-[756px]"}`}
+                          className={`w-full ${!collections[params.collectionsSearch.page]?.other_collections ? "" : "max-w-[756px]"}`}
                         >
                           {loadingCollections ? (
                             <div className="flex flex-col">
                               <CollectionsCardsSkeleton />
                             </div>
-                          ) : collections[params.page] ? (
-                            collections[params.page]?.related_collections.map(
-                              (collection) => (
-                                <CollectionCard
-                                  key={collection.collection_id}
-                                  collection={collection}
-                                />
-                              ),
-                            )
+                          ) : collections[params.collectionsSearch.page] ? (
+                            collections[
+                              params.collectionsSearch.page
+                            ]?.related_collections.map((collection) => (
+                              <CollectionCard
+                                key={collection.collection_id}
+                                collection={collection}
+                              />
+                            ))
                           ) : null}
                         </div>
                         {/* Pagination */}
@@ -511,7 +536,9 @@ export default function ExploreCollectionsPage() {
                                 className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
                                 disabled={isFirstCollectionsPageForCurrentQuery()}
                                 onClick={() =>
-                                  handlePageChange(Number(params.page) - 1)
+                                  handlePageChange(
+                                    Number(params.collectionsSearch.page) - 1,
+                                  )
                                 }
                               >
                                 <ChevronLeft />
@@ -521,7 +548,9 @@ export default function ExploreCollectionsPage() {
                                 className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
                                 disabled={isLastCollectionsPageForCurrentQuery()}
                                 onClick={() =>
-                                  handlePageChange(Number(params.page) + 1)
+                                  handlePageChange(
+                                    Number(params.collectionsSearch.page) + 1,
+                                  )
                                 }
                               >
                                 Next
@@ -532,26 +561,27 @@ export default function ExploreCollectionsPage() {
                         ) : null}
                       </div>
 
-                      {collections[params.page]?.other_collections && (
+                      {collections[params.collectionsSearch.page]
+                        ?.other_collections && (
                         <div className="z-40 xl:max-w-[400px] mt-10 xl:mt-0 xl:ml-[68px] border rounded-md border-gray-200 w-full h-fit">
                           <h2 className="flex items-center text-lg font-semibold h-[47px] px-5 border border-t-0 border-r-0 border-l-0 border-gray-200">
                             Other collections
                           </h2>
                           <div className="px-5">
-                            {collections[params.page]?.other_collections?.map(
-                              (collection) => (
-                                <CollectionCard
-                                  key={collection.collection_id}
-                                  collection={collection}
-                                />
-                              ),
-                            )}
+                            {collections[
+                              params.collectionsSearch.page
+                            ]?.other_collections?.map((collection) => (
+                              <CollectionCard
+                                key={collection.collection_id}
+                                collection={collection}
+                              />
+                            ))}
                           </div>
                         </div>
                       )}
                     </div>
                   </>
-                ) : !params.search && !collections ? (
+                ) : !params.collectionsSearch.search && !collections ? (
                   <>Error</>
                 ) : null}
               </>

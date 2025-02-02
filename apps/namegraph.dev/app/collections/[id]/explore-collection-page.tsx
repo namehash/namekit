@@ -16,7 +16,6 @@ import {
 } from "@namehash/namegraph-sdk/utils";
 import { useEffect, useState } from "react";
 import { Noto_Emoji } from "next/font/google";
-import { useQueryParams } from "@/components/use-query-params";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
 import Skeleton from "@/components/skeleton";
@@ -30,8 +29,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Link } from "@namehash/namekit-react";
-import { buildENSName } from "@namehash/ens-utils";
-import { NameWithCurrentSuffix } from "@/components/collections/name-with-current-suffix";
+import { NameWithCurrentTld } from "@/components/collections/name-with-current-tld";
+import { useQueryParams } from "@/components/use-query-params";
 
 const notoBlack = Noto_Emoji({ preload: false });
 
@@ -110,13 +109,14 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
   }, [id]);
 
   const loadCollectionMembers = () => {
-    if (!!collectionMembers?.[params.page]) {
+    if (!!collectionMembers?.[params.collectionDetails.page]) {
       return;
     }
 
     setLoadingCollectionMembers(true);
     fetchCollectionMembers(id, {
-      offset: (params.page - 1) * navigationConfig.itemsPerPage,
+      offset:
+        (params.collectionDetails.page - 1) * navigationConfig.itemsPerPage,
       limit: navigationConfig.itemsPerPage,
     })
       .then((res) => {
@@ -125,21 +125,21 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
 
           setCollectionMembers({
             ...collectionMembers,
-            [params.page]: {
+            [params.collectionDetails.page]: {
               suggestions,
             },
           });
         } else {
           setCollectionMembers({
             ...collectionMembers,
-            [params.page]: null,
+            [params.collectionDetails.page]: null,
           });
         }
       })
       .catch(() => {
         setCollectionMembers({
           ...collectionMembers,
-          [params.page]: null,
+          [params.collectionDetails.page]: null,
         });
       })
       .finally(() => setLoadingCollectionMembers(false));
@@ -223,17 +223,16 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
   /**
    * Table query
    */
-  const DEFAULT_PAGE_NUMBER = 1;
-  const DEFAULT_COLLECTIONS_PARAMS: Record<string, any> = {
-    page: DEFAULT_PAGE_NUMBER,
-  };
-  type DefaultDomainFiltersType = typeof DEFAULT_COLLECTIONS_PARAMS;
-  const { params, setParams } = useQueryParams<DefaultDomainFiltersType>(
-    DEFAULT_COLLECTIONS_PARAMS,
-  );
+  const { params, setParams } = useQueryParams();
 
   const handlePageChange = (page: number) => {
-    setParams({ page });
+    setParams({
+      ...params,
+      collectionDetails: {
+        ...params.collectionDetails,
+        page,
+      },
+    });
   };
 
   /**
@@ -245,12 +244,12 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
     totalItems: undefined,
   });
   const isFirstCollectionsPageForCurrentQuery = () => {
-    return Number(params.page) === 1;
+    return Number(params.collectionDetails.page) === 1;
   };
   const isLastCollectionsPageForCurrentQuery = () => {
     if (navigationConfig.totalItems) {
       return (
-        Number(params.page) * navigationConfig.itemsPerPage >=
+        Number(params.collectionDetails.page) * navigationConfig.itemsPerPage >=
         navigationConfig.totalItems
       );
     } else return false;
@@ -258,8 +257,8 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
 
   const getNavigationPageTextGuide = () => {
     return navigationConfig.totalItems
-      ? `${(Number(params.page) - 1) * navigationConfig.itemsPerPage + 1}-${Math.min(
-          Number(params.page) * navigationConfig.itemsPerPage,
+      ? `${(Number(params.collectionDetails.page) - 1) * navigationConfig.itemsPerPage + 1}-${Math.min(
+          Number(params.collectionDetails.page) * navigationConfig.itemsPerPage,
           navigationConfig.totalItems,
         )} of ${navigationConfig.totalItems} name suggestions`
       : "No name suggestions found";
@@ -267,7 +266,7 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
 
   useEffect(() => {
     loadCollectionMembers();
-  }, [params.page]);
+  }, [params.collectionDetails.page]);
 
   useEffect(() => {
     setNavigationConfig({
@@ -332,7 +331,9 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                         disabled={isFirstCollectionsPageForCurrentQuery()}
                                         onClick={() =>
                                           handlePageChange(
-                                            Number(params.page) - 1,
+                                            Number(
+                                              params.collectionDetails.page,
+                                            ) - 1,
                                           )
                                         }
                                       >
@@ -343,7 +344,9 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                         disabled={isLastCollectionsPageForCurrentQuery()}
                                         onClick={() =>
                                           handlePageChange(
-                                            Number(params.page) + 1,
+                                            Number(
+                                              params.collectionDetails.page,
+                                            ) + 1,
                                           )
                                         }
                                       >
@@ -361,15 +364,15 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                   </div>
                                 ) : collectionMembers ? (
                                   collectionMembers[
-                                    params.page
+                                    params.collectionDetails.page
                                   ]?.suggestions.map((suggestion) => (
                                     <Link
-                                      href={`/name/${buildENSName(suggestion.label).name}`}
+                                      href={`/name/${suggestion.label}`}
                                       className="bg-gray-100 rounded-full group-2 px-4 py-1 flex items-start"
                                       key={suggestion.label}
                                     >
                                       <div className="max-h-[20px] relative flex items-center justify-center overflow-hidden">
-                                        <NameWithCurrentSuffix
+                                        <NameWithCurrentTld
                                           name={suggestion.label}
                                         />
                                       </div>
@@ -391,7 +394,9 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                       disabled={isFirstCollectionsPageForCurrentQuery()}
                                       onClick={() =>
                                         handlePageChange(
-                                          Number(params.page) - 1,
+                                          Number(
+                                            params.collectionDetails.page,
+                                          ) - 1,
                                         )
                                       }
                                     >
@@ -403,7 +408,9 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                       disabled={isLastCollectionsPageForCurrentQuery()}
                                       onClick={() =>
                                         handlePageChange(
-                                          Number(params.page) + 1,
+                                          Number(
+                                            params.collectionDetails.page,
+                                          ) + 1,
                                         )
                                       }
                                     >
@@ -443,12 +450,12 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                   {sampledNameIdeas?.map((suggestion) => {
                                     return (
                                       <Link
-                                        href={`/name/${buildENSName(suggestion.label).name}`}
+                                        href={`/name/${suggestion.label}`}
                                         key={suggestion.label}
                                         className="bg-gray-100 rounded-full group-2 px-4 flex items-start"
                                       >
                                         <div className="relative flex items-center justify-center overflow-hidden">
-                                          <NameWithCurrentSuffix
+                                          <NameWithCurrentTld
                                             name={suggestion.label}
                                           />
                                         </div>
@@ -514,12 +521,12 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                   {scrambledNameIdeas?.map((suggestion) => {
                                     return (
                                       <Link
-                                        href={`/name/${buildENSName(suggestion.label).name}`}
+                                        href={`/name/${suggestion.label}`}
                                         key={suggestion.label}
                                         className="bg-gray-100 rounded-full group-2 px-4 flex items-start"
                                       >
                                         <div className="relative flex items-center justify-center overflow-hidden">
-                                          <NameWithCurrentSuffix
+                                          <NameWithCurrentTld
                                             name={suggestion.label}
                                           />
                                         </div>

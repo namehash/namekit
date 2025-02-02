@@ -1,8 +1,7 @@
-import { buildENSName } from "@namehash/ens-utils";
 import { NameGraphCollection } from "@namehash/namegraph-sdk/utils";
 import { Link } from "@namehash/namekit-react";
 import { Noto_Emoji } from "next/font/google";
-import { NameWithCurrentSuffix } from "./name-with-current-suffix";
+import { NameWithCurrentTld } from "./name-with-current-tld";
 
 const notoBlack = Noto_Emoji({ preload: false });
 
@@ -43,10 +42,10 @@ export const CollectionCard = ({
             {collection.top_labels.map((tag) => (
               <Link
                 key={tag.label}
-                href={`/name/${buildENSName(tag.label).name}`}
+                href={`/name/${tag.label}`}
                 className="max-h-[28px] w-max bg-gray-100 !text-sm px-2 py-1 bg-muted rounded-full"
               >
-                <NameWithCurrentSuffix name={tag.label} />
+                <NameWithCurrentTld name={tag.label} />
               </Link>
             ))}
           </div>

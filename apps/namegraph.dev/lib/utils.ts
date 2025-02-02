@@ -14,12 +14,6 @@ import {
   ScrambleMethod,
 } from "@namehash/namegraph-sdk/utils";
 import { createNameGraphClient } from "@namehash/namegraph-sdk";
-import {
-  availableSuffixes,
-  DEFAULT_PREFFERED_SUFFIX,
-  PREFERRED_SUFFIX_KEY,
-  Suffixes,
-} from "@/components/suffix-select";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
