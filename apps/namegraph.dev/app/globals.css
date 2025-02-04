@@ -22,6 +22,12 @@
   }
 }
 
+@layer components {
+  .animated-black-underline {
+    @apply underline underline-offset-2 decoration-gray-400 decoration-1 hover:decoration-2 hover:decoration-gray-600 transition-all;
+  }
+}
+
 @layer base {
   :root {
     --radius: 0.5rem;

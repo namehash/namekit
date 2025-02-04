@@ -2,6 +2,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import {
+  ProfileStats,
+  useProfileDetails,
+  ProfileSocials,
+} from "ethereum-identity-kit";
+import {
   DEFAULT_MAX_RELATED_COLLECTIONS,
   NameGraphCollection,
   NameGraphFetchTopCollectionMembersResponse,
@@ -41,6 +46,9 @@ import {
   DEFAULT_ACTIVE_TAB,
   DEFAULT_SORTING_ORDER,
 } from "@/components/providers";
+import useSWR from "swr";
+import { nameguard, NameGuardReport } from "@namehash/nameguard";
+import { NameGuardSummary } from "@/components/name/nameguard-summary";
 
 interface NavigationConfig {
   itemsPerPage: number;
@@ -67,6 +75,20 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
   } catch {
     console.error(`Error: ${name} is not normalized`);
   }
+
+  const { address } = useProfileDetails({
+    addressOrName: NameWithCurrentTld({ name }),
+  });
+
+  const { data: nameguardReport } = useSWR<NameGuardReport>(
+    NameWithCurrentTld({ name: label }),
+    (n: string) => nameguard.inspectName(n),
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    },
+  );
 
   const [loadingCollectionsByMembership, setLoadingCollectionsByMembership] =
     useState(true);
@@ -502,7 +524,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
 
   return (
     <div className="max-w-7xl flex flex-col space-y-8 lg:space-y-0 lg:space-x-8 lg:flex-row mx-auto py-8 w-full">
-      <div className="p-6 flex justify-start flex-col w-full">
+      <div className="flex justify-start flex-col mx-8 lg:mx-6 xl:mx-0">
         {NameWithCurrentTld({ name: label }) ? (
           <div className="mx-auto">
             <NftAvatar
@@ -515,6 +537,19 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
             />
           </div>
         ) : null}
+        <div className="mt-8 flex flex-col space-y-4 md:space-y-0 lg:space-y-6 md:flex-row lg:flex-col md:space-x-4 lg:space-x-0">
+          <div className="w-full flex justify-center items-center border border-gray-200 rounded-md md:w-1/2 lg:w-auto">
+            <NameGuardSummary nameGuardReport={nameguardReport} />
+          </div>
+          <div className="h-max py-6 border border-gray-200 rounded-md md:w-1/2 lg:w-auto">
+            <ProfileStats addressOrName={NameWithCurrentTld({ name })} />
+            <ProfileSocials
+              userAddress={address}
+              name={NameWithCurrentTld({ name })}
+              records={{}}
+            />
+          </div>
+        </div>
         {otherCategories?.length ? (
           <div className="lg:px-4 mx-auto w-full mt-12">
             <div className="w-full rounded-lg border border-gray-200">
@@ -551,7 +586,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
         <div className="mx-auto p-6">
           <div className="flex space-x-4 mb-8">
             <div>
-              <div className="text-3xl font-semibold mb-4 break-all">
+              <div className="text-3xl lg:text-5xl font-bold mb-4 break-all">
                 {label ? (
                   <NameWithCurrentTld name={label} />
                 ) : (

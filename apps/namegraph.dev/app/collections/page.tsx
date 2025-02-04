@@ -29,7 +29,6 @@ import {
   CollectionsGridSkeleton,
 } from "@/components/collections/collections-grid-skeleton";
 import { CollectionCard } from "@/components/collections/collection-card";
-import { buildENSName } from "@namehash/ens-utils";
 import { Link } from "@namehash/namekit-react";
 import { NameWithCurrentTld } from "@/components/collections/name-with-current-tld";
 import { DEFAULT_PAGE_NUMBER } from "@/components/collections/utils";
