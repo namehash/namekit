@@ -90,7 +90,7 @@ const footerResources = [
 
 const demoLinks = [
   {
-    text: "Tokenization",
+    text: "AI Tokenization",
     href: "/tokenization",
   },
   {
