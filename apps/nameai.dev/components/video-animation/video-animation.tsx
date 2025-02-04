@@ -166,7 +166,7 @@ export default function VideoAsciiAnimation() {
         className="hidden"
       />
 
-      <style jsx global>{`
+      <style>{`
         body {
           margin: 0;
           padding: 0;
