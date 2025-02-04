@@ -6,12 +6,11 @@ export default function Page() {
     <>
       <div className="">
         <div className="w-screen h-[calc(100vh-65px)] pt-1 bg-white overflow-hidden relative">
-          {/* <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle,white,transparent)] z-50"></div> */}
           <div
             className="w-screen h-[calc(100vh-65px)] absolute top-0 left-0 z-10"
             style={{
               background:
-                "radial-gradient(ellipse at center, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 10%, rgba(255, 255, 255, 0.2) 70%, transparent 100%)",
+                "radial-gradient(ellipse at center, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 10%, transparent 100%)",
             }}
           ></div>
 
