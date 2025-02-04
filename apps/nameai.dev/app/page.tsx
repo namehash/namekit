@@ -14,9 +14,9 @@ export default function Page() {
               background:
                 "radial-gradient(ellipse at center, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 10%, transparent 100%)",
             }}
-          ></div>
+          />
 
-          <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 max-w-3xl mx-auto px-6 z-50">
+          <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 max-w-3xl mx-auto px-6 z-10">
             <div className="space-y-5 py-5 text-center bg-[radial-gradient(circle,white_80%,blue-500_90%,transparent_100%)]">
               <div className="space-y-2">
                 <Heading as="h1" className="text-black !text-6xl">
