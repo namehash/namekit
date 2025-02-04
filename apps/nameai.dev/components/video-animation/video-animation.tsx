@@ -9,6 +9,7 @@ export default function VideoAsciiAnimation() {
       "prerender",
     ) as HTMLCanvasElement | null;
     const output = document.getElementById("output") as HTMLDivElement | null;
+
     if (!video || !canvas || !output) return;
 
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
@@ -60,14 +61,18 @@ export default function VideoAsciiAnimation() {
         return;
       }
 
-      const w = canvas?.width ?? 0;
-      const h = canvas?.height ?? 0;
-      if (!w || !h || !ctx || !video || video.paused) return;
+      const w = canvas!.width;
+      const h = canvas!.height;
+      if (!w || !h || !video || video.paused) {
+        animationFrameId = requestAnimationFrame(updateCanvas);
+        return;
+      }
 
-      ctx.drawImage(video, 0, 0, w, h);
-      const data = ctx.getImageData(0, 0, w, h).data;
+      ctx!.drawImage(video, 0, 0, w, h);
+      const data = ctx!.getImageData(0, 0, w, h).data;
 
-      const fragment = document.createDocumentFragment(); // Batch DOM updates
+      // Create a document fragment to batch DOM updates
+      const fragment = document.createDocumentFragment();
       for (let y = 0; y < h; y++) {
         const row = document.createElement("div");
         for (let x = 0; x < w; x++) {
@@ -83,15 +88,15 @@ export default function VideoAsciiAnimation() {
             : result;
 
           const span = document.createElement("span");
-          span.style.color = `rgb(${r},${g},${b})`;
+          span.style.color = `rgb(${r}, ${g}, ${b})`;
           span.textContent = char ?? " ";
           row.appendChild(span);
         }
         fragment.appendChild(row);
       }
 
-      output!.innerHTML = "";
-      output!.appendChild(fragment);
+      // Update the output element in one operation using replaceChildren
+      output!.replaceChildren(fragment);
 
       lastDrawTime = timestamp;
       animationFrameId = requestAnimationFrame(updateCanvas);
@@ -105,10 +110,10 @@ export default function VideoAsciiAnimation() {
   }, []);
 
   return (
-    <div className="top-0 left-0 w-full h-full z-[-1]">
+    <div className="absoulute top-0 left-0 w-full h-full  bg-white">
       <div
         id="output"
-        className="relative top-0 left-0 w-full h-full font-mono leading-none"
+        className="relative bg-white top-0 left-0 w-full h-full font-mono leading-none"
       />
 
       <video
@@ -130,21 +135,25 @@ export default function VideoAsciiAnimation() {
         id="prerender"
         width="120"
         height="40"
-        className="hidden"
+        className="hidden bg-red-500"
       ></canvas>
 
       <style jsx global>{`
         body {
           margin: 0;
           padding: 0;
-          background: black;
+          background: white;
           font-family: "Courier New", monospace;
         }
         #output {
           text-align: center;
-          font-size: 7px; /* Adjust font size to match ASCII size */
+          font-size: 23.6px; /* Raised from 7px to 14px for bigger characters */
           white-space: pre;
-          line-height: 5px;
+          line-height: 21px; /* Adjusted line-height accordingly */
+          /* Alternatively, you could use a CSS transform:
+          transform: scale(2);
+          transform-origin: top left;
+          */
         }
         #output span {
           display: inline-block;
