@@ -22,9 +22,15 @@ export default {
           from: { transform: "translateX(0)" },
           to: { transform: "translateX(-100%)" },
         },
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "50%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
       },
       animation: {
         carousel: "carousel 30s linear infinite",
+        fadeIn: "fadeIn 1s linear forwards",
       },
     },
   },
