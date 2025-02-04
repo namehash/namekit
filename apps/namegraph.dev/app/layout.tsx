@@ -13,6 +13,7 @@ import "@namehash/namekit-react/styles.css";
 import NextLink from "next/link";
 import { TldSelect } from "@/components/tld-select";
 import { Providers } from "@/components/providers";
+import { RedirectSearchBar } from "@/components/redirect-search-bar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -84,30 +85,24 @@ export default function RootLayout({
                     </div>
                   </NextLink>
                 </div>
+                <RedirectSearchBar withSubmitCta={false} withTitle={false} />
                 <div className="flex flex-row items-center justify-between md:gap-5 h-[40px]">
                   <TldSelect />
                   <div className="hidden items-center justify-center lg:flex gap-2">
                     <div className="hidden items-center justify-center xl:flex gap-2">
                       <Button variant="ghost" asChild>
-                        <Link href="http://api.namegraph.dev/docs">Docs</Link>
+                        <Link href="http://api.namegraph.dev/docs">
+                          API Docs
+                        </Link>
                       </Button>
 
                       <Button variant="ghost" asChild>
-                        <Link href="https://github.com/namehash/namekit">
+                        <Link href="https://github.com/namehash/namegraph">
                           <GithubIcon className="hidden md:block fill-current" />{" "}
                           GitHub
                         </Link>
                       </Button>
                     </div>
-
-                    <Button variant="ghost" asChild>
-                      <a
-                        href="https://namehashlabs.org/contact"
-                        target="_blank"
-                      >
-                        Contact
-                      </a>
-                    </Button>
                   </div>
                 </div>
               </div>

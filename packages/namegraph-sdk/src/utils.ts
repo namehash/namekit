@@ -183,6 +183,7 @@ export type NameGraphSortOrderOptions =
  * Writers block suggestions and collections
  */
 export type WritersBlockSuggestion = {
+  collectionId: string;
   collectionName: string;
   suggestedName: string;
   tokenizedSuggestedName: string[];
@@ -209,6 +210,7 @@ const getRandomWritersBlockSuggestion = (
   const rawName = getRandomElementOfArray(rawWritersBlockSuggestion.names);
   return {
     collectionName: rawWritersBlockSuggestion.collection_name,
+    collectionId: rawWritersBlockSuggestion.collection_id,
     suggestedName: rawName.normalized_name,
     tokenizedSuggestedName: rawName.tokenized_name,
   };
