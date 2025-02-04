@@ -61,7 +61,6 @@
     "clowes": ["clowes"],
     "ccip": ["ccip"],
     "ensip": ["ensip"],
-    "muhammedtanrıkulu": ["muhammed", "tanrıkulu"],
     "binance": ["binance"],
     "khoriwhittaker": ["khori", "whittaker"],
     "leontalbert": ["leon", "talbert"],
@@ -75,5 +74,7 @@
     "zk": ["zk"],
     "mely": ["mely"],
     "eskenderabebe": ["eskender", "abebe"],
-    "sydmead": ["syd", "mead"]
+    "sydmead": ["syd", "mead"],
+    "vitalikbuterin": ["vitalik", "buterin"],
+    "muhammedtanrikulu": ["muhammed", "tanrikulu"]
 }
