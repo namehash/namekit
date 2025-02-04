@@ -131,7 +131,7 @@ export default function VideoAsciiAnimation() {
   }, []);
 
   return (
-    <div className="relative w-full h-full">
+    <div className="relative w-full h-full animate-fadeIn">
       {/* Output canvas for displaying ASCII art */}
       <canvas
         ref={outputCanvasRef}
