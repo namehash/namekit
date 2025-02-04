@@ -1,3 +1,21 @@
+export const DEFAULT_MAX_RELATED_COLLECTIONS = 6;
+export const DEFAULT_METADATA = true;
+export const DEFAULT_MIN_SUGGESTIONS = 100;
+export const DEFAULT_MAX_SUGGESTIONS = 100;
+export const DEFAULT_FULL_MODE = "full";
+export const DEFAULT_INSTANT_MODE = "instant";
+export const DEFAULT_ENABLE_LEARNING_TO_RANK = true;
+export const DEFAULT_LABEL_DIVERSITY_RATIO = 0.5;
+export const DEFAULT_MAX_PER_TYPE = 2;
+export const DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY = 10;
+export const DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY = 2;
+export const DEFAULT_MAX_RECURSIVE_RELATED_COLLECTIONS = 3;
+export const DEFAULT_OFFSET = 0;
+export const DEFAULT_LABELS_LIMIT = 10;
+export const DEFAULT_MIN_OTHER_COLLECTIONS = 0;
+export const DEFAULT_MAX_OTHER_COLLECTIONS = 3;
+export const DEFAULT_MAX_TOTAL_COLLECTIONS = 6;
+
 /**
  * NameGraph grouping categories
  **/
@@ -14,6 +32,130 @@ export const NameGraphGroupingCategory = {
 
 export type NameGraphGroupingCategory =
   (typeof NameGraphGroupingCategory)[keyof typeof NameGraphGroupingCategory];
+
+
+export interface NameGraphOptions {
+  namegraphEndpoint?: string;
+}
+
+/**
+ * NameGraph params for querying grouping categories suggestions
+ **/
+export type NameGraphGroupingCategoryParams = {
+  min_suggestions: number;
+  max_suggestions: number;
+};
+
+export type NameGraphOtherCategoryParams = NameGraphGroupingCategoryParams & {
+  min_total_suggestions: number;
+};
+
+export type NameGraphRelatedCategoryParams = {
+  max_related_collections: number;
+  max_labels_per_related_collection: number;
+  max_recursive_related_collections: number;
+  enable_learning_to_rank: boolean;
+  label_diversity_ratio: number | null;
+  max_per_type: number | null;
+};
+
+export type TypedNameGraphGroupingCategoriesParams = {
+  [NameGraphGroupingCategory.related]: NameGraphRelatedCategoryParams;
+  [NameGraphGroupingCategory.wordplay]: NameGraphGroupingCategoryParams;
+  [NameGraphGroupingCategory.alternates]: NameGraphGroupingCategoryParams;
+  [NameGraphGroupingCategory.emojify]: NameGraphGroupingCategoryParams;
+  [NameGraphGroupingCategory.community]: NameGraphGroupingCategoryParams;
+  [NameGraphGroupingCategory.expand]: NameGraphGroupingCategoryParams;
+  [NameGraphGroupingCategory.gowild]: NameGraphGroupingCategoryParams;
+  [NameGraphGroupingCategory.other]: NameGraphOtherCategoryParams;
+};
+
+/**
+ * NameGraph API Response types
+ **/
+export type NameGraphSuggestion = {
+  label: string;
+  tokenized_label: string[];
+  metadata: {
+    pipeline_name: string;
+    interpretation: (string | null)[];
+    cached_status: string;
+    categories: string[];
+    cached_sort_score: number | null;
+    applied_strategies: string[][];
+    collection_title: string | null;
+    collection_id: string | null;
+    grouping_category: string | null;
+  };
+};
+
+export interface NameGraphRelatedCollectionResponse {
+  collection_id: string;
+  collection_title: string;
+  collection_members_count: number;
+}
+
+export interface NameGraphGroupedByCategoryResponse {
+  categories: NameGraphFetchTopCollectionMembersResponse[];
+  all_tokenizations: string[][];
+}
+
+export interface NameGraphFetchTopCollectionMembersResponse {
+  suggestions: NameGraphSuggestion[];
+  name: string;
+  type: string;
+  collection_id?: string;
+  collection_title?: string;
+  collection_members_count?: number;
+  related_collections?: NameGraphRelatedCollectionResponse[];
+}
+
+export interface NameGraphCountCollectionsResponse {
+  metadata: {
+    total_number_of_matched_collections: number;
+    processing_time_ms: number;
+    elasticsearch_processing_time_ms: number;
+    elasticsearch_communication_time_ms: number;
+  };
+  count: number;
+}
+
+export interface NameGraphCollectionByMemberResponse {
+  metadata: {
+    total_number_of_matched_collections: number;
+    processing_time_ms: number;
+    elasticsearch_processing_time_ms: number;
+    elasticsearch_communication_time_ms: number;
+  };
+  collections: NameGraphCollection[];
+}
+
+export type NameGraphCollection = {
+  collection_id: string;
+  title: string;
+  owner: string;
+  number_of_labels: number;
+  last_updated_timestamp: number;
+  top_labels: [
+    {
+      label: string;
+    },
+  ];
+  types: [string];
+  avatar_emoji: string;
+  avatar_image: string;
+};
+
+export interface NameGraphFindCollectionsResponse {
+  metadata: {
+    total_number_of_matched_collections: number;
+    processing_time_ms: number;
+    elasticsearch_processing_time_ms: number;
+    elasticsearch_communication_time_ms: number;
+  };
+  related_collections: NameGraphCollection[];
+  other_collections: NameGraphCollection[];
+}
 
 /**
  * NameGraph Class related code
