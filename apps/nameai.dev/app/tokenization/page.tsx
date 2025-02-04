@@ -32,7 +32,7 @@ export default async function TokenizePage(props: Props) {
       />
       <div className="max-w-3xl mx-auto px-6 flex-1 py-12 md:py-20">
         <div className="text-center mb-6 md:mb-12 space-y-3">
-          <Heading as="h1">Label Tokenization</Heading>
+          <Heading as="h1">AI Tokenization Demo</Heading>
           <Text as="p" className="text-gray-500 text-balance">
             <Balancer>
               Extract recognizable words that are otherwise &quot;smashed

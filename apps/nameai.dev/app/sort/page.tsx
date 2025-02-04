@@ -47,7 +47,7 @@ export default async function SortPage() {
       />
       <div className="max-w-3xl mx-auto px-6 flex-1 py-12 md:py-20">
         <div className="text-center mb-6 md:mb-12 space-y-3">
-          <Heading as="h1">AI Sort</Heading>
+          <Heading as="h1">AI Sort Demo</Heading>
           <Text as="p" className="text-gray-500">
             Bring names more likely to be interesting to the top.
           </Text>
