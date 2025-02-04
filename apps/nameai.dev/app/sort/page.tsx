@@ -59,7 +59,7 @@ export default async function SortPage() {
   );
 }
 
-const title = "AI Sort";
+const title = "NameAI - AI Sort Demo";
 const description = "Bring names more likely to be interesting to the top.";
 
 export const metadata: Metadata = {

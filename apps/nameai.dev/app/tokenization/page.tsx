@@ -53,9 +53,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
   const labelForAnalysis = label.includes(".") ? label.split(".")[0] : label;
 
-  const title = labelForAnalysis
-    ? `Label tokenization for ${labelForAnalysis}`
-    : "Label Tokenization";
+  const title = "NameAI - AI Tokenization Demo";
   const description =
     'Extract recognizable words that are otherwise "smashed together" in labels.';
   const url = labelForAnalysis

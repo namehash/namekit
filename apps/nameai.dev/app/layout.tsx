@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     template: `${siteName} - %s`,
     default: title,
   },
-  description,
+  description: "What will you build?",
   keywords,
   openGraph: {
     ...defaultMetaOpengraph,
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
       template: `${siteName} - %s`,
       default: title,
     },
-    description,
+    description: "What will you build?",
     url: "/",
   },
   twitter: {
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
       template: `${siteName} - %s`,
       default: title,
     },
-    description,
+    description: "What will you build?",
   },
 };
 
