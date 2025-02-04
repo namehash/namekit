@@ -126,7 +126,7 @@ export default function VideoAsciiAnimation() {
         className="hidden"
       >
         <source
-          src="https://assets.codepen.io/907471/rainbow_s.mp4"
+          src="https://assets.codepen.io/907471/dancer.mp4"
           type="video/mp4"
         />
       </video>
