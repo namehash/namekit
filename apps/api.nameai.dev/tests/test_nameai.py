@@ -69,3 +69,21 @@ def test_top_tokenization(nameai: 'NameAI'):
     # higher prob than [i, teach]
     assert top_tok('iteach') == ['it', 'each']
     assert top_tok('vitalik') == ['vitalik']
+
+
+def test_tokenizer_quality(nameai: 'NameAI'):
+    from nameai.data import get_resource_path
+    import json
+
+    # Load tokenization quality test cases
+    with open(get_resource_path('tests/tokenization_quality.json')) as f:
+        quality_tests = json.load(f)
+
+    for input_text, expected_tokens in quality_tests.items():
+        result = nameai.inspect_label(input_text)
+        actual_tokens = result.nameai.analysis.top_tokenization
+        if actual_tokens != expected_tokens:
+            print(input_text)
+            print(expected_tokens)
+            print(actual_tokens)
+            print()
