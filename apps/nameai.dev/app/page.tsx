@@ -1,5 +1,7 @@
-import { Heading, Text } from "@namehash/namekit-react";
+import { Button, Heading, Link, Text } from "@namehash/namekit-react";
 import AsciiVideo from "../components/video-animation/video-animation";
+import { HeroStartCommand } from "@/components/HeroStartCommand";
+import { GithubIcon } from "@/components/github-icon";
 
 export default function Page() {
   return (
@@ -15,11 +17,32 @@ export default function Page() {
           ></div>
 
           <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 max-w-3xl mx-auto px-6 z-50">
-            <div className="space-y-3 py-5 text-center bg-[radial-gradient(circle,white_80%,blue-500_90%,transparent_100%)]">
-              <Heading as="h1" className="text-black !text-6xl">
-                Enable new ENS user experiences
-              </Heading>
-              <Text className="text-gray-400">What will you build?</Text>
+            <div className="space-y-5 py-5 text-center bg-[radial-gradient(circle,white_80%,blue-500_90%,transparent_100%)]">
+              <div className="space-y-2">
+                <Heading as="h1" className="text-black !text-6xl">
+                  Enable new ENS user experiences
+                </Heading>
+                <Text className="text-gray-400">What will you build?</Text>
+              </div>
+              <div className="flex justify-center">
+                <HeroStartCommand />
+              </div>
+              <div className="flex justify-center gap-2">
+                <Button asChild>
+                  <Link target="_blank" href="https://api.nameai.dev/docs">
+                    View the docs
+                  </Link>
+                </Button>
+                <Button variant="secondary" asChild>
+                  <Link
+                    target="_blank"
+                    href="https://github.com/namehash/namekit/tree/main/packages/nameai-sdk"
+                  >
+                    <GithubIcon className="w-5 h-5" />
+                    Github
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
           <AsciiVideo />
