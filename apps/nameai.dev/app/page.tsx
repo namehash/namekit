@@ -30,7 +30,7 @@ export default function Page() {
               <div className="flex justify-center gap-2">
                 <Button asChild>
                   <Link target="_blank" href="https://api.nameai.dev/docs">
-                    View the docs
+                    API docs
                   </Link>
                 </Button>
                 <Button variant="secondary" asChild>
