@@ -20,4 +20,3 @@ storybook-static
 
 # We use pnpm, not npm.
 package-lock.json
-packages/nameguard-python/domains_batch/domains_batch_*
