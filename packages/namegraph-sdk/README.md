@@ -2,6 +2,14 @@
 
 A TypeScript SDK for interacting with the NameGraph APIs, providing access to the world's largest collection of names. This SDK enables easy integration with the NameGraph API endpoints for name and collection suggestions.
 
+## Features
+
+- **Category-based Suggestions**: Get name suggestions organized by various categories including related terms, wordplay, alternates, and more
+- **Collection Management**: Find, count, and analyze collections of names
+- **Smart Sampling**: Sample and fetch top members from collections
+- **Advanced Search**: Search collections by string or by collection ID
+
+
 ## Installation
 
 ```bash
@@ -24,13 +32,6 @@ import { namegraph } from "namegraph-sdk";
 // Get name suggestions grouped by category
 const suggestions = await namegraph.groupedByCategory("zeus");
 ```
-
-## Features
-
-- **Category-based Suggestions**: Get name suggestions organized by various categories including related terms, wordplay, alternates, and more
-- **Collection Management**: Find, count, and analyze collections of names
-- **Smart Sampling**: Sample and fetch top members from collections
-- **Advanced Search**: Search collections by string or by collection ID
 
 ## API Reference
 
@@ -136,3 +137,13 @@ The SDK supports various grouping categories for name suggestions:
 - `expand`: Expanded versions
 - `gowild`: Creative variations
 - `other`: Additional suggestions
+
+## Contact Us
+
+Visit our [website](https://namehashlabs.org/) to get in contact.
+
+## License
+
+Licensed under the MIT License, Copyright © 2023-present [NameHash Labs](https://namehashlabs.org).
+
+See [LICENSE](./LICENSE) for more information.

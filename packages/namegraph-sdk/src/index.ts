@@ -23,6 +23,11 @@ import {
   NameGraphCollection,
   ScrambleMethod,
   DEFAULT_MAX_RELATED_COLLECTIONS,
+  DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY,
+  DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY,
+  DEFAULT_MAX_RECURSIVE_RELATED_COLLECTIONS,
+  DEFAULT_LABELS_LIMIT,
+  DEFAULT_OFFSET, DEFAULT_MIN_OTHER_COLLECTIONS, DEFAULT_MAX_TOTAL_COLLECTIONS, DEFAULT_MAX_OTHER_COLLECTIONS,
 } from "./utils";
 
 export class NameGraph {
@@ -66,37 +71,37 @@ export class NameGraph {
       [NameGraphGroupingCategory.related]: {
         enable_learning_to_rank: DEFAULT_ENABLE_LEARNING_TO_RANK,
         max_labels_per_related_collection: 10,
-        max_per_type: 2,
-        max_recursive_related_collections: 3,
+        max_per_type: DEFAULT_MAX_PER_TYPE,
+        max_recursive_related_collections: DEFAULT_MAX_RECURSIVE_RELATED_COLLECTIONS,
         max_related_collections: maxRelatedCollections,
-        label_diversity_ratio: 0.5,
+        label_diversity_ratio: DEFAULT_LABEL_DIVERSITY_RATIO,
       },
       [NameGraphGroupingCategory.wordplay]: {
-        max_suggestions: 10,
-        min_suggestions: 2,
+        max_suggestions: DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY,
+        min_suggestions: DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY,
       },
       [NameGraphGroupingCategory.alternates]: {
-        max_suggestions: 10,
-        min_suggestions: 2,
+        max_suggestions: DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY,
+        min_suggestions: DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY,
       },
       [NameGraphGroupingCategory.emojify]: {
-        max_suggestions: 10,
-        min_suggestions: 2,
+        max_suggestions: DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY,
+        min_suggestions: DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY,
       },
       [NameGraphGroupingCategory.community]: {
-        max_suggestions: 10,
-        min_suggestions: 2,
+        max_suggestions: DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY,
+        min_suggestions: DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY,
       },
       [NameGraphGroupingCategory.expand]: {
-        max_suggestions: 10,
-        min_suggestions: 2,
+        max_suggestions: DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY,
+        min_suggestions: DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY,
       },
       [NameGraphGroupingCategory.gowild]: {
-        max_suggestions: 10,
-        min_suggestions: 2,
+        max_suggestions: DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY,
+        min_suggestions: DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY,
       },
       [NameGraphGroupingCategory.other]: {
-        max_suggestions: 10,
+        max_suggestions: DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY,
         min_suggestions: 6,
         min_total_suggestions: 50,
       },
@@ -137,12 +142,11 @@ export class NameGraph {
     collection_id: string,
   ): Promise<NameGraphFetchTopCollectionMembersResponse> {
     const metadata = true;
-    const max_recursive_related_collections = 3;
 
     const payload = {
       metadata,
       collection_id,
-      max_recursive_related_collections,
+      max_recursive_related_collections: DEFAULT_MAX_RECURSIVE_RELATED_COLLECTIONS,
     };
 
     return this.rawRequest("fetch_top_collection_members", "POST", payload);
@@ -155,8 +159,7 @@ export class NameGraph {
       method?: ScrambleMethod;
     },
   ): Promise<NameGraphSuggestion[]> {
-    const default_method = ScrambleMethod["left-right-shuffle-with-unigrams"];
-    const method = options?.method || default_method;
+    const method = options?.method || ScrambleMethod["left-right-shuffle-with-unigrams"];
     const n_top_members = 25;
     const max_suggestions = 10;
     const seed = options?.seed;
@@ -184,29 +187,24 @@ export class NameGraph {
       sort_order?: NameGraphSortOrderOptions;
     },
   ): Promise<NameGraphFindCollectionsResponse> {
-    const offset = options?.offset || 0;
-    const mode = "instant";
-    const limit_labels = 10;
     const max_per_type = 3;
-    const sort_order = options?.sort_order || NameGraphSortOrderOptions.AI;
-    const min_other_collections = options?.min_other_collections || 0;
-    const max_other_collections = options?.max_other_collections || 3;
-    const max_total_collections = options?.max_total_collections || 6;
-    const label_diversity_ratio = 0.5;
+    const min_other_collections = options?.min_other_collections || DEFAULT_MIN_OTHER_COLLECTIONS;
+    const max_other_collections = options?.max_other_collections || DEFAULT_MAX_OTHER_COLLECTIONS;
+    const max_total_collections = options?.max_total_collections || DEFAULT_MAX_TOTAL_COLLECTIONS;
     const max_related_collections = options?.max_related_collections || 3;
 
     const payload = {
-      limit_labels,
-      offset,
-      sort_order,
+      limit_labels: DEFAULT_LABELS_LIMIT,
+      offset: options?.offset || DEFAULT_OFFSET,
+      sort_order: options?.sort_order || NameGraphSortOrderOptions.AI,
       max_related_collections,
       max_per_type,
-      label_diversity_ratio,
+      label_diversity_ratio: DEFAULT_LABEL_DIVERSITY_RATIO,
       min_other_collections,
       max_other_collections,
       max_total_collections,
       query,
-      mode,
+      mode: DEFAULT_INSTANT_MODE,
     };
 
     return this.rawRequest("find_collections_by_string", "POST", payload);
@@ -221,8 +219,8 @@ export class NameGraph {
   ): Promise<NameGraphFetchTopCollectionMembersResponse> {
     const payload = {
       collection_id,
-      offset: options?.offset || 0,
-      limit: options?.limit || 10,
+      offset: options?.offset || DEFAULT_OFFSET,
+      limit: options?.limit || DEFAULT_LABELS_LIMIT,
       metadata: true,
     };
 
@@ -243,26 +241,19 @@ export class NameGraph {
   public findCollectionsByCollection(
     collection_id: string,
   ): Promise<NameGraphFindCollectionsResponse> {
-    const limit_labels = 10;
-    const offset = 0;
-    const sort_order = NameGraphSortOrderOptions.RELEVANCE;
     const max_related_collections = 3;
     const max_per_type = 3;
-    const label_diversity_ratio = 0.5;
-    const min_other_collections = 0;
-    const max_other_collections = 3;
-    const max_total_collections = 6;
 
     const payload = {
-      limit_labels,
-      offset,
-      sort_order,
+      limit_labels: DEFAULT_LABELS_LIMIT,
+      offset: DEFAULT_OFFSET,
+      sort_order: NameGraphSortOrderOptions.RELEVANCE,
       max_related_collections,
       max_per_type,
-      label_diversity_ratio,
-      min_other_collections,
-      max_other_collections,
-      max_total_collections,
+      label_diversity_ratio: DEFAULT_LABEL_DIVERSITY_RATIO,
+      min_other_collections: DEFAULT_MIN_OTHER_COLLECTIONS,
+      max_other_collections: DEFAULT_MAX_OTHER_COLLECTIONS,
+      max_total_collections: DEFAULT_MAX_TOTAL_COLLECTIONS,
       collection_id,
     };
 
@@ -288,15 +279,12 @@ export class NameGraph {
       sort_order?: NameGraphSortOrderOptions;
     },
   ): Promise<NameGraphCollectionByMemberResponse> {
-    const limit_labels = options?.limit_labels || 10;
-    const offset = options?.offset || 0;
-    const sort_order = options?.sort_order || NameGraphSortOrderOptions.AI;
     const max_results = options?.max_results || 3;
 
     const payload = {
-      limit_labels,
-      offset,
-      sort_order,
+      limit_labels: options?.limit_labels || DEFAULT_LABELS_LIMIT,
+      offset: options?.offset || DEFAULT_OFFSET,
+      sort_order: options?.sort_order || NameGraphSortOrderOptions.AI,
       label,
       mode: DEFAULT_INSTANT_MODE,
       max_results,

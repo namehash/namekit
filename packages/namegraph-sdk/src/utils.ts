@@ -166,6 +166,15 @@ export const DEFAULT_INSTANT_MODE = "instant";
 export const DEFAULT_ENABLE_LEARNING_TO_RANK = true;
 export const DEFAULT_LABEL_DIVERSITY_RATIO = 0.5;
 export const DEFAULT_MAX_PER_TYPE = 2;
+export const DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY = 10;
+export const DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY = 2;
+export const DEFAULT_MAX_RECURSIVE_RELATED_COLLECTIONS = 3;
+export const DEFAULT_OFFSET = 0;
+export const DEFAULT_LABELS_LIMIT = 10;
+export const DEFAULT_MIN_OTHER_COLLECTIONS = 0;
+export const DEFAULT_MAX_OTHER_COLLECTIONS = 3;
+export const DEFAULT_MAX_TOTAL_COLLECTIONS = 6;
+
 export const NameGraphSortOrderOptions = {
   /** Use intelligent endpoint-specific ranking (e.g. with Learning to Rank) */
   AI: "AI",
