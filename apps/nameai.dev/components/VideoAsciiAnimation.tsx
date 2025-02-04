@@ -152,10 +152,7 @@ export default function VideoAsciiAnimation() {
         crossOrigin="anonymous"
         className="hidden"
       >
-        <source
-          src="https://assets.codepen.io/907471/rainbow_s.mp4"
-          type="video/mp4"
-        />
+        <source src="/rainbow.mp4" type="video/mp4" />
       </video>
 
       {/* Hidden prerender canvas used for processing the video/image data */}

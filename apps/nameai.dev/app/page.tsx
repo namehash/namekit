@@ -1,7 +1,7 @@
 import { Button, Heading, Link, Text } from "@namehash/namekit-react";
-import AsciiVideo from "../components/video-animation/video-animation";
 import { HeroStartCommand } from "@/components/HeroStartCommand";
 import { GithubIcon } from "@/components/github-icon";
+import VideoAsciiAnimation from "@/components/VideoAsciiAnimation";
 
 export default function Page() {
   return (
@@ -45,7 +45,7 @@ export default function Page() {
               </div>
             </div>
           </div>
-          <AsciiVideo />
+          <VideoAsciiAnimation />
         </div>
       </div>
     </>
