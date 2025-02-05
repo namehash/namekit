@@ -8,7 +8,7 @@ from mocked_static_property import mock_static_property
 
 
 @contextmanager
-def init_tokenizer(overrides):
+def init_all_tokenizer(overrides):
     with mock_static_property():
         from nameai.all_tokenizer import AllTokenizer
 
@@ -18,6 +18,16 @@ def init_tokenizer(overrides):
             yield tokenizer
 
 
+@contextmanager
+def init_person_name_tokenizer(overrides):
+    from nameai.person_names import PersonNameTokenizer
+
+    with initialize_config_module(version_base=None, config_module='nameai.config'):
+        config = compose(config_name='prod_config', overrides=overrides)
+        tokenizer = PersonNameTokenizer(config)
+        yield tokenizer
+
+
 @mark.parametrize(
     'overrides',
     [
@@ -25,7 +35,7 @@ def init_tokenizer(overrides):
     ],
 )
 def test_all_tokenizer_skip_one_letter_words(overrides: List[str]):
-    with init_tokenizer(overrides) as tokenizer:
+    with init_all_tokenizer(overrides) as tokenizer:
         tokenized_labels = list(tokenizer.tokenize('yorknewŁyork123'))
 
         assert (
@@ -55,7 +65,7 @@ def test_all_tokenizer_skip_one_letter_words(overrides: List[str]):
     ],
 )
 def test_all_tokenizer_skip_non_words(overrides: List[str]):
-    with init_tokenizer(overrides) as tokenizer:
+    with init_all_tokenizer(overrides) as tokenizer:
         tokenized_labels = list(tokenizer.tokenize('yorknewŁyork123'))  # 0 tokenizations
         assert list(tokenized_labels) == []
 
@@ -75,7 +85,7 @@ def test_all_tokenizer_skip_non_words(overrides: List[str]):
     ],
 )
 def test_all_tokenizer_skip_one_letter_words_and_non_words_no_ias(overrides: List[str]):
-    with init_tokenizer(overrides) as tokenizer:
+    with init_all_tokenizer(overrides) as tokenizer:
         tokenized_labels = list(tokenizer.tokenize('laptop'))
         assert ('laptop',) in tokenized_labels
         assert (
@@ -104,7 +114,7 @@ def test_all_tokenizer_skip_one_letter_words_and_non_words_no_ias(overrides: Lis
     ],
 )
 def test_all_tokenizer_skip_one_letter_words_and_non_words_no_ias_with_gaps(overrides: List[str]):
-    with init_tokenizer(overrides) as tokenizer:
+    with init_all_tokenizer(overrides) as tokenizer:
         tokenized_labels = list(tokenizer.tokenize('lapŁtop'))
 
         assert (
@@ -126,7 +136,7 @@ def test_all_tokenizer_skip_one_letter_words_and_non_words_no_ias_with_gaps(over
     ],
 )
 def test_all_tokenizer_time(overrides):
-    with init_tokenizer(overrides) as tokenizer:
+    with init_all_tokenizer(overrides) as tokenizer:
         next(tokenizer.tokenize('miinibaashkiminasiganibiitoosijiganibadagwiingweshiganibakwezhigan'))
 
 
@@ -137,7 +147,7 @@ def test_all_tokenizer_time(overrides):
     ],
 )
 def test_all_tokenizer_skip_one_letter_words_and_non_words_no_ias_with_gaps23(overrides: List[str]):
-    with init_tokenizer(overrides) as tokenizer:
+    with init_all_tokenizer(overrides) as tokenizer:
         tokenized_labels = list(tokenizer.tokenize('laptop😀ą'))
         print(tokenized_labels)
         assert ('laptop', '') in tokenized_labels
@@ -150,7 +160,7 @@ def test_all_tokenizer_skip_one_letter_words_and_non_words_no_ias_with_gaps23(ov
 
 @pytest.mark.execution_timeout(10)
 def test_all_tokenizer_reccurence():
-    with init_tokenizer([]) as tokenizer:
+    with init_all_tokenizer([]) as tokenizer:
         next(tokenizer.tokenize('test' * 900))
 
         with pytest.raises(RecursionError):
@@ -165,7 +175,7 @@ def test_all_tokenizer_reccurence():
     ],
 )
 def test_all_tokenizer_reccurence2(overrides):
-    with init_tokenizer(overrides) as tokenizer:
+    with init_all_tokenizer(overrides) as tokenizer:
         tokenized = tokenizer.tokenize('i' * 4 * 950)
         next(tokenized)
         with pytest.raises(RecursionError):
@@ -174,7 +184,7 @@ def test_all_tokenizer_reccurence2(overrides):
 
 
 def test_all_tokenizer_custom_dict():
-    with init_tokenizer([]) as tokenizer:
+    with init_all_tokenizer([]) as tokenizer:
         tokenized_labels = list(tokenizer.tokenize('nfttop'))
         assert (
             'nft',
@@ -187,7 +197,7 @@ def test_all_tokenizer_custom_dict():
         tokenized_labels = list(tokenizer.tokenize('york'))
         assert ('york',) in tokenized_labels
 
-    with init_tokenizer(['tokenization.custom_dictionary=tests/empty.txt']) as tokenizer:
+    with init_all_tokenizer(['tokenization.custom_dictionary=tests/empty.txt']) as tokenizer:
         tokenized_labels = list(tokenizer.tokenize('nfttop'))
         assert (
             'nft',
@@ -202,7 +212,7 @@ def test_all_tokenizer_custom_dict():
 
 
 def test_all_tokenizer_quality():
-    with init_tokenizer([]) as tokenizer:
+    with init_all_tokenizer([]) as tokenizer:
         from nameai.data import get_resource_path
 
         for multiword in open(get_resource_path('should_be_tokenized.txt')):
@@ -212,7 +222,7 @@ def test_all_tokenizer_quality():
 
 
 def test_all_tokenizer_quality2():
-    with init_tokenizer([]) as tokenizer:
+    with init_all_tokenizer([]) as tokenizer:
         from nameai.data import get_resource_path
         import json
 
@@ -233,3 +243,76 @@ def test_all_tokenizer_quality2():
                 print(failure)
             print(f'\nTotal failures: {len(failures)} out of {len(quality_tests)} test cases')
             assert False, 'Some tokenization quality tests failed. See above for details.'
+
+
+def test_person_name_tokenizer_simple_names():
+    """Test that simple person names are correctly tokenized"""
+    with init_person_name_tokenizer([]) as tokenizer:
+        from nameai.data import get_resource_path
+        import json
+
+        with open(get_resource_path('tests/person_names_quality.json')) as f:
+            quality_tests = json.load(f)
+
+        failures = []
+        for input_label, expected_tokens in quality_tests['simple_names'].items():
+            tokenized_labels = list(tokenizer.tokenize_with_scores(input_label))
+            expected_tuple = tuple(expected_tokens)
+            found = False
+            for tokens, score in tokenized_labels:
+                if tokens == expected_tuple:
+                    found = True
+                    assert score > -float('inf'), f'Expected valid score for {input_label}'
+                    break
+            if not found:
+                failures.append(f'Failed to find expected tokenization for {input_label}')
+
+        if failures:
+            assert False, '\n'.join(failures)
+
+
+def test_person_name_tokenizer_ambiguous_names():
+    """Test that ambiguous names are correctly handled"""
+    with init_person_name_tokenizer([]) as tokenizer:
+        from nameai.data import get_resource_path
+        import json
+
+        with open(get_resource_path('tests/person_names_quality.json')) as f:
+            quality_tests = json.load(f)
+
+        failures = []
+        for input_label, interpretations in quality_tests['ambiguous_names'].items():
+            tokenized_labels = list(tokenizer.tokenize_with_scores(input_label))
+            if interpretations['person_name']:
+                person_name_tuple = tuple(interpretations['person_name'])
+                found = False
+                for tokens, score in tokenized_labels:
+                    if tokens == person_name_tuple:
+                        found = True
+                        assert score > -float('inf'), f'Expected valid score for {input_label}'
+                        break
+                if not found:
+                    failures.append(f'Failed to find person name tokenization for {input_label}')
+
+        if failures:
+            assert False, '\n'.join(failures)
+
+
+def test_person_name_tokenizer_non_names():
+    """Test that non-names have very low scores"""
+    with init_person_name_tokenizer([]) as tokenizer:
+        from nameai.data import get_resource_path
+        import json
+
+        with open(get_resource_path('tests/person_names_quality.json')) as f:
+            quality_tests = json.load(f)
+
+        failures = []
+        for input_label in quality_tests['non_names'].keys():
+            tokenized_labels = list(tokenizer.tokenize_with_scores(input_label))
+            for tokens, score in tokenized_labels:
+                if score >= -10:
+                    failures.append(f'Expected low score for non-name {input_label}, got {score}')
+
+        if failures:
+            assert False, '\n'.join(failures)

@@ -82,13 +82,13 @@ class Ngrams:
     def all_bigrams_count(self) -> int:
         return self._bigrams_and_count[1]
 
-    def unigram_count(self, word: str) -> int:
+    def unigram_count(self, word: str) -> int | float:
         return self.unigrams.get(word, self.oov_count(word))
 
     def bigram_count(self, word: str) -> Optional[int]:
         return self.bigrams.get(word, None)
 
-    def oov_count(self, word: str) -> int:
+    def oov_count(self, word: str) -> float:
         return (1 / 100) ** (len(word))
 
     def word_probability(self, word: str) -> float:

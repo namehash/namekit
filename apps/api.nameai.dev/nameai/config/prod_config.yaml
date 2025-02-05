@@ -4,6 +4,14 @@ tokenization:
   dictionary: words.txt
   custom_dictionary: custom_dictionary.txt
   domain_specific_dictionary: domain_specific_dictionary.txt
+  person_names:
+    first_names: pn_firstnames.json
+    last_names: pn_lastnames.json
+    other: pn_other.json
+    country_stats: pn_country_stats.json
+    country_bonus: 100
+  # person_first_names: firstnames.txt
+  # person_last_names: lastnames.txt
   should_be_tokenized: should_be_tokenized.txt
   skip_non_words: false
   with_gaps: true
