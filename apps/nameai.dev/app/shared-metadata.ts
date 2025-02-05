@@ -14,7 +14,7 @@ export const defaultMetaKeywords = [
   "nameai",
 ];
 
-export const baseUrl = "https://nameai.dev";
+export const baseUrl = "https://nameai.io";
 
 export const defaultMetaOpengraph: Metadata["openGraph"] = {
   title: {
