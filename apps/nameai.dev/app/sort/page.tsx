@@ -6,6 +6,7 @@ import { Client } from "./client";
 import {
   defaultMetaOpengraph,
   defaultMetaTwitter,
+  defaultTitleTemplate,
 } from "@/app/shared-metadata";
 
 export interface LabelItem {
@@ -59,11 +60,11 @@ export default async function SortPage() {
   );
 }
 
-const title = "NameAI - AI Sort Demo";
+const title = "AI Sort Demo";
 const description = "Bring names more likely to be interesting to the top.";
 
 export const metadata: Metadata = {
-  title,
+  title: defaultTitleTemplate(title),
   description,
   openGraph: {
     ...defaultMetaOpengraph,

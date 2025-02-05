@@ -5,6 +5,7 @@ import Balancer from "react-wrap-balancer";
 import {
   defaultMetaOpengraph,
   defaultMetaTwitter,
+  defaultTitleTemplate,
 } from "@/app/shared-metadata";
 
 interface Props {
@@ -53,7 +54,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
   const labelForAnalysis = label.includes(".") ? label.split(".")[0] : label;
 
-  const title = "NameAI - AI Tokenization Demo";
+  const title = "AI Tokenization Demo";
   const description =
     'Extract recognizable words that are otherwise "smashed together" in labels.';
   const url = labelForAnalysis
@@ -61,7 +62,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     : "/tokenization";
 
   return {
-    title,
+    title: defaultTitleTemplate(title),
     description,
     openGraph: {
       ...defaultMetaOpengraph,

@@ -16,9 +16,13 @@ export const defaultMetaKeywords = [
 
 export const baseUrl = "https://nameai.dev";
 
+export const defaultTitleTemplate = (pageName: string) => {
+  return `${siteName} - {pageName}`;
+}
+
 export const defaultMetaOpengraph: Metadata["openGraph"] = {
   title: {
-    template: `%s`,
+    template: `${siteName} - %s`,
     default: defaultMetaTitle,
   },
   type: "website",
