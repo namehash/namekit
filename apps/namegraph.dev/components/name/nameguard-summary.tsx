@@ -66,6 +66,7 @@ export const NameGuardSummary = ({ nameGuardReport }: Props) => {
           </p>
         </div>
         <Link
+          target="_blank"
           href={`https://nameguard.io/inspect/${encodeURIComponent(nameGuardReport.name)}`}
           className="animated-black-underline pb-0.5 font-medium ml-8 mt-4 min-w-[178px] text-right md:ml-0"
         >

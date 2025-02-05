@@ -12,6 +12,7 @@ import {
   NameGraphFetchTopCollectionMembersResponse,
   NameGraphSortOrderOptions,
 } from "@namehash/namegraph-sdk/utils";
+import { useEnsText } from "wagmi";
 import { useEffect, useState } from "react";
 import Skeleton from "@/components/skeleton";
 import { Button } from "@/components/ui/button";
@@ -78,6 +79,22 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
 
   const { address } = useProfileDetails({
     addressOrName: NameWithCurrentTld({ name }),
+  });
+  const { data: telegramRecord } = useEnsText({
+    name: NameWithCurrentTld({ name: label }),
+    key: "org.telegram",
+  });
+  const { data: twitterRecord } = useEnsText({
+    name: NameWithCurrentTld({ name: label }),
+    key: "com.twitter",
+  });
+  const { data: githubRecord } = useEnsText({
+    name: NameWithCurrentTld({ name: label }),
+    key: "com.github",
+  });
+  const { data: discordRecord } = useEnsText({
+    name: NameWithCurrentTld({ name: label }),
+    key: "com.discord",
   });
 
   const { data: nameguardReport } = useSWR<NameGuardReport>(
@@ -335,6 +352,8 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
         activeTab,
       },
     });
+
+    getNavigationPageTextGuide(activeTab);
   };
 
   useEffect(() => {
@@ -373,7 +392,6 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
     ) {
       getCollectionsForQuery(label, DEFAULT_MAX_RELATED_COLLECTIONS)
         .then((res) => {
-          console.log(res, res.categories);
           setOtherCategories(res.categories);
         })
         .catch((err) => {
@@ -400,60 +418,80 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
   }, [navigationConfig?.totalItems]);
 
   const isFirstCollectionsPageForCurrentQuery = () => {
-    return (
-      Number(
-        params.nameDetails.page?.[
-          params.nameDetails.activeTab || DEFAULT_ACTIVE_TAB
-        ],
-      ) === 1
-    );
+    const activeTab = params.nameDetails.activeTab || DEFAULT_ACTIVE_TAB;
+    const currentPage =
+      Number(params.nameDetails.page?.[activeTab]) || DEFAULT_PAGE_NUMBER;
+    return currentPage <= 1;
   };
   const isLastCollectionsPageForCurrentQuery = () => {
-    if (navigationConfig.totalItems) {
-      let totalItems = navigationConfig.totalItems.ByConcept;
-      if (
-        params.nameDetails.activeTab === NameRelatedCollectionsTabs.ByMembership
-      ) {
-        totalItems = navigationConfig.totalItems.ByMembership;
-      }
+    if (!navigationConfig.totalItems) return false;
 
-      if (totalItems) {
-        return (
-          Number(
-            params.nameDetails.page?.[
-              params.nameDetails.activeTab || DEFAULT_ACTIVE_TAB
-            ],
-          ) *
-            navigationConfig.itemsPerPage >=
-          totalItems
-        );
-      }
-    } else return false;
+    const activeTab = params.nameDetails.activeTab || DEFAULT_ACTIVE_TAB;
+    const totalItems = navigationConfig.totalItems[activeTab];
+
+    if (!totalItems) return false;
+
+    const currentPage = Number(
+      params.nameDetails.page?.[activeTab] || DEFAULT_PAGE_NUMBER,
+    );
+
+    return (
+      totalItems <= navigationConfig.itemsPerPage ||
+      currentPage * navigationConfig.itemsPerPage >= totalItems
+    );
   };
 
-  const getNavigationPageTextGuide = () => {
-    if (navigationConfig.totalItems) {
-      let totalItems = navigationConfig.totalItems.ByConcept;
-      if (
-        params.nameDetails.activeTab === NameRelatedCollectionsTabs.ByMembership
-      ) {
-        totalItems = navigationConfig.totalItems.ByMembership;
-      }
-
-      if (totalItems) {
-        return `${(Number(params.nameDetails.page?.[params.nameDetails.activeTab || DEFAULT_ACTIVE_TAB]) - 1) * navigationConfig.itemsPerPage + 1}-${Math.min(
-          Number(
-            params.nameDetails.page?.[
-              params.nameDetails.activeTab || DEFAULT_ACTIVE_TAB
-            ],
-          ) * navigationConfig.itemsPerPage,
-          totalItems,
-        )} of ${totalItems} name suggestions`;
-      }
-    } else {
-      return "No name suggestions found";
+  const getNavigationPageTextGuide = (tab: NameRelatedCollectionsTabs) => {
+    if (!navigationConfig.totalItems) {
+      setNavigationPagesTextGuides({
+        ...navigationPagesTextGuides,
+        [tab]: "No name suggestions found",
+      });
+      return;
     }
+
+    const totalItems = navigationConfig.totalItems[tab];
+    if (!totalItems) return;
+
+    const currentPage = Number(
+      params.nameDetails.page?.[tab] || DEFAULT_PAGE_NUMBER,
+    );
+    const startItem = (currentPage - 1) * navigationConfig.itemsPerPage + 1;
+    const endItem = Math.min(
+      currentPage * navigationConfig.itemsPerPage,
+      totalItems,
+    );
+
+    setNavigationPagesTextGuides({
+      ...navigationPagesTextGuides,
+      [tab]: `${startItem}-${endItem} of ${totalItems} name suggestions`,
+    });
   };
+
+  const [navigationPagesTextGuides, setNavigationPagesTextGuides] = useState<
+    Record<NameRelatedCollectionsTabs, string>
+  >({
+    [NameRelatedCollectionsTabs.ByConcept]: "",
+    [NameRelatedCollectionsTabs.ByMembership]: "",
+  });
+
+  useEffect(() => {
+    getNavigationPageTextGuide(NameRelatedCollectionsTabs.ByConcept);
+  }, [
+    params.nameDetails.page?.[NameRelatedCollectionsTabs.ByConcept],
+    params.nameDetails.activeTab,
+    navigationConfig.totalItems,
+    navigationConfig.itemsPerPage,
+  ]);
+
+  useEffect(() => {
+    getNavigationPageTextGuide(NameRelatedCollectionsTabs.ByMembership);
+  }, [
+    params.nameDetails.page?.[NameRelatedCollectionsTabs.ByMembership],
+    params.nameDetails.activeTab,
+    navigationConfig.totalItems,
+    navigationConfig.itemsPerPage,
+  ]);
 
   const FromTabNameToTabLabel = {
     [NameRelatedCollectionsTabs.ByConcept]: "By concept",
@@ -538,16 +576,21 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
           </div>
         ) : null}
         <div className="mt-8 flex flex-col space-y-4 md:space-y-0 lg:space-y-6 md:flex-row lg:flex-col md:space-x-4 lg:space-x-0">
-          <div className="w-full flex justify-center items-center border border-gray-200 rounded-md md:w-1/2 lg:w-auto">
-            <NameGuardSummary nameGuardReport={nameguardReport} />
-          </div>
           <div className="h-max py-6 border border-gray-200 rounded-md md:w-1/2 lg:w-auto">
             <ProfileStats addressOrName={NameWithCurrentTld({ name })} />
             <ProfileSocials
               userAddress={address}
               name={NameWithCurrentTld({ name })}
-              records={{}}
+              records={{
+                "org.telegram": telegramRecord || "",
+                "com.twitter": twitterRecord || "",
+                "com.github": githubRecord || "",
+                "com.discord": discordRecord || "",
+              }}
             />
+          </div>
+          <div className="w-full flex justify-center items-center border border-gray-200 rounded-md md:w-1/2 lg:w-auto">
+            <NameGuardSummary nameGuardReport={nameguardReport} />
           </div>
         </div>
         {otherCategories?.length ? (
@@ -701,7 +744,12 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                                 <div className="max-w-[756px] w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5">
                                                   <div className="flex items-center">
                                                     <div className="text-lg font-semibold mr-2.5">
-                                                      {getNavigationPageTextGuide()}
+                                                      {
+                                                        navigationPagesTextGuides[
+                                                          NameRelatedCollectionsTabs
+                                                            .ByConcept
+                                                        ]
+                                                      }
                                                     </div>
                                                     {navigationConfig.totalItems ? (
                                                       <div className="flex">
@@ -780,7 +828,12 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                                 {navigationConfig.totalItems ? (
                                                   <div className="flex items-center justify-between border border-gray-200 border-l-0 border-r-0 border-b-0 mt-3 p-3">
                                                     <div className="text-sm text-gray-500 mr-2.5">
-                                                      {getNavigationPageTextGuide()}
+                                                      {
+                                                        navigationPagesTextGuides[
+                                                          NameRelatedCollectionsTabs
+                                                            .ByConcept
+                                                        ]
+                                                      }
                                                     </div>
                                                     <div className="flex items-center gap-2">
                                                       <Button
@@ -857,7 +910,12 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                                 <div className="max-w-[756px] w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5">
                                                   <div className="flex items-center">
                                                     <div className="text-lg font-semibold mr-2.5">
-                                                      {getNavigationPageTextGuide()}
+                                                      {
+                                                        navigationPagesTextGuides[
+                                                          NameRelatedCollectionsTabs
+                                                            .ByMembership
+                                                        ]
+                                                      }
                                                     </div>
                                                     {navigationConfig.totalItems ? (
                                                       <div className="flex">
@@ -936,7 +994,12 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                                 {navigationConfig.totalItems ? (
                                                   <div className="flex items-center justify-between border border-gray-200 border-l-0 border-r-0 border-b-0 mt-3 p-3">
                                                     <div className="text-sm text-gray-500 mr-2.5">
-                                                      {getNavigationPageTextGuide()}
+                                                      {
+                                                        navigationPagesTextGuides[
+                                                          NameRelatedCollectionsTabs
+                                                            .ByMembership
+                                                        ]
+                                                      }
                                                     </div>
                                                     <div className="flex items-center gap-2">
                                                       <Button

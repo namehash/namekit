@@ -12,7 +12,6 @@ import {
   getFirstLabelOfString,
   getNameDetailsPageHref,
 } from "@/lib/utils";
-import { DebounceInput } from "react-debounce-input";
 import { Suspense, useEffect, useState } from "react";
 import { Toggle } from "@/components/ui/toggle";
 import { Button } from "@/components/ui/button";
@@ -23,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
   CollectionsCardsSkeleton,
   CollectionsGridSkeleton,
@@ -105,6 +104,15 @@ export default function ExploreCollectionsPage() {
         page: page,
       },
     });
+
+    /**
+     * Force navigation text update
+     */
+    setNavigationConfig((prev) => ({
+      ...prev,
+      totalItems: prev.totalItems,
+    }));
+
     queryCollections({
       search: params.collectionsSearch.search || "",
       orderBy: params.collectionsSearch.orderBy || NameGraphSortOrderOptions.AI,
@@ -316,24 +324,35 @@ export default function ExploreCollectionsPage() {
     return Number(params.collectionsSearch.page) === 1;
   };
   const isLastCollectionsPageForCurrentQuery = () => {
-    if (navigationConfig.totalItems) {
-      return (
-        Number(params.collectionsSearch.page) * navigationConfig.itemsPerPage >=
-        navigationConfig.totalItems
-      );
-    } else return false;
+    if (!navigationConfig.totalItems) return false;
+
+    const currentPage = Number(params.collectionsSearch.page) || 1;
+    return (
+      currentPage * navigationConfig.itemsPerPage >= navigationConfig.totalItems
+    );
   };
 
   const getNavigationPageTextGuide = () => {
-    return navigationConfig.totalItems
-      ? `${(Number(params.collectionsSearch.page) - 1) * navigationConfig.itemsPerPage + 1}-${Math.min(
-          Number(params.collectionsSearch.page) * navigationConfig.itemsPerPage,
-          navigationConfig.totalItems,
-        )} of ${navigationConfig.totalItems} collections`
-      : !loadingCollections
-        ? "No collections found"
-        : "";
+    if (!navigationConfig.totalItems) {
+      return !loadingCollections ? "No collections found" : "";
+    }
+
+    const currentPage = Number(params.collectionsSearch.page) || 1;
+    const startItem = (currentPage - 1) * navigationConfig.itemsPerPage + 1;
+    const endItem = Math.min(
+      currentPage * navigationConfig.itemsPerPage,
+      navigationConfig.totalItems,
+    );
+
+    return `${startItem}-${endItem} of ${navigationConfig.totalItems} collections`;
   };
+
+  useEffect(() => {
+    // This will update the text whenever page changes
+    if (params.collectionsSearch.page) {
+      setNavigationConfig((prev) => ({ ...prev }));
+    }
+  }, [params.collectionsSearch.page]);
 
   useEffect(() => {
     handleSearch(params.collectionsSearch.search);
@@ -360,30 +379,6 @@ export default function ExploreCollectionsPage() {
                   "______"
                 )}
               </Link>
-            </div>
-
-            {/* Search Bar */}
-            <div className="relative mb-10">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-5 w-5" />
-              <DebounceInput
-                id="query"
-                type="text"
-                name="query"
-                autoComplete="off"
-                value={params.collectionsSearch.search}
-                debounceTimeout={300}
-                placeholder="Type something"
-                onChange={(e) => handleSearch(e.target.value)}
-                className="focus:outline-none w-full text-sm bg-white border border-gray-300 rounded-md py-2 px-4 pl-9"
-              />
-              {params.collectionsSearch.search && (
-                <Button
-                  onClick={() => handleSearch("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 bg-white hover:bg-transparent text-black shadow-none p-0"
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-              )}
             </div>
 
             {params.collectionsSearch.search && (

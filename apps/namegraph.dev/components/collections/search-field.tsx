@@ -1,0 +1,40 @@
+// components/collections/search-field.tsx
+"use client";
+
+import { Search } from "lucide-react";
+import { DebounceInput } from "react-debounce-input";
+import { Link } from "@namehash/namekit-react";
+import { NameWithCurrentTld } from "@/components/collections/name-with-current-tld";
+import { getNameDetailsPageHref } from "@/lib/utils";
+
+interface SearchFieldProps {
+  search: string;
+  onSearch: (value: string) => void;
+  children?: React.ReactNode;
+}
+
+export const SearchField = ({
+  search,
+  onSearch,
+  children,
+}: SearchFieldProps) => (
+  <>
+    <div className="w-full relative">
+      <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-5 w-5" />
+      <DebounceInput
+        id="query"
+        type="text"
+        name="query"
+        autoComplete="off"
+        value={search}
+        debounceTimeout={300}
+        placeholder="Type something"
+        onChange={(e) => onSearch(e.target.value)}
+        className="focus:outline-none w-full text-sm bg-white border border-gray-300 rounded-md py-2 px-4 pl-9 pr-20"
+      />
+      <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center space-x-2">
+        {children}
+      </div>
+    </div>
+  </>
+);

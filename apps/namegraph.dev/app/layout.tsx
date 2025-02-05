@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Inter } from "next/font/google";
 import { NameHashLabsLogo } from "@/components/footer/namehash-labs-logo";
 import { ServiceProviderBadge } from "@/components/footer/service-provider-badge";
-import { RedirectSearchBar } from "@/components/redirect-search-bar";
 import { FarcasterIcon } from "@/components/footer/farcaster-icon";
 import { TelegramIcon } from "@/components/footer/telegram-icon";
 import { TwitterIcon } from "@/components/footer/twitter-icon";
@@ -16,6 +15,7 @@ import "@namehash/namekit-react/styles.css";
 import "@namehash/nameguard-react/styles.css";
 import "ethereum-identity-kit/css";
 import NextLink from "next/link";
+import { SearchFieldWithUrl } from "@/components/collections/search-field-with-url";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -87,7 +87,9 @@ export default function RootLayout({
                     </div>
                   </NextLink>
                 </div>
-                <RedirectSearchBar withSubmitCta={false} withTitle={false} />
+                <div className="w-full px-6">
+                  <SearchFieldWithUrl />
+                </div>
                 <div className="flex flex-row items-center justify-between md:gap-5 h-[40px]">
                   <TldSelect />
                   <div className="hidden items-center justify-center lg:flex gap-2">

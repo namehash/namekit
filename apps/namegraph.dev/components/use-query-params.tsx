@@ -60,42 +60,51 @@ export function QueryParamsProvider({
 
     if (nonDefaultEntries.length === 0) return "";
 
-    return (
-      nonDefaultEntries
-        /**
-         * underscore for key-value
-         */
-        .map(([k, v]) => `${k}_${v}`)
-        /**
-         * dot between pairs
-         */
-        .join(".")
-    );
+    return nonDefaultEntries
+      .map(([k, v]) => {
+        if (k === "page" && typeof v === "object") {
+          // Ensure we only have valid numbers in the object
+          const validEntries = Object.entries(
+            v as Record<string, unknown>,
+          ).filter(([_, val]) => typeof val === "number" && !isNaN(val));
+
+          if (validEntries.length === 0) return "";
+
+          return `${k}_${validEntries
+            .map(([subK, subV]) => `${subK}-${subV}`)
+            .join("_")}`;
+        }
+        return `${k}_${v}`;
+      })
+      .filter(Boolean)
+      .join(".");
   };
 
   const parseValue = (value: string, key: keyof QueryParams) => {
     if (!value.includes("_")) return value;
 
     try {
-      /**
-       * Special handling for TLD values to prevent incorrect splitting
-       */
       if (key === "tld") {
         const [k, v] = value.split("_");
         return { [k]: v };
       }
 
-      /**
-       * Split by dot for other cases
-       */
       const parts = value.split(".");
       const obj: Record<string, unknown> = {};
 
       parts.forEach((part) => {
-        /**
-         * Split by underscore
-         */
         const [k, v] = part.split("_");
+
+        if (k === "page") {
+          const pageEntries = v.split("_").map((pair) => {
+            const [subK, subV] = pair.split("-");
+            const numValue = Number(subV);
+            return [subK, !isNaN(numValue) ? numValue : 1];
+          });
+          obj[k] = Object.fromEntries(pageEntries);
+          return;
+        }
+
         if (v === "true") obj[k] = true;
         else if (v === "false") obj[k] = false;
         else if (!isNaN(Number(v))) obj[k] = Number(v);
