@@ -36,15 +36,18 @@ export function Form({ initialValue }: { initialValue?: string }) {
   const formRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
+  const isInitialLoad = useRef(true);
 
   useEffect(() => {
-    const params = new URLSearchParams(searchParams);
-    if (inputValue) {
-      params.set("label", inputValue);
-    } else {
-      params.delete("label");
+    if (!isInitialLoad.current) {
+      const params = new URLSearchParams(searchParams);
+      if (inputValue) {
+        params.set("label", inputValue);
+      } else {
+        params.delete("label");
+      }
+      router.replace(`/tokenization?${params.toString()}`);
     }
-    router.replace(`/tokenization?${params.toString()}`);
   }, [inputValue, router, searchParams]);
 
   const handleExampleClick = (example: string) => {
@@ -89,8 +92,9 @@ export function Form({ initialValue }: { initialValue?: string }) {
   }, [state.error]);
 
   useEffect(() => {
-    if (initialValue && formRef.current) {
+    if (isInitialLoad.current && initialValue && formRef.current) {
       formRef.current.requestSubmit();
+      isInitialLoad.current = false;
     }
   }, [initialValue]);
 
