@@ -96,13 +96,19 @@ export function QueryParamsProvider({
         const [k, v] = part.split("_");
 
         if (k === "page") {
-          const pageEntries = v.split("_").map((pair) => {
-            const [subK, subV] = pair.split("-");
-            const numValue = Number(subV);
-            return [subK, !isNaN(numValue) ? numValue : 1];
-          });
-          obj[k] = Object.fromEntries(pageEntries);
-          return;
+          if (key === "nameDetails") {
+            const pageEntries = v.split("_").map((pair) => {
+              const [subK, subV] = pair.split("-");
+              const numValue = Number(subV);
+              return [subK, !isNaN(numValue) ? numValue : 1];
+            });
+            obj[k] = Object.fromEntries(pageEntries);
+            return;
+          } else {
+            const pageNum = parseInt(v, 10);
+            obj[k] = !isNaN(pageNum) ? pageNum : 1;
+            return;
+          }
         }
 
         if (v === "true") obj[k] = true;

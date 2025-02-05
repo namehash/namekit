@@ -65,7 +65,6 @@ export default function ExploreCollectionsPage() {
       collectionsSearch: {
         ...params.collectionsSearch,
         search: searchTerm,
-        page: DEFAULT_PAGE_NUMBER, // Resets page when search changes
       },
     });
 
@@ -75,7 +74,7 @@ export default function ExploreCollectionsPage() {
     queryCollections({
       search: params.collectionsSearch.search || "",
       orderBy: params.collectionsSearch.orderBy || NameGraphSortOrderOptions.AI,
-      page: params.collectionsSearch.page || 1,
+      page: params.collectionsSearch.page || DEFAULT_PAGE_NUMBER,
       exactMatch: params.collectionsSearch.exactMatch,
     });
   };
@@ -86,12 +85,13 @@ export default function ExploreCollectionsPage() {
       collectionsSearch: {
         ...params.collectionsSearch,
         orderBy,
+        page: DEFAULT_PAGE_NUMBER,
       },
     });
     queryCollections({
       search: params.collectionsSearch.search || "",
       orderBy: orderBy || NameGraphSortOrderOptions.AI,
-      page: params.collectionsSearch.page || 1,
+      page: params.collectionsSearch.page || DEFAULT_PAGE_NUMBER,
       exactMatch: params.collectionsSearch.exactMatch,
     });
   };
@@ -116,7 +116,7 @@ export default function ExploreCollectionsPage() {
     queryCollections({
       search: params.collectionsSearch.search || "",
       orderBy: params.collectionsSearch.orderBy || NameGraphSortOrderOptions.AI,
-      page: page || 1,
+      page: page,
       exactMatch: params.collectionsSearch.exactMatch,
     });
   };
@@ -405,7 +405,10 @@ export default function ExploreCollectionsPage() {
                                   disabled={isFirstCollectionsPageForCurrentQuery()}
                                   onClick={() =>
                                     handlePageChange(
-                                      Number(params.collectionsSearch.page) - 1,
+                                      Number(
+                                        params.collectionsSearch.page ||
+                                          DEFAULT_PAGE_NUMBER,
+                                      ) - 1,
                                     )
                                   }
                                 >
@@ -441,6 +444,7 @@ export default function ExploreCollectionsPage() {
                                       collectionsSearch: {
                                         ...params.collectionsSearch,
                                         exactMatch: pressed,
+                                        page: DEFAULT_PAGE_NUMBER,
                                       },
                                     });
                                     queryCollections({
@@ -449,7 +453,9 @@ export default function ExploreCollectionsPage() {
                                       orderBy:
                                         params.collectionsSearch.orderBy ||
                                         NameGraphSortOrderOptions.AI,
-                                      page: params.collectionsSearch.page || 1,
+                                      page:
+                                        params.collectionsSearch.page ||
+                                        DEFAULT_PAGE_NUMBER,
                                       exactMatch: pressed,
                                     });
                                   }}
@@ -528,7 +534,8 @@ export default function ExploreCollectionsPage() {
                                 disabled={isFirstCollectionsPageForCurrentQuery()}
                                 onClick={() =>
                                   handlePageChange(
-                                    Number(params.collectionsSearch.page) - 1,
+                                    Number(params.collectionsSearch.page) -
+                                      DEFAULT_PAGE_NUMBER,
                                   )
                                 }
                               >
@@ -540,7 +547,8 @@ export default function ExploreCollectionsPage() {
                                 disabled={isLastCollectionsPageForCurrentQuery()}
                                 onClick={() =>
                                   handlePageChange(
-                                    Number(params.collectionsSearch.page) + 1,
+                                    Number(params.collectionsSearch.page) +
+                                      DEFAULT_PAGE_NUMBER,
                                   )
                                 }
                               >

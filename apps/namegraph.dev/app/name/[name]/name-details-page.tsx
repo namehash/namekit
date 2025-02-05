@@ -594,7 +594,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
           </div>
         </div>
         {otherCategories?.length ? (
-          <div className="lg:px-4 mx-auto w-full mt-12">
+          <div className="mx-auto w-full mt-12">
             <div className="w-full rounded-lg border border-gray-200">
               <p className="text-[18px] font-semibold px-5 py-2.5 border-b border-gray-200">
                 Explore other names
