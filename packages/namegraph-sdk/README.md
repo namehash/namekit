@@ -63,10 +63,20 @@ const suggestions = await client.suggestionsByCategory("zeus");
 const members = await client.sampleCollectionMembers("collection_id");
 ```
 
-#### Fetch Top Collection Members
+#### Fetch Collection Members
 
 ```typescript
+// with pagination
+const members = await client.fetchCollectionMembers("collection_id", {offset: 0, limit: 20});
+
+// Top members
 const topMembers = await client.fetchTopCollectionMembers("collection_id");
+```
+
+#### Generate Scrambled Variations of Collection Tokens
+
+```typescript
+const scrambled = await client.scrambleCollectionTokens('collection_id', {seed: 42});
 ```
 
 #### Find Collections
@@ -90,6 +100,11 @@ const stringCount = await client.countCollectionsByString("zeus god");
 
 // By member
 const memberCount = await client.countCollectionsByMember("zeus");
+```
+
+#### Get Collection by ID
+```typescript
+const collection = await client.getCollectionById("collection_id");
 ```
 
 ### Response Types
