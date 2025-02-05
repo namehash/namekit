@@ -99,7 +99,7 @@ export function Form({ initialValue }: { initialValue?: string }) {
             className="!py-1.5"
             loading={isPending}
           >
-            Analyze
+            AI Analyze
           </Button>
         </div>
       </form>

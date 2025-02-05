@@ -40,7 +40,7 @@ export function Form({
           error={clientError ?? ""}
         />
         <Button type="submit" disabled={isSubmitDisabled} className="!py-1.5">
-          {isPending ? "..." : "Sort"}
+          {isPending ? "..." : "AI Sort"}
         </Button>
       </div>
     </form>
