@@ -6,7 +6,6 @@ import { Client } from "./client";
 import {
   defaultMetaOpengraph,
   defaultMetaTwitter,
-  defaultTitleTemplate,
 } from "@/app/shared-metadata";
 
 export interface LabelItem {
@@ -64,7 +63,7 @@ const title = "AI Sort Demo";
 const description = "Bring names more likely to be interesting to the top.";
 
 export const metadata: Metadata = {
-  title: defaultTitleTemplate(title),
+  title,
   description,
   openGraph: {
     ...defaultMetaOpengraph,

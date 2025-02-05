@@ -5,7 +5,6 @@ import Balancer from "react-wrap-balancer";
 import {
   defaultMetaOpengraph,
   defaultMetaTwitter,
-  defaultTitleTemplate,
 } from "@/app/shared-metadata";
 
 interface Props {
@@ -62,7 +61,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
     : "/tokenization";
 
   return {
-    title: defaultTitleTemplate(title),
+    title,
     description,
     openGraph: {
       ...defaultMetaOpengraph,
