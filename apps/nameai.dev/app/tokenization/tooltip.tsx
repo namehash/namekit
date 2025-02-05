@@ -1,10 +1,10 @@
 import { Transition } from "@headlessui/react";
 import cc from "classcat";
-import React, { useState } from "react";
+import { useState, type ReactNode } from "react";
 
 type TooltipProps = {
-  children: React.ReactNode;
-  content: React.ReactNode;
+  children: any;
+  content: any;
   className?: string;
   placement?: "top" | "right" | "bottom" | "left";
 };
