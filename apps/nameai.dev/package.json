@@ -10,10 +10,12 @@
   },
   "dependencies": {
     "@adraffy/ens-normalize": "1.11.0",
+    "@headlessui/react": "2.2.0",
     "@heroicons/react": "2.2.0",
     "@namehash/ens-webfont": "workspace:*",
     "@namehash/nameai": "workspace:*",
     "@namehash/namekit-react": "workspace:*",
+    "classcat": "5.0.5",
     "next": "15.1.1-canary.5",
     "react": "19.0.0",
     "react-dom": "19.0.0",

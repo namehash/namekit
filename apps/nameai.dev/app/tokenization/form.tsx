@@ -88,8 +88,11 @@ export function Form({ initialValue }: { initialValue?: string }) {
     }
   }, [state.error]);
 
-  const isSubmitDisabled =
-    isPending || !!clientError || inputValue.trim() === "";
+  useEffect(() => {
+    if (initialValue && formRef.current) {
+      formRef.current.requestSubmit();
+    }
+  }, [initialValue]);
 
   return (
     <>

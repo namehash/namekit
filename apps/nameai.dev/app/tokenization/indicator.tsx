@@ -1,6 +1,6 @@
 "use client";
 
-import { Tooltip } from "@namehash/namekit-react/client";
+import { Tooltip } from "./tooltip";
 
 export const calculateNormalizedPercentage = (
   log_probability: number,
@@ -45,25 +45,14 @@ export const Indicator = ({ log_probability }: IndicatorProps) => {
   };
 
   return (
-    <div
-      className="h-2 rounded cursor-help"
-      style={{
-        backgroundColor: `rgb(${r}, ${g}, ${b})`,
-        width: `${width}px`,
-      }}
-    />
-    // <Tooltip
-    //   trigger={
-    //     <div
-    //       className="h-2 rounded cursor-help"
-    //       style={{
-    //         backgroundColor: `rgb(${r}, ${g}, ${b})`,
-    //         width: `${width}px`,
-    //       }}
-    //     />
-    //   }
-    // >
-    //   {getTooltipMessage(normalizedPercentage)}
-    // </Tooltip>
+    <Tooltip content={getTooltipMessage(normalizedPercentage)}>
+      <div
+        className="h-2 rounded cursor-help"
+        style={{
+          backgroundColor: `rgb(${r}, ${g}, ${b})`,
+          width: `${width}px`,
+        }}
+      />
+    </Tooltip>
   );
 };

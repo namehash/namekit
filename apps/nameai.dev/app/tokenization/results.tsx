@@ -27,7 +27,7 @@ export function Results({ analysis }: NameAIReport) {
             topTokenization.map((token, index) => (
               <span
                 key={index}
-                className={`ens-webfont rounded px-3 py-1 text-sm border font-semibold mr-2 ${
+                className={`ens-webfont rounded px-3 py-1 text-sm border mr-2 ${
                   token ? "bg-white border-gray-200" : "bg-gray-200 opacity-30"
                 }`}
               >
@@ -68,7 +68,7 @@ export function Results({ analysis }: NameAIReport) {
             {tokenization.tokens.map((token: string, tokenIndex: any) => (
               <span
                 key={tokenIndex}
-                className={`ens-webfont rounded px-3 py-1 text-sm border font-semibold mr-2 ${
+                className={`ens-webfont rounded px-3 py-1 text-sm border mr-2 ${
                   token ? "bg-white border-gray-200" : "bg-gray-200 opacity-30"
                 }`}
               >
