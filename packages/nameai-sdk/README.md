@@ -1,12 +1,16 @@
 # NameAI SDK
 
-![NPM Version](https://img.shields.io/npm/v/@namehash/nameai)
+[![NPM Version](https://img.shields.io/npm/v/@namehash/nameai)](https://www.npmjs.com/package/@namehash/nameai)
 
 [NameAI](https://nameai.dev) extends [NameGuard](https://nameguard.io) with sophisticated natural language processing capabilities to help evaluate and understand Ethereum Name Service (ENS) names.
 
 [NameGuard](https://nameguard.io) is designed to inspect and prevent malicious use of ENS names by providing comprehensive security checks. See the [NameGuard SDK documentation](../nameguard-sdk/README.md) for details about the base security features.
 
 ⚠️ **This SDK is BETA. Things will change based on the community feedback.**
+
+## Implementation
+
+This SDK provides a TypeScript interface to the NameAI API. Developers interested in the API internals can find the implementation in the [NameAI backend service](https://github.com/namehash/namekit/tree/main/apps/api.nameai.dev).
 
 ## Features
 

@@ -3,12 +3,15 @@
 ## API
 The API extends the NameGuard API and is fully compatible with it.
 
-NameAI-specific endpoints are under the [api.nameai.dev](https://api.nameai.dev) path prefix and
-NameGuard-specific endpoints are under the [api.nameai.dev/nameguard](https://api.nameai.dev/nameguard) path prefix.
+NameAI-specific endpoints are under the `https://api.nameai.dev` path prefix and
+NameGuard-specific endpoints are under the `https://api.nameai.dev/nameguard` path prefix.
 
 API documentation is available at [api.nameai.dev/docs](https://api.nameai.dev/docs) for NameAI and [api.nameai.dev/nameguard/docs](https://api.nameai.dev/nameguard/docs) for NameGuard.
 
 Lambda is publicly accessible under given domain [api.nameai.dev](https://api.nameai.dev)
+
+## SDK
+The NameAI SDK provides a convenient way to interact with the NameAI API in your JavaScript/TypeScript applications. You can find the SDK implementation and documentation at [github.com/namehash/namekit/tree/main/packages/nameai-sdk](https://github.com/namehash/namekit/tree/main/packages/nameai-sdk).
 
 # AWS deploy
 ## Requirements
@@ -116,3 +119,13 @@ This script can be run manually with `poetry run python -m nameai.generate_stati
 Static data is generated once and stored in `nameai/data/static` directory.
 
 Static data is used to speed up NameAI API calls by storing precomputed results in pickle files.
+
+## Contact Us
+
+Visit our [website](https://namehashlabs.org/) to get in contact.
+
+## License
+
+Licensed under the MIT License, Copyright © 2023-present [NameHash Labs](https://namehashlabs.org).
+
+See [LICENSE](./LICENSE) for more information.
