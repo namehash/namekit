@@ -15,7 +15,7 @@
     "NameHash",
     "NameGuard",
     "NameAI",
-    "NFT"
+    "NameGraph"
   ],
   "type": "module",
   "exports": {
