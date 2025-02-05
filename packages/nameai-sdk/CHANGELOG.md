@@ -1,5 +1,11 @@
 # @namehash/nameai
 
+## 1.1.3
+
+### Patch Changes
+
+- 58d8a82: Update default endpoint
+
 ## 1.1.2
 
 ### Patch Changes
