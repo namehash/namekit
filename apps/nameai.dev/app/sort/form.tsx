@@ -45,7 +45,7 @@ export function Form({
           loading={isPending}
           className="!py-1.5"
         >
-          Sort
+          AI Sort
         </Button>
       </div>
     </form>

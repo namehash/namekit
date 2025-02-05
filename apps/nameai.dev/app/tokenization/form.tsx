@@ -110,7 +110,7 @@ export function Form({ initialValue }: { initialValue?: string }) {
             error={clientError ?? ""}
           />
           <Button type="submit" className="!py-1.5" loading={isPending}>
-            Analyze
+            AI Analyze
           </Button>
         </div>
       </form>

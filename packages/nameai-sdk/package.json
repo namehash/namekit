@@ -1,7 +1,7 @@
 {
   "name": "@namehash/nameai",
   "description": "A lightweight JavaScript client for the NameAI API.",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -15,7 +15,7 @@
     "NameHash",
     "NameGuard",
     "NameAI",
-    "NFT"
+    "NameGraph"
   ],
   "type": "module",
   "exports": {

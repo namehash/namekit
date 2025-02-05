@@ -1,5 +1,11 @@
 # @namehash/namekit-react
 
+## 0.12.0
+
+### Minor Changes
+
+- 57b15ac: add loading state to buttons
+
 ## 0.11.0
 
 ### Minor Changes

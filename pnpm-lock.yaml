@@ -123,6 +123,9 @@ importers:
       sonner:
         specifier: 1.5.0
         version: 1.5.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      tweakpane:
+        specifier: 4.0.5
+        version: 4.0.5
     devDependencies:
       '@types/node':
         specifier: ^22.10.2
@@ -5634,6 +5637,9 @@ packages:
     resolution: {integrity: sha512-DUHWQAcC8BTiUZDRzAYGvpSpGLiaOQPfYXlCieQbwUvmml/LRGIe3raKdrOPOoiX0DYlzxs2nH6BoWJoZrj8hA==}
     hasBin: true
 
+  tweakpane@4.0.5:
+    resolution: {integrity: sha512-rxEXdSI+ArlG1RyO6FghC4ZUX8JkEfz8F3v1JuteXSV0pEtHJzyo07fcDG+NsJfN5L39kSbCYbB9cBGHyuI/tQ==}
+
   tween-functions@1.2.0:
     resolution: {integrity: sha512-PZBtLYcCLtEcjL14Fzb1gSxPBeL7nWvGhO5ZFPGqziCcr8uvHp0NDmdjBchp6KHL+tExcg0m3NISmKxhU394dA==}
 
@@ -11143,6 +11149,8 @@ snapshots:
       turbo-linux-arm64: 2.3.3
       turbo-windows-64: 2.3.3
       turbo-windows-arm64: 2.3.3
+
+  tweakpane@4.0.5: {}
 
   tween-functions@1.2.0: {}
 
