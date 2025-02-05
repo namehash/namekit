@@ -1,5 +1,11 @@
 # @namehash/nameai
 
+## 1.1.1
+
+### Patch Changes
+
+- 08c5ae0: Refine NameAI Readme Files
+
 ## 1.1.0
 
 ### Minor Changes
