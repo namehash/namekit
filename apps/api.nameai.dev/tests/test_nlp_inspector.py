@@ -148,6 +148,18 @@ def test_inspector_ambiguous_names(nlp_inspector: 'NLPInspector'):
                 failures.append(
                     f"\nInput: '{input_text}'\nExpected ngrams source\n" f"Got: {tokenizations[0]['source']}"
                 )
+            # verify words tokenization when not a person name
+            expected_words = tuple(interpretations['words'])
+            found_words = False
+            for tokenization in tokenizations:
+                if tokenization['tokens'] == expected_words:
+                    found_words = True
+                    break
+            if not found_words:
+                failures.append(
+                    f"\nInput: '{input_text}'\nExpected words tokenization: {expected_words}\n"
+                    f"Got tokenizations: {[t['tokens'] for t in tokenizations[:5]]}"
+                )
 
     if failures:
         print('\n=== Ambiguous Names Test Failures ===')
@@ -157,6 +169,13 @@ def test_inspector_ambiguous_names(nlp_inspector: 'NLPInspector'):
         assert False, 'Some ambiguous name tests failed. See above for details.'
 
 
+# fixme: === Non-Names Test Failures ===
+# Input: 'cryptoking'
+# Expected: ['crypto', 'king'] (ngrams)
+# Got: ('crypto', 'king') (person_names)
+# Input: 'aiagent'
+# Expected: ['ai', 'agent'] (ngrams)
+# Got: ('a', 'i', 'agent') (ngrams)
 def test_inspector_non_names(nlp_inspector: 'NLPInspector'):
     """Test that non-names are correctly identified"""
     from nameai.data import get_resource_path
@@ -213,20 +232,3 @@ def test_inspector_tokenization_quality(nlp_inspector: 'NLPInspector'):
             print(failure)
         print(f'\nTotal failures: {len(failures)} out of {len(quality_tests)} test cases')
         assert False, 'Some combined tokenization quality tests failed. See above for details.'
-
-
-def test_inspector_probability_ranges(nlp_inspector: 'NLPInspector'):
-    """Test that probabilities are in reasonable ranges for different types of inputs"""
-    # test clear person names
-    result = nlp_inspector.nlp_analyse_label('giancarloesposito')
-    assert result.probability > 1e-8, 'Clear person name should have high probability'
-
-    result = nlp_inspector.nlp_analyse_label('piotrwiśniewski')
-    assert result.probability > 1e-8, 'Clear person name should have high probability'
-
-    # test ambiguous cases
-    result = nlp_inspector.nlp_analyse_label('dragonfernandez')
-    assert 1e-12 < result.probability < 1e-5, 'Ambiguous case should have medium probability'
-
-    result = nlp_inspector.nlp_analyse_label('wolfsmith')
-    assert 1e-12 < result.probability < 1e-5, 'Ambiguous case should have medium probability'

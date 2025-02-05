@@ -3,6 +3,7 @@ from contextlib import contextmanager
 import pytest
 from pytest import mark
 from hydra import initialize_config_module, compose
+import math
 
 from mocked_static_property import mock_static_property
 
@@ -316,3 +317,29 @@ def test_person_name_tokenizer_non_names():
 
         if failures:
             assert False, '\n'.join(failures)
+
+
+def test_person_name_tokenizer_probability_ranges():
+    """Test that probabilities are in reasonable ranges for different types of inputs"""
+    with init_person_name_tokenizer([]) as tokenizer:
+        # test clear person names
+        tokenizations = list(tokenizer.tokenize_with_scores('giancarloesposito'))
+        assert any(
+            score > math.log(1e-8) for _, score in tokenizations
+        ), 'Clear person name should have high probability'
+
+        tokenizations = list(tokenizer.tokenize_with_scores('piotrwiśniewski'))
+        assert any(
+            score > math.log(1e-8) for _, score in tokenizations
+        ), 'Clear person name should have high probability'
+
+        # test ambiguous cases
+        tokenizations = list(tokenizer.tokenize_with_scores('dragonfernandez'))
+        assert any(
+            math.log(1e-12) < score < math.log(1e-5) for _, score in tokenizations
+        ), 'Ambiguous case should have medium probability'
+
+        tokenizations = list(tokenizer.tokenize_with_scores('wolfsmith'))
+        assert any(
+            math.log(1e-12) < score < math.log(1e-5) for _, score in tokenizations
+        ), 'Ambiguous case should have medium probability'

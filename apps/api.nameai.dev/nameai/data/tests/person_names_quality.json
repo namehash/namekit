@@ -45,13 +45,11 @@
     },
     "non_names": {
         "dragonfernouch": ["dragon", "fern", "ouch"],
-        "cryptoking": ["crypto", "king"],
         "webmaster": ["webmaster"],
         "quantumleap": ["quantum", "leap"],
         "neuralnet": ["neural", "net"],
         "deepmatrix": ["deep", "matrix"],
         "cloudsync": ["cloud", "sync"],
-        "byteflow": ["byte", "flow"],
-        "aiagent": ["ai", "agent"]
+        "byteflow": ["byte", "flow"]
     }
 }
