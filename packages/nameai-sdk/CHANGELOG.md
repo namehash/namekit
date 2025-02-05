@@ -1,5 +1,11 @@
 # @namehash/nameai
 
+## 1.1.2
+
+### Patch Changes
+
+- eaa085e: Refine readme
+
 ## 1.1.1
 
 ### Patch Changes
