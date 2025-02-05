@@ -1,5 +1,5 @@
 ---
-"@namehash/nameai-sdk": patch
+"@namehash/nameai": patch
 ---
 
 Refine NameAI Readme Files
