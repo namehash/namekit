@@ -24,55 +24,6 @@ importers:
         specifier: 2.3.3
         version: 2.3.3
 
-  apps/ensnode.io:
-    dependencies:
-      '@namehash/ens-webfont':
-        specifier: workspace:*
-        version: link:../../packages/ens-webfont
-      '@namehash/internal':
-        specifier: workspace:*
-        version: link:../../internal/internal
-      '@namehash/namekit-react':
-        specifier: workspace:*
-        version: link:../../packages/namekit-react
-      '@types/react-dom':
-        specifier: 18.3.1
-        version: 18.3.1
-      classcat:
-        specifier: 5.0.5
-        version: 5.0.5
-      eslint-config-next:
-        specifier: 14.2.14
-        version: 14.2.14(eslint@8.57.1)(typescript@5.6.2)
-      next:
-        specifier: 14.2.21
-        version: 14.2.21(@babel/core@7.26.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react:
-        specifier: 18.3.1
-        version: 18.3.1
-      react-dom:
-        specifier: 18.3.1
-        version: 18.3.1(react@18.3.1)
-    devDependencies:
-      '@types/node':
-        specifier: 22.7.4
-        version: 22.7.4
-      '@types/react':
-        specifier: 18.3.1
-        version: 18.3.1
-      eslint:
-        specifier: 8.57.1
-        version: 8.57.1
-      tailwindcss:
-        specifier: 3.4.13
-        version: 3.4.13
-      ts-prune:
-        specifier: ^0.10.3
-        version: 0.10.3
-      typescript:
-        specifier: 5.6.2
-        version: 5.6.2
-
   apps/examples.nameguard.io:
     dependencies:
       '@namehash/nameguard':
@@ -139,6 +90,9 @@ importers:
       '@adraffy/ens-normalize':
         specifier: 1.11.0
         version: 1.11.0
+      '@headlessui/react':
+        specifier: 2.2.0
+        version: 2.2.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@heroicons/react':
         specifier: 2.2.0
         version: 2.2.0(react@19.0.0)
@@ -151,6 +105,9 @@ importers:
       '@namehash/namekit-react':
         specifier: workspace:*
         version: link:../../packages/namekit-react
+      classcat:
+        specifier: 5.0.5
+        version: 5.0.5
       next:
         specifier: 15.1.1-canary.5
         version: 15.1.1-canary.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -174,11 +131,11 @@ importers:
         specifier: ^22.10.2
         version: 22.10.10
       '@types/react':
-        specifier: 19.0.1
-        version: 19.0.1
+        specifier: 19.0.8
+        version: 19.0.8
       '@types/react-dom':
-        specifier: 19.0.2
-        version: 19.0.2(@types/react@19.0.1)
+        specifier: 19.0.3
+        version: 19.0.3(@types/react@19.0.8)
       eslint:
         specifier: 8.57.1
         version: 8.57.1
@@ -2750,8 +2707,8 @@ packages:
   '@types/react-dom@18.3.1':
     resolution: {integrity: sha512-qW1Mfv8taImTthu4KoXgDfLuk4bydU6Q/TkADnDWWHwi4NX4BR+LWfTp2sVmTqRrsHvyDDTelgelxJ+SsejKKQ==}
 
-  '@types/react-dom@19.0.2':
-    resolution: {integrity: sha512-c1s+7TKFaDRRxr1TxccIX2u7sfCnc3RxkVyBIUA2lCpyqCF+QoAwQ/CBg7bsMdVwP120HEH143VQezKtef5nCg==}
+  '@types/react-dom@19.0.3':
+    resolution: {integrity: sha512-0Knk+HJiMP/qOZgMyNFamlIjw9OFCsyC2ZbigmEEyXXixgre6IQpm/4V+r3qH4GC1JPvRJKInw+on2rV6YZLeA==}
     peerDependencies:
       '@types/react': ^19.0.0
 
@@ -2761,8 +2718,8 @@ packages:
   '@types/react@18.3.11':
     resolution: {integrity: sha512-r6QZ069rFTjrEYgFdOck1gK7FLVsgJE7tTz0pQBczlBNUhBNk0MQH4UbnFSwjpQLMkLzgqvBBa+qGpLje16eTQ==}
 
-  '@types/react@19.0.1':
-    resolution: {integrity: sha512-YW6614BDhqbpR5KtUYzTA+zlA7nayzJRA9ljz9CQoxthR0sDisYZLuvSMsil36t4EH/uAt8T52Xb4sVw17G+SQ==}
+  '@types/react@19.0.8':
+    resolution: {integrity: sha512-9P/o1IGdfmQxrujGbIMDyYaaCykhLKc0NGCtYcECNUr9UAaDe4gwvV9bR6tvd5Br1SG0j+PBpbKr2UYY8CwqSw==}
 
   '@types/resolve@1.20.6':
     resolution: {integrity: sha512-A4STmOXPhMUtHH+S6ymgE2GiBSMqf4oTvcQZMcHzokuTLVYzXTB8ttjcgxOVaAp2lGwEdzZ0J+cRbbeevQj1UQ==}
@@ -6677,6 +6634,12 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
+  '@floating-ui/react-dom@2.1.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@floating-ui/dom': 1.6.13
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+
   '@floating-ui/react@0.19.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@floating-ui/react-dom': 1.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -6691,6 +6654,14 @@ snapshots:
       '@floating-ui/utils': 0.2.9
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
+      tabbable: 6.2.0
+
+  '@floating-ui/react@0.26.28(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@floating-ui/react-dom': 2.1.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@floating-ui/utils': 0.2.9
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
       tabbable: 6.2.0
 
   '@floating-ui/utils@0.2.9': {}
@@ -6718,6 +6689,15 @@ snapshots:
       '@tanstack/react-virtual': 3.11.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
+
+  '@headlessui/react@2.2.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@floating-ui/react': 0.26.28(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@react-aria/focus': 3.19.0(react@19.0.0)
+      '@react-aria/interactions': 3.22.5(react@19.0.0)
+      '@tanstack/react-virtual': 3.11.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
 
   '@heroicons/react@2.2.0(react@18.3.1)':
     dependencies:
@@ -7273,6 +7253,15 @@ snapshots:
       clsx: 2.1.1
       react: 18.3.1
 
+  '@react-aria/focus@3.19.0(react@19.0.0)':
+    dependencies:
+      '@react-aria/interactions': 3.22.5(react@19.0.0)
+      '@react-aria/utils': 3.26.0(react@19.0.0)
+      '@react-types/shared': 3.26.0(react@19.0.0)
+      '@swc/helpers': 0.5.15
+      clsx: 2.1.1
+      react: 19.0.0
+
   '@react-aria/interactions@3.22.5(react@18.3.1)':
     dependencies:
       '@react-aria/ssr': 3.9.7(react@18.3.1)
@@ -7281,10 +7270,23 @@ snapshots:
       '@swc/helpers': 0.5.15
       react: 18.3.1
 
+  '@react-aria/interactions@3.22.5(react@19.0.0)':
+    dependencies:
+      '@react-aria/ssr': 3.9.7(react@19.0.0)
+      '@react-aria/utils': 3.26.0(react@19.0.0)
+      '@react-types/shared': 3.26.0(react@19.0.0)
+      '@swc/helpers': 0.5.15
+      react: 19.0.0
+
   '@react-aria/ssr@3.9.7(react@18.3.1)':
     dependencies:
       '@swc/helpers': 0.5.15
       react: 18.3.1
+
+  '@react-aria/ssr@3.9.7(react@19.0.0)':
+    dependencies:
+      '@swc/helpers': 0.5.15
+      react: 19.0.0
 
   '@react-aria/utils@3.26.0(react@18.3.1)':
     dependencies:
@@ -7295,14 +7297,32 @@ snapshots:
       clsx: 2.1.1
       react: 18.3.1
 
+  '@react-aria/utils@3.26.0(react@19.0.0)':
+    dependencies:
+      '@react-aria/ssr': 3.9.7(react@19.0.0)
+      '@react-stately/utils': 3.10.5(react@19.0.0)
+      '@react-types/shared': 3.26.0(react@19.0.0)
+      '@swc/helpers': 0.5.15
+      clsx: 2.1.1
+      react: 19.0.0
+
   '@react-stately/utils@3.10.5(react@18.3.1)':
     dependencies:
       '@swc/helpers': 0.5.15
       react: 18.3.1
 
+  '@react-stately/utils@3.10.5(react@19.0.0)':
+    dependencies:
+      '@swc/helpers': 0.5.15
+      react: 19.0.0
+
   '@react-types/shared@3.26.0(react@18.3.1)':
     dependencies:
       react: 18.3.1
+
+  '@react-types/shared@3.26.0(react@19.0.0)':
+    dependencies:
+      react: 19.0.0
 
   '@rollup/pluginutils@5.1.4(rollup@4.30.1)':
     dependencies:
@@ -7684,6 +7704,12 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
+  '@tanstack/react-virtual@3.11.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@tanstack/virtual-core': 3.11.2
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+
   '@tanstack/virtual-core@3.11.2': {}
 
   '@testing-library/dom@10.4.0':
@@ -7794,7 +7820,7 @@ snapshots:
 
   '@types/hoist-non-react-statics@3.3.6':
     dependencies:
-      '@types/react': 18.3.11
+      '@types/react': 19.0.8
       hoist-non-react-statics: 3.3.2
 
   '@types/http-errors@2.0.4': {}
@@ -7829,15 +7855,15 @@ snapshots:
 
   '@types/react-dom@18.3.0':
     dependencies:
-      '@types/react': 19.0.1
+      '@types/react': 19.0.8
 
   '@types/react-dom@18.3.1':
     dependencies:
       '@types/react': 18.3.11
 
-  '@types/react-dom@19.0.2(@types/react@19.0.1)':
+  '@types/react-dom@19.0.3(@types/react@19.0.8)':
     dependencies:
-      '@types/react': 19.0.1
+      '@types/react': 19.0.8
 
   '@types/react@18.3.1':
     dependencies:
@@ -7849,7 +7875,7 @@ snapshots:
       '@types/prop-types': 15.7.14
       csstype: 3.1.3
 
-  '@types/react@19.0.1':
+  '@types/react@19.0.8':
     dependencies:
       csstype: 3.1.3
 
