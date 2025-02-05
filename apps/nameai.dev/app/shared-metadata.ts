@@ -18,7 +18,7 @@ export const baseUrl = "https://nameai.dev";
 
 export const defaultMetaOpengraph: Metadata["openGraph"] = {
   title: {
-    template: `${siteName} - %s`,
+    template: `%s`,
     default: defaultMetaTitle,
   },
   type: "website",
