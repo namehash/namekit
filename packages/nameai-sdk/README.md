@@ -2,7 +2,7 @@
 
 [![NPM Version](https://img.shields.io/npm/v/@namehash/nameai)](https://www.npmjs.com/package/@namehash/nameai)
 
-[NameAI](https://nameai.dev) extends [NameGuard](https://nameguard.io) with sophisticated natural language processing capabilities to help evaluate and understand Ethereum Name Service (ENS) names.
+[NameAI](https://nameai.io) extends [NameGuard](https://nameguard.io) with sophisticated natural language processing capabilities to help evaluate and understand Ethereum Name Service (ENS) names.
 
 [NameGuard](https://nameguard.io) is designed to inspect and prevent malicious use of ENS names by providing comprehensive security checks. See the [NameGuard SDK documentation](../nameguard-sdk/README.md) for details about the base security features.
 

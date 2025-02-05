@@ -3,12 +3,12 @@
 ## API
 The API extends the NameGuard API and is fully compatible with it.
 
-NameAI-specific endpoints are under the `https://api.nameai.dev` path prefix and
-NameGuard-specific endpoints are under the `https://api.nameai.dev/nameguard` path prefix.
+NameAI-specific endpoints are under the `https://api.nameai.io` path prefix and
+NameGuard-specific endpoints are under the `https://api.nameai.io/nameguard` path prefix.
 
-API documentation is available at [api.nameai.dev/docs](https://api.nameai.dev/docs) for NameAI and [api.nameai.dev/nameguard/docs](https://api.nameai.dev/nameguard/docs) for NameGuard.
+API documentation is available at [api.nameai.io/docs](https://api.nameai.io/docs) for NameAI and [api.nameai.io/nameguard/docs](https://api.nameai.io/nameguard/docs) for NameGuard.
 
-Lambda is publicly accessible under given domain [api.nameai.dev](https://api.nameai.dev)
+Lambda is publicly accessible under given domain [api.nameai.io](https://api.nameai.io)
 
 ## SDK
 The NameAI SDK provides a convenient way to interact with the NameAI API in your JavaScript/TypeScript applications. You can find the SDK implementation and documentation at [github.com/namehash/namekit/tree/main/packages/nameai-sdk](https://github.com/namehash/namekit/tree/main/packages/nameai-sdk).

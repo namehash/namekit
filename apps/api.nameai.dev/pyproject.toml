@@ -1,10 +1,10 @@
 [tool.poetry]
 name = "nameai"
-version = "0.1.6"
+version = "0.1.7"
 description = "NameHash NameAI API"
 authors = ["NameHash Team <devops@namehash.io>"]
 maintainers = ["NameHash Team <devops@namehash.io>"]
-homepage = "https://www.nameai.dev/"
+homepage = "https://www.nameai.io/"
 repository = "https://github.com/namehash/nameai"
 readme = "README.md"
 license = "LICENSE"
