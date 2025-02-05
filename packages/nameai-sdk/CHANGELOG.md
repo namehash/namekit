@@ -1,5 +1,11 @@
 # @namehash/nameai
 
+## 1.1.4
+
+### Patch Changes
+
+- 182aeb3: Rename nameai.dev to nameai.io
+
 ## 1.1.3
 
 ### Patch Changes
