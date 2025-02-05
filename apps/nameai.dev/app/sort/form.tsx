@@ -39,8 +39,13 @@ export function Form({
           autoComplete="off"
           error={clientError ?? ""}
         />
-        <Button type="submit" disabled={isSubmitDisabled} className="!py-1.5">
-          {isPending ? "..." : "Sort"}
+        <Button
+          type="submit"
+          disabled={isPending}
+          loading={isPending}
+          className="!py-1.5"
+        >
+          AI Sort
         </Button>
       </div>
     </form>

@@ -24,6 +24,6 @@ export async function analyzeLabel(prevState: any, formData: FormData) {
       analysis: result.nameai.analysis,
     };
   } catch (error) {
-    return { error: "Invalid ENS label. Please enter a valid value." };
+    return { error: `Invalid ENS label. Please enter a valid value. ${error}` };
   }
 }

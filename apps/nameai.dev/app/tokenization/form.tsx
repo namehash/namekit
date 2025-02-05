@@ -4,6 +4,7 @@ import { useActionState, useState, useEffect, useRef } from "react";
 import { Input, Button } from "@namehash/namekit-react";
 import { ens_normalize } from "@adraffy/ens-normalize";
 import { toast } from "sonner";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { analyzeLabel } from "./actions";
 import { Results } from "./results";
@@ -33,6 +34,18 @@ export function Form({ initialValue }: { initialValue?: string }) {
   );
   const [normalizedLabel, setNormalizedLabel] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams);
+    if (inputValue) {
+      params.set("label", inputValue);
+    } else {
+      params.delete("label");
+    }
+    router.replace(`/tokenization?${params.toString()}`);
+  }, [inputValue, router, searchParams]);
 
   const handleExampleClick = (example: string) => {
     setInputValue(example);
@@ -75,8 +88,11 @@ export function Form({ initialValue }: { initialValue?: string }) {
     }
   }, [state.error]);
 
-  const isSubmitDisabled =
-    isPending || !!clientError || inputValue.trim() === "";
+  useEffect(() => {
+    if (initialValue && formRef.current) {
+      formRef.current.requestSubmit();
+    }
+  }, [initialValue]);
 
   return (
     <>
@@ -93,13 +109,8 @@ export function Form({ initialValue }: { initialValue?: string }) {
             autoComplete="off"
             error={clientError ?? ""}
           />
-          <Button
-            type="submit"
-            // disabled={isSubmitDisabled}
-            className="!py-1.5"
-            loading={isPending}
-          >
-            Analyze
+          <Button type="submit" className="!py-1.5" loading={isPending}>
+            AI Analyze
           </Button>
         </div>
       </form>
