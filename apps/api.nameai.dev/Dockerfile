@@ -4,4 +4,5 @@ RUN yum install gcc -y
 COPY pyproject.toml poetry.lock LICENSE README.md ./
 COPY nameai ./nameai/
 RUN pip install --no-cache-dir .[lambda]
+RUN python -m nameai.download
 CMD [ "nameai.root_api.handler" ]

@@ -109,24 +109,6 @@ class AllTokenizer:
                     continue
                 automaton.add_word(word, word)
 
-        # with open(get_resource_path(self.config.tokenization.person_first_names), encoding='utf-8') as f:
-        #     for line in f:
-        #         word = line.strip().lower()
-        #         if len(word) <= 2:
-        #             continue
-        #         if word in should_be_tokenized:
-        #             continue
-        #         automaton.add_word(word, word)
-
-        # with open(get_resource_path(self.config.tokenization.person_last_names), encoding='utf-8') as f:
-        #     for line in f:
-        #         word = line.strip().lower()
-        #         if len(word) <= 2:
-        #             continue
-        #         if word in should_be_tokenized:
-        #             continue
-        #         automaton.add_word(word, word)
-
         automaton.make_automaton()
         return automaton
 

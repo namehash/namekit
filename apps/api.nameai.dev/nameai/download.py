@@ -32,8 +32,8 @@ class S3Downloader:
         self.get_client().download_file(self.bucket, key, local_path)
 
 
-@hydra.main(config_path='./config', config_name='prod_config', version_base=None)
-def main(config: DictConfig):
+def download_files(config: DictConfig):
+    """Download files using provided config"""
     downloader = S3Downloader()
     downloader.download_file(
         key=config.tokenization.person_names.first_names_s3_key,
@@ -57,5 +57,10 @@ def main(config: DictConfig):
     )
 
 
+@hydra.main(config_path='./config', config_name='prod_config', version_base=None)
+def download_files_main(config: DictConfig):
+    download_files(config)
+
+
 if __name__ == '__main__':
-    main()
+    download_files_main()
