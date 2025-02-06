@@ -39,12 +39,25 @@ export function Form({ initialValue }: { initialValue?: string }) {
   const isInitialLoad = useRef(true);
 
   useEffect(() => {
-    // Set isInitialLoad to false after first render
-    isInitialLoad.current = false;
-  }, []); // Empty dependency array means this runs once after first render
+    if (isInitialLoad.current && initialValue) {
+      isInitialLoad.current = false;
+      const submitForm = async () => {
+        try {
+          const normalized = ens_normalize(initialValue);
+          setNormalizedLabel(normalized);
+          if (formRef.current) {
+            formRef.current.requestSubmit();
+          }
+        } catch (error) {
+          setClientError("Enter a valid ENS label value");
+        }
+      };
+      submitForm();
+    }
+  }, [initialValue]);
 
   useEffect(() => {
-    if (!isInitialLoad.current) {
+    if (!isInitialLoad.current && inputValue) {
       const params = new URLSearchParams(searchParams);
       if (inputValue) {
         params.set("label", inputValue);
@@ -95,13 +108,6 @@ export function Form({ initialValue }: { initialValue?: string }) {
       toast.error(state.error);
     }
   }, [state.error]);
-
-  useEffect(() => {
-    if (isInitialLoad.current && (initialValue || searchParams.get('label')) && formRef.current) {
-      formRef.current.requestSubmit();
-      isInitialLoad.current = false;
-    }
-  }, [initialValue, searchParams]);
 
   return (
     <>
