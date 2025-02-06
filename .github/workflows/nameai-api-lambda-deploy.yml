@@ -7,7 +7,7 @@ on:
       - staging
     paths:
       - "packages/nameai-python/**"
-      - "apps/api.nameai.dev/**"
+      - "apps/api.nameai.io/**"
       - ".github/workflows/nameai-api-lambda-deploy.yml"
   workflow_dispatch:
 
@@ -76,7 +76,7 @@ jobs:
           cd terraform
           chmod +x ./deploy_lambda.sh
           ./deploy_lambda.sh $STAGE $AWS_REGION $DOMAIN_NAME $CERTIFICATE_NAME $HOSTED_ZONE_NAME
-        working-directory: apps/api.nameai.dev
+        working-directory: apps/api.nameai.io
 
   notify:
     name: Send Slack deployment event notification

@@ -10,7 +10,7 @@
 
 ## API Implementation
 
-This SDK provides a TypeScript interface to the NameAI API. Developers interested in the NameAI API internals can find the implementation in the [NameAI backend service](https://github.com/namehash/namekit/tree/main/apps/api.nameai.dev).
+This SDK provides a TypeScript interface to the NameAI API. Developers interested in the NameAI API internals can find the implementation in the [NameAI backend service](https://github.com/namehash/namekit/tree/main/apps/api.nameai.io).
 
 ## Features
 

@@ -5,7 +5,7 @@ description = "NameHash NameAI API"
 authors = ["NameHash Team <devops@namehash.io>"]
 maintainers = ["NameHash Team <devops@namehash.io>"]
 homepage = "https://www.nameai.io/"
-repository = "https://github.com/namehash/nameai"
+repository = "https://github.com/namehash/namekit"
 readme = "README.md"
 license = "LICENSE"
 packages = [{ include = "nameai" }]
