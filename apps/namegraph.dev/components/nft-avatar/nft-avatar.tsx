@@ -8,7 +8,7 @@ import {
   NftAvatarLoadingMethod,
 } from "./avatar-utils";
 import React, { useEffect, useRef, useState } from "react";
-import { useScreenSize } from "./useScreenSize";
+import { useScreenSize } from "./use-screen-size";
 import { NotNormalizedNameNftAvatar } from "./not-normalized-name";
 import { NormalizedNameNftAvatar } from "./normalized-name";
 import { LoadingNftAvatar } from "./loading-nft-avatar";
