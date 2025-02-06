@@ -97,11 +97,11 @@ export function Form({ initialValue }: { initialValue?: string }) {
   }, [state.error]);
 
   useEffect(() => {
-    if (isInitialLoad.current && initialValue && formRef.current) {
+    if (isInitialLoad.current && (initialValue || searchParams.get('label')) && formRef.current) {
       formRef.current.requestSubmit();
       isInitialLoad.current = false;
     }
-  }, [initialValue]);
+  }, [initialValue, searchParams]);
 
   return (
     <>
