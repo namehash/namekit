@@ -39,6 +39,11 @@ export function Form({ initialValue }: { initialValue?: string }) {
   const isInitialLoad = useRef(true);
 
   useEffect(() => {
+    // Set isInitialLoad to false after first render
+    isInitialLoad.current = false;
+  }, []); // Empty dependency array means this runs once after first render
+
+  useEffect(() => {
     if (!isInitialLoad.current) {
       const params = new URLSearchParams(searchParams);
       if (inputValue) {
