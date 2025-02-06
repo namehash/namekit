@@ -36,36 +36,15 @@ export function Form({ initialValue }: { initialValue?: string }) {
   const formRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const isInitialLoad = useRef(true);
 
   useEffect(() => {
-    if (isInitialLoad.current && initialValue) {
-      isInitialLoad.current = false;
-      const submitForm = async () => {
-        try {
-          const normalized = ens_normalize(initialValue);
-          setNormalizedLabel(normalized);
-          if (formRef.current) {
-            formRef.current.requestSubmit();
-          }
-        } catch (error) {
-          setClientError("Enter a valid ENS label value");
-        }
-      };
-      submitForm();
+    const params = new URLSearchParams(searchParams);
+    if (inputValue) {
+      params.set("label", inputValue);
+    } else {
+      params.delete("label");
     }
-  }, [initialValue]);
-
-  useEffect(() => {
-    if (!isInitialLoad.current && inputValue) {
-      const params = new URLSearchParams(searchParams);
-      if (inputValue) {
-        params.set("label", inputValue);
-      } else {
-        params.delete("label");
-      }
-      router.replace(`/tokenization?${params.toString()}`);
-    }
+    router.replace(`/tokenization?${params.toString()}`);
   }, [inputValue, router, searchParams]);
 
   const handleExampleClick = (example: string) => {
@@ -108,6 +87,14 @@ export function Form({ initialValue }: { initialValue?: string }) {
       toast.error(state.error);
     }
   }, [state.error]);
+
+  useEffect(() => {
+    if (initialValue && formRef.current) {
+      setTimeout(() => {
+        formRef.current?.requestSubmit();
+      }, 100);
+    }
+  }, [initialValue]);
 
   return (
     <>
