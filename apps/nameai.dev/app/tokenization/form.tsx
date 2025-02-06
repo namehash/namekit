@@ -36,15 +36,30 @@ export function Form({ initialValue }: { initialValue?: string }) {
   const formRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
+  const updateTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
   useEffect(() => {
-    const params = new URLSearchParams(searchParams);
-    if (inputValue) {
-      params.set("label", inputValue);
-    } else {
-      params.delete("label");
+    // Clear any existing timeout
+    if (updateTimeoutRef.current) {
+      clearTimeout(updateTimeoutRef.current);
     }
-    router.replace(`/tokenization?${params.toString()}`);
+
+    // Debounce the URL update
+    updateTimeoutRef.current = setTimeout(() => {
+      const params = new URLSearchParams(searchParams);
+      if (inputValue) {
+        params.set("label", inputValue);
+      } else {
+        params.delete("label");
+      }
+      router.replace(`/tokenization?${params.toString()}`);
+    }, 300); // Wait 300ms after last keystroke
+
+    return () => {
+      if (updateTimeoutRef.current) {
+        clearTimeout(updateTimeoutRef.current);
+      }
+    };
   }, [inputValue, router, searchParams]);
 
   const handleExampleClick = (example: string) => {
