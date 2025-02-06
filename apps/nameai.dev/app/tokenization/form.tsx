@@ -36,7 +36,7 @@ export function Form({ initialValue }: { initialValue?: string }) {
   const formRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const updateTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const updateTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
     // Clear any existing timeout
