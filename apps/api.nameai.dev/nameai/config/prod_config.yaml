@@ -4,6 +4,16 @@ tokenization:
   dictionary: words.txt
   custom_dictionary: custom_dictionary.txt
   domain_specific_dictionary: domain_specific_dictionary.txt
+  person_names:
+    first_names_path: pn_firstnames.json
+    last_names_path: pn_lastnames.json
+    other_path: pn_other.json
+    country_stats_path: pn_country_stats.json
+    first_names_s3_key: person_names_firstnames.json
+    last_names_s3_key: person_names_lastnames.json
+    other_s3_key: person_names_other.json
+    country_stats_s3_key: person_names_country_stats.json
+    country_bonus: 100
   should_be_tokenized: should_be_tokenized.txt
   skip_non_words: false
   with_gaps: true
