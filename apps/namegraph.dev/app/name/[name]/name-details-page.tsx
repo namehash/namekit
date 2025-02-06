@@ -13,7 +13,7 @@ import {
   NameGraphSortOrderOptions,
 } from "@namehash/namegraph-sdk/utils";
 import { useEnsText } from "wagmi";
-import { useEffect, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import Skeleton from "@/components/skeleton";
 import { Button } from "@/components/ui/button";
 import { useQueryParams } from "@/components/use-query-params";
@@ -50,6 +50,10 @@ import {
 import useSWR from "swr";
 import { nameguard, NameGuardReport } from "@namehash/nameguard";
 import { NameGuardSummary } from "@/components/name/nameguard-summary";
+import { TokenAnalysisResults } from "@/components/name-ai/results";
+import { analyzeLabel } from "@/components/name-ai/actions";
+import { TokenAnalysisResultsSkeleton } from "@/components/name-ai/skeleton";
+import { NLPLabelAnalysis } from "@namehash/nameai";
 
 interface NavigationConfig {
   itemsPerPage: number;
@@ -68,6 +72,20 @@ export const NameRelatedCollectionsTabs = {
 
 export type NameRelatedCollectionsTabs =
   (typeof NameRelatedCollectionsTabs)[keyof typeof NameRelatedCollectionsTabs];
+
+type ActionState = {
+  error?: string;
+  success?: boolean;
+  label?: string;
+  analysis?: any;
+};
+
+const initialState: ActionState = {
+  error: "",
+  success: false,
+  label: "",
+  analysis: null,
+};
 
 export const NameDetailsPage = ({ name }: { name: string }) => {
   let label = name;
@@ -560,6 +578,19 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
     }
   };
 
+  const [loadingLabelAnalysis, setLoadingLabelAnalysis] = useState(true);
+  const [labelAnalysis, setLabelAnalysis] = useState<
+    NLPLabelAnalysis | undefined
+  >(undefined);
+  useEffect(() => {
+    setLoadingLabelAnalysis(true);
+    analyzeLabel(label)
+      .then((res) => {
+        setLabelAnalysis(res.analysis);
+      })
+      .finally(() => setLoadingLabelAnalysis(false));
+  }, [label]);
+
   return (
     <div className="max-w-7xl flex flex-col space-y-8 lg:space-y-0 lg:space-x-8 lg:flex-row mx-auto py-8 w-full">
       <div className="flex justify-start flex-col mx-8 lg:mx-6 xl:mx-0">
@@ -592,6 +623,17 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
           <div className="w-full flex justify-center items-center border border-gray-200 rounded-md md:w-1/2 lg:w-auto">
             <NameGuardSummary nameGuardReport={nameguardReport} />
           </div>
+        </div>
+        <div>
+          {loadingLabelAnalysis ? (
+            <div className="mt-8">
+              <TokenAnalysisResultsSkeleton />
+            </div>
+          ) : labelAnalysis ? (
+            <div className="mt-8">
+              <TokenAnalysisResults analysis={labelAnalysis} />
+            </div>
+          ) : null}
         </div>
         {otherCategories?.length ? (
           <div className="mx-auto w-full mt-12">
