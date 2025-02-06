@@ -17,13 +17,13 @@ class PersonNames:
 
     def __init__(self, config: DictConfig):
         pn_config = config.tokenization.person_names
-        self.firstnames = json.load(open(get_resource_path(pn_config.first_names)))
-        self.lastnames = json.load(open(get_resource_path(pn_config.last_names)))
-        other = json.load(open(get_resource_path(pn_config.other)))
+        self.firstnames = json.load(open(get_resource_path(pn_config.first_names_path)))
+        self.lastnames = json.load(open(get_resource_path(pn_config.last_names_path)))
+        other = json.load(open(get_resource_path(pn_config.other_path)))
         self.countries: dict[str, int] = other['all']
         self.firstname_initials: dict[str, dict[str, int]] = other['firstname_initials']
         self.lastname_initials: dict[str, dict[str, int]] = other['lastname_initials']
-        self.country_stats = json.load(open(get_resource_path(pn_config.country_stats)))
+        self.country_stats = json.load(open(get_resource_path(pn_config.country_stats_path)))
         self.all_internet_users: int = sum(x[0] for x in self.country_stats.values())
         self.all_population: int = sum(x[1] for x in self.country_stats.values())
         self.country_bonus = pn_config.country_bonus
