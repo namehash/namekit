@@ -28,7 +28,7 @@ const initialState: ActionState = {
 export function Form({ initialValue }: { initialValue?: string }) {
   const [inputValue, setInputValue] = useState(initialValue ?? "");
   const [clientError, setClientError] = useState<string | null>(null);
-  const [state, formAction, isPending] = useActionState(
+  const [state, formAction, isPending] = useActionState<ActionState, FormData>(
     analyzeLabel,
     initialState,
   );
@@ -36,10 +36,16 @@ export function Form({ initialValue }: { initialValue?: string }) {
   const formRef = useRef<HTMLFormElement>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const isInitialLoad = useRef(true);
+  const updateTimeoutRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   useEffect(() => {
-    if (!isInitialLoad.current) {
+    // Clear any existing timeout
+    if (updateTimeoutRef.current) {
+      clearTimeout(updateTimeoutRef.current);
+    }
+
+    // Debounce the URL update
+    updateTimeoutRef.current = setTimeout(() => {
       const params = new URLSearchParams(searchParams);
       if (inputValue) {
         params.set("label", inputValue);
@@ -47,7 +53,13 @@ export function Form({ initialValue }: { initialValue?: string }) {
         params.delete("label");
       }
       router.replace(`/tokenization?${params.toString()}`);
-    }
+    }, 300); // Wait 300ms after last keystroke
+
+    return () => {
+      if (updateTimeoutRef.current) {
+        clearTimeout(updateTimeoutRef.current);
+      }
+    };
   }, [inputValue, router, searchParams]);
 
   const handleExampleClick = (example: string) => {
@@ -92,9 +104,10 @@ export function Form({ initialValue }: { initialValue?: string }) {
   }, [state.error]);
 
   useEffect(() => {
-    if (isInitialLoad.current && initialValue && formRef.current) {
-      formRef.current.requestSubmit();
-      isInitialLoad.current = false;
+    if (initialValue && formRef.current) {
+      setTimeout(() => {
+        formRef.current?.requestSubmit();
+      }, 100);
     }
   }, [initialValue]);
 
