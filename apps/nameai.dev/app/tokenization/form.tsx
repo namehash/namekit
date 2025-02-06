@@ -28,7 +28,7 @@ const initialState: ActionState = {
 export function Form({ initialValue }: { initialValue?: string }) {
   const [inputValue, setInputValue] = useState(initialValue ?? "");
   const [clientError, setClientError] = useState<string | null>(null);
-  const [state, formAction, isPending] = useActionState<ActionState>(
+  const [state, formAction, isPending] = useActionState<ActionState, FormData>(
     analyzeLabel,
     initialState,
   );
