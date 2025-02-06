@@ -85,7 +85,7 @@ importers:
         specifier: 5.6.2
         version: 5.6.2
 
-  apps/nameai.dev:
+  apps/nameai.io:
     dependencies:
       '@adraffy/ens-normalize':
         specifier: 1.11.0
