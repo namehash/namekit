@@ -1,5 +1,11 @@
 # @namehash/nameai
 
+## 1.1.5
+
+### Patch Changes
+
+- df44ce3: Rename nameai.dev to nameai.io
+
 ## 1.1.4
 
 ### Patch Changes
