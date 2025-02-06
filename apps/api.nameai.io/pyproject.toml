@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nameai"
-version = "0.1.7"
+version = "0.1.8"
 description = "NameHash NameAI API"
 authors = ["NameHash Team <devops@namehash.io>"]
 maintainers = ["NameHash Team <devops@namehash.io>"]
