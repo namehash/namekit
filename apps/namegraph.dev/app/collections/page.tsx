@@ -162,27 +162,6 @@ export default function ExploreCollectionsPage() {
       const MAX_RELATED_COLLECTIONS = 20;
       const OTHER_COLLECTIONS_NUMBER = 5;
 
-      /**
-       * This is the case where we have already queried the results for
-       * a given page, which is being visited once again and for which
-       * we have already stored its necessary data inside collections.
-       *
-       * There is no need then to re-do a load collections query.
-       *
-       * Of course this is only true if both the query and the sorting
-       * algorithm lastly used are the same. If any of these have changes,
-       * we do the queryCollections query once again and update the page's results.
-       */
-      if (
-        !!lastQueryDone &&
-        lastQueryDone.search === payload.search &&
-        !!collections?.[payload.page] &&
-        payload.orderBy == collections?.[payload.page]?.sort_order &&
-        payload.exactMatch === lastQueryDone.exactMatch
-      ) {
-        return;
-      }
-
       setLoadingCollections(true);
 
       if (payload.exactMatch) {
