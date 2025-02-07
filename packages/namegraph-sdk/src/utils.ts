@@ -11,9 +11,9 @@ export const DEFAULT_MAX_SUGGESTIONS = 100;
 */
 export const DEFAULT_INSTANT_MODE = "instant";
 
-/* Other modes are: full and domain_detail. 
+/* Other modes are: full and domain_detail.
 They differ in what generators are to be used and how many names from each generator to take into final results
-In full context: https://github.com/namehash/name-generator/blob/master/readme.md#pipelines-weights-sampler 
+In full context: https://github.com/namehash/name-generator/blob/master/readme.md#pipelines-weights-sampler
 */
 export const DEFAULT_FULL_MODE = "full";
 
@@ -42,7 +42,7 @@ export const DEFAULT_MAX_TOTAL_COLLECTIONS = 6;
  */
 export const NameGraphGroupingCategory = {
   related: "related",
-  wordplay: "wordplay", 
+  wordplay: "wordplay",
   alternates: "alternates",
   emojify: "emojify",
   community: "community",
@@ -100,6 +100,10 @@ export type TypedNameGraphGroupingCategoriesParams = {
   [NameGraphGroupingCategory.gowild]: NameGraphGroupingCategoryParams;
   [NameGraphGroupingCategory.other]: NameGraphOtherCategoryParams;
 };
+
+/**
+ * NameGraph API Response types
+ **/
 
 /** Represents a single name suggestion with metadata */
 export type NameGraphSuggestion = {
@@ -224,6 +228,9 @@ export interface NameGraphFindCollectionsResponse {
   other_collections: NameGraphCollection[];
 }
 
+/**
+ * NameGraph Class related code
+ **/
 export class NameGraphError extends Error {
   constructor(
     public status: number,
@@ -244,12 +251,17 @@ export const NameGraphSortOrderOptions = {
   /** Use relevance ranking */
   RELEVANCE: "Relevance",
 } as const;
-
 export type NameGraphSortOrderOptions =
   (typeof NameGraphSortOrderOptions)[keyof typeof NameGraphSortOrderOptions];
 
+/**
+ * Writers block suggestions and collections
+ */
+
 /** Represents a suggestion for writer's block feature */
 export type WritersBlockSuggestion = {
+  /** Id of the collection */
+  collectionId: string;
   /** Name of the collection */
   collectionName: string;
   /** Suggested name */
@@ -279,28 +291,28 @@ export type WritersBlockCollection = {
 const getRandomElementOfArray = <Type>(array: Type[]): Type =>
   array[Math.floor(Math.random() * array.length)];
 
-/** 
- * Gets a random suggestion from writer's block collections 
- * 
+/**
+ * Gets a random suggestion from writer's block collections
+ *
  * @param {WritersBlockCollection[]} array - Array of collections to sample from
  * @returns {WritersBlockSuggestion} Random suggestion from the collections
  */
 const getRandomWritersBlockSuggestion = (
   array: WritersBlockCollection[],
 ): WritersBlockSuggestion => {
-
   const rawWritersBlockSuggestion = getRandomElementOfArray(array);
   const rawName = getRandomElementOfArray(rawWritersBlockSuggestion.names);
   return {
     collectionName: rawWritersBlockSuggestion.collection_name,
+    collectionId: rawWritersBlockSuggestion.collection_id,
     suggestedName: rawName.normalized_name,
     tokenizedSuggestedName: rawName.tokenized_name,
   };
 };
 
 /**
- * Samples suggestions from writer's block collections
- * 
+ * Samples suggestions from writer's block collections until suggestionsCount is reached.
+ *
  * @param {number} suggestionsCount - Maximum number of suggestions to return
  * @param {WritersBlockCollection[]} catalog - Array of collections to sample from
  * @returns {WritersBlockSuggestion[]} Array of unique suggestions

@@ -1,18 +1,21 @@
-import { Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
+import { Inter } from "next/font/google";
 import { NameHashLabsLogo } from "@/components/footer/namehash-labs-logo";
 import { ServiceProviderBadge } from "@/components/footer/service-provider-badge";
-import { EmailIcon } from "../components/footer/email-icon";
-import { GithubIcon } from "@/components/footer/github-icon";
-import { TwitterIcon } from "@/components/footer/twitter-icon";
 import { FarcasterIcon } from "@/components/footer/farcaster-icon";
 import { TelegramIcon } from "@/components/footer/telegram-icon";
-import { Button } from "@/components/ui/button";
-import "@namehash/namekit-react/styles.css";
-import NextLink from "next/link";
+import { TwitterIcon } from "@/components/footer/twitter-icon";
+import { GithubIcon } from "@/components/footer/github-icon";
+import { EmailIcon } from "../components/footer/email-icon";
 import { TldSelect } from "@/components/tld-select";
 import { Providers } from "@/components/providers";
+import { Button } from "@/components/ui/button";
+import "@namehash/namekit-react/styles.css";
+import "@namehash/nameguard-react/styles.css";
+import "ethereum-identity-kit/css";
+import NextLink from "next/link";
+import { SearchFieldWithUrl } from "@/components/collections/search-field-with-url";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -84,35 +87,33 @@ export default function RootLayout({
                     </div>
                   </NextLink>
                 </div>
+                <div className="w-full px-6">
+                  <SearchFieldWithUrl />
+                </div>
                 <div className="flex flex-row items-center justify-between md:gap-5 h-[40px]">
                   <TldSelect />
                   <div className="hidden items-center justify-center lg:flex gap-2">
                     <div className="hidden items-center justify-center xl:flex gap-2">
                       <Button variant="ghost" asChild>
-                        <Link href="http://api.namegraph.dev/docs">Docs</Link>
+                        <Link href="http://api.namegraph.dev/docs">
+                          API Docs
+                        </Link>
                       </Button>
 
                       <Button variant="ghost" asChild>
-                        <Link href="https://github.com/namehash/namekit">
+                        <Link href="https://github.com/namehash/namegraph">
                           <GithubIcon className="hidden md:block fill-current" />{" "}
                           GitHub
                         </Link>
                       </Button>
                     </div>
-
-                    <Button variant="ghost" asChild>
-                      <a
-                        href="https://namehashlabs.org/contact"
-                        target="_blank"
-                      >
-                        Contact
-                      </a>
-                    </Button>
                   </div>
                 </div>
               </div>
             </header>
-            <main className="flex-1">{children}</main>
+            <Providers>
+              <main className="flex-1">{children}</main>
+            </Providers>
             <footer className="lg:px-[50px] px-5 flex items-center justify-center w-full border-t border-gray-200">
               <div className="pt-8 pb-5 flex flex-col gap-10 items-start justify-between w-full max-w-[1216px]">
                 <div className="w-full gap-5 flex flex-col lg:flex-row lg:justify-between">

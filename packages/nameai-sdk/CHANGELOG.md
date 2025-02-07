@@ -1,5 +1,35 @@
 # @namehash/nameai
 
+## 1.1.5
+
+### Patch Changes
+
+- df44ce3: Rename nameai.dev to nameai.io
+
+## 1.1.4
+
+### Patch Changes
+
+- 182aeb3: Rename nameai.dev to nameai.io
+
+## 1.1.3
+
+### Patch Changes
+
+- 58d8a82: Update default endpoint
+
+## 1.1.2
+
+### Patch Changes
+
+- eaa085e: Refine readme
+
+## 1.1.1
+
+### Patch Changes
+
+- 08c5ae0: Refine NameAI Readme Files
+
 ## 1.1.0
 
 ### Minor Changes

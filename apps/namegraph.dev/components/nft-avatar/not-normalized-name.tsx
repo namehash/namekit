@@ -1,6 +1,6 @@
 import React from "react";
 import { AvatarSize } from "./avatar-utils";
-import { useScreenSize } from "./useScreenSize";
+import { useScreenSize } from "./use-screen-size";
 import { Normalization } from "@namehash/ens-utils";
 import cc from "classcat";
 

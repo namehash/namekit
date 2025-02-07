@@ -1,7 +1,7 @@
 {
   "name": "@namehash/namekit-react",
   "description": "React UI components for building on NameKit.",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "license": "MIT",
   "type": "commonjs",
   "repository": {
@@ -45,7 +45,6 @@
     "@namehash/ens-utils": "workspace:*",
     "@namehash/ens-webfont": "workspace:*",
     "@namehash/nameguard": "0.9.0",
-    "atropos": "1.0.2",
     "classcat": "5.0.5",
     "viem": "2.21.16"
   },

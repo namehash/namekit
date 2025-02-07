@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "./ui/select";
 import { useQueryParams } from "./use-query-params";
 import {
@@ -46,10 +45,6 @@ export const TldSelect = () => {
    * 3. In the URL tld and in the localStorage, set the new selection
    */
   const setTLDinLocalStorage = () => {
-    console.log(
-      params.tld.suffix,
-      window.localStorage.getItem(PREFERRED_TLD_LOCALSTORAGE_KEY),
-    );
     if (
       params.tld.suffix ===
       window.localStorage.getItem(PREFERRED_TLD_LOCALSTORAGE_KEY)
@@ -117,40 +112,26 @@ export const TldSelect = () => {
     };
   }, [params.tld.suffix]);
 
-  const pathname = usePathname();
-  const pagesToIncludeTldSelector = ["/name", "/collections"];
-  const [shouldDisplayTldSelector, setShouldDisplayTldSelector] =
-    useState(false);
-  const displayTldSelector = () => {
-    for (let x = 0; x < pagesToIncludeTldSelector.length; x++) {
-      if (pathname.includes(pagesToIncludeTldSelector[x])) {
-        setShouldDisplayTldSelector(true);
-        return;
-      }
-    }
-    setShouldDisplayTldSelector(false);
-  };
-  useEffect(() => {
-    displayTldSelector();
-  }, [pathname]);
-
-  return shouldDisplayTldSelector ? (
-    <Select
-      defaultValue={params.tld.suffix}
-      onValueChange={(newValue) => updatePreferredTld(newValue as Tlds)}
-    >
-      <SelectTrigger>
-        <div className="mr-1">{params.tld.suffix?.toString()}</div>
-      </SelectTrigger>
-      <SelectContent>
-        {Object.values(availableTlds).map((value) => {
-          return (
-            <SelectItem key={value} value={value}>
-              {value}
-            </SelectItem>
-          );
-        })}
-      </SelectContent>
-    </Select>
-  ) : null;
+  return (
+    <div className="flex space-x-1 items-center">
+      <p className="text-sm min-w-[90px] hidden md:block">Parent name</p>
+      <Select
+        defaultValue={params.tld.suffix}
+        onValueChange={(newValue) => updatePreferredTld(newValue as Tlds)}
+      >
+        <SelectTrigger>
+          <div className="mr-1">{params.tld.suffix?.toString()}</div>
+        </SelectTrigger>
+        <SelectContent>
+          {Object.values(availableTlds).map((value) => {
+            return (
+              <SelectItem key={value} value={value}>
+                {value}
+              </SelectItem>
+            );
+          })}
+        </SelectContent>
+      </Select>
+    </div>
+  );
 };
