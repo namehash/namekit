@@ -239,7 +239,7 @@ def test_all_tokenizer_quality2():
                 failures.append(f"\nInput: '{input_text}'\nExpected: {expected_tokens}\nGot: {tokenized_labels}")
 
         if failures:
-            print('\n=== Tokenization Quality Test Failures ===')
+            print('\n=== AllTokenizer Quality Test Failures ===')
             for failure in failures:
                 print(failure)
             print(f'\nTotal failures: {len(failures)} out of {len(quality_tests)} test cases')
@@ -247,7 +247,7 @@ def test_all_tokenizer_quality2():
 
 
 def test_person_name_tokenizer_simple_names():
-    """Test that simple person names are correctly tokenized"""
+    """Verify tokenization of clear person names."""
     with init_person_name_tokenizer([]) as tokenizer:
         from nameai.data import get_resource_path
         import json
@@ -269,11 +269,15 @@ def test_person_name_tokenizer_simple_names():
                 failures.append(f'Failed to find expected tokenization for {input_label}')
 
         if failures:
-            assert False, '\n'.join(failures)
+            print('\n=== PersonNameTokenizer Quality Test Failures [simple_names] ===')
+            for failure in failures:
+                print(failure)
+            print(f'\nTotal failures: {len(failures)} out of {len(quality_tests)} test cases')
+            assert False, 'Some tokenization quality tests failed. See above for details.'
 
 
 def test_person_name_tokenizer_ambiguous_names():
-    """Test that ambiguous names are correctly handled"""
+    """Verify handling of ambiguous inputs that could be names."""
     with init_person_name_tokenizer([]) as tokenizer:
         from nameai.data import get_resource_path
         import json
@@ -282,13 +286,13 @@ def test_person_name_tokenizer_ambiguous_names():
             quality_tests = json.load(f)
 
         failures = []
-        for input_label, interpretations in quality_tests['ambiguous_names'].items():
+        for input_label, interpretation2expected_tokens in quality_tests['ambiguous_names'].items():
             tokenized_labels = list(tokenizer.tokenize_with_scores(input_label))
-            if interpretations['person_name']:
-                person_name_tuple = tuple(interpretations['person_name'])
+            if interpretation2expected_tokens['person_name'] is not None:
+                person_name_tokens = tuple(interpretation2expected_tokens['person_name'])
                 found = False
                 for tokens, score in tokenized_labels:
-                    if tokens == person_name_tuple:
+                    if tokens == person_name_tokens:
                         found = True
                         assert score > -float('inf'), f'Expected valid score for {input_label}'
                         break
@@ -296,11 +300,15 @@ def test_person_name_tokenizer_ambiguous_names():
                     failures.append(f'Failed to find person name tokenization for {input_label}')
 
         if failures:
-            assert False, '\n'.join(failures)
+            print('\n=== PersonNameTokenizer Quality Test Failures [ambiguous_names] ===')
+            for failure in failures:
+                print(failure)
+            print(f'\nTotal failures: {len(failures)} out of {len(quality_tests)} test cases')
+            assert False, 'Some tokenization quality tests failed. See above for details.'
 
 
-def test_person_name_tokenizer_non_names():
-    """Test that non-names have very low scores"""
+def test_person_name_tokenizer_non_names_low_scores():
+    """Verify that non-name inputs get low (< 1e-10) probability scores."""
     with init_person_name_tokenizer([]) as tokenizer:
         from nameai.data import get_resource_path
         import json
@@ -311,16 +319,27 @@ def test_person_name_tokenizer_non_names():
         failures = []
         for input_label in quality_tests['non_names'].keys():
             tokenized_labels = list(tokenizer.tokenize_with_scores(input_label))
-            for tokens, score in tokenized_labels:
-                if score >= -10:
-                    failures.append(f'Expected low score for non-name {input_label}, got {score}')
+            for tokens, log_prob in tokenized_labels:
+                if log_prob >= math.log(1e-10):
+                    failures.append(f'Expected very low score for non-name {input_label}, got {log_prob}')
 
         if failures:
-            assert False, '\n'.join(failures)
+            print('\n=== PersonNameTokenizer Quality Test Failures [non_names] ===')
+            for failure in failures:
+                print(failure)
+            print(f'\nTotal failures: {len(failures)} out of {len(quality_tests)} test cases')
+            assert False, 'Some tokenization quality tests failed. See above for details.'
 
 
 def test_person_name_tokenizer_probability_ranges():
-    """Test that probabilities are in reasonable ranges for different types of inputs"""
+    """
+    Verify probability scoring across input categories.
+
+    Tests probability ranges for:
+    1. Clear names: high scores (> log(1e-8))
+    2. Ambiguous cases: medium scores (log(1e-12) to log(1e-8))
+    3. Non-names: very low scores (< log(1e-15))
+    """
     with init_person_name_tokenizer([]) as tokenizer:
         # test clear person names
         tokenizations = list(tokenizer.tokenize_with_scores('giancarloesposito'))
@@ -336,10 +355,20 @@ def test_person_name_tokenizer_probability_ranges():
         # test ambiguous cases
         tokenizations = list(tokenizer.tokenize_with_scores('dragonfernandez'))
         assert any(
-            math.log(1e-12) < score < math.log(1e-5) for _, score in tokenizations
+            math.log(1e-12) < score < math.log(1e-8) for _, score in tokenizations
         ), 'Ambiguous case should have medium probability'
 
         tokenizations = list(tokenizer.tokenize_with_scores('wolfsmith'))
         assert any(
-            math.log(1e-12) < score < math.log(1e-5) for _, score in tokenizations
+            math.log(1e-12) < score < math.log(1e-8) for _, score in tokenizations
         ), 'Ambiguous case should have medium probability'
+
+        # test non-names
+        tokenizations = list(tokenizer.tokenize_with_scores('cryptocurrency'))
+        assert all(score < math.log(1e-15) for _, score in tokenizations), 'Non-name should have very low probability'
+
+        tokenizations = list(tokenizer.tokenize_with_scores('blockchain'))
+        assert all(score < math.log(1e-15) for _, score in tokenizations), 'Non-name should have very low probability'
+
+        tokenizations = list(tokenizer.tokenize_with_scores('yerbamate'))
+        assert all(score < math.log(1e-15) for _, score in tokenizations), 'Non-name should have very low probability'

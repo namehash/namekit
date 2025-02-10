@@ -110,8 +110,8 @@ def test_inspector_simple_names(nlp_inspector: 'NLPInspector'):
     failures = []
     for input_text, expected_tokens in quality_tests['simple_names'].items():
         tokenizations, _ = nlp_inspector.tokenize(input_text, 1000)
-        expected_tuple = tuple(expected_tokens)
-        if tokenizations[0]['tokens'] != expected_tuple or tokenizations[0]['source'] != 'person_names':
+        expected_tokens = tuple(expected_tokens)
+        if tokenizations[0]['tokens'] != expected_tokens or tokenizations[0]['source'] != 'person_names':
             failures.append(
                 f"\nInput: '{input_text}'\nExpected: {expected_tokens} (person_names)\n"
                 f"Got: {tokenizations[0]['tokens']} ({tokenizations[0]['source']})"
@@ -134,13 +134,13 @@ def test_inspector_ambiguous_names(nlp_inspector: 'NLPInspector'):
         quality_tests = json.load(f)
 
     failures = []
-    for input_text, interpretations in quality_tests['ambiguous_names'].items():
+    for input_text, interpretation2expected_tokens in quality_tests['ambiguous_names'].items():
         tokenizations, _ = nlp_inspector.tokenize(input_text, 1000)
-        if interpretations['person_name']:
-            expected_tuple = tuple(interpretations['person_name'])
-            if tokenizations[0]['tokens'] != expected_tuple or tokenizations[0]['source'] != 'person_names':
+        if interpretation2expected_tokens['person_name'] is not None:
+            expected_tokens = tuple(interpretation2expected_tokens['person_name'])
+            if tokenizations[0]['tokens'] != expected_tokens or tokenizations[0]['source'] != 'person_names':
                 failures.append(
-                    f"\nInput: '{input_text}'\nExpected: {expected_tuple} (person_names)\n"
+                    f"\nInput: '{input_text}'\nExpected: {expected_tokens} (person_names)\n"
                     f"Got: {tokenizations[0]['tokens']} ({tokenizations[0]['source']})"
                 )
         else:
@@ -148,8 +148,7 @@ def test_inspector_ambiguous_names(nlp_inspector: 'NLPInspector'):
                 failures.append(
                     f"\nInput: '{input_text}'\nExpected ngrams source\n" f"Got: {tokenizations[0]['source']}"
                 )
-            # verify words tokenization when not a person name
-            expected_words = tuple(interpretations['words'])
+            expected_words = tuple(interpretation2expected_tokens['words'])
             found_words = False
             for tokenization in tokenizations:
                 if tokenization['tokens'] == expected_words:
@@ -169,13 +168,6 @@ def test_inspector_ambiguous_names(nlp_inspector: 'NLPInspector'):
         assert False, 'Some ambiguous name tests failed. See above for details.'
 
 
-# fixme: === Non-Names Test Failures ===
-# Input: 'cryptoking'
-# Expected: ['crypto', 'king'] (ngrams)
-# Got: ('crypto', 'king') (person_names)
-# Input: 'aiagent'
-# Expected: ['ai', 'agent'] (ngrams)
-# Got: ('a', 'i', 'agent') (ngrams)
 def test_inspector_non_names(nlp_inspector: 'NLPInspector'):
     """Test that non-names are correctly identified"""
     from nameai.data import get_resource_path
