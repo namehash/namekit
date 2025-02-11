@@ -113,7 +113,7 @@ export const TldSelect = () => {
   }, [params.tld.suffix]);
 
   return (
-    <div className="flex space-x-1 items-center">
+    <div className="flex space-x-1 items-center w-[200px]">
       <p className="text-sm min-w-[90px] hidden md:block">Parent name</p>
       <Select
         defaultValue={params.tld.suffix}
