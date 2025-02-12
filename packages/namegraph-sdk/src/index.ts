@@ -73,6 +73,11 @@ export class NameGraph {
    * 
    * @param {string} label - The ENS label to get suggestions for, cannot contain dots (.). If enclosed in double quotes assuming label is pre-tokenized
    * @param {number} maxRelatedCollections - Maximum number of related collections to return (default: 6)
+   * @param {number} options.max_per_type - collection diversity parameter based on collection types, adds penalty to collections with the same type as other collections. If null, then no penalty will be added
+   * @param {number} options.max_labels_per_related_collection - Max number of labels returned in any related collection
+   * @param {number} options.max_suggestion_per_grouping_category - Maximal number of suggestions to generate in one specific category
+   * @param {number} options.min_suggestion_per_grouping_category - Minimal number of suggestions to generate in one specific category. If the number of suggestions generated for this category is below 'min_suggestions'
+   * then the entire category should be filtered out from the response.
    * @returns {Promise<NameGraphGroupedByCategoryResponse>} Suggestions grouped by category.
    * @example
    * const suggestions = await client.suggestionsByCategory('zeus', 10);
@@ -80,45 +85,50 @@ export class NameGraph {
   public suggestionsByCategory(
     label: string,
     maxRelatedCollections = DEFAULT_MAX_RELATED_COLLECTIONS,
+    options?: {
+      max_per_type?: number,
+      max_labels_per_related_collection?: number,
+      max_suggestion_per_grouping_category?: number,
+      min_suggestion_per_grouping_category?: number,
+    },
   ): Promise<NameGraphGroupedByCategoryResponse> {
     const categoriesQueryConfig: TypedNameGraphGroupingCategoriesParams = {
       [NameGraphGroupingCategory.related]: {
         enable_learning_to_rank: DEFAULT_ENABLE_LEARNING_TO_RANK,
-        max_labels_per_related_collection: 10, /* max number of labels returned in any related collection */
-        max_per_type: DEFAULT_MAX_PER_TYPE,
+        max_labels_per_related_collection: Math.round(options?.max_labels_per_related_collection || 10), //TODO: validation with python package (1<=x<=10) + should we round it to integer here or allow the API to do it?
+        max_per_type: Math.round ( options?.max_per_type || DEFAULT_MAX_PER_TYPE), //TODO: validation with python package (1<=x) + should we round it to integer here or allow the API to do it?
         max_recursive_related_collections: DEFAULT_MAX_RECURSIVE_RELATED_COLLECTIONS, /* Set to 0 to disable the "recursive related collection search". When set to a value between 1 and 10, for each related collection we find, 
         we also do a (depth 1 recursive) lookup for this many related collections to the related collection.*/
         max_related_collections: maxRelatedCollections, /* max number of related collections returned. If 0 it effectively turns off any related collection search. */
         label_diversity_ratio: DEFAULT_LABEL_DIVERSITY_RATIO,
       },
       [NameGraphGroupingCategory.wordplay]: {
-        max_suggestions: DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY, /* minimal number of suggestions to generate in one specific category. If the number of suggestions generated for this category is below 'min_suggestions' 
-        then the entire category should be filtered out from the response. */
-        min_suggestions: DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY, /* maximal number of suggestions to generate in one specific category */
+        max_suggestions:  Math.round ( options?.max_suggestion_per_grouping_category || DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY), //TODO: validation with python package (0<=x<=30) + should we round it to integer here or allow the API to do it?
+        min_suggestions:  Math.round ( options?.min_suggestion_per_grouping_category || DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY), //TODO: validation with python package (0<=x<=30) + should we round it to integer here or allow the API to do it?
       },
 
       [NameGraphGroupingCategory.alternates]: {
-        max_suggestions: DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY,
-        min_suggestions: DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY,
+        max_suggestions:  Math.round ( options?.max_suggestion_per_grouping_category || DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY),
+        min_suggestions:  Math.round ( options?.min_suggestion_per_grouping_category || DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY),
       },
       [NameGraphGroupingCategory.emojify]: {
-        max_suggestions: DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY,
-        min_suggestions: DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY,
+        max_suggestions:  Math.round ( options?.max_suggestion_per_grouping_category || DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY),
+        min_suggestions:  Math.round ( options?.min_suggestion_per_grouping_category || DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY),
       },
       [NameGraphGroupingCategory.community]: {
-        max_suggestions: DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY,
-        min_suggestions: DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY,
+        max_suggestions:  Math.round ( options?.max_suggestion_per_grouping_category || DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY),
+        min_suggestions:  Math.round ( options?.min_suggestion_per_grouping_category || DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY),
       },
       [NameGraphGroupingCategory.expand]: {
-        max_suggestions: DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY,
-        min_suggestions: DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY,
+        max_suggestions:  Math.round ( options?.max_suggestion_per_grouping_category || DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY),
+        min_suggestions:  Math.round ( options?.min_suggestion_per_grouping_category || DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY),
       },
       [NameGraphGroupingCategory.gowild]: {
-        max_suggestions: DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY,
-        min_suggestions: DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY,
+        max_suggestions:  Math.round ( options?.max_suggestion_per_grouping_category || DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY),
+        min_suggestions:  Math.round ( options?.min_suggestion_per_grouping_category || DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY),
       },
       [NameGraphGroupingCategory.other]: {
-        max_suggestions: DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY,
+        max_suggestions: Math.round ( options?.max_suggestion_per_grouping_category || DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY),
         min_suggestions: 6,
         min_total_suggestions: 50, /* if not enough suggestions then "fallback generator" should be placed into another new category type called "other"
         it may be not fulfilled because of `max_suggestions` limit */
@@ -142,6 +152,7 @@ export class NameGraph {
    * 
    * @param {string} collection_id - The ID of the collection to sample from
    * @param {number} options.seed - Random seed for reproducible sampling
+   * @param {number} options.max_sample_size - the maximum number of members to sample. If the collection has fewer members than max_sample_size, all the members will be returned
    * @returns {Promise<NameGraphSuggestion[]>} Array of sampled collection members
    * @example
    * const members = await client.sampleCollectionMembers('collection_id', { seed: 42 });
@@ -150,9 +161,10 @@ export class NameGraph {
     collection_id: string,
     options?: {
       seed?: number;
+      max_sample_size?: number;
     },
   ): Promise<NameGraphSuggestion[]> {
-    const max_sample_size = 5; /* the maximum number of members to sample. If the collection has less members than max_sample_size, all the members will be returned */
+    const max_sample_size = Math.round(options?.max_sample_size || 5); //TODO: validation with python package (1<=x<=100) + should we round it to integer here or allow the API to do it?
     const seed = options?.seed;
 
     const payload = {
@@ -193,6 +205,8 @@ export class NameGraph {
    * @param {string} collection_id - The ID of the collection to scramble tokens from
    * @param {number} options.seed - Random seed for reproducible scrambling
    * @param {ScrambleMethod} options.method - Method to use for scrambling. Possible values: "left-right-shuffle", "left-right-shuffle-with-unigrams", "full-shuffle"
+   * @param {ScrambleMethod} options.n_top_members - Number of collection's top members to include in scrambling
+   * @param {ScrambleMethod} options.max_suggestions - Maximal number of suggestions to generate, must be a positive integer
    * @returns {Promise<NameGraphSuggestion[]>} Array of scrambled suggestions
    * @example
    * const scrambled = await client.scrambleCollectionTokens('collection_id', {
@@ -202,13 +216,15 @@ export class NameGraph {
   public scrambleCollectionTokens(
     collection_id: string,
     options?: {
-      seed?: number;
+      seed?: number
       method?: ScrambleMethod;
+      n_top_members?: number;
+      max_suggestions?: number;
     },
   ): Promise<NameGraphSuggestion[]> {
     const method = options?.method || ScrambleMethod["left-right-shuffle-with-unigrams"];
-    const n_top_members = 25; /* Number of collection's top members to include in scrambling */
-    const max_suggestions = 10; /* Maximal number of suggestions to generate, must be a positive integer */
+    const n_top_members = Math.round(options?.n_top_members || 25); //TODO: validation with python package (1 <= x) + should we round it to integer here or allow the API to do it?
+    const max_suggestions = Math.round(options?.max_suggestions || 10); //TODO: as above (0 < x)+ what about handling negative numbers?
     const seed = options?.seed;
 
     const payload = {
@@ -227,10 +243,13 @@ export class NameGraph {
    * Searches for collections by a string query.
    * 
    * @param {string} query - input query (with or without spaces) which is used to search for template collections, cannot contain dots (.)
+   * @param {number} options.max_per_type - Number of collections with the same type which are not penalized. Set to null if you want to disable the penalization.
+   * If the penalization algorithm is turned on then 3 times more results (than max_related_collections) are retrieved from Elasticsearch
    * @param {number} options.offset - Starting offset for pagination (default: 0)
    * @param {number} options.min_other_collections - Minimum number of other collections to return (default: 0)
    * @param {number} options.max_other_collections - Maximum number of other collections to return (default: 3)
-   * @param {number} options.max_related_collections - Maximum number of related collections to return (default: 3)
+   * @param {number} options.max_related_collections - Maximum number of related collections to return.
+   * Return collections at [offset, offset + max_related_collections) positions (order as in sort_order). Should be a positive integer (default: 3)
    * @param {number} options.max_total_collections - Maximum number of total (related + other) collections to return (default: 6)
    * @param {NameGraphSortOrderOptions} options.sort_order - Sort order: "AI", "A-Z", "Z-A", or "Relevance" (default: "AI")
    * @returns {Promise<NameGraphFindCollectionsResponse>} Matching collections
@@ -244,6 +263,7 @@ export class NameGraph {
   public findCollectionsByString(
     query: string,
     options?: {
+      max_per_type?: number;
       offset?: number;
       min_other_collections?: number;
       max_other_collections?: number;
@@ -252,7 +272,7 @@ export class NameGraph {
       sort_order?: NameGraphSortOrderOptions;
     },
   ): Promise<NameGraphFindCollectionsResponse> {
-    const max_per_type = 3;
+    const max_per_type = Math.round(options?.max_per_type || 3); //TODO: should we round it to integer here or allow the API to do it?
     const min_other_collections = options?.min_other_collections || DEFAULT_MIN_OTHER_COLLECTIONS;
     const max_other_collections = options?.max_other_collections || DEFAULT_MAX_OTHER_COLLECTIONS;
     const max_total_collections = options?.max_total_collections || DEFAULT_MAX_TOTAL_COLLECTIONS;
@@ -328,15 +348,23 @@ export class NameGraph {
    * Finds collections related to a given collection.
    * 
    * @param {string} collection_id - The ID of the collection to find related collections for
+   * @param {number} options.max_per_type - Number of collections with the same type which are not penalized. Set to null if you want to disable the penalization.
+   * If the penalization algorithm is turned on then 3 times more results (than max_related_collections) are retrieved from Elasticsearch
+   * @param {number} options.max_related_collections - Max number of related collections to return (for each page).
+   * Return collections at [offset, offset + max_related_collections) positions (order as in sort_order). Should be a positive integer
    * @returns {Promise<NameGraphFindCollectionsResponse>} Related collections
    * @example
    * const related = await client.findCollectionsByCollection('collection_id');
    */
   public findCollectionsByCollection(
     collection_id: string,
+    options?: {
+      max_related_collections?: number;
+      max_per_type?: number;
+    },
   ): Promise<NameGraphFindCollectionsResponse> {
-    const max_related_collections = 3;
-    const max_per_type = 3;
+    const max_related_collections = Math.round(options?.max_related_collections || 3); //TODO: validation with python package (0 < x) + should we round it to integer here or allow the API to do it?
+    const max_per_type = Math.round(options?.max_per_type || 3); //TODO: should we round it to integer here or allow the API to do it?
 
     const payload = {
       limit_labels: DEFAULT_LABELS_LIMIT,
