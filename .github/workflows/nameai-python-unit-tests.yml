@@ -5,13 +5,13 @@ on:
     branches:
       - main
     paths:
-      - "apps/api.nameai.dev/**"
+      - "apps/api.nameai.io/**"
   pull_request:
     branches:
       - main
       - staging
     paths:
-      - "apps/api.nameai.dev/**"
+      - "apps/api.nameai.io/**"
 
 jobs:
   test:
@@ -36,11 +36,11 @@ jobs:
           cache: "poetry"
 
       - name: Install dependencies
-        working-directory: ./apps/api.nameai.dev
+        working-directory: ./apps/api.nameai.io
         run: poetry install --extras "lambda"
 
       - name: Run tests
-        working-directory: ./apps/api.nameai.dev
+        working-directory: ./apps/api.nameai.io
         env:
           S3_BUCKET: ${{ secrets.S3_BUCKET }}
           S3_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
