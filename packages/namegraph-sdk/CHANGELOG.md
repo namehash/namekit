@@ -1,5 +1,11 @@
 # @namehash/namegraph-sdk
 
+## 0.5.1
+
+### Patch Changes
+
+- cc06f41: Update NameGraph SDK's README, add detailed documentation and provide test coverage for the package
+
 ## 0.5.0
 
 ### Minor Changes
