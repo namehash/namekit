@@ -29,7 +29,7 @@ export const SearchFieldWithUrl = ({ onSearch }: SearchFieldWithUrlProps) => {
 
   const goToCollections = () => {
     router.push(
-      `/collections?${new URLSearchParams({
+      `/?${new URLSearchParams({
         tld: `suffix_${params.tld.suffix}`,
         nameDetails: `page_${params.nameDetails.page}.activeTab_${params.nameDetails.activeTab}.orderBy_${params.nameDetails.orderBy}`,
         collectionsSearch: `search_${params.collectionsSearch.search}.page_${params.collectionsSearch.page}.orderBy_${params.collectionsSearch.orderBy}.exactMatch_${params.collectionsSearch.exactMatch}`,

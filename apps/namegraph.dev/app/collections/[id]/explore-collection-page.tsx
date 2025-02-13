@@ -30,8 +30,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Link } from "@namehash/namekit-react";
+import { buildENSName } from "@namehash/ens-utils";
 import { NameWithCurrentTld } from "@/components/collections/name-with-current-tld";
 import { useQueryParams } from "@/components/use-query-params";
+import { NftAvatar } from "@/components/nft-avatar/nft-avatar";
+import { AvatarSize } from "@/components/nft-avatar/avatar-utils";
 
 const notoBlack = Noto_Emoji({ preload: false });
 
@@ -113,7 +116,6 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
     if (!!collectionMembers?.[params.collectionDetails.page]) {
       return;
     }
-
     setLoadingCollectionMembers(true);
     fetchCollectionMembers(id, {
       offset:
@@ -374,6 +376,11 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                       className="bg-gray-100 rounded-full group-2 px-4 py-1 flex items-start"
                                       key={suggestion.label}
                                     >
+                                      <NftAvatar
+                                        withLink={false}
+                                        size={AvatarSize.MINI}
+                                        name={buildENSName(suggestion.label)}
+                                      />
                                       <div className="max-h-[20px] relative flex items-center justify-center overflow-hidden">
                                         <NameWithCurrentTld
                                           name={suggestion.label}

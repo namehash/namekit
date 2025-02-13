@@ -128,6 +128,7 @@ export function QueryParamsProvider({
 
     searchParams.forEach((value, key) => {
       if (
+        key === "collectionDetails" ||
         key === "collectionsSearch" ||
         key === "tld" ||
         key === "nameDetails"
