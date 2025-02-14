@@ -60,7 +60,7 @@ type FooterProps = {
 } & React.HTMLAttributes<HTMLDivElement>;
 
 export const Footer = ({
-  openResourcesInNewTab = false,
+  openResourcesInNewTab = true,
   ...props
 }: FooterProps) => {
   return (
@@ -112,7 +112,7 @@ export const Footer = ({
                     <li key={resource.name} className="my-2">
                       <Link
                         key={resource.name}
-                        target={openResourcesInNewTab ? "_self" : "_self"}
+                        target={openResourcesInNewTab ? "_blank" : "_self"}
                         variant="secondary"
                         size="small"
                         href={resource.href}
