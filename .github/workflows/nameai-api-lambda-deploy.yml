@@ -59,9 +59,6 @@ jobs:
           ALCHEMY_URI_SEPOLIA: ${{ secrets.ALCHEMY_URI_SEPOLIA }}
           ENS_SUBGRAPH_URL_MAINNET: ${{ secrets.ENS_SUBGRAPH_URL_MAINNET }}
           ENS_SUBGRAPH_URL_SEPOLIA: ${{ secrets.ENS_SUBGRAPH_URL_SEPOLIA }}
-          S3_BUCKET: ${{ secrets.S3_BUCKET }}
-          S3_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }}
-          S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
           CERTIFICATE_NAME: ${{ secrets.NAMEAI_CERTIFICATE_NAME }}
           HOSTED_ZONE_NAME: ${{ secrets.NAMEAI_HOSTED_ZONE_NAME }}

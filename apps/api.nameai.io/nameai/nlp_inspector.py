@@ -138,32 +138,11 @@ class NLPInspector:
             tokenized['tokens'] = tuple(uniq_gaps(tokenized['tokens']))
             tokenized['probability'] = math.exp(tokenized['log_probability'])
 
-        # # print probabilities by source
-        # ngrams_probs = [t['probability'] for t in tokenizeds if t['source'] == 'ngrams']
-        # person_probs = [t['probability'] for t in tokenizeds if t['source'] == 'person_names']
-        # print('\nProbabilities by source for input label: ', label)
-        # if ngrams_probs:
-        #     print(
-        #         f'ngrams: min={min(ngrams_probs):.2e}, max={max(ngrams_probs):.2e}, '
-        #         f'avg={sum(ngrams_probs)/len(ngrams_probs):.2e}'
-        #     )
-        # if person_probs:
-        #     print(
-        #         f'person_names: min={min(person_probs):.2e}, max={max(person_probs):.2e}, '
-        #         f'avg={sum(person_probs)/len(person_probs):.2e}'
-        #     )
-
         # sort so highest probability with the same tokenization is first
         tokenizeds = sorted(tokenizeds, key=lambda tokenized: tokenized['probability'], reverse=True)
         # remove duplicates after empty duplicates removal
         # used = set()
         # tokenizeds = [x for x in tokenizeds if x['tokens'] not in used and (used.add(x['tokens']) or True)]
-
-        # # print top 5 tokenizations by probability
-        # print('\nTop 5 tokenizations by probability:')
-        # for t in tokenizeds[:5]:
-        #     print(f"{t['tokens']} (prob: {t['probability']:.2e}, source: {t['source']})")
-        # print('\n')
 
         return tokenizeds, partial_tokenization
 

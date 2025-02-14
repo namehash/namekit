@@ -73,15 +73,15 @@ class AllTokenizer:
 
     def __init__(self, config):
         self.config = config
-        self.skip_non_words = config.tokenization.skip_non_words
-        self.with_gaps = config.tokenization.with_gaps
+        self.skip_non_words = config.tokenization.all_tokenizer.skip_non_words
+        self.with_gaps = config.tokenization.all_tokenizer.with_gaps
 
     @static_property
     def automaton(self):
         automaton = ahocorasick.Automaton()
 
         should_be_tokenized = set()
-        with open(get_resource_path(self.config.tokenization.should_be_tokenized), encoding='utf-8') as f:
+        with open(get_resource_path(self.config.tokenization.all_tokenizer.should_be_tokenized), encoding='utf-8') as f:
             for line in f:
                 word = line.strip().lower()
                 should_be_tokenized.add(word)

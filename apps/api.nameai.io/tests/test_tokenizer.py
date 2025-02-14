@@ -32,7 +32,7 @@ def init_person_name_tokenizer(overrides):
 @mark.parametrize(
     'overrides',
     [
-        (['tokenization.skip_non_words=false', 'tokenization.with_gaps=false']),
+        (['tokenization.all_tokenizer.skip_non_words=false', 'tokenization.all_tokenizer.with_gaps=false']),
     ],
 )
 def test_all_tokenizer_skip_one_letter_words(overrides: List[str]):
@@ -62,7 +62,7 @@ def test_all_tokenizer_skip_one_letter_words(overrides: List[str]):
 @mark.parametrize(
     'overrides',
     [
-        (['tokenization.skip_non_words=true']),
+        (['tokenization.all_tokenizer.skip_non_words=true']),
     ],
 )
 def test_all_tokenizer_skip_non_words(overrides: List[str]):
@@ -82,7 +82,7 @@ def test_all_tokenizer_skip_non_words(overrides: List[str]):
 @mark.parametrize(
     'overrides',
     [
-        (['tokenization.skip_non_words=true']),
+        (['tokenization.all_tokenizer.skip_non_words=true']),
     ],
 )
 def test_all_tokenizer_skip_one_letter_words_and_non_words_no_ias(overrides: List[str]):
@@ -111,7 +111,7 @@ def test_all_tokenizer_skip_one_letter_words_and_non_words_no_ias(overrides: Lis
 @mark.parametrize(
     'overrides',
     [
-        (['tokenization.skip_non_words=false', 'tokenization.with_gaps=true']),
+        (['tokenization.all_tokenizer.skip_non_words=false', 'tokenization.all_tokenizer.with_gaps=true']),
     ],
 )
 def test_all_tokenizer_skip_one_letter_words_and_non_words_no_ias_with_gaps(overrides: List[str]):
@@ -133,7 +133,7 @@ def test_all_tokenizer_skip_one_letter_words_and_non_words_no_ias_with_gaps(over
 @mark.parametrize(
     'overrides',
     [
-        (['tokenization.skip_non_words=false', 'tokenization.with_gaps=true']),
+        (['tokenization.all_tokenizer.skip_non_words=false', 'tokenization.all_tokenizer.with_gaps=true']),
     ],
 )
 def test_all_tokenizer_time(overrides):
@@ -144,7 +144,7 @@ def test_all_tokenizer_time(overrides):
 @mark.parametrize(
     'overrides',
     [
-        (['tokenization.skip_non_words=false', 'tokenization.with_gaps=true']),
+        (['tokenization.all_tokenizer.skip_non_words=false', 'tokenization.all_tokenizer.with_gaps=true']),
     ],
 )
 def test_all_tokenizer_skip_one_letter_words_and_non_words_no_ias_with_gaps23(overrides: List[str]):
@@ -172,7 +172,7 @@ def test_all_tokenizer_reccurence():
 @mark.parametrize(
     'overrides',
     [
-        (['tokenization.skip_non_words=false', 'tokenization.with_gaps=true']),
+        (['tokenization.all_tokenizer.skip_non_words=false', 'tokenization.all_tokenizer.with_gaps=true']),
     ],
 )
 def test_all_tokenizer_reccurence2(overrides):
