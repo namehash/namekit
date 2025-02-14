@@ -5,6 +5,7 @@ import {
   fetchCollectionMembers,
   findCollectionsByCollection,
   getCollectionById,
+  getNameDetailsPageHref,
   sampleNamesByCollectionId,
   scrambleNamesByCollectionId,
 } from "@/lib/utils";
@@ -16,7 +17,6 @@ import {
 } from "@namehash/namegraph-sdk/utils";
 import { useEffect, useState } from "react";
 import { Noto_Emoji } from "next/font/google";
-import { useQueryParams } from "@/components/use-query-params";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Loader } from "lucide-react";
 import Skeleton from "@/components/skeleton";
@@ -29,6 +29,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Link } from "@namehash/namekit-react";
+import { NameWithCurrentTld } from "@/components/collections/name-with-current-tld";
+import { useQueryParams } from "@/components/use-query-params";
 
 const notoBlack = Noto_Emoji({ preload: false });
 
@@ -107,13 +110,14 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
   }, [id]);
 
   const loadCollectionMembers = () => {
-    if (!!collectionMembers?.[params.page]) {
+    if (!!collectionMembers?.[params.collectionDetails.page]) {
       return;
     }
 
     setLoadingCollectionMembers(true);
     fetchCollectionMembers(id, {
-      offset: (params.page - 1) * navigationConfig.itemsPerPage,
+      offset:
+        (params.collectionDetails.page - 1) * navigationConfig.itemsPerPage,
       limit: navigationConfig.itemsPerPage,
     })
       .then((res) => {
@@ -122,21 +126,21 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
 
           setCollectionMembers({
             ...collectionMembers,
-            [params.page]: {
+            [params.collectionDetails.page]: {
               suggestions,
             },
           });
         } else {
           setCollectionMembers({
             ...collectionMembers,
-            [params.page]: null,
+            [params.collectionDetails.page]: null,
           });
         }
       })
       .catch(() => {
         setCollectionMembers({
           ...collectionMembers,
-          [params.page]: null,
+          [params.collectionDetails.page]: null,
         });
       })
       .finally(() => setLoadingCollectionMembers(false));
@@ -220,17 +224,16 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
   /**
    * Table query
    */
-  const DEFAULT_PAGE_NUMBER = 1;
-  const DEFAULT_COLLECTIONS_PARAMS: Record<string, any> = {
-    page: DEFAULT_PAGE_NUMBER,
-  };
-  type DefaultDomainFiltersType = typeof DEFAULT_COLLECTIONS_PARAMS;
-  const { params, setParams } = useQueryParams<DefaultDomainFiltersType>(
-    DEFAULT_COLLECTIONS_PARAMS,
-  );
+  const { params, setParams } = useQueryParams();
 
   const handlePageChange = (page: number) => {
-    setParams({ page });
+    setParams({
+      ...params,
+      collectionDetails: {
+        ...params.collectionDetails,
+        page,
+      },
+    });
   };
 
   /**
@@ -242,12 +245,12 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
     totalItems: undefined,
   });
   const isFirstCollectionsPageForCurrentQuery = () => {
-    return Number(params.page) === 1;
+    return Number(params.collectionDetails.page) === 1;
   };
   const isLastCollectionsPageForCurrentQuery = () => {
     if (navigationConfig.totalItems) {
       return (
-        Number(params.page) * navigationConfig.itemsPerPage >=
+        Number(params.collectionDetails.page) * navigationConfig.itemsPerPage >=
         navigationConfig.totalItems
       );
     } else return false;
@@ -255,8 +258,8 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
 
   const getNavigationPageTextGuide = () => {
     return navigationConfig.totalItems
-      ? `${(Number(params.page) - 1) * navigationConfig.itemsPerPage + 1}-${Math.min(
-          Number(params.page) * navigationConfig.itemsPerPage,
+      ? `${(Number(params.collectionDetails.page) - 1) * navigationConfig.itemsPerPage + 1}-${Math.min(
+          Number(params.collectionDetails.page) * navigationConfig.itemsPerPage,
           navigationConfig.totalItems,
         )} of ${navigationConfig.totalItems} name suggestions`
       : "No name suggestions found";
@@ -264,12 +267,12 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
 
   useEffect(() => {
     loadCollectionMembers();
-  }, [params.page]);
+  }, [params.collectionDetails.page]);
 
   useEffect(() => {
     setNavigationConfig({
       ...navigationConfig,
-      totalItems: collection?.number_of_names || undefined,
+      totalItems: collection?.number_of_labels || undefined,
     });
   }, [collection]);
 
@@ -314,7 +317,7 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                     <div className="w-full">
                       <div className="w-full mb-8">
                         <div className="w-full flex flex-col space-y-4 p-3 rounded-xl border border-gray-200">
-                          <div className="w-full h-[877px] flex flex-col justify-start">
+                          <div className="w-full h-[1023px] flex flex-col justify-start">
                             <div className="h-full">
                               {/* Collection Count and Sort */}
                               <div className="max-w-[756px] w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5">
@@ -329,7 +332,9 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                         disabled={isFirstCollectionsPageForCurrentQuery()}
                                         onClick={() =>
                                           handlePageChange(
-                                            Number(params.page) - 1,
+                                            Number(
+                                              params.collectionDetails.page,
+                                            ) - 1,
                                           )
                                         }
                                       >
@@ -340,7 +345,9 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                         disabled={isLastCollectionsPageForCurrentQuery()}
                                         onClick={() =>
                                           handlePageChange(
-                                            Number(params.page) + 1,
+                                            Number(
+                                              params.collectionDetails.page,
+                                            ) + 1,
                                           )
                                         }
                                       >
@@ -358,16 +365,21 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                   </div>
                                 ) : collectionMembers ? (
                                   collectionMembers[
-                                    params.page
+                                    params.collectionDetails.page
                                   ]?.suggestions.map((suggestion) => (
-                                    <div
-                                      key={suggestion.name}
-                                      className="bg-gray-100 rounded-full groupp-2 px-4 flex items-start"
+                                    <Link
+                                      href={getNameDetailsPageHref(
+                                        suggestion.label,
+                                      )}
+                                      className="bg-gray-100 rounded-full group-2 px-4 py-1 flex items-start"
+                                      key={suggestion.label}
                                     >
                                       <div className="max-h-[20px] relative flex items-center justify-center overflow-hidden">
-                                        {suggestion.name}
+                                        <NameWithCurrentTld
+                                          name={suggestion.label}
+                                        />
                                       </div>
-                                    </div>
+                                    </Link>
                                   ))
                                 ) : null}
                               </div>
@@ -385,7 +397,9 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                       disabled={isFirstCollectionsPageForCurrentQuery()}
                                       onClick={() =>
                                         handlePageChange(
-                                          Number(params.page) - 1,
+                                          Number(
+                                            params.collectionDetails.page,
+                                          ) - 1,
                                         )
                                       }
                                     >
@@ -397,7 +411,9 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                       disabled={isLastCollectionsPageForCurrentQuery()}
                                       onClick={() =>
                                         handlePageChange(
-                                          Number(params.page) + 1,
+                                          Number(
+                                            params.collectionDetails.page,
+                                          ) + 1,
                                         )
                                       }
                                     >
@@ -436,14 +452,19 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                 <div className="flex flex-wrap gap-3 pl-3">
                                   {sampledNameIdeas?.map((suggestion) => {
                                     return (
-                                      <div
-                                        key={suggestion.name}
-                                        className="bg-gray-100 rounded-full groupp-2 px-4 flex items-start"
+                                      <Link
+                                        href={getNameDetailsPageHref(
+                                          suggestion.label,
+                                        )}
+                                        key={suggestion.label}
+                                        className="bg-gray-100 rounded-full group-2 px-4 flex items-start"
                                       >
                                         <div className="relative flex items-center justify-center overflow-hidden">
-                                          {suggestion.name}
+                                          <NameWithCurrentTld
+                                            name={suggestion.label}
+                                          />
                                         </div>
-                                      </div>
+                                      </Link>
                                     );
                                   })}
                                 </div>
@@ -504,14 +525,19 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                                 <div className="flex flex-wrap gap-3 pl-3">
                                   {scrambledNameIdeas?.map((suggestion) => {
                                     return (
-                                      <div
-                                        key={suggestion.name}
-                                        className="bg-gray-100 rounded-full groupp-2 px-4 flex items-start"
+                                      <Link
+                                        href={getNameDetailsPageHref(
+                                          suggestion.label,
+                                        )}
+                                        key={suggestion.label}
+                                        className="bg-gray-100 rounded-full group-2 px-4 flex items-start"
                                       >
                                         <div className="relative flex items-center justify-center overflow-hidden">
-                                          {suggestion.name}
+                                          <NameWithCurrentTld
+                                            name={suggestion.label}
+                                          />
                                         </div>
-                                      </div>
+                                      </Link>
                                     );
                                   })}
                                 </div>

@@ -21,13 +21,13 @@ export const MIN_ETH_REGISTRABLE_LABEL_LENGTH = 3;
  */
 export const Normalization = {
   /** `normalized`: The name or label is normalized. */
-  Normalized: 'normalized',
+  Normalized: "normalized",
 
   /** `unnormalized`: The name or label is not normalized. */
-  Unnormalized: 'unnormalized',
+  Unnormalized: "unnormalized",
 
   /** `unknown`: The name or label is unknown because it cannot be looked up from its hash. */
-  Unknown: 'unknown',
+  Unknown: "unknown",
 } as const;
 
 export type Normalization = (typeof Normalization)[keyof typeof Normalization];
@@ -266,7 +266,7 @@ export function getNamespaceRoot(name: ENSName): NamespaceRoot {
  *          `unknown` if the decentralization status of the name is unknown.
  */
 export function getDecentralizationStatus(
-  name: ENSName
+  name: ENSName,
 ): DecentralizationStatus {
   switch (getNamespaceRoot(name)) {
     case "ens":
@@ -328,12 +328,12 @@ export function getRegistrationPotential(name: ENSName): RegistrationPotential {
 
 /**
  * Splits a `string` into an array of the Unicode characters it contains.
- * 
+ *
  * In JavaScript, the `.split("")` method of a `string` may give different
  * results because it returns an array of UTF-16 code units, not Unicode
  * characters. For example, the string "😄" (Grinning Face with Smiling Eyes) is
  * represented by two UTF-16 code units, but is a single Unicode character.
- * 
+ *
  * @param text the `string` to split into Unicode characters.
  * @returns An array of the Unicode characters contained in `text`.
  */
@@ -343,7 +343,7 @@ export function charSplit(text: string): string[] {
 
 /**
  * Counts the number of Unicode characters in a `string`.
- * 
+ *
  * This length may be different than the traditional `.length` property of a
  * `string` in JavaScript. In Javascript, the `.length` property of a `string`
  * returns the number of UTF-16 code units in that `string`. Some Unicode
@@ -352,7 +352,7 @@ export function charSplit(text: string): string[] {
  * of U+1F604, which exceeds 16 bits. Therefore, UTF-16 represents such
  * characters using *more than one* 16-bit code unit, which is known as a
  * "surrogate pair".
- * 
+ *
  * NOTE: This length will be the same as determined by the
  * EthRegistrarController smart contracts. These contracts calculate length
  * using the following code that counts Unicode characters in UTF-8 encoding.

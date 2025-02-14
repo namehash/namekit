@@ -22,6 +22,12 @@
   }
 }
 
+@layer components {
+  .animated-black-underline {
+    @apply underline underline-offset-2 decoration-gray-400 decoration-1 hover:decoration-2 hover:decoration-gray-600 transition-all;
+  }
+}
+
 @layer base {
   :root {
     --radius: 0.5rem;
@@ -66,4 +72,157 @@
 
 * {
   font-display: swap;
+}
+
+/**
+ * Atropos 0.9.6
+ * Touch-friendly 3D parallax hover effects
+ * https://atroposjs.com
+ *
+ * Copyright 2021-2021
+ *
+ * Released under the MIT License
+ *
+ * Released on: September 28, 2021
+ */
+
+.atropos {
+  display: block;
+  position: relative;
+  perspective: 100000px;
+  transform: translate3d(0, 0, 0);
+}
+.atropos-rotate-scroll-x,
+.atropos-rotate-scroll-y,
+.atropos-rotate-touch {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.atropos-rotate-touch-scroll-y {
+  touch-action: pan-y;
+}
+.atropos-rotate-touch-scroll-x {
+  touch-action: pan-x;
+}
+.atropos-rotate-touch {
+  touch-action: none;
+}
+.atropos-rotate,
+.atropos-scale {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition-property: transform;
+  display: block;
+}
+.atropos-highlight,
+.atropos-shadow {
+  position: absolute;
+  pointer-events: none;
+  transition-property: transform, opacity;
+  display: block;
+}
+.atropos-shadow {
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: -1;
+  height: 100%;
+  filter: blur(30px);
+}
+.atropos-highlight {
+  left: -50%;
+  top: -50%;
+  width: 300%;
+  height: 300%;
+  background-image: radial-gradient(
+    circle at 50%,
+    rgba(255, 255, 255, 0.15),
+    transparent 50%
+  );
+  z-index: 0;
+  opacity: 0;
+}
+.atropos-rotate {
+  position: relative;
+}
+.atropos-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transform: translate3d(0, 0, 0);
+  display: block;
+}
+.atropos-active {
+  z-index: 1;
+}
+[data-atropos-offset] {
+  transition-property: transform;
+}
+[data-atropos-opacity] {
+  transition-property: opacity;
+}
+[data-atropos-offset][data-atropos-opacity] {
+  transition-property: transform, opacity;
+}
+.atropos.automatic {
+  transition: none;
+  animation: moveCard 8s ease 0s infinite !important;
+}
+.atropos.automatic.animate-pulse {
+  transition: none;
+  animation: pulseAndMoveCard 8s ease 0s infinite !important;
+}
+@keyframes pulseAndMoveCard {
+  0% {
+    opacity: 1;
+    filter: brightness(120%);
+    transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg);
+  }
+  13%,
+  16% {
+    opacity: 0.66;
+    transform: rotateZ(0deg) rotateX(-4deg) rotateY(16deg);
+  }
+  35%,
+  38% {
+    opacity: 0.66;
+    transform: rotateZ(3deg) rotateX(6deg) rotateY(10deg);
+  }
+  50%,
+  60% {
+    opacity: 1;
+    transform: rotateZ(-3deg) rotateX(-6deg) rotateY(-10deg);
+  }
+  90%,
+  100% {
+    opacity: 0.66;
+    transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg);
+  }
+}
+@keyframes moveCard {
+  0% {
+    transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg);
+  }
+  13%,
+  16% {
+    transform: rotateZ(0deg) rotateX(-6deg) rotateY(20deg);
+  }
+  35%,
+  38% {
+    transform: rotateZ(8deg) rotateX(8deg) rotateY(12deg);
+  }
+  50%,
+  60% {
+    transform: rotateZ(-8deg) rotateX(-8deg) rotateY(-12deg);
+  }
+  90%,
+  100% {
+    transform: rotateZ(0deg) rotateX(0deg) rotateY(0deg);
+  }
 }

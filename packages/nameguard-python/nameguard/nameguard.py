@@ -91,7 +91,7 @@ def init_inspector():
         return Inspector(config)
 
 
-ens_contract_adresses = {
+ens_contract_addresses = {
     '0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85',  # Base Registrar
     '0xd4416b13d2b3a9abae7acd5d6c2bbdbe25686401',  # Name Wrapper
 }
@@ -512,7 +512,7 @@ class NameGuard:
 
         token_type = res_json['id']['tokenMetadata']['tokenType']
 
-        if token_type not in ['ERC721', 'ERC1155'] and contract_address in ens_contract_adresses:
+        if token_type not in ['ERC721', 'ERC1155'] and contract_address in ens_contract_addresses:
             return FakeEthNameCheckResult(
                 status=FakeEthNameCheckStatus.UNKNOWN_NFT, nameguard_report=None, investigated_fields=None
             )
@@ -543,7 +543,7 @@ class NameGuard:
             except KeyError:
                 pass
 
-        if contract_address in ens_contract_adresses:
+        if contract_address in ens_contract_addresses:
             if ALCHEMY_UNKNOWN_NAME.match(title):
                 unknown_name = f"[{res_json['id']['tokenId'][2:]}].eth"
                 investigated_fields['title'] = unknown_name
@@ -555,7 +555,7 @@ class NameGuard:
     async def _fake_eth_name_check(
         self, network_name, contract_address, fields: dict[str, str]
     ) -> FakeEthNameCheckResult:
-        if contract_address in ens_contract_adresses:
+        if contract_address in ens_contract_addresses:
             if 'title' not in fields:
                 raise MissingTitle()
 

@@ -2,6 +2,14 @@
 
 A TypeScript SDK for interacting with the NameGraph APIs, providing access to the world's largest collection of names. This SDK enables easy integration with the NameGraph API endpoints for name and collection suggestions.
 
+## Features
+
+- **Category-based Suggestions**: Get name suggestions organized by various categories including related terms, wordplay, alternates, and more
+- **Collection Management**: Find, count, and analyze collections of names
+- **Smart Sampling**: Sample and fetch top members from collections
+- **Advanced Search**: Search collections by string or by collection ID
+
+
 ## Installation
 
 ```bash
@@ -24,13 +32,6 @@ import { namegraph } from "namegraph-sdk";
 // Get name suggestions grouped by category
 const suggestions = await namegraph.groupedByCategory("zeus");
 ```
-
-## Features
-
-- **Category-based Suggestions**: Get name suggestions organized by various categories including related terms, wordplay, alternates, and more
-- **Collection Management**: Find, count, and analyze collections of names
-- **Smart Sampling**: Sample and fetch top members from collections
-- **Advanced Search**: Search collections by string or by collection ID
 
 ## API Reference
 
@@ -62,10 +63,20 @@ const suggestions = await client.suggestionsByCategory("zeus");
 const members = await client.sampleCollectionMembers("collection_id");
 ```
 
-#### Fetch Top Collection Members
+#### Fetch Collection Members
 
 ```typescript
+// with pagination
+const members = await client.fetchCollectionMembers("collection_id", {offset: 0, limit: 20});
+
+// Top members
 const topMembers = await client.fetchTopCollectionMembers("collection_id");
+```
+
+#### Generate Scrambled Variations of Collection Tokens
+
+```typescript
+const scrambled = await client.scrambleCollectionTokens('collection_id', {seed: 42});
 ```
 
 #### Find Collections
@@ -89,6 +100,11 @@ const stringCount = await client.countCollectionsByString("zeus god");
 
 // By member
 const memberCount = await client.countCollectionsByMember("zeus");
+```
+
+#### Get Collection by ID
+```typescript
+const collection = await client.getCollectionById("collection_id");
 ```
 
 ### Response Types
@@ -136,3 +152,13 @@ The SDK supports various grouping categories for name suggestions:
 - `expand`: Expanded versions
 - `gowild`: Creative variations
 - `other`: Additional suggestions
+
+## Contact Us
+
+Visit our [website](https://namehashlabs.org/) to get in contact.
+
+## License
+
+Licensed under the MIT License, Copyright © 2023-present [NameHash Labs](https://namehashlabs.org).
+
+See [LICENSE](./LICENSE) for more information.

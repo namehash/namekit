@@ -1,5 +1,34 @@
 # @namehash/namegraph-sdk
 
+## 0.5.1
+
+### Patch Changes
+
+- cc06f41: Update NameGraph SDK's README, add detailed documentation and provide test coverage for the package
+
+## 0.5.0
+
+### Minor Changes
+
+- f6b270f: Add possibility of not querying any related collections when using suggestionsByCategory endpoint
+- 52f56f3: Update WritersBlock type and sampling function
+
+### Patch Changes
+
+- 8ff36d8: Rename NameGraph parameter
+- 5568549: Rename name to label in NameGraph
+
+## 0.4.0
+
+### Minor Changes
+
+- 343bbe9: Update NameGraph SDK to include new API methods
+- 61f3849: Add fetchCollectionsByMember method in NameGraph SDK package
+
+### Patch Changes
+
+- 23ce8d7: default seed for scrambleCollectionTokens
+
 ## 0.3.0
 
 ### Minor Changes

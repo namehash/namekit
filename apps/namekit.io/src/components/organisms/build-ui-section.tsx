@@ -6,6 +6,7 @@ import cc from "classcat";
 import { useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { Heading, Text } from "@namehash/namekit-react";
+import Balancer from "react-wrap-balancer";
 
 enum Color {
   Blue = "blue",
@@ -22,11 +23,15 @@ export const BuildUiSection = () => {
     <section className="justify-center relative w-full lg:pt-[100px] pt-10 lg:px-28 px-5 flex items-start overflow-hidden">
       <div className="h-full flex flex-col w-full items-center justify-between z-20">
         <div className="flex flex-col items-center">
-          <Heading>Customize to match your brand and UI</Heading>
+          <Heading className="text-center">
+            <Balancer>Customize to match your brand and UI</Balancer>
+          </Heading>
 
-          <Text className="mt-5 text-lg text-gray-500">
-            Integrate into your “host app” via UI Kit, SDK, or APIs depending on
-            preference
+          <Text className="mt-5 text-lg text-gray-500 text-center">
+            <Balancer>
+              Integrate into your “host app” via UI Kit, SDK, or APIs depending
+              on preference
+            </Balancer>
           </Text>
 
           <div className="rounded-[32px] border border-gray-200 bg-white inline-flex p-2 gap-2 lg:mt-8 mt-5">
