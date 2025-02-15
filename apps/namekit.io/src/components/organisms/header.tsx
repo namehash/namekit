@@ -4,9 +4,9 @@ import { IconMenu, NamekitLogo, GithubIcon } from "../atoms";
 import { Popover, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
-import Link from "next/link";
 import cc from "classcat";
-import { Button, IconButton } from "@namehash/namekit-react";
+import { Button, IconButton, Link } from "@namehash/namekit-react";
+import NextLink from "next/link";
 import { ExternalLinkIcon } from "../atoms/icons/external-link-icon";
 
 export const Header = () => {
@@ -33,17 +33,25 @@ export const Header = () => {
 
   const NamekitDesktopNavigationLinks = [
     {
-      element: <>Explore Web3</>,
-      href: "/explore-web3",
+      element: (
+        <Button variant="ghost" asChild>
+          <NextLink href="/explore-web3">
+            <>Explore Web3</>
+          </NextLink>
+        </Button>
+      ),
     },
     {
       element: (
-        <div className="flex items-center justify-center gap-2">
-          <GithubIcon className="w-6 h-6" />
-          GitHub
-        </div>
+        <Button variant="ghost" asChild>
+          <Link target="_blank" href="https://github.com/namehash/namekit">
+            <div className="flex items-center justify-center gap-2">
+              <GithubIcon className="w-6 h-6" />
+              GitHub
+            </div>
+          </Link>
+        </Button>
       ),
-      href: "https://github.com/namehash/namekit",
     },
   ];
 
@@ -164,12 +172,8 @@ export const Header = () => {
                 </IconButton>
 
                 <nav className="lg:flex hidden lg:items-center">
-                  {NamekitDesktopNavigationLinks.map((link, idx) => (
-                    <Button variant="ghost" asChild key={idx}>
-                      <Link target="_blank" href={link.href}>
-                        {link.element}
-                      </Link>
-                    </Button>
+                  {NamekitDesktopNavigationLinks.map((link) => (
+                    <div key={link.element.toString()}>{link.element}</div>
                   ))}
                 </nav>
               </div>
