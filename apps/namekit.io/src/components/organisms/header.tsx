@@ -7,6 +7,7 @@ import { Fragment } from "react";
 import Link from "next/link";
 import cc from "classcat";
 import { Button, IconButton } from "@namehash/namekit-react";
+import { ExternalLinkIcon } from "../atoms/icons/external-link-icon";
 
 export const Header = () => {
   const NamekitMobileNavigationLinks = [
@@ -24,6 +25,7 @@ export const Header = () => {
       element: (
         <Link target="_blank" href="https://alpha.namekit.io">
           Try the Alpha
+          <ExternalLinkIcon className="w-5 h-5" />
         </Link>
       ),
     },
