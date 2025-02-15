@@ -60,12 +60,10 @@ The NameKit monorepo contains multiple packages and apps.
 <table>
   <thead>
     <tr>
-      <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th><!-- adding spaces to stop language images from 
-      getting smashed --></th>
+      <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to stop language images from getting smashed --></th>
       <th align="left">Source Code</th>
       <th align="left">Summary</th>
-      <th align="left">Deployment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th><!-- adding spaces to make GitHub stop 
-      distorting deployment shields --></th>
+      <th align="left">Deployment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop distorting deployment shields --></th>
     </tr>
   </thead>
   <tbody>
@@ -212,10 +210,10 @@ The NameKit monorepo contains multiple packages and apps.
 <table>
   <thead>
     <tr>
-      <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+      <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to stop language images from getting smashed --></th>
       <th align="left">Source Code</th>
       <th align="left">Summary</th>
-      <th align="left">Deployment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+      <th align="left">Deployment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop distorting deployment shields --></th>
     </tr>
   </thead>
   <tbody>
@@ -362,7 +360,7 @@ The NameKit monorepo contains multiple packages and apps.
 <table>
   <thead>
     <tr>
-      <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+      <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th><!-- adding spaces to stop language images from getting smashed -->
       <th align="left">Source Code</th>
       <th align="left">Summary</th>
       <th align="left">✨ Try it out! ✨</th>
@@ -513,7 +511,7 @@ The NameKit monorepo contains multiple packages and apps.
       </td>
       <td>Official website for NameGuard.</td>
       <td>
-        <a href="https://nameguard.io">Preview</a>
+        <a href="https://nameguard.io">Preview</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop breaking header for this column across multiple lines -->
       </td>
     </tr>
     <tr>
