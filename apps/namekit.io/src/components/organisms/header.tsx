@@ -37,7 +37,6 @@ export const Header = () => {
     {
       element: (
         <div className="flex items-center justify-center gap-2">
-          {" "}
           <GithubIcon className="w-6 h-6" />
           GitHub
         </div>
@@ -157,9 +156,8 @@ export const Header = () => {
                     aria-label="GitHub link"
                     href={"https://github.com/namehash/namekit"}
                     target="_blank"
-                    className="p-[7px]"
                   >
-                    <GithubIcon className="w-5 h-5 lg:hidden" />
+                    <GithubIcon className="w-6 h-6 lg:hidden" />
                   </Link>
                 </IconButton>
 
