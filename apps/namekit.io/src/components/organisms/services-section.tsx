@@ -21,7 +21,6 @@ import {
 import { ExternalLinkIcon } from "../atoms/icons/external-link-icon";
 import { EnsVisionIcon } from "../atoms/icons/ensvision-icon";
 import OpenSeaIcon from "../atoms/icons/opensea-icon";
-import { X2y2Icon } from "../atoms/icons/x2y2-icon";
 import { LooksRareIcon } from "../atoms/icons/looksrare-icon";
 import LensProtocolLogo from "../atoms/icons/lens-protocol-logo";
 import FarcasterLogo from "../atoms/icons/farcaster-logo";
@@ -37,6 +36,7 @@ import CoinbaseNftIcon from "../atoms/icons/coinbase-nft-icon";
 import NamestoneLogo from "../atoms/icons/namestone-logo";
 import { Button, Heading, Link, Text } from "@namehash/namekit-react";
 import { ExploreNameGraphForm } from "../molecules/explore-namegraph-form";
+import { X2y2Logo } from "../atoms/icons/x2y2-logo";
 
 interface ServiceProps {
   label: {
@@ -283,7 +283,7 @@ const services: ServiceProps[] = [
           <EnsVisionIcon />
           <OpenSeaIcon />
           <RaribleIcon />
-          <X2y2Icon />
+          <X2y2Logo />
           <LooksRareIcon />
           <CoinbaseNftIcon />
           <Text className="text-lg leading-6 text-gray-500">
