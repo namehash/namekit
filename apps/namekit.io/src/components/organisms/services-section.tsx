@@ -74,7 +74,7 @@ export const Service = ({
     >
       <div
         className={cc([
-          "w-full flex flex-col lg:flex-row max-w-[1216px]",
+          "w-full flex flex-col lg:flex-row max-w-[1216px] gap-10",
           {
             "lg:flex-row-reverse": isInverted,
           },

@@ -69,7 +69,7 @@ export const BuildFutureSection = () => {
           </Balancer>
         </Text>
       </div>
-      <div className="grid lg:grid-cols-3 grid-cols-1 justify-items-center max-w-[1216px]">
+      <div className="grid lg:grid-cols-3 grid-cols-1 justify-items-start lg:justify-items-center max-w-[1216px]">
         {items.map((item, index) => (
           <Item key={index} {...item} />
         ))}
