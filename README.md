@@ -17,7 +17,7 @@
 <!-- TAGLINE -->
 <p align="center">
   Easily integrate rich ENS user journeys into your wallet, app, or game.
-<p>
+</p>
 
 <!-- PROJECT SHIELDS -->
 <p align="center">
@@ -60,10 +60,12 @@ The NameKit monorepo contains multiple packages and apps.
 <table>
   <thead>
     <tr>
-      <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to stop language images from getting smashed --></th>
+      <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th><!-- adding spaces to stop language images from 
+      getting smashed --></th>
       <th align="left">Source Code</th>
       <th align="left">Summary</th>
-      <th align="left">Deployment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop distorting deployment shields --></th>
+      <th align="left">Deployment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th><!-- adding spaces to make GitHub stop 
+      distorting deployment shields --></th>
     </tr>
   </thead>
   <tbody>
@@ -162,6 +164,46 @@ The NameKit monorepo contains multiple packages and apps.
         </a>
       </td>
     </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white">
+          <img src="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white" alt="TypeScript" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="packages/nameai-sdk">nameai-sdk</a>
+      </td>
+      <td>A JavaScript/TypeScript SDK for integrating AI‐driven naming functionalities.</td>
+      <td>
+        <a href="https://www.npmjs.com/package/@namehash/nameai-sdk">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fnameai-sdk?style=flat&color=444444">
+            <img src="https://img.shields.io/npm/v/%40namehash%2Fnameai-sdk?style=flat&color=444444" alt="NPM Version" width="auto" height="17">
+          </picture>
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white">
+          <img src="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white" alt="TypeScript" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="packages/namegraph-sdk">namegraph-sdk</a>
+      </td>
+      <td>A JavaScript/TypeScript SDK for integrating graph‐based name analytics and services.</td>
+      <td>
+        <a href="https://www.npmjs.com/package/@namehash/namegraph-sdk">
+          <picture>
+            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/npm/v/%40namehash%2Fnamegraph-sdk?style=flat&color=444444">
+            <img src="https://img.shields.io/npm/v/%40namehash%2Fnamegraph-sdk?style=flat&color=444444" alt="NPM Version" width="auto" height="17">
+          </picture>
+        </a>
+      </td>
+    </tr>
   </tbody>
 </table>
 
@@ -170,10 +212,10 @@ The NameKit monorepo contains multiple packages and apps.
 <table>
   <thead>
     <tr>
-      <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to stop language images from getting smashed --></th>
+      <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
       <th align="left">Source Code</th>
       <th align="left">Summary</th>
-      <th align="left">Deployment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop distorting deployment shields --></th>
+      <th align="left">Deployment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
     </tr>
   </thead>
   <tbody>
@@ -300,26 +342,6 @@ The NameKit monorepo contains multiple packages and apps.
         </picture>
       </td>
       <td>
-        <a href="https://github.com/namehash/ens-label-inspector">ens-label-inspector</a>
-      </td>
-      <td>Detailed inspection of labels in ENS names.</td>
-      <td>
-        <a href="https://pypi.org/project/ens-label-inspector/">
-          <picture>
-            <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/pypi/v/ens-label-inspector?style=flat&color=444444">
-            <img src="https://img.shields.io/pypi/v/ens-label-inspector?style=flat&color=444444" alt="PyPI Version" width="auto" height="17">
-          </picture>
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/py-444444?logo=python&logoColor=white">
-          <img src="https://img.shields.io/badge/py-444444?logo=python&logoColor=white" alt="Python" width="auto" height="17">
-        </picture>
-      </td>
-      <td>
         <a href="packages/nameguard-python/">nameguard</a>
       </td>
       <td>Identify and prevent malicious use of ENS names.</td>
@@ -340,7 +362,7 @@ The NameKit monorepo contains multiple packages and apps.
 <table>
   <thead>
     <tr>
-      <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to stop language images from getting smashed --></th>
+      <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
       <th align="left">Source Code</th>
       <th align="left">Summary</th>
       <th align="left">✨ Try it out! ✨</th>
@@ -355,16 +377,128 @@ The NameKit monorepo contains multiple packages and apps.
         </picture>
       </td>
       <td>
-        ens-node
-        <br>
+        <a href="https://github.com/namehash/ensnode">alpha.ensnode.io</a>
+      </td>
+      <td>Multichain indexer for ENS, powered by Ponder.</td>
+      <td>
+        <a href="https://alpha.ensnode.io/">
+          Preview
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td>
         <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/coming%20soon-e1e1e1">
-          <img src="https://img.shields.io/badge/coming%20soon-e1e1e1" alt="coming soon" width="auto" height="17">
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/next.js-444444?logo=next.js&logoColor=white">
+          <img src="https://img.shields.io/badge/next.js-444444?logo=next.js&logoColor=white" alt="Next.js" width="auto" height="17">
         </picture>
       </td>
-      <td>Backend for NameKit. Simplify and enhance your integration with ENS.</td>
+      <td>
+        <a href="apps/ensnode.io/">ensnode.io</a>
+      </td>
+      <td>Next.js landing page for ENSNode.</td>
+      <td>
+        <a href="https://ensnode.io">
+          Preview
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white">
+          <img src="https://img.shields.io/badge/ts-444444?logo=typescript&logoColor=white" alt="TypeScript" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="https://github.com/namehash/ens-subgraph-transition-tools">ens-subgraph-transition-tools</a>
+      </td>
+      <td>Tooling for transitioning ENS subgraphs.</td>
       <td>
         -
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/py-444444?logo=python&logoColor=white">
+          <img src="https://img.shields.io/badge/py-444444?logo=python&logoColor=white" alt="Python" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="https://github.com/namehash/namegraph">api.namegraph.dev</a>
+      </td>
+      <td>Python API for NameGraph.</td>
+      <td>
+        <a href="https://api.namegraph.dev/docs">
+          Preview
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/py-444444?logo=python&logoColor=white">
+          <img src="https://img.shields.io/badge/py-444444?logo=python&logoColor=white" alt="Python" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="https://github.com/namehash/collection-templates">NameGraph Collection Templates</a>
+      </td>
+      <td>Python templates for NameGraph collections.</td>
+      <td>
+         -
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/py-444444?logo=python&logoColor=white">
+          <img src="https://img.shields.io/badge/py-444444?logo=python&logoColor=white" alt="Python" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="https://github.com/namehash/namekit/tree/main/apps/api.nameai.dev">api.nameai.dev</a>
+      </td>
+      <td>Python API for NameAI.</td>
+      <td>
+        <a href="http://api.nameai.dev/docs">
+          Preview
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/next.js-444444?logo=next.js&logoColor=white">
+          <img src="https://img.shields.io/badge/next.js-444444?logo=next.js&logoColor=white" alt="Next.js" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="https://github.com/namehash/namekit/tree/main/apps/nameai.dev">nameai.dev</a>
+      </td>
+      <td>Next.js landing page for NameAI.</td>
+      <td>
+        <a href="https://nameai.dev/">
+          Preview
+        </a>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/next.js-444444?logo=next.js&logoColor=white">
+          <img src="https://img.shields.io/badge/next.js-444444?logo=next.js&logoColor=white" alt="Next.js" width="auto" height="17">
+        </picture>
+      </td>
+      <td>
+        <a href="https://github.com/namehash/namekit/tree/main/apps/namegraph.dev">namegraph.dev</a>
+      </td>
+      <td>Next.js landing page for NameGraph.</td>
+      <td>
+        <a href="https://www.namegraph.dev/">
+          Preview
+        </a>
       </td>
     </tr>
     <tr>
@@ -379,7 +513,7 @@ The NameKit monorepo contains multiple packages and apps.
       </td>
       <td>Official website for NameGuard.</td>
       <td>
-        <a href="https://nameguard.io">Preview</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- adding spaces to make GitHub stop breaking header for this column across multiple lines -->
+        <a href="https://nameguard.io">Preview</a>
       </td>
     </tr>
     <tr>
@@ -475,7 +609,7 @@ The NameKit monorepo contains multiple packages and apps.
 
 ### Getting started
 
-Use `git` to clone this respository, and install the dependencies using `pnpm` to run NameKit locally:
+Use `git` to clone this repository, and install the dependencies using `pnpm` to run NameKit locally:
 
 1. `git clone https://github.com/namehash/namekit.git`
 2. `cd namekit`
@@ -486,7 +620,7 @@ It's recommended you run `pnpm dev` in the root of the repository to start all a
 
 ## Testing
 
-Tests are automatically ran when a new Pull Request is opened. You can run them locally using `pnpm test`.
+Tests are automatically run when a new Pull Request is opened. You can run them locally using `pnpm test`.
 
 If you're developing locally, you can watch changes and run tests automatically using `pnpm test:watch`.
 
