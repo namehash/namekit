@@ -276,7 +276,7 @@ const services: ServiceProps[] = [
       "Millions of the most desirable names are already taken. But don’t worry. Hope isn’t lost. The name you love could still be yours for the right price. NameKit automatically aggregates data across web3 about names listed for sale. Offers to buy a name through NameKit automatically appear across all major marketplaces.",
     postSubtitle: (
       <div className="flex flex-col gap-4">
-        <Text className="text-lg leading-6 text-gray-500">
+        <Text className="text-lg leading-6 text-gray-500 lg:text-start text-center">
           Automatic integrations with:
         </Text>
         <div className="flex flex-wrap gap-x-6 gap-y-4 items-center justify-center lg:justify-start">
@@ -418,7 +418,7 @@ const services: ServiceProps[] = [
     subtitle:
       "Harness the power of the pixel. Immerse your users in an interactive, video game-inspired 'create your player' user journeys to shape their unique ENS identity.",
     postSubtitle: (
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 w-full">
         <Text className="text-lg leading-6 text-gray-500 lg:text-start text-center">
           Composable integrations with:
         </Text>
