@@ -3,10 +3,10 @@
 import { NameGraphSortOrderOptions } from "@namehash/namegraph-sdk/utils";
 import { DEFAULT_PAGE_NUMBER } from "./collections/utils";
 import { QueryParamsProvider } from "./use-query-params";
-import { NameRelatedCollectionsTabs } from "@/app/name/[name]/name-details-page";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
 import { config } from "@/lib/wagmi";
+import { NameRelatedCollectionsTabs } from "@/app/name/[name]/types";
 
 const queryClient = new QueryClient();
 
@@ -21,9 +21,12 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
           defaultValues={{
             collectionsSearch: {
               search: "",
-              page: DEFAULT_PAGE_NUMBER,
+              page: {
+                [NameRelatedCollectionsTabs.ByConcept]: DEFAULT_PAGE_NUMBER,
+                [NameRelatedCollectionsTabs.ByMembership]: DEFAULT_PAGE_NUMBER,
+              },
+              activeTab: DEFAULT_ACTIVE_TAB,
               orderBy: NameGraphSortOrderOptions.AI,
-              exactMatch: false,
             },
             tld: {
               suffix: undefined,

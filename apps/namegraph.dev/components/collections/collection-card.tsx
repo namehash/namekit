@@ -1,8 +1,8 @@
 import { NameGraphCollection } from "@namehash/namegraph-sdk/utils";
 import { Link } from "@namehash/namekit-react";
 import { Noto_Emoji } from "next/font/google";
-import { NameWithCurrentTld } from "./name-with-current-tld";
 import { getNameDetailsPageHref } from "@/lib/utils";
+import { NameWithCurrentTld, useQueryParams } from "../use-query-params";
 
 const notoBlack = Noto_Emoji({ preload: false });
 
@@ -11,6 +11,8 @@ export const CollectionCard = ({
 }: {
   collection: NameGraphCollection;
 }) => {
+  const { params } = useQueryParams();
+
   return (
     <div
       key={collection.collection_id}
@@ -46,7 +48,7 @@ export const CollectionCard = ({
                 href={getNameDetailsPageHref(tag.label)}
                 className="max-h-[28px] w-max bg-gray-100 !text-sm px-2 py-1 bg-muted rounded-full"
               >
-                <NameWithCurrentTld name={tag.label} />
+                {NameWithCurrentTld({ name: tag.label, params })}
               </Link>
             ))}
           </div>

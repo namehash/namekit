@@ -13,10 +13,13 @@ import {
   NameGraphSortOrderOptions,
 } from "@namehash/namegraph-sdk/utils";
 import { useEnsText } from "wagmi";
-import { useActionState, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Skeleton from "@/components/skeleton";
 import { Button } from "@/components/ui/button";
-import { useQueryParams } from "@/components/use-query-params";
+import {
+  NameWithCurrentTld,
+  useQueryParams,
+} from "@/components/use-query-params";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { CollectionCard } from "@/components/collections/collection-card";
 import {
@@ -36,7 +39,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Link } from "@namehash/namekit-react";
-import { NameWithCurrentTld } from "@/components/collections/name-with-current-tld";
 import { CollectionsCardsSkeleton } from "@/components/collections/collections-grid-skeleton";
 import { buildENSName } from "@namehash/ens-utils";
 import { NftAvatar } from "@/components/nft-avatar/nft-avatar";
@@ -54,6 +56,7 @@ import { TokenAnalysisResults } from "@/components/name-ai/results";
 import { analyzeLabel } from "@/components/name-ai/actions";
 import { TokenAnalysisResultsSkeleton } from "@/components/name-ai/skeleton";
 import { NLPLabelAnalysis } from "@namehash/nameai";
+import { DEFAULT_ITEMS_PER_PAGE } from "./types";
 
 interface NavigationConfig {
   itemsPerPage: number;
@@ -73,20 +76,6 @@ export const NameRelatedCollectionsTabs = {
 export type NameRelatedCollectionsTabs =
   (typeof NameRelatedCollectionsTabs)[keyof typeof NameRelatedCollectionsTabs];
 
-type ActionState = {
-  error?: string;
-  success?: boolean;
-  label?: string;
-  analysis?: any;
-};
-
-const initialState: ActionState = {
-  error: "",
-  success: false,
-  label: "",
-  analysis: null,
-};
-
 export const NameDetailsPage = ({ name }: { name: string }) => {
   let label = name;
   try {
@@ -95,28 +84,30 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
     console.error(`Error: ${name} is not normalized`);
   }
 
+  const { params, setParams } = useQueryParams();
+
   const { address } = useProfileDetails({
-    addressOrName: NameWithCurrentTld({ name }),
+    addressOrName: NameWithCurrentTld({ name, params }),
   });
   const { data: telegramRecord } = useEnsText({
-    name: NameWithCurrentTld({ name: label }),
+    name: NameWithCurrentTld({ name: label, params }),
     key: "org.telegram",
   });
   const { data: twitterRecord } = useEnsText({
-    name: NameWithCurrentTld({ name: label }),
+    name: NameWithCurrentTld({ name: label, params }),
     key: "com.twitter",
   });
   const { data: githubRecord } = useEnsText({
-    name: NameWithCurrentTld({ name: label }),
+    name: NameWithCurrentTld({ name: label, params }),
     key: "com.github",
   });
   const { data: discordRecord } = useEnsText({
-    name: NameWithCurrentTld({ name: label }),
+    name: NameWithCurrentTld({ name: label, params }),
     key: "com.discord",
   });
 
   const { data: nameguardReport } = useSWR<NameGuardReport>(
-    NameWithCurrentTld({ name: label }),
+    NameWithCurrentTld({ name: label, params }),
     (n: string) => nameguard.inspectName(n),
     {
       revalidateIfStale: false,
@@ -222,7 +213,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                     "number"
                       ? res.metadata.total_number_of_matched_collections
                       : /**
-                         * NameAPI makes usage of a stringified "+1000" for
+                         * NameAI makes usage of a stringified "+1000" for
                          * res.metadata.total_number_of_matched_collections
                          * if there are more than 1000 collections this query
                          * is contained in. Since this is a different data type
@@ -294,7 +285,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                     "number"
                       ? res.metadata.total_number_of_matched_collections
                       : /**
-                         * NameAPI makes usage of a stringified "+1000" for
+                         * NameAI makes usage of a stringified "+1000" for
                          * res.metadata.total_number_of_matched_collections
                          * if there are more than 1000 collections this query
                          * is contained in. Since this is a different data type
@@ -342,8 +333,6 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
   /**
    * Table query
    */
-  const { params, setParams } = useQueryParams();
-
   const handlePageChange = (page: number) => {
     setParams({
       ...params,
@@ -357,7 +346,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
     });
 
     queryCollections({
-      page: page || DEFAULT_PAGE_NUMBER,
+      page,
       activeTab: params.nameDetails.activeTab || DEFAULT_ACTIVE_TAB,
     });
   };
@@ -387,7 +376,6 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
   /**
    * Navigation helper functions
    */
-  const DEFAULT_ITEMS_PER_PAGE = 20;
   const [navigationConfig, setNavigationConfig] = useState<NavigationConfig>({
     itemsPerPage: DEFAULT_ITEMS_PER_PAGE,
     totalItems: {
@@ -594,24 +582,29 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
   return (
     <div className="max-w-7xl flex flex-col space-y-8 lg:space-y-0 lg:space-x-8 lg:flex-row mx-auto py-8 w-full">
       <div className="flex justify-start flex-col mx-8 lg:mx-6 xl:mx-0">
-        {NameWithCurrentTld({ name: label }) ? (
-          <div className="mx-auto">
-            <NftAvatar
-              name={buildENSName(
-                NameWithCurrentTld({ name: label, reloadOnChange: true }),
-              )}
-              size={AvatarSize.HUGE}
-              withLink={false}
-              is3d={true}
-            />
-          </div>
-        ) : null}
+        <div className="mx-auto">
+          <NftAvatar
+            name={
+              label && params.tld.suffix
+                ? buildENSName(NameWithCurrentTld({ name: label, params }))
+                : null
+            }
+            size={AvatarSize.HUGE}
+            withLink={false}
+            is3d={true}
+          />
+        </div>
         <div className="mt-8 flex flex-col space-y-4 md:space-y-0 lg:space-y-6 md:flex-row lg:flex-col md:space-x-4 lg:space-x-0">
           <div className="h-max py-6 border border-gray-200 rounded-md md:w-1/2 lg:w-auto">
-            <ProfileStats addressOrName={NameWithCurrentTld({ name })} />
+            <ProfileStats
+              addressOrName={NameWithCurrentTld({ name, params })}
+            />
             <ProfileSocials
               userAddress={address}
-              name={NameWithCurrentTld({ name })}
+              name={NameWithCurrentTld({
+                name,
+                params,
+              })}
               records={{
                 "org.telegram": telegramRecord || "",
                 "com.twitter": twitterRecord || "",
@@ -655,7 +648,10 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                             href={getNameDetailsPageHref(suggestion.label)}
                             className="p-5 border-t border-gray-200 font-semibold text-base text-black"
                           >
-                            <NameWithCurrentTld name={suggestion.label} />
+                            {NameWithCurrentTld({
+                              name: suggestion.label,
+                              params,
+                            })}
                           </Link>
                         );
                       })}
@@ -673,7 +669,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
             <div>
               <div className="text-3xl lg:text-5xl font-bold mb-4 break-all">
                 {label ? (
-                  <NameWithCurrentTld name={label} />
+                  <>{NameWithCurrentTld({ name: label, params })}</>
                 ) : (
                   <Skeleton className="w-40 h-8" />
                 )}
@@ -1015,7 +1011,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                                       NameRelatedCollectionsTabs.ByMembership,
                                                     ) ? (
                                                     getLoadedResultsForTab(
-                                                      NameRelatedCollectionsTabs.ByConcept,
+                                                      NameRelatedCollectionsTabs.ByMembership,
                                                     )?.related_collections.map(
                                                       (collection: any) => (
                                                         <CollectionCard

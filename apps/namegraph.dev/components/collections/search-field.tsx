@@ -1,11 +1,7 @@
-// components/collections/search-field.tsx
 "use client";
 
 import { Search } from "lucide-react";
 import { DebounceInput } from "react-debounce-input";
-import { Link } from "@namehash/namekit-react";
-import { NameWithCurrentTld } from "@/components/collections/name-with-current-tld";
-import { getNameDetailsPageHref } from "@/lib/utils";
 
 interface SearchFieldProps {
   search: string;

@@ -1,16 +1,17 @@
 "use client";
 
-import { NameWithCurrentTld } from "@/components/collections/name-with-current-tld";
 import { getNameDetailsPageHref } from "@/lib/utils";
 import { WritersBlockSuggestion } from "@namehash/namegraph-sdk/utils";
 import { Link } from "@namehash/namekit-react";
 import { useRouter } from "next/navigation";
+import { NameWithCurrentTld, useQueryParams } from "../use-query-params";
 
 export const WritersBlockPill = ({
   suggestion,
 }: {
   suggestion: WritersBlockSuggestion;
 }) => {
+  const { params } = useQueryParams();
   const router = useRouter();
 
   return (
@@ -33,7 +34,7 @@ export const WritersBlockPill = ({
         className="text-gray-800 relative"
       >
         <p className="inline break-all">
-          <NameWithCurrentTld name={suggestion.suggestedName} />
+          {NameWithCurrentTld({ name: suggestion.suggestedName, params })}
         </p>
       </Link>
     </a>

@@ -13,7 +13,6 @@ import {
   getNameDetailsPageHref,
 } from "@/lib/utils";
 import { Suspense, useEffect, useState } from "react";
-import { Toggle } from "@/components/ui/toggle";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -28,144 +27,106 @@ import {
   CollectionsGridSkeleton,
 } from "@/components/collections/collections-grid-skeleton";
 import { CollectionCard } from "@/components/collections/collection-card";
-import { buildENSName } from "@namehash/ens-utils";
+import { buildENSName, ENSName } from "@namehash/ens-utils";
 import { Link } from "@namehash/namekit-react";
-import { NameWithCurrentTld } from "@/components/collections/name-with-current-tld";
 import { DEFAULT_PAGE_NUMBER } from "@/components/collections/utils";
-import { useQueryParams } from "@/components/use-query-params";
-import { debounce } from "lodash";
+import {
+  NameWithCurrentTld,
+  useQueryParams,
+} from "@/components/use-query-params";
 import { HomePage } from "@/components/homepage/homepage";
 import { NftAvatar } from "@/components/nft-avatar/nft-avatar";
 import { AvatarSize } from "@/components/nft-avatar/avatar-utils";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  DEFAULT_ACTIVE_TAB,
+  DEFAULT_ITEMS_PER_PAGE,
+  NameRelatedCollectionsTabs,
+} from "./name/[name]/types";
+import Skeleton from "@/components/skeleton";
+import { DEFAULT_SORTING_ORDER } from "@/components/providers";
 
 interface NavigationConfig {
   itemsPerPage: number;
-  totalItems?: number;
+  totalItems?: Record<NameRelatedCollectionsTabs, number | undefined>;
 }
 
 interface CollectionsData {
   sort_order: NameGraphSortOrderOptions;
-  other_collections: NameGraphCollection[] | null;
   related_collections: NameGraphCollection[];
 }
 
 export default function ExploreCollectionsPage() {
-  /**
-   * Table query
-   */
   const { params, setParams } = useQueryParams();
 
-  const handleSearch = (searchTerm: string) => {
-    setNavigationConfig({
-      ...navigationConfig,
-      totalItems: undefined,
-    });
-
-    if (!searchTerm) {
-      return;
-    }
-
-    setParams({
-      ...params,
-      collectionsSearch: {
-        ...params.collectionsSearch,
-        search: searchTerm,
-      },
-    });
-
-    setCollections(null);
-    setLoadingCollections(true);
-
-    debounce(() => {
-      queryCollections({
-        search: params.collectionsSearch.search || "",
-        orderBy:
-          params.collectionsSearch.orderBy || NameGraphSortOrderOptions.AI,
-        page: params.collectionsSearch.page || DEFAULT_PAGE_NUMBER,
-        exactMatch: params.collectionsSearch.exactMatch,
-      });
-    }, 3000);
-  };
-
-  const handleOrderBy = (orderBy: NameGraphSortOrderOptions) => {
-    setParams({
-      ...params,
-      collectionsSearch: {
-        ...params.collectionsSearch,
-        orderBy,
-        page: DEFAULT_PAGE_NUMBER,
-      },
-    });
-    queryCollections({
-      search: params.collectionsSearch.search || "",
-      orderBy: orderBy || NameGraphSortOrderOptions.AI,
-      page: params.collectionsSearch.page || DEFAULT_PAGE_NUMBER,
-      exactMatch: params.collectionsSearch.exactMatch,
-    });
-  };
-
-  const handlePageChange = (page: number) => {
-    setParams({
-      ...params,
-      collectionsSearch: {
-        ...params.collectionsSearch,
-        page: page,
-      },
-    });
-
-    /**
-     * Force navigation text update
-     */
-    setNavigationConfig((prev) => ({
-      ...prev,
-      totalItems: prev.totalItems,
-    }));
-
-    queryCollections({
-      search: params.collectionsSearch.search || "",
-      orderBy: params.collectionsSearch.orderBy || NameGraphSortOrderOptions.AI,
-      page: page,
-      exactMatch: params.collectionsSearch.exactMatch,
-    });
-  };
+  const [loadingCollectionsByMembership, setLoadingCollectionsByMembership] =
+    useState(true);
+  const [loadingCollectionByConcept, setLoadingCollectionByConcept] =
+    useState(true);
 
   /**
-   * collections state:
-   *
-   * undefined is set when component never tried querying collections
-   * null is set when no collections were retrieved from NameGraph SDK for currentSearch
-   * NameGraphCollection[] is set when collections that were retrieved were grouped and state was set
+   * undefined: when query was never done
+   * null: when query was done but resulted in error
+   * NameGraphFindCollectionsResponse: when query was successfully done
    */
-  const [collections, setCollections] = useState<
-    undefined | null | Record<number, CollectionsData | null | undefined>
-  >(undefined);
+  const [relatedCollectionsByMembership, setRelatedCollectionsByMembership] =
+    useState<
+      undefined | null | Record<number, CollectionsData | null | undefined>
+    >(undefined);
 
-  const [loadingCollections, setLoadingCollections] = useState(false);
-
-  const DEFAULT_ITEMS_PER_PAGE = 20;
-  const [navigationConfig, setNavigationConfig] = useState<NavigationConfig>({
-    itemsPerPage: DEFAULT_ITEMS_PER_PAGE,
-    totalItems: undefined,
-  });
+  /**
+   * undefined: when query was never done
+   * null: when query was done but resulted in error
+   * NameGraphFindCollectionsResponse: when query was successfully done
+   */
+  const [relatedCollectionsByConcept, setRelatedCollectionsByConcept] =
+    useState<
+      undefined | null | Record<number, CollectionsData | null | undefined>
+    >(undefined);
 
   interface QueryCollectionsParam {
-    exactMatch: boolean;
-    orderBy: NameGraphSortOrderOptions;
+    activeTab: NameRelatedCollectionsTabs;
+    orderBy?: NameGraphSortOrderOptions;
     search: string;
     page: number;
   }
 
   const queryCollections = (payload: QueryCollectionsParam) => {
-    if (payload.search && !loadingCollections) {
+    if (payload.search) {
       const query = getFirstLabelOfString(payload.search);
 
       const MAX_COLLECTIONS_FOR_EXACT_MATCH = 10;
       const MAX_RELATED_COLLECTIONS = 20;
       const OTHER_COLLECTIONS_NUMBER = 5;
 
-      setLoadingCollections(true);
+      /**
+       * This is the case where we have already queried the results for
+       * a given page, which is being visited once again and for which
+       * we have already stored its necessary data.
+       *
+       * There is no need then to re-do a load collections query.
+       *
+       * Of course this is only true if both the query and the sorting
+       * algorithm lastly used are the same. If any of these have changes,
+       * we do the queryCollections query once again and update the page's results.
+       */
 
-      if (payload.exactMatch) {
+      let currentCollectionsToConsider = relatedCollectionsByMembership;
+      if (payload.activeTab === DEFAULT_ACTIVE_TAB) {
+        currentCollectionsToConsider = relatedCollectionsByConcept;
+      }
+
+      const currentPageWasLoaded =
+        !!currentCollectionsToConsider?.[payload.page] &&
+        payload.orderBy ==
+          currentCollectionsToConsider?.[payload.page]?.sort_order;
+
+      if (currentPageWasLoaded) {
+        return;
+      }
+
+      if (payload.activeTab === NameRelatedCollectionsTabs.ByMembership) {
+        setLoadingCollectionsByMembership(true);
         findCollectionsByMember(query, {
           offset: (payload.page - 1) * navigationConfig.itemsPerPage,
           sort_order: payload.orderBy,
@@ -182,57 +143,63 @@ export default function ExploreCollectionsPage() {
 
               setNavigationConfig({
                 ...navigationConfig,
-                totalItems:
-                  typeof res.metadata.total_number_of_matched_collections ===
-                  "number"
-                    ? res.metadata.total_number_of_matched_collections
-                    : /**
-                       * NameAPI makes usage of a stringified "+1000" for
-                       * res.metadata.total_number_of_matched_collections
-                       * if there are more than 1000 collections this query
-                       * is contained in. Since this is a different data type
-                       * and we are handling number operations with totalItems,
-                       * we are here normalizing this use case to use the number 1000
-                       */
-                      MAX_COLLECTIONS_NUMBER_NAME_API_CAN_DOCUMENT,
+                totalItems: {
+                  [NameRelatedCollectionsTabs.ByConcept]:
+                    navigationConfig.totalItems?.[
+                      NameRelatedCollectionsTabs.ByConcept
+                    ],
+                  [NameRelatedCollectionsTabs.ByMembership]:
+                    typeof res.metadata.total_number_of_matched_collections ===
+                    "string" /**
+                     * NameAI makes usage of a stringified "+1000" for
+                     * res.metadata.total_number_of_matched_collections
+                     * if there are more than 1000 collections this query
+                     * is contained in. Since this is a different data type
+                     * and we are handling number operations with totalItems,
+                     * we are here normalizing this use case to use the number 1000
+                     */
+                      ? MAX_COLLECTIONS_NUMBER_NAME_API_CAN_DOCUMENT
+                      : res.metadata.total_number_of_matched_collections,
+                },
               });
 
               const relatedCollections = res.collections;
 
-              setCollections({
-                ...collections,
+              if (relatedCollections.length === 0) {
+                setRelatedCollectionsByMembership(null);
+                return;
+              }
+
+              setRelatedCollectionsByMembership({
+                ...relatedCollectionsByMembership,
                 [payload.page]: {
-                  sort_order: payload.orderBy,
+                  sort_order: payload.orderBy || DEFAULT_SORTING_ORDER,
                   related_collections: relatedCollections,
-                  other_collections: null,
                 },
               });
             } else {
-              setCollections({
-                ...collections,
+              setRelatedCollectionsByMembership({
+                ...relatedCollectionsByMembership,
                 [payload.page]: null,
               });
             }
           })
           .catch(() => {
-            setCollections({
-              ...collections,
+            setRelatedCollectionsByMembership({
+              ...relatedCollectionsByMembership,
               [payload.page]: null,
             });
           })
           .finally(() => {
-            setLoadingCollections(false);
+            setLoadingCollectionsByMembership(false);
           });
       } else {
+        setLoadingCollectionByConcept(true);
         findCollectionsByString(query, {
           offset: (payload.page - 1) * navigationConfig.itemsPerPage,
           sort_order: payload.orderBy,
           max_total_collections:
             MAX_RELATED_COLLECTIONS + OTHER_COLLECTIONS_NUMBER,
-          /**
-           * Please note how the number of collections one page show is
-           * strategically aligned with ITEMS_PER_PAGE_OPTIONS.
-           */
           max_related_collections: MAX_RELATED_COLLECTIONS,
           max_other_collections: OTHER_COLLECTIONS_NUMBER,
           min_other_collections: OTHER_COLLECTIONS_NUMBER,
@@ -243,97 +210,336 @@ export default function ExploreCollectionsPage() {
 
               setNavigationConfig({
                 ...navigationConfig,
-                totalItems:
-                  typeof res.metadata.total_number_of_matched_collections ===
-                  "number"
-                    ? res.metadata.total_number_of_matched_collections
-                    : /**
-                       * NameAPI makes usage of a stringified "+1000" for
-                       * res.metadata.total_number_of_matched_collections
-                       * if there are more than 1000 collections this query
-                       * is contained in. Since this is a different data type
-                       * and we are handling number operations with totalItems,
-                       * we are here normalizing this use case to use the number 1000
-                       */
-                      MAX_COLLECTIONS_NUMBER_NAME_API_CAN_DOCUMENT,
+                totalItems: {
+                  [NameRelatedCollectionsTabs.ByMembership]:
+                    navigationConfig.totalItems?.[
+                      NameRelatedCollectionsTabs.ByMembership
+                    ],
+                  [NameRelatedCollectionsTabs.ByConcept]:
+                    typeof res.metadata.total_number_of_matched_collections ===
+                    "string" /**
+                     * NameAI makes usage of a stringified "+1000" for
+                     * res.metadata.total_number_of_matched_collections
+                     * if there are more than 1000 collections this query
+                     * is contained in. Since this is a different data type
+                     * and we are handling number operations with totalItems,
+                     * we are here normalizing this use case to use the number 1000
+                     */
+                      ? MAX_COLLECTIONS_NUMBER_NAME_API_CAN_DOCUMENT
+                      : res.metadata.total_number_of_matched_collections,
+                },
               });
 
-              const moreCollections = res.other_collections;
               const relatedCollections = res.related_collections;
 
-              setCollections({
-                ...collections,
+              if (relatedCollections.length === 0) {
+                setRelatedCollectionsByConcept(null);
+                return;
+              }
+
+              setRelatedCollectionsByConcept({
+                ...relatedCollectionsByConcept,
                 [payload.page]: {
-                  sort_order: payload.orderBy,
+                  sort_order: payload.orderBy || DEFAULT_SORTING_ORDER,
                   related_collections: relatedCollections,
-                  other_collections: moreCollections,
                 },
               });
             } else {
-              setCollections({
-                ...collections,
+              setRelatedCollectionsByConcept({
+                ...relatedCollectionsByConcept,
                 [payload.page]: null,
               });
             }
           })
           .catch(() => {
-            setCollections({
-              ...collections,
+            setRelatedCollectionsByConcept({
+              ...relatedCollectionsByConcept,
               [payload.page]: null,
             });
           })
           .finally(() => {
-            setLoadingCollections(false);
+            setLoadingCollectionByConcept(false);
           });
       }
-    } else {
-      setCollections(null);
-      setLoadingCollections(false);
     }
   };
+
+  const handleSearch = (searchTerm: string) => {
+    if (!searchTerm) return;
+
+    setParams({
+      ...params,
+      collectionsSearch: {
+        ...params.collectionsSearch,
+        search: searchTerm,
+        page: {
+          ...params.collectionsSearch.page,
+          [params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB]:
+            params.collectionsSearch.page?.[
+              params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB
+            ] || DEFAULT_PAGE_NUMBER,
+        } as Record<NameRelatedCollectionsTabs, number | undefined>,
+        activeTab: DEFAULT_ACTIVE_TAB,
+      },
+    });
+
+    queryCollections({
+      search: searchTerm,
+      activeTab: DEFAULT_ACTIVE_TAB,
+      page: DEFAULT_PAGE_NUMBER,
+      orderBy: params.collectionsSearch.orderBy || NameGraphSortOrderOptions.AI,
+    });
+  };
+
+  const handlePageChange = (page: number) => {
+    setParams({
+      ...params,
+      collectionsSearch: {
+        ...params.collectionsSearch,
+        page: {
+          ...params.collectionsSearch.page,
+          [params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB]: page,
+        } as Record<NameRelatedCollectionsTabs, number | undefined>,
+      },
+    });
+
+    queryCollections({
+      search: params.collectionsSearch.search,
+      activeTab: params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB,
+      page,
+    });
+  };
+
+  const handleActiveTabChange = (activeTab: NameRelatedCollectionsTabs) => {
+    setParams({
+      ...params,
+      collectionsSearch: {
+        ...params.collectionsSearch,
+        activeTab,
+      },
+    });
+
+    getNavigationPageTextGuide(activeTab);
+  };
+
+  useEffect(() => {
+    queryCollections({
+      search: params.collectionsSearch.search,
+      activeTab: params.collectionsSearch.activeTab,
+      page:
+        params.collectionsSearch.page?.[
+          params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB
+        ] || DEFAULT_PAGE_NUMBER,
+      orderBy: params.collectionsSearch.orderBy || NameGraphSortOrderOptions.AI,
+    });
+  }, [params.collectionsSearch.activeTab]);
 
   /**
    * Navigation helper functions
    */
+  const [navigationConfig, setNavigationConfig] = useState<NavigationConfig>({
+    itemsPerPage: DEFAULT_ITEMS_PER_PAGE,
+    totalItems: {
+      [NameRelatedCollectionsTabs.ByConcept]: undefined,
+      [NameRelatedCollectionsTabs.ByMembership]: undefined,
+    },
+  });
+
+  useEffect(() => {
+    const activeTab = params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB;
+
+    if (
+      /**
+       * If the main results are already loaded
+       * we load the results for the hidden tab
+       */
+      navigationConfig.totalItems &&
+      navigationConfig.totalItems[activeTab as NameRelatedCollectionsTabs]
+    ) {
+      queryCollections({
+        activeTab: getOppositeTab(),
+        page:
+          params.collectionsSearch.page?.[
+            params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB
+          ] || DEFAULT_PAGE_NUMBER,
+        orderBy: params.collectionsSearch.orderBy,
+        search: params.collectionsSearch.search,
+      });
+    }
+  }, [navigationConfig?.totalItems]);
+
   const isFirstCollectionsPageForCurrentQuery = () => {
-    return Number(params.collectionsSearch.page) === 1;
+    const activeTab = params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB;
+    const currentPage =
+      Number(params.collectionsSearch.page?.[activeTab]) || DEFAULT_PAGE_NUMBER;
+    return currentPage <= 1;
   };
+
   const isLastCollectionsPageForCurrentQuery = () => {
     if (!navigationConfig.totalItems) return false;
 
-    const currentPage = Number(params.collectionsSearch.page) || 1;
+    const activeTab = params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB;
+    const totalItems = navigationConfig.totalItems[activeTab];
+
+    if (!totalItems) return false;
+
+    const currentPage = Number(
+      params.collectionsSearch.page?.[activeTab] || DEFAULT_PAGE_NUMBER,
+    );
+
     return (
-      currentPage * navigationConfig.itemsPerPage >= navigationConfig.totalItems
+      totalItems <= navigationConfig.itemsPerPage ||
+      currentPage * navigationConfig.itemsPerPage >= totalItems
     );
   };
 
-  const getNavigationPageTextGuide = () => {
+  const [navigationPagesTextGuides, setNavigationPagesTextGuides] = useState<
+    Record<NameRelatedCollectionsTabs, string>
+  >({
+    [NameRelatedCollectionsTabs.ByConcept]: "",
+    [NameRelatedCollectionsTabs.ByMembership]: "",
+  });
+
+  const getNavigationPageTextGuide = (tab: NameRelatedCollectionsTabs) => {
     if (!navigationConfig.totalItems) {
-      return !loadingCollections ? "No collections found" : "";
+      setNavigationPagesTextGuides({
+        ...navigationPagesTextGuides,
+        [tab]: "No name suggestions found",
+      });
+      return;
     }
 
-    const currentPage = Number(params.collectionsSearch.page) || 1;
+    const totalItems = navigationConfig.totalItems[tab];
+    if (!totalItems) return;
+
+    const currentPage = Number(
+      params.collectionsSearch.page?.[tab] || DEFAULT_PAGE_NUMBER,
+    );
     const startItem = (currentPage - 1) * navigationConfig.itemsPerPage + 1;
     const endItem = Math.min(
       currentPage * navigationConfig.itemsPerPage,
-      navigationConfig.totalItems,
+      totalItems,
     );
 
-    return `${startItem}-${endItem} of ${navigationConfig.totalItems} collections`;
+    setNavigationPagesTextGuides({
+      ...navigationPagesTextGuides,
+      [tab]: `${startItem}-${endItem} of ${totalItems} name suggestions`,
+    });
   };
 
   useEffect(() => {
-    /**
-     * This will update the navigation info text whenever page changes
-     */
-    if (params.collectionsSearch.page) {
-      setNavigationConfig((prev) => ({ ...prev }));
-    }
-  }, [params.collectionsSearch.page]);
+    getNavigationPageTextGuide(NameRelatedCollectionsTabs.ByConcept);
+  }, [
+    params.collectionsSearch.page?.[NameRelatedCollectionsTabs.ByConcept],
+    params.collectionsSearch.activeTab,
+    navigationConfig.totalItems,
+    navigationConfig.itemsPerPage,
+  ]);
 
   useEffect(() => {
-    handleSearch(params.collectionsSearch.search);
+    getNavigationPageTextGuide(NameRelatedCollectionsTabs.ByMembership);
+  }, [
+    params.collectionsSearch.page?.[NameRelatedCollectionsTabs.ByMembership],
+    params.collectionsSearch.activeTab,
+    navigationConfig.totalItems,
+    navigationConfig.itemsPerPage,
+  ]);
+
+  /**
+   * This serves for us to query results in a wise manner:
+   * We first query results for visible tab and later on for
+   * hidden tab. This is necessary as we want to show the count
+   * of results of both tabs as soon as possible. This is also wise
+   * as we prioritize, always, querying first the results that will be
+   * displayed in visitor's UI and later on the results that he/she can visit.
+   */
+  const getOppositeTab = (): NameRelatedCollectionsTabs => {
+    const activeTab = params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB;
+
+    switch (activeTab) {
+      case NameRelatedCollectionsTabs.ByConcept:
+        return NameRelatedCollectionsTabs.ByMembership;
+      case NameRelatedCollectionsTabs.ByMembership:
+        return NameRelatedCollectionsTabs.ByConcept;
+      default:
+        return NameRelatedCollectionsTabs.ByMembership;
+    }
+  };
+
+  const handleOrderBy = (orderBy: NameGraphSortOrderOptions) => {
+    setParams({
+      ...params,
+      collectionsSearch: {
+        ...params.collectionsSearch,
+        orderBy,
+        page: {
+          ...params.collectionsSearch.page,
+          [params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB]:
+            DEFAULT_PAGE_NUMBER,
+        } as Record<NameRelatedCollectionsTabs, number | undefined>,
+      },
+    });
+
+    queryCollections({
+      search: params.collectionsSearch.search,
+      activeTab: params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB,
+      page: DEFAULT_PAGE_NUMBER,
+      orderBy,
+    });
+  };
+
+  const hasLoadedResultsForTab = (tab: NameRelatedCollectionsTabs) => {
+    const loadedResults = getLoadedResultsForTab(tab);
+
+    return !!loadedResults;
+  };
+
+  const getLoadedResultsForTab = (
+    tab: NameRelatedCollectionsTabs,
+  ): null | CollectionsData | undefined => {
+    const pages = params.collectionsSearch.page;
+
+    if (!pages) return null;
+
+    const activePage = pages[tab] || DEFAULT_PAGE_NUMBER;
+
+    switch (tab) {
+      case NameRelatedCollectionsTabs.ByConcept:
+        return !!relatedCollectionsByConcept?.[activePage]
+          ? relatedCollectionsByConcept[activePage]
+          : null;
+      case NameRelatedCollectionsTabs.ByMembership:
+        return !!relatedCollectionsByMembership?.[activePage]
+          ? relatedCollectionsByMembership[activePage]
+          : null;
+      default:
+        return null;
+    }
+  };
+
+  useEffect(() => {
+    console.log(relatedCollectionsByConcept);
+  }, [relatedCollectionsByConcept]);
+
+  const [lastSearchDoneFor, setLastSearchDoneFor] = useState("");
+  useEffect(() => {
+    if (lastSearchDoneFor !== params.collectionsSearch.search) {
+      handleSearch(params.collectionsSearch.search);
+      setLastSearchDoneFor(params.collectionsSearch.search);
+    }
   }, [params.collectionsSearch.search]);
+
+  const [searchEnsName, setSearchEnsName] = useState<ENSName | null>(null);
+  useEffect(() => {
+    setSearchEnsName(
+      buildENSName(
+        NameWithCurrentTld({
+          params,
+          name: params.collectionsSearch.search,
+        }),
+      ),
+    );
+  }, [params.tld.suffix, params.collectionsSearch.search]);
 
   return !params.collectionsSearch.search ? (
     <HomePage />
@@ -341,239 +547,488 @@ export default function ExploreCollectionsPage() {
     <Suspense fallback={<div>Loading...</div>}>
       <div className="mx-auto py-8 w-full">
         <div className="max-w-7xl mx-auto p-6">
-          <div>
+          <h1 className="text-sm text-gray-500">
+            Collection search results for
+          </h1>
+          <div className="flex space-x-6 mt-4 mb-3 items-center justify-start">
             <div>
               <NftAvatar
-                size={AvatarSize.MEDIUM}
                 withLink={false}
-                name={buildENSName(params.collectionsSearch.search)}
+                name={searchEnsName}
+                size={AvatarSize.SMALL}
+                key={params.collectionsSearch.search}
               />
-              <h1 className="text-sm text-gray-500">
-                Collection search results for
-              </h1>
             </div>
-            <div className="flex space-x-6 mt-1 mb-3">
-              <Link
-                href={getNameDetailsPageHref(
-                  params.collectionsSearch.search.replace(" ", ""),
-                )}
-                className="!text-3xl font-bold mb-5 leading-9 truncate"
-              >
-                {params.collectionsSearch.search ? (
-                  <NameWithCurrentTld name={params.collectionsSearch.search} />
-                ) : (
-                  "______"
-                )}
-              </Link>
-            </div>
-
-            {params.collectionsSearch.search && (
-              <>
-                {loadingCollections &&
-                !collections?.[params.collectionsSearch.page] ? (
-                  <CollectionsGridSkeleton />
-                ) : collections ? (
-                  <>
-                    <div className="w-full flex flex-col xl:flex-row">
-                      <div className="w-full">
-                        {/* Collection Count and Sort */}
-                        <div
-                          className={`w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5 ${!collections[params.collectionsSearch.page]?.other_collections ? "" : "max-w-[756px]"}`}
-                        >
-                          <div className="flex items-center">
-                            <div className="text-lg font-semibold mr-2.5">
-                              {getNavigationPageTextGuide()}
-                            </div>
-                            {navigationConfig.totalItems ? (
-                              <div className="flex">
-                                <Button
-                                  className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50 disabled:hover:bg-white"
-                                  disabled={isFirstCollectionsPageForCurrentQuery()}
-                                  onClick={() =>
-                                    handlePageChange(
-                                      Number(
-                                        params.collectionsSearch.page ||
-                                          DEFAULT_PAGE_NUMBER,
-                                      ) - 1,
-                                    )
-                                  }
-                                >
-                                  <ChevronLeft className="w-6 h-6 text-black" />
-                                </Button>
-                                <Button
-                                  className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50"
-                                  disabled={isLastCollectionsPageForCurrentQuery()}
-                                  onClick={() =>
-                                    handlePageChange(
-                                      Number(params.collectionsSearch.page) + 1,
-                                    )
-                                  }
-                                >
-                                  <ChevronRight className="w-6 h-6 text-black" />
-                                </Button>
-                              </div>
-                            ) : null}
-                          </div>
-
-                          <div className="flex space-x-4">
-                            {collections[params.collectionsSearch.page] ? (
-                              <div className="flex text-gray-200 border rounded-lg">
-                                <Toggle
-                                  pressed={params.collectionsSearch.exactMatch}
-                                  onPressedChange={(pressed) => {
-                                    setNavigationConfig({
-                                      ...navigationConfig,
-                                      totalItems: undefined,
-                                    });
-                                    setParams({
-                                      ...params,
-                                      collectionsSearch: {
-                                        ...params.collectionsSearch,
-                                        exactMatch: pressed,
-                                        page: DEFAULT_PAGE_NUMBER,
-                                      },
-                                    });
-                                    queryCollections({
-                                      search:
-                                        params.collectionsSearch.search || "",
-                                      orderBy:
-                                        params.collectionsSearch.orderBy ||
-                                        NameGraphSortOrderOptions.AI,
-                                      page:
-                                        params.collectionsSearch.page ||
-                                        DEFAULT_PAGE_NUMBER,
-                                      exactMatch: pressed,
-                                    });
-                                  }}
-                                >
-                                  Exact Match
-                                </Toggle>
-                              </div>
-                            ) : null}
-                            {collections[params.collectionsSearch.page] ? (
-                              <div className="flex space-x-3 items-center">
-                                <div className="text-sm text-gray-500">
-                                  Sort by
-                                </div>
-                                <Select
-                                  defaultValue={
-                                    params.collectionsSearch.orderBy ||
-                                    NameGraphSortOrderOptions.AI
-                                  }
-                                  onValueChange={(newValue) =>
-                                    handleOrderBy(
-                                      newValue as NameGraphSortOrderOptions,
-                                    )
-                                  }
-                                >
-                                  <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="Sort by" />
-                                  </SelectTrigger>
-                                  <SelectContent>
-                                    {Object.entries(
-                                      FromNameGraphSortOrderToDropdownTextContent,
-                                    ).map(([key]) => {
-                                      return (
-                                        <SelectItem key={key} value={key}>
-                                          {
-                                            FromNameGraphSortOrderToDropdownTextContent[
-                                              key as NameGraphSortOrderOptions
-                                            ]
-                                          }
-                                        </SelectItem>
-                                      );
-                                    })}
-                                  </SelectContent>
-                                </Select>
-                              </div>
-                            ) : null}
-                          </div>
-                        </div>
-                        {/* Collections List */}
-                        <div
-                          className={`w-full ${!collections[params.collectionsSearch.page]?.other_collections ? "" : "max-w-[756px]"}`}
-                        >
-                          {loadingCollections ? (
-                            <div className="flex flex-col">
-                              <CollectionsCardsSkeleton />
-                            </div>
-                          ) : collections[params.collectionsSearch.page] ? (
-                            collections[
-                              params.collectionsSearch.page
-                            ]?.related_collections.map((collection) => (
-                              <CollectionCard
-                                key={collection.collection_id}
-                                collection={collection}
-                              />
-                            ))
-                          ) : null}
-                        </div>
-                        {/* Pagination */}
-                        {navigationConfig.totalItems ? (
-                          <div className="flex items-center justify-between border border-gray-200 border-l-0 border-r-0 border-b-0 mt-3 pt-3">
-                            <div className="text-sm text-gray-500 mr-2.5">
-                              {getNavigationPageTextGuide()}
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <Button
-                                className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
-                                disabled={isFirstCollectionsPageForCurrentQuery()}
-                                onClick={() =>
-                                  handlePageChange(
-                                    Number(params.collectionsSearch.page) -
-                                      DEFAULT_PAGE_NUMBER,
-                                  )
-                                }
-                              >
-                                <ChevronLeft />
-                                Prev
-                              </Button>
-                              <Button
-                                className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
-                                disabled={isLastCollectionsPageForCurrentQuery()}
-                                onClick={() =>
-                                  handlePageChange(
-                                    Number(params.collectionsSearch.page) +
-                                      DEFAULT_PAGE_NUMBER,
-                                  )
-                                }
-                              >
-                                Next
-                                <ChevronRight />
-                              </Button>
-                            </div>
-                          </div>
-                        ) : null}
-                      </div>
-
-                      {collections[params.collectionsSearch.page]
-                        ?.other_collections && (
-                        <div className="z-40 xl:max-w-[400px] mt-10 xl:mt-0 xl:ml-[68px] border rounded-md border-gray-200 w-full h-fit">
-                          <h2 className="flex items-center text-lg font-semibold h-[47px] px-5 border border-t-0 border-r-0 border-l-0 border-gray-200">
-                            Other collections
-                          </h2>
-                          <div className="px-5">
-                            {collections[
-                              params.collectionsSearch.page
-                            ]?.other_collections?.map((collection) => (
-                              <CollectionCard
-                                key={collection.collection_id}
-                                collection={collection}
-                              />
-                            ))}
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  </>
-                ) : !params.collectionsSearch.search && !collections ? (
-                  <>Error</>
-                ) : null}
-              </>
-            )}
+            <Link
+              href={getNameDetailsPageHref(
+                params.collectionsSearch.search.replace(" ", ""),
+              )}
+              className="!text-3xl font-bold truncate"
+            >
+              {NameWithCurrentTld({
+                name: params.collectionsSearch.search,
+                params,
+              })}
+            </Link>
           </div>
+
+          <Tabs
+            defaultValue={params.nameDetails.activeTab || DEFAULT_ACTIVE_TAB}
+          >
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5">
+              <TabsList className="w-max">
+                <TabsTriggers
+                  navigationConfig={navigationConfig}
+                  handleActiveTabChange={handleActiveTabChange}
+                />
+              </TabsList>
+
+              <Select
+                defaultValue={
+                  params.collectionsSearch.orderBy ||
+                  NameGraphSortOrderOptions.AI
+                }
+                onValueChange={(value) =>
+                  handleOrderBy(value as NameGraphSortOrderOptions)
+                }
+              >
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.entries(
+                    FromNameGraphSortOrderToDropdownTextContent,
+                  ).map(([key]) => (
+                    <SelectItem key={key} value={key}>
+                      {
+                        FromNameGraphSortOrderToDropdownTextContent[
+                          key as NameGraphSortOrderOptions
+                        ]
+                      }
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <TabsContents
+              loadingCollectionByConcept={loadingCollectionByConcept}
+              params={params}
+              navigationConfig={navigationConfig}
+              relatedCollectionsByMembership={relatedCollectionsByMembership}
+              relatedCollectionsByConcept={relatedCollectionsByConcept}
+              loadingCollectionsByMembership={loadingCollectionsByMembership}
+              hasLoadedResultsForTab={hasLoadedResultsForTab}
+              handlePageChange={handlePageChange}
+              isFirstCollectionsPageForCurrentQuery={
+                isFirstCollectionsPageForCurrentQuery
+              }
+              isLastCollectionsPageForCurrentQuery={
+                isLastCollectionsPageForCurrentQuery
+              }
+              navigationPagesTextGuides={navigationPagesTextGuides}
+            />
+          </Tabs>
         </div>
       </div>
     </Suspense>
   );
 }
+
+const TabsTriggers = ({
+  handleActiveTabChange,
+  navigationConfig,
+}: {
+  handleActiveTabChange: (activeTab: NameRelatedCollectionsTabs) => void;
+  navigationConfig: NavigationConfig;
+}) => {
+  const FromTabNameToTabLabel = {
+    [NameRelatedCollectionsTabs.ByConcept]: "By concept",
+    [NameRelatedCollectionsTabs.ByMembership]: "By membership",
+  };
+
+  return (
+    <>
+      {Object.entries(NameRelatedCollectionsTabs).map(([key, value]) => {
+        return (
+          <TabsTrigger
+            key={value}
+            value={key as NameRelatedCollectionsTabs}
+            onClick={() =>
+              handleActiveTabChange(key as NameRelatedCollectionsTabs)
+            }
+          >
+            {FromTabNameToTabLabel[key as NameRelatedCollectionsTabs]}
+            {navigationConfig.totalItems?.[
+              key as NameRelatedCollectionsTabs
+            ] !== undefined ? (
+              <span className="w-16 ml-3 border border-gray-400 rounded-full">
+                {
+                  navigationConfig.totalItems?.[
+                    key as NameRelatedCollectionsTabs
+                  ]
+                }
+              </span>
+            ) : (
+              <Skeleton className="ml-3 w-16 h-6" />
+            )}
+          </TabsTrigger>
+        );
+      })}
+    </>
+  );
+};
+
+const TabsContents = ({
+  params,
+  hasLoadedResultsForTab,
+  handlePageChange,
+  isFirstCollectionsPageForCurrentQuery,
+  isLastCollectionsPageForCurrentQuery,
+  navigationPagesTextGuides,
+  loadingCollectionByConcept,
+  loadingCollectionsByMembership,
+  relatedCollectionsByConcept,
+  relatedCollectionsByMembership,
+  navigationConfig,
+}: {
+  hasLoadedResultsForTab: any;
+  handlePageChange: any;
+  isFirstCollectionsPageForCurrentQuery: any;
+  isLastCollectionsPageForCurrentQuery: any;
+  params: any;
+  navigationPagesTextGuides: any;
+  loadingCollectionByConcept: boolean;
+  loadingCollectionsByMembership: boolean;
+  relatedCollectionsByConcept: any;
+  relatedCollectionsByMembership: any;
+  navigationConfig: NavigationConfig;
+}) => {
+  return (
+    <>
+      {Object.entries(NameRelatedCollectionsTabs).map(([key, value]) => {
+        return (
+          <TabsContent
+            key={value}
+            className="w-full"
+            value={key as NameRelatedCollectionsTabs}
+          >
+            <div className="min-h-[400px] overflow-hidden">
+              {key === NameRelatedCollectionsTabs.ByConcept ? (
+                <>
+                  {loadingCollectionByConcept ? (
+                    <div className="w-full flex flex-col justify-center items-center">
+                      <div className="w-full flex flex-col space-y-4 p-3 rounded-xl mb-8 border border-gray-200">
+                        <Skeleton className="w-[350px] my-2 h-6 mr-auto" />
+                        <CollectionsCardsSkeleton className="flex flex-col space-y-[30px]" />
+                        <CollectionsCardsSkeleton />
+                      </div>
+                    </div>
+                  ) : relatedCollectionsByConcept ? (
+                    <div>
+                      <div className="w-full flex flex-col xl:flex-row space-y-8 xl:space-x-8 xl:space-y-0">
+                        <div className="w-full">
+                          <div className="w-full mb-8">
+                            <div className="w-full flex flex-col space-y-4 p-3 rounded-xl border border-gray-200">
+                              <div className="w-full flex flex-col justify-start">
+                                <div className="h-full">
+                                  {/* Collection Count and Sort */}
+                                  <div className="max-w-[756px] w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5">
+                                    <div className="flex items-center">
+                                      <div className="text-lg font-semibold mr-2.5">
+                                        {
+                                          navigationPagesTextGuides[
+                                            NameRelatedCollectionsTabs.ByConcept
+                                          ]
+                                        }
+                                      </div>
+                                      {navigationConfig.totalItems ? (
+                                        <div className="flex">
+                                          <Button
+                                            className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50 disabled:hover:bg-white"
+                                            disabled={isFirstCollectionsPageForCurrentQuery()}
+                                            onClick={() =>
+                                              handlePageChange(
+                                                Number(
+                                                  params.nameDetails.page?.[
+                                                    params.nameDetails
+                                                      .activeTab ||
+                                                      DEFAULT_ACTIVE_TAB
+                                                  ],
+                                                ) - 1,
+                                              )
+                                            }
+                                          >
+                                            <ChevronLeft className="w-6 h-6 text-black" />
+                                          </Button>
+                                          <Button
+                                            className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50"
+                                            disabled={isLastCollectionsPageForCurrentQuery()}
+                                            onClick={() =>
+                                              handlePageChange(
+                                                Number(
+                                                  params.nameDetails.page?.[
+                                                    params.nameDetails
+                                                      .activeTab ||
+                                                      DEFAULT_ACTIVE_TAB
+                                                  ],
+                                                ) + 1,
+                                              )
+                                            }
+                                          >
+                                            <ChevronRight className="w-6 h-6 text-black" />
+                                          </Button>
+                                        </div>
+                                      ) : null}
+                                    </div>
+                                  </div>
+                                  {/* Collections List */}
+                                  <div className="w-full h-full max-w-[756px] space-y-4">
+                                    {loadingCollectionByConcept ? (
+                                      <div className="my-20 flex flex-col w-full mt-auto justify-center items-center">
+                                        <CollectionsCardsSkeleton />
+                                      </div>
+                                    ) : hasLoadedResultsForTab(
+                                        NameRelatedCollectionsTabs.ByConcept,
+                                      ) ? (
+                                      relatedCollectionsByConcept[
+                                        params.collectionsSearch.page?.[
+                                          NameRelatedCollectionsTabs.ByConcept
+                                        ] || DEFAULT_PAGE_NUMBER
+                                      ]?.related_collections.map(
+                                        (collection: NameGraphCollection) => (
+                                          <CollectionCard
+                                            key={collection.collection_id}
+                                            collection={collection}
+                                          />
+                                        ),
+                                      )
+                                    ) : null}
+                                  </div>
+                                </div>
+                                <div className="mt-auto">
+                                  {/* Pagination */}
+                                  {navigationConfig.totalItems ? (
+                                    <div className="flex items-center justify-between border border-gray-200 border-l-0 border-r-0 border-b-0 mt-3 p-3">
+                                      <div className="text-sm text-gray-500 mr-2.5">
+                                        {
+                                          navigationPagesTextGuides[
+                                            NameRelatedCollectionsTabs.ByConcept
+                                          ]
+                                        }
+                                      </div>
+                                      <div className="flex items-center gap-2">
+                                        <Button
+                                          className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
+                                          disabled={isFirstCollectionsPageForCurrentQuery()}
+                                          onClick={() =>
+                                            handlePageChange(
+                                              Number(
+                                                params.nameDetails.page?.[
+                                                  params.nameDetails
+                                                    .activeTab ||
+                                                    DEFAULT_ACTIVE_TAB
+                                                ],
+                                              ) - 1,
+                                            )
+                                          }
+                                        >
+                                          <ChevronLeft />
+                                          Prev
+                                        </Button>
+                                        <Button
+                                          className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
+                                          disabled={isLastCollectionsPageForCurrentQuery()}
+                                          onClick={() =>
+                                            handlePageChange(
+                                              Number(
+                                                params.nameDetails.page?.[
+                                                  params.nameDetails
+                                                    .activeTab ||
+                                                    DEFAULT_ACTIVE_TAB
+                                                ],
+                                              ) + 1,
+                                            )
+                                          }
+                                        >
+                                          Next
+                                          <ChevronRight />
+                                        </Button>
+                                      </div>
+                                    </div>
+                                  ) : null}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : null}
+                </>
+              ) : (
+                <>
+                  {loadingCollectionsByMembership ? (
+                    <div className="w-full flex flex-col justify-center items-center">
+                      <div className="w-full flex flex-col space-y-4 p-3 rounded-xl mb-8 border border-gray-200">
+                        <Skeleton className="w-[350px] my-2 h-6 mr-auto" />
+                        <CollectionsCardsSkeleton className="flex flex-col space-y-[30px]" />
+                        <CollectionsCardsSkeleton />
+                      </div>
+                    </div>
+                  ) : relatedCollectionsByMembership ? (
+                    <div>
+                      <div className="w-full flex flex-col xl:flex-row space-y-8 xl:space-x-8 xl:space-y-0">
+                        <div className="w-full">
+                          <div className="w-full mb-8">
+                            <div className="w-full flex flex-col space-y-4 p-3 rounded-xl border border-gray-200">
+                              <div className="w-full flex flex-col justify-start">
+                                <div className="h-full">
+                                  {/* Collection Count and Sort */}
+                                  <div className="max-w-[756px] w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5">
+                                    <div className="flex items-center">
+                                      <div className="text-lg font-semibold mr-2.5">
+                                        {
+                                          navigationPagesTextGuides[
+                                            NameRelatedCollectionsTabs
+                                              .ByMembership
+                                          ]
+                                        }
+                                      </div>
+                                      {navigationConfig.totalItems ? (
+                                        <div className="flex">
+                                          <Button
+                                            className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50 disabled:hover:bg-white"
+                                            disabled={isFirstCollectionsPageForCurrentQuery()}
+                                            onClick={() =>
+                                              handlePageChange(
+                                                Number(
+                                                  params.nameDetails.page?.[
+                                                    params.nameDetails
+                                                      .activeTab ||
+                                                      DEFAULT_ACTIVE_TAB
+                                                  ],
+                                                ) - 1,
+                                              )
+                                            }
+                                          >
+                                            <ChevronLeft className="w-6 h-6 text-black" />
+                                          </Button>
+                                          <Button
+                                            className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50"
+                                            disabled={isLastCollectionsPageForCurrentQuery()}
+                                            onClick={() =>
+                                              handlePageChange(
+                                                Number(
+                                                  params.nameDetails.page?.[
+                                                    params.nameDetails
+                                                      .activeTab ||
+                                                      DEFAULT_ACTIVE_TAB
+                                                  ],
+                                                ) + 1,
+                                              )
+                                            }
+                                          >
+                                            <ChevronRight className="w-6 h-6 text-black" />
+                                          </Button>
+                                        </div>
+                                      ) : null}
+                                    </div>
+                                  </div>
+                                  {/* Collections List */}
+                                  <div className="w-full h-full max-w-[756px] space-y-4">
+                                    {loadingCollectionsByMembership ? (
+                                      <div className="flex flex-col w-full mt-auto justify-center items-center">
+                                        <CollectionsCardsSkeleton />
+                                      </div>
+                                    ) : hasLoadedResultsForTab(
+                                        NameRelatedCollectionsTabs.ByMembership,
+                                      ) ? (
+                                      relatedCollectionsByMembership[
+                                        params.collectionsSearch.page?.[
+                                          NameRelatedCollectionsTabs
+                                            .ByMembership
+                                        ] || DEFAULT_PAGE_NUMBER
+                                      ]?.related_collections.map(
+                                        (collection: any) => (
+                                          <CollectionCard
+                                            key={collection.collection_id}
+                                            collection={collection}
+                                          />
+                                        ),
+                                      )
+                                    ) : null}
+                                  </div>
+                                </div>
+                                <div className="mt-auto">
+                                  {/* Pagination */}
+                                  {navigationConfig.totalItems ? (
+                                    <div className="flex items-center justify-between border border-gray-200 border-l-0 border-r-0 border-b-0 mt-3 p-3">
+                                      <div className="text-sm text-gray-500 mr-2.5">
+                                        {
+                                          navigationPagesTextGuides[
+                                            NameRelatedCollectionsTabs
+                                              .ByMembership
+                                          ]
+                                        }
+                                      </div>
+                                      <div className="flex items-center gap-2">
+                                        <Button
+                                          className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
+                                          disabled={isFirstCollectionsPageForCurrentQuery()}
+                                          onClick={() =>
+                                            handlePageChange(
+                                              Number(
+                                                params.nameDetails.page?.[
+                                                  params.nameDetails
+                                                    .activeTab ||
+                                                    DEFAULT_ACTIVE_TAB
+                                                ],
+                                              ) - 1,
+                                            )
+                                          }
+                                        >
+                                          <ChevronLeft />
+                                          Prev
+                                        </Button>
+                                        <Button
+                                          className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
+                                          disabled={isLastCollectionsPageForCurrentQuery()}
+                                          onClick={() =>
+                                            handlePageChange(
+                                              Number(
+                                                params.nameDetails.page?.[
+                                                  params.nameDetails
+                                                    .activeTab ||
+                                                    DEFAULT_ACTIVE_TAB
+                                                ],
+                                              ) + 1,
+                                            )
+                                          }
+                                        >
+                                          Next
+                                          <ChevronRight />
+                                        </Button>
+                                      </div>
+                                    </div>
+                                  ) : null}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="mt-8 text-sm ml-2">
+                      No related collections where found for this name
+                    </p>
+                  )}
+                </>
+              )}
+            </div>
+          </TabsContent>
+        );
+      })}
+    </>
+  );
+};

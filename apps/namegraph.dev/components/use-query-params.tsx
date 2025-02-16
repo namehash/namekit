@@ -4,14 +4,14 @@ import { createContext, useContext, useCallback, ReactNode } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { NameGraphSortOrderOptions } from "@namehash/namegraph-sdk/utils";
 import { Tlds } from "./collections/utils";
-import { NameRelatedCollectionsTabs } from "@/app/name/[name]/name-details-page";
+import { NameRelatedCollectionsTabs } from "@/app/name/[name]/types";
 
-interface QueryParams {
+export interface QueryParams {
   collectionsSearch: {
     search: string;
-    page: number;
     orderBy: NameGraphSortOrderOptions;
-    exactMatch: boolean;
+    activeTab: NameRelatedCollectionsTabs;
+    page?: Record<NameRelatedCollectionsTabs, number | undefined>;
   };
   tld: {
     suffix?: Tlds;
@@ -25,6 +25,16 @@ interface QueryParams {
     orderBy: NameGraphSortOrderOptions;
   };
 }
+
+export const NameWithCurrentTld = ({
+  params,
+  name,
+}: {
+  params: QueryParams;
+  name: string;
+}): string => {
+  return `${name}${params.tld.suffix ? params.tld.suffix : ""}`;
+};
 
 interface QueryParamsContextType {
   params: QueryParams;

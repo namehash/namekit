@@ -39,18 +39,17 @@ const NUMBER_OF_SKELETONS_OF_COLLECTION_CARDS = 5;
 
 export const CollectionsCardsSkeleton = ({
   className = "flex flex-col space-y-2.5",
+  number = NUMBER_OF_SKELETONS_OF_COLLECTION_CARDS,
 }) => {
   return (
     <div className={className}>
-      {[...Array(NUMBER_OF_SKELETONS_OF_COLLECTION_CARDS).keys()].map(
-        (collection) => {
-          return (
-            <div key={collection}>
-              <CollectionCardSkeleton />
-            </div>
-          );
-        },
-      )}
+      {[...Array(number).keys()].map((collection) => {
+        return (
+          <div key={collection}>
+            <CollectionCardSkeleton />
+          </div>
+        );
+      })}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { WritersBlockPills } from "@/components/mini-apps/ideate/writers-block-pills";
+import { WritersBlockPills } from "@/components/mini-apps/writers-block-pills";
 import { writersBlockSuggestions } from "@/lib/writers-block-suggestions";
 import {
   sampleWritersBlockSuggestions,
