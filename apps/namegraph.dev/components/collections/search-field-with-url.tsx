@@ -1,7 +1,6 @@
 "use client";
 
 import { useQueryParams } from "@/components/use-query-params";
-import { DEFAULT_PAGE_NUMBER } from "@/components/collections/utils";
 import { ArrowRight, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -21,7 +20,6 @@ export const SearchFieldWithUrl = ({ onSearch }: SearchFieldWithUrlProps) => {
       collectionsSearch: {
         ...params.collectionsSearch,
         search: value,
-        page: DEFAULT_PAGE_NUMBER,
       },
     });
     onSearch?.(value);
@@ -32,7 +30,7 @@ export const SearchFieldWithUrl = ({ onSearch }: SearchFieldWithUrlProps) => {
       `/?${new URLSearchParams({
         tld: `suffix_${params.tld.suffix}`,
         nameDetails: `page_${params.nameDetails.page}.activeTab_${params.nameDetails.activeTab}.orderBy_${params.nameDetails.orderBy}`,
-        collectionsSearch: `search_${params.collectionsSearch.search}.page_${params.collectionsSearch.page}.orderBy_${params.collectionsSearch.orderBy}.exactMatch_${params.collectionsSearch.exactMatch}`,
+        collectionsSearch: `search_${params.collectionsSearch.search}.page_${params.collectionsSearch.page}.orderBy_${params.collectionsSearch.orderBy}}`,
       }).toString()}`,
     );
   };
