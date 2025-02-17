@@ -95,16 +95,16 @@ export class NameGraph {
         const categoriesQueryConfig: TypedNameGraphGroupingCategoriesParams = {
             [NameGraphGroupingCategory.related]: {
                 enable_learning_to_rank: DEFAULT_ENABLE_LEARNING_TO_RANK,
-                max_labels_per_related_collection: options?.max_labels_per_related_collection || 10, //TODO: should we do validation here (1<=x<=10)
-                max_per_type: options?.max_per_type || DEFAULT_MAX_PER_TYPE, //TODO: should we do validation here (1<=x)
+                max_labels_per_related_collection: options?.max_labels_per_related_collection || 10,
+                max_per_type: options?.max_per_type || DEFAULT_MAX_PER_TYPE,
                 max_recursive_related_collections: DEFAULT_MAX_RECURSIVE_RELATED_COLLECTIONS, /* Set to 0 to disable the "recursive related collection search". When set to a value between 1 and 10, for each related collection we find,
         we also do a (depth 1 recursive) lookup for this many related collections to the related collection.*/
                 max_related_collections: maxRelatedCollections, /* max number of related collections returned. If 0 it effectively turns off any related collection search. */
                 label_diversity_ratio: DEFAULT_LABEL_DIVERSITY_RATIO,
             },
             [NameGraphGroupingCategory.wordplay]: {
-                max_suggestions: options?.max_suggestion_per_grouping_category || DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY, //TODO: should we do validation here (0<=x<=30)
-                min_suggestions: options?.min_suggestion_per_grouping_category || DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY, //TODO: should we do validation here (0<=x<=30)
+                max_suggestions: options?.max_suggestion_per_grouping_category || DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY,
+                min_suggestions: options?.min_suggestion_per_grouping_category || DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY,
             },
 
             [NameGraphGroupingCategory.alternates]: {
@@ -164,7 +164,7 @@ export class NameGraph {
             max_sample_size?: number;
         },
     ): Promise<NameGraphSuggestion[]> {
-        const max_sample_size = options?.max_sample_size || 5; //TODO: Should we do validation here (1<=x<=100)
+        const max_sample_size = options?.max_sample_size || 5;
         const seed = options?.seed;
 
         const payload = {
@@ -223,8 +223,8 @@ export class NameGraph {
         },
     ): Promise<NameGraphSuggestion[]> {
         const method = options?.method || ScrambleMethod["left-right-shuffle-with-unigrams"];
-        const n_top_members = options?.n_top_members || 25; //TODO: should we do validation here (1 <= x)
-        const max_suggestions = options?.max_suggestions || 10; //TODO: as above (0 < x)
+        const n_top_members = options?.n_top_members || 25;
+        const max_suggestions = options?.max_suggestions || 10;
         const seed = options?.seed;
 
         const payload = {
@@ -363,7 +363,7 @@ export class NameGraph {
             max_per_type?: number;
         },
     ): Promise<NameGraphFindCollectionsResponse> {
-        const max_related_collections = options?.max_related_collections || 3; //TODO: should we do validation here (0 < x)
+        const max_related_collections = options?.max_related_collections || 3;
         const max_per_type = options?.max_per_type || 3;
 
         const payload = {
