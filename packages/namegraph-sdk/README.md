@@ -153,6 +153,30 @@ The SDK supports various grouping categories for name suggestions:
 - `gowild`: Creative variations
 - `other`: Additional suggestions
 
+## Modes
+
+The SDK supports three modes for processing requests:
+
+- Instant Mode (`instant`):
+  - Fastest response time
+  - More basic name generations
+  - Some advanced generators like W2VGenerator are disabled (weight multiplier = 0)
+  - Often used for real-time suggestions
+
+- Domain Detail Mode (`domain_detail`):
+  - Intermediate between instant and full
+  - More comprehensive than instant, but still optimized for performance
+  - Some generators have reduced weights compared to full mode
+  - Expanded search window for collection ranking and sampling
+
+- Full Mode (`full`):
+  - Most comprehensive name generation
+  - Includes all enabled generators
+  - Uses full weights for most generators
+  - Accesses advanced generators like `Wikipedia2VGenerator` and `W2VGenerator`
+  - Takes longer to process, but provides the most diverse results
+
+
 ## Contact Us
 
 Visit our [website](https://namehashlabs.org/) to get in contact.
