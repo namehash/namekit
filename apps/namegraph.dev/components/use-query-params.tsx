@@ -106,7 +106,7 @@ export function QueryParamsProvider({
         const [k, v] = part.split("_");
 
         if (k === "page") {
-          if (key === "nameDetails") {
+          if (key === "nameDetails" || key === "collectionsSearch") {
             const pageEntries = v.split("_").map((pair) => {
               const [subK, subV] = pair.split("-");
               const numValue = Number(subV);

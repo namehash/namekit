@@ -3,6 +3,8 @@ import { Link } from "@namehash/namekit-react";
 import { Noto_Emoji } from "next/font/google";
 import { getNameDetailsPageHref } from "@/lib/utils";
 import { NameWithCurrentTld, useQueryParams } from "../use-query-params";
+import { DisplayedName } from "@namehash/nameguard-react";
+import { buildENSName } from "@namehash/ens-utils";
 
 const notoBlack = Noto_Emoji({ preload: false });
 
@@ -48,7 +50,11 @@ export const CollectionCard = ({
                 href={getNameDetailsPageHref(tag.label)}
                 className="max-h-[28px] w-max bg-gray-100 !text-sm px-2 py-1 bg-muted rounded-full"
               >
-                {NameWithCurrentTld({ name: tag.label, params })}
+                <DisplayedName
+                  name={buildENSName(
+                    NameWithCurrentTld({ name: tag.label, params }),
+                  )}
+                />
               </Link>
             ))}
           </div>

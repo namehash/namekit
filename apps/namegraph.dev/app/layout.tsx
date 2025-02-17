@@ -16,6 +16,7 @@ import "@namehash/nameguard-react/styles.css";
 import "ethereum-identity-kit/css";
 import NextLink from "next/link";
 import { SearchFieldWithUrl } from "@/components/collections/search-field-with-url";
+import "@namehash/namekit-react/styles.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

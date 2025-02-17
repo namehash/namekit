@@ -155,7 +155,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
     if (label) {
       const query = getFirstLabelOfString(label);
 
-      const MAX_COLLECTIONS_FOR_EXACT_MATCH = 10;
+      const MAX_COLLECTIONS_FOR_EXACT_MATCH = 20;
       const MAX_RELATED_COLLECTIONS = 20;
       const OTHER_COLLECTIONS_NUMBER = 5;
 

@@ -22,7 +22,7 @@ export const SearchField = ({
         type="text"
         name="query"
         autoComplete="off"
-        value={search}
+        value={search || ""}
         debounceTimeout={300}
         placeholder="Type something"
         onChange={(e) => onSearch(e.target.value)}

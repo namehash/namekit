@@ -32,6 +32,7 @@ import { Link } from "@namehash/namekit-react";
 import { DEFAULT_PAGE_NUMBER } from "@/components/collections/utils";
 import {
   NameWithCurrentTld,
+  QueryParams,
   useQueryParams,
 } from "@/components/use-query-params";
 import { HomePage } from "@/components/homepage/homepage";
@@ -85,7 +86,7 @@ export default function ExploreCollectionsPage() {
     >(undefined);
 
   interface QueryCollectionsParam {
-    activeTab: NameRelatedCollectionsTabs;
+    tab: NameRelatedCollectionsTabs;
     orderBy?: NameGraphSortOrderOptions;
     search: string;
     page: number;
@@ -95,7 +96,7 @@ export default function ExploreCollectionsPage() {
     if (payload.search) {
       const query = getFirstLabelOfString(payload.search);
 
-      const MAX_COLLECTIONS_FOR_EXACT_MATCH = 10;
+      const MAX_COLLECTIONS_FOR_EXACT_MATCH = 20;
       const MAX_RELATED_COLLECTIONS = 20;
       const OTHER_COLLECTIONS_NUMBER = 5;
 
@@ -112,20 +113,21 @@ export default function ExploreCollectionsPage() {
        */
 
       let currentCollectionsToConsider = relatedCollectionsByMembership;
-      if (payload.activeTab === DEFAULT_ACTIVE_TAB) {
+      if (payload.tab === DEFAULT_ACTIVE_TAB) {
         currentCollectionsToConsider = relatedCollectionsByConcept;
       }
 
       const currentPageWasLoaded =
         !!currentCollectionsToConsider?.[payload.page] &&
         payload.orderBy ==
-          currentCollectionsToConsider?.[payload.page]?.sort_order;
+          currentCollectionsToConsider?.[payload.page]?.sort_order &&
+        lastSearchDoneFor[payload.tab] === payload.search;
 
       if (currentPageWasLoaded) {
         return;
       }
 
-      if (payload.activeTab === NameRelatedCollectionsTabs.ByMembership) {
+      if (payload.tab === NameRelatedCollectionsTabs.ByMembership) {
         setLoadingCollectionsByMembership(true);
         findCollectionsByMember(query, {
           offset: (payload.page - 1) * navigationConfig.itemsPerPage,
@@ -144,10 +146,7 @@ export default function ExploreCollectionsPage() {
               setNavigationConfig({
                 ...navigationConfig,
                 totalItems: {
-                  [NameRelatedCollectionsTabs.ByConcept]:
-                    navigationConfig.totalItems?.[
-                      NameRelatedCollectionsTabs.ByConcept
-                    ],
+                  ...navigationConfig.totalItems,
                   [NameRelatedCollectionsTabs.ByMembership]:
                     typeof res.metadata.total_number_of_matched_collections ===
                     "string" /**
@@ -160,15 +159,10 @@ export default function ExploreCollectionsPage() {
                      */
                       ? MAX_COLLECTIONS_NUMBER_NAME_API_CAN_DOCUMENT
                       : res.metadata.total_number_of_matched_collections,
-                },
+                } as Record<NameRelatedCollectionsTabs, number | undefined>,
               });
 
               const relatedCollections = res.collections;
-
-              if (relatedCollections.length === 0) {
-                setRelatedCollectionsByMembership(null);
-                return;
-              }
 
               setRelatedCollectionsByMembership({
                 ...relatedCollectionsByMembership,
@@ -192,6 +186,10 @@ export default function ExploreCollectionsPage() {
           })
           .finally(() => {
             setLoadingCollectionsByMembership(false);
+            setLastSearchDoneFor({
+              ...lastSearchDoneFor,
+              [NameRelatedCollectionsTabs.ByMembership]: payload.search,
+            });
           });
       } else {
         setLoadingCollectionByConcept(true);
@@ -211,10 +209,7 @@ export default function ExploreCollectionsPage() {
               setNavigationConfig({
                 ...navigationConfig,
                 totalItems: {
-                  [NameRelatedCollectionsTabs.ByMembership]:
-                    navigationConfig.totalItems?.[
-                      NameRelatedCollectionsTabs.ByMembership
-                    ],
+                  ...navigationConfig.totalItems,
                   [NameRelatedCollectionsTabs.ByConcept]:
                     typeof res.metadata.total_number_of_matched_collections ===
                     "string" /**
@@ -227,15 +222,10 @@ export default function ExploreCollectionsPage() {
                      */
                       ? MAX_COLLECTIONS_NUMBER_NAME_API_CAN_DOCUMENT
                       : res.metadata.total_number_of_matched_collections,
-                },
+                } as Record<NameRelatedCollectionsTabs, number | undefined>,
               });
 
               const relatedCollections = res.related_collections;
-
-              if (relatedCollections.length === 0) {
-                setRelatedCollectionsByConcept(null);
-                return;
-              }
 
               setRelatedCollectionsByConcept({
                 ...relatedCollectionsByConcept,
@@ -259,6 +249,10 @@ export default function ExploreCollectionsPage() {
           })
           .finally(() => {
             setLoadingCollectionByConcept(false);
+            setLastSearchDoneFor({
+              ...lastSearchDoneFor,
+              [NameRelatedCollectionsTabs.ByConcept]: payload.search,
+            });
           });
       }
     }
@@ -273,10 +267,13 @@ export default function ExploreCollectionsPage() {
         ...params.collectionsSearch,
         search: searchTerm,
         page: {
-          ...params.collectionsSearch.page,
-          [params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB]:
+          [NameRelatedCollectionsTabs.ByConcept]:
             params.collectionsSearch.page?.[
-              params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB
+              NameRelatedCollectionsTabs.ByConcept
+            ] || DEFAULT_PAGE_NUMBER,
+          [NameRelatedCollectionsTabs.ByMembership]:
+            params.collectionsSearch.page?.[
+              NameRelatedCollectionsTabs.ByMembership
             ] || DEFAULT_PAGE_NUMBER,
         } as Record<NameRelatedCollectionsTabs, number | undefined>,
         activeTab: DEFAULT_ACTIVE_TAB,
@@ -285,27 +282,36 @@ export default function ExploreCollectionsPage() {
 
     queryCollections({
       search: searchTerm,
-      activeTab: DEFAULT_ACTIVE_TAB,
-      page: DEFAULT_PAGE_NUMBER,
+      tab: DEFAULT_ACTIVE_TAB,
+      page:
+        params.collectionsSearch.page?.[
+          params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB
+        ] || DEFAULT_PAGE_NUMBER,
       orderBy: params.collectionsSearch.orderBy || NameGraphSortOrderOptions.AI,
     });
   };
 
   const handlePageChange = (page: number) => {
+    console.log(
+      "Hey I will update the ",
+      params.collectionsSearch.activeTab,
+      "to page ",
+      page,
+    );
     setParams({
       ...params,
       collectionsSearch: {
         ...params.collectionsSearch,
         page: {
           ...params.collectionsSearch.page,
-          [params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB]: page,
+          [params.collectionsSearch.activeTab]: page,
         } as Record<NameRelatedCollectionsTabs, number | undefined>,
       },
     });
 
     queryCollections({
       search: params.collectionsSearch.search,
-      activeTab: params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB,
+      tab: params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB,
       page,
     });
   };
@@ -316,6 +322,11 @@ export default function ExploreCollectionsPage() {
       collectionsSearch: {
         ...params.collectionsSearch,
         activeTab,
+        page: {
+          [NameRelatedCollectionsTabs.ByConcept]: DEFAULT_PAGE_NUMBER,
+          [NameRelatedCollectionsTabs.ByMembership]: DEFAULT_PAGE_NUMBER,
+          ...params.collectionsSearch.page,
+        },
       },
     });
 
@@ -325,7 +336,7 @@ export default function ExploreCollectionsPage() {
   useEffect(() => {
     queryCollections({
       search: params.collectionsSearch.search,
-      activeTab: params.collectionsSearch.activeTab,
+      tab: params.collectionsSearch.activeTab,
       page:
         params.collectionsSearch.page?.[
           params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB
@@ -357,16 +368,18 @@ export default function ExploreCollectionsPage() {
       navigationConfig.totalItems[activeTab as NameRelatedCollectionsTabs]
     ) {
       queryCollections({
-        activeTab: getOppositeTab(),
+        tab: getOppositeTab(),
         page:
-          params.collectionsSearch.page?.[
-            params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB
-          ] || DEFAULT_PAGE_NUMBER,
+          params.collectionsSearch.page?.[getOppositeTab()] ||
+          DEFAULT_PAGE_NUMBER,
         orderBy: params.collectionsSearch.orderBy,
         search: params.collectionsSearch.search,
       });
     }
-  }, [navigationConfig?.totalItems]);
+  }, [
+    navigationConfig?.totalItems?.[NameRelatedCollectionsTabs.ByConcept],
+    navigationConfig?.totalItems?.[NameRelatedCollectionsTabs.ByMembership],
+  ]);
 
   const isFirstCollectionsPageForCurrentQuery = () => {
     const activeTab = params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB;
@@ -432,7 +445,7 @@ export default function ExploreCollectionsPage() {
   }, [
     params.collectionsSearch.page?.[NameRelatedCollectionsTabs.ByConcept],
     params.collectionsSearch.activeTab,
-    navigationConfig.totalItems,
+    navigationConfig.totalItems?.[NameRelatedCollectionsTabs.ByConcept],
     navigationConfig.itemsPerPage,
   ]);
 
@@ -441,7 +454,7 @@ export default function ExploreCollectionsPage() {
   }, [
     params.collectionsSearch.page?.[NameRelatedCollectionsTabs.ByMembership],
     params.collectionsSearch.activeTab,
-    navigationConfig.totalItems,
+    navigationConfig.totalItems?.[NameRelatedCollectionsTabs.ByMembership],
     navigationConfig.itemsPerPage,
   ]);
 
@@ -482,7 +495,7 @@ export default function ExploreCollectionsPage() {
 
     queryCollections({
       search: params.collectionsSearch.search,
-      activeTab: params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB,
+      tab: params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB,
       page: DEFAULT_PAGE_NUMBER,
       orderBy,
     });
@@ -517,15 +530,16 @@ export default function ExploreCollectionsPage() {
     }
   };
 
+  const [lastSearchDoneFor, setLastSearchDoneFor] = useState({
+    [NameRelatedCollectionsTabs.ByConcept]: "",
+    [NameRelatedCollectionsTabs.ByMembership]: "",
+  });
   useEffect(() => {
-    console.log(relatedCollectionsByConcept);
-  }, [relatedCollectionsByConcept]);
-
-  const [lastSearchDoneFor, setLastSearchDoneFor] = useState("");
-  useEffect(() => {
-    if (lastSearchDoneFor !== params.collectionsSearch.search) {
+    if (
+      lastSearchDoneFor[params.collectionsSearch.activeTab] !==
+      params.collectionsSearch.search
+    ) {
       handleSearch(params.collectionsSearch.search);
-      setLastSearchDoneFor(params.collectionsSearch.search);
     }
   }, [params.collectionsSearch.search]);
 
@@ -573,7 +587,9 @@ export default function ExploreCollectionsPage() {
           </div>
 
           <Tabs
-            defaultValue={params.nameDetails.activeTab || DEFAULT_ACTIVE_TAB}
+            defaultValue={
+              params.collectionsSearch.activeTab || DEFAULT_ACTIVE_TAB
+            }
           >
             <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5">
               <TabsList className="w-max">
@@ -691,18 +707,52 @@ const TabsContents = ({
   relatedCollectionsByMembership,
   navigationConfig,
 }: {
-  hasLoadedResultsForTab: any;
-  handlePageChange: any;
-  isFirstCollectionsPageForCurrentQuery: any;
-  isLastCollectionsPageForCurrentQuery: any;
-  params: any;
-  navigationPagesTextGuides: any;
+  hasLoadedResultsForTab: (tab: NameRelatedCollectionsTabs) => boolean;
+  handlePageChange: (page: number) => void;
+  isFirstCollectionsPageForCurrentQuery: () => boolean;
+  isLastCollectionsPageForCurrentQuery: () => boolean;
+  params: QueryParams;
+  navigationPagesTextGuides: Record<NameRelatedCollectionsTabs, string>;
   loadingCollectionByConcept: boolean;
   loadingCollectionsByMembership: boolean;
-  relatedCollectionsByConcept: any;
-  relatedCollectionsByMembership: any;
+  relatedCollectionsByConcept:
+    | undefined
+    | null
+    | Record<number, CollectionsData | null | undefined>;
+  relatedCollectionsByMembership:
+    | undefined
+    | null
+    | Record<number, CollectionsData | null | undefined>;
   navigationConfig: NavigationConfig;
 }) => {
+  useEffect(() => {
+    console.log("relatedCollectionsByConcept", relatedCollectionsByConcept);
+    console.log(
+      "relatedCollectionsByMembership",
+      relatedCollectionsByMembership,
+    );
+  }, [relatedCollectionsByMembership, relatedCollectionsByConcept]);
+  useEffect(() => {
+    console.log(
+      "By Membership results:",
+      relatedCollectionsByMembership?.[
+        params.collectionsSearch.page?.[
+          NameRelatedCollectionsTabs.ByMembership
+        ] || DEFAULT_PAGE_NUMBER
+      ]?.related_collections,
+    );
+    console.log(
+      "By Concept results:",
+      relatedCollectionsByConcept?.[
+        params.collectionsSearch.page?.[NameRelatedCollectionsTabs.ByConcept] ||
+          DEFAULT_PAGE_NUMBER
+      ]?.related_collections,
+    );
+  }, [
+    params.collectionsSearch.activeTab,
+    params.collectionsSearch.page?.[NameRelatedCollectionsTabs.ByConcept],
+    params.collectionsSearch.page?.[NameRelatedCollectionsTabs.ByMembership],
+  ]);
   return (
     <>
       {Object.entries(NameRelatedCollectionsTabs).map(([key, value]) => {
@@ -749,11 +799,11 @@ const TabsContents = ({
                                             onClick={() =>
                                               handlePageChange(
                                                 Number(
-                                                  params.nameDetails.page?.[
-                                                    params.nameDetails
-                                                      .activeTab ||
-                                                      DEFAULT_ACTIVE_TAB
-                                                  ],
+                                                  params.collectionsSearch
+                                                    .page?.[
+                                                    NameRelatedCollectionsTabs
+                                                      .ByConcept
+                                                  ] || DEFAULT_PAGE_NUMBER,
                                                 ) - 1,
                                               )
                                             }
@@ -766,11 +816,11 @@ const TabsContents = ({
                                             onClick={() =>
                                               handlePageChange(
                                                 Number(
-                                                  params.nameDetails.page?.[
-                                                    params.nameDetails
-                                                      .activeTab ||
-                                                      DEFAULT_ACTIVE_TAB
-                                                  ],
+                                                  params.collectionsSearch
+                                                    .page?.[
+                                                    NameRelatedCollectionsTabs
+                                                      .ByConcept
+                                                  ] || DEFAULT_PAGE_NUMBER,
                                                 ) + 1,
                                               )
                                             }
@@ -823,11 +873,10 @@ const TabsContents = ({
                                           onClick={() =>
                                             handlePageChange(
                                               Number(
-                                                params.nameDetails.page?.[
-                                                  params.nameDetails
-                                                    .activeTab ||
-                                                    DEFAULT_ACTIVE_TAB
-                                                ],
+                                                params.collectionsSearch.page?.[
+                                                  NameRelatedCollectionsTabs
+                                                    .ByConcept
+                                                ] || DEFAULT_PAGE_NUMBER,
                                               ) - 1,
                                             )
                                           }
@@ -836,16 +885,15 @@ const TabsContents = ({
                                           Prev
                                         </Button>
                                         <Button
-                                          className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
+                                          className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50"
                                           disabled={isLastCollectionsPageForCurrentQuery()}
                                           onClick={() =>
                                             handlePageChange(
                                               Number(
-                                                params.nameDetails.page?.[
-                                                  params.nameDetails
-                                                    .activeTab ||
-                                                    DEFAULT_ACTIVE_TAB
-                                                ],
+                                                params.collectionsSearch.page?.[
+                                                  NameRelatedCollectionsTabs
+                                                    .ByConcept
+                                                ] || DEFAULT_PAGE_NUMBER,
                                               ) + 1,
                                             )
                                           }
@@ -902,11 +950,11 @@ const TabsContents = ({
                                             onClick={() =>
                                               handlePageChange(
                                                 Number(
-                                                  params.nameDetails.page?.[
-                                                    params.nameDetails
-                                                      .activeTab ||
-                                                      DEFAULT_ACTIVE_TAB
-                                                  ],
+                                                  params.collectionsSearch
+                                                    .page?.[
+                                                    NameRelatedCollectionsTabs
+                                                      .ByMembership
+                                                  ] || DEFAULT_PAGE_NUMBER,
                                                 ) - 1,
                                               )
                                             }
@@ -919,11 +967,11 @@ const TabsContents = ({
                                             onClick={() =>
                                               handlePageChange(
                                                 Number(
-                                                  params.nameDetails.page?.[
-                                                    params.nameDetails
-                                                      .activeTab ||
-                                                      DEFAULT_ACTIVE_TAB
-                                                  ],
+                                                  params.collectionsSearch
+                                                    .page?.[
+                                                    NameRelatedCollectionsTabs
+                                                      .ByMembership
+                                                  ] || DEFAULT_PAGE_NUMBER,
                                                 ) + 1,
                                               )
                                             }
@@ -978,11 +1026,10 @@ const TabsContents = ({
                                           onClick={() =>
                                             handlePageChange(
                                               Number(
-                                                params.nameDetails.page?.[
-                                                  params.nameDetails
-                                                    .activeTab ||
-                                                    DEFAULT_ACTIVE_TAB
-                                                ],
+                                                params.collectionsSearch.page?.[
+                                                  NameRelatedCollectionsTabs
+                                                    .ByMembership
+                                                ] || DEFAULT_PAGE_NUMBER,
                                               ) - 1,
                                             )
                                           }
@@ -991,16 +1038,15 @@ const TabsContents = ({
                                           Prev
                                         </Button>
                                         <Button
-                                          className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
+                                          className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50"
                                           disabled={isLastCollectionsPageForCurrentQuery()}
                                           onClick={() =>
                                             handlePageChange(
                                               Number(
-                                                params.nameDetails.page?.[
-                                                  params.nameDetails
-                                                    .activeTab ||
-                                                    DEFAULT_ACTIVE_TAB
-                                                ],
+                                                params.collectionsSearch.page?.[
+                                                  NameRelatedCollectionsTabs
+                                                    .ByMembership
+                                                ] || DEFAULT_PAGE_NUMBER,
                                               ) + 1,
                                             )
                                           }
