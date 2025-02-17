@@ -15,10 +15,12 @@ interface ItemProps {
 const Item = ({ icon, title, description }: ItemProps) => {
   return (
     <div className="flex flex-col items-start p-4 text-center py-4">
-      <div className="p-2 border border-gray-300 rounded-full">{icon}</div>
-      <Heading className="font-semibold" as="h5">
-        {title}
-      </Heading>
+      <div className="flex items-center gap-2">
+        <div className="p-2 border border-gray-300 rounded-full">{icon}</div>
+        <Heading className="font-semibold" as="h5">
+          {title}
+        </Heading>
+      </div>
 
       <Text className="text-gray-500 leading-6 text-start text-sm mt-2">
         {description}
@@ -67,7 +69,7 @@ export const BuildFutureSection = () => {
           </Balancer>
         </Text>
       </div>
-      <div className="grid lg:grid-cols-3 grid-cols-1 justify-items-center max-w-[1216px]">
+      <div className="grid lg:grid-cols-3 grid-cols-1 justify-items-start lg:justify-items-center max-w-[1216px]">
         {items.map((item, index) => (
           <Item key={index} {...item} />
         ))}

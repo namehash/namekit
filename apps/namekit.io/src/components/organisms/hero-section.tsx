@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ColorfulBackground, GithubIcon } from "../atoms";
 import { Button, Heading, Text } from "@namehash/namekit-react";
+import { ExternalLinkIcon } from "../atoms/icons/external-link-icon";
 
 export const HeroSection = () => {
   return (
@@ -23,6 +24,7 @@ export const HeroSection = () => {
           <Button variant="primary" size="large" asChild>
             <Link target="_blank" href="https://alpha.namekit.io">
               Try now
+              <ExternalLinkIcon className="w-5 h-5" />
             </Link>
           </Button>
           <Button variant="secondary" size="large" asChild>
