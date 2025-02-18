@@ -47,7 +47,7 @@ export const ThreeJSAnimation = () => {
     ctx = canvas.getContext('2d');
 
     // Use a uniform particle color.
-    const particleColor = "0,204,255"; // RGB for cyan
+    const particleColor = "114, 152, 248"; // RGB for cyan
     const gradient = ctx.createRadialGradient(
       canvas.width / 2, 
       canvas.height / 2, 
