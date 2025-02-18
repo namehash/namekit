@@ -7,7 +7,7 @@ export const HeadlineBanner = () => {
     <div className="px-5 text-white justify-center items-center sm:h-[44px] w-full bg-[#3B0D48] space-x-4 py-4 text-sm relative z-20 flex">
       <div className="flex space-x-3 items-center">
         <MegaphoneIcon className="flex shrink-0 w-6 h-6 opacity-50 -mr-1" />
-        <p className=" sm:pr-0">Meet us at DevCon in Bangkok 11-13 Nov 2024</p>
+        <p className=" sm:pr-0">Meet us at ETHDenver Feb 27 - Mar 2</p>
       </div>
 
       <CalendarButton
