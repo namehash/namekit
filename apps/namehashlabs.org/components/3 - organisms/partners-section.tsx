@@ -6,6 +6,7 @@ import { BlockfulLogo } from "../1 - atoms/icons/blockful-logo";
 import { EnelpolLogo } from "../1 - atoms/icons/enelpol-logo";
 import { AxiomLogo } from "../1 - atoms/icons/axiom-logo";
 import { ContactUsForm } from "@namehash/internal";
+import { EnsVisionLogo } from "../1 - atoms/icons/ens-vision-logo";
 
 export const PartnersPage = () => {
   return (
@@ -28,7 +29,7 @@ export const PartnersPage = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 max-w-[1216px] m-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 max-w-[1216px] m-auto">
         {partners.map((partner) => (
           <PartnerCard key={partner.websiteUrl} {...partner} />
         ))}
@@ -112,6 +113,27 @@ const partners: PartnerCardProps[] = [
       </Balancer>
     ),
     websiteUrl: "http://enelpol.com/",
+  },
+  {
+    title: <EnsVisionLogo className="h-8" />,
+    text: (
+      <Balancer>
+        Vision provides the top marketplace for ENS names. We appreciate the
+        incredible service they provide to the ENS community and the special
+        role they serve in the growth of ENS. Our team is proud to collaborate
+        with Vision on solutions like{" "}
+        <a
+          href="https://www.nameai.io/"
+          target="_blank"
+          className="underline whitespace-nowrap hover:text-black transition-colors duration-200"
+        >
+          NameAI
+        </a>{" "}
+        that help improve the discoverability and liquidity of ENS names on
+        secondary markets.
+      </Balancer>
+    ),
+    websiteUrl: "https://vision.io/",
   },
   {
     title: <AxiomLogo className="h-8" />,
