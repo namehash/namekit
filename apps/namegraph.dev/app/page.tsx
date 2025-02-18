@@ -409,7 +409,7 @@ export default function ExploreCollectionsPage() {
               href={
                 searchedEnsName
                   ? getNameDetailsPageHref(
-                      searchedEnsName.name.replace(" ", ""),
+                      params.collectionsSearch.search.replace(" ", ""),
                     )
                   : ""
               }
@@ -511,44 +511,44 @@ export default function ExploreCollectionsPage() {
                       {navigationConfig.totalItemsNumber?.[
                         key as keyof typeof NameRelatedCollectionsTabs
                       ] &&
-                        !loading[
-                          key as keyof typeof NameRelatedCollectionsTabs
-                        ] && (
-                          <div className="flex">
-                            <Button
-                              className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50 disabled:hover:bg-white"
-                              disabled={isFirstPage(
+                      !loading[
+                        key as keyof typeof NameRelatedCollectionsTabs
+                      ] ? (
+                        <div className="flex">
+                          <Button
+                            className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50 disabled:hover:bg-white"
+                            disabled={isFirstPage(
+                              key as keyof typeof NameRelatedCollectionsTabs,
+                            )}
+                            onClick={() =>
+                              handlePageChange(
+                                pageState[
+                                  key as keyof typeof NameRelatedCollectionsTabs
+                                ] - 1,
                                 key as keyof typeof NameRelatedCollectionsTabs,
-                              )}
-                              onClick={() =>
-                                handlePageChange(
-                                  pageState[
-                                    key as keyof typeof NameRelatedCollectionsTabs
-                                  ] - 1,
-                                  key as keyof typeof NameRelatedCollectionsTabs,
-                                )
-                              }
-                            >
-                              <ChevronLeft className="w-6 h-6 text-black" />
-                            </Button>
-                            <Button
-                              className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50"
-                              disabled={isLastPage(
+                              )
+                            }
+                          >
+                            <ChevronLeft className="w-6 h-6 text-black" />
+                          </Button>
+                          <Button
+                            className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50"
+                            disabled={isLastPage(
+                              key as keyof typeof NameRelatedCollectionsTabs,
+                            )}
+                            onClick={() =>
+                              handlePageChange(
+                                pageState[
+                                  key as keyof typeof NameRelatedCollectionsTabs
+                                ] + 1,
                                 key as keyof typeof NameRelatedCollectionsTabs,
-                              )}
-                              onClick={() =>
-                                handlePageChange(
-                                  pageState[
-                                    key as keyof typeof NameRelatedCollectionsTabs
-                                  ] + 1,
-                                  key as keyof typeof NameRelatedCollectionsTabs,
-                                )
-                              }
-                            >
-                              <ChevronRight className="w-6 h-6 text-black" />
-                            </Button>
-                          </div>
-                        )}
+                              )
+                            }
+                          >
+                            <ChevronRight className="w-6 h-6 text-black" />
+                          </Button>
+                        </div>
+                      ) : null}
                     </div>
                   </div>
 
@@ -563,53 +563,51 @@ export default function ExploreCollectionsPage() {
                   {navigationConfig.totalItemsNumber?.[
                     key as keyof typeof NameRelatedCollectionsTabs
                   ] &&
-                    !loading[
-                      key as keyof typeof NameRelatedCollectionsTabs
-                    ] && (
-                      <div className="flex items-center justify-between border border-gray-200 border-l-0 border-r-0 border-b-0 mt-3 p-3">
-                        <div className="text-sm text-gray-500 mr-2.5">
-                          {getNavigationTextGuide(
+                  !loading[key as keyof typeof NameRelatedCollectionsTabs] ? (
+                    <div className="flex items-center justify-between border border-gray-200 border-l-0 border-r-0 border-b-0 mt-3 p-3">
+                      <div className="text-sm text-gray-500 mr-2.5">
+                        {getNavigationTextGuide(
+                          key as keyof typeof NameRelatedCollectionsTabs,
+                        )}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Button
+                          className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
+                          disabled={isFirstPage(
                             key as keyof typeof NameRelatedCollectionsTabs,
                           )}
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Button
-                            className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
-                            disabled={isFirstPage(
+                          onClick={() =>
+                            handlePageChange(
+                              pageState[
+                                key as keyof typeof NameRelatedCollectionsTabs
+                              ] - 1,
                               key as keyof typeof NameRelatedCollectionsTabs,
-                            )}
-                            onClick={() =>
-                              handlePageChange(
-                                pageState[
-                                  key as keyof typeof NameRelatedCollectionsTabs
-                                ] - 1,
-                                key as keyof typeof NameRelatedCollectionsTabs,
-                              )
-                            }
-                          >
-                            <ChevronLeft />
-                            Prev
-                          </Button>
-                          <Button
-                            className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
-                            disabled={isLastPage(
+                            )
+                          }
+                        >
+                          <ChevronLeft />
+                          Prev
+                        </Button>
+                        <Button
+                          className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
+                          disabled={isLastPage(
+                            key as keyof typeof NameRelatedCollectionsTabs,
+                          )}
+                          onClick={() =>
+                            handlePageChange(
+                              pageState[
+                                key as keyof typeof NameRelatedCollectionsTabs
+                              ] + 1,
                               key as keyof typeof NameRelatedCollectionsTabs,
-                            )}
-                            onClick={() =>
-                              handlePageChange(
-                                pageState[
-                                  key as keyof typeof NameRelatedCollectionsTabs
-                                ] + 1,
-                                key as keyof typeof NameRelatedCollectionsTabs,
-                              )
-                            }
-                          >
-                            Next
-                            <ChevronRight />
-                          </Button>
-                        </div>
+                            )
+                          }
+                        >
+                          Next
+                          <ChevronRight />
+                        </Button>
                       </div>
-                    )}
+                    </div>
+                  ) : null}
                 </div>
               </TabsContent>
             ))}

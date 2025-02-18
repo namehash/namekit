@@ -13,7 +13,7 @@ import {
 } from "ethereum-identity-kit";
 import { useEnsText } from "wagmi";
 import { ens_normalize } from "@adraffy/ens-normalize";
-import { buildENSName, ENSName } from "@namehash/ens-utils";
+import { buildENSName } from "@namehash/ens-utils";
 import useSWR from "swr";
 import { nameguard, NameGuardReport } from "@namehash/nameguard";
 import {
@@ -61,7 +61,6 @@ import { Button } from "@/components/ui/button";
 import Skeleton from "@/components/skeleton";
 import { analyzeLabel } from "@/components/name-ai/actions";
 import { Link } from "@namehash/namekit-react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { NLPLabelAnalysis } from "@namehash/nameai";
 
 interface CollectionsData {
@@ -446,18 +445,6 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
     });
   }, []);
 
-  const [searchedEnsName, setSearchedEnsName] = useState<ENSName | null>(null);
-  useEffect(() => {
-    setSearchedEnsName(
-      buildENSName(
-        NameWithCurrentTld({
-          params,
-          name: params.collectionsSearch.search,
-        }),
-      ),
-    );
-  }, [params.tld.suffix, searchedEnsName]);
-
   return (
     <div className="max-w-7xl flex flex-col space-y-8 lg:space-y-0 lg:grid lg:gap-8 lg:grid-cols-[335px_minmax(335px,_1fr)] mx-auto py-8 w-full">
       {/* Left Column */}
@@ -465,9 +452,12 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
         <div className="mx-auto">
           <NftAvatar
             name={
-              searchedEnsName
+              label
                 ? buildENSName(
-                    NameWithCurrentTld({ name: searchedEnsName.name, params }),
+                    NameWithCurrentTld({
+                      name: label,
+                      params,
+                    }),
                   )
                 : null
             }
