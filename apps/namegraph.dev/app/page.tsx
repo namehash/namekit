@@ -115,19 +115,18 @@ export default function ExploreCollectionsPage() {
           });
 
           if (response) {
-            const totalItemsNumber =
-              typeof response.metadata.total_number_of_matched_collections ===
-              "string"
-                ? MAX_NUMBER_OF_COLLECTIONS_MEMBERSHIP_IN_NAMEGRAPH_API
-                : response.metadata.total_number_of_matched_collections;
-
-            setNavigationConfig((prev) => ({
-              ...prev,
-              totalItemsNumber: {
-                ...prev.totalItemsNumber,
-                [tab]: totalItemsNumber,
-              },
-            }));
+            if (
+              navigationConfig.totalItemsNumber[tab] !==
+              response.metadata.total_number_of_matched_collections
+            ) {
+              setNavigationConfig((prev) => ({
+                ...prev,
+                totalItemsNumber: {
+                  ...prev.totalItemsNumber,
+                  [tab]: response.metadata.total_number_of_matched_collections,
+                },
+              }));
+            }
 
             setCollections((prev) => ({
               ...prev,
@@ -152,19 +151,18 @@ export default function ExploreCollectionsPage() {
           });
 
           if (response) {
-            const totalItemsNumber =
-              typeof response.metadata.total_number_of_matched_collections ===
-              "string"
-                ? MAX_NUMBER_OF_COLLECTIONS_MEMBERSHIP_IN_NAMEGRAPH_API
-                : response.metadata.total_number_of_matched_collections;
-
-            setNavigationConfig((prev) => ({
-              ...prev,
-              totalItemsNumber: {
-                ...prev.totalItemsNumber,
-                [tab]: totalItemsNumber,
-              },
-            }));
+            if (
+              navigationConfig.totalItemsNumber[tab] !==
+              response.metadata.total_number_of_matched_collections
+            ) {
+              setNavigationConfig((prev) => ({
+                ...prev,
+                totalItemsNumber: {
+                  ...prev.totalItemsNumber,
+                  [tab]: response.metadata.total_number_of_matched_collections,
+                },
+              }));
+            }
 
             setCollections((prev) => ({
               ...prev,
@@ -355,13 +353,13 @@ export default function ExploreCollectionsPage() {
       currentTab,
       currentPage,
       params.collectionsSearch.orderBy || DEFAULT_SORTING_ORDER,
-      params.collectionsSearch.search,
+      searchedEnsName?.name || params.collectionsSearch.search,
     );
   }, [currentTab, fetchCollections, params.collectionsSearch.orderBy]);
 
-  const [searchEnsName, setSearchEnsName] = useState<ENSName | null>(null);
+  const [searchedEnsName, setSearchedEnsName] = useState<ENSName | null>(null);
   useEffect(() => {
-    setSearchEnsName(
+    setSearchedEnsName(
       buildENSName(
         NameWithCurrentTld({
           params,
@@ -382,10 +380,10 @@ export default function ExploreCollectionsPage() {
         tab as keyof typeof NameRelatedCollectionsTabs,
         currentPage,
         params.collectionsSearch.orderBy || DEFAULT_SORTING_ORDER,
-        searchEnsName?.name || "",
+        searchedEnsName?.name || "",
       );
     });
-  }, [searchEnsName]);
+  }, [searchedEnsName]);
 
   if (!params.collectionsSearch.search) {
     return <HomePage />;
@@ -402,21 +400,28 @@ export default function ExploreCollectionsPage() {
             <div>
               <NftAvatar
                 withLink={false}
-                name={searchEnsName}
+                name={searchedEnsName}
                 size={AvatarSize.SMALL}
-                key={params.collectionsSearch.search}
+                key={searchedEnsName?.name || params.collectionsSearch.search}
               />
             </div>
             <Link
-              href={getNameDetailsPageHref(
-                params.collectionsSearch.search.replace(" ", ""),
-              )}
+              href={
+                searchedEnsName
+                  ? getNameDetailsPageHref(
+                      searchedEnsName.name.replace(" ", ""),
+                    )
+                  : ""
+              }
               className="!text-3xl font-bold truncate"
             >
-              {NameWithCurrentTld({
-                name: params.collectionsSearch.search,
-                params,
-              })}
+              {searchedEnsName?.name
+                ? searchedEnsName.name
+                : NameWithCurrentTld({
+                    name:
+                      searchedEnsName?.name || params.collectionsSearch.search,
+                    params,
+                  })}
             </Link>
           </div>
 
@@ -433,16 +438,23 @@ export default function ExploreCollectionsPage() {
                       )
                     }
                   >
-                    {key === "ByConcept" ? "By concept" : "By membership"}
+                    {key === NameRelatedCollectionsTabs.ByConcept
+                      ? "By concept"
+                      : "By membership"}
                     <span className="w-16 ml-3 border border-gray-400 rounded-full">
-                      {loading[
+                      {!navigationConfig.totalItemsNumber?.[
                         key as keyof typeof NameRelatedCollectionsTabs
                       ] ? (
                         <Skeleton className="mx-[1px] rounded-md w-[60px] h-4" />
+                      ) : navigationConfig.totalItemsNumber?.[
+                          key as keyof typeof NameRelatedCollectionsTabs
+                        ] ===
+                        MAX_NUMBER_OF_COLLECTIONS_MEMBERSHIP_IN_NAMEGRAPH_API ? (
+                        "+1000"
                       ) : (
                         navigationConfig.totalItemsNumber?.[
                           key as keyof typeof NameRelatedCollectionsTabs
-                        ] || 0
+                        ]
                       )}
                     </span>
                   </TabsTrigger>

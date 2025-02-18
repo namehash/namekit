@@ -13,7 +13,7 @@ import {
 } from "ethereum-identity-kit";
 import { useEnsText } from "wagmi";
 import { ens_normalize } from "@adraffy/ens-normalize";
-import { buildENSName } from "@namehash/ens-utils";
+import { buildENSName, ENSName } from "@namehash/ens-utils";
 import useSWR from "swr";
 import { nameguard, NameGuardReport } from "@namehash/nameguard";
 import {
@@ -446,6 +446,18 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
     });
   }, []);
 
+  const [searchedEnsName, setSearchedEnsName] = useState<ENSName | null>(null);
+  useEffect(() => {
+    setSearchedEnsName(
+      buildENSName(
+        NameWithCurrentTld({
+          params,
+          name: params.collectionsSearch.search,
+        }),
+      ),
+    );
+  }, [params.tld.suffix, searchedEnsName]);
+
   return (
     <div className="max-w-7xl flex flex-col space-y-8 lg:space-y-0 lg:grid lg:gap-8 lg:grid-cols-[335px_minmax(335px,_1fr)] mx-auto py-8 w-full">
       {/* Left Column */}
@@ -453,8 +465,10 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
         <div className="mx-auto">
           <NftAvatar
             name={
-              label && params.tld.suffix
-                ? buildENSName(NameWithCurrentTld({ name: label, params }))
+              searchedEnsName
+                ? buildENSName(
+                    NameWithCurrentTld({ name: searchedEnsName.name, params }),
+                  )
                 : null
             }
             size={AvatarSize.HUGE}
@@ -570,7 +584,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                               )
                             }
                           >
-                            {key === "ByConcept"
+                            {key === NameRelatedCollectionsTabs.ByConcept
                               ? "By concept"
                               : "By membership"}
                             <span className="w-16 ml-3 border border-gray-400 rounded-full">
