@@ -3,14 +3,14 @@
 import { createContext, useContext, useCallback, ReactNode } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { NameGraphSortOrderOptions } from "@namehash/namegraph-sdk/utils";
-import { Tlds } from "./collections/utils";
-import { NameRelatedCollectionsTabs } from "@/app/name/[name]/types";
+import { Tlds } from "./collections/tld";
+import { NameRelatedCollectionsTabs } from "./collections/utils";
 
 export interface QueryParams {
   collectionsSearch: {
     search: string;
     orderBy: NameGraphSortOrderOptions;
-    activeTab: NameRelatedCollectionsTabs;
+    tab: NameRelatedCollectionsTabs;
     page?: Record<NameRelatedCollectionsTabs, number | undefined>;
   };
   tld: {
@@ -21,7 +21,7 @@ export interface QueryParams {
   };
   nameDetails: {
     page?: Record<NameRelatedCollectionsTabs, number | undefined>;
-    activeTab: NameRelatedCollectionsTabs;
+    tab: NameRelatedCollectionsTabs;
     orderBy: NameGraphSortOrderOptions;
   };
 }

@@ -8,7 +8,7 @@ import {
   availableTlds,
   PREFERRED_TLD_LOCALSTORAGE_KEY,
   Tlds,
-} from "./collections/utils";
+} from "./collections/tld";
 
 export const DEFAULT_PREFFERED_TLD = availableTlds[Tlds.ETH];
 

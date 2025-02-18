@@ -11,9 +11,9 @@ import {
 } from "../use-query-params";
 import { DisplayedName } from "@namehash/nameguard-react";
 import Skeleton from "@/components/skeleton";
-import { DEFAULT_ITEMS_PER_PAGE } from "@/app/name/[name]/types";
 import { useScreenSize } from "../nft-avatar/use-screen-size";
 import { useState } from "react";
+import { DEFAULT_ITEMS_PER_PAGE } from "../collections/utils";
 
 interface NameSuggestionsListProps {
   suggestions?: NameGraphSuggestion[] | null;

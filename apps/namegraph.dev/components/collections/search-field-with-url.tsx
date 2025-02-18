@@ -2,11 +2,10 @@
 
 import { useQueryParams } from "@/components/use-query-params";
 import { ArrowRight, X } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { SearchField } from "./search-field";
-import { NameRelatedCollectionsTabs } from "@/app/name/[name]/types";
-import { DEFAULT_PAGE_NUMBER } from "./utils";
+import { NameRelatedCollectionsTabs, DEFAULT_PAGE_NUMBER } from "./utils";
 
 interface SearchFieldWithUrlProps {
   onSearch?: (value: string) => void;
@@ -14,9 +13,10 @@ interface SearchFieldWithUrlProps {
 
 export const SearchFieldWithUrl = ({ onSearch }: SearchFieldWithUrlProps) => {
   const { params, setParams } = useQueryParams();
+  const pathname = usePathname();
   const router = useRouter();
 
-  const handleSearch = (value: string) => {
+  const handleSearch = (value: string, submission = false) => {
     setParams({
       ...params,
       collectionsSearch: {
@@ -29,14 +29,17 @@ export const SearchFieldWithUrl = ({ onSearch }: SearchFieldWithUrlProps) => {
       },
     });
     onSearch?.(value);
+
+    if (submission && pathname !== "/") {
+      goToCollections();
+    }
   };
 
   const goToCollections = () => {
     router.push(
       `/?${new URLSearchParams({
         tld: `suffix_${params.tld.suffix}`,
-        nameDetails: `page_${params.nameDetails.page}.activeTab_${params.nameDetails.activeTab}.orderBy_${params.nameDetails.orderBy}`,
-        collectionsSearch: `search_${params.collectionsSearch.search}.page_${params.collectionsSearch.page}.orderBy_${params.collectionsSearch.orderBy}}`,
+        collectionsSearch: `search_${params.collectionsSearch.search}`,
       }).toString()}`,
     );
   };

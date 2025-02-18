@@ -1,12 +1,14 @@
 "use client";
 
 import { NameGraphSortOrderOptions } from "@namehash/namegraph-sdk/utils";
-import { DEFAULT_PAGE_NUMBER } from "./collections/utils";
 import { QueryParamsProvider } from "./use-query-params";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
 import { config } from "@/lib/wagmi";
-import { NameRelatedCollectionsTabs } from "@/app/name/[name]/types";
+import {
+  DEFAULT_PAGE_NUMBER,
+  NameRelatedCollectionsTabs,
+} from "./collections/utils";
 
 const queryClient = new QueryClient();
 
@@ -22,10 +24,10 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
             collectionsSearch: {
               search: "",
               page: {
-                [NameRelatedCollectionsTabs.ByConcept]: DEFAULT_PAGE_NUMBER,
-                [NameRelatedCollectionsTabs.ByMembership]: DEFAULT_PAGE_NUMBER,
+                [NameRelatedCollectionsTabs.ByConcept]: undefined,
+                [NameRelatedCollectionsTabs.ByMembership]: undefined,
               },
-              activeTab: DEFAULT_ACTIVE_TAB,
+              tab: DEFAULT_ACTIVE_TAB,
               orderBy: NameGraphSortOrderOptions.AI,
             },
             tld: {
@@ -36,10 +38,10 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
             },
             nameDetails: {
               page: {
-                [NameRelatedCollectionsTabs.ByConcept]: DEFAULT_PAGE_NUMBER,
-                [NameRelatedCollectionsTabs.ByMembership]: DEFAULT_PAGE_NUMBER,
+                [NameRelatedCollectionsTabs.ByConcept]: undefined,
+                [NameRelatedCollectionsTabs.ByMembership]: undefined,
               },
-              activeTab: DEFAULT_ACTIVE_TAB,
+              tab: DEFAULT_ACTIVE_TAB,
               orderBy: DEFAULT_SORTING_ORDER,
             },
           }}

@@ -24,9 +24,9 @@ import {
   sampleNamesByCollectionId,
   scrambleNamesByCollectionId,
 } from "@/lib/utils";
-import { NameSuggestionsList } from "@/components/mini-apps/name-suggestions-list";
-import { FromScrambleMethodToText } from "@/app/name/[name]/types";
+import { NameSuggestionsList } from "@/components/utils/name-suggestions-list";
 import { CollectionsCardsSkeleton } from "@/components/collections/collections-grid-skeleton";
+import { FromScrambleMethodToText } from "@/components/collections/utils";
 
 const notoBlack = Noto_Emoji({ preload: false });
 const DEFAULT_ITEMS_PER_PAGE = 20;
