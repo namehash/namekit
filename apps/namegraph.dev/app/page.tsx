@@ -10,7 +10,7 @@ import {
 } from "@namehash/namegraph-sdk/utils";
 import { HeroStartCommand } from "@/components/hero-start-command";
 import { RedirectSearchBar } from "@/components/redirect-search-bar";
-import { ThreeJSAnimation } from "@/components/hero-animation/hero-animation";
+import { ThreeJSAnimation } from "@/components/hero-animation";
 
 export default function HomePage() {
   const [suggestions, setSuggestions] = useState<WritersBlockSuggestion[]>([]);
