@@ -1,14 +1,22 @@
 import fetch from "cross-fetch";
 import {
   DEFAULT_ENABLE_LEARNING_TO_RANK,
-  DEFAULT_FULL_MODE, DEFAULT_INSTANT_MODE,
-  DEFAULT_LABEL_DIVERSITY_RATIO, DEFAULT_LABELS_LIMIT, DEFAULT_MAX_OTHER_COLLECTIONS,
+  DEFAULT_FULL_MODE,
+  DEFAULT_INSTANT_MODE,
+  DEFAULT_LABEL_DIVERSITY_RATIO,
+  DEFAULT_LABELS_LIMIT,
+  DEFAULT_MAX_OTHER_COLLECTIONS,
   DEFAULT_MAX_PER_TYPE,
   DEFAULT_MAX_RECURSIVE_RELATED_COLLECTIONS,
   DEFAULT_MAX_RELATED_COLLECTIONS,
-  DEFAULT_MAX_SUGGESTIONS, DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY, DEFAULT_MAX_TOTAL_COLLECTIONS,
-  DEFAULT_METADATA, DEFAULT_MIN_OTHER_COLLECTIONS,
-  DEFAULT_MIN_SUGGESTIONS, DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY, DEFAULT_OFFSET,
+  DEFAULT_MAX_SUGGESTIONS,
+  DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY,
+  DEFAULT_MAX_TOTAL_COLLECTIONS,
+  DEFAULT_METADATA,
+  DEFAULT_MIN_OTHER_COLLECTIONS,
+  DEFAULT_MIN_SUGGESTIONS,
+  DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY,
+  DEFAULT_OFFSET,
   NameGraphCollection,
   NameGraphCollectionByMemberResponse,
   NameGraphCountCollectionsResponse,
@@ -25,7 +33,7 @@ import {
 } from "./utils";
 
 /** The default endpoint URL for the NameGraph API */
-const DEFAULT_ENDPOINT = "https://api.namegraph.dev/";
+const DEFAULT_ENDPOINT = "https://api.namegraph.io/";
 
 export class NameGraph {
   private namegraphEndpoint: URL;
@@ -38,7 +46,7 @@ export class NameGraph {
 
   /**
    * Gets name suggestions grouped by category for a given label.
-   * 
+   *
    * @param {string} label - The ENS label to get suggestions for, cannot contain dots (.)
    * @returns {Promise<NameGraphGroupedByCategoryResponse>} Suggestions grouped by category
    * @example
@@ -47,7 +55,8 @@ export class NameGraph {
   public groupedByCategory(
     label: string,
   ): Promise<NameGraphGroupedByCategoryResponse> {
-    const sorter = "weighted-sampling"; /* sorter algorithm, possible values: round-robin, count, length, weighted-sampling */
+    const sorter =
+      "weighted-sampling"; /* sorter algorithm, possible values: round-robin, count, length, weighted-sampling */
     const min_primary_fraction = 0.1; /* minimal fraction of primary labels, ensures at least `min_suggestions * min_primary_fraction` primary labels will be generated */
 
     const payload = {
@@ -58,10 +67,13 @@ export class NameGraph {
       max_suggestions: DEFAULT_MAX_SUGGESTIONS,
       min_primary_fraction,
       params: {
-        mode: DEFAULT_FULL_MODE, /* request mode: instant, domain_detail, full */
-        enable_learning_to_rank: DEFAULT_ENABLE_LEARNING_TO_RANK, /*enable learning to rank. if true, the results will be sorted by 'learning to rank' algorithm */
-        label_diversity_ratio: DEFAULT_LABEL_DIVERSITY_RATIO, /* collection diversity parameter based on labels, adds penalty to collections with similar labels to other collections. If null, then no penalty will be added */
-        max_per_type: DEFAULT_MAX_PER_TYPE, /*collection diversity parameter based on collection types, adds penalty to collections with the same type as other collections. If null, then no penalty will be added */
+        mode: DEFAULT_FULL_MODE /* request mode: instant, domain_detail, full */,
+        enable_learning_to_rank:
+          DEFAULT_ENABLE_LEARNING_TO_RANK /*enable learning to rank. if true, the results will be sorted by 'learning to rank' algorithm */,
+        label_diversity_ratio:
+          DEFAULT_LABEL_DIVERSITY_RATIO /* collection diversity parameter based on labels, adds penalty to collections with similar labels to other collections. If null, then no penalty will be added */,
+        max_per_type:
+          DEFAULT_MAX_PER_TYPE /*collection diversity parameter based on collection types, adds penalty to collections with the same type as other collections. If null, then no penalty will be added */,
       },
     };
 
@@ -70,7 +82,7 @@ export class NameGraph {
 
   /**
    * Gets name suggestions by category with configurable related collections.
-   * 
+   *
    * @param {string} label - The ENS label to get suggestions for, cannot contain dots (.). If enclosed in double quotes assuming label is pre-tokenized
    * @param {number} maxRelatedCollections - Maximum number of related collections to return (default: 6)
    * @returns {Promise<NameGraphGroupedByCategoryResponse>} Suggestions grouped by category.
@@ -84,17 +96,21 @@ export class NameGraph {
     const categoriesQueryConfig: TypedNameGraphGroupingCategoriesParams = {
       [NameGraphGroupingCategory.related]: {
         enable_learning_to_rank: DEFAULT_ENABLE_LEARNING_TO_RANK,
-        max_labels_per_related_collection: 10, /* max number of labels returned in any related collection */
+        max_labels_per_related_collection: 10 /* max number of labels returned in any related collection */,
         max_per_type: DEFAULT_MAX_PER_TYPE,
-        max_recursive_related_collections: DEFAULT_MAX_RECURSIVE_RELATED_COLLECTIONS, /* Set to 0 to disable the "recursive related collection search". When set to a value between 1 and 10, for each related collection we find, 
-        we also do a (depth 1 recursive) lookup for this many related collections to the related collection.*/
-        max_related_collections: maxRelatedCollections, /* max number of related collections returned. If 0 it effectively turns off any related collection search. */
+        max_recursive_related_collections:
+          DEFAULT_MAX_RECURSIVE_RELATED_COLLECTIONS /* Set to 0 to disable the "recursive related collection search". When set to a value between 1 and 10, for each related collection we find, 
+        we also do a (depth 1 recursive) lookup for this many related collections to the related collection.*/,
+        max_related_collections:
+          maxRelatedCollections /* max number of related collections returned. If 0 it effectively turns off any related collection search. */,
         label_diversity_ratio: DEFAULT_LABEL_DIVERSITY_RATIO,
       },
       [NameGraphGroupingCategory.wordplay]: {
-        max_suggestions: DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY, /* minimal number of suggestions to generate in one specific category. If the number of suggestions generated for this category is below 'min_suggestions' 
-        then the entire category should be filtered out from the response. */
-        min_suggestions: DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY, /* maximal number of suggestions to generate in one specific category */
+        max_suggestions:
+          DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY /* minimal number of suggestions to generate in one specific category. If the number of suggestions generated for this category is below 'min_suggestions' 
+        then the entire category should be filtered out from the response. */,
+        min_suggestions:
+          DEFAULT_MIN_SUGGESTIONS_PER_GROUPING_CATEGORY /* maximal number of suggestions to generate in one specific category */,
       },
 
       [NameGraphGroupingCategory.alternates]: {
@@ -120,8 +136,8 @@ export class NameGraph {
       [NameGraphGroupingCategory.other]: {
         max_suggestions: DEFAULT_MAX_SUGGESTIONS_PER_GROUPING_CATEGORY,
         min_suggestions: 6,
-        min_total_suggestions: 50, /* if not enough suggestions then "fallback generator" should be placed into another new category type called "other"
-        it may be not fulfilled because of `max_suggestions` limit */
+        min_total_suggestions: 50 /* if not enough suggestions then "fallback generator" should be placed into another new category type called "other"
+        it may be not fulfilled because of `max_suggestions` limit */,
       },
     };
 
@@ -139,7 +155,7 @@ export class NameGraph {
 
   /**
    * Gets a random sample of members from a collection.
-   * 
+   *
    * @param {string} collection_id - The ID of the collection to sample from
    * @param {number} options.seed - Random seed for reproducible sampling
    * @returns {Promise<NameGraphSuggestion[]>} Array of sampled collection members
@@ -167,7 +183,7 @@ export class NameGraph {
 
   /**
    * Fetches top 10 members from the collection specified by collection_id
-   * 
+   *
    * @param {string} collection_id - The ID of the collection
    * @returns {Promise<NameGraphFetchTopCollectionMembersResponse>} Top collection members
    * @example
@@ -181,7 +197,8 @@ export class NameGraph {
     const payload = {
       metadata,
       collection_id,
-      max_recursive_related_collections: DEFAULT_MAX_RECURSIVE_RELATED_COLLECTIONS,
+      max_recursive_related_collections:
+        DEFAULT_MAX_RECURSIVE_RELATED_COLLECTIONS,
     };
 
     return this.rawRequest("fetch_top_collection_members", "POST", payload);
@@ -189,7 +206,7 @@ export class NameGraph {
 
   /**
    * Generates scrambled variations of collection tokens.
-   * 
+   *
    * @param {string} collection_id - The ID of the collection to scramble tokens from
    * @param {number} options.seed - Random seed for reproducible scrambling
    * @param {ScrambleMethod} options.method - Method to use for scrambling. Possible values: "left-right-shuffle", "left-right-shuffle-with-unigrams", "full-shuffle"
@@ -206,7 +223,8 @@ export class NameGraph {
       method?: ScrambleMethod;
     },
   ): Promise<NameGraphSuggestion[]> {
-    const method = options?.method || ScrambleMethod["left-right-shuffle-with-unigrams"];
+    const method =
+      options?.method || ScrambleMethod["left-right-shuffle-with-unigrams"];
     const n_top_members = 25; /* Number of collection's top members to include in scrambling */
     const max_suggestions = 10; /* Maximal number of suggestions to generate, must be a positive integer */
     const seed = options?.seed;
@@ -225,7 +243,7 @@ export class NameGraph {
 
   /**
    * Searches for collections by a string query.
-   * 
+   *
    * @param {string} query - input query (with or without spaces) which is used to search for template collections, cannot contain dots (.)
    * @param {number} options.offset - Starting offset for pagination (default: 0)
    * @param {number} options.min_other_collections - Minimum number of other collections to return (default: 0)
@@ -253,9 +271,12 @@ export class NameGraph {
     },
   ): Promise<NameGraphFindCollectionsResponse> {
     const max_per_type = 3;
-    const min_other_collections = options?.min_other_collections || DEFAULT_MIN_OTHER_COLLECTIONS;
-    const max_other_collections = options?.max_other_collections || DEFAULT_MAX_OTHER_COLLECTIONS;
-    const max_total_collections = options?.max_total_collections || DEFAULT_MAX_TOTAL_COLLECTIONS;
+    const min_other_collections =
+      options?.min_other_collections || DEFAULT_MIN_OTHER_COLLECTIONS;
+    const max_other_collections =
+      options?.max_other_collections || DEFAULT_MAX_OTHER_COLLECTIONS;
+    const max_total_collections =
+      options?.max_total_collections || DEFAULT_MAX_TOTAL_COLLECTIONS;
     const max_related_collections = options?.max_related_collections || 3;
 
     const payload = {
@@ -269,7 +290,7 @@ export class NameGraph {
       max_other_collections,
       max_total_collections,
       query,
-      mode: DEFAULT_INSTANT_MODE, /* request mode that performs rescoring on top 20 collections instead of 100, should result in faster responses */
+      mode: DEFAULT_INSTANT_MODE /* request mode that performs rescoring on top 20 collections instead of 100, should result in faster responses */,
     };
 
     return this.rawRequest("find_collections_by_string", "POST", payload);
@@ -277,7 +298,7 @@ export class NameGraph {
 
   /**
    * Fetches members from a collection with pagination support
-   * 
+   *
    * @param {string} collection_id - The ID of the collection
    * @param {number} options.offset - Starting offset (number of members to skip) for pagination (default: 0)
    * @param {number} options.limit - Maximum number of members to return (default: 10)
@@ -307,7 +328,7 @@ export class NameGraph {
 
   /**
    * Counts collections matching a string query.
-   * 
+   *
    * @param {string} query - input query (with or without spaces) which is used to search for template collections, cannot contain dots (.)
    * @returns {Promise<NameGraphCountCollectionsResponse>} Count of matching collections
    * @example
@@ -326,7 +347,7 @@ export class NameGraph {
 
   /**
    * Finds collections related to a given collection.
-   * 
+   *
    * @param {string} collection_id - The ID of the collection to find related collections for
    * @returns {Promise<NameGraphFindCollectionsResponse>} Related collections
    * @example
@@ -356,7 +377,7 @@ export class NameGraph {
 
   /**
    * Counts collections containing a specific member.
-   * 
+   *
    * @param {string} label - The member label to count collections for
    * @returns {Promise<NameGraphCountCollectionsResponse>} Count of collections containing the member
    * @example
@@ -374,7 +395,7 @@ export class NameGraph {
 
   /**
    * Finds collections containing a specific member.
-   * 
+   *
    * @param {string} label - The member label to find collections for
    * @param {object} options - Optional search parameters
    * @param {number} options.offset - Starting offset for pagination (default: 0)
@@ -414,7 +435,7 @@ export class NameGraph {
 
   /**
    * Gets information about a single collection by its ID.
-   * 
+   *
    * @param {string} collection_id - The ID of the collection to retrieve
    * @returns {Promise<NameGraphCollection>} The requested collection
    * @example
@@ -481,7 +502,7 @@ export class NameGraph {
 
 /**
  * Creates a new instance of a NameGraph client.
- * 
+ *
  * @param {NameGraphOptions} options - Configuration options for NameGraph
  * @returns {NameGraph} A new NameGraph client instance
  * @example
@@ -496,7 +517,7 @@ const defaultClient = createNameGraphClient();
 
 /**
  * Default NameGraph client instance for convenient access to NameGraph functionality.
- * 
+ *
  * @example
  * import { namegraph } from '@namehash/namegraph';
  * const response = await namegraph.groupedByCategory('vitalik');
