@@ -5,6 +5,7 @@ import cc from "classcat";
 import {
   AvatarSize,
   DEFAULT_AVATAR_SHADOW,
+  getAvatarBorderRadius,
   NftAvatarLoadingMethod,
 } from "./avatar-utils";
 import React, { useEffect, useRef, useState } from "react";
@@ -71,7 +72,7 @@ export const NftAvatar = ({
   const [withText] = useState<boolean>(
     size === AvatarSize.BIG || size === AvatarSize.HUGE,
   );
-  const avatarBorderRadius = "rounded-[36px]";
+  const avatarBorderRadius = getAvatarBorderRadius(size);
   const [nameFontSizeIsCalculated, setNameFontSizeIsCalculated] =
     useState(false);
   const [stopDisplayingLoadingState, setStopDisplayingLoadingState] =
@@ -117,9 +118,6 @@ export const NftAvatar = ({
     if (imageRef.current) {
       const wrapperElm: HTMLImageElement = imageRef.current;
       const imageElm = wrapperElm.children[0];
-
-      console.log("wrapperElm", wrapperElm);
-      console.log("imageElm", imageElm);
 
       let averageAvatarColor;
       if (imageElm) {
