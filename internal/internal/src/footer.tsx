@@ -10,22 +10,20 @@ import {
 } from "./icons";
 
 const footerProducts = [
-  {
-    name: "ENSNode",
-    href: "https://www.ensnode.io/",
-  },
-  {
-    name: "ENS Referral Program",
-    href: "https://namehashlabs.org/ens-referral-program",
-  },
+  // ENSNode is commented out until ENSNode is ready for launch.
+  // {
+  //   name: "ENSNode",
+  //   href: "https://www.ensnode.io/",
+  // },
   {
     name: "NameAI",
-    href: "https://nameai.dev/",
+    href: "https://nameai.io/",
   },
-  {
-    name: "NameGraph",
-    href: "https://www.namegraph.dev/",
-  },
+  // NameGraph is commented out until NameGraph is ready for launch.
+  // {
+  //   name: "NameGraph",
+  //   href: "https://www.namegraph.dev/",
+  // },
   {
     name: "NameGuard",
     href: "https://nameguard.io",
@@ -33,6 +31,10 @@ const footerProducts = [
   {
     name: "NameKit",
     href: "https://namekit.io",
+  },
+  {
+    name: "ENS Referral Program",
+    href: "https://namehashlabs.org/ens-referral-program",
   },
 ];
 
