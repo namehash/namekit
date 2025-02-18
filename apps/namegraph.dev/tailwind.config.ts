@@ -22,6 +22,15 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {},
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+      },
+    },
+    animation: {
+      fadeIn: "fadeIn 1s linear forwards",
     },
   },
   plugins: [require("tailwindcss-animate")],
