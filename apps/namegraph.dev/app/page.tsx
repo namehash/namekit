@@ -10,7 +10,14 @@ import {
 } from "@namehash/namegraph-sdk/utils";
 import { HeroStartCommand } from "@/components/hero-start-command";
 import { RedirectSearchBar } from "@/components/redirect-search-bar";
-import { ThreeJSAnimation } from "@/components/hero-animation";
+import dynamic from "next/dynamic";
+// import { ThreeJSAnimation } from "@/components/hero-animation";
+
+const ThreeJSAnimation = dynamic(
+  () =>
+    import("../components/hero-animation").then((mod) => mod.ThreeJSAnimation),
+  { ssr: false },
+);
 
 export default function HomePage() {
   const [suggestions, setSuggestions] = useState<WritersBlockSuggestion[]>([]);
@@ -26,7 +33,9 @@ export default function HomePage() {
 
   return (
     <>
-      <ThreeJSAnimation />
+      <div className="w-[100vw] h-[100vh] bg-black">
+        <ThreeJSAnimation />
+      </div>
       <div className="container mx-auto py-16 px-4">
         <div className="max-w-4xl flex flex-col mx-auto text-center">
           <div className="flex flex-col gap-2 w-full h-fit mb-4">
