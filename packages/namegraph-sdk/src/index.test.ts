@@ -69,6 +69,31 @@ describe("suggestionsByCategory", () => {
   it("should reject label with dots", async () => {
     await expect(namegraph.suggestionsByCategory(labelWithDots)).rejects.toThrow();
   });
+
+  it("should throw error for invalid max_suggestion_per_grouping_category", async () => {
+    await expect(namegraph.suggestionsByCategory(exampleLabel, undefined, {
+      max_suggestion_per_grouping_category: 31 // Above max allowed value of 30
+    })).rejects.toThrow();
+  });
+
+  it("should respect min_suggestion_per_grouping_category parameter", async () => {
+    const minSuggestions = 2;
+    const response = await namegraph.suggestionsByCategory(exampleLabel, undefined, {
+      min_suggestion_per_grouping_category: minSuggestions
+    });
+
+    response.categories.forEach(category => {
+      if (category.type === NameGraphGroupingCategory.related) {
+        expect(category.suggestions.length).toBeGreaterThanOrEqual(minSuggestions);
+      }
+    });
+  });
+
+  it("should throw error for invalid min_suggestion_per_grouping_category", async () => {
+    await expect(namegraph.suggestionsByCategory(exampleLabel, undefined, {
+      min_suggestion_per_grouping_category: -1 // Below min allowed value of 0
+    })).rejects.toThrow();
+  });
 });
 
 
@@ -87,6 +112,26 @@ describe("sampleCollectionMembers", () => {
     const sample2 = await namegraph.sampleCollectionMembers(exampleCollectionId, { seed });
     
     expect(sample1).toEqual(sample2);
+  });
+
+  it("should respect max_sample_size parameter", async () => {
+    const maxSampleSize = 3;
+    const response = await namegraph.sampleCollectionMembers(exampleCollectionId, {
+      max_sample_size: maxSampleSize
+    });
+    expect(response.length).toBeLessThanOrEqual(maxSampleSize);
+  });
+
+  it("should reject float max_sample_size parameter", async () => {
+    await expect(namegraph.sampleCollectionMembers(exampleCollectionId, {
+      max_sample_size: 2.3
+    })).rejects.toThrow();
+  });
+
+  it("should throw error for invalid max_sample_size", async () => {
+    await expect(namegraph.sampleCollectionMembers(exampleCollectionId, {
+      max_sample_size: 101 // Above max allowed value of 100
+    })).rejects.toThrow();
   });
 });
 
@@ -127,6 +172,26 @@ describe("scrambleCollectionTokens", () => {
   it("should return at most 10 scrambled suggestions", async () => {
     const response = await namegraph.scrambleCollectionTokens(exampleCollectionId);
     expect(response.length).toBeLessThanOrEqual(10);
+  });
+
+  it("should respect max_suggestions parameter", async () => {
+    const maxSuggestions = 5;
+    const response = await namegraph.scrambleCollectionTokens(exampleCollectionId, {
+      max_suggestions: maxSuggestions
+    });
+    expect(response.length).toBeLessThanOrEqual(maxSuggestions);
+  });
+
+  it("should reject float max_suggestions parameter", async () => {
+    await expect(namegraph.scrambleCollectionTokens(exampleCollectionId, {
+      max_suggestions: 2.3
+    })).rejects.toThrow();
+  });
+
+  it("should throw error for invalid max_suggestions", async () => {
+    await expect(namegraph.scrambleCollectionTokens(exampleCollectionId, {
+      max_suggestions: -1 // Below min allowed value of 0
+    })).rejects.toThrow();
   });
 });
 
@@ -180,6 +245,24 @@ describe("findCollectionsByString", () => {
 
     expect(response_total.related_collections.length + response_total.other_collections.length).toBeLessThanOrEqual(max_total_collections);
 
+  });
+
+  it("should respect max_per_type parameter", async () => {
+    const maxPerType = 2;
+    const response = await namegraph.findCollectionsByString(exampleQuery, {
+      max_per_type: maxPerType
+    });
+
+    const allSuggestions = response.related_collections.concat(response.other_collections)
+
+    const typeGroups = allSuggestions.reduce((acc: Record<string, number>, collection) => {
+        collection.types.forEach((type: string) => acc[type] = (acc[type] || 0) + 1);
+        return acc;
+    }, {});
+
+    Object.values(typeGroups).forEach(count => {
+      expect(count).toBeLessThanOrEqual(maxPerType);
+    });
   });
 });
 
@@ -252,6 +335,28 @@ describe("findCollectionsByCollection", () => {
     const response = await namegraph.findCollectionsByCollection(exampleCollectionId);
 
     expect(response.related_collections.length).toBeLessThanOrEqual(3); // max_related_collections is 3
+  });
+
+  it("should respect max_per_type parameter", async () => {
+    const maxPerType = 2;
+    const response = await namegraph.findCollectionsByCollection(exampleCollectionId, {
+      max_per_type: maxPerType
+    });
+
+    const typeGroups = response.other_collections.reduce((acc: Record<string, number>, collection) => {
+      collection.types.forEach((type: string) => acc[type] = (acc[type] || 0) + 1);
+      return acc;
+  }, {});
+
+    Object.values(typeGroups).forEach(count => {
+      expect(count).toBeLessThanOrEqual(maxPerType);
+    });
+  });
+
+  it("should throw error for negative max_related_collections", async () => {
+    await expect(namegraph.findCollectionsByCollection(exampleCollectionId, {
+      max_related_collections: -1
+    })).rejects.toThrow();
   });
 });
 
