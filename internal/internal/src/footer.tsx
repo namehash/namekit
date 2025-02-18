@@ -7,43 +7,64 @@ import {
   ServiceProviderBadge,
   TelegramIcon,
   TwitterIcon,
-} from "../1 - atoms";
+} from "./icons";
 
 const footerProducts = [
+  // ENSNode is commented out until ENSNode is ready for launch.
+  // {
+  //   name: "ENSNode",
+  //   href: "https://www.ensnode.io/",
+  // },
   {
-    name: "NameKit",
-    href: "https://namekit.io",
+    name: "NameAI",
+    href: "https://nameai.io/",
   },
+  // NameGraph is commented out until NameGraph is ready for launch.
+  // {
+  //   name: "NameGraph",
+  //   href: "https://www.namegraph.dev/",
+  // },
   {
     name: "NameGuard",
     href: "https://nameguard.io",
   },
   {
+    name: "NameKit",
+    href: "https://namekit.io",
+  },
+  {
     name: "ENS Referral Program",
-    href: "/ens-referral-program",
+    href: "https://namehashlabs.org/ens-referral-program",
   },
 ];
 
 const footerResources = [
   {
     name: "Contact us",
-    href: "/contact",
+    href: "https://namehashlabs.org/contact",
   },
   {
     name: "Careers",
-    href: "/careers",
+    href: "https://namehashlabs.org/careers",
   },
   {
     name: "Partners",
-    href: "/partners",
+    href: "https://namehashlabs.org/partners",
   },
   {
     name: "Brand assets",
-    href: "/brand-assets",
+    href: "https://namehashlabs.org/brand-assets",
   },
 ];
 
-export const Footer = (props: React.HTMLAttributes<HTMLDivElement>) => {
+type FooterProps = {
+  openResourcesInNewTab?: boolean;
+} & React.HTMLAttributes<HTMLDivElement>;
+
+export const Footer = ({
+  openResourcesInNewTab = true,
+  ...props
+}: FooterProps) => {
   return (
     <section
       className="lg:px-[50px] px-5 flex items-center justify-center w-full border-t border-gray-200"
@@ -93,9 +114,7 @@ export const Footer = (props: React.HTMLAttributes<HTMLDivElement>) => {
                     <li key={resource.name} className="my-2">
                       <Link
                         key={resource.name}
-                        target={
-                          resource.href.startsWith("/") ? "_self" : "_blank"
-                        }
+                        target={openResourcesInNewTab ? "_blank" : "_self"}
                         variant="secondary"
                         size="small"
                         href={resource.href}
