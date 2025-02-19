@@ -94,7 +94,13 @@ class NLPInspector:
         return self.inspector.analyse_label(label, simple_confusables=True)
 
     def tokenize(self, label: str, tokenizations_limit: int) -> tuple[list[dict], bool]:
-        # get tokenizations from both sources
+        """
+        Tokenize text using both person name and general-purpose tokenizers.
+
+        Combines results from PersonNameTokenizer (with name-specific probabilities)
+        and AllTokenizer (with ngram-based probabilities).
+        Returns tokenizations sorted by probability.
+        """
         all_tokenizer_iterator = self.tokenizer.tokenize(label)
         person_names_iterator = self.person_names_tokenizer.tokenize_with_scores(label)
 
@@ -122,7 +128,7 @@ class NLPInspector:
                         break
                     used.add(tokenized)
                     i += 1
-                    # for non-person-name tokenizations, use ngrams probability
+                    # for AllTokenizer tokenizations, use ngrams probability
                     tokenizeds.append(
                         {
                             'tokens': tokenized,

@@ -2,7 +2,7 @@ import collections
 import copy
 import json
 import math
-from typing import Optional
+from typing import Iterator, Optional
 from omegaconf import DictConfig
 
 from nameai.data import get_resource_path
@@ -10,9 +10,12 @@ from nameai.data import get_resource_path
 
 class PersonNames:
     """
-    For each interpretation (tokenization) calculates probability of a person existence with given name per country.
-    It is weighted by number of Internet users.
-    We want also tokenizer - should it be the highest prob or sum of probs for given interpretation.
+    Analyzes and scores potential person name interpretations in text.
+
+    Uses statistical data about first names, last names, and their frequency per country
+    to evaluate different possible interpretations of a text string as a person's name.
+    Scoring is weighted by country-specific internet user statistics to reflect
+    real-world name likelihood.
     """
 
     def __init__(self, config: DictConfig):
@@ -231,42 +234,15 @@ class PersonNames:
 
         return sorted(all_interpretations, reverse=True)
 
-    def verbose(self, input_name):
-        results = self.anal(input_name)
-
-        for r in results:
-            score = math.prod([sum(result['gender'].values()) for result in r['names']])
-            print([result['name'] for result in r['names']], [result['type'] for result in r['names']])
-            print(score, score ** (1 / len(r)), r['names'])
-
-            for result in r['names']:
-                best_probs = sorted(result['prob'].items(), key=lambda x: x[1], reverse=True)[:5]
-                print(result['name'])
-                print(best_probs)
-
-            countries = collections.defaultdict(lambda: 1)
-            genders = collections.defaultdict(lambda: 1)
-            probs = collections.defaultdict(lambda: 1)
-            for result in r['names']:
-                for country, count in result['country'].items():
-                    countries[country] *= count
-                for gender, count in result['gender'].items():
-                    genders[gender] *= count
-                for country, count in result['prob'].items():
-                    probs[country] *= count
-
-            country = sorted(countries.items(), key=lambda x: x[1], reverse=True)[:1]
-            print('Country', country)
-            gender = sorted(genders.items(), key=lambda x: x[1], reverse=True)[:1]
-            print('Gender', gender)
-            probs = sorted(probs.items(), key=lambda x: x[1], reverse=True)[:1]
-            print('Prob', probs)
-            probs2 = sorted(r['prob'].items(), key=lambda x: x[1], reverse=True)[:3]
-            print('Prob2', probs2)
-            print()
-
 
 class PersonNameTokenizer:
+    """
+    Specialized tokenizer for identifying person names in text.
+
+    Uses statistical name data and filtering to identify valid name tokens.
+    Yields tokenizations as tuples of tokens paired with their log probability.
+    """
+
     def __init__(self, config: DictConfig):
         super().__init__()
         self.pn = PersonNames(config)
@@ -280,7 +256,7 @@ class PersonNameTokenizer:
         """Get or compute scores for a label"""
         return self.pn.score(label)
 
-    def tokenize_with_scores(self, label: str):
+    def tokenize_with_scores(self, label: str) -> Iterator[tuple[tuple[str, ...], float]]:
         """
         Tokenize a label into possible person name interpretations with their scores
         returns an iterator of (tokenization, log_probability) pairs

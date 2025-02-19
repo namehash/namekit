@@ -69,7 +69,13 @@ class DFS:
 
 
 class AllTokenizer:
-    """Return all tokenizations. It is a generator."""
+    """
+    General-purpose tokenizer that finds all possible word combinations in text.
+
+    Uses an Aho-Corasick automaton with multiple dictionaries to identify
+    valid words. Can produce tokenizations with gaps.
+    Yields tokenizations as tuples of tokens.
+    """
 
     def __init__(self, config):
         self.config = config
