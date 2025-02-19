@@ -270,8 +270,12 @@ class PersonNameTokenizer:
     def __init__(self, config: DictConfig):
         super().__init__()
         self.pn = PersonNames(config)
+        self.should_be_tokenized = set()
+        with open(get_resource_path(config.tokenization.all_tokenizer.should_be_tokenized), encoding='utf-8') as f:
+            for line in f:
+                word = line.strip().lower()
+                self.should_be_tokenized.add(word)
 
-    # @lru_cache(maxsize=1000)
     def _get_scores(self, label: str) -> list[tuple[float, str, tuple[str, ...], str, dict[str, float]]]:
         """Get or compute scores for a label"""
         return self.pn.score(label)
@@ -283,6 +287,10 @@ class PersonNameTokenizer:
         """
         seen = set()
         for prob, country, tokenization, type_, genders in self._get_scores(label):
-            if tokenization not in seen and all(len(t) > 1 for t in tokenization):  # skip single letter tokens
+            if (  # skip if any token is in should_be_tokenized list or is a single letter
+                tokenization not in seen
+                and all(len(t) > 1 for t in tokenization)
+                and not any(t.lower() in self.should_be_tokenized for t in tokenization)
+            ):
                 seen.add(tokenization)
                 yield tokenization, math.log(prob) if prob > 0 else -float('inf')
