@@ -200,6 +200,6 @@ export const ThreeJSAnimation = () => {
     };
   }, []);
 
-  return <div className='animate-fadeIn' id="webgl" style={{ width: '100%', height: '100%' }} />;
+  return <div className='animate-fadeIn absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' id="webgl" style={{ width: '100%', height: '100%' }} />;
 };
 
