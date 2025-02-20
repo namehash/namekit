@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+const plugin = require("tailwindcss/plugin");
 
 const config: Config = {
   darkMode: ["class"],
@@ -29,14 +30,18 @@ const config: Config = {
         },
         longFadeOut: {
           "0%": { opacity: "1" },
-          "95%": { opacity: "1" },
-          "100%": { opacity: "0" },
+          "100%": { opacity: "0.4" },
         },
         longFadeIn: {
           "0%": { opacity: "0" },
           "95%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
+      },
+      textShadow: {
+        sm: "0 1px 2px var(--tw-shadow-color)",
+        DEFAULT: "0 2px 4px var(--tw-shadow-color)",
+        lg: "0 8px 16px var(--tw-shadow-color)",
       },
     },
     animation: {
@@ -45,6 +50,24 @@ const config: Config = {
       longFadeIn: "longFadeIn 7s linear forwards",
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    plugin(function ({
+      matchUtilities,
+      theme,
+    }: {
+      matchUtilities: any;
+      theme: any;
+    }) {
+      matchUtilities(
+        {
+          "text-shadow": (value: string) => ({
+            textShadow: value,
+          }),
+        },
+        { values: theme("textShadow") },
+      );
+    }),
+  ],
 };
 export default config;
