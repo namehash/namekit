@@ -27,10 +27,22 @@ const config: Config = {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
+        longFadeOut: {
+          "0%": { opacity: "1" },
+          "95%": { opacity: "1" },
+          "100%": { opacity: "0" },
+        },
+        longFadeIn: {
+          "0%": { opacity: "0" },
+          "95%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
       },
     },
     animation: {
       fadeIn: "fadeIn 1s linear forwards",
+      longFadeOut: "longFadeOut 7s linear forwards",
+      longFadeIn: "longFadeIn 7s linear forwards",
     },
   },
   plugins: [require("tailwindcss-animate")],

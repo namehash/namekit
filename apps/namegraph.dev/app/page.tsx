@@ -11,7 +11,6 @@ import {
 import { HeroStartCommand } from "@/components/hero-start-command";
 import { RedirectSearchBar } from "@/components/redirect-search-bar";
 import dynamic from "next/dynamic";
-// import { ThreeJSAnimation } from "@/components/hero-animation";
 
 const ThreeJSAnimation = dynamic(
   () =>
@@ -33,10 +32,10 @@ export default function HomePage() {
 
   return (
     <>
-      <div className="w-[100vw] h-[100vh] bg-black">
+      <div className="absolute animate-longFadeOut top-0 left-0 w-[100vw] h-[100vh] bg-black">
         <ThreeJSAnimation />
       </div>
-      <div className="container mx-auto py-16 px-4">
+      <div className="container animate-longFadeIn w-[100vw] flex items-center justify-center min-h-[calc(100vh-70px)] mx-auto py-16 px-4">
         <div className="max-w-4xl flex flex-col mx-auto text-center">
           <div className="flex flex-col gap-2 w-full h-fit mb-4">
             <p className="text-center not-italic uppercase text-gray-500 text-xs tracking-[0.3px] font-medium">
