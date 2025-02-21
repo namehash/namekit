@@ -50,7 +50,7 @@ export default function Page() {
                   alt="hero"
                 />
               }
-              calendarButtonText="Meet us at DevCon"
+              calendarButtonText="Meet us at ETHDenver"
               greenLabelText="Collecting Community Input"
               buttonText="Share your voice"
               buttonUrl="https://app.deform.cc/form/bac7c954-c419-4a81-a84f-97fa05f0a898"
