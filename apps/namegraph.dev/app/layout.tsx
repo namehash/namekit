@@ -95,7 +95,7 @@ export default function RootLayout({
                   <div className="hidden items-center justify-center lg:flex gap-2">
                     <div className="hidden items-center justify-center xl:flex gap-2">
                       <Button variant="ghost" asChild>
-                        <Link href="http://api.namegraph.dev/docs">
+                        <Link href="http://api.namegraph.io/docs">
                           API Docs
                         </Link>
                       </Button>

@@ -9,7 +9,6 @@ A TypeScript SDK for interacting with the NameGraph APIs, providing access to th
 - **Smart Sampling**: Sample and fetch top members from collections
 - **Advanced Search**: Search collections by string or by collection ID
 
-
 ## Installation
 
 ```bash
@@ -39,7 +38,7 @@ const suggestions = await namegraph.groupedByCategory("zeus");
 
 ```typescript
 const client = createNameGraphClient({
-  namegraphEndpoint: "https://custom-api.endpoint.com", // Optional, defaults to https://api.namegraph.dev/
+  namegraphEndpoint: "https://custom-api.endpoint.com", // Optional, defaults to https://api.namegraph.io/
 });
 ```
 
@@ -67,7 +66,10 @@ const members = await client.sampleCollectionMembers("collection_id");
 
 ```typescript
 // with pagination
-const members = await client.fetchCollectionMembers("collection_id", {offset: 0, limit: 20});
+const members = await client.fetchCollectionMembers("collection_id", {
+  offset: 0,
+  limit: 20,
+});
 
 // Top members
 const topMembers = await client.fetchTopCollectionMembers("collection_id");
@@ -76,7 +78,9 @@ const topMembers = await client.fetchTopCollectionMembers("collection_id");
 #### Generate Scrambled Variations of Collection Tokens
 
 ```typescript
-const scrambled = await client.scrambleCollectionTokens('collection_id', {seed: 42});
+const scrambled = await client.scrambleCollectionTokens("collection_id", {
+  seed: 42,
+});
 ```
 
 #### Find Collections
@@ -103,6 +107,7 @@ const memberCount = await client.countCollectionsByMember("zeus");
 ```
 
 #### Get Collection by ID
+
 ```typescript
 const collection = await client.getCollectionById("collection_id");
 ```
