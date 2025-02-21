@@ -39,7 +39,7 @@ export class NameGraph {
     /**
      * Gets name suggestions grouped by category for a given label.
      *
-     * @param {string} label - The ENS label to get suggestions for, cannot contain dots (.)
+     * @param {string} label - The ENS label to get suggestions for, cannot contain dots (.). If enclosed in double quotes assuming label is pre-tokenized, the separators in the pre-tokenized input are spaces.
      * @returns {Promise<NameGraphGroupedByCategoryResponse>} Suggestions grouped by category
      * @example
      * const response = await client.groupedByCategory('zeus');
@@ -71,13 +71,13 @@ export class NameGraph {
     /**
      * Gets name suggestions by category with configurable related collections.
      *
-     * @param {string} label - The ENS label to get suggestions for, cannot contain dots (.). If enclosed in double quotes assuming label is pre-tokenized
+     * @param {string} label - The ENS label to get suggestions for, cannot contain dots (.). If enclosed in double quotes assuming label is pre-tokenized, the separators in the pre-tokenized input are spaces.
      * @param {number} maxRelatedCollections - Maximum number of related collections to return (default: 6)
-     * @param {number} options.max_per_type - collection diversity parameter based on collection types, adds penalty to collections with the same type as other collections. If null, then no penalty will be added
-     * @param {number} options.max_labels_per_related_collection - Max number of labels returned in any related collection
-     * @param {number} options.max_suggestion_per_grouping_category - Maximal number of suggestions to generate in one specific category
+     * @param {number} options.max_per_type - collection diversity parameter based on collection types, adds penalty to collections with the same type as other collections. If null, then no penalty will be added (default: 2)
+     * @param {number} options.max_labels_per_related_collection - Max number of labels returned in any related collection (default: 10)
+     * @param {number} options.max_suggestion_per_grouping_category - Maximal number of suggestions to generate in one specific category (default: 10)
      * @param {number} options.min_suggestion_per_grouping_category - Minimal number of suggestions to generate in one specific category. If the number of suggestions generated for this category is below 'min_suggestions'
-     * then the entire category should be filtered out from the response.
+     * then the entire category should be filtered out from the response. (default: 2)
      * @returns {Promise<NameGraphGroupedByCategoryResponse>} Suggestions grouped by category.
      * @example
      * const suggestions = await client.suggestionsByCategory('zeus', 10);
@@ -152,7 +152,7 @@ export class NameGraph {
      *
      * @param {string} collection_id - The ID of the collection to sample from
      * @param {number} options.seed - Random seed for reproducible sampling
-     * @param {number} options.max_sample_size - the maximum number of members to sample. If the collection has fewer members than max_sample_size, all the members will be returned
+     * @param {number} options.max_sample_size - the maximum number of members to sample. If the collection has fewer members than max_sample_size, all the members will be returned (default: 5)
      * @returns {Promise<NameGraphSuggestion[]>} Array of sampled collection members
      * @example
      * const members = await client.sampleCollectionMembers('collection_id', { seed: 42 });
@@ -205,8 +205,8 @@ export class NameGraph {
      * @param {string} collection_id - The ID of the collection to scramble tokens from
      * @param {number} options.seed - Random seed for reproducible scrambling
      * @param {ScrambleMethod} options.method - Method to use for scrambling. Possible values: "left-right-shuffle", "left-right-shuffle-with-unigrams", "full-shuffle"
-     * @param {ScrambleMethod} options.n_top_members - Number of collection's top members to include in scrambling
-     * @param {ScrambleMethod} options.max_suggestions - Maximal number of suggestions to generate, must be a positive integer
+     * @param {number} options.n_top_members - Number of collection's top members to include in scrambling (default: 25)
+     * @param {number} options.max_suggestions - Maximal number of suggestions to generate, must be a positive integer (default: 10)
      * @returns {Promise<NameGraphSuggestion[]>} Array of scrambled suggestions
      * @example
      * const scrambled = await client.scrambleCollectionTokens('collection_id', {
@@ -244,11 +244,11 @@ export class NameGraph {
      *
      * @param {string} query - input query (with or without spaces) which is used to search for template collections, cannot contain dots (.)
      * @param {number} options.max_per_type - Number of collections with the same type which are not penalized. Set to null if you want to disable the penalization.
-     * If the penalization algorithm is turned on then 3 times more results (than max_related_collections) are retrieved from Elasticsearch
+     * If the penalization algorithm is turned on then 3 times more results (than max_related_collections) are retrieved from Elasticsearch (default: 3)
      * @param {number} options.offset - Starting offset for pagination (default: 0)
      * @param {number} options.min_other_collections - Minimum number of other collections to return (default: 0)
      * @param {number} options.max_other_collections - Maximum number of other collections to return (default: 3)
-     * @param {number} options.max_related_collections - Maximum number of related collections to return.
+     * @param {number} options.max_related_collections - Maximum number of related collections to return (default: 3)
      * Return collections at [offset, offset + max_related_collections) positions (order as in sort_order). Should be a positive integer (default: 3)
      * @param {number} options.max_total_collections - Maximum number of total (related + other) collections to return (default: 6)
      * @param {NameGraphSortOrderOptions} options.sort_order - Sort order: "AI", "A-Z", "Z-A", or "Relevance" (default: "AI")
@@ -349,9 +349,9 @@ export class NameGraph {
      *
      * @param {string} collection_id - The ID of the collection to find related collections for
      * @param {number} options.max_per_type - Number of collections with the same type which are not penalized. Set to null if you want to disable the penalization.
-     * If the penalization algorithm is turned on then 3 times more results (than max_related_collections) are retrieved from Elasticsearch
+     * If the penalization algorithm is turned on then 3 times more results (than max_related_collections) are retrieved from Elasticsearch (default: 3)
      * @param {number} options.max_related_collections - Max number of related collections to return (for each page).
-     * Return collections at [offset, offset + max_related_collections) positions (order as in sort_order). Should be a positive integer
+     * Return collections at [offset, offset + max_related_collections) positions (order as in sort_order). Should be a positive integer (default: 3)
      * @returns {Promise<NameGraphFindCollectionsResponse>} Related collections
      * @example
      * const related = await client.findCollectionsByCollection('collection_id');
@@ -404,7 +404,6 @@ export class NameGraph {
      * Finds collections containing a specific member.
      *
      * @param {string} label - The member label to find collections for
-     * @param {object} options - Optional search parameters
      * @param {number} options.offset - Starting offset for pagination (default: 0)
      * @param {number} options.max_results - Maximum number of results to return (default: 3)
      * @param {number} options.limit_labels - Maximum number of labels per collection (default: 10)
