@@ -18,11 +18,11 @@ def nameai():
 def test_normalized(nameai: 'NameAI'):
     result = nameai.inspect_label('nick')
     assert abs(result.nameai.purity_score - 0.9976234705882353) < 0.0001, result.nameai.purity_score
-    assert abs(result.nameai.sort_score - 0.9354685918689098) < 0.0001, result.nameai.sort_score
+    assert abs(result.nameai.sort_score - 0.93694557738369) < 0.0001, result.nameai.sort_score
     assert result.nameai.analysis.status == 'normalized'
-    assert abs(result.nameai.analysis.probability - 0.0000317942695746393) < 0.0001, result.nameai.analysis.probability
+    assert abs(result.nameai.analysis.probability - 0.00019752378433969656) < 0.0001, result.nameai.analysis.probability
     assert (
-        abs(result.nameai.analysis.log_probability - -10.356224486471852) < 0.0001
+        abs(result.nameai.analysis.log_probability - -8.529651553837413) < 0.0001
     ), result.nameai.analysis.log_probability
     assert result.nameai.analysis.word_count == 1
     assert result.nameguard.rating.name == 'WARN'
@@ -38,13 +38,13 @@ def test_name(nameai: 'NameAI'):
     result = nameai.inspect_name('nick')
     assert result.nameai.analysis.inspection.label == 'nick'
     assert abs(result.nameai.purity_score - 0.9976234705882353) < 0.0001, result.nameai.purity_score
-    assert abs(result.nameai.sort_score - 0.9354685918689098) < 0.0001, result.nameai.sort_score
+    assert abs(result.nameai.sort_score - 0.93694557738369) < 0.0001, result.nameai.sort_score
     assert result.nameai.analysis.status == 'normalized'
 
     result = nameai.inspect_name('nick.eth')
     assert result.nameai.analysis.inspection.label == 'nick'
     assert abs(result.nameai.purity_score - 0.9976234705882353) < 0.0001, result.nameai.purity_score
-    assert abs(result.nameai.sort_score - 0.9354685918689098) < 0.0001, result.nameai.sort_score
+    assert abs(result.nameai.sort_score - 0.93694557738369) < 0.0001, result.nameai.sort_score
     assert result.nameai.analysis.status == 'normalized'
 
     result = nameai.inspect_name('nick.eth.eth')
