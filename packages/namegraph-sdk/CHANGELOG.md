@@ -1,5 +1,11 @@
 # @namehash/namegraph-sdk
 
+## 0.5.2
+
+### Patch Changes
+
+- 8cf999b: Exposed parameters affecting the output size and added corresponding unit tests
+
 ## 0.5.1
 
 ### Patch Changes
