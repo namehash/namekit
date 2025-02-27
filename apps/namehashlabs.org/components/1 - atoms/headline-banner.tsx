@@ -16,7 +16,7 @@ export const HeadlineBanner = () => {
         variant="ghost"
         link="namehashlabs/namehashlabs"
       >
-        <Link variant="underline" size="small">
+        <Link target="_blank" variant="underline" size="small">
           Book a meeting
         </Link>
       </CalendarButton>
