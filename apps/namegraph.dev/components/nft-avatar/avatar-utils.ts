@@ -8,6 +8,19 @@ export enum AvatarSize {
 
 export const DEFAULT_AVATAR_SHADOW = "rgb(63, 135, 202)";
 
+export const getAvatarBorderRadius = (size: AvatarSize) => {
+  switch (size) {
+    case AvatarSize.HUGE:
+    case AvatarSize.BIG:
+    case AvatarSize.MEDIUM:
+      return "rounded-[36px]";
+    case AvatarSize.SMALL:
+      return "rounded-[9px]";
+    case AvatarSize.MINI:
+      return "rounded-[6px]";
+  }
+};
+
 export enum NftAvatarLoadingMethod {
   /*
     For SHOW_LOADING_UNTIL_ALL_CONFIRMED loading
