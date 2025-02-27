@@ -95,7 +95,7 @@ export const Footer = ({
                       <Link asChild variant="secondary" size="small">
                         <NextLink
                           target={
-                            product.href.includes("namehashlabs.org") &&
+                            new URL(product.href).host === "namehashlabs.org" &&
                             !openResourcesInNewTab
                               ? "_self"
                               : "_blank"
