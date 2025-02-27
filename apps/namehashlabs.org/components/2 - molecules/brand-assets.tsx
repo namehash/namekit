@@ -3,7 +3,7 @@ import Image from "next/image";
 import { PreSectionText } from "../1 - atoms";
 import { ColorfulBg } from "../1 - atoms/colorful-bg";
 import { ColorfulDownloadIcon } from "../1 - atoms/icons/colorful-download-icon";
-import { Button, Link } from "@namehash/namekit-react";
+import { Button, Heading, Link, Text } from "@namehash/namekit-react";
 
 export const BrandAssets = () => {
   return (
@@ -20,15 +20,16 @@ export const BrandAssets = () => {
         <div className="flex flex-col lg:flex-row gap-10 items-center justify-center border-t border-gray-200 py-20 ">
           <div className="flex flex-col items-start gap-6">
             <div className="flex flex-col gap-3">
-              <h3 className="text-3xl leading-9 lg:text-4xl lg:leading-10 font-bold">
-                Download assets
-              </h3>
-              <p className="text-lg leading-7 font-normal text-gray-500">
+              <Heading as="h1">Download assets</Heading>
+              <Text
+                className="!text-lg !leading-7 !font-normal !text-gray-500"
+                as="p"
+              >
                 Working together with Namehash Labs or crafting an article
                 featuring us? Explore the official Namehash Labs assets
                 available on our Github to incorporate into your marketing
                 materials, website, or mobile application.
-              </p>
+              </Text>
             </div>
 
             <Button variant="primary" size="medium" asChild>

@@ -3,14 +3,13 @@
 import NextLink from "next/link";
 
 import { PreSectionText } from "../1 - atoms/pre-section-text";
-import { SectionText } from "../1 - atoms/section-text";
 import { SectionTitle } from "../1 - atoms/section-title";
 import { Balancer } from "react-wrap-balancer";
 import { AvatarSize } from "./avatar-with-tooltip";
 import { getCachedProfile } from "@/data/ensProfiles";
 import { UltimateENSAvatar } from ".";
 import { getNameHashLabsAvatarCallbacks } from "@/lib/client/nh-labs-avatar";
-import { Button } from "@namehash/namekit-react";
+import { Button, Text } from "@namehash/namekit-react";
 
 const namehashLabsTeam = {
   profiles: [
@@ -43,13 +42,13 @@ export const TeamSection = () => {
         <div className="flex flex-col max-[635px] items-center justify-center mb-[60px] xl:max-w-[448px] xl:justify-start xl:items-start">
           <PreSectionText>WHO WE ARE</PreSectionText>
           <SectionTitle className="my-3">Our team</SectionTitle>
-          <SectionText className="w-full flex items-center justify-center text-center mb-5 xl:text-left">
+          <Text as="p" className="text-lg text-gray-500 mb-5 xl:text-left">
             <Balancer>
               NameHash Labs is a team of builders dedicated to the growth of
               ENS. Wanna be here? We&apos;re actively searching for special
               talents and would be happy to hear from you.
             </Balancer>
-          </SectionText>
+          </Text>
           <Button asChild>
             <NextLink href="/careers">Join our team</NextLink>
           </Button>
