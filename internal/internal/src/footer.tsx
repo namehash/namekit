@@ -1,4 +1,5 @@
 import { Link } from "@namehash/namekit-react";
+import NextLink from "next/link";
 import {
   EmailIcon,
   FarcasterIcon,
@@ -91,15 +92,18 @@ export const Footer = ({
                 {footerProducts.map((product) => {
                   return (
                     <li key={product.name} className="my-2">
-                      <Link
-                        target={
-                          product.href.startsWith("/") ? "_self" : "_blank"
-                        }
-                        href={product.href}
-                        variant="secondary"
-                        size="small"
-                      >
-                        {product.name}
+                      <Link asChild variant="secondary" size="small">
+                        <NextLink
+                          target={
+                            product.href.includes("namehashlabs.org") &&
+                            !openResourcesInNewTab
+                              ? "_self"
+                              : "_blank"
+                          }
+                          href={product.href}
+                        >
+                          {product.name}
+                        </NextLink>
                       </Link>
                     </li>
                   );
@@ -114,12 +118,16 @@ export const Footer = ({
                     <li key={resource.name} className="my-2">
                       <Link
                         key={resource.name}
-                        target={openResourcesInNewTab ? "_blank" : "_self"}
+                        asChild
                         variant="secondary"
                         size="small"
-                        href={resource.href}
                       >
-                        {resource.name}
+                        <NextLink
+                          href={resource.href}
+                          target={openResourcesInNewTab ? "_blank" : "_self"}
+                        >
+                          {resource.name}
+                        </NextLink>
                       </Link>
                     </li>
                   );
