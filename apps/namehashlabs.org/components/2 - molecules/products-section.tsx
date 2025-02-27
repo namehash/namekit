@@ -122,7 +122,10 @@ const Product = ({
 
 export const ProductsSection = () => {
   return (
-    <div className="lg:py-20 py-10 flex flex-col gap-10 w-full">
+    <div
+      id="productsSection"
+      className="lg:py-20 py-10 flex flex-col gap-10 w-full"
+    >
       {products.map((product, index) => (
         <Product
           key={product.title}
