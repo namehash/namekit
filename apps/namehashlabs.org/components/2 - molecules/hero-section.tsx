@@ -60,9 +60,9 @@ export const HeroSection = () => {
           className="!px-20 !rounded-full"
           size="large"
           onClick={() => {
-            const theVision = document.getElementById("theVisionSection");
-            if (theVision) {
-              theVision.scrollIntoView({ behavior: "smooth" });
+            const productsSection = document.getElementById("productsSection");
+            if (productsSection) {
+              productsSection.scrollIntoView({ behavior: "smooth" });
             }
           }}
         >

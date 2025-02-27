@@ -6,3 +6,4 @@ export * from "./services-section";
 export * from "./the-vision-section";
 export * from "./header";
 export * from "./namekit-footer";
+export * from "./introducing-namekit";

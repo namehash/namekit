@@ -87,13 +87,8 @@ export const Header = () => {
               <div className="inline-flex">
                 {/* Mobile markup */}
                 <Popover.Button className="lg:hidden relative z-30 mr-4 focus:outline-none focus-visible:outline-2 focus-visible:outline-black">
-                  <IconButton variant="ghost">
-                    <span className="sr-only">Open menu</span>
-                    <IconMenu
-                      className="w-5 stroke-current"
-                      aria-hidden="true"
-                    />
-                  </IconButton>
+                  <span className="sr-only">Open menu</span>
+                  <IconMenu className="w-5 stroke-current" aria-hidden="true" />
                 </Popover.Button>
                 <Transition
                   as={Fragment}

@@ -9,7 +9,7 @@ import cc from "classcat";
 import { Button, Link } from "@namehash/namekit-react";
 import NextLink from "next/link";
 
-import { SectionText } from "../1 - atoms";
+import { SectionText, SectionTitle } from "../1 - atoms";
 
 interface ProductProps {
   label: {
@@ -122,7 +122,11 @@ const Product = ({
 
 export const ProductsSection = () => {
   return (
-    <div className="lg:py-20 py-10 flex flex-col gap-10 w-full">
+    <div
+      id="productsSection"
+      className="lg:py-20 py-10 flex flex-col gap-10 w-full"
+    >
+      <SectionTitle>Our Products</SectionTitle>
       {products.map((product, index) => (
         <Product
           key={product.title}
@@ -143,6 +147,50 @@ export const ProductsSection = () => {
 };
 
 const products: ProductProps[] = [
+  {
+    title: "ENSNode",
+    subtitle:
+      "Unlock new opportunities for ENS support in your web3 app with ENSNode, your gateway to a seamless fusion of richest onchain and offchain data from across the ENS ecosystem.",
+    label: {
+      title: "ENS Developer Tooling",
+      icon: <ChartBarSquareIcon className="h-5 w-5 text-gray-500" />,
+    },
+    illustration: (
+      <Image
+        quality={100}
+        width={568}
+        height={360}
+        className="w-full h-auto"
+        src="/images/ensnode-developer.png"
+        alt="hero"
+      />
+    ),
+    buttonLabel: "Learn more",
+    buttonUrl: "https://ensnode.io",
+    sectionId: "ens-node",
+  },
+  {
+    title: "NameGuard",
+    subtitle:
+      "Provide a safer environment for ENS names in your Web3 app, eliminate hidden risks for your users, and encourage optimal use of ENS.",
+    label: {
+      title: "Protect the ENS community",
+      icon: <ShieldCheckIcon className="h-5 w-5 text-gray-500" />,
+    },
+    illustration: (
+      <Image
+        quality={100}
+        width={568}
+        height={360}
+        className="w-full h-auto"
+        src="/images/nameguard-protect.png"
+        alt="hero"
+      />
+    ),
+    buttonLabel: "Try it now",
+    buttonUrl: "https://www.nameguard.io/",
+    sectionId: "nameguard",
+  },
   {
     title: "NameKit",
     subtitle:
@@ -187,49 +235,5 @@ const products: ProductProps[] = [
     greenLabelText: "Proposal pending",
     buttonUrl: "/ens-referral-program",
     sectionId: "ens-referral-program",
-  },
-  {
-    title: "NameGuard",
-    subtitle:
-      "Provide a safer environment for ENS names in your Web3 app, eliminate hidden risks for your users, and encourage optimal use of ENS.",
-    label: {
-      title: "Protect the ENS community",
-      icon: <ShieldCheckIcon className="h-5 w-5 text-gray-500" />,
-    },
-    illustration: (
-      <Image
-        quality={100}
-        width={568}
-        height={360}
-        className="w-full h-auto"
-        src="/images/nameguard-protect.png"
-        alt="hero"
-      />
-    ),
-    buttonLabel: "Try it now",
-    buttonUrl: "https://www.nameguard.io/",
-    sectionId: "nameguard",
-  },
-  {
-    title: "ENSNode",
-    subtitle:
-      "Unlock new opportunities for ENS support in your web3 app with ENSNode, your gateway to a seamless fusion of richest onchain and offchain data from across the ENS ecosystem.",
-    label: {
-      title: "ENS Developer Tooling",
-      icon: <ChartBarSquareIcon className="h-5 w-5 text-gray-500" />,
-    },
-    illustration: (
-      <Image
-        quality={100}
-        width={568}
-        height={360}
-        className="w-full h-auto"
-        src="/images/ensnode-developer.png"
-        alt="hero"
-      />
-    ),
-    buttonLabel: "Learn more",
-    buttonUrl: "https://ensnode.io",
-    sectionId: "ens-node",
   },
 ];

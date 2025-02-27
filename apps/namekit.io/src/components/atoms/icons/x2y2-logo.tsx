@@ -27,8 +27,8 @@ export const X2y2Logo = (props: SVGProps<SVGSVGElement>) => {
         fill="url(#paint1_linear_3975_29414)"
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M22.9738 16.0006C22.9738 16.979 22.781 17.9479 22.4066 18.8518C22.0322 19.7558 21.4834 20.5772 20.7915 21.269C20.0996 21.9609 19.2783 22.5097 18.3743 22.8841C17.4703 23.2586 16.5015 23.4513 15.523 23.4513C14.5446 23.4513 13.5757 23.2586 12.6717 22.8841C11.7678 22.5097 10.9464 21.9609 10.2545 21.269C9.56267 20.5772 9.01386 19.7558 8.63942 18.8518C8.26499 17.9479 8.07227 16.979 8.07227 16.0006C8.07227 14.0245 8.85725 12.1294 10.2545 10.7321C11.6518 9.33479 13.547 8.5498 15.523 8.5498C17.4991 8.5498 19.3942 9.33479 20.7915 10.7321C22.1888 12.1294 22.9738 14.0245 22.9738 16.0006ZM20.4902 16.0006C20.4902 17.3179 19.9669 18.5813 19.0353 19.5129C18.1038 20.4444 16.8404 20.9677 15.523 20.9677C14.2056 20.9677 12.9422 20.4444 12.0107 19.5129C11.0792 18.5813 10.5558 17.3179 10.5558 16.0006C10.5558 14.6832 11.0792 13.4198 12.0107 12.4882C12.9422 11.5567 14.2056 11.0334 15.523 11.0334C16.8404 11.0334 18.1038 11.5567 19.0353 12.4882C19.9669 13.4198 20.4902 14.6832 20.4902 16.0006Z"
         fill="url(#paint2_linear_3975_29414)"
       />
@@ -41,8 +41,8 @@ export const X2y2Logo = (props: SVGProps<SVGSVGElement>) => {
           y2="15.5715"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#00E0FF" />
-          <stop offset="1" stop-color="#562EC8" />
+          <stop stopColor="#00E0FF" />
+          <stop offset="1" stopColor="#562EC8" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_3975_29414"
@@ -52,8 +52,8 @@ export const X2y2Logo = (props: SVGProps<SVGSVGElement>) => {
           y2="15.5713"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#00E0FF" />
-          <stop offset="1" stop-color="#562EC8" />
+          <stop stopColor="#00E0FF" />
+          <stop offset="1" stopColor="#562EC8" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_3975_29414"
@@ -63,8 +63,8 @@ export const X2y2Logo = (props: SVGProps<SVGSVGElement>) => {
           y2="15.5721"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#00E0FF" />
-          <stop offset="1" stop-color="#562EC8" />
+          <stop stopColor="#00E0FF" />
+          <stop offset="1" stopColor="#562EC8" />
         </linearGradient>
       </defs>
     </svg>

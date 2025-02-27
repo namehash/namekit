@@ -1,9 +1,9 @@
 "use client";
 
-import { PreSectionText, SectionText, SectionTitle } from "../1 - atoms";
 import { Balancer } from "react-wrap-balancer";
 import Lottie from "lottie-react";
-import waveAnimation from "./../../public/animations/wave-animation.json";
+import waveAnimation from "./../../../public/animations/wave-animation.json";
+import { PreSectionText, SectionText, SectionTitle } from "@/components/atoms";
 
 export const IntroducingNamekit = () => {
   return (
