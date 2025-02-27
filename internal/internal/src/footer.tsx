@@ -10,11 +10,10 @@ import {
 } from "./icons";
 
 const footerProducts = [
-  // ENSNode is commented out until ENSNode is ready for launch.
-  // {
-  //   name: "ENSNode",
-  //   href: "https://www.ensnode.io/",
-  // },
+  {
+    name: "ENSNode",
+    href: "https://www.ensnode.io/",
+  },
   {
     name: "NameAI",
     href: "https://nameai.io/",
