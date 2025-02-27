@@ -6,9 +6,9 @@ import {
 } from "@/components/2 - molecules";
 import { FinancialSupportSection } from "@/components/2 - molecules/financial-support-section";
 import { IntroducingNamekit } from "@/components/2 - molecules/introducing-namekit";
-import { OurSuportersSection } from "@/components/2 - molecules/our-supporters-section";
 import { TestimonialsSection } from "@/components/2 - molecules/testimonials-section";
 import { TheVisionSection } from "@/components/2 - molecules/the-vision-section";
+import { OurSuportersSection } from "@/components/3 - organisms/our-supporters/OurSuportersSection";
 
 export default function Page() {
   return (
