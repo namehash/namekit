@@ -1,11 +1,11 @@
 "use client";
 
 import { useQueryParams } from "@/components/use-query-params";
-import { DEFAULT_PAGE_NUMBER } from "@/components/collections/utils";
 import { ArrowRight, X } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { SearchField } from "./search-field";
+import { NameRelatedCollectionsTabs, DEFAULT_PAGE_NUMBER } from "./utils";
 
 interface SearchFieldWithUrlProps {
   onSearch?: (value: string) => void;
@@ -13,26 +13,33 @@ interface SearchFieldWithUrlProps {
 
 export const SearchFieldWithUrl = ({ onSearch }: SearchFieldWithUrlProps) => {
   const { params, setParams } = useQueryParams();
+  const pathname = usePathname();
   const router = useRouter();
 
-  const handleSearch = (value: string) => {
+  const handleSearch = (value: string, submission = false) => {
     setParams({
       ...params,
       collectionsSearch: {
         ...params.collectionsSearch,
         search: value,
-        page: DEFAULT_PAGE_NUMBER,
+        page: {
+          [NameRelatedCollectionsTabs.ByConcept]: DEFAULT_PAGE_NUMBER,
+          [NameRelatedCollectionsTabs.ByMembership]: DEFAULT_PAGE_NUMBER,
+        },
       },
     });
     onSearch?.(value);
+
+    if (submission && pathname !== "/") {
+      goToCollections();
+    }
   };
 
   const goToCollections = () => {
     router.push(
-      `/collections?${new URLSearchParams({
+      `/?${new URLSearchParams({
         tld: `suffix_${params.tld.suffix}`,
-        nameDetails: `page_${params.nameDetails.page}.activeTab_${params.nameDetails.activeTab}.orderBy_${params.nameDetails.orderBy}`,
-        collectionsSearch: `search_${params.collectionsSearch.search}.page_${params.collectionsSearch.page}.orderBy_${params.collectionsSearch.orderBy}.exactMatch_${params.collectionsSearch.exactMatch}`,
+        collectionsSearch: `search_${params.collectionsSearch.search}`,
       }).toString()}`,
     );
   };
@@ -42,14 +49,14 @@ export const SearchFieldWithUrl = ({ onSearch }: SearchFieldWithUrlProps) => {
       search={params.collectionsSearch.search}
       onSearch={handleSearch}
     >
-      {params.collectionsSearch.search && (
+      {params.collectionsSearch.search ? (
         <Button
           onClick={() => handleSearch("")}
           className="bg-white hover:bg-transparent text-black shadow-none p-0"
         >
           <X className="h-4 w-4" />
         </Button>
-      )}
+      ) : null}
       <Button
         onClick={goToCollections}
         className="bg-white hover:bg-transparent text-black shadow-none p-0 ml-2"
