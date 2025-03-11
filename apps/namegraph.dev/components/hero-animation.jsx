@@ -87,7 +87,15 @@ export const ThreeJSAnimation = () => {
       this.p = 9;
       this.q = 14;
       this.redraw = () => {
-        if (cloud) scene.remove(cloud);
+        // Store the current rotation if cloud exists
+        let currentRotation = { x: 0, y: 0, z: 0 };
+        if (cloud) {
+          currentRotation.x = cloud.rotation.x;
+          currentRotation.y = cloud.rotation.y;
+          currentRotation.z = cloud.rotation.z;
+          scene.remove(cloud);
+        }
+        
         const geo = new THREE.TorusKnotGeometry(
           controls.radius, 
           controls.tube, 
@@ -119,6 +127,12 @@ export const ThreeJSAnimation = () => {
         };
 
         cloud = new THREE.Points(geo, material);
+        
+        // Apply the stored rotation to the new cloud
+        cloud.rotation.x = currentRotation.x;
+        cloud.rotation.y = currentRotation.y;
+        cloud.rotation.z = currentRotation.z;
+        
         scene.add(cloud);
       };
     };
@@ -138,8 +152,12 @@ export const ThreeJSAnimation = () => {
     const initialTube = controls.tube;        // 40
     const targetRadius = 1;                   // Final radius value
     const targetTube = 10;                    // Final tube value
+    const delayBeforeAnimation = 3000;        // 3 seconds delay before animation starts
     const automationDuration = 5000;          // 5 seconds in milliseconds
-    const automationStartTime = performance.now();
+    const automationStartTime = performance.now() + delayBeforeAnimation;
+
+    // Initialize the geometry with initial values
+    controls.redraw();
 
     // Add lighting
     const spotLight = new THREE.SpotLight(0xffffff);
@@ -149,21 +167,28 @@ export const ThreeJSAnimation = () => {
 
     // Animation render function
     const render = () => {
-      // Animate radius and tube in a linear fashion from their initial values to target values over 5 seconds.
-      const elapsed = performance.now() - automationStartTime;
-      if (elapsed < automationDuration) {
+      // Animate radius and tube after a 3-second delay
+      const currentTime = performance.now();
+      const elapsed = currentTime - automationStartTime;
+      
+      if (elapsed >= 0 && elapsed < automationDuration) {
+        // Use a smooth easing function (ease-in-out)
         const t = elapsed / automationDuration; // Normalized time from 0 to 1
+        const smoothT = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+        
         // Interpolate each value:
-        const newRadius = initialRadius * (1 - t) + targetRadius * t;
-        const newTube = initialTube * (1 - t) + targetTube * t;
-        if (Math.abs(newRadius - controls.radius) > 0.001 || Math.abs(newTube - controls.tube) > 0.001) {
+        const newRadius = initialRadius * (1 - smoothT) + targetRadius * smoothT;
+        const newTube = initialTube * (1 - smoothT) + targetTube * smoothT;
+        
+        // Only redraw if there's a significant change to reduce performance impact
+        if (Math.abs(controls.radius - newRadius) > 0.01 || Math.abs(controls.tube - newTube) > 0.01) {
           controls.radius = newRadius;
           controls.tube = newTube;
           controls.redraw();
         }
       }
       
-      // Optionally, you can add a slight rotation animation.
+      // Always rotate the cloud for continuous animation
       if (cloud) {
         cloud.rotation.x += 0.0001;
         cloud.rotation.z += 0.001;

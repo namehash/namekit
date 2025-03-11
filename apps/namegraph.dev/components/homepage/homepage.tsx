@@ -41,10 +41,16 @@ export const HomePage = () => {
       <div className="w-[100vw] h-[100vh] bg-black overflow-hidden relative flex items-center justify-center">
         <ThreeJSAnimation />
       </div>
-      <div className="absolute py-20 animate-longFadeIn flex flex-col items-center justify-between top-0 left-0 w-[100vw] h-[100vh] mt-[70px]">
-        <h1 className="text-white x-50 text-center not-italic font-bold text-4xl leading-10 sm:text-5xl sm:leading-[52px]">
-          LET THERE BE LIGHT
-        </h1>
+      <div className="absolute py-20 flex flex-col items-center justify-between top-0 left-0 w-[100vw] h-[100vh] mt-[70px]">
+        <div className="relative flex flex-col gap-2 w-full">
+          <h1 className="absolute top-0 left-1/2 -translate-x-1/2 text-white animate-fadeInFadeOut x-50 text-center not-italic font-bold text-4xl leading-10 sm:text-5xl sm:leading-[52px]">
+            From the infinite of possible names
+          </h1>
+          <h1 className="absolute top-0 left-1/2 -translate-x-1/2 text-white animate-longFadeIn x-50 text-center not-italic font-bold text-4xl leading-10 sm:text-5xl sm:leading-[52px]">
+            Collect all the ENS names you love
+          </h1>
+        </div>
+
         <div className="z-20 bottom-20 landscape:bottom-0 tall:landscape:bottom-0">
           <IconButton
             variant="secondary"
@@ -53,7 +59,13 @@ export const HomePage = () => {
             onClick={() => {
               const theVision = document.getElementById("namegraph-demo");
               if (theVision) {
-                theVision.scrollIntoView({ behavior: "smooth" });
+                const viewportHeight = window.innerHeight;
+                const elementHeight = theVision.getBoundingClientRect().height;
+                const offset = (viewportHeight - elementHeight) / 2;
+                window.scrollTo({
+                  top: theVision.offsetTop - offset,
+                  behavior: "smooth",
+                });
               }
             }}
           >
@@ -61,7 +73,7 @@ export const HomePage = () => {
           </IconButton>
         </div>
       </div>
-      <div className="container mx-auto py-16 px-4">
+      <div id="namegraph-demo" className="container mx-auto py-16 px-4">
         <div className="max-w-4xl flex flex-col mx-auto text-center">
           <div className="flex flex-col gap-2 w-full h-fit mb-4">
             <p className="text-center not-italic uppercase text-gray-500 text-xs tracking-[0.3px] font-medium">
