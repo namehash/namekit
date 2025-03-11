@@ -9,7 +9,6 @@ import { Analytics } from "@vercel/analytics/react";
 
 import { HeadlineBanner } from "@/components/1 - atoms";
 import { Header } from "@/components/2 - molecules/header";
-import { Footer } from "@/components/2 - molecules";
 
 import {
   baseUrl,
@@ -20,6 +19,7 @@ import {
   defaultMetaOpengraph,
   defaultMetaTwitter,
 } from "./shared-metadata";
+import { Footer } from "@namehash/internal";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -71,7 +71,7 @@ export default function RootLayout({
             {children}
           </div>
 
-          <Footer />
+          <Footer openResourcesInNewTab={false} />
         </div>
         <SpeedInsights />
         <Analytics />

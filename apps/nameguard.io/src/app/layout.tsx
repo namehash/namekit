@@ -9,7 +9,8 @@ import { NameGuardWrapper } from "@/components/molecules/NameGuardWrapper";
 import React from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Footer, Header } from "@/components/organisms";
+import { Header } from "@/components/organisms";
+import { Footer } from "@namehash/internal";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 
@@ -60,7 +61,7 @@ export default function RootLayout({
       <body className={inter.variable}>
         <Header />
         {children}
-        <Footer />
+        <Footer openResourcesInNewTab={true} />
         <Analytics />
         <SpeedInsights />
         <NameGuardWrapper />

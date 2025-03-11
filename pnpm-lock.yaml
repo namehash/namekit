@@ -99,6 +99,9 @@ importers:
       '@namehash/ens-webfont':
         specifier: workspace:*
         version: link:../../packages/ens-webfont
+      '@namehash/internal':
+        specifier: workspace:*
+        version: link:../../internal/internal
       '@namehash/nameai':
         specifier: workspace:*
         version: link:../../packages/nameai-sdk
@@ -166,6 +169,9 @@ importers:
       '@namehash/ens-utils':
         specifier: workspace:*
         version: link:../../packages/ens-utils
+      '@namehash/internal':
+        specifier: workspace:*
+        version: link:../../internal/internal
       '@namehash/nameai':
         specifier: 1.1.4
         version: 1.1.4(bufferutil@4.0.9)(typescript@5.6.2)(utf-8-validate@5.0.10)(zod@3.24.1)
