@@ -33,6 +33,10 @@ const footerProducts = [
     href: "https://namekit.io",
   },
   {
+    name: "ENS Rainbow",
+    href: "https://ensrainbow.io",
+  },
+  {
     name: "ENS Referral Program",
     href: "https://namehashlabs.org/ens-referral-program",
   },
