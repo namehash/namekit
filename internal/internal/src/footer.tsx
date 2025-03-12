@@ -16,6 +16,10 @@ const footerProducts = [
     href: "https://www.ensnode.io/",
   },
   {
+    name: "ENSRainbow",
+    href: "https://ensrainbow.io",
+  },
+  {
     name: "NameAI",
     href: "https://nameai.io/",
   },
@@ -31,10 +35,6 @@ const footerProducts = [
   {
     name: "NameKit",
     href: "https://namekit.io",
-  },
-  {
-    name: "ENSRainbow",
-    href: "https://ensrainbow.io",
   },
   {
     name: "ENS Referral Program",
