@@ -32,6 +32,11 @@ export function getRandomProfiles(
     return [];
   }
 
+  // If we have fewer or equal profiles than maxCount, return them in original order
+  if (validProfiles.length <= maxCount) {
+    return validProfiles;
+  }
+
   // Create a more reliable seed from the title
   const seed = title
     .split("")
