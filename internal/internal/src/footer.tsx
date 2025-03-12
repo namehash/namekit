@@ -33,7 +33,7 @@ const footerProducts = [
     href: "https://namekit.io",
   },
   {
-    name: "ENS Rainbow",
+    name: "ENSRainbow",
     href: "https://ensrainbow.io",
   },
   {
