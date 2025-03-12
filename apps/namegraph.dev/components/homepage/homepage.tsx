@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { WritersBlockPills } from "@/components/utils/writers-block-pills";
 import { writersBlockSuggestions } from "@/lib/writers-block-suggestions";
 import { ChevronDown } from "lucide-react";
+import Balancer from "react-wrap-balancer";
 
 import {
   sampleWritersBlockSuggestions,
@@ -44,10 +45,10 @@ export const HomePage = () => {
       <div className="absolute py-20 flex flex-col items-center justify-between top-0 left-0 w-[100vw] h-[100vh] mt-[70px]">
         <div className="relative flex flex-col gap-2 w-full">
           <h1 className="absolute top-0 left-1/2 -translate-x-1/2 text-white animate-fadeInFadeOut x-50 text-center not-italic font-bold text-4xl leading-10 sm:text-5xl sm:leading-[52px]">
-            From the infinite of possible names
+            <Balancer>From the infinite of possible names</Balancer>
           </h1>
           <h1 className="absolute top-0 left-1/2 -translate-x-1/2 text-white animate-longFadeIn x-50 text-center not-italic font-bold text-4xl leading-10 sm:text-5xl sm:leading-[52px]">
-            Collect all the ENS names you love
+            <Balancer>Collect all the ENS names you love</Balancer>
           </h1>
         </div>
 
