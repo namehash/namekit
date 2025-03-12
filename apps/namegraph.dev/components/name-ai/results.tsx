@@ -1,5 +1,4 @@
 import { Indicator } from "./indicator";
-import { ProbabilityHeader } from "./skeleton";
 
 export function TokenAnalysisResults({ analysis }: any) {
   const topTokenization = analysis?.top_tokenization || [];
@@ -8,8 +7,7 @@ export function TokenAnalysisResults({ analysis }: any) {
     <div className="space-y-6">
       <div>
         <div className="flex justify-between items-center mb-3">
-          <h3 className="text-lg font-semibold">Recommended Tokenization</h3>
-          <ProbabilityHeader />
+          <h3 className="text-lg font-semibold">NameAI Tokenization</h3>
         </div>
 
         <div className="bg-white flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm h-12">

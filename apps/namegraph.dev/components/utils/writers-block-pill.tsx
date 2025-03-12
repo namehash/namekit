@@ -19,7 +19,7 @@ export const WritersBlockPill = ({
     <a
       onClick={(e) => {
         e.preventDefault();
-        router.push(`/${suggestion.collectionId}`);
+        router.push(`/collections/${suggestion.collectionId}`);
       }}
       className="truncate hover:cursor-pointer hover:bg-gray-100 hover:transition ens-webfont relative min-w-[180px] min-h-[48px] bg-white border py-1.5 px-5 mb-2 whitespace-nowrap text-sm font-medium leading-5 transition rounded-xl focus-visible:outline-black border-gray-200"
     >

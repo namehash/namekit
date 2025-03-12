@@ -3,8 +3,7 @@ export function TokenAnalysisResultsSkeleton() {
     <div className="space-y-6">
       <div>
         <div className="flex justify-between items-center mb-3">
-          <h3 className="text-lg font-semibold">Recommended Tokenization</h3>
-          <ProbabilityHeader />
+          <h3 className="text-lg font-semibold">NameAI Tokenization</h3>
         </div>
         <div className="bg-white flex items-center px-3 py-1.5 border border-gray-300 rounded mb-3 shadow-sm h-12">
           <div className="animate-pulse flex space-between items-center w-full">
@@ -21,10 +20,3 @@ export function TokenAnalysisResultsSkeleton() {
   );
 }
 
-export function ProbabilityHeader() {
-  return (
-    <span className="text-gray-500 text-xs uppercase select-none">
-      Probability
-    </span>
-  );
-}

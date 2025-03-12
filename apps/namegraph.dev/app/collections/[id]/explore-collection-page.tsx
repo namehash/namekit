@@ -419,16 +419,16 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
               </div>
 
               <div className="w-full flex flex-col space-y-8">
-                <div className="border rounded-md border-gray-200 w-full h-fit">
+                <div className="rounded-md w-full h-fit">
                   <h2 className="flex items-center text-lg font-semibold h-[47px] px-5 border-b border-gray-200">
                     Related collections
                   </h2>
-                  <div className="px-5">
+                  <div className="px-5 pt-3 space-y-3">
                     {loading.collection ? (
-                      <div className="pb-[18px] space-y-3 overflow-hidden">
+                      <div className="pb-[18px] space-y-7 overflow-hidden">
                         <CollectionsCardsSkeleton
                           number={3}
-                          className="space-y-3"
+                          className="space-y-7"
                         />
                       </div>
                     ) : collectionState.relatedCollections?.related_collections
@@ -447,16 +447,16 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                   </div>
                 </div>
 
-                <div className="border rounded-md border-gray-200 w-full h-fit">
+                <div className="rounded-md w-full h-fit">
                   <h2 className="flex items-center text-lg font-semibold h-[47px] px-5 border-b border-gray-200">
                     Other collections
                   </h2>
-                  <div className="px-5">
+                  <div className="px-5 pt-3 space-y-3">
                     {loading.collection ? (
-                      <div className="pb-[18px] space-y-3 overflow-hidden">
+                      <div className="pb-[18px] space-y-7 overflow-hidden">
                         <CollectionsCardsSkeleton
                           number={3}
-                          className="space-y-3"
+                          className="space-y-7"
                         />
                       </div>
                     ) : collectionState.relatedCollections?.other_collections
