@@ -1,4 +1,5 @@
 import { Link } from "@namehash/namekit-react";
+import NextLink from "next/link";
 import {
   EmailIcon,
   FarcasterIcon,
@@ -10,11 +11,10 @@ import {
 } from "./icons";
 
 const footerProducts = [
-  // ENSNode is commented out until ENSNode is ready for launch.
-  // {
-  //   name: "ENSNode",
-  //   href: "https://www.ensnode.io/",
-  // },
+  {
+    name: "ENSNode",
+    href: "https://www.ensnode.io/",
+  },
   {
     name: "NameAI",
     href: "https://nameai.io/",
@@ -91,15 +91,18 @@ export const Footer = ({
                 {footerProducts.map((product) => {
                   return (
                     <li key={product.name} className="my-2">
-                      <Link
-                        target={
-                          product.href.startsWith("/") ? "_self" : "_blank"
-                        }
-                        href={product.href}
-                        variant="secondary"
-                        size="small"
-                      >
-                        {product.name}
+                      <Link asChild variant="secondary" size="small">
+                        <NextLink
+                          target={
+                            new URL(product.href).host === "namehashlabs.org" &&
+                            !openResourcesInNewTab
+                              ? "_self"
+                              : "_blank"
+                          }
+                          href={product.href}
+                        >
+                          {product.name}
+                        </NextLink>
                       </Link>
                     </li>
                   );
@@ -114,12 +117,16 @@ export const Footer = ({
                     <li key={resource.name} className="my-2">
                       <Link
                         key={resource.name}
-                        target={openResourcesInNewTab ? "_blank" : "_self"}
+                        asChild
                         variant="secondary"
                         size="small"
-                        href={resource.href}
                       >
-                        {resource.name}
+                        <NextLink
+                          href={resource.href}
+                          target={openResourcesInNewTab ? "_blank" : "_self"}
+                        >
+                          {resource.name}
+                        </NextLink>
                       </Link>
                     </li>
                   );

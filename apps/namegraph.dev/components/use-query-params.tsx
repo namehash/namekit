@@ -3,15 +3,15 @@
 import { createContext, useContext, useCallback, ReactNode } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { NameGraphSortOrderOptions } from "@namehash/namegraph-sdk/utils";
-import { Tlds } from "./collections/utils";
-import { NameRelatedCollectionsTabs } from "@/app/name/[name]/name-details-page";
+import { Tlds } from "./collections/tld";
+import { NameRelatedCollectionsTabs } from "./collections/utils";
 
-interface QueryParams {
+export interface QueryParams {
   collectionsSearch: {
     search: string;
-    page: number;
     orderBy: NameGraphSortOrderOptions;
-    exactMatch: boolean;
+    tab: NameRelatedCollectionsTabs;
+    page?: Record<NameRelatedCollectionsTabs, number | undefined>;
   };
   tld: {
     suffix?: Tlds;
@@ -21,10 +21,20 @@ interface QueryParams {
   };
   nameDetails: {
     page?: Record<NameRelatedCollectionsTabs, number | undefined>;
-    activeTab: NameRelatedCollectionsTabs;
+    tab: NameRelatedCollectionsTabs;
     orderBy: NameGraphSortOrderOptions;
   };
 }
+
+export const NameWithCurrentTld = ({
+  params,
+  name,
+}: {
+  params: QueryParams;
+  name: string;
+}): string => {
+  return `${name}${params.tld.suffix ? params.tld.suffix : ""}`;
+};
 
 interface QueryParamsContextType {
   params: QueryParams;
@@ -96,7 +106,7 @@ export function QueryParamsProvider({
         const [k, v] = part.split("_");
 
         if (k === "page") {
-          if (key === "nameDetails") {
+          if (key === "nameDetails" || key === "collectionsSearch") {
             const pageEntries = v.split("_").map((pair) => {
               const [subK, subV] = pair.split("-");
               const numValue = Number(subV);
@@ -128,6 +138,7 @@ export function QueryParamsProvider({
 
     searchParams.forEach((value, key) => {
       if (
+        key === "collectionDetails" ||
         key === "collectionsSearch" ||
         key === "tld" ||
         key === "nameDetails"
