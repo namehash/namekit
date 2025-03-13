@@ -5,8 +5,8 @@ import {
   TeamSection,
 } from "@/components/2 - molecules";
 import { FinancialSupportSection } from "@/components/2 - molecules/financial-support-section";
-import { OurSuportersSection } from "@/components/2 - molecules/our-supporters-section";
 import { TestimonialsSection } from "@/components/2 - molecules/testimonials-section";
+import { OurSuportersSection } from "@/components/3 - organisms/our-supporters/OurSuportersSection";
 
 export default function Page() {
   return (
