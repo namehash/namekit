@@ -16,6 +16,10 @@ const footerProducts = [
     href: "https://www.ensnode.io/",
   },
   {
+    name: "ENSRainbow",
+    href: "https://ensrainbow.io",
+  },
+  {
     name: "NameAI",
     href: "https://nameai.io/",
   },
