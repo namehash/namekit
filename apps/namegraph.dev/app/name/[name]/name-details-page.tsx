@@ -19,6 +19,7 @@ import { nameguard, NameGuardReport } from "@namehash/nameguard";
 import {
   DEFAULT_MAX_RELATED_COLLECTIONS,
   NameGraphCollection,
+  NameGraphGroupingCategory,
   NameGraphSortOrderOptions,
   NameGraphSuggestion,
 } from "@namehash/namegraph-sdk/utils";
@@ -48,11 +49,14 @@ import {
   DEFAULT_SORTING_ORDER,
 } from "@/components/providers";
 import {
+  ExternalLinkHosts,
   findCollectionsByMember,
   findCollectionsByString,
   FromNameGraphSortOrderToDropdownTextContent,
   getCollectionsForQuery,
+  getExternalLinkURLForName,
   getNameDetailsPageHref,
+  ZEROED_ADDRESS,
 } from "@/lib/utils";
 import { CollectionCard } from "@/components/collections/collection-card";
 import { CollectionsCardsSkeleton } from "@/components/collections/collections-grid-skeleton";
@@ -62,6 +66,8 @@ import Skeleton from "@/components/skeleton";
 import { analyzeLabel } from "@/components/name-ai/actions";
 import { Link } from "@namehash/namekit-react";
 import { NLPLabelAnalysis } from "@namehash/nameai";
+import { EnsOutlineIcon } from "@/components/nft-avatar/ens-outline-icon";
+import { EnsVisionIcon } from "@/components/name/vision-icon";
 
 interface CollectionsData {
   sort_order: NameGraphSortOrderOptions;
@@ -333,7 +339,15 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
       ]
     ) {
       getCollectionsForQuery(label, DEFAULT_MAX_RELATED_COLLECTIONS)
-        .then((res) => setOtherCategories(res.categories))
+        .then((res) =>
+          setOtherCategories(
+            res.categories.filter(
+              (category) =>
+                category.type !== NameGraphGroupingCategory.related &&
+                category.type !== NameGraphGroupingCategory.other,
+            ),
+          ),
+        )
         .catch((err) => {
           console.error(err);
           setOtherCategories([]);
@@ -410,9 +424,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
     if (!currentCollections?.related_collections.length) {
       return (
         <div className="w-full min-h-[200px] flex items-center justify-center">
-          <p className="text-sm text-gray-500">
-            No collections
-          </p>
+          <p className="text-sm text-gray-500">No collections</p>
         </div>
       );
     }
@@ -445,46 +457,50 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
     });
   }, []);
 
-  const [ensName, setEnsName] = useState<null | ENSName>(null)
+  const [ensName, setEnsName] = useState<null | ENSName>(null);
   useEffect(() => {
-    setEnsName(buildENSName(
-      NameWithCurrentTld({
-        name: label,
-        params,
-      }),
-    ))
-  }, [params.tld.suffix])
+    setEnsName(
+      buildENSName(
+        NameWithCurrentTld({
+          name: label,
+          params,
+        }),
+      ),
+    );
+  }, [params.tld.suffix]);
 
   return (
     <div className="max-w-7xl flex xl:px-6 pr-4 flex-col space-y-8 lg:space-y-0 lg:grid lg:gap-8 lg:grid-cols-[335px_minmax(335px,_1fr)] mx-auto py-8 w-full">
       {/* Left Column */}
       <div className="flex justify-start flex-col mx-8 lg:mx-6 xl:mx-0">
-          <div key={ensName?.name} className="mx-auto">
-            <NftAvatar
-              name={ensName}
-              size={AvatarSize.HUGE}
-              withLink={false}
-              is3d={true}
-            />
-          </div>
+        <div key={ensName?.name} className="mx-auto">
+          <NftAvatar
+            name={ensName}
+            size={AvatarSize.HUGE}
+            withLink={false}
+            is3d={true}
+          />
+        </div>
 
         <div className="mt-8 flex flex-col space-y-4 md:space-y-0 lg:space-y-6 md:flex-row lg:flex-col md:space-x-4 lg:space-x-0">
           {/* Profile Info */}
-          <div className="h-max py-6 border border-gray-200 rounded-md md:w-1/2 lg:w-auto">
-            <ProfileStats
-              addressOrName={NameWithCurrentTld({ name, params })}
-            />
-            <ProfileSocials
-              userAddress={address}
-              name={NameWithCurrentTld({ name, params })}
-              records={{
-                "org.telegram": telegramRecord || "",
-                "com.twitter": twitterRecord || "",
-                "com.github": githubRecord || "",
-                "com.discord": discordRecord || "",
-              }}
-            />
-          </div>
+          {!address || address === ZEROED_ADDRESS ? undefined : (
+            <div className="h-max py-6 border border-gray-200 rounded-md md:w-1/2 lg:w-auto">
+              <ProfileStats
+                addressOrName={NameWithCurrentTld({ name, params })}
+              />
+              <ProfileSocials
+                userAddress={address}
+                name={NameWithCurrentTld({ name, params })}
+                records={{
+                  "org.telegram": telegramRecord || "",
+                  "com.twitter": twitterRecord || "",
+                  "com.github": githubRecord || "",
+                  "com.discord": discordRecord || "",
+                }}
+              />
+            </div>
+          )}
 
           {/* NameGuard Summary */}
           <div className="w-full flex justify-center items-center border border-gray-200 rounded-md md:w-1/2 lg:w-auto">
@@ -500,7 +516,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
             </div>
           ) : labelAnalysis ? (
             <div className="mt-8">
-              <TokenAnalysisResults analysis={labelAnalysis} />
+              <TokenAnalysisResults label={label} analysis={labelAnalysis} />
             </div>
           ) : null}
         </div>
@@ -540,11 +556,11 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
         )}
       </div>
 
-      {/* Right Column - Collections */}
+      {/* Right Column */}
       <div className="mx-auto space-y-8 w-full">
         <div className="mx-auto p-6">
           {/* Title */}
-          <div className="flex space-x-4 mb-8">
+          <div className="w-full justify-between items-center flex space-x-4 mb-8">
             <div>
               <div className="text-3xl lg:text-5xl font-bold mb-4 break-all">
                 {label ? (
@@ -553,6 +569,22 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                   <Skeleton className="w-40 h-8" />
                 )}
               </div>
+            </div>
+            <div className="flex space-x-6 items-center">
+              {Object.keys(ExternalLinkHosts).map((host) => {
+                const URLForName = getExternalLinkURLForName(
+                  host as ExternalLinkHosts,
+                  NameWithCurrentTld({ name: label, params }),
+                );
+
+                if (!URLForName) return <></>;
+
+                return (
+                  <a key={host} target="_blank" href={URLForName}>
+                    {getIconForExternalLinkHost(host as ExternalLinkHosts)}
+                  </a>
+                );
+              })}
             </div>
           </div>
 
@@ -580,9 +612,9 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                               ? "By concept"
                               : "By membership"}
                             <span className="w-16 ml-3 border border-gray-400 rounded-full">
-                              {typeof (navigationConfig.totalItemsNumber?.[
+                              {typeof navigationConfig.totalItemsNumber?.[
                                 key as keyof typeof NameRelatedCollectionsTabs
-                              ]) === "undefined" ? (
+                              ] === "undefined" ? (
                                 <Skeleton className="mx-[1px] rounded-md w-[60px] h-4" />
                               ) : (
                                 navigationConfig.totalItemsNumber?.[
@@ -648,44 +680,44 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                             {navigationConfig.totalItemsNumber?.[
                               key as keyof typeof NameRelatedCollectionsTabs
                             ] &&
-                              !loading[
-                                key as keyof typeof NameRelatedCollectionsTabs
-                              ] ? (
-                                <div className="flex">
-                                  <Button
-                                    className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50 disabled:hover:bg-white"
-                                    disabled={isFirstPage(
+                            !loading[
+                              key as keyof typeof NameRelatedCollectionsTabs
+                            ] ? (
+                              <div className="flex">
+                                <Button
+                                  className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50 disabled:hover:bg-white"
+                                  disabled={isFirstPage(
+                                    key as keyof typeof NameRelatedCollectionsTabs,
+                                  )}
+                                  onClick={() =>
+                                    handlePageChange(
+                                      pageState[
+                                        key as keyof typeof NameRelatedCollectionsTabs
+                                      ] - 1,
                                       key as keyof typeof NameRelatedCollectionsTabs,
-                                    )}
-                                    onClick={() =>
-                                      handlePageChange(
-                                        pageState[
-                                          key as keyof typeof NameRelatedCollectionsTabs
-                                        ] - 1,
-                                        key as keyof typeof NameRelatedCollectionsTabs,
-                                      )
-                                    }
-                                  >
-                                    <ChevronLeft className="w-6 h-6 text-black" />
-                                  </Button>
-                                  <Button
-                                    className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50"
-                                    disabled={isLastPage(
+                                    )
+                                  }
+                                >
+                                  <ChevronLeft className="w-6 h-6 text-black" />
+                                </Button>
+                                <Button
+                                  className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50"
+                                  disabled={isLastPage(
+                                    key as keyof typeof NameRelatedCollectionsTabs,
+                                  )}
+                                  onClick={() =>
+                                    handlePageChange(
+                                      pageState[
+                                        key as keyof typeof NameRelatedCollectionsTabs
+                                      ] + 1,
                                       key as keyof typeof NameRelatedCollectionsTabs,
-                                    )}
-                                    onClick={() =>
-                                      handlePageChange(
-                                        pageState[
-                                          key as keyof typeof NameRelatedCollectionsTabs
-                                        ] + 1,
-                                        key as keyof typeof NameRelatedCollectionsTabs,
-                                      )
-                                    }
-                                  >
-                                    <ChevronRight className="w-6 h-6 text-black" />
-                                  </Button>
-                                </div>
-                              ) : null}
+                                    )
+                                  }
+                                >
+                                  <ChevronRight className="w-6 h-6 text-black" />
+                                </Button>
+                              </div>
+                            ) : null}
                           </div>
                         </div>
 
@@ -701,7 +733,9 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                       {navigationConfig.totalItemsNumber?.[
                         key as keyof typeof NameRelatedCollectionsTabs
                       ] &&
-                      !loading[key as keyof typeof NameRelatedCollectionsTabs] ? (
+                      !loading[
+                        key as keyof typeof NameRelatedCollectionsTabs
+                      ] ? (
                         <div className="flex items-center justify-between border border-gray-200 border-l-0 border-r-0 border-b-0 mt-3 p-3">
                           <div className="text-sm text-gray-500 mr-2.5">
                             {getNavigationTextGuide(
@@ -756,6 +790,17 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
       </div>
     </div>
   );
+};
+
+const getIconForExternalLinkHost = (host: ExternalLinkHosts): JSX.Element => {
+  switch (host) {
+    case ExternalLinkHosts.ENSDomains:
+      return <EnsOutlineIcon className="w-8 h-8 hover:scale-110 transition" />;
+    case ExternalLinkHosts.Vision:
+      return <EnsVisionIcon className="w-16 h-16 hover:scale-110 transition" />;
+    default:
+      return <></>;
+  }
 };
 
 export default NameDetailsPage;

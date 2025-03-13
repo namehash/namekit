@@ -31,8 +31,8 @@ export const SearchField = ({
           debounceTimeout={300}
           placeholder="Type something"
           onChange={(e) => onSearch(e.target.value, false)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && inputRef.current) {
+          onKeyDown={() => {
+            if (inputRef.current) {
               onSearch((inputRef.current as HTMLInputElement).value, true);
             }
           }}

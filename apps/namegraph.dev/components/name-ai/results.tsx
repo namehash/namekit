@@ -1,16 +1,29 @@
+import { NLPLabelAnalysis } from "@namehash/nameai";
 import { Indicator } from "./indicator";
+import { Link } from "@namehash/namekit-react";
 
-export function TokenAnalysisResults({ analysis }: any) {
+export function TokenAnalysisResults({
+  analysis,
+  label,
+}: {
+  analysis: NLPLabelAnalysis;
+  label: string;
+}) {
   const topTokenization = analysis?.top_tokenization || [];
 
   return (
     <div className="space-y-6">
-      <div>
+      <div className="flex flex-col p-3 pb-0 border border-gray-200 rounded">
         <div className="flex justify-between items-center mb-3">
-          <h3 className="text-lg font-semibold">NameAI Tokenization</h3>
+          <Link
+            href={`https://www.nameai.io/tokenization?label=${label}`}
+            className="!text-lg font-semibold"
+            target="_blank"
+          >
+            NameAI Tokenization
+          </Link>
         </div>
-
-        <div className="bg-white flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm h-12">
+        <div className="bg-white flex items-center mb-3 h-12">
           {topTokenization.length > 0 ? (
             topTokenization.map((token: any, index: any) => (
               <span
