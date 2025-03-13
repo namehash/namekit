@@ -9,6 +9,7 @@ import { Profile } from "@/data/ensProfiles";
 import { useId } from "react";
 import cc from "classcat";
 import { Tooltip } from "@namehash/namekit-react/client";
+import { EfpLogo } from "../1 - atoms/icons/efp-logo";
 
 interface AvatarWithTooltipProps {
   className?: string;
@@ -220,6 +221,20 @@ export const AvatarWithTooltip = ({
                 aria-label={"Twitter profile"}
               >
                 <TwitterIcon className="fill-current text-gray-400 hover:text-white transition-color duration-200" />
+              </a>
+            )}
+
+            {profile.address && (
+              <a
+                href={`https://efp.app/${profile.address}`}
+                target="_blank"
+                aria-label={"EFP profile"}
+                className="transition-all duration-300 hover:brightness-100 brightness-75 hover:filter-none grayscale"
+              >
+                <EfpLogo
+                  color="gray"
+                  className="w-5 h-5 fill-current text-gray-400 hover:text-white transition-color duration-200"
+                />
               </a>
             )}
           </div>
