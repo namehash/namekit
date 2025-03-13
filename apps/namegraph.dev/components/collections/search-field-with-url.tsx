@@ -1,7 +1,7 @@
 "use client";
 
 import { useQueryParams } from "@/components/use-query-params";
-import { ArrowRight, X } from "lucide-react";
+import { X } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { SearchField } from "./search-field";
@@ -16,7 +16,7 @@ export const SearchFieldWithUrl = ({ onSearch }: SearchFieldWithUrlProps) => {
   const pathname = usePathname();
   const router = useRouter();
 
-  const handleSearch = (value: string, submission = false) => {
+  const handleSearch = (value: string) => {
     setParams({
       ...params,
       collectionsSearch: {
@@ -30,16 +30,16 @@ export const SearchFieldWithUrl = ({ onSearch }: SearchFieldWithUrlProps) => {
     });
     onSearch?.(value);
 
-    if (submission && pathname !== "/") {
-      goToCollections();
+    if (pathname !== "/") {
+      goToCollections(value);
     }
   };
 
-  const goToCollections = () => {
+  const goToCollections = (value = "") => {
     router.push(
       `/?${new URLSearchParams({
         tld: `suffix_${params.tld.suffix}`,
-        collectionsSearch: `search_${params.collectionsSearch.search}`,
+        collectionsSearch: `search_${params.collectionsSearch.search || value}`,
       }).toString()}`,
     );
   };
@@ -57,12 +57,6 @@ export const SearchFieldWithUrl = ({ onSearch }: SearchFieldWithUrlProps) => {
           <X className="h-4 w-4" />
         </Button>
       ) : null}
-      <Button
-        onClick={goToCollections}
-        className="bg-white hover:bg-transparent text-black shadow-none p-0 ml-2"
-      >
-        <ArrowRight className="h-4 w-4" />
-      </Button>
     </SearchField>
   );
 };
