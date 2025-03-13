@@ -30,7 +30,7 @@ export default function RootLayout({
       <Providers>
         <body className={inter.className}>
           <div className="min-h-screen flex flex-col">
-            <header className="sticky bg-white top-0 w-full z-50 border-b border-gray-300 h-[56px] py-[9px] sm:h-[70px] sm:py-4 select-none">
+            <header className="sticky bg-white top-0 w-full z-50 border-b border-gray-300 h-[56px] py-[9px] sm:h-[70px] sm:py-4 select-none max-w-[100vw] overflow-hidden">
               <div className="max-w-7xl mx-auto items-center justify-between flex flex-row px-6">
                 <div className="flex flex-row justify-between items-center">
                   <div className="flex flex-row justify-between items-center gap-1 cursor-pointer flex-shrink-0 pr-2">
