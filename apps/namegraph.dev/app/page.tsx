@@ -281,7 +281,7 @@ export default function ExploreCollectionsPage() {
     tab: keyof typeof NameRelatedCollectionsTabs,
   ) => {
     if (!navigationConfig.totalItemsNumber?.[tab]) {
-      return "No name suggestions found";
+      return "No collections";
     }
 
     const currentPage = pageState[tab];
@@ -293,7 +293,7 @@ export default function ExploreCollectionsPage() {
       totalItemsNumber = displayableTotalItems;
     }
 
-    if (!totalItemsNumber) return "No name suggestions found";
+    if (!totalItemsNumber) return "No collections";
 
     const startItem = Math.min(
       (currentPage - 1) * navigationConfig.itemsPerPage + 1,
@@ -304,7 +304,7 @@ export default function ExploreCollectionsPage() {
       totalItemsNumber,
     );
 
-    return `${startItem}-${endItem} of ${displayableTotalItems} name suggestions`;
+    return `${startItem}-${endItem} of ${displayableTotalItems} collections`;
   };
 
   const renderCollectionsContent = (
@@ -327,7 +327,7 @@ export default function ExploreCollectionsPage() {
       return (
         <div className="w-full min-h-[200px] flex items-center justify-center">
           <p className="text-sm text-gray-500">
-            No collections found for the current page
+            No collections
           </p>
         </div>
       );
@@ -442,9 +442,9 @@ export default function ExploreCollectionsPage() {
                       ? "By concept"
                       : "By membership"}
                     <span className="w-16 ml-3 border border-gray-400 rounded-full">
-                      {!navigationConfig.totalItemsNumber?.[
+                      {typeof (navigationConfig.totalItemsNumber?.[
                         key as keyof typeof NameRelatedCollectionsTabs
-                      ] ? (
+                      ]) === "undefined" ? (
                         <Skeleton className="mx-[1px] rounded-md w-[60px] h-4" />
                       ) : navigationConfig.totalItemsNumber?.[
                           key as keyof typeof NameRelatedCollectionsTabs
@@ -469,7 +469,7 @@ export default function ExploreCollectionsPage() {
                   handleOrderBy(value as NameGraphSortOrderOptions)
                 }
               >
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-[120px]">
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent>
@@ -494,7 +494,7 @@ export default function ExploreCollectionsPage() {
                 value={key}
                 className="w-full min-h-[400px]"
               >
-                <div className="w-full h-full flex flex-col space-y-4 p-3 rounded-xl border border-gray-200">
+                <div className="w-full h-full flex flex-col space-y-4 p-3 rounded-xl">
                   <div className="max-w-[756px] w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5">
                     <div className="flex items-center">
                       <div className="text-lg font-semibold mr-2.5">

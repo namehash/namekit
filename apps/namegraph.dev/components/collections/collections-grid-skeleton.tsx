@@ -15,7 +15,7 @@ export const CollectionsGridSkeleton = () => {
             </div>
           </div>
           <div className="mt-3 md:mt-0 xl:mr-[68px]">
-            <Skeleton className="w-[180px] h-9" />
+            <Skeleton className="w-[120px] h-9" />
           </div>
         </div>
         <div className="flex flex-col space-y-7">
@@ -57,12 +57,12 @@ export const CollectionsCardsSkeleton = ({
 const CollectionCardSkeleton = () => {
   return (
     <div className="flex h-[86px] py-3">
-      <div>
+      <div className="ml-3">
         <Skeleton className="w-[73px] h-[73px]" />
       </div>
       <div className="w-full flex flex-col justify-start space-y-2 ml-[18px] items-start">
         <Skeleton className="w-[100px] md:w-[200px] h-4 mr-auto" />
-        <Skeleton className="w-[180px] md:w-[320px] h-3 mr-auto" />
+        <Skeleton className="w-[120px] md:w-[320px] h-3 mr-auto" />
         <div className="flex gap-2 relative">
           {[...Array(8).keys()].map((collection) => {
             return (

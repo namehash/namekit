@@ -238,9 +238,9 @@ export const FromNameGraphSortOrderToDropdownTextContent: Record<
   NameGraphSortOrderOptions,
   string
 > = {
-  [NameGraphSortOrderOptions.AI]: "AI with Learning to Rank",
-  [NameGraphSortOrderOptions.AZ]: "A-Z (asc)",
-  [NameGraphSortOrderOptions.ZA]: "Z-A (desc)",
+  [NameGraphSortOrderOptions.AI]: "AI",
+  [NameGraphSortOrderOptions.AZ]: "Name: A-Z",
+  [NameGraphSortOrderOptions.ZA]: "Name: Z-A",
   [NameGraphSortOrderOptions.RELEVANCE]: "Relevance",
 };
 

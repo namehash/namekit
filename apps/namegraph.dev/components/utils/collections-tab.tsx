@@ -95,7 +95,7 @@ export const CollectionsTabContent = ({
                       )
                     ) : (
                       <p className="mt-8 text-sm ml-2">
-                        No collections found for the current page
+                        No collections
                       </p>
                     )}
                   </div>

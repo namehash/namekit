@@ -36,7 +36,7 @@ export const SearchField = ({
               onSearch((inputRef.current as HTMLInputElement).value, true);
             }
           }}
-          className="focus:outline-none w-full text-sm bg-white border border-gray-300 rounded-md py-2 px-4 pl-9 pr-20"
+          className="focus:outline-none w-full text-sm bg-white border border-gray-300 hover:shadow hover:transition transition rounded-md py-2 px-4 pl-9 pr-20"
         />
         <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center space-x-2">
           {children}

@@ -13,7 +13,7 @@ import {
 } from "ethereum-identity-kit";
 import { useEnsText } from "wagmi";
 import { ens_normalize } from "@adraffy/ens-normalize";
-import { buildENSName } from "@namehash/ens-utils";
+import { buildENSName, ENSName } from "@namehash/ens-utils";
 import useSWR from "swr";
 import { nameguard, NameGuardReport } from "@namehash/nameguard";
 import {
@@ -365,7 +365,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
     tab: keyof typeof NameRelatedCollectionsTabs,
   ) => {
     if (!navigationConfig.totalItemsNumber?.[tab]) {
-      return "No name suggestions found";
+      return "No collections";
     }
 
     const currentPage = pageState[tab];
@@ -377,7 +377,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
       totalItemsNumber = displayableTotalItems;
     }
 
-    if (!totalItemsNumber) return "No name suggestions found";
+    if (!totalItemsNumber) return "No collections";
 
     const startItem = Math.min(
       (currentPage - 1) * navigationConfig.itemsPerPage + 1,
@@ -388,7 +388,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
       totalItemsNumber,
     );
 
-    return `${startItem}-${endItem} of ${displayableTotalItems} name suggestions`;
+    return `${startItem}-${endItem} of ${displayableTotalItems} collections`;
   };
 
   const renderCollectionsContent = (
@@ -411,7 +411,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
       return (
         <div className="w-full min-h-[200px] flex items-center justify-center">
           <p className="text-sm text-gray-500">
-            No collections found for the current page
+            No collections
           </p>
         </div>
       );
@@ -445,27 +445,28 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
     });
   }, []);
 
+  const [ensName, setEnsName] = useState<null | ENSName>(null)
+  useEffect(() => {
+    setEnsName(buildENSName(
+      NameWithCurrentTld({
+        name: label,
+        params,
+      }),
+    ))
+  }, [params.tld.suffix])
+
   return (
-    <div className="max-w-7xl flex flex-col space-y-8 lg:space-y-0 lg:grid lg:gap-8 lg:grid-cols-[335px_minmax(335px,_1fr)] mx-auto py-8 w-full">
+    <div className="max-w-7xl flex xl:px-6 pr-4 flex-col space-y-8 lg:space-y-0 lg:grid lg:gap-8 lg:grid-cols-[335px_minmax(335px,_1fr)] mx-auto py-8 w-full">
       {/* Left Column */}
       <div className="flex justify-start flex-col mx-8 lg:mx-6 xl:mx-0">
-        <div className="mx-auto">
-          <NftAvatar
-            name={
-              label
-                ? buildENSName(
-                    NameWithCurrentTld({
-                      name: label,
-                      params,
-                    }),
-                  )
-                : null
-            }
-            size={AvatarSize.HUGE}
-            withLink={false}
-            is3d={true}
-          />
-        </div>
+          <div key={ensName?.name} className="mx-auto">
+            <NftAvatar
+              name={ensName}
+              size={AvatarSize.HUGE}
+              withLink={false}
+              is3d={true}
+            />
+          </div>
 
         <div className="mt-8 flex flex-col space-y-4 md:space-y-0 lg:space-y-6 md:flex-row lg:flex-col md:space-x-4 lg:space-x-0">
           {/* Profile Info */}
@@ -559,6 +560,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
           <div className="flex space-x-4">
             <div className="w-full">
               <div className="w-full space-y-4">
+                <h2 className="font-medium">Related Collections</h2>
                 <Tabs defaultValue={currentTab} value={currentTab}>
                   <div className="flex justify-between flex-col space-y-4 md:space-y-0 md:flex-row">
                     {/* Tab List */}
@@ -578,14 +580,14 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                               ? "By concept"
                               : "By membership"}
                             <span className="w-16 ml-3 border border-gray-400 rounded-full">
-                              {navigationConfig.totalItemsNumber?.[
+                              {typeof (navigationConfig.totalItemsNumber?.[
                                 key as keyof typeof NameRelatedCollectionsTabs
-                              ] ? (
+                              ]) === "undefined" ? (
+                                <Skeleton className="mx-[1px] rounded-md w-[60px] h-4" />
+                              ) : (
                                 navigationConfig.totalItemsNumber?.[
                                   key as keyof typeof NameRelatedCollectionsTabs
                                 ]
-                              ) : (
-                                <Skeleton className="mx-[1px] rounded-md w-[60px] h-4" />
                               )}
                             </span>
                           </TabsTrigger>
@@ -602,7 +604,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                         handleOrderBy(value as NameGraphSortOrderOptions)
                       }
                     >
-                      <SelectTrigger className="w-[180px]">
+                      <SelectTrigger className="w-[120px]">
                         <SelectValue placeholder="Sort by" />
                       </SelectTrigger>
                       <SelectContent>
@@ -628,7 +630,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                       value={key}
                       className="w-full min-h-[400px]"
                     >
-                      <div className="w-full h-full flex flex-col space-y-4 p-3 rounded-xl border border-gray-200">
+                      <div className="w-full h-full flex flex-col space-y-4 p-3 rounded-xl">
                         {/* Collection Count and Navigation */}
                         <div className="max-w-[756px] w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5">
                           <div className="flex items-center">
@@ -648,7 +650,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                             ] &&
                               !loading[
                                 key as keyof typeof NameRelatedCollectionsTabs
-                              ] && (
+                              ] ? (
                                 <div className="flex">
                                   <Button
                                     className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50 disabled:hover:bg-white"
@@ -683,7 +685,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                                     <ChevronRight className="w-6 h-6 text-black" />
                                   </Button>
                                 </div>
-                              )}
+                              ) : null}
                           </div>
                         </div>
 
@@ -694,6 +696,56 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                           )}
                         </div>
                       </div>
+
+                      {/* Bottom Pagination */}
+                      {navigationConfig.totalItemsNumber?.[
+                        key as keyof typeof NameRelatedCollectionsTabs
+                      ] &&
+                      !loading[key as keyof typeof NameRelatedCollectionsTabs] ? (
+                        <div className="flex items-center justify-between border border-gray-200 border-l-0 border-r-0 border-b-0 mt-3 p-3">
+                          <div className="text-sm text-gray-500 mr-2.5">
+                            {getNavigationTextGuide(
+                              key as keyof typeof NameRelatedCollectionsTabs,
+                            )}
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Button
+                              className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
+                              disabled={isFirstPage(
+                                key as keyof typeof NameRelatedCollectionsTabs,
+                              )}
+                              onClick={() =>
+                                handlePageChange(
+                                  pageState[
+                                    key as keyof typeof NameRelatedCollectionsTabs
+                                  ] - 1,
+                                  key as keyof typeof NameRelatedCollectionsTabs,
+                                )
+                              }
+                            >
+                              <ChevronLeft />
+                              Prev
+                            </Button>
+                            <Button
+                              className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
+                              disabled={isLastPage(
+                                key as keyof typeof NameRelatedCollectionsTabs,
+                              )}
+                              onClick={() =>
+                                handlePageChange(
+                                  pageState[
+                                    key as keyof typeof NameRelatedCollectionsTabs
+                                  ] + 1,
+                                  key as keyof typeof NameRelatedCollectionsTabs,
+                                )
+                              }
+                            >
+                              Next
+                              <ChevronRight />
+                            </Button>
+                          </div>
+                        </div>
+                      ) : null}
                     </TabsContent>
                   ))}
                 </Tabs>
