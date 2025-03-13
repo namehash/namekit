@@ -1,9 +1,6 @@
 import { NLPLabelAnalysis } from "@namehash/nameai";
 import { Indicator } from "./indicator";
-<<<<<<< HEAD
 import { Link } from "@namehash/namekit-react";
-=======
->>>>>>> origin/main
 
 export function TokenAnalysisResults({
   analysis,
