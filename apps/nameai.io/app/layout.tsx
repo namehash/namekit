@@ -19,6 +19,7 @@ import {
   defaultMetaOpengraph,
   defaultMetaTwitter,
 } from "./shared-metadata";
+import { NameaiLogo } from "@/components/nameai-logo";
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -73,8 +74,9 @@ export default function RootLayout({
                 <div className="flex flex-row justify-between items-center gap-1 cursor-pointer flex-shri0 pr-2">
                   <Link
                     href="/"
-                    className="text-black not-italic font-bold text-[22.683px] leading-[22.683px] tracking-[-0.907px] sm:text-[27.816px] sm:leading-[27.816px] sm:tracking-[-1.113px]"
+                    className="flex flex-row items-center gap-2 text-black not-italic font-bold text-[22.683px] leading-[22.683px] tracking-[-0.907px] sm:text-[27.816px] sm:leading-[27.816px] sm:tracking-[-1.113px]"
                   >
+                    <NameaiLogo className="w-6 h-6" />
                     NameAI
                   </Link>
                 </div>
