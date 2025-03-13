@@ -42,17 +42,18 @@ export const HomePage = () => {
       <div className="w-[100vw] h-[100vh] bg-black overflow-hidden relative flex items-center justify-center">
         <ThreeJSAnimation />
       </div>
-      <div className="absolute py-20 flex flex-col items-center justify-between top-0 left-0 w-[100vw] h-[100vh] mt-[70px]">
-        <div className="relative flex flex-col gap-2 w-full">
-          <h1 className="absolute top-0 left-1/2 -translate-x-1/2 text-white animate-fadeInFadeOut x-50 text-center not-italic font-bold text-4xl leading-10 sm:text-5xl sm:leading-[52px]">
+      <div className="absolute top-0 lg:top-1/2 left-1/2 lg:left-1/3 -translate-x-1/2 lg:-translate-y-1/2 flex flex-col w-full max-w-[500px] h-[300px]">
+        <div className="relative w-full h-full">
+          <h1 className="absolute w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white animate-fadeInFadeOut x-50 text-center not-italic font-bold text-4xl leading-10 sm:text-5xl sm:leading-[52px]">
             <Balancer>From the infinite of possible names</Balancer>
           </h1>
-          <h1 className="absolute top-0 left-1/2 -translate-x-1/2 text-white animate-longFadeIn x-50 text-center not-italic font-bold text-4xl leading-10 sm:text-5xl sm:leading-[52px]">
+          <h1 className="absolute w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white animate-longFadeIn x-50 text-center not-italic font-bold text-4xl leading-10 sm:text-5xl sm:leading-[52px]">
             <Balancer>Collect all the ENS names you love</Balancer>
           </h1>
         </div>
-
-        <div className="z-20 bottom-20 landscape:bottom-0 tall:landscape:bottom-0">
+      </div>
+      <div className="absolute py-20 flex flex-col items-center justify-between top-0 left-0 w-[100vw] h-[100vh] mt-[70px]">
+        <div className="z-20 flex flex-col items-center justify-end w-full h-full">
           <IconButton
             variant="secondary"
             className="!px-20 !rounded-full"

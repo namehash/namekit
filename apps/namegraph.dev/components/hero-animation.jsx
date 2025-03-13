@@ -18,7 +18,7 @@ export const ThreeJSAnimation = () => {
     camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.set(40, 0, -40);
     camera.lookAt(scene.position);
-    
+  
     renderer = new THREE.WebGLRenderer();
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setClearColor(new THREE.Color(0x000000)); // Background color
@@ -225,6 +225,6 @@ export const ThreeJSAnimation = () => {
     };
   }, []);
 
-  return <div className='animate-fadeIn absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' id="webgl" style={{ width: '100%', height: '100%' }} />;
-};
+  return <div className='lg:animate-fadeInAndMoveLeft animate-fadeIn absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2' id="webgl" style={{ width: '100%', height: '100%' }} />;
+}; 
 

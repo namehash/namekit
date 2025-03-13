@@ -44,6 +44,11 @@ const config: Config = {
           "95%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
+        moveLeft: {
+          "0%": { transform: "translate(-50%, -50%)" },
+          "70%": { transform: "translate(-50%, -50%)" },
+          "100%": { transform: "translate(-35%, -57%)" },
+        },
       },
     },
     animation: {
@@ -51,6 +56,8 @@ const config: Config = {
       longFadeOut: "longFadeOut 7s linear forwards",
       longFadeIn: "longFadeIn 10s linear forwards",
       fadeInFadeOut: "fadeInFadeOut 4s linear forwards",
+      fadeInAndMoveLeft:
+        "fadeIn 1s linear forwards, moveLeft 8s ease-in-out forwards",
     },
   },
   plugins: [require("tailwindcss-animate")],
