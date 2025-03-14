@@ -9,6 +9,8 @@ import { Profile } from "@/data/ensProfiles";
 import { useId } from "react";
 import cc from "classcat";
 import { Tooltip } from "@namehash/namekit-react/client";
+import { EfpLogo } from "../1 - atoms/icons/efp-logo";
+import { ProfileStats } from "ethereum-identity-kit";
 
 interface AvatarWithTooltipProps {
   className?: string;
@@ -98,6 +100,7 @@ export const AvatarWithTooltip = ({
       setBlockHoverInteraction(true);
     }
   }, [isAvatarScaled]);
+
   useEffect(() => {
     if (blockHoverInteraction) {
       setTimeout(() => {
@@ -222,7 +225,39 @@ export const AvatarWithTooltip = ({
                 <TwitterIcon className="fill-current text-gray-400 hover:text-white transition-color duration-200" />
               </a>
             )}
+
+            {profile.address && (
+              <a
+                href={`https://efp.app/${profile.address}`}
+                target="_blank"
+                aria-label={"EFP profile"}
+                className="transition-all duration-300 hover:brightness-100 brightness-75 hover:filter-none grayscale"
+              >
+                <EfpLogo
+                  color="gray"
+                  className="w-5 h-5 fill-current text-gray-400 hover:text-white transition-color duration-200"
+                />
+              </a>
+            )}
           </div>
+          <ProfileStats
+            addressOrName={profile.ensName}
+            statsStyle={{
+              color: "rgb(156 163 175)",
+              fontFamily: "var(--font-inter)",
+              fontWeight: "500",
+            }}
+            containerStyle={{
+              marginTop: "4px",
+              gap: "16px",
+              width: "100%",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "flex-start",
+              color: "#9CA3AF",
+            }}
+          />
+
           {profile.displayName && (
             <p className="text-sm font-normal">{profile.displayName}</p>
           )}
