@@ -1,9 +1,12 @@
+import { NameAILogo } from "./nameai-logo";
+
 export function TokenAnalysisResultsSkeleton() {
   return (
     <div className="space-y-6">
       <div>
         <div className="px-3 py-1.5 border border-gray-200 rounded">
-          <div className="flex justify-between items-center mb-3 mt-1.5">
+          <div className="flex justify-start space-x-2 items-center mb-3 mt-1.5">
+            <NameAILogo className="w-6 h-6" />
             <h3 className="text-lg font-semibold">NameAI Tokenization</h3>
           </div>
           <div className="bg-white flex items-center mb-3 h-12">

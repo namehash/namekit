@@ -1,6 +1,7 @@
 import { NLPLabelAnalysis } from "@namehash/nameai";
 import { Indicator } from "./indicator";
 import { Link } from "@namehash/namekit-react";
+import { NameAILogo } from "./nameai-logo";
 
 export function TokenAnalysisResults({
   analysis,
@@ -14,7 +15,8 @@ export function TokenAnalysisResults({
   return (
     <div className="space-y-6">
       <div className="flex flex-col p-3 pb-0 border border-gray-200 rounded">
-        <div className="flex justify-between items-center mb-3">
+        <div className="flex justify-start space-x-2 items-center mb-3">
+          <NameAILogo className="w-6 h-6" />
           <Link
             href={`https://www.nameai.io/tokenization?label=${label}`}
             className="!text-lg font-semibold"
