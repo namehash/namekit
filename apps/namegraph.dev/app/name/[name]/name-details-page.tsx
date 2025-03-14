@@ -472,7 +472,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
   return (
     <div className="max-w-7xl flex xl:px-6 pr-4 flex-col space-y-8 lg:space-y-0 lg:grid lg:gap-8 lg:grid-cols-[335px_minmax(335px,_1fr)] mx-auto py-8 w-full">
       {/* Left Column */}
-      <div className="flex justify-start flex-col mx-8 lg:mx-6 xl:mx-0">
+      <div className="lg:w-full flex justify-start flex-col mx-8 lg:mx-6 xl:mx-0">
         <div key={ensName?.name} className="mx-auto">
           <NftAvatar
             name={ensName}
