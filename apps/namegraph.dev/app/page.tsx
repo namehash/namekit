@@ -327,9 +327,7 @@ export default function ExploreCollectionsPage() {
     if (!currentCollections?.related_collections.length) {
       return (
         <div className="w-full min-h-[200px] flex items-center justify-center">
-          <p className="text-sm text-gray-500">
-            No collections
-          </p>
+          <p className="text-sm text-gray-500">No collections</p>
         </div>
       );
     }
@@ -443,9 +441,9 @@ export default function ExploreCollectionsPage() {
                       ? "By concept"
                       : "By membership"}
                     <span className="w-16 ml-3 border border-gray-400 rounded-full">
-                      {typeof (navigationConfig.totalItemsNumber?.[
+                      {typeof navigationConfig.totalItemsNumber?.[
                         key as keyof typeof NameRelatedCollectionsTabs
-                      ]) === "undefined" ? (
+                      ] === "undefined" ? (
                         <Skeleton className="mx-[1px] rounded-md w-[60px] h-4" />
                       ) : navigationConfig.totalItemsNumber?.[
                           key as keyof typeof NameRelatedCollectionsTabs
