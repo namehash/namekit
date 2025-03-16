@@ -5,6 +5,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import {
   useQueryParams,
   NameWithCurrentTld,
+  QueryParams,
 } from "@/components/use-query-params";
 import {
   ProfileStats,
@@ -19,6 +20,7 @@ import { nameguard, NameGuardReport } from "@namehash/nameguard";
 import {
   DEFAULT_MAX_RELATED_COLLECTIONS,
   NameGraphCollection,
+  NameGraphFetchTopCollectionMembersResponse,
   NameGraphGroupingCategory,
   NameGraphSortOrderOptions,
   NameGraphSuggestion,
@@ -116,9 +118,9 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
       },
     });
 
-  const [otherCategories, setOtherCategories] = useState<any[] | undefined>(
-    undefined,
-  );
+  const [otherCategories, setOtherCategories] = useState<
+    NameGraphFetchTopCollectionMembersResponse[] | undefined
+  >(undefined);
   const [loadingLabelAnalysis, setLoadingLabelAnalysis] = useState(true);
   const [labelAnalysis, setLabelAnalysis] = useState<
     NLPLabelAnalysis | undefined
@@ -470,9 +472,9 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
   }, [params.tld.suffix]);
 
   return (
-    <div className="max-w-7xl flex xl:px-6 pr-4 flex-col space-y-8 lg:space-y-0 lg:grid lg:gap-8 lg:grid-cols-[335px_minmax(335px,_1fr)] mx-auto py-8 w-full">
+    <div className="max-w-7xl flex flex-col space-y-8 mx-auto py-8 w-full lg:space-y-0 lg:grid lg:gap-8 lg:grid-cols-[335px_minmax(335px,_1fr)] xl:px-6">
       {/* Left Column */}
-      <div className="lg:w-full flex justify-start flex-col mx-8 lg:mx-6 xl:mx-0">
+      <div className="lg:w-full flex justify-start flex-col mx-6 xl:mx-0">
         <div key={ensName?.name} className="mx-auto">
           <NftAvatar
             name={ensName}
@@ -482,8 +484,13 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
           />
         </div>
 
-        <div className="mt-8 flex flex-col space-y-4 md:space-y-0 lg:space-y-6 md:flex-row lg:flex-col md:space-x-4 lg:space-x-0">
-          {/* Profile Info */}
+        {/* Label in mobile */}
+        <div className="mt-8 lg:hidden">
+          <LabelAndLinks label={label} params={params} />
+        </div>
+
+        <div className="mt-4 flex flex-col space-y-4 md:space-y-0 lg:space-y-6 md:flex-row lg:flex-col md:space-x-4 lg:space-x-0">
+          {/* Profile Info for both mobile and desktop */}
           {!address || address === ZEROED_ADDRESS ? undefined : (
             <div className="h-max py-6 border border-gray-200 rounded-md md:w-1/2 lg:w-auto">
               <ProfileStats
@@ -503,92 +510,39 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
           )}
 
           {/* NameGuard Summary */}
-          <div className="w-full flex justify-center items-center border border-gray-200 rounded-md md:w-1/2 lg:w-auto">
+          <div className="w-full lg:mt-4 flex-1 flex justify-center items-center border border-gray-200 rounded-md md:w-1/2 lg:w-auto">
             <NameGuardSummary nameGuardReport={nameguardReport} />
           </div>
         </div>
 
-        {/* Label Analysis */}
+        {/* Label Analysis for both mobile and desktop */}
         <div>
           {loadingLabelAnalysis ? (
-            <div className="mt-8">
+            <div className="mt-6">
               <TokenAnalysisResultsSkeleton />
             </div>
           ) : labelAnalysis ? (
-            <div className="mt-8">
+            <div className="mt-6">
               <TokenAnalysisResults label={label} analysis={labelAnalysis} />
             </div>
           ) : null}
         </div>
 
-        {/* Other Categories */}
-        {otherCategories && otherCategories.length > 0 && (
-          <div className="mx-auto w-full mt-12">
-            <div className="w-full rounded-lg border border-gray-200">
-              <p className="text-[18px] font-semibold px-5 py-2.5 border-b border-gray-200">
-                Explore other names
-              </p>
-              {otherCategories.map((collection) => (
-                <div key={collection.collection_id}>
-                  <p className="py-3 px-5 font-semibold text-sm text-gray-500">
-                    {collection.name}
-                  </p>
-                  <div className="flex flex-col">
-                    {collection.suggestions
-                      .slice(0, 3)
-                      .map((suggestion: NameGraphSuggestion) => (
-                        <Link
-                          key={suggestion.label}
-                          href={getNameDetailsPageHref(suggestion.label)}
-                          className="p-5 border-t border-gray-200 font-semibold text-base text-black"
-                        >
-                          {NameWithCurrentTld({
-                            name: suggestion.label,
-                            params,
-                          })}
-                        </Link>
-                      ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+        {/* Other Categories in desktop */}
+        <div className="hidden lg:block mt-6">
+          <OtherCategories otherCategories={otherCategories} params={params} />
+        </div>
       </div>
 
-      {/* Right Column */}
+      {/* Right Column in desktop */}
       <div className="mx-auto space-y-8 w-full">
         <div className="mx-auto p-6">
           {/* Title */}
-          <div className="w-full justify-between items-center flex space-x-4 mb-8">
-            <div>
-              <div className="text-3xl lg:text-5xl font-bold mb-4 break-all">
-                {label ? (
-                  <>{NameWithCurrentTld({ name: label, params })}</>
-                ) : (
-                  <Skeleton className="w-40 h-8" />
-                )}
-              </div>
-            </div>
-            <div className="flex space-x-6 items-center">
-              {Object.keys(ExternalLinkHosts).map((host) => {
-                const URLForName = getExternalLinkURLForName(
-                  host as ExternalLinkHosts,
-                  NameWithCurrentTld({ name: label, params }),
-                );
-
-                if (!URLForName) return <></>;
-
-                return (
-                  <a key={host} target="_blank" href={URLForName}>
-                    {getIconForExternalLinkHost(host as ExternalLinkHosts)}
-                  </a>
-                );
-              })}
-            </div>
+          <div className="hidden lg:block">
+            <LabelAndLinks label={label} params={params} />
           </div>
 
-          {/* Collections Tabs */}
+          {/* Collections Tabs for both mobile and desktop */}
           <div className="flex space-x-4">
             <div className="w-full">
               <div className="w-full space-y-4">
@@ -636,22 +590,27 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                         handleOrderBy(value as NameGraphSortOrderOptions)
                       }
                     >
-                      <SelectTrigger className="w-[120px]">
-                        <SelectValue placeholder="Sort by" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {Object.entries(
-                          FromNameGraphSortOrderToDropdownTextContent,
-                        ).map(([key]) => (
-                          <SelectItem key={key} value={key}>
-                            {
-                              FromNameGraphSortOrderToDropdownTextContent[
-                                key as NameGraphSortOrderOptions
-                              ]
-                            }
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
+                      <div className="flex space-x-3 items-center">
+                        <p className="font-regular text-sm text-gray-400">
+                          Sort by
+                        </p>
+                        <SelectTrigger className="w-[120px]">
+                          <SelectValue placeholder="Sort by" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {Object.entries(
+                            FromNameGraphSortOrderToDropdownTextContent,
+                          ).map(([key]) => (
+                            <SelectItem key={key} value={key}>
+                              {
+                                FromNameGraphSortOrderToDropdownTextContent[
+                                  key as NameGraphSortOrderOptions
+                                ]
+                              }
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </div>
                     </Select>
                   </div>
 
@@ -662,7 +621,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                       value={key}
                       className="w-full min-h-[400px]"
                     >
-                      <div className="w-full h-full flex flex-col space-y-4 p-3 rounded-xl">
+                      <div className="w-full h-full flex flex-col space-y-4 rounded-xl">
                         {/* Collection Count and Navigation */}
                         <div className="max-w-[756px] w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5">
                           <div className="flex items-center">
@@ -788,6 +747,11 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
           </div>
         </div>
       </div>
+
+      {/* Other categories in mobile */}
+      <div className="lg:hidden mx-6">
+        <OtherCategories otherCategories={otherCategories} params={params} />
+      </div>
     </div>
   );
 };
@@ -801,6 +765,89 @@ const getIconForExternalLinkHost = (host: ExternalLinkHosts): JSX.Element => {
     default:
       return <></>;
   }
+};
+
+const LabelAndLinks = ({
+  label,
+  params,
+}: {
+  label: string;
+  params: QueryParams;
+}) => {
+  return (
+    <div className="w-full justify-between items-center md:flex space-x-4 md:mb-8">
+      <div>
+        <div className="text-5xl font-bold md:mb-4 break-all">
+          {label ? (
+            <>{NameWithCurrentTld({ name: label, params })}</>
+          ) : (
+            <Skeleton className="w-40 h-8" />
+          )}
+        </div>
+      </div>
+      <div className="flex space-x-6 items-center">
+        {Object.keys(ExternalLinkHosts).map((host) => {
+          const URLForName = getExternalLinkURLForName(
+            host as ExternalLinkHosts,
+            NameWithCurrentTld({ name: label, params }),
+          );
+
+          if (!URLForName) return <></>;
+
+          return (
+            <a key={host} target="_blank" href={URLForName}>
+              {getIconForExternalLinkHost(host as ExternalLinkHosts)}
+            </a>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+
+const OtherCategories = ({
+  otherCategories,
+  params,
+}: {
+  otherCategories?: NameGraphFetchTopCollectionMembersResponse[];
+  params: QueryParams;
+}) => {
+  return (
+    <>
+      {otherCategories && otherCategories.length > 0 && (
+        <div className="mx-auto w-full">
+          <div className="w-full rounded-lg border border-gray-200">
+            <p className="text-[18px] font-semibold px-5 py-2.5 border-b border-gray-200">
+              Explore other names
+            </p>
+            {otherCategories.map((collection) => (
+              <div key={collection.collection_id}>
+                <p className="py-3 px-5 font-semibold text-sm text-gray-500">
+                  {collection.name}
+                </p>
+                <div className="flex flex-col">
+                  {collection.suggestions
+                    .slice(0, 3)
+                    .map((suggestion: NameGraphSuggestion) => (
+                      <Link
+                        key={suggestion.label}
+                        href={getNameDetailsPageHref(suggestion.label)}
+                        className="p-5 border-t border-gray-200 font-semibold text-base text-black"
+                      >
+                        {NameWithCurrentTld({
+                          name: suggestion.label,
+                          params,
+                        })}
+                      </Link>
+                    ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </>
+  );
 };
 
 export default NameDetailsPage;
