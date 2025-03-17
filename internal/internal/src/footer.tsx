@@ -190,12 +190,18 @@ export const Footer = ({
               by
             </span>
             <Link
+              href="https://namehashlabs.org/"
               variant="underline"
               size="small"
-              className="!text-black"
-              href="/"
+              asChild
             >
-              NameHash Labs
+              <NextLink
+                target={!openResourcesInNewTab ? "_self" : "_blank"}
+                className="!text-black"
+                href="https://namehashlabs.org/"
+              >
+                NameHash Labs
+              </NextLink>
             </Link>
           </div>
         </div>

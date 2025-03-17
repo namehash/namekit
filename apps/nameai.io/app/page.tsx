@@ -2,6 +2,7 @@ import { Button, Heading, Link, Text } from "@namehash/namekit-react";
 import { HeroStartCommand } from "@/components/HeroStartCommand";
 import { GithubIcon } from "@/components/github-icon";
 import VideoAsciiAnimation from "@/components/VideoAsciiAnimation";
+import Balancer from "react-wrap-balancer";
 
 export default function Page() {
   return (
@@ -20,7 +21,7 @@ export default function Page() {
             <div className="space-y-5 py-5 text-center bg-[radial-gradient(circle,white_80%,blue-500_90%,transparent_100%)]">
               <div className="space-y-2">
                 <Heading as="h1" className="text-black !text-6xl">
-                  Enable new ENS user experiences
+                  <Balancer>Enable magical ENS user experiences</Balancer>
                 </Heading>
                 <Text className="text-gray-400">What will you build?</Text>
               </div>

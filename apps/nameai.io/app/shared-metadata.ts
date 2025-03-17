@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const siteName = "NameAI";
-export const defaultMetaTitle = "NameAI - Enable new ENS user experiences";
+export const defaultMetaTitle = "NameAI - Enable magical ENS user experiences";
 export const defaultMetaDescription =
   "Discover the words that otherwise hidden in labels.";
 export const defaultMetaKeywords = [
