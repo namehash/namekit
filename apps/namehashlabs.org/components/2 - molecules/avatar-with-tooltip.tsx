@@ -10,7 +10,7 @@ import { useId } from "react";
 import cc from "classcat";
 import { Tooltip } from "@namehash/namekit-react/client";
 import { EfpLogo } from "../1 - atoms/icons/efp-logo";
-import { ProfileStats } from "ethereum-identity-kit";
+import { EfpProfileStats } from "./efp-profile-stats";
 
 interface AvatarWithTooltipProps {
   className?: string;
@@ -240,23 +240,8 @@ export const AvatarWithTooltip = ({
               </a>
             )}
           </div>
-          <ProfileStats
-            addressOrName={profile.ensName}
-            statsStyle={{
-              color: "rgb(156 163 175)",
-              fontFamily: "var(--font-inter)",
-              fontWeight: "500",
-            }}
-            containerStyle={{
-              marginTop: "4px",
-              gap: "16px",
-              width: "100%",
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "flex-start",
-              color: "#9CA3AF",
-            }}
-          />
+
+          {profile.address && <EfpProfileStats address={profile.address} />}
 
           {profile.displayName && (
             <p className="text-sm font-normal">{profile.displayName}</p>
