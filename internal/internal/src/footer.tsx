@@ -13,7 +13,7 @@ import {
 const footerProducts = [
   {
     name: "ENSNode",
-    href: "https://www.ensnode.io/",
+    href: "https://ensnode.io",
   },
   {
     name: "ENSRainbow",
