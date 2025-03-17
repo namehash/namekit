@@ -4,10 +4,7 @@
 import { useEffect } from "react";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "./ui/select";
 import { useQueryParams } from "./use-query-params";
-import {
-  availableTlds,
-  Tlds,
-} from "./collections/tld";
+import { availableTlds, Tlds } from "./collections/tld";
 
 export const DEFAULT_PREFFERED_TLD = availableTlds[Tlds.ETH];
 
@@ -45,13 +42,13 @@ export const TldSelect = () => {
 
       if (!params.tld.suffix) {
         /** 1 */
-          /** 1.1 */
-          setParams({
-            ...params,
-            tld: {
-              suffix: DEFAULT_PREFFERED_TLD as Tlds,
-            },
-          });
+        /** 1.1 */
+        setParams({
+          ...params,
+          tld: {
+            suffix: DEFAULT_PREFFERED_TLD as Tlds,
+          },
+        });
       }
     }
   };
@@ -61,7 +58,7 @@ export const TldSelect = () => {
   }, [params.tld.suffix]);
 
   return (
-    <div className="flex space-x-1 items-center w-[200px]">
+    <div className="flex space-x-1 items-center md:w-[200px]">
       <p className="text-sm min-w-[90px] hidden md:block">Parent name</p>
       <Select
         defaultValue={params.tld.suffix}

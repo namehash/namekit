@@ -1,16 +1,31 @@
+import { NLPLabelAnalysis } from "@namehash/nameai";
 import { Indicator } from "./indicator";
+import { NameAILogo } from "./nameai-logo";
+import Link from "next/link";
 
-export function TokenAnalysisResults({ analysis }: any) {
+export function TokenAnalysisResults({
+  analysis,
+  label,
+}: {
+  analysis: NLPLabelAnalysis;
+  label: string;
+}) {
   const topTokenization = analysis?.top_tokenization || [];
 
   return (
-    <div className="space-y-6">
-      <div>
-        <div className="flex justify-between items-center mb-3">
-          <h3 className="text-lg font-semibold">NameAI Tokenization</h3>
+    <div className="space-y-6 p-3 pb-0 border border-gray-200 rounded">
+      <div className="md:w-[80%] md:mx-auto lg:w-full flex flex-col">
+        <div className="flex justify-start space-x-2 items-center mb-3">
+          <NameAILogo className="w-6 h-6" />
+          <Link
+            className="animated-black-underline font-medium text-right"
+            href={`https://www.nameai.io/tokenization?label=${label}`}
+            target="_blank"
+          >
+            NameAI Tokenization
+          </Link>
         </div>
-
-        <div className="bg-white flex items-center p-3 border border-gray-300 rounded mb-3 shadow-sm h-12">
+        <div className="bg-white flex items-center mb-3 h-12">
           {topTokenization.length > 0 ? (
             topTokenization.map((token: any, index: any) => (
               <span
