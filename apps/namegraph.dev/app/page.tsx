@@ -27,7 +27,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { CollectionsCardsSkeleton } from "@/components/collections/collections-grid-skeleton";
 import { CollectionCard } from "@/components/collections/collection-card";
 import { buildENSName, ENSName } from "@namehash/ens-utils";
-import { Link } from "@namehash/namekit-react";
+import Link from "next/link";
 import {
   NameWithCurrentTld,
   useQueryParams,
@@ -396,14 +396,6 @@ export default function ExploreCollectionsPage() {
             Collection search results for
           </h1>
           <div className="flex space-x-6 mt-4 mb-3 items-center justify-start">
-            <div>
-              <NftAvatar
-                withLink={false}
-                name={searchedEnsName}
-                size={AvatarSize.SMALL}
-                key={searchedEnsName?.name || params.collectionsSearch.search}
-              />
-            </div>
             <Link
               href={
                 searchedEnsName
@@ -412,7 +404,23 @@ export default function ExploreCollectionsPage() {
                     )
                   : ""
               }
-              className="!text-3xl font-bold truncate"
+            >
+              <NftAvatar
+                withLink={false}
+                name={searchedEnsName}
+                size={AvatarSize.SMALL}
+                key={searchedEnsName?.name || params.collectionsSearch.search}
+              />
+            </Link>
+            <Link
+              href={
+                searchedEnsName
+                  ? getNameDetailsPageHref(
+                      params.collectionsSearch.search.replace(" ", ""),
+                    )
+                  : ""
+              }
+              className="!text-3xl font-bold truncate underline"
             >
               {searchedEnsName?.name
                 ? searchedEnsName.name
@@ -468,22 +476,25 @@ export default function ExploreCollectionsPage() {
                   handleOrderBy(value as NameGraphSortOrderOptions)
                 }
               >
-                <SelectTrigger className="w-[120px]">
-                  <SelectValue placeholder="Sort by" />
-                </SelectTrigger>
-                <SelectContent>
-                  {Object.entries(
-                    FromNameGraphSortOrderToDropdownTextContent,
-                  ).map(([key]) => (
-                    <SelectItem key={key} value={key}>
-                      {
-                        FromNameGraphSortOrderToDropdownTextContent[
-                          key as NameGraphSortOrderOptions
-                        ]
-                      }
-                    </SelectItem>
-                  ))}
-                </SelectContent>
+                <div className="flex space-x-3 items-center">
+                  <p className="font-regular text-sm text-gray-400">Sort by</p>
+                  <SelectTrigger className="w-[120px]">
+                    <SelectValue placeholder="Sort by" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Object.entries(
+                      FromNameGraphSortOrderToDropdownTextContent,
+                    ).map(([key]) => (
+                      <SelectItem key={key} value={key}>
+                        {
+                          FromNameGraphSortOrderToDropdownTextContent[
+                            key as NameGraphSortOrderOptions
+                          ]
+                        }
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </div>
               </Select>
             </div>
 
