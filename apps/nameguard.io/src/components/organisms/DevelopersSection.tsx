@@ -203,7 +203,7 @@ const devElements: ListSectionElement[] = [
     ),
     icon: (
       <DeveloperSectionIconWrapper>
-        <GearWheelIcon />
+        <GearWheelIcon className="text-white" />
       </DeveloperSectionIconWrapper>
     ),
     link: "https://github.com/namehash/namekit/blob/main/apps/api.nameguard.io",
