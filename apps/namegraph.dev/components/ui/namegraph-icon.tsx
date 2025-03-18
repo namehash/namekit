@@ -10,11 +10,7 @@ export const NameGraphIcon = (props: SVGProps<SVGSVGElement>) => {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <path
-        d="M8 5L14 14M14 14H25M14 14L8 23"
-        stroke="black"
-        stroke-width="2"
-      />
+      <path d="M8 5L14 14M14 14H25M14 14L8 23" stroke="black" strokeWidth="2" />
       <circle cx="8" cy="5" r="3" fill="black" />
       <circle cx="20" cy="5" r="3" fill="black" />
       <circle cx="8" cy="23" r="3" fill="black" />

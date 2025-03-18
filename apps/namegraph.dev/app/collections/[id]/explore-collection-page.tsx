@@ -228,7 +228,7 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
   }, [collectionState.collection]);
 
   return (
-    <div className="mx-auto py-8 w-full">
+    <div className="mx-auto py-8 w-full overflow-x-hidden">
       <div className="max-w-7xl mx-auto p-6">
         <div className="flex space-x-4 mb-8">
           <div className="group-hover:bg-gray-300 group-hover:transition flex justify-center items-center rounded-md bg-background h-[72px] w-[72px] bg-gray-100 border border-gray-100">
@@ -384,7 +384,7 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                     >
                       <p>Generate new names by scrambling existing ones</p>
                     </Tooltip>
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-4 flex-wrap">
                       <Select
                         defaultValue={scrambleMethod}
                         onValueChange={(value) =>
