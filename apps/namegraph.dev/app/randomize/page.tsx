@@ -94,7 +94,7 @@ export default function RandomizePage() {
   }, [selectedCollection]);
 
   return (
-    <div className="container mx-auto py-8 flex flex-col items-center">
+    <div className="container overflow-x-hidden mx-auto py-8 flex flex-col items-center">
       <h1 className="text-xl font-semibold mt-4 mb-8 text-center">
         🌪️ Query something to start the brainstorm 🧠
       </h1>

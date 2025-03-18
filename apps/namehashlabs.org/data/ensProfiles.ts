@@ -44,7 +44,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     "0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5",
     buildProfile({
       ensName: "nick.eth",
-      title: "Lead developer of ENS & Ethereum Foundation alum",
+      title: "Founder and Lead Developer of ENS & Ethereum Foundation Alumni",
       displayName: "Nick Johnson",
       twitterProfile: "https://x.com/nicksdjohnson",
       address: "0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5",
@@ -126,7 +126,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     "0x190473B3071946df65306989972706A4c006A561",
     buildProfile({
       ensName: "chainlinkgod.eth",
-      title: "Chainlink Community Ambassador",
+      title: "Chainlink Community Liaison",
       twitterProfile: "https://x.com/ChainLinkGod",
       address: "0x190473B3071946df65306989972706A4c006A561",
     }),
@@ -166,7 +166,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     "0x1D5460F896521aD685Ea4c3F2c679Ec0b6806359",
     buildProfile({
       ensName: "coltron.eth",
-      title: "ENS Public Goods Steward",
+      title: "ENS Public Goods Steward, Gov Analyst at Karpatkey",
       twitterProfile: "https://x.com/Coltron_eth",
       address: "0x1D5460F896521aD685Ea4c3F2c679Ec0b6806359",
     }),
@@ -175,7 +175,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     "0x54BeCc7560a7Be76d72ED76a1f5fee6C5a2A7Ab6",
     buildProfile({
       ensName: "simona.eth",
-      title: "ENS Public Goods Steward, Governance at DELV & Optimism",
+      title: "ENS Public Goods Steward, Advisor at DELV & Optimism",
       twitterProfile: "https://x.com/Sim_Pop",
       address: "0x54BeCc7560a7Be76d72ED76a1f5fee6C5a2A7Ab6",
     }),
@@ -184,7 +184,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     "0x48A63097E1Ac123b1f5A8bbfFafA4afa8192FaB0",
     buildProfile({
       ensName: "ceresstation.eth",
-      title: "Co-founder Gitcoin & Kernel",
+      title: "Co-founder of Gitcoin and General Partner at Public Works",
       displayName: "Scott Moore",
       twitterProfile: "https://x.com/notscottmoore",
       address: "0x48A63097E1Ac123b1f5A8bbfFafA4afa8192FaB0",
@@ -221,7 +221,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     "0x399e0ae23663f27181ebb4e66ec504b3aab25541",
     buildProfile({
       ensName: "superphiz.eth",
-      title: "Ethereum Decentralized Staking Advocate",
+      title: "Ethereum Decentralization Advocate",
       twitterProfile: "https://x.com/superphiz",
       address: "0x399e0ae23663f27181ebb4e66ec504b3aab25541",
     }),
@@ -230,9 +230,9 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     "0xe11da9560b51f8918295edc5ab9c0a90e9ada20b",
     buildProfile({
       ensName: "jalil.eth",
-      title: "Intangible things at Visualize Value.",
+      title: "Gardener at Visualize Value",
       displayName: "Jalil Wahdatehagh",
-      twitterProfile: "https://x.com/jalil_eth",
+      twitterProfile: "https://x.com/jalilwahdat",
       address: "0xe11da9560b51f8918295edc5ab9c0a90e9ada20b",
     }),
   ],
@@ -297,7 +297,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     "0x76A6D08b82034b397E7e09dAe4377C18F132BbB8",
     buildProfile({
       ensName: "alextnetto.eth",
-      title: "Co-founder of Blockful, building public goods for DAOs",
+      title: "Executive Director of Blockful & ENS Meta-Gov Steward",
       displayName: "Alex Netto",
       twitterProfile: "https://x.com/alextnetto",
       address: "0x76A6D08b82034b397E7e09dAe4377C18F132BbB8",
@@ -327,7 +327,8 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     "0xA7860E99e3ce0752D1ac53b974E309fFf80277C6",
     buildProfile({
       ensName: "limes.eth",
-      title: "ENS DAO Steward & Secretary - Growth at Layer3",
+      title:
+        "ENS DAO Steward & Secretary - Building transparency with SafeNotes",
       twitterProfile: "https://x.com/limes_eth",
       address: "0xA7860E99e3ce0752D1ac53b974E309fFf80277C6",
     }),
@@ -375,7 +376,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     "0x179A862703a4adfb29896552DF9e307980D19285",
     buildProfile({
       ensName: "gregskril.eth",
-      title: "Developer at ENS Labs",
+      title: "Developer Relations at ENS Labs",
       displayName: "Greg Skriloff",
       twitterProfile: "https://x.com/gregskril",
       address: "0x179A862703a4adfb29896552DF9e307980D19285",
@@ -394,7 +395,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     "0xc28de09AD1a20737B92834943558DdfcC88d020D",
     buildProfile({
       ensName: "184.eth",
-      title: "Support at ENS Labs & ENS Ecosystem Steward",
+      title: "Support Lead at ENS Labs",
       twitterProfile: "https://x.com/184eth",
       address: "0xc28de09AD1a20737B92834943558DdfcC88d020D",
     }),
@@ -413,7 +414,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     "0x866B3c4994e1416B7C738B9818b31dC246b95eEE",
     buildProfile({
       ensName: "jefflau.eth",
-      title: "Core Team Leader - ENS Labs",
+      title: "ENS Cofounder & Core Team Leader",
       displayName: "Jeff Lau",
       twitterProfile: "https://x.com/_jefflau",
       address: "0x866B3c4994e1416B7C738B9818b31dC246b95eEE",
