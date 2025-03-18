@@ -3,43 +3,32 @@ import { SVGProps } from "react";
 export const EfpLogo = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
-      width="512"
-      height="512"
-      viewBox="0 0 512 512"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <rect
-        width="512"
-        height="512"
-        rx="40"
-        fill="url(#paint0_linear_965_4162)"
-      />
-      <path
-        d="M167.68 258.56L255.36 112.64L342.4 258.56L255.36 311.68L167.68 258.56Z"
-        fill="#333333"
-      />
-      <path
-        d="M255.36 327.68L167.68 274.56L255.36 398.08L342.4 274.56L255.36 327.68Z"
-        fill="#333333"
-      />
-      <path
-        d="M367.36 341.76H342.4V378.88H307.84V401.92H342.4V440.32H367.36V401.92H401.28V378.88H367.36V341.76Z"
-        fill="#333333"
-      />
+      <g clip-path="url(#clip0_510_2632)">
+        <path
+          d="M6 11.3515L11.6189 2L17.1971 11.3515L11.6189 14.7559L6 11.3515Z"
+          fill="currentColor"
+        />
+        <path
+          d="M11.6189 15.7813L6 12.377L11.6189 20.2927L17.1971 12.377L11.6189 15.7813ZM18.7967 16.6837H17.1971V19.0627H14.9825V20.5387H17.1971V22.9999H18.7967V20.5387H20.9705V19.0627H18.7967V16.6837Z"
+          fill="currentColor"
+        />
+      </g>
       <defs>
-        <linearGradient
-          id="paint0_linear_965_4162"
-          x1="256"
-          y1="256"
-          x2="512"
-          y2="512"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#FFE067" />
-          <stop offset="1" stopColor="#FFF7D9" />
-        </linearGradient>
+        <clipPath id="clip0_510_2632">
+          <rect
+            width="14.9999"
+            height="20.9998"
+            fill="white"
+            transform="translate(6 2)"
+          />
+        </clipPath>
       </defs>
     </svg>
   );
