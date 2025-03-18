@@ -797,7 +797,7 @@ const LabelAndLinks = ({
               </a>
             );
           } else {
-            return <Skeleton className="w-16 h-10" />;
+            return <Skeleton key={host} className="w-16 h-10" />;
           }
         })}
       </div>
