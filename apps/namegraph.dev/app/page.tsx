@@ -431,7 +431,7 @@ export default function ExploreCollectionsPage() {
           <h1 className="text-sm text-gray-500">
             Collection search results for
           </h1>
-          <div className="flex flex-col lg:flex-row lg:space-x-8">
+          <div className="flex flex-col lg:grid lg:gap-8 lg:grid-cols-[minmax(300px,_80%)_minmax(300px,_20%)]">
             <div className="w-full">
               <div className="flex space-x-6 mt-4 mb-3 items-center justify-start">
                 <Link
@@ -668,7 +668,7 @@ export default function ExploreCollectionsPage() {
                 ))}
               </Tabs>
             </div>
-            <div className="w-full max-w-[370px]">
+            <div className="w-full min-w-max mt-8 lg:mt-[192px]">
               <OtherCategories
                 otherCategories={otherCategories}
                 params={params}
