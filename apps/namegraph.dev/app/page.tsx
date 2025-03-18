@@ -3,7 +3,10 @@
 
 import React, { useEffect, useState, useCallback } from "react";
 import {
+  DEFAULT_MAX_RELATED_COLLECTIONS,
   NameGraphCollection,
+  NameGraphFetchTopCollectionMembersResponse,
+  NameGraphGroupingCategory,
   NameGraphSortOrderOptions,
 } from "@namehash/namegraph-sdk/utils";
 
@@ -11,6 +14,7 @@ import {
   findCollectionsByMember,
   findCollectionsByString,
   FromNameGraphSortOrderToDropdownTextContent,
+  getCollectionsForQuery,
   getFirstLabelOfString,
   getNameDetailsPageHref,
 } from "@/lib/utils";
@@ -49,6 +53,7 @@ import {
   NavigationConfigurations,
   TabsCollectionsStorage,
 } from "@/components/collections/utils";
+import { OtherCategories } from "@/components/collections/other-categories";
 
 export default function ExploreCollectionsPage() {
   const { params, setParams } = useQueryParams();
@@ -317,9 +322,8 @@ export default function ExploreCollectionsPage() {
 
     if (isLoading) {
       return (
-        <div className="w-full flex flex-col space-y-4">
-          <CollectionsCardsSkeleton className="flex flex-col space-y-[30px]" />
-          <CollectionsCardsSkeleton />
+        <div className="w-full flex flex-col space-y-2">
+          <CollectionsCardsSkeleton className="flex flex-col space-y-[22px] md:space-y-[18px]" />
         </div>
       );
     }
@@ -384,6 +388,38 @@ export default function ExploreCollectionsPage() {
     });
   }, [searchedEnsName]);
 
+  const [otherCategories, setOtherCategories] = useState<
+    NameGraphFetchTopCollectionMembersResponse[] | undefined
+  >(undefined);
+  useEffect(() => {
+    if (
+      navigationConfig.totalItemsNumber?.[
+        NameRelatedCollectionsTabs.ByConcept
+      ] &&
+      navigationConfig.totalItemsNumber?.[
+        NameRelatedCollectionsTabs.ByMembership
+      ]
+    ) {
+      getCollectionsForQuery(
+        params.collectionsSearch.search,
+        DEFAULT_MAX_RELATED_COLLECTIONS,
+      )
+        .then((res) =>
+          setOtherCategories(
+            res.categories.filter(
+              (category) =>
+                category.type !== NameGraphGroupingCategory.related &&
+                category.type !== NameGraphGroupingCategory.other,
+            ),
+          ),
+        )
+        .catch((err) => {
+          console.error(err);
+          setOtherCategories([]);
+        });
+    }
+  }, [navigationConfig.totalItemsNumber, params.collectionsSearch.search]);
+
   if (!params.collectionsSearch.search) {
     return <HomePage />;
   }
@@ -395,233 +431,250 @@ export default function ExploreCollectionsPage() {
           <h1 className="text-sm text-gray-500">
             Collection search results for
           </h1>
-          <div className="flex space-x-6 mt-4 mb-3 items-center justify-start">
-            <Link
-              href={
-                searchedEnsName
-                  ? getNameDetailsPageHref(
-                      params.collectionsSearch.search.replace(" ", ""),
-                    )
-                  : ""
-              }
-            >
-              <NftAvatar
-                withLink={false}
-                name={searchedEnsName}
-                size={AvatarSize.SMALL}
-                key={searchedEnsName?.name || params.collectionsSearch.search}
-              />
-            </Link>
-            <Link
-              href={
-                searchedEnsName
-                  ? getNameDetailsPageHref(
-                      params.collectionsSearch.search.replace(" ", ""),
-                    )
-                  : ""
-              }
-              className="!text-3xl font-bold truncate underline"
-            >
-              {searchedEnsName?.name
-                ? searchedEnsName.name
-                : NameWithCurrentTld({
-                    name:
-                      searchedEnsName?.name || params.collectionsSearch.search,
-                    params,
-                  })}
-            </Link>
-          </div>
-
-          <Tabs defaultValue={currentTab} value={currentTab}>
-            <div className="flex justify-between flex-col space-y-4 md:space-y-0 md:flex-row">
-              <TabsList className="w-max">
-                {Object.entries(NameRelatedCollectionsTabs).map(([key]) => (
-                  <TabsTrigger
-                    key={key}
-                    value={key}
-                    onClick={() =>
-                      handleTabChange(
-                        key as keyof typeof NameRelatedCollectionsTabs,
-                      )
+          <div className="flex flex-col lg:flex-row lg:space-x-8">
+            <div className="w-full">
+              <div className="flex space-x-6 mt-4 mb-3 items-center justify-start">
+                <Link
+                  href={
+                    searchedEnsName
+                      ? getNameDetailsPageHref(
+                          params.collectionsSearch.search.replace(" ", ""),
+                        )
+                      : ""
+                  }
+                >
+                  <NftAvatar
+                    withLink={false}
+                    name={searchedEnsName}
+                    size={AvatarSize.SMALL}
+                    key={
+                      searchedEnsName?.name || params.collectionsSearch.search
                     }
-                  >
-                    {key === NameRelatedCollectionsTabs.ByConcept
-                      ? "By concept"
-                      : "By membership"}
-                    <span className="w-16 ml-3 border border-gray-400 rounded-full">
-                      {typeof navigationConfig.totalItemsNumber?.[
-                        key as keyof typeof NameRelatedCollectionsTabs
-                      ] === "undefined" ? (
-                        <Skeleton className="mx-[1px] rounded-md w-[60px] h-4" />
-                      ) : navigationConfig.totalItemsNumber?.[
-                          key as keyof typeof NameRelatedCollectionsTabs
-                        ] ===
-                        MAX_NUMBER_OF_COLLECTIONS_MEMBERSHIP_IN_NAMEGRAPH_API ? (
-                        "+1000"
-                      ) : (
-                        navigationConfig.totalItemsNumber?.[
-                          key as keyof typeof NameRelatedCollectionsTabs
-                        ]
-                      )}
-                    </span>
-                  </TabsTrigger>
-                ))}
-              </TabsList>
+                  />
+                </Link>
+                <Link
+                  href={
+                    searchedEnsName
+                      ? getNameDetailsPageHref(
+                          params.collectionsSearch.search.replace(" ", ""),
+                        )
+                      : ""
+                  }
+                  className="!text-3xl font-bold truncate underline"
+                >
+                  {searchedEnsName?.name
+                    ? searchedEnsName.name
+                    : NameWithCurrentTld({
+                        name:
+                          searchedEnsName?.name ||
+                          params.collectionsSearch.search,
+                        params,
+                      })}
+                </Link>
+              </div>
 
-              <Select
-                defaultValue={
-                  params.collectionsSearch.orderBy || DEFAULT_SORTING_ORDER
-                }
-                onValueChange={(value) =>
-                  handleOrderBy(value as NameGraphSortOrderOptions)
-                }
-              >
-                <div className="flex space-x-3 items-center">
-                  <p className="font-regular text-sm text-gray-400">Sort by</p>
-                  <SelectTrigger className="w-[120px]">
-                    <SelectValue placeholder="Sort by" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {Object.entries(
-                      FromNameGraphSortOrderToDropdownTextContent,
-                    ).map(([key]) => (
-                      <SelectItem key={key} value={key}>
-                        {
-                          FromNameGraphSortOrderToDropdownTextContent[
-                            key as NameGraphSortOrderOptions
-                          ]
-                        }
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </div>
-              </Select>
-            </div>
-
-            {Object.entries(NameRelatedCollectionsTabs).map(([key]) => (
-              <TabsContent
-                key={key}
-                value={key}
-                className="w-full min-h-[400px]"
-              >
-                <div className="w-full h-full flex flex-col space-y-4 p-3 rounded-xl">
-                  <div className="max-w-[756px] w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5">
-                    <div className="flex items-center">
-                      <div className="text-lg font-semibold mr-2.5">
-                        {loading[
-                          key as keyof typeof NameRelatedCollectionsTabs
-                        ] ? (
-                          <Skeleton className="w-[330px] h-7 my-1" />
-                        ) : (
-                          getNavigationTextGuide(
+              <Tabs defaultValue={currentTab} value={currentTab}>
+                <div className="flex justify-between flex-col space-y-4 md:space-y-0 md:flex-row">
+                  <TabsList className="w-max">
+                    {Object.entries(NameRelatedCollectionsTabs).map(([key]) => (
+                      <TabsTrigger
+                        key={key}
+                        value={key}
+                        onClick={() =>
+                          handleTabChange(
                             key as keyof typeof NameRelatedCollectionsTabs,
                           )
+                        }
+                      >
+                        {key === NameRelatedCollectionsTabs.ByConcept
+                          ? "By concept"
+                          : "By membership"}
+                        <span className="w-16 ml-3 border border-gray-400 rounded-full">
+                          {typeof navigationConfig.totalItemsNumber?.[
+                            key as keyof typeof NameRelatedCollectionsTabs
+                          ] === "undefined" ? (
+                            <Skeleton className="mx-[1px] rounded-md w-[60px] h-4" />
+                          ) : navigationConfig.totalItemsNumber?.[
+                              key as keyof typeof NameRelatedCollectionsTabs
+                            ] ===
+                            MAX_NUMBER_OF_COLLECTIONS_MEMBERSHIP_IN_NAMEGRAPH_API ? (
+                            "+1000"
+                          ) : (
+                            navigationConfig.totalItemsNumber?.[
+                              key as keyof typeof NameRelatedCollectionsTabs
+                            ]
+                          )}
+                        </span>
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
+
+                  <Select
+                    defaultValue={
+                      params.collectionsSearch.orderBy || DEFAULT_SORTING_ORDER
+                    }
+                    onValueChange={(value) =>
+                      handleOrderBy(value as NameGraphSortOrderOptions)
+                    }
+                  >
+                    <div className="flex space-x-3 items-center">
+                      <p className="font-regular text-sm text-gray-400">
+                        Sort by
+                      </p>
+                      <SelectTrigger className="w-[120px]">
+                        <SelectValue placeholder="Sort by" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {Object.entries(
+                          FromNameGraphSortOrderToDropdownTextContent,
+                        ).map(([key]) => (
+                          <SelectItem key={key} value={key}>
+                            {
+                              FromNameGraphSortOrderToDropdownTextContent[
+                                key as NameGraphSortOrderOptions
+                              ]
+                            }
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </div>
+                  </Select>
+                </div>
+
+                {Object.entries(NameRelatedCollectionsTabs).map(([key]) => (
+                  <TabsContent
+                    key={key}
+                    value={key}
+                    className="w-full min-h-[400px]"
+                  >
+                    <div className="w-full h-full flex flex-col space-y-4 rounded-xl">
+                      <div className="max-w-[756px] w-full flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0 mb-5">
+                        <div className="flex items-center">
+                          <div className="text-lg font-semibold mr-2.5">
+                            {loading[
+                              key as keyof typeof NameRelatedCollectionsTabs
+                            ] ? (
+                              <Skeleton className="w-[330px] h-7 my-1" />
+                            ) : (
+                              getNavigationTextGuide(
+                                key as keyof typeof NameRelatedCollectionsTabs,
+                              )
+                            )}
+                          </div>
+                          {navigationConfig.totalItemsNumber?.[
+                            key as keyof typeof NameRelatedCollectionsTabs
+                          ] &&
+                          !loading[
+                            key as keyof typeof NameRelatedCollectionsTabs
+                          ] ? (
+                            <div className="flex">
+                              <Button
+                                className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50 disabled:hover:bg-white"
+                                disabled={isFirstPage(
+                                  key as keyof typeof NameRelatedCollectionsTabs,
+                                )}
+                                onClick={() =>
+                                  handlePageChange(
+                                    pageState[
+                                      key as keyof typeof NameRelatedCollectionsTabs
+                                    ] - 1,
+                                    key as keyof typeof NameRelatedCollectionsTabs,
+                                  )
+                                }
+                              >
+                                <ChevronLeft className="w-6 h-6 text-black" />
+                              </Button>
+                              <Button
+                                className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50"
+                                disabled={isLastPage(
+                                  key as keyof typeof NameRelatedCollectionsTabs,
+                                )}
+                                onClick={() =>
+                                  handlePageChange(
+                                    pageState[
+                                      key as keyof typeof NameRelatedCollectionsTabs
+                                    ] + 1,
+                                    key as keyof typeof NameRelatedCollectionsTabs,
+                                  )
+                                }
+                              >
+                                <ChevronRight className="w-6 h-6 text-black" />
+                              </Button>
+                            </div>
+                          ) : null}
+                        </div>
+                      </div>
+
+                      {/* Collections List */}
+                      <div className="w-full flex-1">
+                        {renderCollectionsContent(
+                          key as keyof typeof NameRelatedCollectionsTabs,
                         )}
                       </div>
+
+                      {/* Bottom Pagination */}
                       {navigationConfig.totalItemsNumber?.[
                         key as keyof typeof NameRelatedCollectionsTabs
                       ] &&
                       !loading[
                         key as keyof typeof NameRelatedCollectionsTabs
                       ] ? (
-                        <div className="flex">
-                          <Button
-                            className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50 disabled:hover:bg-white"
-                            disabled={isFirstPage(
+                        <div className="flex items-center justify-between border border-gray-200 border-l-0 border-r-0 border-b-0 mt-3 p-3">
+                          <div className="text-sm text-gray-500 mr-2.5">
+                            {getNavigationTextGuide(
                               key as keyof typeof NameRelatedCollectionsTabs,
                             )}
-                            onClick={() =>
-                              handlePageChange(
-                                pageState[
-                                  key as keyof typeof NameRelatedCollectionsTabs
-                                ] - 1,
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Button
+                              className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
+                              disabled={isFirstPage(
                                 key as keyof typeof NameRelatedCollectionsTabs,
-                              )
-                            }
-                          >
-                            <ChevronLeft className="w-6 h-6 text-black" />
-                          </Button>
-                          <Button
-                            className="cursor-pointer p-[9px] bg-white shadow-none hover:bg-gray-50 rounded-lg disabled:opacity-50"
-                            disabled={isLastPage(
-                              key as keyof typeof NameRelatedCollectionsTabs,
-                            )}
-                            onClick={() =>
-                              handlePageChange(
-                                pageState[
-                                  key as keyof typeof NameRelatedCollectionsTabs
-                                ] + 1,
+                              )}
+                              onClick={() =>
+                                handlePageChange(
+                                  pageState[
+                                    key as keyof typeof NameRelatedCollectionsTabs
+                                  ] - 1,
+                                  key as keyof typeof NameRelatedCollectionsTabs,
+                                )
+                              }
+                            >
+                              <ChevronLeft />
+                              Prev
+                            </Button>
+                            <Button
+                              className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
+                              disabled={isLastPage(
                                 key as keyof typeof NameRelatedCollectionsTabs,
-                              )
-                            }
-                          >
-                            <ChevronRight className="w-6 h-6 text-black" />
-                          </Button>
+                              )}
+                              onClick={() =>
+                                handlePageChange(
+                                  pageState[
+                                    key as keyof typeof NameRelatedCollectionsTabs
+                                  ] + 1,
+                                  key as keyof typeof NameRelatedCollectionsTabs,
+                                )
+                              }
+                            >
+                              Next
+                              <ChevronRight />
+                            </Button>
+                          </div>
                         </div>
                       ) : null}
                     </div>
-                  </div>
-
-                  {/* Collections List */}
-                  <div className="w-full flex-1">
-                    {renderCollectionsContent(
-                      key as keyof typeof NameRelatedCollectionsTabs,
-                    )}
-                  </div>
-
-                  {/* Bottom Pagination */}
-                  {navigationConfig.totalItemsNumber?.[
-                    key as keyof typeof NameRelatedCollectionsTabs
-                  ] &&
-                  !loading[key as keyof typeof NameRelatedCollectionsTabs] ? (
-                    <div className="flex items-center justify-between border border-gray-200 border-l-0 border-r-0 border-b-0 mt-3 p-3">
-                      <div className="text-sm text-gray-500 mr-2.5">
-                        {getNavigationTextGuide(
-                          key as keyof typeof NameRelatedCollectionsTabs,
-                        )}
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Button
-                          className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
-                          disabled={isFirstPage(
-                            key as keyof typeof NameRelatedCollectionsTabs,
-                          )}
-                          onClick={() =>
-                            handlePageChange(
-                              pageState[
-                                key as keyof typeof NameRelatedCollectionsTabs
-                              ] - 1,
-                              key as keyof typeof NameRelatedCollectionsTabs,
-                            )
-                          }
-                        >
-                          <ChevronLeft />
-                          Prev
-                        </Button>
-                        <Button
-                          className="bg-white text-black shadow-none hover:bg-gray-50 text-sm p-2.5"
-                          disabled={isLastPage(
-                            key as keyof typeof NameRelatedCollectionsTabs,
-                          )}
-                          onClick={() =>
-                            handlePageChange(
-                              pageState[
-                                key as keyof typeof NameRelatedCollectionsTabs
-                              ] + 1,
-                              key as keyof typeof NameRelatedCollectionsTabs,
-                            )
-                          }
-                        >
-                          Next
-                          <ChevronRight />
-                        </Button>
-                      </div>
-                    </div>
-                  ) : null}
-                </div>
-              </TabsContent>
-            ))}
-          </Tabs>
+                  </TabsContent>
+                ))}
+              </Tabs>
+            </div>
+            <div className="w-full max-w-[370px]">
+              <OtherCategories
+                otherCategories={otherCategories}
+                params={params}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </Suspense>

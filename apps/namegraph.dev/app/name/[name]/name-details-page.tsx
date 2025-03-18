@@ -70,6 +70,7 @@ import { Link } from "@namehash/namekit-react";
 import { NLPLabelAnalysis } from "@namehash/nameai";
 import { EnsOutlineIcon } from "@/components/nft-avatar/ens-outline-icon";
 import { EnsVisionIcon } from "@/components/name/vision-icon";
+import { OtherCategories } from "@/components/collections/other-categories";
 
 interface CollectionsData {
   sort_order: NameGraphSortOrderOptions;
@@ -417,8 +418,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
     if (isLoading) {
       return (
         <div className="w-full flex flex-col space-y-4">
-          <CollectionsCardsSkeleton className="flex flex-col space-y-[30px]" />
-          <CollectionsCardsSkeleton />
+          <CollectionsCardsSkeleton className="flex flex-col space-y-[22px] md:space-y-[18px]" />
         </div>
       );
     }
@@ -629,7 +629,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                               {loading[
                                 key as keyof typeof NameRelatedCollectionsTabs
                               ] ? (
-                                <Skeleton className="w-[330px] h-7 my-1" />
+                                <Skeleton className="w-[260px] h-6 my-1.5" />
                               ) : (
                                 getNavigationTextGuide(
                                   key as keyof typeof NameRelatedCollectionsTabs,
@@ -802,51 +802,6 @@ const LabelAndLinks = ({
         })}
       </div>
     </div>
-  );
-};
-
-const OtherCategories = ({
-  otherCategories,
-  params,
-}: {
-  otherCategories?: NameGraphFetchTopCollectionMembersResponse[];
-  params: QueryParams;
-}) => {
-  return (
-    <>
-      {otherCategories && otherCategories.length > 0 && (
-        <div className="mx-auto w-full">
-          <div className="w-full rounded-lg border border-gray-200">
-            <p className="text-[18px] font-semibold px-5 py-2.5 border-b border-gray-200">
-              Explore other names
-            </p>
-            {otherCategories.map((collection) => (
-              <div key={collection.collection_id}>
-                <p className="py-3 px-5 font-semibold text-sm text-gray-500">
-                  {collection.name}
-                </p>
-                <div className="flex flex-col">
-                  {collection.suggestions
-                    .slice(0, 3)
-                    .map((suggestion: NameGraphSuggestion) => (
-                      <Link
-                        key={suggestion.label}
-                        href={getNameDetailsPageHref(suggestion.label)}
-                        className="p-5 border-t border-gray-200 font-semibold text-base text-black"
-                      >
-                        {NameWithCurrentTld({
-                          name: suggestion.label,
-                          params,
-                        })}
-                      </Link>
-                    ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-    </>
   );
 };
 

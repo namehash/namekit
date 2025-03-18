@@ -286,3 +286,7 @@ export const getExternalLinkURLForName = (host: ExternalLinkHosts, name: string)
 }
 
 export const ZEROED_ADDRESS = "0x0000000000000000000000000000000000000000"
+
+export const formatNumber = (num: number): string => {
+  return new Intl.NumberFormat().format(num);
+}

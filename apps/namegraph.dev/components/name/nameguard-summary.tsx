@@ -24,7 +24,7 @@ export const NameGuardSummary = ({ nameGuardReport }: Props) => {
             </div>
           </div>
         </div>
-        <div className="md:mt-[18px] md:ml-10 ml-3 lg:mt-4 lg:ml-10">
+        <div className="md:mt-[18px] md:ml-10 ml-3 lg:mt-4 lg:mb-0.5 lg:ml-10">
           <Skeleton className="w-40 h-6" />
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { NameGraphCollection } from "@namehash/namegraph-sdk/utils";
 import { Link } from "@namehash/namekit-react";
 import { Noto_Emoji } from "next/font/google";
-import { getNameDetailsPageHref } from "@/lib/utils";
+import { formatNumber, getNameDetailsPageHref } from "@/lib/utils";
 import { NameWithCurrentTld, useQueryParams } from "../use-query-params";
 import { DisplayedName } from "@namehash/nameguard-react";
 import { buildENSName } from "@namehash/ens-utils";
@@ -32,7 +32,7 @@ export const CollectionCard = ({
 
   return (
     <div className="group relative" key={collection.collection_id}>
-      <div className="rounded-md border border-gray-200 group-hover:border-black">
+      <div className="rounded-md border border-gray-200 group-hover:border-gray-400">
         <button
           role="link"
           onClick={(e) => redirectLink(e)}
@@ -51,18 +51,22 @@ export const CollectionCard = ({
             </div>
           </div>
           <div className="flex-1 overflow-hidden flex flex-col items-start">
-            <div className="w-full flex justify-between">
-              <h3 className="!text-sm font-semibold truncate group-hover:underline">
-                {collection.title}
-              </h3>
-              <p className="mr-3 text-sm font-light text-gray-500">
-                {collection.number_of_labels} name
+            <div className="w-full flex flex-col items-start mb-2 space-y-1">
+              <div className="flex w-full justify-between">
+                <h3 className="!text-sm font-semibold truncate w-full flex justify-between">
+                  {collection.title}
+                </h3>
+                <p className="hidden md:block text-xs md:text-sm mr-3 text-sm font-light text-gray-500 min-w-max">
+                  {formatNumber(collection.number_of_labels)} name
+                  {collection.number_of_labels !== 1 ? "s" : ""}
+                </p>
+              </div>
+              <p className="text-xs text-gray-500 truncate">by namegraph.eth</p>
+              <p className="md:hidden text-xs mr-3 text-sm font-light text-gray-500">
+                {formatNumber(collection.number_of_labels)} name
                 {collection.number_of_labels !== 1 ? "s" : ""}
               </p>
             </div>
-            <p className="text-xs text-gray-500 mb-2 truncate">
-              by namegraph.eth
-            </p>
             <div className="flex gap-2">
               {collection.top_labels.map((tag) => (
                 <button
@@ -82,7 +86,7 @@ export const CollectionCard = ({
             </div>
           </div>
         </button>
-        <div className="z-40 rounded-md bg-gradient-white-to-transparent absolute right-[1px] bottom-0.5 w-40 h-[60px]"></div>
+        <div className="pointer-events-none z-40 rounded-md bg-gradient-white-to-transparent absolute right-[1px] bottom-0.5 w-40 h-[60px]"></div>
       </div>
     </div>
   );
