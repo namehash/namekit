@@ -5,6 +5,11 @@ interface EfpProfileStatsProps {
   address: string;
 }
 
+// Helper function to format numbers according to user's locale
+const formatNumber = (num: number): string => {
+  return new Intl.NumberFormat().format(num);
+};
+
 export const EfpProfileStats = ({ address }: EfpProfileStatsProps) => {
   const { followers, following, statsLoading, refreshProfileStats } =
     useProfileStats({
@@ -16,13 +21,15 @@ export const EfpProfileStats = ({ address }: EfpProfileStatsProps) => {
       <NextLink
         href={`https://efp.app/${address}`}
         target="_blank"
-        className="flex items-center gap-2 hover:scale-105 transition-all duration-200"
+        className="flex items-center gap-2 transition-all duration-200"
       >
         <div className="flex flex-col items-center gap-1">
           {statsLoading ? (
             <p className="text-sm font-normal bg-gray-200 animate-pulse rounded-md w-16 h-5"></p>
           ) : (
-            <p className="text-sm font-normal">{following}</p>
+            <p className="text-sm font-normal min-w-16 text-center">
+              {formatNumber(following || 0)}
+            </p>
           )}
 
           <p className="text-xs font-normal text-gray-400">Following</p>
@@ -31,7 +38,9 @@ export const EfpProfileStats = ({ address }: EfpProfileStatsProps) => {
           {statsLoading ? (
             <p className="text-sm font-normal bg-gray-200 animate-pulse rounded-md w-16 h-5"></p>
           ) : (
-            <p className="text-sm font-normal">{followers}</p>
+            <p className="text-sm font-normal min-w-16 text-center">
+              {formatNumber(followers || 0)}
+            </p>
           )}
           <p className="text-xs font-normal text-gray-400">Followers</p>
         </div>
