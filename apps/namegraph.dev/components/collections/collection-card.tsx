@@ -17,25 +17,23 @@ export const CollectionCard = ({
   const { params } = useQueryParams();
 
   /**
-   * This function is necessary because there is different links
-   * inside this component. It organizes links functionaly, on click.
+   * This function is necessary because there is
+   * different links inside this component.
    */
-  const redirectLink = (e: MouseEvent, clickOnName = "") => {
-    e.stopPropagation();
-
-    if (clickOnName) {
-      window.location.href = getNameDetailsPageHref(clickOnName);
+  const getLinkToPage = (name = "") => {
+    if (!!name) {
+      return getNameDetailsPageHref(name);
     } else {
-      window.location.href = `/collections/${collection.collection_id}`;
+      return `/collections/${collection.collection_id}`;
     }
   };
 
   return (
     <div className="group relative" key={collection.collection_id}>
       <div className="rounded-md border border-gray-200 group-hover:border-gray-400">
-        <button
-          role="link"
-          onClick={(e) => redirectLink(e)}
+        <a
+          target="_blank"
+          href={getLinkToPage()}
           className="related !no-underline transition rounded-lg py-3 flex items-start space-x-[18px] w-full"
         >
           <div
@@ -69,10 +67,10 @@ export const CollectionCard = ({
             </div>
             <div className="flex gap-2">
               {collection.top_labels.map((tag) => (
-                <button
-                  role="link"
+                <a
                   key={tag.label}
-                  onClick={(e) => redirectLink(e, tag.label)}
+                  target="_blank"
+                  href={getLinkToPage(tag.label)}
                   className="hover:underline max-h-[28px] w-max bg-gray-100 !text-sm px-2 py-1 bg-muted rounded-full"
                 >
                   <DisplayedName
@@ -81,11 +79,11 @@ export const CollectionCard = ({
                       NameWithCurrentTld({ name: tag.label, params }),
                     )}
                   />
-                </button>
+                </a>
               ))}
             </div>
           </div>
-        </button>
+        </a>
         <div className="pointer-events-none z-40 rounded-md bg-gradient-white-to-transparent absolute right-[1px] bottom-0.5 w-40 h-[60px]"></div>
       </div>
     </div>

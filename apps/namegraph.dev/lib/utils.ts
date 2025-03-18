@@ -142,9 +142,10 @@ export const findCollectionsByString = async (
 
 export const findCollectionsByCollection = async (
   collection_id: string,
+  max_related_collections?: number,
 ): Promise<NameGraphFindCollectionsResponse> => {
   const nameGeneratorSuggestions =
-    await NameGraphClient.findCollectionsByCollection(collection_id);
+    await NameGraphClient.findCollectionsByCollection(collection_id, {max_related_collections});
 
   return nameGeneratorSuggestions;
 };

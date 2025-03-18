@@ -42,7 +42,7 @@ import { AvatarSize } from "@/components/nft-avatar/avatar-utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Skeleton from "@/components/skeleton";
 import {
-  DEFAULT_ACTIVE_TAB,
+  DEFAULT_COLLECTIONS_TAB,
   DEFAULT_SORTING_ORDER,
 } from "@/components/providers";
 import {
@@ -57,7 +57,7 @@ import { OtherCategories } from "@/components/collections/other-categories";
 
 export default function ExploreCollectionsPage() {
   const { params, setParams } = useQueryParams();
-  const currentTab = params.collectionsSearch.tab || DEFAULT_ACTIVE_TAB;
+  const currentTab = params.collectionsSearch.tab || DEFAULT_COLLECTIONS_TAB;
 
   {
     /* Track page state for each tab independently */
@@ -438,7 +438,10 @@ export default function ExploreCollectionsPage() {
                   href={
                     searchedEnsName
                       ? getNameDetailsPageHref(
-                          params.collectionsSearch.search.replace(" ", ""),
+                          String(params.collectionsSearch.search).replace(
+                            " ",
+                            "",
+                          ),
                         )
                       : ""
                   }
@@ -456,7 +459,10 @@ export default function ExploreCollectionsPage() {
                   href={
                     searchedEnsName
                       ? getNameDetailsPageHref(
-                          params.collectionsSearch.search.replace(" ", ""),
+                          String(params.collectionsSearch.search).replace(
+                            " ",
+                            "",
+                          ),
                         )
                       : ""
                   }

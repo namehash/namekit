@@ -23,7 +23,6 @@ import {
   NameGraphFetchTopCollectionMembersResponse,
   NameGraphGroupingCategory,
   NameGraphSortOrderOptions,
-  NameGraphSuggestion,
 } from "@namehash/namegraph-sdk/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -47,7 +46,7 @@ import {
   TabsCollectionsStorage,
 } from "@/components/collections/utils";
 import {
-  DEFAULT_ACTIVE_TAB,
+  DEFAULT_COLLECTIONS_TAB,
   DEFAULT_SORTING_ORDER,
 } from "@/components/providers";
 import {
@@ -57,7 +56,6 @@ import {
   FromNameGraphSortOrderToDropdownTextContent,
   getCollectionsForQuery,
   getExternalLinkURLForName,
-  getNameDetailsPageHref,
   ZEROED_ADDRESS,
 } from "@/lib/utils";
 import { CollectionCard } from "@/components/collections/collection-card";
@@ -66,16 +64,10 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Skeleton from "@/components/skeleton";
 import { analyzeLabel } from "@/components/name-ai/actions";
-import { Link } from "@namehash/namekit-react";
 import { NLPLabelAnalysis } from "@namehash/nameai";
 import { EnsOutlineIcon } from "@/components/nft-avatar/ens-outline-icon";
 import { EnsVisionIcon } from "@/components/name/vision-icon";
 import { OtherCategories } from "@/components/collections/other-categories";
-
-interface CollectionsData {
-  sort_order: NameGraphSortOrderOptions;
-  related_collections: any[];
-}
 
 export const NameDetailsPage = ({ name }: { name: string }) => {
   let label = name;
@@ -86,7 +78,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
   }
 
   const { params, setParams } = useQueryParams();
-  const currentTab = params.nameDetails.tab || DEFAULT_ACTIVE_TAB;
+  const currentTab = params.nameDetails.tab || DEFAULT_COLLECTIONS_TAB;
 
   {
     /* Collections state with separate page tracking for each tab */
@@ -154,15 +146,16 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
     key: "com.discord",
   });
 
-  const { data: nameguardReport } = useSWR<NameGuardReport>(
-    NameWithCurrentTld({ name: label, params }),
-    (n: string) => nameguard.inspectName(n),
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    },
-  );
+  const { data: nameguardReport, isLoading: loadingNameGuardReport } =
+    useSWR<NameGuardReport>(
+      NameWithCurrentTld({ name: label, params }),
+      (n: string) => nameguard.inspectName(n),
+      {
+        revalidateIfStale: false,
+        revalidateOnFocus: false,
+        revalidateOnReconnect: false,
+      },
+    );
 
   const fetchCollections = useCallback(
     async (
@@ -472,7 +465,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
   }, [params.tld.suffix]);
 
   return (
-    <div className="max-w-7xl flex flex-col space-y-8 mx-auto py-8 w-full lg:space-y-0 lg:grid lg:gap-8 lg:grid-cols-[335px_minmax(335px,_1fr)] xl:px-6">
+    <div className="overflow-hidden max-w-7xl flex flex-col space-y-8 mx-auto py-8 w-full lg:space-y-0 lg:grid lg:gap-8 lg:grid-cols-[335px_minmax(335px,_1fr)] xl:px-6">
       {/* Left Column */}
       <div className="lg:w-full flex justify-start flex-col mx-6 xl:mx-0">
         <div key={ensName?.name} className="mx-auto">
@@ -511,7 +504,12 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
 
           {/* NameGuard Summary */}
           <div className="w-full lg:mt-4 flex-1 flex justify-center items-center border border-gray-200 rounded-md md:w-1/2 lg:w-auto">
-            <NameGuardSummary nameGuardReport={nameguardReport} />
+            <NameGuardSummary
+              nameGuardReport={
+                !!params.tld.suffix ? nameguardReport : undefined
+              }
+              loading={loadingNameGuardReport}
+            />
           </div>
         </div>
 
@@ -775,17 +773,15 @@ const LabelAndLinks = ({
   params: QueryParams;
 }) => {
   return (
-    <div className="w-full justify-between items-center md:flex space-x-4 md:mb-8">
-      <div>
-        <div className="text-5xl font-bold md:mb-4 break-all">
-          {label ? (
-            <>{NameWithCurrentTld({ name: label, params })}</>
-          ) : (
-            <Skeleton className="w-40 h-8" />
-          )}
-        </div>
+    <div className="w-full justify-between items-center md:flex space-x-4 mb-4">
+      <div className="flex justify-center text-center text-4xl lg:text-5xl font-bold md:mb-4 break-all">
+        {label && params.tld.suffix ? (
+          <>{NameWithCurrentTld({ name: label, params })}</>
+        ) : (
+          <Skeleton className="w-80 h-10 lg:my-1" />
+        )}
       </div>
-      <div className="flex space-x-6 items-center">
+      <div className="flex space-x-6 items-center justify-center h-10 mt-4 lg:mt-0">
         {Object.keys(ExternalLinkHosts).map((host) => {
           const URLForName = getExternalLinkURLForName(
             host as ExternalLinkHosts,
@@ -794,11 +790,15 @@ const LabelAndLinks = ({
 
           if (!URLForName) return <></>;
 
-          return (
-            <a key={host} target="_blank" href={URLForName}>
-              {getIconForExternalLinkHost(host as ExternalLinkHosts)}
-            </a>
-          );
+          if (label && params.tld.suffix) {
+            return (
+              <a key={host} target="_blank" href={URLForName}>
+                {getIconForExternalLinkHost(host as ExternalLinkHosts)}
+              </a>
+            );
+          } else {
+            return <Skeleton className="w-16 h-10" />;
+          }
         })}
       </div>
     </div>
