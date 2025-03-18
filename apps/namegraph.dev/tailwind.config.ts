@@ -47,7 +47,7 @@ const config: Config = {
         moveLeft: {
           "0%": { transform: "translate(-50%, -50%)" },
           "70%": { transform: "translate(-50%, -50%)" },
-          "100%": { transform: "translate(-35%, -57%)" },
+          "100%": { transform: "translate(-33%, -57%)" },
         },
       },
     },
