@@ -432,7 +432,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
     }
 
     return (
-      <div className="w-full flex flex-col space-y-4">
+      <div className="w-full max-w-[100vw] flex flex-col space-y-4">
         {currentCollections.related_collections.map(
           (collection: NameGraphCollection) => (
             <div key={collection.collection_id} className="w-full">
@@ -472,7 +472,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
   }, [params.tld.suffix]);
 
   return (
-    <div className="max-w-7xl flex flex-col space-y-8 mx-auto py-8 w-full lg:space-y-0 lg:grid lg:gap-8 lg:grid-cols-[335px_minmax(335px,_1fr)] xl:px-6">
+    <div className="max-w-7xl overflow-x-hidden flex flex-col space-y-8 mx-auto py-8 w-full lg:space-y-0 lg:grid lg:gap-8 lg:grid-cols-[335px_minmax(335px,_1fr)] xl:px-6">
       {/* Left Column */}
       <div className="lg:w-full flex justify-start flex-col mx-6 xl:mx-0">
         <div key={ensName?.name} className="mx-auto">
