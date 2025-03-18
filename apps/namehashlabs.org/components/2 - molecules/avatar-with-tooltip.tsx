@@ -231,7 +231,6 @@ export const AvatarWithTooltip = ({
                 href={`https://efp.app/${profile.address}`}
                 target="_blank"
                 aria-label={"EFP profile"}
-                className="transition-all duration-300 hover:brightness-100 brightness-75 hover:filter-none grayscale"
               >
                 <EfpLogo
                   color="gray"
