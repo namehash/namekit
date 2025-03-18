@@ -17,8 +17,8 @@ import { NameGraphIcon } from "@/components/ui/namegraph-icon";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "NameGraph",
-  description: "Explore and discover names",
+  title: "NameGraph: Collect all the ENS names you love",
+  description: "Explore the world's largest knowledge graph of names",
 };
 
 export default function RootLayout({
