@@ -13,21 +13,20 @@ import {
 const footerProducts = [
   {
     name: "ENSNode",
-    href: "https://www.ensnode.io/",
+    href: "https://ensnode.io",
   },
   {
     name: "ENSRainbow",
     href: "https://ensrainbow.io",
   },
   {
+    name: "NameGraph",
+    href: "https://www.namegraph.dev/",
+  },
+  {
     name: "NameAI",
     href: "https://nameai.io/",
   },
-  // NameGraph is commented out until NameGraph is ready for launch.
-  // {
-  //   name: "NameGraph",
-  //   href: "https://www.namegraph.dev/",
-  // },
   {
     name: "NameGuard",
     href: "https://nameguard.io",
