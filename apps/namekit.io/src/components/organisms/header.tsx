@@ -6,14 +6,16 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Fragment } from "react";
 import cc from "classcat";
 import { Button, IconButton, Link } from "@namehash/namekit-react";
-import NextLink from "next/link";
 import { ExternalLinkIcon } from "../atoms/icons/external-link-icon";
 
 export const Header = () => {
   const NamekitMobileNavigationLinks = [
-    {
-      element: <Link href="/explore-web3">Explore Web3</Link>,
-    },
+    // NOTE: "Explore Web3" links are temporarily commented out because the page content is outdated
+    // and needs significant updates to match 2025 information. These links will be restored once
+    // the page content has been updated.
+    // {
+    //   element: <Link href="/explore-web3">Explore Web3</Link>,
+    // },
     {
       element: (
         <Link href="https://github.com/namehash/namekit" target="_blank">
@@ -32,15 +34,18 @@ export const Header = () => {
   ];
 
   const NamekitDesktopNavigationLinks = [
-    {
-      element: (
-        <Button variant="ghost" asChild>
-          <NextLink href="/explore-web3">
-            <>Explore Web3</>
-          </NextLink>
-        </Button>
-      ),
-    },
+    // NOTE: "Explore Web3" links are temporarily commented out because the page content is outdated
+    // and needs significant updates to match 2025 information. These links will be restored once
+    // the page content has been updated.
+    // {
+    //   element: (
+    //     <Button variant="ghost" asChild>
+    //       <NextLink href="/explore-web3">
+    //         <>Explore Web3</>
+    //       </NextLink>
+    //     </Button>
+    //   ),
+    // },
     {
       element: (
         <Button variant="ghost" asChild>
