@@ -173,7 +173,7 @@ export const Footer = ({
               target="_blank"
               aria-label="EFP"
             >
-              <EfpIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200 w-5 h-5 grayscale" />
+              <EfpIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200 w-6 h-6" />
             </Link>
             <Link
               href="https://t.me/namehash"
