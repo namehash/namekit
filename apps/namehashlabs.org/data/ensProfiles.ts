@@ -41,7 +41,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     "0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5",
     buildProfile({
       ensName: "nick.eth",
-      title: "Founder and CEO of ENS & Ethereum Foundation Alumni",
+      title: "Founder and Lead Developer of ENS & Ethereum Foundation Alumni",
       displayName: "Nick Johnson",
       twitterProfile: "https://x.com/nicksdjohnson",
     }),
