@@ -425,7 +425,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
     }
 
     return (
-      <div className="w-full flex flex-col space-y-4">
+      <div className="w-full max-w-[100vw] flex flex-col space-y-4">
         {currentCollections.related_collections.map(
           (collection: NameGraphCollection) => (
             <div key={collection.collection_id} className="w-full">

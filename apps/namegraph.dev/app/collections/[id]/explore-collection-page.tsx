@@ -1,7 +1,7 @@
 "use client";
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import { SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Noto_Emoji } from "next/font/google";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { CollectionCard } from "@/components/collections/collection-card";
