@@ -20,6 +20,17 @@ export const metadata = {
   title: "NameGraph: Collect all the ENS names you love",
   description: "Explore the world's largest knowledge graph of names",
   metadataBase: new URL("https://namegraph.dev"),
+  openGraph: {
+    title: "NameGraph: Collect all the ENS names you love",
+    description: "Explore the world's largest knowledge graph of names",
+    url: "https://namegraph.dev",
+    siteName: "NameGraph",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "NameGraph: Collect all the ENS names you love",
+    description: "Explore the world's largest knowledge graph of names",
+  },
 };
 
 export default function RootLayout({
