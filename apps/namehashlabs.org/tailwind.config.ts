@@ -26,6 +26,13 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-inter)", ...defaultTheme.fontFamily.sans],
       },
+      backgroundImage: {
+        "skeleton-shimmer":
+          "linear-gradient(90deg, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0.2) 20%, rgba(255, 255, 255, 0.5) 60%, rgba(255, 255, 255, 0))",
+      },
+      backgroundColor: {
+        skeleton: "rgba(0, 0, 0, 0.05)",
+      },
     },
     keyframes: {
       spin: {
@@ -65,6 +72,14 @@ const config: Config = {
         "0%": { transform: "rotate(0deg)" },
         "100%": { transform: "rotate(360deg)" },
       },
+      shimmer: {
+        "0%": { transform: "translateX(-100%)" },
+        "100%": { transform: "translateX(100%)" },
+      },
+      pulse: {
+        "0%, 100%": { opacity: "1" },
+        "50%": { opacity: "0.2" },
+      },
     },
     animation: {
       fadeIn: "fadeIn 1s linear forwards",
@@ -75,6 +90,9 @@ const config: Config = {
       slideOut: "slideOut 0.5s ease-in",
       widen: "widen 5s linear forwards",
       spin: "spin 1s linear infinite",
+      skeleton: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+      shimmer: "shimmer 2s infinite linear",
+      pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
     },
   },
   plugins: [],
