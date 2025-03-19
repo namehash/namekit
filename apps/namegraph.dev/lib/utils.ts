@@ -142,9 +142,10 @@ export const findCollectionsByString = async (
 
 export const findCollectionsByCollection = async (
   collection_id: string,
+  max_related_collections?: number,
 ): Promise<NameGraphFindCollectionsResponse> => {
   const nameGeneratorSuggestions =
-    await NameGraphClient.findCollectionsByCollection(collection_id);
+    await NameGraphClient.findCollectionsByCollection(collection_id, {max_related_collections});
 
   return nameGeneratorSuggestions;
 };
@@ -286,3 +287,7 @@ export const getExternalLinkURLForName = (host: ExternalLinkHosts, name: string)
 }
 
 export const ZEROED_ADDRESS = "0x0000000000000000000000000000000000000000"
+
+export const formatNumber = (num: number): string => {
+  return new Intl.NumberFormat().format(num);
+}

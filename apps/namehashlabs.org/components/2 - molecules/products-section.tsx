@@ -11,6 +11,8 @@ import NextLink from "next/link";
 
 import { SectionText, SectionTitle } from "../1 - atoms";
 
+import making_the_unknown_img from "/public/images/making_the_unknown.svg";
+
 interface ProductProps {
   label: {
     icon: React.ReactElement;
@@ -168,6 +170,39 @@ const products: ProductProps[] = [
     buttonLabel: "Learn more",
     buttonUrl: "https://ensnode.io",
     sectionId: "ens-node",
+  },
+  {
+    title: "ENSRainbow",
+    subtitle:
+      "Making the unknown, known. Heal millions of unknown ENS names with this ENSNode sidecar service.",
+    label: {
+      title: "ENS Developer Tooling",
+      icon: <ChartBarSquareIcon className="h-5 w-5 text-gray-500" />,
+    },
+    buttonLabel: "Learn more",
+    buttonUrl: "https://ensrainbow.io",
+    sectionId: "ens-rainbow",
+    illustration: (
+      <div className="w-full h-auto z-10">
+        <Image
+          quality={100}
+          width={568}
+          height={360}
+          className="w-full h-auto"
+          src={making_the_unknown_img}
+          alt="hero"
+        />
+      </div>
+    ),
+    gradient: (
+      <div
+        className="absolute inset-0 rounded-lg opacity-30 z-0"
+        style={{
+          background:
+            "radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.00) 0%, #FFF 100%), linear-gradient(90deg, #FFAF00 0%, #F112D9 32.29%, #4C3FA0 70.83%, #2ED3C6 95.83%)",
+        }}
+      />
+    ),
   },
   {
     title: "NameGuard",

@@ -375,7 +375,9 @@ export class NameGraph {
             label_diversity_ratio: DEFAULT_LABEL_DIVERSITY_RATIO,
             min_other_collections: DEFAULT_MIN_OTHER_COLLECTIONS,
             max_other_collections: DEFAULT_MAX_OTHER_COLLECTIONS,
-            max_total_collections: DEFAULT_MAX_TOTAL_COLLECTIONS,
+            max_total_collections: Math.max(
+                max_related_collections + DEFAULT_MAX_OTHER_COLLECTIONS,
+                DEFAULT_MAX_TOTAL_COLLECTIONS),
             collection_id,
         };
 

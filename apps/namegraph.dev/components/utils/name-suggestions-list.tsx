@@ -11,31 +11,28 @@ import {
 } from "../use-query-params";
 import { DisplayedName } from "@namehash/nameguard-react";
 import Skeleton from "@/components/skeleton";
-import { useScreenSize } from "../nft-avatar/use-screen-size";
 import { useState } from "react";
 import { DEFAULT_ITEMS_PER_PAGE } from "../collections/utils";
 
 interface NameSuggestionsListProps {
+  numberOfSkeletons?: number;
   suggestions?: NameGraphSuggestion[] | null;
   loading?: boolean;
 }
 
-const GRID_ROWS = 5;
-const GRID_COLUMNS = DEFAULT_ITEMS_PER_PAGE / GRID_ROWS;
-const MAX_PILL_WIDTH = 150;
-const PILL_HEIGHT = 40;
+const MAX_PILL_WIDTH = 250;
 
 export const NameSuggestionsList = ({
+  numberOfSkeletons = DEFAULT_ITEMS_PER_PAGE,
   suggestions,
   loading,
 }: NameSuggestionsListProps) => {
   const { params } = useQueryParams();
-  const { isMobile, isTablet } = useScreenSize();
 
   const renderSkeletons = () => {
-    return Array.from({ length: DEFAULT_ITEMS_PER_PAGE }).map((_, index) => (
+    return Array.from({ length: numberOfSkeletons }).map((_, index) => (
       <div key={`skeleton-${index}`} className="w-full h-full">
-        <Skeleton className="h-10 w-full rounded-[6px] pl-1 pr-3 py-1" />
+        <Skeleton className="h-[56px] w-full rounded-[6px]" />
       </div>
     ));
   };
@@ -43,7 +40,7 @@ export const NameSuggestionsList = ({
   const renderSuggestions = () => {
     const paddedSuggestions = [
       ...(suggestions || []),
-      ...Array(DEFAULT_ITEMS_PER_PAGE - (suggestions?.length || 0)).fill(null),
+      ...Array(numberOfSkeletons - (suggestions?.length || 0)).fill(null),
     ];
 
     return paddedSuggestions.map((suggestion, index) => {
@@ -60,23 +57,15 @@ export const NameSuggestionsList = ({
   };
 
   if (!!suggestions && !suggestions.length && !loading) {
-    return <div className="p-3">No name suggestions found</div>;
+    return <>No name suggestions found</>;
   }
 
   if (!suggestions && !loading) {
-    return <div className="p-3">We invite you to click the button above</div>;
+    return <></>;
   }
 
   return (
-    <div
-      className="w-full h-full grid gap-3"
-      style={{
-        gridTemplateColumns: `repeat(${isMobile ? 1 : isTablet ? 2 : GRID_COLUMNS}, minmax(${MAX_PILL_WIDTH}px, 1fr))`,
-        gridTemplateRows: `repeat(${GRID_ROWS}, ${PILL_HEIGHT}px)`,
-        gridAutoFlow: "row",
-        alignItems: "stretch",
-      }}
-    >
+    <div className="w-full h-full grid gap-3">
       {loading ? renderSkeletons() : renderSuggestions()}
     </div>
   );
@@ -115,10 +104,10 @@ const NameSuggestion = ({
         }}
         className="w-full h-[80px] left-[-100%] absolute opacity-20 brightness-125"
       ></div>
-      <div className="mr-2">
+      <div className="mr-4">
         <NftAvatar
           withLink={false}
-          size={AvatarSize.MINI}
+          size={AvatarSize.SMALL}
           name={buildENSName(
             NameWithCurrentTld({ name: suggestion.label, params }),
           )}
@@ -126,6 +115,7 @@ const NameSuggestion = ({
         />
       </div>
       <DisplayedName
+        textStylingClasses="!text-lg"
         maxDisplayWidth={MAX_PILL_WIDTH}
         name={buildENSName(
           NameWithCurrentTld({ name: suggestion.label, params }),

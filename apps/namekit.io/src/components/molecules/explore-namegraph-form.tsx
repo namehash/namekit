@@ -16,7 +16,7 @@ export const ExploreNameGraphForm = () => {
 
     const encodedSearch = encodeURIComponent(exploreNameGraphInput);
     window.open(
-      `https://www.namegraph.dev/collections?search=${encodedSearch}`,
+      `https://www.namegraph.dev/?collectionsSearch=search_${encodedSearch}`,
       "_blank",
     );
   };

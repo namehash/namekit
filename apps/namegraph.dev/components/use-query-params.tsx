@@ -4,7 +4,10 @@ import { createContext, useContext, useCallback, ReactNode } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { NameGraphSortOrderOptions } from "@namehash/namegraph-sdk/utils";
 import { Tlds } from "./collections/tld";
-import { NameRelatedCollectionsTabs } from "./collections/utils";
+import {
+  NameRelatedCollectionsTabs,
+  NameSuggestionsTabs,
+} from "./collections/utils";
 
 export interface QueryParams {
   collectionsSearch: {

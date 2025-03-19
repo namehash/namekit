@@ -3,12 +3,15 @@ import cc from "classcat";
 import Link from "next/link";
 import { RatingIcon, ratingTextColor } from "@namehash/nameguard-react";
 import Skeleton from "../skeleton";
+
 interface Props {
   nameGuardReport?: ConsolidatedNameGuardReport;
+  loading?: boolean;
 }
-/**  * @param nameGuardReport - the consolidated NameGuard API report of the given name  */
-export const NameGuardSummary = ({ nameGuardReport }: Props) => {
-  if (!nameGuardReport) {
+
+/** @param nameGuardReport - the consolidated NameGuard API report of the given name  */
+export const NameGuardSummary = ({ nameGuardReport, loading }: Props) => {
+  if (!nameGuardReport || loading) {
     return (
       <div className="w-full md:w-[80%] lg:w-full md:flex-wrap p-4 text-black items-center md:flex md:flex-col md:justify-start md:items-start text-black items-center">
         <div className="flex flex-col">
@@ -24,7 +27,7 @@ export const NameGuardSummary = ({ nameGuardReport }: Props) => {
             </div>
           </div>
         </div>
-        <div className="md:mt-[18px] md:ml-10 ml-3 lg:mt-4 lg:ml-10">
+        <div className="md:mt-[18px] md:ml-10 ml-10 lg:mt-4 lg:mb-0.5 lg:ml-10">
           <Skeleton className="w-40 h-6" />
         </div>
       </div>
