@@ -22,8 +22,9 @@ export const metadata = {
   openGraph: {
     title: "NameGraph: Collect all the ENS names you love",
     description: "Explore the world's largest knowledge graph of names",
-    // url: "https://namegraph.dev",
     siteName: "NameGraph",
+    url: "/",
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
