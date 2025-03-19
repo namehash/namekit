@@ -101,24 +101,37 @@ export const HomePage = () => {
             </h1>
           </div>
           <p className="text-center not-italic font-normal text-gray-500 text-lg leading-7 sm:text-base sm:leading-6 sm:font-light">
-            Help your users discover ENS names they love with NameGraph.
+            <Balancer>
+              Help your users discover ENS names they love with NameGraph.
+            </Balancer>
           </p>
           <p className="text-center not-italic font-normal text-gray-500 text-lg leading-7 sm:text-base sm:leading-6 sm:font-light">
-            NameGraph empowers ENS registrar apps to build new name discovery
-            user experiences. Surf more than 21 million name ideas across more
-            than 400,000 name collections, or generate infinite related name
-            suggestions.
+            <Balancer>
+              NameGraph empowers ENS registrar apps to build new name discovery
+              user experiences.
+            </Balancer>
           </p>
           <div className="flex mx-auto mt-6">
             <HeroStartCommand />
           </div>
+        </div>
+        <div className="max-w-[1216px] mx-auto flex flex-col items-center justify-start bg-gray-50 rounded-xl p-10 mt-10 w-full">
+          <div className="flex flex-col items-center justify-center gap-3">
+            <p className="text-lg font-semibold">Explore the NameGraph</p>
 
-          <p className="text-lg font-semibold mb-4 mt-12">
-            Explore the NameGraph
-          </p>
-          <WritersBlockPills suggestions={suggestions}></WritersBlockPills>
-          <div className="my-3">
+            <p className="text-center not-italic font-normal text-gray-500 text-lg leading-7 sm:text-base sm:leading-6 sm:font-light">
+              Generate infinite related name suggestions.
+            </p>
+          </div>
+
+          <div className="my-5">
             <Button onClick={ideate}>Ideate</Button>
+          </div>
+
+          <div className="border-t border-gray-200 my-5 w-full" />
+
+          <div className="my-5">
+            <WritersBlockPills suggestions={suggestions}></WritersBlockPills>
           </div>
         </div>
       </div>

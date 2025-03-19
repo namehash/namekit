@@ -21,7 +21,7 @@ export const WritersBlockPill = ({
         e.preventDefault();
         router.push(`/collections/${suggestion.collectionId}`);
       }}
-      className="truncate hover:cursor-pointer hover:bg-gray-100 hover:transition ens-webfont relative min-w-[180px] min-h-[48px] bg-white border py-1.5 px-5 mb-2 whitespace-nowrap text-sm font-medium leading-5 transition rounded-xl focus-visible:outline-black border-gray-200"
+      className="truncate hover:cursor-pointer w-full md:w-auto flex flex-col items-center justify-center hover:bg-gray-100 hover:transition ens-webfont relative min-w-[180px] min-h-[48px] bg-white border py-1.5 px-5 whitespace-nowrap text-sm font-medium leading-5 transition rounded-xl focus-visible:outline-black border-gray-200"
     >
       <div className="text-gray-500 relative">
         <p className="break-all">{suggestion.collectionName}</p>
