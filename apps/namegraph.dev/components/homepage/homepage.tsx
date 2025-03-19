@@ -44,11 +44,24 @@ export const HomePage = () => {
       </div>
 
       <div className="absolute top-0 left-0 w-[100vw] h-[100vh] flex items-start md:items-cente justify-center lg:items-center lg:justify-start lg:pl-[5%] xl:pl-[16.5%]">
-        <div className="relative w-full max-w-[500px] h-[300px] mt-5 md:mt-20 md:-translate-y-16 sm:md:-translate-y-24">
-          <h1 className="absolute w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white animate-fadeInFadeOut x-50 text-center not-italic font-bold text-4xl leading-10 sm:text-5xl sm:leading-[52px] text-shadow-thick">
+        <div className="relative w-full max-w-[500px] h-[200px] mt-5 md:mt-20 md:-translate-y-16 sm:md:-translate-y-24">
+          <div
+            className="animate-longFadeIn"
+            style={{
+              position: "absolute",
+              top: 0,
+              width: "500px",
+              height: "200px",
+              left: 0,
+              background:
+                "radial-gradient(ellipse at center, rgba(0, 0, 0, 0.9) 10%, rgba(0, 0, 0, 0.7) 25%, rgba(0, 0, 0, 0.5) 40%, rgba(0, 0, 0, 0.4) 55%, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 0) 85%, rgba(0, 0, 0, 0) 100%)",
+              borderRadius: "9999px",
+            }}
+          ></div>
+          <h1 className="absolute w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white animate-fadeInFadeOut x-50 text-center not-italic font-bold text-4xl leading-10 sm:text-5xl sm:leading-[52px] text-shadow-strong">
             <Balancer>From the infinite of possible names</Balancer>
           </h1>
-          <h1 className="absolute w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white animate-longFadeIn x-50 text-center not-italic font-bold text-4xl leading-10 sm:text-5xl sm:leading-[52px] text-shadow-thick">
+          <h1 className="absolute w-full top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white animate-longFadeIn x-50 text-center not-italic font-bold text-4xl leading-10 sm:text-5xl sm:leading-[52px] text-shadow-strong">
             <Balancer>Collect all the ENS names you love</Balancer>
           </h1>
         </div>
