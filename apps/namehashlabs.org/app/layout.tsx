@@ -1,6 +1,7 @@
 import "./globals.css";
 import "@namehash/namekit-react/styles.css";
 import "@namehash/ens-webfont";
+import "ethereum-identity-kit/css";
 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -20,6 +21,7 @@ import {
   defaultMetaTwitter,
 } from "./shared-metadata";
 import { Footer } from "@namehash/internal";
+import Providers from "@/components/3 - organisms/Providers";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -60,22 +62,24 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.variable}>
-        <div className="w-full">
-          <HeadlineBanner />
-          <div className="w-full flex flex-col relative items-center justify-center">
-            <div className="absolute top-0 left-0 w-full z-40">
-              <Header />
+      <Providers>
+        <body className={inter.variable}>
+          <div className="w-full">
+            <HeadlineBanner />
+            <div className="w-full flex flex-col relative items-center justify-center">
+              <div className="absolute top-0 left-0 w-full z-40">
+                <Header />
+              </div>
+
+              {children}
             </div>
 
-            {children}
+            <Footer openResourcesInNewTab={false} />
           </div>
-
-          <Footer openResourcesInNewTab={false} />
-        </div>
-        <SpeedInsights />
-        <Analytics />
-      </body>
+          <SpeedInsights />
+          <Analytics />
+        </body>
+      </Providers>
     </html>
   );
 }

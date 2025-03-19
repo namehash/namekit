@@ -5,3 +5,4 @@ export * from "./farcaster-icon";
 export * from "./github-icon";
 export * from "./email-icon";
 export * from "./service-provider-badge";
+export * from "./efp-icon";

@@ -53,8 +53,20 @@ export interface NavigationConfigurations {
 }
 
 export const MAX_NUMBER_OF_COLLECTIONS_MEMBERSHIP_IN_NAMEGRAPH_API = 1000;
+export const DEFAULT_NUMBER_OF_RELATED_COLLECTIONS = 10;
+export const DEFAULT_NUMBER_OF_NAMES_TO_SCRAMBLE = 10;
+export const DEFAULT_NUMBER_OF_NAMES_TO_IDEATE = 5;
 export const DEFAULT_ITEMS_PER_PAGE = 20;
 export const DEFAULT_PAGE_NUMBER = 1;
+
+export const NameSuggestionsTabs = {
+  Names: "Names",
+  Sample: "Sample",
+  Scramble: "Scramble",
+} as const;
+
+export type NameSuggestionsTabs =
+  (typeof NameRelatedCollectionsTabs)[keyof typeof NameRelatedCollectionsTabs];
 
 export const FromScrambleMethodToText: Record<ScrambleMethod, string> = {
   [ScrambleMethod["full-shuffle"]]: "Full Shuffle",

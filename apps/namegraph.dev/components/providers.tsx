@@ -8,12 +8,14 @@ import { config } from "@/lib/wagmi";
 import {
   DEFAULT_PAGE_NUMBER,
   NameRelatedCollectionsTabs,
+  NameSuggestionsTabs,
 } from "./collections/utils";
 
 const queryClient = new QueryClient();
 
 export const DEFAULT_SORTING_ORDER = NameGraphSortOrderOptions.AI;
-export const DEFAULT_ACTIVE_TAB = NameRelatedCollectionsTabs.ByConcept;
+export const DEFAULT_COLLECTIONS_TAB = NameRelatedCollectionsTabs.ByConcept;
+export const DEFAULT_SUGGESTIONS_TAB = NameSuggestionsTabs.Names;
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -27,7 +29,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
                 [NameRelatedCollectionsTabs.ByConcept]: undefined,
                 [NameRelatedCollectionsTabs.ByMembership]: undefined,
               },
-              tab: DEFAULT_ACTIVE_TAB,
+              tab: DEFAULT_COLLECTIONS_TAB,
               orderBy: NameGraphSortOrderOptions.AI,
             },
             tld: {
@@ -41,7 +43,7 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
                 [NameRelatedCollectionsTabs.ByConcept]: undefined,
                 [NameRelatedCollectionsTabs.ByMembership]: undefined,
               },
-              tab: DEFAULT_ACTIVE_TAB,
+              tab: DEFAULT_COLLECTIONS_TAB,
               orderBy: DEFAULT_SORTING_ORDER,
             },
           }}

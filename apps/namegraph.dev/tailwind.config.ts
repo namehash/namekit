@@ -50,6 +50,10 @@ const config: Config = {
           "100%": { transform: "translate(-33%, -57%)" },
         },
       },
+      textShadow: {
+        thick:
+          "0 2px 4px rgba(0, 0, 0, 1), 0 0 8px rgba(0, 0, 0, 1), 0 0 16px rgba(0, 0, 0, 0.9), 0 0 24px rgba(0, 0, 0, 0.8), 0 0 32px rgba(0, 0, 0, 0.7)",
+      },
     },
     animation: {
       fadeIn: "fadeIn 1s linear forwards",
@@ -60,6 +64,17 @@ const config: Config = {
         "fadeIn 1s linear forwards, moveLeft 8s ease-in-out forwards",
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    function ({ addUtilities }: { addUtilities: any }) {
+      const newUtilities = {
+        ".text-shadow-thick": {
+          textShadow:
+            "0 2px 4px rgba(0, 0, 0, 1), 0 0 8px rgba(0, 0, 0, 1), 0 0 16px rgba(0, 0, 0, 0.9), 0 0 24px rgba(0, 0, 0, 0.8), 0 0 32px rgba(0, 0, 0, 0.7)",
+        },
+      };
+      addUtilities(newUtilities);
+    },
+  ],
 };
 export default config;

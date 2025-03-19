@@ -93,7 +93,7 @@ export const AvatarIcons = (props: React.SVGProps<SVGSVGElement>) => (
         fill="#fff"
       />
     </mask>
-    <g clip-path="url(#c)">
+    <g clipPath="url(#c)">
       <g mask="url(#d)">
         <path d="m40 4.5h-40v40h40z" fill="#969697" />
         <path
