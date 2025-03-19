@@ -27,6 +27,7 @@ export const metadata = {
     siteName: "NameGraph",
   },
   twitter: {
+    card: "summary_large_image",
     title: "NameGraph: Collect all the ENS names you love",
     description: "Explore the world's largest knowledge graph of names",
   },
