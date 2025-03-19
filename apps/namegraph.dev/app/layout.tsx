@@ -19,6 +19,17 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "NameGraph: Collect all the ENS names you love",
   description: "Explore the world's largest knowledge graph of names",
+  metadataBase: new URL("https://namegraph.dev"),
+  openGraph: {
+    title: "NameGraph: Collect all the ENS names you love",
+    description: "Explore the world's largest knowledge graph of names",
+    url: "https://namegraph.dev",
+    siteName: "NameGraph",
+  },
+  twitter: {
+    title: "NameGraph: Collect all the ENS names you love",
+    description: "Explore the world's largest knowledge graph of names",
+  },
 };
 
 export default function RootLayout({
