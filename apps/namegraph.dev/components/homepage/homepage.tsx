@@ -101,11 +101,15 @@ export const HomePage = () => {
             </h1>
           </div>
           <p className="text-center not-italic font-normal text-gray-500 text-lg leading-7 sm:text-base sm:leading-6 sm:font-light">
-            Help your users discover ENS names they love with NameGraph.
+            <Balancer>
+              Help your users discover ENS names they love with NameGraph.
+            </Balancer>
           </p>
           <p className="text-center not-italic font-normal text-gray-500 text-lg leading-7 sm:text-base sm:leading-6 sm:font-light">
-            NameGraph empowers ENS registrar apps to build new name discovery
-            user experiences.
+            <Balancer>
+              NameGraph empowers ENS registrar apps to build new name discovery
+              user experiences.
+            </Balancer>
           </p>
           <div className="flex mx-auto mt-6">
             <HeroStartCommand />
