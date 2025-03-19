@@ -23,7 +23,7 @@ export const metadata = {
     title: "NameGraph: Collect all the ENS names you love",
     description: "Explore the world's largest knowledge graph of names",
     siteName: "NameGraph",
-    url: "/",
+    url: "https://namegraph.dev",
     type: "website",
   },
   twitter: {
