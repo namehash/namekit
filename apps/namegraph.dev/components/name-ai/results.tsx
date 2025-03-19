@@ -15,15 +15,24 @@ export function TokenAnalysisResults({
   return (
     <div className="space-y-6 p-3 pb-0 border border-gray-200 rounded">
       <div className="md:w-[80%] md:mx-auto lg:w-full flex flex-col">
-        <div className="flex justify-start space-x-2 items-center mb-3">
-          <NameAILogo className="w-6 h-6" />
-          <Link
-            className="animated-black-underline font-medium text-right"
-            href={`https://www.nameai.io/tokenization?label=${label}`}
-            target="_blank"
-          >
-            NameAI Tokenization
-          </Link>
+        <div className="flex justify-between items-center mb-3">
+          <div>
+            <div className="flex justify-start space-x-2 items-center">
+              <NameAILogo className="w-6 h-6" />
+              <Link
+                className="animated-black-underline font-medium text-right"
+                href={`https://www.nameai.io/tokenization?label=${label}`}
+                target="_blank"
+              >
+                NameAI Tokenization
+              </Link>
+            </div>
+          </div>
+          {analysis.word_count ? (
+            <div className="text-sm text-gray-400 font-semibold">
+              {analysis.word_count} word{analysis.word_count > 1 ? "s" : ""}
+            </div>
+          ) : null}
         </div>
         <div className="bg-white flex items-center mb-3 h-12">
           {topTokenization.length > 0 ? (

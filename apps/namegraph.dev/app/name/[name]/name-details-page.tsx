@@ -23,7 +23,6 @@ import {
   NameGraphFetchTopCollectionMembersResponse,
   NameGraphGroupingCategory,
   NameGraphSortOrderOptions,
-  NameGraphSuggestion,
 } from "@namehash/namegraph-sdk/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
@@ -47,7 +46,7 @@ import {
   TabsCollectionsStorage,
 } from "@/components/collections/utils";
 import {
-  DEFAULT_ACTIVE_TAB,
+  DEFAULT_COLLECTIONS_TAB,
   DEFAULT_SORTING_ORDER,
 } from "@/components/providers";
 import {
@@ -57,7 +56,6 @@ import {
   FromNameGraphSortOrderToDropdownTextContent,
   getCollectionsForQuery,
   getExternalLinkURLForName,
-  getNameDetailsPageHref,
   ZEROED_ADDRESS,
 } from "@/lib/utils";
 import { CollectionCard } from "@/components/collections/collection-card";
@@ -66,15 +64,10 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Skeleton from "@/components/skeleton";
 import { analyzeLabel } from "@/components/name-ai/actions";
-import { Link } from "@namehash/namekit-react";
 import { NLPLabelAnalysis } from "@namehash/nameai";
 import { EnsOutlineIcon } from "@/components/nft-avatar/ens-outline-icon";
 import { EnsVisionIcon } from "@/components/name/vision-icon";
-
-interface CollectionsData {
-  sort_order: NameGraphSortOrderOptions;
-  related_collections: any[];
-}
+import { OtherCategories } from "@/components/collections/other-categories";
 
 export const NameDetailsPage = ({ name }: { name: string }) => {
   let label = name;
@@ -85,7 +78,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
   }
 
   const { params, setParams } = useQueryParams();
-  const currentTab = params.nameDetails.tab || DEFAULT_ACTIVE_TAB;
+  const currentTab = params.nameDetails.tab || DEFAULT_COLLECTIONS_TAB;
 
   {
     /* Collections state with separate page tracking for each tab */
@@ -153,15 +146,16 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
     key: "com.discord",
   });
 
-  const { data: nameguardReport } = useSWR<NameGuardReport>(
-    NameWithCurrentTld({ name: label, params }),
-    (n: string) => nameguard.inspectName(n),
-    {
-      revalidateIfStale: false,
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    },
-  );
+  const { data: nameguardReport, isLoading: loadingNameGuardReport } =
+    useSWR<NameGuardReport>(
+      NameWithCurrentTld({ name: label, params }),
+      (n: string) => nameguard.inspectName(n),
+      {
+        revalidateIfStale: false,
+        revalidateOnFocus: false,
+        revalidateOnReconnect: false,
+      },
+    );
 
   const fetchCollections = useCallback(
     async (
@@ -417,8 +411,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
     if (isLoading) {
       return (
         <div className="w-full flex flex-col space-y-4">
-          <CollectionsCardsSkeleton className="flex flex-col space-y-[30px]" />
-          <CollectionsCardsSkeleton />
+          <CollectionsCardsSkeleton className="flex flex-col space-y-[22px] md:space-y-[18px]" />
         </div>
       );
     }
@@ -472,7 +465,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
   }, [params.tld.suffix]);
 
   return (
-    <div className="max-w-7xl overflow-x-hidden flex flex-col space-y-8 mx-auto py-8 w-full lg:space-y-0 lg:grid lg:gap-8 lg:grid-cols-[335px_minmax(335px,_1fr)] xl:px-6">
+    <div className="overflow-hidden max-w-7xl flex flex-col space-y-8 mx-auto py-8 w-full lg:space-y-0 lg:grid lg:gap-8 lg:grid-cols-[335px_minmax(335px,_1fr)] xl:px-6">
       {/* Left Column */}
       <div className="lg:w-full flex justify-start flex-col mx-6 xl:mx-0">
         <div key={ensName?.name} className="mx-auto">
@@ -511,7 +504,12 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
 
           {/* NameGuard Summary */}
           <div className="w-full lg:mt-4 flex-1 flex justify-center items-center border border-gray-200 rounded-md md:w-1/2 lg:w-auto">
-            <NameGuardSummary nameGuardReport={nameguardReport} />
+            <NameGuardSummary
+              nameGuardReport={
+                !!params.tld.suffix ? nameguardReport : undefined
+              }
+              loading={loadingNameGuardReport}
+            />
           </div>
         </div>
 
@@ -629,7 +627,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
                               {loading[
                                 key as keyof typeof NameRelatedCollectionsTabs
                               ] ? (
-                                <Skeleton className="w-[330px] h-7 my-1" />
+                                <Skeleton className="w-[260px] h-6 my-1.5" />
                               ) : (
                                 getNavigationTextGuide(
                                   key as keyof typeof NameRelatedCollectionsTabs,
@@ -775,17 +773,15 @@ const LabelAndLinks = ({
   params: QueryParams;
 }) => {
   return (
-    <div className="w-full justify-between items-center md:flex space-x-4 md:mb-8">
-      <div>
-        <div className="text-5xl font-bold md:mb-4 break-all">
-          {label ? (
-            <>{NameWithCurrentTld({ name: label, params })}</>
-          ) : (
-            <Skeleton className="w-40 h-8" />
-          )}
-        </div>
+    <div className="w-full justify-between items-center md:flex space-x-4 mb-4">
+      <div className="flex justify-center text-center text-4xl lg:text-5xl font-bold md:mb-4 break-all">
+        {label && params.tld.suffix ? (
+          <>{NameWithCurrentTld({ name: label, params })}</>
+        ) : (
+          <Skeleton className="w-80 h-10 lg:my-1" />
+        )}
       </div>
-      <div className="flex space-x-6 items-center">
+      <div className="flex space-x-6 items-center justify-center h-10 mt-4 lg:mt-0">
         {Object.keys(ExternalLinkHosts).map((host) => {
           const URLForName = getExternalLinkURLForName(
             host as ExternalLinkHosts,
@@ -794,59 +790,18 @@ const LabelAndLinks = ({
 
           if (!URLForName) return <></>;
 
-          return (
-            <a key={host} target="_blank" href={URLForName}>
-              {getIconForExternalLinkHost(host as ExternalLinkHosts)}
-            </a>
-          );
+          if (label && params.tld.suffix) {
+            return (
+              <a key={host} target="_blank" href={URLForName}>
+                {getIconForExternalLinkHost(host as ExternalLinkHosts)}
+              </a>
+            );
+          } else {
+            return <Skeleton key={host} className="w-16 h-10" />;
+          }
         })}
       </div>
     </div>
-  );
-};
-
-const OtherCategories = ({
-  otherCategories,
-  params,
-}: {
-  otherCategories?: NameGraphFetchTopCollectionMembersResponse[];
-  params: QueryParams;
-}) => {
-  return (
-    <>
-      {otherCategories && otherCategories.length > 0 && (
-        <div className="mx-auto w-full">
-          <div className="w-full rounded-lg border border-gray-200">
-            <p className="text-[18px] font-semibold px-5 py-2.5 border-b border-gray-200">
-              Explore other names
-            </p>
-            {otherCategories.map((collection) => (
-              <div key={collection.collection_id}>
-                <p className="py-3 px-5 font-semibold text-sm text-gray-500">
-                  {collection.name}
-                </p>
-                <div className="flex flex-col">
-                  {collection.suggestions
-                    .slice(0, 3)
-                    .map((suggestion: NameGraphSuggestion) => (
-                      <Link
-                        key={suggestion.label}
-                        href={getNameDetailsPageHref(suggestion.label)}
-                        className="p-5 border-t border-gray-200 font-semibold text-base text-black"
-                      >
-                        {NameWithCurrentTld({
-                          name: suggestion.label,
-                          params,
-                        })}
-                      </Link>
-                    ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-    </>
   );
 };
 
