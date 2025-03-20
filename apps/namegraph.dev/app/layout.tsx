@@ -1,6 +1,6 @@
 import "./globals.css";
 import Link from "next/link";
-import { Inter } from "next/font/google";
+import { Inter, Noto_Emoji } from "next/font/google";
 import { GithubIcon } from "@/components/footer/github-icon";
 import { TldSelect } from "@/components/tld-select";
 import { Providers } from "@/components/providers";

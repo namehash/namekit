@@ -29,9 +29,9 @@ export function TokenAnalysisResults({
             </div>
           </div>
           {analysis.word_count ? (
-            <div className="text-sm text-gray-400 font-semibold">
+            <p className="text-xs md:text-sm font-light text-gray-500">
               {analysis.word_count} word{analysis.word_count > 1 ? "s" : ""}
-            </div>
+            </p>
           ) : null}
         </div>
         <div className="bg-white flex items-center mb-3 h-12">
