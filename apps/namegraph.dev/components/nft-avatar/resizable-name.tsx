@@ -4,16 +4,11 @@
 import React from "react";
 import { useEffect, useRef, useState } from "react";
 
-/*
-  Launch Readiness Removal: NFT Details Page is not ready!
-
-    import Link from "next/link";
-*/
 import cc from "classcat";
 import { ENSName, Normalization } from "@namehash/ens-utils";
 import { DomainCardProps } from "../../../../packages/namekit-react/src/components/DomainCard";
 
-interface DisplayedNameProps {
+interface ResizableNameProps {
   /*
     The font-size starts at 'maxFontSize' and is reduced until:
     1. The displayed name fits in one line OR
@@ -22,7 +17,7 @@ interface DisplayedNameProps {
   minFontSize?: number;
   maxFontSize?: number;
   isClickableLink?: boolean;
-  fontConfigClasses?: DisplayedNameConfig;
+  fontConfigClasses?: ResizableNameConfig;
   domainName: ENSName | null; // when null we show the skeleton
 
   /*
@@ -34,16 +29,16 @@ interface DisplayedNameProps {
   domainCard?: DomainCardProps | null;
   /*
     With 'parentReferenceForFontResizing' set, the displayed name font-size keeps decreasing
-    until it fits the 'linesToFitDisplayedName' value, stoping the resizing process there then.
+    until it fits the 'linesToFitResizableName' value, stoping the resizing process there then.
   */
-  linesToFitDisplayedName?: number;
+  linesToFitResizableName?: number;
   /*
     For dinamically updating font-size based on parent width,
     the prop parentReferenceForFontResizing is required.
   */
   parentReferenceForFontResizing?: React.RefObject<HTMLElement>;
   /*
-    If the name is too long to fit in 'linesToFitDisplayedName', reaching then the 'minFontSize'
+    If the name is too long to fit in 'linesToFitResizableName', reaching then the 'minFontSize'
     first, we'll truncated the name using 'lineClampCount' to determine how many lines of text
     to display. Truncated names not necessarely will show ellipsis, it depends on how many
     lines a name uses and how many lines are allowed to be displayed.
@@ -67,7 +62,7 @@ export const FontLineHeight = {
   },
 };
 
-export enum DisplayedNameConfig {
+export enum ResizableNameConfig {
   NFTDetailsPage = "font-bold text-4xl",
   DomainCard = "sm:text-lg font-semibold line-clamp-2",
   AccountPagesTableRow = "sm:text-md inline font-semibold truncate border-b border-black leading-none animated-black-underline",
@@ -85,22 +80,18 @@ export enum DisplayedNameConfig {
 */
 const DELAY_BETWEEN_FONT_SIZE_CALCULATION_AND_NAME_DISPLAYING = 0;
 
-export const DisplayedName = ({
+export const ResizableName = ({
   domainName,
   domainCard,
   minFontSize = 16,
   maxFontSize = 128,
-  /*
-    Launch Readiness Removal: NFT Details Page is not ready!
-      isClickableLink = false,
-  */
   onFinishedNameCalculations,
-  linesToFitDisplayedName = 2,
+  linesToFitResizableName = 2,
   parentReferenceForFontResizing,
   lineClampCount = LineClampCount.Two,
-  fontConfigClasses = DisplayedNameConfig.DomainCard,
+  fontConfigClasses = ResizableNameConfig.DomainCard,
   skeletonClasses = "w-40 h-3 bg-black bg-opacity-5 rounded",
-}: DisplayedNameProps) => {
+}: ResizableNameProps) => {
   const displayedNameRef = useRef<null | HTMLDivElement>(null);
   const [fontSize, setFontSize] = useState<number>(maxFontSize);
   const [displayName, setDisplayName] = useState(false);
@@ -244,7 +235,7 @@ export const DisplayedName = ({
 
       if (
         ((linesOfContent &&
-          linesOfContent >= linesToFitDisplayedName &&
+          linesOfContent >= linesToFitResizableName &&
           linesOfContent !== 1) ||
           copyDoesntFitParentMaxWidth ||
           !ensLabelElmHeight) &&
@@ -284,7 +275,7 @@ export const DisplayedName = ({
               Understand 'shouldCalculateBeforeDisplay' being false as:
               2. We are not calculating the displayed name font-size based on
                 its parent width, instead, we are using the fontConfigClasses
-                configured font-size to instantly display DisplayedName comp.
+                configured font-size to instantly display ResizableName comp.
             */
             "text-transparent pointer-events-none":
               (shouldCalculateBeforeDisplay &&

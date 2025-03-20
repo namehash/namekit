@@ -774,13 +774,13 @@ const LabelAndLinks = ({
 }) => {
   return (
     <div className="w-full justify-between items-center md:flex space-x-4 mb-4">
-      <div className="flex justify-center text-center text-4xl lg:text-5xl font-bold md:mb-4 break-all">
+      <h2 className="flex justify-center text-center text-4xl lg:text-5xl font-bold md:mb-4 break-all">
         {label && params.tld.suffix ? (
           <>{NameWithCurrentTld({ name: label, params })}</>
         ) : (
           <Skeleton className="w-80 h-10 lg:my-1" />
         )}
-      </div>
+      </h2>
       <div className="flex space-x-6 items-center justify-center h-10 mt-4 lg:mt-0">
         {Object.keys(ExternalLinkHosts).map((host) => {
           const URLForName = getExternalLinkURLForName(

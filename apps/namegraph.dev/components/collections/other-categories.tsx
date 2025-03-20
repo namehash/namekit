@@ -3,8 +3,8 @@ import {
   NameGraphSuggestion,
 } from "@namehash/namegraph-sdk/utils";
 import { NameWithCurrentTld, QueryParams } from "../use-query-params";
-import Link from "next/link";
 import { getNameDetailsPageHref } from "@/lib/utils";
+import { Link } from "@namehash/namekit-react";
 
 export const OtherCategories = ({
   otherCategories,

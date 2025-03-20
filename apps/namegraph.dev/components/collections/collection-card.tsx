@@ -1,12 +1,9 @@
 import { NameGraphCollection } from "@namehash/namegraph-sdk/utils";
-import { Link } from "@namehash/namekit-react";
 import { Noto_Emoji } from "next/font/google";
 import { formatNumber, getNameDetailsPageHref } from "@/lib/utils";
 import { NameWithCurrentTld, useQueryParams } from "../use-query-params";
-import { DisplayedName } from "@namehash/nameguard-react";
 import { buildENSName } from "@namehash/ens-utils";
-import { MouseEvent } from "react";
-
+import { DisplayedName } from "@namehash/nameguard-react";
 const notoBlack = Noto_Emoji({ preload: false });
 
 export const CollectionCard = ({
@@ -32,7 +29,6 @@ export const CollectionCard = ({
     <div className="group relative" key={collection.collection_id}>
       <div className="rounded-md border border-gray-200 group-hover:border-gray-400">
         <a
-          target="_blank"
           href={getLinkToPage()}
           className="related !no-underline transition rounded-lg py-3 flex items-start space-x-[18px] w-full"
         >
@@ -43,9 +39,7 @@ export const CollectionCard = ({
             className="ml-3 flex justify-center items-center rounded-md bg-background h-[72px] w-[72px] bg-gray-100"
           >
             <div className="relative flex items-center justify-center overflow-hidden">
-              <p className={`text-3xl ${notoBlack.className}`}>
-                {collection.avatar_emoji}
-              </p>
+              <p className={`text-3xl ${notoBlack.className}`}>{collection.avatar_emoji}</p>
             </div>
           </div>
           <div className="flex-1 overflow-hidden flex flex-col items-start">
@@ -54,13 +48,13 @@ export const CollectionCard = ({
                 <h3 className="!text-sm font-semibold truncate w-full flex justify-between">
                   {collection.title}
                 </h3>
-                <p className="hidden md:block text-xs md:text-sm mr-3 text-sm font-light text-gray-500 min-w-max">
+                <p className="hidden md:block text-xs md:text-sm mr-3 font-light text-gray-500 min-w-max">
                   {formatNumber(collection.number_of_labels)} name
                   {collection.number_of_labels !== 1 ? "s" : ""}
                 </p>
               </div>
               <p className="text-xs text-gray-500 truncate">by namegraph.eth</p>
-              <p className="md:hidden text-xs mr-3 text-sm font-light text-gray-500">
+              <p className="md:hidden text-xs mr-3 md:text-sm font-light text-gray-500">
                 {formatNumber(collection.number_of_labels)} name
                 {collection.number_of_labels !== 1 ? "s" : ""}
               </p>
@@ -69,7 +63,6 @@ export const CollectionCard = ({
               {collection.top_labels.map((tag) => (
                 <a
                   key={tag.label}
-                  target="_blank"
                   href={getLinkToPage(tag.label)}
                   className="hover:underline max-h-[28px] w-max bg-gray-100 !text-sm px-2 py-1 bg-muted rounded-full"
                 >

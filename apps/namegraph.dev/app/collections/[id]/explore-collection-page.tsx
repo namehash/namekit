@@ -347,7 +347,7 @@ export const ExploreCollectionPage = ({ id }: { id: string }) => {
                     ))}
                   </Tabs>
                 </div>
-                <div className="w-full md:w-1/2 flex flex-col space-y-8 mt-8">
+                <div className="w-full md:w-1/2 flex flex-col space-y-8 mt-8 md:mt-3">
                   <div className="rounded-md w-full h-fit">
                     <h2 className="flex items-center text-lg font-semibold h-[47px] px-5 border-b border-gray-200">
                       Related collections

@@ -14,7 +14,7 @@ import { NotNormalizedNameNftAvatar } from "./not-normalized-name";
 import { NormalizedNameNftAvatar } from "./normalized-name";
 import { LoadingNftAvatar } from "./loading-nft-avatar";
 import { EnsOutlineIcon } from "./ens-outline-icon";
-import { DisplayedName, DisplayedNameConfig } from "./displayed-name";
+import { ResizableName, ResizableNameConfig } from "./resizable-name";
 import { ENSName, Normalization } from "@namehash/ens-utils";
 import { FastAverageColor } from "fast-average-color";
 import { isSafari } from "react-device-detect";
@@ -299,9 +299,9 @@ export const NftAvatar = ({
                     ref={avatarDomainNameRef}
                     data-atropos-offset="3"
                   >
-                    <DisplayedName
+                    <ResizableName
                       domainName={name}
-                      fontConfigClasses={DisplayedNameConfig.NFTAvatar}
+                      fontConfigClasses={ResizableNameConfig.NFTAvatar}
                       parentReferenceForFontResizing={avatarDomainNameRef}
                       minFontSize={
                         size === AvatarSize.BIG || size === AvatarSize.HUGE
