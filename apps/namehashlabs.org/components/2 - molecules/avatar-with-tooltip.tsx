@@ -9,6 +9,8 @@ import { Profile } from "@/data/ensProfiles";
 import { useId } from "react";
 import cc from "classcat";
 import { Tooltip } from "@namehash/namekit-react/client";
+import { EfpLogo } from "../1 - atoms/icons/efp-logo";
+import { EfpProfileStats } from "./efp-profile-stats";
 
 interface AvatarWithTooltipProps {
   className?: string;
@@ -98,6 +100,7 @@ export const AvatarWithTooltip = ({
       setBlockHoverInteraction(true);
     }
   }, [isAvatarScaled]);
+
   useEffect(() => {
     if (blockHoverInteraction) {
       setTimeout(() => {
@@ -222,7 +225,23 @@ export const AvatarWithTooltip = ({
                 <TwitterIcon className="fill-current text-gray-400 hover:text-white transition-color duration-200" />
               </a>
             )}
+
+            {profile.address && (
+              <a
+                href={`https://efp.app/${profile.address}`}
+                target="_blank"
+                aria-label={"EFP profile"}
+              >
+                <EfpLogo
+                  color="gray"
+                  className="w-5 h-5 fill-current text-gray-400 hover:text-white transition-color duration-200"
+                />
+              </a>
+            )}
           </div>
+
+          {profile.address && <EfpProfileStats address={profile.address} />}
+
           {profile.displayName && (
             <p className="text-sm font-normal">{profile.displayName}</p>
           )}

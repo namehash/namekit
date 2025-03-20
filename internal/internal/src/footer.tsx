@@ -1,6 +1,7 @@
 import { Link } from "@namehash/namekit-react";
 import NextLink from "next/link";
 import {
+  EfpIcon,
   EmailIcon,
   FarcasterIcon,
   GithubIcon,
@@ -144,7 +145,7 @@ export const Footer = ({
             © NameHash Labs. All Rights Reserved
           </p>
 
-          <div className="flex gap-3">
+          <div className="flex items-center gap-3">
             <Link
               href="https://x.com/NamehashLabs"
               target="_blank"
@@ -152,7 +153,6 @@ export const Footer = ({
             >
               <TwitterIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200" />
             </Link>
-
             <Link
               href="https://github.com/namehash"
               target="_blank"
@@ -160,7 +160,6 @@ export const Footer = ({
             >
               <GithubIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200" />
             </Link>
-
             <Link
               href="https://warpcast.com/namehash"
               target="_blank"
@@ -168,7 +167,13 @@ export const Footer = ({
             >
               <FarcasterIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200" />
             </Link>
-
+            <Link
+              href="https://efp.app/namehashlabs.eth"
+              target="_blank"
+              aria-label="EFP"
+            >
+              <EfpIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200 w-6 h-6" />
+            </Link>
             <Link
               href="https://t.me/namehash"
               target="_blank"
@@ -176,7 +181,6 @@ export const Footer = ({
             >
               <TelegramIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200" />
             </Link>
-
             <Link href="mailto:hello@namehashlabs.org" aria-label="Email">
               <EmailIcon className="hover:text-black text-[#AFAFAF] transition-all duration-200" />
             </Link>

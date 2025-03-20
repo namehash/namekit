@@ -1,4 +1,8 @@
-import { MobileSectionDivider, WalletIcon } from "@/components/atoms";
+import {
+  GearWheelIcon,
+  MobileSectionDivider,
+  WalletIcon,
+} from "@/components/atoms";
 import { ComingSoonSection, ComingSoonSectionProps } from "./ComingSoonSection";
 
 import dangerous_name_config_img from "../../../public/assets/dangerous_name_configuration.svg";
@@ -99,18 +103,21 @@ const comingSoonSections: ComingSoonSectionProps[] = [
     },
   },
   {
-    sectionTargetSvg: <WalletIcon />,
-    sectionTargetClientMessage: "For wallets and dApps",
+    sectionTargetSvg: <GearWheelIcon className="text-black" />,
+    sectionTargetClientMessage: "For ENS indexers",
     sectionHeader: <>Making the unknown, known</>,
     sectionDescription:
-      "Many ENS domains are known to technically exist as a node in ENS, however the actual names for these domains is currently unknown. The ENS Subgraph helps to resolve some of these, but NameGuard goes further to resolve unknown names with a more powerful solution that learns from the community across time.",
+      "Our goal is to heal as many ENS names as possible. The ENS community has better things to do than learn about technical complexities like unknown names or encoded labelhashes.",
     sectionBackgroundName: "bg-purple_background",
     isTextOnTheLeft: true,
-    badgeText: "Planned",
     imageSpecifics: {
       source: the_unknown_img.src,
       tagWidth: 1228,
       tagHeight: 814,
+    },
+    button: {
+      text: "Learn more",
+      href: "https://ensrainbow.io",
     },
   },
 ];

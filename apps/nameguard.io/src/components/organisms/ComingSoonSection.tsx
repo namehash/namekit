@@ -1,6 +1,9 @@
 import Image from "next/image";
 import cc from "classcat";
 import { ImageCharacteristics } from "@/types/imageTypes";
+import { Button } from "@namehash/namekit-react";
+import Link from "next/link";
+import { ArrowTopRightOnSquareIcon } from "@heroicons/react/24/solid";
 
 export type ComingSoonSectionProps = {
   sectionTargetClientMessage: string;
@@ -9,8 +12,12 @@ export type ComingSoonSectionProps = {
   sectionDescription: string;
   sectionBackgroundName: string;
   isTextOnTheLeft: boolean;
-  badgeText: string;
+  badgeText?: string;
   imageSpecifics: ImageCharacteristics;
+  button?: {
+    text: string;
+    href: string;
+  };
 };
 
 export function ComingSoonSection(props: ComingSoonSectionProps) {
@@ -62,21 +69,33 @@ export function ComingSoonSection(props: ComingSoonSectionProps) {
         </div>
         <h1 className="hidden sm:block text-black font-bold not-italic z-10 text-center xl:text-left text-4xl leading-10">
           {props.sectionHeader}&nbsp;{" "}
-          <span className="hidden sm:relative sm:-top-1 sm:inline-flex items-center justify-center rounded-xl bg-green-100 px-3 py-0.5 text-center text-green-800 font-medium not-italic text-sm leading-5">
-            {props.badgeText}
-          </span>
+          {props.badgeText && (
+            <span className="hidden sm:relative sm:-top-1 sm:inline-flex items-center justify-center rounded-xl bg-green-100 px-3 py-0.5 text-center text-green-800 font-medium not-italic text-sm leading-5">
+              {props.badgeText}
+            </span>
+          )}
         </h1>
         <div className="flex flex-col items-center gap-3 sm:hidden">
           <h1 className="sm:hidden text-black font-bold not-italic z-10 text-center text-2xl leading-8">
             {props.sectionHeader}
           </h1>
-          <span className="sm:hidden inline-flex items-center justify-center rounded-xl bg-green-100 mx-3 px-3 py-0.5 text-center text-green-800 font-medium not-italic text-sm leading-5">
-            {props.badgeText}
-          </span>
+          {props.badgeText && (
+            <span className="sm:hidden inline-flex items-center justify-center rounded-xl bg-green-100 mx-3 px-3 py-0.5 text-center text-green-800 font-medium not-italic text-sm leading-5">
+              {props.badgeText}
+            </span>
+          )}
         </div>
         <p className="text-gray-500 not-italic font-normal z-10 text-center text-lg leading-7 xl:text-left sm:text-lg sm:w-4/5 sm:leading-7 sm:font-light">
           {props.sectionDescription}
         </p>
+        {props.button && (
+          <Button variant="primary" size="medium" asChild>
+            <Link href={props.button.href} target="_blank">
+              {props.button.text}{" "}
+              <ArrowTopRightOnSquareIcon className="w-4 h-4" />
+            </Link>
+          </Button>
+        )}
       </div>
 
       <div

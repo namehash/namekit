@@ -9,7 +9,7 @@ export function WritersBlockPills({ suggestions }: WritersBlockPillsProps) {
   return (
     <>
       {suggestions.length ? (
-        <div className="flex flex-col space-y-3">
+        <div className="flex flex-col">
           <div className="flex flex-wrap gap-2 justify-center">
             {suggestions.map((suggestion, idx) => (
               <WritersBlockPill key={idx} suggestion={suggestion} />
