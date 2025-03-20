@@ -48,7 +48,7 @@ export default async function Namekit({ params }: Props) {
   const report = await nameguard.inspectName(decodedName);
 
   return (
-    <div className="max-w-7xl mx-auto p-6 py-12">
+    <div className="max-w-7xl mx-auto p-6 pt-24 pb-12">
       <NGReport name={decodedName} data={report} />
     </div>
   );
