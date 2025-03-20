@@ -59,10 +59,10 @@ export const HomePage = () => {
             }}
           ></div>
           <h1 className="absolute w-full top-1/2 left-1/2 -translate-x-1/2 mt-10 lg:mt-0 -translate-y-1/2 text-white animate-fadeInFadeOut x-50 text-center not-italic font-bold text-4xl leading-10 sm:text-5xl sm:leading-[52px] text-shadow-strong">
-            <Balancer>From the infinite of possible names</Balancer>
+            <Balancer>From the infinite universe of names</Balancer>
           </h1>
           <h1 className="absolute w-full top-1/2 left-1/2 -translate-x-1/2 mt-10 lg:mt-0 -translate-y-1/2 text-white animate-longFadeIn x-50 text-center not-italic font-bold text-4xl leading-10 sm:text-5xl sm:leading-[52px] text-shadow-strong">
-            <Balancer>Collect all the ENS names you love</Balancer>
+            <Balancer>Discover and collect all the ENS names you love</Balancer>
           </h1>
         </div>
       </div>
