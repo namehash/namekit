@@ -466,11 +466,7 @@ export default function ExploreCollectionsPage() {
                         )
                       : ""
                   }
-<<<<<<< HEAD
                   className="text-3xl font-bold truncate underline"
-=======
-                  className="!text-3xl font-bold truncate underline"
->>>>>>> origin/main
                 >
                   {searchedEnsName?.name
                     ? searchedEnsName.name
