@@ -3,17 +3,17 @@ import fake_NFT_filter_img from "../../../public/assets/fake_NFT_filter.svg";
 import surface_risks_img from "../../../public/assets/surface_risks.svg";
 
 import {
-  CoinbaseIcon,
-  FarcasterLogo,
-  LensProtocolIcon,
+  // CoinbaseIcon,
+  // FarcasterLogo,
+  // LensProtocolIcon,
   MessageIcon,
   MobileSectionDivider,
-  OpenSeaIcon,
-  PushIcon,
-  RaribleIcon,
+  // OpenSeaIcon,
+  // PushIcon,
+  // RaribleIcon,
   ShoppingCartIcon,
-  WalletConnectIcon,
-  XMTPIcon,
+  // WalletConnectIcon,
+  // XMTPIcon,
 } from "@/components/atoms";
 
 import { ReadySection, ReadySectionProps } from "./ReadySection";
@@ -59,7 +59,7 @@ const address = "0x8Ae0e6dd8eACe27045d9e017C8Cf6dAa9D08C776";
 const result = await nameguard.getSecurePrimaryName(address);`,
     integrationsPanel: (
       <div className="hidden sm:inline-flex flex-col items-center lg:items-start justify-center gap-4 z-10">
-        <p className="text-gray-500 text-lg leading-6 font-normal not-italic whitespace-nowrap">
+        {/* <p className="text-gray-500 text-lg leading-6 font-normal not-italic whitespace-nowrap">
           Composable integrations include
         </p>
         <div className="w-full h-fit flex flex-row justify-around lg:justify-start items-center gap-6 flex-wrap lg:flex-nowrap">
@@ -68,7 +68,7 @@ const result = await nameguard.getSecurePrimaryName(address);`,
           <FarcasterLogo />
           <PushIcon />
           <WalletConnectIcon />
-        </div>
+        </div> */}
       </div>
     ),
     imageSpecifics: {
@@ -111,12 +111,12 @@ const result = await nameguard.fakeEthNameCheck(contract, tokenId, {
 })`,
     integrationsPanel: (
       <div className="inline-flex items-center gap-6 z-10">
-        <p className="text-gray-500 text-lg leading-6 font-normal not-italic whitespace-nowrap">
+        {/* <p className="text-gray-500 text-lg leading-6 font-normal not-italic whitespace-nowrap">
           Composable integrations include
         </p>
         <OpenSeaIcon />
         <RaribleIcon />
-        <CoinbaseIcon />
+        <CoinbaseIcon /> */}
       </div>
     ),
     imageSpecifics: {

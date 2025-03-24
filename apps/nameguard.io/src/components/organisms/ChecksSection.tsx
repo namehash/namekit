@@ -130,36 +130,36 @@ export function ChecksSection() {
       ),
       icon: checkCircle,
     },
-    {
-      header: (
-        <div className={headerWrapperStyle}>
-          <p className={headerStyle}>Name Ruggability</p>
-          <ListSectionBadge width={96} height={20} text="Coming soon" />
-        </div>
-      ),
-      text: (
-        <Fragment>
-          Warn buyers on secondary markets if a name can potentially be taken
-          away.
-        </Fragment>
-      ),
-      icon: checkCircle,
-    },
-    {
-      header: (
-        <div className={headerWrapperStyle}>
-          <p className={headerStyle}>NameWrapper Fuses</p>
-          <ListSectionBadge width={96} height={20} text="Coming soon" />
-        </div>
-      ),
-      text: (
-        <Fragment>
-          Protect buyers on secondary markets from NameWrapper fuse
-          configurations.
-        </Fragment>
-      ),
-      icon: checkCircle,
-    },
+    // {
+    //   header: (
+    //     <div className={headerWrapperStyle}>
+    //       <p className={headerStyle}>Name Ruggability</p>
+    //       <ListSectionBadge width={96} height={20} text="Coming soon" />
+    //     </div>
+    //   ),
+    //   text: (
+    //     <Fragment>
+    //       Warn buyers on secondary markets if a name can potentially be taken
+    //       away.
+    //     </Fragment>
+    //   ),
+    //   icon: checkCircle,
+    // },
+    // {
+    //   header: (
+    //     <div className={headerWrapperStyle}>
+    //       <p className={headerStyle}>NameWrapper Fuses</p>
+    //       <ListSectionBadge width={96} height={20} text="Coming soon" />
+    //     </div>
+    //   ),
+    //   text: (
+    //     <Fragment>
+    //       Protect buyers on secondary markets from NameWrapper fuse
+    //       configurations.
+    //     </Fragment>
+    //   ),
+    //   icon: checkCircle,
+    // },
     {
       header: <p className={headerStyle}>Have a check suggestion?</p>,
       text: (

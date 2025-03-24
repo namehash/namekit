@@ -29,6 +29,24 @@ export const ComingSoonSections = () => {
 
 const comingSoonSections: ComingSoonSectionProps[] = [
   {
+    sectionTargetSvg: <GearWheelIcon className="text-black" />,
+    sectionTargetClientMessage: "For ENS indexers",
+    sectionHeader: <>Making the unknown, known</>,
+    sectionDescription:
+      "Our goal is to heal as many ENS names as possible. The ENS community has better things to do than learn about technical complexities like unknown names or encoded labelhashes.",
+    sectionBackgroundName: "bg-purple_background",
+    isTextOnTheLeft: true,
+    imageSpecifics: {
+      source: the_unknown_img.src,
+      tagWidth: 1228,
+      tagHeight: 814,
+    },
+    button: {
+      text: "Learn more",
+      href: "https://ensrainbow.io",
+    },
+  },
+  {
     sectionTargetSvg: <WalletIcon />,
     sectionTargetClientMessage: "For wallets and dApps",
     sectionHeader: (
@@ -41,7 +59,7 @@ const comingSoonSections: ComingSoonSectionProps[] = [
       "Safeguard your community from improperly configured resolver records with ENS HealthChecks. These checks shield against major issues, spanning significant irreversible losses to web3 profiles that are incorrectly formatted and may not load properly.",
     sectionBackgroundName: "bg-purple_background",
     isTextOnTheLeft: true,
-    badgeText: "Coming soon",
+    badgeText: "Planned",
     imageSpecifics: {
       source: dangerous_name_config_img.src,
       tagWidth: 960,
@@ -69,7 +87,6 @@ const comingSoonSections: ComingSoonSectionProps[] = [
       tagHeight: 626,
     },
   },
-
   {
     sectionTargetSvg: <WalletIcon />,
     sectionTargetClientMessage: "For wallets and dApps",
@@ -78,14 +95,13 @@ const comingSoonSections: ComingSoonSectionProps[] = [
       "Unicode is a complex beast. Are you certain you are prepared to handle the display of all possible ENS names in your UI? ENS Webfont not only enhances security against homograph attacks but also expands rendering support for emojis and other unique graphemes.",
     sectionBackgroundName: "bg-purple_background",
     isTextOnTheLeft: true,
-    badgeText: "Planned",
+    badgeText: "Alpha",
     imageSpecifics: {
       source: ens_webfont_img.src,
       tagWidth: 1440,
       tagHeight: 958,
     },
   },
-
   {
     sectionTargetSvg: <WalletIcon />,
     sectionTargetClientMessage: "For wallets and dApps",
@@ -100,24 +116,6 @@ const comingSoonSections: ComingSoonSectionProps[] = [
       tagWidth: 968,
       tagHeight: 738,
       styles: "md:pl-8",
-    },
-  },
-  {
-    sectionTargetSvg: <GearWheelIcon className="text-black" />,
-    sectionTargetClientMessage: "For ENS indexers",
-    sectionHeader: <>Making the unknown, known</>,
-    sectionDescription:
-      "Our goal is to heal as many ENS names as possible. The ENS community has better things to do than learn about technical complexities like unknown names or encoded labelhashes.",
-    sectionBackgroundName: "bg-purple_background",
-    isTextOnTheLeft: true,
-    imageSpecifics: {
-      source: the_unknown_img.src,
-      tagWidth: 1228,
-      tagHeight: 814,
-    },
-    button: {
-      text: "Learn more",
-      href: "https://ensrainbow.io",
     },
   },
 ];
