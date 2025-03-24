@@ -345,7 +345,7 @@ const services: ServiceProps[] = [
         loading="lazy"
       />
     ),
-    buttonUrl: "https://www.nameguard.io/",
+    buttonUrl: "https://nameguard.io/",
   },
   {
     title: "ENS names for your community",
