@@ -3,13 +3,9 @@ import type { Metadata } from "next";
 export const siteName = "NameHash Labs";
 export const defaultMetaTitle = "NameHash Labs - Helping ENS Grow";
 export const defaultMetaDescription =
-  "NameHash Labs builds open source public goods that drive the global adoption of ENS.";
+  "NameHash Labs builds open source infrastructure to support the global adoption of ENS.";
 export const defaultMetaKeywords = [
   "ens",
-  "web3",
-  "eth",
-  "nameguard",
-  "namekit",
   "namehash",
 ];
 

@@ -1,9 +1,9 @@
 import { Fragment } from "react";
 import {
   CloudOutlineIcon,
-  ListSectionBadge,
+  // ListSectionBadge,
   FigmaIcon,
-  FileIcon,
+  // FileIcon,
   FontIcon,
   GearWheelIcon,
   GithubIconDevelopers,
@@ -76,7 +76,7 @@ const devElements: ListSectionElement[] = [
     header: (
       <DeveloperSectionWrapper>
         <DeveloperSectionTitle>NameGuard React UI Kit</DeveloperSectionTitle>
-        <ListSectionBadge width={53} height={20} text="Alpha" />
+        {/* <ListSectionBadge width={53} height={20} text="Alpha" /> */}
       </DeveloperSectionWrapper>
     ),
     text: (
@@ -161,7 +161,7 @@ const devElements: ListSectionElement[] = [
     header: (
       <DeveloperSectionWrapper>
         <DeveloperSectionTitle>ENS Name Parser</DeveloperSectionTitle>
-        <ListSectionBadge width={53} height={20} text="Alpha" />
+        {/* <ListSectionBadge width={53} height={20} text="Alpha" /> */}
       </DeveloperSectionWrapper>
     ),
     text: <Fragment>Utilities for parsing ENS names from user input.</Fragment>,
@@ -208,29 +208,29 @@ const devElements: ListSectionElement[] = [
     ),
     link: "https://github.com/namehash/namekit/blob/main/apps/api.nameguard.io",
   },
-  {
-    header: (
-      <DeveloperSectionWrapper>
-        <DeveloperSectionTitle>Detailed documentation</DeveloperSectionTitle>
-        <ListSectionBadge width={96} height={20} text="Coming soon" />
-      </DeveloperSectionWrapper>
-    ),
-    text: (
-      <Fragment>
-        Step-by-step guides to help developers make the most of NameGuard.
-      </Fragment>
-    ),
-    icon: (
-      <DeveloperSectionIconWrapper>
-        <FileIcon />
-      </DeveloperSectionIconWrapper>
-    ),
-  },
+  // {
+  //   header: (
+  //     <DeveloperSectionWrapper>
+  //       <DeveloperSectionTitle>Detailed documentation</DeveloperSectionTitle>
+  //       <ListSectionBadge width={96} height={20} text="Coming soon" />
+  //     </DeveloperSectionWrapper>
+  //   ),
+  //   text: (
+  //     <Fragment>
+  //       Step-by-step guides to help developers make the most of NameGuard.
+  //     </Fragment>
+  //   ),
+  //   icon: (
+  //     <DeveloperSectionIconWrapper>
+  //       <FileIcon />
+  //     </DeveloperSectionIconWrapper>
+  //   ),
+  // },
   {
     header: (
       <DeveloperSectionWrapper>
         <DeveloperSectionTitle>ENS Webfont</DeveloperSectionTitle>
-        <ListSectionBadge width={96} height={20} text="Alpha" />
+        {/* <ListSectionBadge width={96} height={20} text="Alpha" /> */}
       </DeveloperSectionWrapper>
     ),
     text: (

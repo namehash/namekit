@@ -4,7 +4,7 @@ import {
   ExploreTheEcosystemSection,
   Hero,
   NewExitSection,
-  RoadMap,
+  // RoadMap,
   ComingSoonSections,
   ReadySections,
 } from "@/components/organisms";
@@ -21,7 +21,7 @@ export default function Home() {
       <DevelopersSection />
       <MobileSectionDivider />
       <ExploreTheEcosystemSection />
-      <RoadMap />
+      {/* <RoadMap /> */}
       <NewExitSection />
     </>
   );
