@@ -17,7 +17,7 @@ export const HeroSection = () => {
           className="text-lg text-center text-gray-500 font-normal leading-7 mt-4 max-w-[500px]"
         >
           <Balancer>
-            We integrate ENS onboarding into web3 wallets, apps, and games
+            We build open source infrastructure to support the global adoption of ENS
           </Balancer>
         </div>
         <div className="flex items-center justify-center mt-10">
