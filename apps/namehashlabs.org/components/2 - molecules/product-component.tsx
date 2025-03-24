@@ -14,6 +14,7 @@ export interface ProductProps {
   greenLabelText?: string;
   buttonText?: string;
   calendarButtonText?: string;
+  showCalendarButton?: boolean;
 }
 
 export const ProductComponent = ({
@@ -26,6 +27,7 @@ export const ProductComponent = ({
   greenLabelText,
   buttonText = "Join the discussion",
   calendarButtonText = "Learn more",
+  showCalendarButton = true,
 }: ProductProps) => {
   return (
     <section
@@ -82,7 +84,7 @@ export const ProductComponent = ({
                 </div>
               )}
 
-              {calendarButtonText && (
+              {showCalendarButton && (
                 <CalendarButton
                   variant="ghost"
                   link="namehashlabs/namehashlabs"
