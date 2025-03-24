@@ -3,7 +3,7 @@ import Image from "next/image";
 import { ProductComponent } from "@/components/2 - molecules/product-component";
 import { defaultMetaOpengraph, defaultMetaTwitter } from "../shared-metadata";
 
-const title = "ENS Referral Program Proposal";
+const title = "ENSv2 Referral Programs";
 const description =
   "Join the discussion about an ENS Referral Program and help ENS grow.";
 
