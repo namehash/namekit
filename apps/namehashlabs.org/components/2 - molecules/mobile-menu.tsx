@@ -79,7 +79,7 @@ const MobileMenu = () => {
                   enableScroll();
                 }}
               >
-                ENS Referral Program
+                ENSv2 Referral Programs
               </NextLink>
             </Button>
             <Button variant="primary" asChild>
