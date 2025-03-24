@@ -355,30 +355,30 @@ const services: ServiceProps[] = [
         NameKit integrates with your preferred strategy for subname
         issuance—whether it&apos;s offchain, L2s, or L1. Name searches in
         NameKit default to &quot;.eth&quot; as the default root, but you can
-        customize to &quot;.yourbrand.eth&quot; or &quot;.cb.id&quot;{" "}
+        customize to &quot;.yourbrand.eth&quot; or &quot;.base.eth&quot;{" "}
         <Link
           size="large"
           variant="underline"
           target="_blank"
-          href="https://profile.coinbase.com/"
+          href="https://www.base.org/names"
         >
           as done by Coinbase
         </Link>
         .
       </>
     ),
-    postSubtitle: (
-      <div className="flex flex-col gap-4">
-        <Text className="text-lg leading-6 text-gray-500 lg:text-start text-center">
-          Composable integrations with:
-        </Text>
-        <div className="flex flex-wrap gap-x-6 gap-y-4 items-center justify-center lg:justify-start">
-          <NamestoneLogo />
-          <NamespaceLogo />
-          <UnrugableLogo />
-        </div>
-      </div>
-    ),
+    // postSubtitle: (
+    //   <div className="flex flex-col gap-4">
+    //     <Text className="text-lg leading-6 text-gray-500 lg:text-start text-center">
+    //       Composable integrations with:
+    //     </Text>
+    //     <div className="flex flex-wrap gap-x-6 gap-y-4 items-center justify-center lg:justify-start">
+    //       <NamestoneLogo />
+    //       <NamespaceLogo />
+    //       <UnrugableLogo />
+    //     </div>
+    //   </div>
+    // ),
     label: {
       title: "Community & Brand",
       icon: <MegaphoneIcon className="h-5 w-5 text-gray-500" />,
@@ -452,8 +452,8 @@ const services: ServiceProps[] = [
           Composable integrations with:
         </Text>
         <div className="flex flex-wrap gap-x-6 gap-y-4 items-center justify-center lg:justify-start">
-          <LensProtocolLogo />
-          <FarcasterLogo />
+          {/* <LensProtocolLogo /> */}
+          <EfpLogo />
           <Image
             quality={100}
             width={91}
@@ -462,7 +462,7 @@ const services: ServiceProps[] = [
             alt="POAP logo"
             loading="lazy"
           />
-          <EfpLogo />
+          <FarcasterLogo />
         </div>
       </div>
     ),
@@ -481,44 +481,44 @@ const services: ServiceProps[] = [
       />
     ),
   },
-  {
-    title: "Engage with others",
-    subtitle:
-      "Provide your community with access to their interoperable web3 inbox directly inside of your application so they can bring their messages with them everywhere they go.",
-    postSubtitle: (
-      <div className="flex flex-col gap-4">
-        <Text className="text-lg leading-6 text-gray-500 lg:text-start text-center">
-          Composable integrations with:
-        </Text>
-        <div className="flex flex-wrap gap-x-6 gap-y-4 items-center justify-center lg:justify-start">
-          <XmtpLogo />
-          <Image
-            src="/images/namekit/dm3-logo.png"
-            alt="ENS Messaging"
-            loading="lazy"
-            width={105}
-            height={28}
-            quality={100}
-          />
-          <PushLogo />
-          <WalletConnectLogo />
-        </div>
-      </div>
-    ),
-    label: {
-      title: "Web3 Chat",
-      icon: <MegaphoneIcon className="h-5 w-5 text-gray-500" />,
-    },
-    illustration: (
-      <Image
-        quality={100}
-        width={568}
-        height={360}
-        src="/images/namekit/engage-community-image.png"
-        alt="hero"
-      />
-    ),
-  },
+  // {
+  //   title: "Engage with others",
+  //   subtitle:
+  //     "Provide your community with access to their interoperable web3 inbox directly inside of your application so they can bring their messages with them everywhere they go.",
+  //   postSubtitle: (
+  //     <div className="flex flex-col gap-4">
+  //       <Text className="text-lg leading-6 text-gray-500 lg:text-start text-center">
+  //         Composable integrations with:
+  //       </Text>
+  //       <div className="flex flex-wrap gap-x-6 gap-y-4 items-center justify-center lg:justify-start">
+  //         <XmtpLogo />
+  //         <Image
+  //           src="/images/namekit/dm3-logo.png"
+  //           alt="ENS Messaging"
+  //           loading="lazy"
+  //           width={105}
+  //           height={28}
+  //           quality={100}
+  //         />
+  //         <PushLogo />
+  //         <WalletConnectLogo />
+  //       </div>
+  //     </div>
+  //   ),
+  //   label: {
+  //     title: "Web3 Chat",
+  //     icon: <MegaphoneIcon className="h-5 w-5 text-gray-500" />,
+  //   },
+  //   illustration: (
+  //     <Image
+  //       quality={100}
+  //       width={568}
+  //       height={360}
+  //       src="/images/namekit/engage-community-image.png"
+  //       alt="hero"
+  //     />
+  //   ),
+  // },
   {
     title: "Never lose a name you love with ENS AutoRenew",
     subtitle:
