@@ -17,7 +17,7 @@ export const Header = () => {
 
         <div className="hidden md:flex items-center justify-end gap-3">
           <Button variant="ghost" size="medium" asChild>
-            <NextLink href="/ens-referral-program">
+            <NextLink href="/ens-v2-referral-programs">
               ENSv2 Referral Programs
             </NextLink>
           </Button>

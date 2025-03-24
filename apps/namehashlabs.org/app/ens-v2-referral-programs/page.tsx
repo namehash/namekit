@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     ...defaultMetaOpengraph,
     title,
     description,
-    url: "/ens-referral-program",
+    url: "/ens-v2-referral-programs",
   },
   twitter: {
     ...defaultMetaTwitter,
