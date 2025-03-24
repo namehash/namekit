@@ -476,15 +476,6 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     }),
   ],
   [
-    "0xFAFaC5F0571aa0F12A156FFdCD37E8a7dd694c4F",
-    buildProfile({
-      ensName: "frankind.eth",
-      title: "Engineering",
-      twitterProfile: "https://x.com/frankind_eth",
-      address: "0xFAFaC5F0571aa0F12A156FFdCD37E8a7dd694c4F",
-    }),
-  ],
-  [
     "0x6148bB313D42f2B72f8992f739a15dF984236F23",
     buildProfile({
       ensName: "karbowski.eth",
@@ -540,15 +531,6 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       ensName: "sebban.eth",
       title: "Engineering",
       address: "0x69A193cf78a6CBb48084797A69164ca409EBb285",
-    }),
-  ],
-  [
-    "0xB6616C9eA0AbE063d3c4433691e8361FFb482099",
-    buildProfile({
-      ensName: "santapolukord.eth",
-      title: "Outreach",
-      displayName: "Santa Polukord",
-      address: "0xB6616C9eA0AbE063d3c4433691e8361FFb482099",
     }),
   ],
   [
