@@ -10,13 +10,13 @@ export const ExploreNameGraphForm = () => {
     e.preventDefault();
 
     if (!exploreNameGraphInput.trim()) {
-      window.open("https://www.namegraph.dev/collections", "_blank");
+      window.open("https://namegraph.dev/", "_blank");
       return;
     }
 
     const encodedSearch = encodeURIComponent(exploreNameGraphInput);
     window.open(
-      `https://www.namegraph.dev/?collectionsSearch=search_${encodedSearch}`,
+      `https://namegraph.dev/?collectionsSearch=search_${encodedSearch}`,
       "_blank",
     );
   };
