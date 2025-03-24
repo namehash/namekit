@@ -447,7 +447,7 @@ const services: ServiceProps[] = [
     subtitle:
       "It's more than just a name – it's your web3 identity. Provide your community the ability to craft their perfect profile, showcase shared connections, and discover other like-minded frens.",
     postSubtitle: (
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 w-full">
         <Text className="text-lg leading-6 text-gray-500 lg:text-start text-center">
           Composable integrations with:
         </Text>
