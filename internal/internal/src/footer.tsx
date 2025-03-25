@@ -38,7 +38,7 @@ const footerProducts = [
   },
   {
     name: "ENS Referral Program",
-    href: "https://namehashlabs.org/ens-referral-program",
+    href: "https://namehashlabs.org/ens-v2-referral-programs",
   },
 ];
 
@@ -80,9 +80,9 @@ export const Footer = ({
             <NameHashLabsLogo />
 
             <p className="text-sm font-light text-gray-500 max-w-[339px] leading-6">
-              Founded in 2022, Namehash Labs is dedicated to developing
-              open source infrastructure-level solutions that help the
-              Ethereum Name Service (ENS) Protocol grow.
+              Founded in 2022, Namehash Labs is dedicated to developing open
+              source infrastructure-level solutions that help the Ethereum Name
+              Service (ENS) Protocol grow.
             </p>
 
             <ServiceProviderBadge />
