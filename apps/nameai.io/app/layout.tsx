@@ -77,7 +77,7 @@ export default function RootLayout({
                     className="flex flex-row items-center gap-2 text-black not-italic font-bold text-[22.683px] leading-[22.683px] tracking-[-0.907px] sm:text-[27.816px] sm:leading-[27.816px] sm:tracking-[-1.113px]"
                   >
                     <NameaiLogo className="w-6 h-6" />
-                    NameAI
+                    <span className="hidden sm:block">NameAI</span>
                   </Link>
                 </div>
               </div>
