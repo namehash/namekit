@@ -13,7 +13,8 @@ import {
 import { HeroStartCommand } from "@/components/hero-start-command";
 import { Button, IconButton } from "@namehash/namekit-react";
 import dynamic from "next/dynamic";
-
+import NextLink from "next/link";
+import { EnsVisionLogo } from "../ui/EnsVisionLogo";
 const ThreeJSAnimation = dynamic(
   () =>
     import("../../components/hero-animation").then(
@@ -114,6 +115,24 @@ export const HomePage = () => {
           <div className="flex mx-auto mt-6">
             <HeroStartCommand />
           </div>
+        </div>
+        {/* Integration Example Panel */}
+        <div className="max-w-4xl mx-auto flex flex-col items-center justify-start rounded-xl mt-10 w-full">
+          <NextLink
+            href="https://x.com/ensvision/status/1902711055802933619"
+            target="_blank"
+            className="w-full bg-black rounded-lg px-8 py-4 flex items-center justify-around group"
+          >
+            <div className="flex w-1/3 text-center text-white text-sm rounded-full items-center justify-center">
+              Example ENS <br /> ecosystem integration
+            </div>
+            <div className="flex w-1/3 justify-center transition-colors duration-300 group-hover:bg-gray-800 p-4 cursor-pointer rounded-lg items-center gap-2">
+              <EnsVisionLogo />
+            </div>
+            <div className="flex w-1/3 text-center text-white text-sm rounded-full items-center justify-center">
+              Powering <br /> VisionScore
+            </div>
+          </NextLink>
         </div>
         <div className="max-w-[1216px] mx-auto flex flex-col items-center justify-start bg-gray-50 rounded-xl p-10 mt-10 w-full">
           <div className="flex flex-col items-center justify-center gap-3">
