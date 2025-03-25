@@ -31,9 +31,7 @@ export const ENSReferralProductComponent = ({
 }: ENSReferralProductProps) => {
   return (
     <section
-      className={cc([
-        "lg:py-5 pt-10 pb-5 w-full flex items-center justify-between",
-      ])}
+      className={cc(["lg:py-5 py-5 w-full flex items-center justify-between"])}
     >
       <div
         className={cc([
