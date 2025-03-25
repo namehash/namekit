@@ -12,6 +12,8 @@ import {
   WarningShieldSmall,
 } from "@/components/atoms";
 import { Button, Link } from "@namehash/namekit-react";
+import NextLink from "next/link";
+import { NameAiLogo } from "../atoms/icons/NameAILogo";
 
 export function Hero() {
   return (
@@ -53,6 +55,21 @@ export function Hero() {
               <Link href="https://api.nameguard.io/docs">View the docs</Link>
             </Button>
           </div>
+          <NextLink
+            href="https://nameai.io"
+            target="_blank"
+            className="w-full z-50 bg-black rounded-lg mt-12 max-w-6xl gap-2 px-4 md:px-0 py-4 flex items-center justify-around group"
+          >
+            <div className="flex w-1/3 text-center text-white text-sm rounded-full items-center justify-center">
+              Example ENS <br /> ecosystem integration
+            </div>
+            <div className="flex w-1/3 justify-center h-full py-4 transition-colors duration-300 group-hover:bg-gray-800 cursor-pointer rounded-lg items-center">
+              <NameAiLogo className="w-full h-10" />
+            </div>
+            <div className="flex w-1/3 text-center text-white text-sm rounded-full items-center justify-center">
+              Powering Detailed <br /> Name Analysis
+            </div>
+          </NextLink>
         </div>
 
         <div className="absolute z-0 top-0 left-0 h-full w-full box-border bg-center bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] [background-size:24px_24px]" />
