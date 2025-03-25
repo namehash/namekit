@@ -37,7 +37,7 @@ export const ENSReferralProductComponent = ({
     >
       <div
         className={cc([
-          "w-full flex flex-col items-center lg:flex-row",
+          "w-full flex flex-col-reverse gap-5 lg:flex-row items-center",
           {
             "lg:flex-row-reverse": isInverted,
           },
@@ -71,7 +71,7 @@ export const ENSReferralProductComponent = ({
               {buttonUrl && (
                 <div className="flex justify-center lg:justify-start w-full md:w-auto">
                   <Button
-                    className="md:w-auto w-full items-center justify-center"
+                    className="w-auto items-center justify-center"
                     asChild
                   >
                     <Link href={buttonUrl}>
