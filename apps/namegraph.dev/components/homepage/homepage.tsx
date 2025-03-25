@@ -130,7 +130,7 @@ export const HomePage = () => {
               <EnsVisionLogo />
             </div>
             <div className="flex w-1/3 text-center text-white text-sm rounded-full items-center justify-center">
-              Powering <br /> VisionScore
+              Powering Related <br /> Name Suggestions
             </div>
           </NextLink>
         </div>
