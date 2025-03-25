@@ -93,7 +93,7 @@ export const ENSReferralProductComponent = ({
             </div>
           </div>
         </div>
-        <div className="lg:w-1/2 w-full  lg:mt-0 mt-5 relative flex items-center justify-center">
+        <div className="lg:w-1/2 w-full mt-0 relative flex items-center justify-center">
           {gradient}
           {illustration}
         </div>
