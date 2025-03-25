@@ -10,7 +10,6 @@ import {
   TelegramIcon,
   TwitterIcon,
 } from "./icons";
-
 const footerProducts = [
   {
     name: "ENSNode",
@@ -21,8 +20,16 @@ const footerProducts = [
     href: "https://ensrainbow.io",
   },
   {
+    name: "ENSAdmin",
+    href: "https://admin.ensnode.io",
+  },
+  {
+    name: "ENSv2 Referral Programs",
+    href: "https://namehashlabs.org/ens-v2-referral-programs",
+  },
+  {
     name: "NameGraph",
-    href: "https://www.namegraph.dev/",
+    href: "https://namegraph.dev",
   },
   {
     name: "NameAI",
@@ -35,10 +42,6 @@ const footerProducts = [
   {
     name: "NameKit",
     href: "https://namekit.io",
-  },
-  {
-    name: "ENS Referral Program",
-    href: "https://namehashlabs.org/ens-v2-referral-programs",
   },
 ];
 
@@ -81,8 +84,8 @@ export const Footer = ({
 
             <p className="text-sm font-light text-gray-500 max-w-[339px] leading-6">
               Founded in 2022, Namehash Labs is dedicated to developing open
-              source infrastructure-level solutions that help the Ethereum Name
-              Service (ENS) Protocol grow.
+              source infrastructure that helps the Ethereum Name Service (ENS)
+              Protocol grow.
             </p>
 
             <ServiceProviderBadge />
