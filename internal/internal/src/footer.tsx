@@ -10,7 +10,6 @@ import {
   TelegramIcon,
   TwitterIcon,
 } from "./icons";
-
 const footerProducts = [
   {
     name: "ENSNode",
@@ -85,8 +84,8 @@ export const Footer = ({
 
             <p className="text-sm font-light text-gray-500 max-w-[339px] leading-6">
               Founded in 2022, Namehash Labs is dedicated to developing open
-              source infrastructure-level solutions that help the Ethereum Name
-              Service (ENS) Protocol grow.
+              source infrastructure that helps the Ethereum Name Service (ENS)
+              Protocol grow.
             </p>
 
             <ServiceProviderBadge />
