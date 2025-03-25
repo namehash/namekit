@@ -1,12 +1,35 @@
 import Image from "next/image";
-import Link from "next/link";
+import NextLink from "next/link";
 import { ColorfulBackground, GithubIcon } from "../atoms";
-import { Button, Heading, Text } from "@namehash/namekit-react";
+import { Button, Heading, Link, Text } from "@namehash/namekit-react";
 import { ExternalLinkIcon } from "../atoms/icons/external-link-icon";
+import Balancer from "react-wrap-balancer";
 
 export const HeroSection = () => {
   return (
     <section className="justify-between relative w-full pt-[80px] lg:px-10 px-5 flex flex-col items-center overflow-hidden ens-webfont">
+      <div className="w-full animate-fadeIn max-w-5xl mx-auto flex justify-center z-20">
+        <div className="bg-gradient-to-r items-center flex justify-center w-full from-purple-300 via-gray-50 to-orange-200 p-4 rounded-lg mb-8 border-4 border-gray-800">
+          <Balancer className="mx-auto">
+            <p className="text-center italic">
+              <span className="font-bold ">
+                Major Rearchitecture in Progress
+              </span>
+              <br />
+              NameKit will build on{" "}
+              <Link
+                variant="underline"
+                href="https://ensnode.io"
+                target="_blank"
+              >
+                ENSNode
+              </Link>{" "}
+              for ENSv2
+            </p>
+          </Balancer>
+        </div>
+      </div>
+
       <div className="flex-col flex items-center justify-center z-20 mb-20">
         <Heading
           as="h1"
@@ -22,16 +45,19 @@ export const HeroSection = () => {
         </Text>
         <div className="flex items-center justify-center gap-4 animate-fadeIn">
           <Button variant="primary" size="large" asChild>
-            <Link target="_blank" href="https://alpha.namekit.io">
+            <NextLink target="_blank" href="https://alpha.namekit.io">
               Try now
               <ExternalLinkIcon className="w-5 h-5" />
-            </Link>
+            </NextLink>
           </Button>
           <Button variant="secondary" size="large" asChild>
-            <Link target="_blank" href={"https://github.com/namehash/namekit"}>
+            <NextLink
+              target="_blank"
+              href={"https://github.com/namehash/namekit"}
+            >
               <GithubIcon className="w-5 h-5" />
               GitHub
-            </Link>
+            </NextLink>
           </Button>
         </div>
       </div>
