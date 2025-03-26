@@ -20,7 +20,7 @@ export default function Page() {
                 </div>
 
                 <div className="flex flex-col">
-                  <span className="text-white text-base">
+                  <span className="text-white text-base font-semibold">
                     Example ENS ecosystem integration
                   </span>
                   <span className="text-gray-400 text-sm">
