@@ -117,10 +117,17 @@ export const HomePage = () => {
         </div>
         <div className="max-w-[1216px] mx-auto flex flex-col items-center justify-start bg-gray-50 rounded-xl p-10 mt-10 w-full">
           <div className="flex flex-col items-center justify-center gap-3">
-            <p className="text-lg font-semibold">Explore the NameGraph</p>
+            <p className="text-lg font-semibold">
+              <Balancer>
+                Help your users overcome &quot;writer&apos;s block&quot;
+              </Balancer>
+            </p>
 
             <p className="text-center not-italic font-normal text-gray-500 text-lg leading-7 sm:text-base sm:leading-6 sm:font-light">
-              Generate infinite related name suggestions.
+              <Balancer>
+                Picking a name can be hard. Inspire your users with example
+                ideas.
+              </Balancer>
             </p>
           </div>
 
