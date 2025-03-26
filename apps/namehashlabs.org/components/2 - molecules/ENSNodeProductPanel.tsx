@@ -5,11 +5,17 @@ import Image from "next/image";
 export const ENSNodeProductPanel = () => {
   return (
     <div className="flex flex-col items-center justify-center w-full px-5">
-      <div className="flex flex-col lg:flex-row gap-8 p-20 pl-8 bg-dark-blue rounded-2xl w-full max-w-[1216px] bg-[#0d111c] mt-20">
+      <div className="flex flex-col lg:flex-row gap-8 lg:p-20 p-8 pl-8 pr-8 lg:pr-20 bg-dark-blue rounded-2xl w-full max-w-[1216px] bg-[#0d111c]">
         {/* Left side - Image */}
         <div className="flex-1">
+          {/* Badge lg screen */}
+          <div className=" items-center gap-2 px-3 py-1.5 bg-gray-800 rounded-full text-sm lg:hidden inline-flex mb-4">
+            <BoltIcon className="w-4 h-4 text-gray-300" />
+            <span className="text-gray-300">Critical ENSv2 Infrastructure</span>
+          </div>
           <div className="relative aspect-[4/3] w-full">
             <Image
+              quality={100}
               src="/images/ensnode-diagram.png" // You'll need to add this image to your public folder
               alt="ENSNode infrastructure diagram showing multiple chains connecting"
               fill
@@ -20,8 +26,8 @@ export const ENSNodeProductPanel = () => {
 
         {/* Right side - Content */}
         <div className="flex-1 space-y-4">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-800 rounded-full text-sm">
+          {/* Badge lg screen */}
+          <div className="items-center gap-2 px-3 py-1.5 bg-gray-800 rounded-full text-sm lg:inline-flex hidden">
             <BoltIcon className="w-4 h-4 text-gray-300" />
             <span className="text-gray-300">Critical ENSv2 Infrastructure</span>
           </div>

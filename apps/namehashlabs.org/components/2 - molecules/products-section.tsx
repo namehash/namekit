@@ -1,7 +1,7 @@
 import React from "react";
 import {
   ChartBarSquareIcon,
-  GlobeAmericasIcon,
+  GlobeAltIcon,
   RocketLaunchIcon,
   ShieldCheckIcon,
   SparklesIcon,
@@ -21,6 +21,7 @@ import ens_admin_img from "/public/images/ens-admin-illustration.png";
 import namegraph_img from "/public/images/namegraph-illustration.png";
 import ens_v2_referral_programs_img from "/public/images/ens-v2-referral-programs.svg";
 import nameai_img from "/public/images/nameai-illustration.png";
+import { ENSNodeProductPanel } from "./ENSNodeProductPanel";
 interface ProductProps {
   label: {
     icon: React.ReactElement;
@@ -63,7 +64,7 @@ const Product = ({
     >
       <div
         className={cc([
-          "w-full flex flex-col items-center lg:gap-10 lg:flex-row max-w-[1216px] bg-gray-50 rounded-[20px] p-[32px]",
+          "w-full flex flex-col-reverse lg:flex-row items-center lg:gap-10 max-w-[1216px] bg-gray-50 rounded-[20px] p-[32px]",
           {
             "lg:flex-row-reverse": isInverted,
           },
@@ -78,8 +79,9 @@ const Product = ({
           ])}
         >
           <div className="flex-col inline-flex gap-5 lg:max-w-[568px]">
-            <div className="justify-center lg:justify-start flex">
-              <div className="gap-2 bg-black inline-flex items-center bg-opacity-5 px-4 py-2 rounded-[20px]">
+            {/* Badge lg screen */}
+            <div className="justify-center lg:justify-start hidden lg:flex">
+              <div className="gap-2 bg-black inline-flex items-center bg-opacity-5 px-4 py-2 rounded-[20px] ">
                 {label.icon}
                 <p className="text-sm leading-5 font-medium">{label.title}</p>
               </div>
@@ -115,22 +117,28 @@ const Product = ({
             {buttonUrl && buttonLabel && (
               <div className="flex lg:justify-start justify-center">
                 <Button asChild>
-                  {isInternalLink(buttonUrl) ? (
-                    <NextLink href={buttonUrl}>{buttonLabel}</NextLink>
-                  ) : (
-                    <Link href={buttonUrl}>
-                      {buttonLabel}
-                      <Link.ExternalIcon />
-                    </Link>
-                  )}
+                  <NextLink href={buttonUrl}>{buttonLabel}</NextLink>
                 </Button>
               </div>
             )}
           </div>
         </div>
-        <div className="lg:w-1/2 w-full  lg:mt-0 mt-5 relative flex items-center justify-center">
-          {gradient}
-          {illustration}
+        <div className="lg:w-1/2 w-full lg:mt-0 mt-5">
+          <div className="flex flex-col gap-4">
+            {/* Mobile badge */}
+            <div className="flex justify-center lg:hidden">
+              <div className="gap-2 bg-black inline-flex items-center bg-opacity-5 px-4 py-2 rounded-[20px]">
+                {label.icon}
+                <p className="text-sm leading-5 font-medium">{label.title}</p>
+              </div>
+            </div>
+
+            {/* Image container */}
+            <div className="relative flex items-center justify-center">
+              {gradient}
+              {illustration}
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -144,6 +152,8 @@ export const ProductsSection = () => {
       className="lg:py-20 py-10 flex flex-col gap-10 w-full"
     >
       <SectionTitle>Our Products</SectionTitle>
+      <ENSNodeProductPanel />
+
       {products.map((product, index) => (
         <Product
           key={product.title}
@@ -242,7 +252,7 @@ const products: ProductProps[] = [
       "ENS Registrar apps need infrastructure to help their users discover “collectable” ENS names, such that more names are registered. Navigate more than 21 million “collectable” names spanning more than 400,000 name collections.",
     label: {
       title: "ENS Name Collection Infrastructure",
-      icon: <GlobeAmericasIcon className="h-5 w-5 text-gray-500" />,
+      icon: <GlobeAltIcon className="h-5 w-5 text-gray-500" />,
     },
     buttonLabel: "Learn more",
     buttonUrl: "https://www.namegraph.dev/",
@@ -303,7 +313,7 @@ const products: ProductProps[] = [
         alt="hero"
       />
     ),
-    buttonLabel: "Try it now",
+    buttonLabel: "Learn more",
     buttonUrl: "https://www.nameguard.io/",
     sectionId: "nameguard",
   },
