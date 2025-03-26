@@ -29,7 +29,10 @@ export default function Page() {
                 </div>
               </div>
               <Button variant="secondary" asChild>
-                <NextLink href="https://docs.vision.io/profile-features/vision-score-beta">
+                <NextLink
+                  target="_blank"
+                  href="https://docs.vision.io/profile-features/vision-score-beta"
+                >
                   About VisionScore
                 </NextLink>
               </Button>
