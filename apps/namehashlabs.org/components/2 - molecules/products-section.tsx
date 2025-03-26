@@ -1,7 +1,12 @@
 import React from "react";
 import {
   ChartBarSquareIcon,
+  GlobeAmericasIcon,
+  RocketLaunchIcon,
   ShieldCheckIcon,
+  SparklesIcon,
+  StarIcon,
+  WrenchScrewdriverIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { Balancer } from "react-wrap-balancer";
@@ -11,8 +16,11 @@ import NextLink from "next/link";
 
 import { SectionText, SectionTitle } from "../1 - atoms";
 
-import making_the_unknown_img from "/public/images/making_the_unknown.svg";
-
+import making_the_unknown_img from "/public/images/making_the_unknown.png";
+import ens_admin_img from "/public/images/ens-admin-illustration.png";
+import namegraph_img from "/public/images/namegraph-illustration.png";
+import ens_v2_referral_programs_img from "/public/images/ens-v2-referral-programs.svg";
+import nameai_img from "/public/images/nameai-illustration.png";
 interface ProductProps {
   label: {
     icon: React.ReactElement;
@@ -55,13 +63,20 @@ const Product = ({
     >
       <div
         className={cc([
-          "w-full flex flex-col items-center lg:flex-row max-w-[1216px] bg-gray-50 rounded-[20px] p-[32px]",
+          "w-full flex flex-col items-center lg:gap-10 lg:flex-row max-w-[1216px] bg-gray-50 rounded-[20px] p-[32px]",
           {
             "lg:flex-row-reverse": isInverted,
           },
         ])}
       >
-        <div className="lg:w-1/2 w-full flex items-start justify-center ">
+        <div
+          className={cc([
+            "lg:w-1/2 w-full flex items-start justify-center",
+            {
+              "lg:ml-10": !isInverted,
+            },
+          ])}
+        >
           <div className="flex-col inline-flex gap-5 lg:max-w-[568px]">
             <div className="justify-center lg:justify-start flex">
               <div className="gap-2 bg-black inline-flex items-center bg-opacity-5 px-4 py-2 rounded-[20px]">
@@ -150,34 +165,12 @@ export const ProductsSection = () => {
 
 const products: ProductProps[] = [
   {
-    title: "ENSNode",
-    subtitle:
-      "Unlock new opportunities for ENS support in your web3 app with ENSNode, your gateway to a seamless fusion of richest onchain and offchain data from across the ENS ecosystem.",
-    label: {
-      title: "ENS Developer Tooling",
-      icon: <ChartBarSquareIcon className="h-5 w-5 text-gray-500" />,
-    },
-    illustration: (
-      <Image
-        quality={100}
-        width={568}
-        height={360}
-        className="w-full h-auto"
-        src="/images/ensnode-developer.png"
-        alt="hero"
-      />
-    ),
-    buttonLabel: "Learn more",
-    buttonUrl: "https://ensnode.io",
-    sectionId: "ens-node",
-  },
-  {
     title: "ENSRainbow",
     subtitle:
-      "Making the unknown, known. Heal millions of unknown ENS names with this ENSNode sidecar service.",
+      "All ENS apps depending on indexed ENS name data need infrastructure to reduce the occurrence of ENS users being exposed to ugly and confusing technical implementation details of ENS smart contracts.",
     label: {
-      title: "ENS Developer Tooling",
-      icon: <ChartBarSquareIcon className="h-5 w-5 text-gray-500" />,
+      title: "ENS User Experience Infrastructure",
+      icon: <StarIcon className="h-5 w-5 text-gray-500" />,
     },
     buttonLabel: "Learn more",
     buttonUrl: "https://ensrainbow.io",
@@ -194,22 +187,110 @@ const products: ProductProps[] = [
         />
       </div>
     ),
-    gradient: (
-      <div
-        className="absolute inset-0 rounded-lg opacity-30 z-0"
-        style={{
-          background:
-            "radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.00) 0%, #FFF 100%), linear-gradient(90deg, #FFAF00 0%, #F112D9 32.29%, #4C3FA0 70.83%, #2ED3C6 95.83%)",
-        }}
-      />
+  },
+  {
+    title: "ENSAdmin",
+    subtitle:
+      "ENS Developers need “power tools” to explore the ENS Protocol and trace operations like never before. Interactively learn and debug how ENS Registries, Registrars, Resolvers, Gateways, and Clients interact.",
+    label: {
+      title: "ENS Developer Power Tools",
+      icon: <WrenchScrewdriverIcon className="h-5 w-5 text-gray-500" />,
+    },
+    buttonLabel: "Learn more",
+    buttonUrl: "https://admin.ensnode.io/status",
+    sectionId: "ens-admin",
+    illustration: (
+      <div className="w-full h-auto z-10">
+        <Image
+          quality={100}
+          width={568}
+          height={360}
+          className="w-full h-auto"
+          src={ens_admin_img}
+          alt="hero"
+        />
+      </div>
+    ),
+  },
+  {
+    title: "ENSv2 Referral Programs",
+    subtitle:
+      "ENS needs growth and revenues. Referral programs incentivize platforms with large existing audiences to integrate and promote .eth registrations and renewals.  Passionate about ENS? Become an ENSv2 Referrer, help grow ENS, and start earning.",
+    label: {
+      title: "ENS Growth Incentive Program",
+      icon: <ChartBarSquareIcon className="h-5 w-5 text-gray-500" />,
+    },
+    buttonLabel: "Learn more",
+    buttonUrl: "/ens-v2-referral-programs",
+    sectionId: "ens-v2-referral-programs",
+    illustration: (
+      <div className="w-full h-auto z-10">
+        <Image
+          quality={100}
+          width={568}
+          height={360}
+          className="w-full h-auto"
+          src={ens_v2_referral_programs_img}
+          alt="hero"
+        />
+      </div>
+    ),
+  },
+  {
+    title: "NameGraph",
+    subtitle:
+      "ENS Registrar apps need infrastructure to help their users discover “collectable” ENS names, such that more names are registered. Navigate more than 21 million “collectable” names spanning more than 400,000 name collections.",
+    label: {
+      title: "ENS Name Collection Infrastructure",
+      icon: <GlobeAmericasIcon className="h-5 w-5 text-gray-500" />,
+    },
+    buttonLabel: "Learn more",
+    buttonUrl: "https://www.namegraph.dev/",
+    sectionId: "namegraph",
+    illustration: (
+      <div className="w-full h-auto z-10">
+        <Image
+          quality={100}
+          width={568}
+          height={360}
+          className="w-full h-auto"
+          src={namegraph_img}
+          alt="hero"
+        />
+      </div>
+    ),
+  },
+
+  {
+    title: "NameAI",
+    subtitle:
+      "ENS Marketplace apps need infrastructure to automatically sort the most attractive names up to the top of the list. Enables multi-dimensional name scoring. Improves name discovery and liquidity to ultimately boost ENS DAO revenues.",
+    label: {
+      title: "ENS Name Discovery Infrastructure",
+      icon: <SparklesIcon className="h-5 w-5 text-gray-500" />,
+    },
+    buttonLabel: "Learn more",
+    buttonUrl: "https://www.nameai.io/",
+    sectionId: "nameai",
+    illustration: (
+      <div className="w-full h-auto z-10">
+        <Image
+          quality={100}
+          width={568}
+          height={360}
+          className="w-full h-auto"
+          src={nameai_img}
+          alt="hero"
+        />
+      </div>
     ),
   },
   {
     title: "NameGuard",
     subtitle:
-      "Provide a safer environment for ENS names in your Web3 app, eliminate hidden risks for your users, and encourage optimal use of ENS.",
+      "A number of ENS user flows can suffer from “sharp edges” with unexpected or harmful consequences. NameGuard’s powerful name inspection capabilities provide a safer environment for operations on ENS names and encourages the optimal use of ENS.",
     label: {
-      title: "Protect the ENS community",
+      title: "ENS Name Security Infrastructure",
       icon: <ShieldCheckIcon className="h-5 w-5 text-gray-500" />,
     },
     illustration: (
@@ -229,10 +310,10 @@ const products: ProductProps[] = [
   {
     title: "NameKit",
     subtitle:
-      "A fast, easy and highly customizable way for developers to add engaging ENS user journeys to their application.",
+      "ENSv2 enables a completely new infrastructure for ENS name registrars to be built. NameKit is being rearchitected for ENSv2 to support the rapid deployment of new subname registrars that deliver fun and engaging ENS user journeys.",
     label: {
-      title: "Improved economics for building on ENS",
-      icon: <ChartBarSquareIcon className="h-5 w-5 text-gray-500" />,
+      title: "ENSv2 Registrar Infrastructure",
+      icon: <RocketLaunchIcon className="h-5 w-5 text-gray-500" />,
     },
     buttonLabel: "Learn more",
     illustration: (
@@ -247,28 +328,5 @@ const products: ProductProps[] = [
     ),
     buttonUrl: "https://www.namekit.io/",
     sectionId: "namekit",
-  },
-  {
-    title: "ENS Referral Program",
-    subtitle:
-      "The power of a protocol lies not only in its technology, but in the strength of its community. Passionate about ENS? Become an ENS Referrer, help grow ENS, and start earning.",
-    label: {
-      title: "Incentive program to help ENS grow",
-      icon: <ChartBarSquareIcon className="h-5 w-5 text-gray-500" />,
-    },
-    buttonLabel: "Learn more",
-    illustration: (
-      <Image
-        quality={100}
-        width={568}
-        height={360}
-        className="w-full h-auto"
-        src="/images/ens-incentive.png"
-        alt="hero"
-      />
-    ),
-    greenLabelText: "Proposal pending",
-    buttonUrl: "/ens-v2-referral-programs",
-    sectionId: "ens-v2-referral-programs",
   },
 ];
