@@ -3,14 +3,38 @@ import { HeroStartCommand } from "@/components/HeroStartCommand";
 import { GithubIcon } from "@/components/github-icon";
 import VideoAsciiAnimation from "@/components/VideoAsciiAnimation";
 import Balancer from "react-wrap-balancer";
-import { EnsVisionLogo } from "@/components/EnsVisionLogo";
 import NextLink from "next/link";
+import { BoltIcon } from "@heroicons/react/24/outline";
 
 export default function Page() {
   return (
     <>
       <div className="w-full">
         <div className="w-screen h-[calc(100vh-65px)] pt-1 bg-white overflow-hidden relative">
+          {/* Integration Example Panel */}
+          <div className="w-full px-5 sm:px-0 absolute z-20 left-1/2 -translate-x-1/2 top-10 sm:bottom-[20%] max-w-[1216px] mx-auto">
+            <div className="w-full bg-black flex-col sm:flex-row gap-4 rounded-lg px-8 py-4 flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="p-4 rounded-full bg-gray-700">
+                  <BoltIcon className="w-5 h-5 text-white" />
+                </div>
+
+                <div className="flex flex-col">
+                  <span className="text-white text-base">
+                    Example ENS ecosystem integration
+                  </span>
+                  <span className="text-gray-400 text-sm">
+                    Powering VisionScore
+                  </span>
+                </div>
+              </div>
+              <Button variant="secondary" asChild>
+                <NextLink href="https://docs.vision.io/profile-features/vision-score-beta">
+                  About VisionScore
+                </NextLink>
+              </Button>
+            </div>
+          </div>
           <div
             className="w-screen h-[calc(100vh-65px)] absolute top-0 left-0 z-10"
             style={{
@@ -47,25 +71,6 @@ export default function Page() {
                 </Button>
               </div>
             </div>
-          </div>
-
-          {/* Integration Example Panel */}
-          <div className="w-full px-5 sm:px-0 absolute z-10 left-1/2 -translate-x-1/2 bottom-[10%] sm:bottom-[20%] max-w-3xl mx-auto translate-y-1/2 mt-12">
-            <NextLink
-              href="https://docs.vision.io/profile-features/vision-score-beta"
-              target="_blank"
-              className="w-full z-50 bg-black rounded-lg px-8 py-4 flex items-center justify-around group"
-            >
-              <div className="flex w-1/3 text-center text-white text-sm rounded-full items-center justify-center">
-                Example ENS <br /> ecosystem integration
-              </div>
-              <div className="flex w-1/3 justify-center transition-colors duration-300 group-hover:bg-gray-800 p-4 cursor-pointer rounded-lg items-center gap-2">
-                <EnsVisionLogo />
-              </div>
-              <div className="flex w-1/3 text-center text-white text-sm rounded-full items-center justify-center">
-                Powering <br /> VisionScore
-              </div>
-            </NextLink>
           </div>
 
           <VideoAsciiAnimation />

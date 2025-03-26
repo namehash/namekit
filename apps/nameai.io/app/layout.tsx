@@ -68,7 +68,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} bg-gray-50`}>
         <div className="min-h-screen flex flex-col">
-          <header className="sticky bg-white top-0 w-full z-20 border-b border-gray-300 h-[56px] py-[9px] sm:h-[70px] sm:py-4 select-none">
+          <header className="sticky bg-white top-0 w-full z-30 border-b border-gray-300 h-[56px] py-[9px] sm:h-[70px] sm:py-4 select-none">
             <div className="max-w-7xl mx-auto items-center justify-between flex flex-row px-6">
               <div className="flex flex-row lg:gap-2 xl:gap-7 justify-between items-center">
                 <div className="flex flex-row justify-between items-center gap-1 cursor-pointer flex-shri0 pr-2">
