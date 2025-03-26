@@ -3,7 +3,6 @@ import React from "react";
 import cc from "classcat";
 import {
   ArrowPathIcon,
-  ChartBarSquareIcon,
   LightBulbIcon,
   MegaphoneIcon,
   PaintBrushIcon,
@@ -535,26 +534,6 @@ const services: ServiceProps[] = [
         loading="lazy"
         src="/images/namekit/never-for-image.png"
         alt="ENS Name AutoRenew"
-      />
-    ),
-  },
-  {
-    title: "ENSNode",
-    subtitle:
-      "NameKit is planned to integrate with an ENSNode backend that you can host in your own infrastructure. ENSNode will power many of the special features in NameKit and accelerate your ENS integrations by removing a lot of the complexity you would otherwise encounter.",
-    label: {
-      title: "ENS Developer Tooling",
-      icon: <ChartBarSquareIcon className="h-5 w-5 text-gray-500" />,
-    },
-    buttonUrl: "https://ensnode.io",
-    illustration: (
-      <Image
-        quality={100}
-        width={568}
-        height={360}
-        loading="lazy"
-        src="/images/namekit/ens-node-illustration.png"
-        alt="ENSNode Architecture Overview"
       />
     ),
   },
