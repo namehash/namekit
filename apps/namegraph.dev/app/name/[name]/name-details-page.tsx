@@ -485,7 +485,7 @@ export const NameDetailsPage = ({ name }: { name: string }) => {
         <div className="mt-4 flex flex-col space-y-4 md:space-y-0 lg:space-y-6 md:flex-row lg:flex-col md:space-x-4 lg:space-x-0">
           {/* Profile Info for both mobile and desktop */}
           {!address || address === ZEROED_ADDRESS ? undefined : (
-            <div className="h-max py-6 border border-gray-200 rounded-md md:w-1/2 lg:w-auto">
+            <div className="h-max py-6 border flex flex-col items-center gap-2 border-gray-200 rounded-md md:w-1/2 lg:w-auto">
               <ProfileStats
                 addressOrName={NameWithCurrentTld({ name, params })}
               />
