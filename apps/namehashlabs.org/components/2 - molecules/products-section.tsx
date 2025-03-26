@@ -268,7 +268,7 @@ const products: ProductProps[] = [
       />
     ),
     greenLabelText: "Proposal pending",
-    buttonUrl: "/ens-referral-program",
-    sectionId: "ens-referral-program",
+    buttonUrl: "/ens-v2-referral-programs",
+    sectionId: "ens-v2-referral-programs",
   },
 ];
