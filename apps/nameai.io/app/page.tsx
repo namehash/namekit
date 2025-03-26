@@ -12,7 +12,7 @@ export default function Page() {
       <div className="w-full">
         <div className="w-screen h-[calc(100vh-65px)] pt-1 bg-white overflow-hidden relative">
           {/* Integration Example Panel */}
-          <div className="w-full px-5 sm:px-0 absolute z-20 left-1/2 -translate-x-1/2 top-10 sm:bottom-[20%] max-w-[1216px] mx-auto">
+          <div className="w-full px-5 absolute z-20 left-1/2 -translate-x-1/2 top-10 sm:bottom-[20%] max-w-[1216px] mx-auto">
             <div className="w-full bg-black flex-col sm:flex-row gap-4 rounded-lg px-8 py-4 flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="p-4 rounded-full bg-gray-700">
