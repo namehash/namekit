@@ -13,7 +13,6 @@ import {
 } from "@/components/atoms";
 import { Button, Link } from "@namehash/namekit-react";
 import NextLink from "next/link";
-import { NameAiLogo } from "../atoms/icons/NameAILogo";
 import { BoltIcon } from "@heroicons/react/24/solid";
 
 export function Hero() {
