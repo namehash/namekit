@@ -93,7 +93,7 @@ export const Footer = ({
 
           <div className="flex justify-start">
             <div className="flex flex-col w-[228px] pr-5">
-              <span className="mb-2 text-sm font-semibold">Products</span>
+              <span className="mb-2 text-sm font-semibold">Infrastructure</span>
               <ul className="flex flex-col">
                 {footerProducts.map((product) => {
                   return (
