@@ -151,7 +151,7 @@ export const ProductsSection = () => {
       id="productsSection"
       className="lg:py-20 py-10 flex flex-col gap-10 w-full"
     >
-      <SectionTitle>Our Products</SectionTitle>
+      <SectionTitle>Our ENS Infrastructure</SectionTitle>
       <ENSNodeProductPanel />
 
       {products.map((product, index) => (
