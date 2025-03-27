@@ -29,7 +29,7 @@
     "classcat": "5.0.5",
     "clsx": "^2.1.1",
     "dat.gui": "0.7.9",
-    "ethereum-identity-kit": "0.1.4",
+    "ethereum-identity-kit": "0.2.16",
     "fast-average-color": "9.3.0",
     "lucide-react": "^0.468.0",
     "next": "14.2.21",
