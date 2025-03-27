@@ -14,12 +14,38 @@ import {
 import { Button, Link } from "@namehash/namekit-react";
 import NextLink from "next/link";
 import { NameAiLogo } from "../atoms/icons/NameAILogo";
+import { BoltIcon } from "@heroicons/react/24/solid";
 
 export function Hero() {
   return (
     <div className="relative bg-hero_background bg-no-repeat bg-center bg-contain">
-      <section className="md:min-h-[800px] xl:min-h-[960px] box-border relative z-10 w-full h-full py-[61px] sm:py-24 px-5 flex flex-col items-center justify-center md:px-10 md:pb-32">
-        <div className="inline-flex flex-col items-center gap-5 w-full h-fit relative z-20">
+      <section className="md:min-h-[800px] xl:min-h-[960px] box-border relative z-10 w-full h-full py-[61px] sm:py-24 px-5 flex flex-col items-center justify-start md:px-10 md:pb-32">
+        {/* Integration Example Panel */}
+        <div className="w-full px-5 z-20 mx-auto justify-self-start">
+          <div className="w-full bg-black max-w-[1216px] mx-auto flex-col sm:flex-row gap-4 rounded-lg px-8 py-4 flex items-center justify-between justify-self-start">
+            <div className="flex items-center gap-4">
+              <div className="p-4 rounded-full bg-gray-700">
+                <BoltIcon className="w-5 h-5 text-white" />
+              </div>
+
+              <div className="flex flex-col">
+                <span className="text-white text-base font-semibold">
+                  NameGuard is powering NameAI
+                </span>
+                <span className="text-gray-400 text-sm">
+                  NameAI extends NameGuard’s deep name inspections
+                </span>
+              </div>
+            </div>
+            <Button variant="secondary" asChild>
+              <NextLink target="_blank" href="https://nameai.io">
+                Learn more
+              </NextLink>
+            </Button>
+          </div>
+        </div>
+
+        <div className="inline-flex mt-10 flex-col items-center gap-5 w-full h-fit relative z-20 justify-center pb-20 flex-1">
           <div className="flex flex-col gap-2 w-fit h-fit">
             <p className="text-center not-italic uppercase text-gray-500 text-xs tracking-[0.3px] font-medium">
               An open source public good
@@ -55,21 +81,6 @@ export function Hero() {
               <Link href="https://api.nameguard.io/docs">View the docs</Link>
             </Button>
           </div>
-          <NextLink
-            href="https://nameai.io"
-            target="_blank"
-            className="w-full z-50 bg-black rounded-lg mt-12 max-w-6xl gap-2 px-4 md:px-0 py-4 flex items-center justify-around group"
-          >
-            <div className="flex w-1/3 text-center text-white text-sm rounded-full items-center justify-center">
-              Example ENS <br /> ecosystem integration
-            </div>
-            <div className="flex w-1/3 justify-center h-full py-4 transition-colors duration-300 group-hover:bg-gray-800 cursor-pointer rounded-lg items-center">
-              <NameAiLogo className="w-full h-10" />
-            </div>
-            <div className="flex w-1/3 text-center text-white text-sm rounded-full items-center justify-center">
-              Powering Detailed <br /> Name Analysis
-            </div>
-          </NextLink>
         </div>
 
         <div className="absolute z-0 top-0 left-0 h-full w-full box-border bg-center bg-[radial-gradient(#DEDEDEB2_1px,transparent_1px)] [background-size:24px_24px]" />
