@@ -13,7 +13,8 @@ import {
 import { HeroStartCommand } from "@/components/hero-start-command";
 import { Button, IconButton } from "@namehash/namekit-react";
 import dynamic from "next/dynamic";
-
+import NextLink from "next/link";
+import { BoltIcon } from "@heroicons/react/24/solid";
 const ThreeJSAnimation = dynamic(
   () =>
     import("../../components/hero-animation").then(
@@ -115,6 +116,34 @@ export const HomePage = () => {
             <HeroStartCommand />
           </div>
         </div>
+        {/* Integration Example Panel */}
+        <div className="w-full px-5 z-20 mx-auto mt-10 mb-2">
+          <div className="w-full bg-black max-w-[1216px] mx-auto flex-col sm:flex-row gap-4 rounded-lg px-8 py-4 flex items-center justify-between justify-self-start">
+            <div className="flex items-center gap-4">
+              <div className="p-4 rounded-full bg-gray-700">
+                <BoltIcon className="w-5 h-5 text-white" />
+              </div>
+
+              <div className="flex flex-col">
+                <span className="text-white text-base font-semibold">
+                  Example ENS ecosystem integration{" "}
+                </span>
+                <span className="text-gray-400 text-sm">
+                  powering related name suggestions at Vision{" "}
+                </span>
+              </div>
+            </div>
+            <Button variant="secondary" asChild>
+              <NextLink
+                target="_blank"
+                href="https://x.com/ensvision/status/1902711055802933619"
+              >
+                Learn more
+              </NextLink>
+            </Button>
+          </div>
+        </div>
+
         <div className="max-w-[1216px] mx-auto flex flex-col items-center justify-start bg-gray-50 rounded-xl p-10 mt-10 w-full">
           <div className="flex flex-col items-center justify-center gap-3">
             <p className="text-lg font-semibold">
