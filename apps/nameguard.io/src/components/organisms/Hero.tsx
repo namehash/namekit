@@ -12,12 +12,39 @@ import {
   WarningShieldSmall,
 } from "@/components/atoms";
 import { Button, Link } from "@namehash/namekit-react";
+import NextLink from "next/link";
+import { BoltIcon } from "@heroicons/react/24/solid";
 
 export function Hero() {
   return (
     <div className="relative bg-hero_background bg-no-repeat bg-center bg-contain">
-      <section className="md:min-h-[800px] xl:min-h-[960px] box-border relative z-10 w-full h-full py-[61px] sm:py-24 px-5 flex flex-col items-center justify-center md:px-10 md:pb-32">
-        <div className="inline-flex flex-col items-center gap-5 w-full h-fit relative z-20">
+      <section className="md:min-h-[800px] xl:min-h-[960px] box-border relative z-10 w-full h-full py-[61px] sm:py-24 px-5 flex flex-col items-center justify-start md:px-10 md:pb-32">
+        {/* Integration Example Panel */}
+        <div className="w-full px-5 z-20 mx-auto justify-self-start">
+          <div className="w-full bg-black max-w-[1216px] mx-auto flex-col sm:flex-row gap-4 rounded-lg px-8 py-4 flex items-center justify-between justify-self-start">
+            <div className="flex items-center gap-4">
+              <div className="p-4 rounded-full bg-gray-700">
+                <BoltIcon className="w-5 h-5 text-white" />
+              </div>
+
+              <div className="flex flex-col">
+                <span className="text-white text-base font-semibold">
+                  NameGuard is powering NameAI
+                </span>
+                <span className="text-gray-400 text-sm">
+                  NameAI extends NameGuard’s deep name inspections
+                </span>
+              </div>
+            </div>
+            <Button variant="secondary" asChild>
+              <NextLink target="_blank" href="https://nameai.io">
+                Learn more
+              </NextLink>
+            </Button>
+          </div>
+        </div>
+
+        <div className="inline-flex mt-10 flex-col items-center gap-5 w-full h-fit relative z-20 justify-center pb-20 flex-1">
           <div className="flex flex-col gap-2 w-fit h-fit">
             <p className="text-center not-italic uppercase text-gray-500 text-xs tracking-[0.3px] font-medium">
               An open source public good
