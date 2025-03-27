@@ -129,6 +129,14 @@ const partners: PartnerCardProps[] = [
         >
           NameAI
         </a>{" "}
+        and{" "}
+        <a
+          href="https://namegraph.dev/"
+          target="_blank"
+          className="underline whitespace-nowrap hover:text-black transition-colors duration-200"
+        >
+          NameGraph
+        </a>{" "}
         that help improve the discoverability and liquidity of ENS names on
         secondary markets.
       </Balancer>
@@ -139,7 +147,7 @@ const partners: PartnerCardProps[] = [
     title: <AxiomLogo className="h-8" />,
     text: (
       <Balancer>
-        We’re collaborating with Axiom on an{" "}
+        We collaborated with Axiom on an{" "}
         <a
           href="https://github.com/namehash/ens-referrals"
           target="_blank"
@@ -147,8 +155,8 @@ const partners: PartnerCardProps[] = [
         >
           ENS Referral program prototype
         </a>
-        . This R&D effort explores how ZK-proofs and Axiom&apos;s ZK-coprocessor
-        technology can achieve better economic incentives for all parties,
+        . This R&D effort explored how ZK-proofs and Axiom&apos;s ZK-coprocessor
+        technology could achieve better economic incentives for all parties,
         including the ENS DAO, referrers, and referred persons.
       </Balancer>
     ),

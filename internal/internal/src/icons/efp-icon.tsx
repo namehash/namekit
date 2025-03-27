@@ -10,7 +10,7 @@ export const EfpIcon = (props: SVGProps<SVGSVGElement>) => {
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <g clip-path="url(#clip0_510_2632)">
+      <g clipPath="url(#clip0_510_2632)">
         <path
           d="M6 11.3515L11.6189 2L17.1971 11.3515L11.6189 14.7559L6 11.3515Z"
           fill="currentColor"
