@@ -1,12 +1,50 @@
 import Image from "next/image";
-import Link from "next/link";
+import NextLink from "next/link";
 import { ColorfulBackground, GithubIcon } from "../atoms";
-import { Button, Heading, Text } from "@namehash/namekit-react";
+import { Button, Heading, Link, Text } from "@namehash/namekit-react";
 import { ExternalLinkIcon } from "../atoms/icons/external-link-icon";
+import { BoltIcon } from "@heroicons/react/24/outline";
+import Balancer from "react-wrap-balancer";
 
 export const HeroSection = () => {
   return (
-    <section className="justify-between relative w-full pt-[80px] lg:px-10 px-5 flex flex-col items-center overflow-hidden ens-webfont">
+    <section className="justify-between relative w-full pt-10 lg:px-10 px-5 flex flex-col items-center overflow-hidden ens-webfont">
+      {/* Integration Example Panel */}
+      <div className="w-full px-5 z-20  mx-auto mb-20">
+        <div className="w-full bg-black max-w-[1216px] mx-auto flex-col sm:flex-row gap-4 rounded-lg px-8 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="p-4 rounded-full bg-gray-700">
+              <BoltIcon className="w-5 h-5 text-white" />
+            </div>
+
+            <div className="flex flex-col">
+              <span className="text-white text-base font-semibold">
+                <Balancer>Major ENSv2 rearchitecture in progress</Balancer>
+              </span>
+              <span className="text-gray-400 text-sm">
+                <Balancer>
+                  NameKit will build for ENSv2 using{" "}
+                  <Link
+                    variant="underline"
+                    href="https://ensnode.io"
+                    size="small"
+                    className="text-white"
+                    target="_blank"
+                  >
+                    ENSNode
+                  </Link>
+                </Balancer>
+              </span>
+            </div>
+          </div>
+          <Button variant="secondary" asChild>
+            <NextLink target="_blank" href="https://ensnode.io">
+              About ENSNode
+            </NextLink>
+          </Button>
+        </div>
+      </div>
+
       <div className="flex-col flex items-center justify-center z-20 mb-20">
         <Heading
           as="h1"
@@ -22,16 +60,19 @@ export const HeroSection = () => {
         </Text>
         <div className="flex items-center justify-center gap-4 animate-fadeIn">
           <Button variant="primary" size="large" asChild>
-            <Link target="_blank" href="https://alpha.namekit.io">
+            <NextLink target="_blank" href="https://alpha.namekit.io">
               Try now
               <ExternalLinkIcon className="w-5 h-5" />
-            </Link>
+            </NextLink>
           </Button>
           <Button variant="secondary" size="large" asChild>
-            <Link target="_blank" href={"https://github.com/namehash/namekit"}>
+            <NextLink
+              target="_blank"
+              href={"https://github.com/namehash/namekit"}
+            >
               <GithubIcon className="w-5 h-5" />
               GitHub
-            </Link>
+            </NextLink>
           </Button>
         </div>
       </div>
