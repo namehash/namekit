@@ -18,3 +18,56 @@ body {
   background: var(--background);
   font-family: Inter, system-ui, sans-serif;
 }
+
+@keyframes spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.rotating-border {
+  --border-size: 0.25rem;
+  --border-bg: conic-gradient(#FF9E00, #F112D9, #4C3FA0, #2ED3C6, #FF9E00);
+  position: relative;
+  overflow: hidden;
+}
+
+.rotating-border::before {
+  content: '';
+  display: block;
+  background: var(--border-bg);
+  width: calc(100% * 1.41421356237);
+  padding-bottom: calc(100% * 1.41421356237);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 100%;
+  z-index: -2;
+  animation: spin 5s linear infinite;
+}
+
+.rotating-border::after {
+  content: '';
+  position: absolute;
+  inset: var(--border-size);
+  background: black;
+  z-index: -1;
+  border-radius: inherit;
+}
+
+.border-rotate {
+  --border-rotate: 0deg;
+  background: linear-gradient(black, black) padding-box,
+              conic-gradient(from var(--border-rotate), #FF9E00, #F112D9, #2ED3C6, #FF9E00) border-box;
+  animation: border-rotate 3s linear infinite;
+}
+
+@property --rotation {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
