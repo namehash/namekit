@@ -117,8 +117,8 @@ export const HomePage = () => {
           </div>
         </div>
         {/* Integration Example Panel */}
-        <div className="w-full px-5 z-20 mx-auto mt-10 mb-2">
-          <div className="w-full bg-black max-w-[1216px] mx-auto flex-col sm:flex-row gap-4 rounded-lg px-8 py-4 flex items-center justify-between justify-self-start">
+        <div className="w-full z-20 mx-auto mt-10 mb-2">
+          <div className="w-full bg-black max-w-5xl mx-auto flex-col sm:flex-row gap-4 rounded-lg px-8 py-4 flex items-center justify-between justify-self-start">
             <div className="flex items-center gap-4">
               <div className="p-4 rounded-full bg-gray-700">
                 <BoltIcon className="w-5 h-5 text-white" />
@@ -126,10 +126,12 @@ export const HomePage = () => {
 
               <div className="flex flex-col">
                 <span className="text-white text-base font-semibold">
-                  Example ENS ecosystem integration{" "}
+                  <Balancer>Example ENS ecosystem integration</Balancer>
                 </span>
                 <span className="text-gray-400 text-sm">
-                  powering related name suggestions at Vision{" "}
+                  <Balancer>
+                    powering related name suggestions at Vision{" "}
+                  </Balancer>
                 </span>
               </div>
             </div>
