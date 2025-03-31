@@ -11,7 +11,7 @@ import {
 import Image from "next/image";
 import { Balancer } from "react-wrap-balancer";
 import cc from "classcat";
-import { Button, Link } from "@namehash/namekit-react";
+import { Button } from "@namehash/namekit-react";
 import NextLink from "next/link";
 
 import { SectionText, SectionTitle } from "../1 - atoms";
