@@ -12,15 +12,15 @@ export default function Page() {
       <div className="w-full">
         <div className="w-screen h-[calc(100vh-65px)] pt-1 bg-white overflow-hidden relative">
           {/* Integration Example Panel */}
-          <div className="w-full px-5 absolute z-20 left-1/2 -translate-x-1/2 top-10 sm:bottom-[20%] max-w-[1216px] mx-auto">
-            <div className="w-full bg-black flex-col sm:flex-row gap-4 rounded-lg px-8 py-4 flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="p-4 rounded-full bg-gray-700">
+          <div className="w-full px-4 sm:px-5 absolute z-20 left-1/2 -translate-x-1/2 top-5 sm:bottom-[20%] max-w-[1216px] mx-auto">
+            <div className="w-full bg-black flex-col sm:flex-row gap-6 sm:gap-4 rounded-lg p-6 sm:px-8 sm:py-4 flex items-center justify-between">
+              <div className="flex items-center gap-4 w-full sm:w-auto">
+                <div className="p-3 sm:p-4 rounded-full bg-gray-700 shrink-0">
                   <BoltIcon className="w-5 h-5 text-white" />
                 </div>
 
-                <div className="flex flex-col">
-                  <span className="text-white text-base font-semibold">
+                <div className="flex flex-col min-w-0">
+                  <span className="text-white text-base font-semibold truncate">
                     Example ENS ecosystem integration
                   </span>
                   <span className="text-gray-400 text-sm">
@@ -28,7 +28,11 @@ export default function Page() {
                   </span>
                 </div>
               </div>
-              <Button variant="secondary" asChild>
+              <Button
+                variant="secondary"
+                className="w-full sm:w-auto items-center justify-center text-center"
+                asChild
+              >
                 <NextLink
                   target="_blank"
                   href="https://docs.vision.io/profile-features/vision-score-beta"
