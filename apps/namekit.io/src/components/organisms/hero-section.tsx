@@ -11,9 +11,9 @@ export const HeroSection = () => {
     <section className="justify-between relative w-full pt-10 lg:px-10 px-5 flex flex-col items-center overflow-hidden ens-webfont">
       {/* Integration Example Panel */}
       <div className="w-full px-5 z-20 mx-auto mb-20">
-        <div className="relative rainbow-border w-full bg-black max-w-[1216px] mx-auto flex-col sm:flex-row gap-4 rounded-lg px-8 py-4 flex items-center justify-between overflow-hidden">
-          <div className="flex items-center gap-4">
-            <div className="p-4 rounded-full bg-gray-700">
+        <div className="relative rainbow-border w-full bg-black max-w-[1216px] mx-auto flex-col gap-6 sm:gap-4 rounded-lg p-6 sm:p-8 sm:flex-row flex items-center justify-between overflow-hidden">
+          <div className="flex items-center gap-4 w-full sm:w-auto">
+            <div className="p-3 sm:p-4 rounded-full bg-gray-700 shrink-0">
               <BoltIcon className="w-5 h-5 text-white" />
             </div>
 
@@ -37,7 +37,11 @@ export const HeroSection = () => {
               </span>
             </div>
           </div>
-          <Button variant="secondary" asChild>
+          <Button
+            variant="secondary"
+            className="w-full sm:w-auto items-center justify-center"
+            asChild
+          >
             <NextLink target="_blank" href="https://ensnode.io">
               About ENSNode
             </NextLink>
