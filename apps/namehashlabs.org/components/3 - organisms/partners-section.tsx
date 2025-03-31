@@ -7,6 +7,7 @@ import { EnelpolLogo } from "../1 - atoms/icons/enelpol-logo";
 import { AxiomLogo } from "../1 - atoms/icons/axiom-logo";
 import { ContactUsForm } from "@namehash/internal";
 import { EnsVisionLogo } from "../1 - atoms/icons/ens-vision-logo";
+import { PonderLogo } from "../1 - atoms/icons/ponder-logo";
 
 export const PartnersPage = () => {
   return (
@@ -142,6 +143,29 @@ const partners: PartnerCardProps[] = [
       </Balancer>
     ),
     websiteUrl: "https://vision.io/",
+  },
+  {
+    title: <PonderLogo className="h-6" />,
+    text: (
+      <Balancer>
+        Ponder is an open-source indexing framework built for the modern
+        Ethereum ecosystem. The Ponder core team acknowledges{" "}
+        <a
+          href="https://ensnode.io/"
+          target="_blank"
+          className="underline whitespace-nowrap hover:text-black transition-colors duration-200"
+        >
+          ENSNode
+        </a>{" "}
+        — our multichain indexer for ENSv2 — as a flagship project for their
+        framework. Our teams work together to deliver an open-source ENS
+        indexing solution that&apos;s fast, stable, correct, and complete.
+        Indexing ENS across all chains is no easy task — our collaboration helps
+        ensure that Ponder continues to be the best tool for indexing ENS over
+        the long-term.
+      </Balancer>
+    ),
+    websiteUrl: "https://ponder.sh/",
   },
   {
     title: <AxiomLogo className="h-8" />,
