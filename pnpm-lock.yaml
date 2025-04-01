@@ -67,8 +67,8 @@ importers:
         specifier: 18.3.1
         version: 18.3.1
       autoprefixer:
-        specifier: 10.4.20
-        version: 10.4.20(postcss@8.4.47)
+        specifier: 10.4.21
+        version: 10.4.21(postcss@8.4.47)
       eslint:
         specifier: 8.57.1
         version: 8.57.1
@@ -355,8 +355,8 @@ importers:
         specifier: 18.3.1
         version: 18.3.1
       autoprefixer:
-        specifier: 10.4.20
-        version: 10.4.20(postcss@8.4.47)
+        specifier: 10.4.21
+        version: 10.4.21(postcss@8.4.47)
       eslint:
         specifier: 8.57.1
         version: 8.57.1
@@ -449,8 +449,8 @@ importers:
         specifier: 18.3.1
         version: 18.3.1
       autoprefixer:
-        specifier: 10.4.20
-        version: 10.4.20(postcss@8.4.47)
+        specifier: 10.4.21
+        version: 10.4.21(postcss@8.4.47)
       eslint:
         specifier: 8.57.1
         version: 8.57.1
@@ -641,8 +641,8 @@ importers:
         specifier: 18.3.1
         version: 18.3.1
       autoprefixer:
-        specifier: 10.4.20
-        version: 10.4.20(postcss@8.4.47)
+        specifier: 10.4.21
+        version: 10.4.21(postcss@8.4.47)
       postcss:
         specifier: 8.4.47
         version: 8.4.47
@@ -824,8 +824,8 @@ importers:
         specifier: 18.3.0
         version: 18.3.0
       autoprefixer:
-        specifier: 10.4.20
-        version: 10.4.20(postcss@8.4.47)
+        specifier: 10.4.21
+        version: 10.4.21(postcss@8.4.47)
       postcss:
         specifier: 8.4.47
         version: 8.4.47
@@ -913,8 +913,8 @@ importers:
         specifier: 18.3.0
         version: 18.3.0
       autoprefixer:
-        specifier: 10.4.20
-        version: 10.4.20(postcss@8.4.47)
+        specifier: 10.4.21
+        version: 10.4.21(postcss@8.4.47)
       postcss:
         specifier: 8.4.47
         version: 8.4.47
@@ -2126,6 +2126,7 @@ packages:
 
   '@paulmillr/qr@0.2.1':
     resolution: {integrity: sha512-IHnV6A+zxU7XwmKFinmYjUcwlyK9+xkG3/s9KcQhI9BjQKycrJ1JRO+FbNYPwZiPKW3je/DR0k7w8/gLa5eaxQ==}
+    deprecated: 'The package is now available as "qr": npm install qr'
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -3254,6 +3255,7 @@ packages:
 
   '@walletconnect/sign-client@2.17.0':
     resolution: {integrity: sha512-sErYwvSSHQolNXni47L3Bm10ptJc1s1YoJvJd34s5E9h9+d3rj7PrhbiW9X82deN+Dm5oA8X9tC4xty1yIBrVg==}
+    deprecated: 'Reliability and performance improvements. See: https://github.com/WalletConnect/walletconnect-monorepo/releases'
 
   '@walletconnect/time@1.0.2':
     resolution: {integrity: sha512-uzdd9woDcJ1AaBZRhqy5rNC9laqWGErfc4dxA9a87mPdKOgWMD85mcFo9dIYIts/Jwocfwn07EC6EzclKubk/g==}
@@ -3433,8 +3435,8 @@ packages:
     resolution: {integrity: sha512-0RqyHfMyIhRXgnHuSQz2LVOE81jtAQ7EZTrF75ngiipklIsxajZ2vD042EXdiIEDs6eEAzfE10k+YhIbNl4/eg==}
     engines: {node: '>= 12.0.0'}
 
-  autoprefixer@10.4.20:
-    resolution: {integrity: sha512-XY25y5xSv/wEoqzDyXXME4AFfkZI0P23z6Fs3YgymDnKJkCGOnkL0iTxCa85UTqaSgfcqyf3UA6+c7wUvx/16g==}
+  autoprefixer@10.4.21:
+    resolution: {integrity: sha512-O+A6LWV5LDHSJD3LjHYoNi4VLsj/Whi7k6zG12xTYaU4cQ8oxQGckXNX8cRHK5yOZ/ppVHe0ZBXGzSV9jXdVbQ==}
     engines: {node: ^10 || ^12 || >=14}
     hasBin: true
     peerDependencies:
@@ -3562,6 +3564,9 @@ packages:
 
   caniuse-lite@1.0.30001692:
     resolution: {integrity: sha512-A95VKan0kdtrsnMubMKxEKUKImOPSuCpYgxSQBo036P5YYgVIcOYJEgt/txJWqObiRQeISNCfef9nvlQ0vbV7A==}
+
+  caniuse-lite@1.0.30001707:
+    resolution: {integrity: sha512-3qtRjw/HQSMlDWf+X79N206fepf4SOOU6SQLMaq/0KkZLmSjPxAkBOQQ+FxbHKfHmYLZFfdWsO3KA90ceHPSnw==}
 
   chai@4.5.0:
     resolution: {integrity: sha512-RITGBfijLkBddZvnn8jdqoTypxvqbOLYQkGGxXzeFjVHvudaPw0HNFD9x928/eUwYWd2dPCugVqspGALTZZQKw==}
@@ -4949,6 +4954,7 @@ packages:
 
   lodash.isequal@4.5.0:
     resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
+    deprecated: This package is deprecated. Use require('node:util').isDeepStrictEqual instead.
 
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
@@ -10017,10 +10023,10 @@ snapshots:
 
   atropos@1.0.2: {}
 
-  autoprefixer@10.4.20(postcss@8.4.47):
+  autoprefixer@10.4.21(postcss@8.4.47):
     dependencies:
       browserslist: 4.24.4
-      caniuse-lite: 1.0.30001692
+      caniuse-lite: 1.0.30001707
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.1.1
@@ -10099,7 +10105,7 @@ snapshots:
 
   browserslist@4.24.4:
     dependencies:
-      caniuse-lite: 1.0.30001692
+      caniuse-lite: 1.0.30001707
       electron-to-chromium: 1.5.79
       node-releases: 2.0.19
       update-browserslist-db: 1.1.2(browserslist@4.24.4)
@@ -10150,6 +10156,8 @@ snapshots:
   camelcase@5.3.1: {}
 
   caniuse-lite@1.0.30001692: {}
+
+  caniuse-lite@1.0.30001707: {}
 
   chai@4.5.0:
     dependencies:
