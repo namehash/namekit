@@ -17,9 +17,19 @@ export default {
           "0%": { opacity: "0" },
           "100%": { opacity: "1" },
         },
+        "spin-slow": {
+          from: { transform: "translate(-50%, -50%) rotate(0deg)" },
+          to: { transform: "translate(-50%, -50%) rotate(360deg)" },
+        },
+        "border-rotate": {
+          "0%": { "--rotation": "0deg" },
+          "100%": { "--rotation": "360deg" },
+        },
       },
       animation: {
         fadeIn: "fadeIn 1s linear forwards",
+        "spin-slow": "spin-slow 5s linear infinite",
+        "border-rotate": "border-rotate 3s linear infinite",
       },
       boxShadow: {
         "explore-web3-card":

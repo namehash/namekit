@@ -10,38 +10,49 @@ export const HeroSection = () => {
   return (
     <section className="justify-between relative w-full pt-10 lg:px-10 px-5 flex flex-col items-center overflow-hidden ens-webfont">
       {/* Integration Example Panel */}
-      <div className="w-full px-5 z-20  mx-auto mb-20">
-        <div className="w-full bg-black max-w-[1216px] mx-auto flex-col sm:flex-row gap-4 rounded-lg px-8 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="p-4 rounded-full bg-gray-700">
-              <BoltIcon className="w-5 h-5 text-white" />
-            </div>
+      <div className="w-full px-5 z-20 mx-auto mb-20">
+        <div className="relative w-full max-w-[1216px] mx-auto">
+          <div
+            className="border-[3px] border-transparent bg-clip-padding p-[1px] rounded-lg animate-border-rotate"
+            style={{
+              background:
+                "linear-gradient(black, black) padding-box, conic-gradient(from var(--rotation), #FF9E00, #F112D9, #2ED3C6, #FF9E00) border-box",
+              ["--rotation" as string]: "0deg",
+            }}
+          >
+            <div className="bg-black rounded-lg flex-col sm:flex-row gap-4 px-8 py-4 flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="p-4 rounded-full bg-gray-700">
+                  <BoltIcon className="w-5 h-5 text-white" />
+                </div>
 
-            <div className="flex flex-col">
-              <span className="text-white text-base font-semibold">
-                <Balancer>Major ENSv2 rearchitecture in progress</Balancer>
-              </span>
-              <span className="text-gray-400 text-sm">
-                <Balancer>
-                  NameKit will build for ENSv2 using{" "}
-                  <Link
-                    variant="underline"
-                    href="https://ensnode.io"
-                    size="small"
-                    className="text-white"
-                    target="_blank"
-                  >
-                    ENSNode
-                  </Link>
-                </Balancer>
-              </span>
+                <div className="flex flex-col">
+                  <span className="text-white text-base font-semibold">
+                    <Balancer>Major ENSv2 rearchitecture in progress</Balancer>
+                  </span>
+                  <span className="text-gray-400 text-sm">
+                    <Balancer>
+                      NameKit will build for ENSv2 using{" "}
+                      <Link
+                        variant="underline"
+                        href="https://ensnode.io"
+                        size="small"
+                        className="text-white"
+                        target="_blank"
+                      >
+                        ENSNode
+                      </Link>
+                    </Balancer>
+                  </span>
+                </div>
+              </div>
+              <Button variant="secondary" asChild>
+                <NextLink target="_blank" href="https://ensnode.io">
+                  About ENSNode
+                </NextLink>
+              </Button>
             </div>
           </div>
-          <Button variant="secondary" asChild>
-            <NextLink target="_blank" href="https://ensnode.io">
-              About ENSNode
-            </NextLink>
-          </Button>
         </div>
       </div>
 
