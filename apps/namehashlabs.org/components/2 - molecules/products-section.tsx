@@ -255,7 +255,7 @@ const products: ProductProps[] = [
       icon: <GlobeAltIcon className="h-5 w-5 text-gray-500" />,
     },
     buttonLabel: "Learn more",
-    buttonUrl: "https://www.namegraph.dev/",
+    buttonUrl: "https://namegraph.dev/",
     sectionId: "namegraph",
     illustration: (
       <div className="w-full h-auto z-10">
@@ -280,7 +280,7 @@ const products: ProductProps[] = [
       icon: <SparklesIcon className="h-5 w-5 text-gray-500" />,
     },
     buttonLabel: "Learn more",
-    buttonUrl: "https://www.nameai.io/",
+    buttonUrl: "https://nameai.io/",
     sectionId: "nameai",
     illustration: (
       <div className="w-full h-auto z-10">
@@ -314,7 +314,7 @@ const products: ProductProps[] = [
       />
     ),
     buttonLabel: "Learn more",
-    buttonUrl: "https://www.nameguard.io/",
+    buttonUrl: "https://nameguard.io/",
     sectionId: "nameguard",
   },
   {
@@ -336,7 +336,7 @@ const products: ProductProps[] = [
         alt="hero"
       />
     ),
-    buttonUrl: "https://www.namekit.io/",
+    buttonUrl: "https://namekit.io/",
     sectionId: "namekit",
   },
 ];
