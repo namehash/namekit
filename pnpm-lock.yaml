@@ -317,9 +317,6 @@ importers:
       '@namehash/nameguard-react':
         specifier: workspace:*
         version: link:../../packages/nameguard-react
-      '@namehash/namehashlabs-react':
-        specifier: workspace:*
-        version: link:../../packages/namehashlabs-react
       '@namehash/namekit-react':
         specifier: workspace:*
         version: link:../../packages/namekit-react
