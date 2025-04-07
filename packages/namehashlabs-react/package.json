@@ -1,0 +1,63 @@
+{
+  "name": "@namehash/namehashlabs-react",
+  "description": "Larger React UI components for building webpages NameHash-style",
+  "version": "0.0.1",
+  "license": "MIT",
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/namehash/namekit.git",
+    "directory": "packages/namhashlabs-react"
+  },
+  "homepage": "https://github.com/namehash/namekit/tree/main/packages/namehashlabs-react",
+  "keywords": [
+    "ENS",
+    "NameKit",
+    "NameHash",
+    "NameHashLabs"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "sideEffects": false,
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "styles": "./dist/index.css",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.mjs"
+    },
+    "./styles.css": {
+      "import": "./dist/index.css",
+      "default": "./dist/index.css"
+    }
+  },
+  "dependencies": {
+    "@namehash/namekit-react": "workspace:*",
+    "classcat": "5.0.5"
+  },
+  "devDependencies": {
+    "@namekit/tsconfig": "workspace:*",
+    "@types/react": "18.3.1",
+    "@types/react-dom": "18.3.1",
+    "autoprefixer": "10.4.20",
+    "next": "14.2.21",
+    "postcss": "8.4.47",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "tailwindcss": "3.4.13",
+    "tsup": "8.3.5",
+    "typescript": "5.6.2"
+  },
+  "peerDependencies": {
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

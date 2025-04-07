@@ -7,7 +7,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Button } from "@namehash/namekit-react";
 import { Toaster } from "sonner";
-import { Footer } from "@namehash/internal";
+import { Footer } from "@namehash/namehashlabs-react";
 
 const inter = Inter({ subsets: ["latin"] });
 
