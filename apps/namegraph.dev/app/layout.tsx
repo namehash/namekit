@@ -5,7 +5,7 @@ import { GithubIcon } from "@/components/footer/github-icon";
 import { TldSelect } from "@/components/tld-select";
 import { Providers } from "@/components/providers";
 import { Button } from "@/components/ui/button";
-import { Footer } from "@namehash/internal";
+import { Footer } from "@namehash/namehashlabs-react";
 import "@namehash/namekit-react/styles.css";
 import "@namehash/nameguard-react/styles.css";
 import "ethereum-identity-kit/css";

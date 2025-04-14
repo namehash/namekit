@@ -5,7 +5,7 @@ import "@namehash/ens-webfont";
 
 import { Header } from "@/components/organisms/header";
 import { Inter } from "next/font/google";
-import { Footer } from "@namehash/internal";
+import { Footer } from "@namehash/namehashlabs-react";
 
 const inter = Inter({
   subsets: ["latin"],

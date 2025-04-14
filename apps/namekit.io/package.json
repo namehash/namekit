@@ -21,6 +21,7 @@
     "react-dom": "18.3.1",
     "react-hot-toast": "2.4.1",
     "@namehash/internal": "workspace:*",
+    "@namehash/namehashlabs-react": "workspace:*",
     "@namehash/namekit-react": "workspace:*",
     "@namehash/ens-webfont": "workspace:*",
     "react-wrap-balancer": "1.1.1"
