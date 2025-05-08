@@ -10,7 +10,7 @@ import React from "react";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Header } from "@/components/organisms";
-import { Footer } from "@namehash/internal";
+import { Footer } from "@namehash/namehashlabs-react";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 

@@ -6,6 +6,7 @@ export default {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     "./node_modules/@namehash/internal/src/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/@namehash/namehashlabs-react/src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {

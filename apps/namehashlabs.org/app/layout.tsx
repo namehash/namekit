@@ -20,7 +20,7 @@ import {
   defaultMetaOpengraph,
   defaultMetaTwitter,
 } from "./shared-metadata";
-import { Footer } from "@namehash/internal";
+import { Footer } from "@namehash/namehashlabs-react";
 import Providers from "@/components/3 - organisms/Providers";
 
 const inter = Inter({
