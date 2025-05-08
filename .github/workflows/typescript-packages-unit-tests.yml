@@ -1,6 +1,7 @@
 name: TypeScript Packages - Unit
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
@@ -19,6 +20,8 @@ on:
 env:
   PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
   PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}
+  NAMERANK_API_URI: ${{ github.ref == 'refs/heads/staging' && 'https://api-stage.nameai.dev/' || '' }}
+  NAMEGUARD_API_URI: ${{ github.ref == 'refs/heads/staging' && 'https://api-staging.nameguard.io/' || '' }}
 
 jobs:
   test:
