@@ -97,3 +97,130 @@ def test_inspector_word_count(nlp_inspector: 'NLPInspector'):
 
     result = nlp_inspector.nlp_analyse_label('toplap')
     assert result.word_count == 2
+
+
+def test_inspector_simple_names(nlp_inspector: 'NLPInspector'):
+    """Test that simple person names are correctly identified"""
+    from nameai.data import get_resource_path
+    import json
+
+    with open(get_resource_path('tests/person_names_quality.json')) as f:
+        quality_tests = json.load(f)
+
+    failures = []
+    for input_text, expected_tokens in quality_tests['simple_names'].items():
+        tokenizations, _ = nlp_inspector.tokenize(input_text, 1000)
+        expected_tokens = tuple(expected_tokens)
+        if tokenizations[0]['tokens'] != expected_tokens or tokenizations[0]['source'] != 'person_names':
+            failures.append(
+                f"\nInput: '{input_text}'\nExpected: {expected_tokens} (person_names)\n"
+                f"Got: {tokenizations[0]['tokens']} ({tokenizations[0]['source']})"
+            )
+
+    if failures:
+        print('\n=== Simple Names Test Failures ===')
+        for failure in failures:
+            print(failure)
+        print(f'\nTotal failures: {len(failures)} out of {len(quality_tests["simple_names"])} test cases')
+        assert False, 'Some simple name tests failed. See above for details.'
+
+
+def test_inspector_ambiguous_names(nlp_inspector: 'NLPInspector'):
+    """Test that ambiguous names are handled correctly"""
+    from nameai.data import get_resource_path
+    import json
+
+    with open(get_resource_path('tests/person_names_quality.json')) as f:
+        quality_tests = json.load(f)
+
+    failures = []
+    for input_text, interpretation2expected_tokens in quality_tests['ambiguous_names'].items():
+        tokenizations, _ = nlp_inspector.tokenize(input_text, 1000)
+        if interpretation2expected_tokens['person_name'] is not None:
+            expected_tokens = tuple(interpretation2expected_tokens['person_name'])
+            if tokenizations[0]['tokens'] != expected_tokens or tokenizations[0]['source'] != 'person_names':
+                failures.append(
+                    f"\nInput: '{input_text}'\nExpected: {expected_tokens} (person_names)\n"
+                    f"Got: {tokenizations[0]['tokens']} ({tokenizations[0]['source']})"
+                )
+        else:
+            if tokenizations[0]['source'] != 'ngrams':
+                failures.append(
+                    f"\nInput: '{input_text}'\nExpected ngrams source\n" f"Got: {tokenizations[0]['source']}"
+                )
+            expected_words = tuple(interpretation2expected_tokens['words'])
+            found_words = False
+            for tokenization in tokenizations:
+                if tokenization['tokens'] == expected_words:
+                    found_words = True
+                    break
+            if not found_words:
+                failures.append(
+                    f"\nInput: '{input_text}'\nExpected words tokenization: {expected_words}\n"
+                    f"Got tokenizations: {[t['tokens'] for t in tokenizations[:5]]}"
+                )
+
+    if failures:
+        print('\n=== Ambiguous Names Test Failures ===')
+        for failure in failures:
+            print(failure)
+        print(f'\nTotal failures: {len(failures)} out of {len(quality_tests["ambiguous_names"])} test cases')
+        assert False, 'Some ambiguous name tests failed. See above for details.'
+
+
+def test_inspector_non_names(nlp_inspector: 'NLPInspector'):
+    """Test that non-names are correctly identified"""
+    from nameai.data import get_resource_path
+    import json
+
+    with open(get_resource_path('tests/person_names_quality.json')) as f:
+        quality_tests = json.load(f)
+
+    failures = []
+    for input_text, expected_tokens in quality_tests['non_names'].items():
+        tokenizations, _ = nlp_inspector.tokenize(input_text, 1000)
+        expected_tuple = tuple(expected_tokens)
+        if tokenizations[0]['tokens'] != expected_tuple or tokenizations[0]['source'] != 'ngrams':
+            failures.append(
+                f"\nInput: '{input_text}'\nExpected: {expected_tokens} (ngrams)\n"
+                f"Got: {tokenizations[0]['tokens']} ({tokenizations[0]['source']})"
+            )
+
+    if failures:
+        print('\n=== Non-Names Test Failures ===')
+        for failure in failures:
+            print(failure)
+        print(f'\nTotal failures: {len(failures)} out of {len(quality_tests["non_names"])} test cases')
+        assert False, 'Some non-name tests failed. See above for details.'
+
+
+def test_inspector_tokenization_quality(nlp_inspector: 'NLPInspector'):
+    """Test combined tokenizer quality using the same test cases as AllTokenizer"""
+    from nameai.data import get_resource_path
+    import json
+
+    # Load tokenization quality test cases
+    with open(get_resource_path('tests/tokenization_quality.json')) as f:
+        quality_tests = json.load(f)
+
+    failures = []
+    for input_text, expected_tokens in quality_tests.items():
+        tokenizations, _ = nlp_inspector.tokenize(input_text, 1000)
+        expected_tuple = tuple(expected_tokens)
+        found = False
+        for tokenization in tokenizations:
+            if tokenization['tokens'] == expected_tuple:
+                found = True
+                break
+        if not found:
+            failures.append(
+                f"\nInput: '{input_text}'\nExpected: {expected_tokens}\n"
+                f"Got: {[t['tokens'] for t in tokenizations[:5]]}"
+            )
+
+    if failures:
+        print('\n=== Combined Tokenization Quality Test Failures ===')
+        for failure in failures:
+            print(failure)
+        print(f'\nTotal failures: {len(failures)} out of {len(quality_tests)} test cases')
+        assert False, 'Some combined tokenization quality tests failed. See above for details.'
