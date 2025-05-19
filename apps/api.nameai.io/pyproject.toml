@@ -20,7 +20,7 @@ mangum = { version = "^0.17.0", optional = true }
 httpx = "^0.25.0"
 python-dotenv = "^1.0.0"
 pyahocorasick = "^2.0.0"
-setuptools = "^75.1.0"
+setuptools = "^78.0.0"
 
 
 [tool.poetry.extras]
