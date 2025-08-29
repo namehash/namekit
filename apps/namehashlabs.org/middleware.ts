@@ -4,6 +4,7 @@ const allowedOrigins = [
   "https://namehashlabs.org",
   "https://www.nameguard.io",
   "https://www.namekit.io",
+  "https://ensawards.org"
 ];
 
 const corsOptions = {
