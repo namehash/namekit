@@ -127,7 +127,7 @@ export function assumeTld(labels: string[], assumedTld: string): string[] {
 
 export function parseName(
   inputName: string,
-  options?: NameParserOptions
+  options?: NameParserOptions,
 ): ParsedName {
   const trimWhitespace =
     options?.trimWhitespace !== undefined

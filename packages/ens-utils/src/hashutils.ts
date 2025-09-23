@@ -1,4 +1,4 @@
-import { keccak256, toHex } from 'viem'
+import { keccak256, toHex } from "viem";
 
 /**
  * Simple wrapper around the viem implementation of `labelhash` that returns a generic string instead.

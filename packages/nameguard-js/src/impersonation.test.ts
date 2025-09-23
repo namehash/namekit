@@ -15,7 +15,9 @@ describe("computeImpersonationEstimate", () => {
     expect(computeImpersonationEstimate("vitalìk.eth")).toBe("potential");
     expect(computeImpersonationEstimate("٧٣٧.eth")).toBe("unlikely");
     expect(computeImpersonationEstimate("poet.base.eth")).toBe("unlikely");
-    expect(computeImpersonationEstimate("exampleprimary.cb.id")).toBe("unlikely");
+    expect(computeImpersonationEstimate("exampleprimary.cb.id")).toBe(
+      "unlikely",
+    );
     expect(computeImpersonationEstimate("888‍‍.eth")).toBe("potential");
     expect(computeImpersonationEstimate("‍‍❤‍‍.eth")).toBe("potential");
     expect(computeImpersonationEstimate("٠٠۱.eth")).toBe("potential");

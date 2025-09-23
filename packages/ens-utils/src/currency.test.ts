@@ -22,8 +22,8 @@ describe("getPrimaryDisplayCurrency() function", () => {
       getPrimaryDisplayCurrency(
         CurrencyDisplayRule.PreferredCurrency,
         preferredCurrency,
-        Currency.Usd
-      )
+        Currency.Usd,
+      ),
     ).toBe(preferredCurrency);
   });
 
@@ -34,8 +34,8 @@ describe("getPrimaryDisplayCurrency() function", () => {
       getPrimaryDisplayCurrency(
         CurrencyDisplayRule.NativeCurrency,
         Currency.Eth,
-        nativeCurrency
-      )
+        nativeCurrency,
+      ),
     ).toBe(nativeCurrency);
   });
 });
@@ -46,8 +46,8 @@ describe("getAlternateDisplayCurrency() function", () => {
       getAlternateDisplayCurrency(
         CurrencyDisplayRule.PreferredCurrency,
         Currency.Usd,
-        Currency.Usd
-      )
+        Currency.Usd,
+      ),
     ).toBe(Currency.Eth);
   });
 
@@ -56,8 +56,8 @@ describe("getAlternateDisplayCurrency() function", () => {
       getAlternateDisplayCurrency(
         CurrencyDisplayRule.PreferredCurrency,
         Currency.Eth,
-        Currency.Eth
-      )
+        Currency.Eth,
+      ),
     ).toBe(Currency.Usd);
   });
 
@@ -66,8 +66,8 @@ describe("getAlternateDisplayCurrency() function", () => {
       getAlternateDisplayCurrency(
         CurrencyDisplayRule.PreferredCurrency,
         Currency.Eth,
-        Currency.Usd
-      )
+        Currency.Usd,
+      ),
     ).toBe(Currency.Usd);
   });
 
@@ -76,8 +76,8 @@ describe("getAlternateDisplayCurrency() function", () => {
       getAlternateDisplayCurrency(
         CurrencyDisplayRule.NativeCurrency,
         Currency.Eth,
-        Currency.Usd
-      )
+        Currency.Usd,
+      ),
     ).toBe(Currency.Eth);
   });
 
@@ -86,8 +86,8 @@ describe("getAlternateDisplayCurrency() function", () => {
       getAlternateDisplayCurrency(
         CurrencyDisplayRule.NativeCurrency,
         Currency.Eth,
-        Currency.Eth
-      )
+        Currency.Eth,
+      ),
     ).toBe(Currency.Usd);
   });
 
@@ -96,8 +96,8 @@ describe("getAlternateDisplayCurrency() function", () => {
       getAlternateDisplayCurrency(
         CurrencyDisplayRule.NativeCurrency,
         Currency.Usd,
-        Currency.Usd
-      )
+        Currency.Usd,
+      ),
     ).toBe(Currency.Eth);
   });
 });
@@ -137,13 +137,13 @@ describe("parseStringToCurrency() function", () => {
 
   it("should throw an error for invalid currency string", () => {
     expect(() => parseStringToCurrency("invalid")).toThrow(
-      "Cannot convert: \"invalid\" to a recognized Currency"
+      'Cannot convert: "invalid" to a recognized Currency',
     );
   });
 
   it("should throw an error for empty string", () => {
     expect(() => parseStringToCurrency("")).toThrow(
-      "Cannot convert: \"\" to a recognized Currency"
+      'Cannot convert: "" to a recognized Currency',
     );
   });
 });

@@ -10,12 +10,16 @@ import {
 describe("labelhash", () => {
   it("correctly hashes an empty label", () => {
     const result = labelhash("");
-    expect(result).toBe("0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470");
+    expect(result).toBe(
+      "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+    );
   });
 
   it("correctly hashes a non-empty label", () => {
     const result = labelhash("example");
-    expect(result).toBe("0x6fd43e7cffc31bb581d7421c8698e29aa2bd8e7186a394b85299908b4eb9b175");
+    expect(result).toBe(
+      "0x6fd43e7cffc31bb581d7421c8698e29aa2bd8e7186a394b85299908b4eb9b175",
+    );
   });
 });
 

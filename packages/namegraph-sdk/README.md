@@ -9,7 +9,6 @@ A TypeScript SDK for interacting with the NameGraph APIs, providing access to th
 - **Smart Sampling**: Sample and fetch top members from collections
 - **Advanced Search**: Search collections by string or by collection ID
 
-
 ## Installation
 
 ```bash
@@ -67,7 +66,10 @@ const members = await client.sampleCollectionMembers("collection_id");
 
 ```typescript
 // with pagination
-const members = await client.fetchCollectionMembers("collection_id", {offset: 0, limit: 20});
+const members = await client.fetchCollectionMembers("collection_id", {
+  offset: 0,
+  limit: 20,
+});
 
 // Top members
 const topMembers = await client.fetchTopCollectionMembers("collection_id");
@@ -76,7 +78,9 @@ const topMembers = await client.fetchTopCollectionMembers("collection_id");
 #### Generate Scrambled Variations of Collection Tokens
 
 ```typescript
-const scrambled = await client.scrambleCollectionTokens('collection_id', {seed: 42});
+const scrambled = await client.scrambleCollectionTokens("collection_id", {
+  seed: 42,
+});
 ```
 
 #### Find Collections
@@ -103,6 +107,7 @@ const memberCount = await client.countCollectionsByMember("zeus");
 ```
 
 #### Get Collection by ID
+
 ```typescript
 const collection = await client.getCollectionById("collection_id");
 ```
@@ -158,12 +163,14 @@ The SDK supports various grouping categories for name suggestions:
 The SDK supports three modes for processing requests:
 
 - Instant Mode (`instant`):
+
   - Fastest response time
   - More basic name generations
   - Some advanced generators like W2VGenerator are disabled (weight multiplier = 0)
   - Often used for real-time suggestions
 
 - Domain Detail Mode (`domain_detail`):
+
   - Intermediate between instant and full
   - More comprehensive than instant, but still optimized for performance
   - Some generators have reduced weights compared to full mode
@@ -175,7 +182,6 @@ The SDK supports three modes for processing requests:
   - Uses full weights for most generators
   - Accesses advanced generators like `Wikipedia2VGenerator` and `W2VGenerator`
   - Takes longer to process, but provides the most diverse results
-
 
 ## Contact Us
 

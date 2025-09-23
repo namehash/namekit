@@ -36,7 +36,7 @@ const getFallbackAvatarCallback = async (ensName: string) => {
 };
 
 export const getNameHashLabsAvatarCallbacks = (
-  profile: Profile
+  profile: Profile,
 ): AvatarQueryModel[] => {
   return [
     async () => await getCachedAvatarCallback(profile.ensName),

@@ -1,5 +1,11 @@
 import { describe, it, expect, beforeAll } from "vitest";
-import { isEmojiChar, isEmojiSequence, isEmojiZwjSequence, isEmoji, isCombiningChar } from "./utils";
+import {
+  isEmojiChar,
+  isEmojiSequence,
+  isEmojiZwjSequence,
+  isEmoji,
+  isCombiningChar,
+} from "./utils";
 import { initializeData } from "./data";
 
 describe("isEmojiChar", () => {
@@ -25,7 +31,7 @@ describe("isEmojiChar", () => {
       ["\u{0002b736}", false], // Unicode 14 CJK
     ];
     for (const [chr, expected] of cases) {
-      expect(isEmojiChar(chr)).toBe(expected)
+      expect(isEmojiChar(chr)).toBe(expected);
     }
   });
 });
@@ -49,7 +55,7 @@ describe("isEmojiSequence", () => {
       ["🦹", true],
     ];
     for (const [text, expected] of cases) {
-      expect(isEmojiSequence(text)).toBe(expected)
+      expect(isEmojiSequence(text)).toBe(expected);
     }
   });
 });
@@ -65,11 +71,17 @@ describe("isEmojiZwjSequence", () => {
       ["a", false],
       ["\u2705", false], // single emoji
       ["🇪🇹", false], // RGI
-      ["\u{0001F469}\u{0001F3FB}\u{0000200D}\u{0001F91D}\u{0000200D}\u{0001F469}\u{0001F3FC}", true],
-      ["\u{0001F469}\u{0001F3FB}\u{0000200D}\u{0001F91D}\u{0000200D}\u{0000200D}\u{0001F469}\u{0001F3FC}", false], // 2 ZWJs
+      [
+        "\u{0001F469}\u{0001F3FB}\u{0000200D}\u{0001F91D}\u{0000200D}\u{0001F469}\u{0001F3FC}",
+        true,
+      ],
+      [
+        "\u{0001F469}\u{0001F3FB}\u{0000200D}\u{0001F91D}\u{0000200D}\u{0000200D}\u{0001F469}\u{0001F3FC}",
+        false,
+      ], // 2 ZWJs
     ];
     for (const [text, expected] of cases) {
-      expect(isEmojiZwjSequence(text)).toBe(expected)
+      expect(isEmojiZwjSequence(text)).toBe(expected);
     }
   });
 });
@@ -90,7 +102,7 @@ describe("isEmoji", () => {
       ["🇵🇱🇺🇦", false],
     ];
     for (const [text, expected] of cases) {
-      expect(isEmoji(text)).toBe(expected)
+      expect(isEmoji(text)).toBe(expected);
     }
   });
 });
@@ -108,7 +120,7 @@ describe("isCombiningChar", () => {
       "\u{055b7a}",
       "\u{06ac1e}",
       "\u{063027}",
-      "\u{057c5c}"
+      "\u{057c5c}",
     ];
     const combining = [
       "\u{000345}",
@@ -120,7 +132,7 @@ describe("isCombiningChar", () => {
       "\u{01e133}",
       "\u{000e3a}",
       "\u{000d3b}",
-      "\u{002dfa}"
+      "\u{002dfa}",
     ];
     for (const chr of nonCombining) {
       expect(isCombiningChar(chr)).toBe(false);

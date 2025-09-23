@@ -7,11 +7,15 @@ const PROVIDER_URI_MAINNET = process.env.PROVIDER_URI_MAINNET;
 const PROVIDER_URI_SEPOLIA = process.env.PROVIDER_URI_SEPOLIA;
 
 if (!PROVIDER_URI_MAINNET) {
-  console.warn("PROVIDER_URI_MAINNET is not defined. Defaulting to viem's default provider, which may have rate limiting and other performance limitations.");
+  console.warn(
+    "PROVIDER_URI_MAINNET is not defined. Defaulting to viem's default provider, which may have rate limiting and other performance limitations.",
+  );
 }
 
 if (!PROVIDER_URI_SEPOLIA) {
-  console.warn("PROVIDER_URI_SEPOLIA is not defined. Defaulting to viem's default provider, which may have rate limiting and other performance limitations.");
+  console.warn(
+    "PROVIDER_URI_SEPOLIA is not defined. Defaulting to viem's default provider, which may have rate limiting and other performance limitations.",
+  );
 }
 
 /**
@@ -50,16 +54,18 @@ describe("NameGuardJS", () => {
     const localNameguard = createClient({
       // not a real endpoint, will error if used
       nameguardEndpoint: INVALID_NAMEGUARD_API_ENDPOINT,
-      publicClient
+      publicClient,
     });
 
     expect(
       // this should try to fetch from the endpoint
       localNameguard.getSecurePrimaryName(
         "0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5",
-        { returnNameGuardReport: true }
-      )
-    ).rejects.toThrow("request to http://localhost:1234/secure-primary-name/mainnet/0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5?return_nameguard_report=true failed");
+        { returnNameGuardReport: true },
+      ),
+    ).rejects.toThrow(
+      "request to http://localhost:1234/secure-primary-name/mainnet/0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5?return_nameguard_report=true failed",
+    );
   });
 
   it("should throw an error for network mismatch on mainnet", () => {
@@ -73,7 +79,9 @@ describe("NameGuardJS", () => {
         network: "mainnet",
         publicClient: sepoliaClient,
       });
-    }).toThrow("Network mismatch: expected mainnet (chain id 1), but got chain id 11155111.");
+    }).toThrow(
+      "Network mismatch: expected mainnet (chain id 1), but got chain id 11155111.",
+    );
   });
 
   it("should throw an error for network mismatch on sepolia", () => {
@@ -87,7 +95,9 @@ describe("NameGuardJS", () => {
         network: "sepolia",
         publicClient: mainnetClient,
       });
-    }).toThrow("Network mismatch: expected sepolia (chain id 11155111), but got chain id 1.");
+    }).toThrow(
+      "Network mismatch: expected sepolia (chain id 11155111), but got chain id 1.",
+    );
   });
 
   it("should not throw an error for correct network on mainnet", () => {

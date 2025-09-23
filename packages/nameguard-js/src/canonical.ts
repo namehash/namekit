@@ -44,7 +44,7 @@ export function getCanonicalLabel(label: string): string | null {
  * Some graphemes have no canonical form because of language-specific writing scripts.
  *
  * If the input label contains confusable graphemes with no canonical form, or if the canonical label cannot be normalized, the function returns null.
- * 
+ *
  * @param label - The label to retrieve the normalized canonical label for.
  * @returns The normalized canonical label, or `null` if the label contains graphemes with no canonical form or if the canonical label cannot be normalized.
  */

@@ -1,8 +1,5 @@
 import { describe, it, expect } from "vitest";
-import {
-  sampleWritersBlockSuggestions,
-  WritersBlockCollection,
-} from "./utils";
+import { sampleWritersBlockSuggestions, WritersBlockCollection } from "./utils";
 
 describe("sampleWritersBlockSuggestions", () => {
   const mockCatalog: WritersBlockCollection[] = [
@@ -45,14 +42,14 @@ describe("sampleWritersBlockSuggestions", () => {
   it("should return unique suggestions", () => {
     const suggestionsCount = 2;
     const result = sampleWritersBlockSuggestions(suggestionsCount, mockCatalog);
-    const uniqueSuggestions = new Set(result.map(s => s.suggestedName));
+    const uniqueSuggestions = new Set(result.map((s) => s.suggestedName));
     expect(uniqueSuggestions.size).toBe(result.length);
   });
 
   it("should return suggestions with correct structure", () => {
     const result = sampleWritersBlockSuggestions(1, mockCatalog);
     const suggestion = result[0];
-    
+
     expect(suggestion).toHaveProperty("collectionName");
     expect(suggestion).toHaveProperty("suggestedName");
     expect(suggestion).toHaveProperty("tokenizedSuggestedName");
@@ -73,7 +70,7 @@ describe("sampleWritersBlockSuggestions", () => {
   it("should return suggestions from different collections", () => {
     const suggestionsCount = 2;
     const result = sampleWritersBlockSuggestions(suggestionsCount, mockCatalog);
-    const uniqueCollections = new Set(result.map(s => s.collectionName));
+    const uniqueCollections = new Set(result.map((s) => s.collectionName));
     expect(uniqueCollections.size).toBe(result.length);
   });
 });

@@ -4,10 +4,7 @@ export const siteName = "NameHash Labs";
 export const defaultMetaTitle = "NameHash Labs - Helping ENS Grow";
 export const defaultMetaDescription =
   "NameHash Labs builds open source infrastructure to support the global adoption of ENS.";
-export const defaultMetaKeywords = [
-  "ens",
-  "namehash",
-];
+export const defaultMetaKeywords = ["ens", "namehash"];
 
 export const baseUrl = "https://namehashlabs.org";
 

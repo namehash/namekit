@@ -1,9 +1,9 @@
-import { UserConfig, defineConfig } from 'vitest/config';
+import { UserConfig, defineConfig } from "vitest/config";
 
 export default defineConfig({
-    resolve: {
-      alias: {
-        '@': '/.'
-      },
+  resolve: {
+    alias: {
+      "@": "/.",
     },
+  },
 } as UserConfig);

@@ -10,7 +10,7 @@ export const stringToBigInt = (stringValue: string): bigint => {
 
 export const decimalToBigInt = (decimalValue: Decimal): bigint => {
   return numberToBigInt(
-    Number(decimalValue.toFixed(0, Decimal.ROUND_HALF_DOWN))
+    Number(decimalValue.toFixed(0, Decimal.ROUND_HALF_DOWN)),
   );
 };
 
@@ -49,7 +49,7 @@ export const bigIntToNumber = (bigIntValue: bigint): number => {
 export const approxScaleBigInt = (
   bigIntValue: bigint,
   scaleFactor: number,
-  digitsOfPrecision: bigint
+  digitsOfPrecision: bigint,
 ): bigint => {
   if (digitsOfPrecision < 0n)
     throw Error("digitsOfPrecision must be non-negative");
@@ -72,7 +72,7 @@ export const approxScaleBigInt = (
   // the conversion to BigInt here will implicitly cause inflatedScaleFactor to
   // lose any digits of precision beyond digitsOfPrecision
   const inflatedScaleFactorBigInt = BigInt(
-    Math.round(inflatedScaleFactorNumber)
+    Math.round(inflatedScaleFactorNumber),
   );
 
   const inflatedResult = bigIntValue * inflatedScaleFactorBigInt;

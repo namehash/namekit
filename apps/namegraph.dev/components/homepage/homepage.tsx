@@ -116,39 +116,6 @@ export const HomePage = () => {
             <HeroStartCommand />
           </div>
         </div>
-        {/* Integration Example Panel */}
-        <div className="w-full z-20 mx-auto mt-10 mb-2 px-4 sm:px-0">
-          <div className="w-full bg-black max-w-5xl mx-auto flex-col sm:flex-row gap-6 sm:gap-4 rounded-lg p-6 sm:px-8 sm:py-4 flex items-center justify-between">
-            <div className="flex items-center gap-4 w-full sm:w-auto">
-              <div className="p-3 sm:p-4 rounded-full bg-gray-700 shrink-0">
-                <BoltIcon className="w-5 h-5 text-white" />
-              </div>
-
-              <div className="flex flex-col min-w-0">
-                <span className="text-white text-base font-semibold">
-                  <Balancer>Example ENS ecosystem integration</Balancer>
-                </span>
-                <span className="text-gray-400 text-sm">
-                  <Balancer>
-                    powering related name suggestions at Vision{" "}
-                  </Balancer>
-                </span>
-              </div>
-            </div>
-            <Button
-              variant="secondary"
-              className="w-full items-center justify-center sm:w-auto text-center"
-              asChild
-            >
-              <NextLink
-                target="_blank"
-                href="https://x.com/ensvision/status/1902711055802933619"
-              >
-                Learn more
-              </NextLink>
-            </Button>
-          </div>
-        </div>
 
         <div className="max-w-[1216px] mx-auto flex flex-col items-center justify-start bg-gray-50 rounded-xl p-10 mt-10 w-full">
           <div className="flex flex-col items-center justify-center gap-3">

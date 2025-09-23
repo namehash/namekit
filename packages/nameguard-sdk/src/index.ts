@@ -518,8 +518,8 @@ export class NameGuard {
   }: NameGuardOptions = {}) {
     this.nameguardEndpoint = new URL(nameguardEndpoint);
     // Ensure the endpoint ends with a trailing slash
-    if (!this.nameguardEndpoint.pathname.endsWith('/')) {
-      this.nameguardEndpoint.pathname += '/';
+    if (!this.nameguardEndpoint.pathname.endsWith("/")) {
+      this.nameguardEndpoint.pathname += "/";
     }
 
     this.network = network;

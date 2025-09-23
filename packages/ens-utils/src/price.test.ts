@@ -1,48 +1,55 @@
 import { describe, it, expect } from "vitest";
 
-import { Price, buildPrice, convertCurrencyWithRates, formattedPrice } from "./price";
+import {
+  Price,
+  buildPrice,
+  convertCurrencyWithRates,
+  formattedPrice,
+} from "./price";
 import { Currency, PriceCurrencyFormat } from "./currency";
 
 describe("buildPrice() function", () => {
-
   it("Build from string values", () => {
-      const value = "100";
-      const currency = "USD";
+    const value = "100";
+    const currency = "USD";
 
-      const result = buildPrice(value, currency);
-  
-      expect(result).toStrictEqual({
-          value: 100n,
-          currency: Currency.Usd,
-      });
+    const result = buildPrice(value, currency);
+
+    expect(result).toStrictEqual({
+      value: 100n,
+      currency: Currency.Usd,
     });
+  });
 
-    it("Build from non-string values", () => {
-      const value = 100n;
-      const currency = Currency.Usd;
+  it("Build from non-string values", () => {
+    const value = 100n;
+    const currency = Currency.Usd;
 
-      const result = buildPrice(value, currency);
-  
-      expect(result).toStrictEqual({
-          value: 100n,
-          currency: Currency.Usd,
-      });
+    const result = buildPrice(value, currency);
+
+    expect(result).toStrictEqual({
+      value: 100n,
+      currency: Currency.Usd,
     });
+  });
 
-    it("Invalid value", () => {
-      const value = "abc";
-      const currency = "USD";
-  
-      expect(() => buildPrice(value, currency)).toThrow(`Cannot convert string: ${value} to BigInt`);
-    });
+  it("Invalid value", () => {
+    const value = "abc";
+    const currency = "USD";
 
-    it("Invalid currency", () => {
-      const value = "100";
-      const currency = "invalid";
-  
-      expect(() => buildPrice(value, currency)).toThrow(`Cannot convert: "${currency}" to a recognized Currency`);
-    });
+    expect(() => buildPrice(value, currency)).toThrow(
+      `Cannot convert string: ${value} to BigInt`,
+    );
+  });
 
+  it("Invalid currency", () => {
+    const value = "100";
+    const currency = "invalid";
+
+    expect(() => buildPrice(value, currency)).toThrow(
+      `Cannot convert: "${currency}" to a recognized Currency`,
+    );
+  });
 });
 
 enum CurrencyTestScenario {
@@ -272,14 +279,14 @@ const exchangeRatesMock = {
 
 const runCurrencyTestsForScenario = (
   scenario: CurrencyTestScenario,
-  currency: Currency
+  currency: Currency,
 ) => {
   const test = currencyTestInputs[scenario][currency];
 
   const exchangedPrice = convertCurrencyWithRates(
     test.fromPrice,
     test.toCurrency,
-    exchangeRatesMock
+    exchangeRatesMock,
   );
 
   const resFormatted = formattedPrice({
@@ -296,7 +303,7 @@ describe("Currencies underflow displaying", () => {
   it("GAS - Underflow", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.UNDERFLOW,
-      Currency.Gas
+      Currency.Gas,
     );
 
     // console.log("GAS Underflow is ", result);
@@ -306,7 +313,7 @@ describe("Currencies underflow displaying", () => {
   it("USD - Underflow", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.UNDERFLOW,
-      Currency.Usd
+      Currency.Usd,
     );
 
     // console.log("USD Underflow is ", result);
@@ -316,7 +323,7 @@ describe("Currencies underflow displaying", () => {
   it("ETH - Underflow", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.UNDERFLOW,
-      Currency.Eth
+      Currency.Eth,
     );
 
     // console.log("ETH Underflow is ", result);
@@ -326,7 +333,7 @@ describe("Currencies underflow displaying", () => {
   it("WETH - Underflow", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.UNDERFLOW,
-      Currency.Weth
+      Currency.Weth,
     );
 
     // console.log("WETH Underflow is ", result);
@@ -336,7 +343,7 @@ describe("Currencies underflow displaying", () => {
   it("DAI - Underflow", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.UNDERFLOW,
-      Currency.Dai
+      Currency.Dai,
     );
 
     // console.log("DAI Underflow is ", result);
@@ -346,7 +353,7 @@ describe("Currencies underflow displaying", () => {
   it("USDC - Underflow", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.UNDERFLOW,
-      Currency.Usdc
+      Currency.Usdc,
     );
 
     // console.log("USDC Underflow is ", result);
@@ -359,7 +366,7 @@ describe("Currencies min value displaying", () => {
   it("USD - Min", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.MIN,
-      Currency.Usd
+      Currency.Usd,
     );
 
     // console.log("USD Min is ", result);
@@ -369,7 +376,7 @@ describe("Currencies min value displaying", () => {
   it("ETH - Min", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.MIN,
-      Currency.Eth
+      Currency.Eth,
     );
 
     // console.log("ETH Min is ", result);
@@ -379,7 +386,7 @@ describe("Currencies min value displaying", () => {
   it("WETH - Min", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.MIN,
-      Currency.Weth
+      Currency.Weth,
     );
 
     // console.log("WETH Min is ", result);
@@ -389,7 +396,7 @@ describe("Currencies min value displaying", () => {
   it("DAI - Min", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.MIN,
-      Currency.Dai
+      Currency.Dai,
     );
 
     // console.log("DAI Min is ", result);
@@ -399,7 +406,7 @@ describe("Currencies min value displaying", () => {
   it("USDC - Min", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.MIN,
-      Currency.Usdc
+      Currency.Usdc,
     );
 
     // console.log("USDC Min is ", result);
@@ -412,7 +419,7 @@ describe("Currencies regular values displaying", () => {
   it("USD - Regular", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.REGULAR,
-      Currency.Usd
+      Currency.Usd,
     );
 
     // console.log("USD Regular is ", result);
@@ -422,7 +429,7 @@ describe("Currencies regular values displaying", () => {
   it("ETH - Regular", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.REGULAR,
-      Currency.Eth
+      Currency.Eth,
     );
 
     // console.log("ETH Regular is ", result);
@@ -432,7 +439,7 @@ describe("Currencies regular values displaying", () => {
   it("WETH - Regular", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.REGULAR,
-      Currency.Weth
+      Currency.Weth,
     );
 
     // console.log("WETH Regular is ", result);
@@ -442,7 +449,7 @@ describe("Currencies regular values displaying", () => {
   it("DAI - Regular", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.REGULAR,
-      Currency.Dai
+      Currency.Dai,
     );
 
     // console.log("DAI Regular is ", result);
@@ -452,7 +459,7 @@ describe("Currencies regular values displaying", () => {
   it("USDC - Regular", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.REGULAR,
-      Currency.Usdc
+      Currency.Usdc,
     );
 
     // console.log("USDC Regular is ", result);
@@ -465,7 +472,7 @@ describe("Currencies max values displaying", () => {
   it("GAS - Max", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.MAX,
-      Currency.Gas
+      Currency.Gas,
     );
 
     // console.log("GAS Max is ", result);
@@ -475,7 +482,7 @@ describe("Currencies max values displaying", () => {
   it("USD - Max", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.MAX,
-      Currency.Usd
+      Currency.Usd,
     );
 
     // console.log("USD Max is ", result);
@@ -492,7 +499,7 @@ describe("Currencies max values displaying", () => {
   it("USDC - Max", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.MAX,
-      Currency.Usdc
+      Currency.Usdc,
     );
 
     // console.log("USDC Max is ", result);
@@ -505,7 +512,7 @@ describe("Currencies overflow values displaying", () => {
   it("GAS - Overflow", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.OVERFLOW,
-      Currency.Gas
+      Currency.Gas,
     );
 
     // console.log("GAS Overflow is ", result);
@@ -515,7 +522,7 @@ describe("Currencies overflow values displaying", () => {
   it("USD - Overflow", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.OVERFLOW,
-      Currency.Usd
+      Currency.Usd,
     );
 
     // console.log("USD Overflow is ", result);
@@ -525,7 +532,7 @@ describe("Currencies overflow values displaying", () => {
   it("ETH - Overflow", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.OVERFLOW,
-      Currency.Eth
+      Currency.Eth,
     );
 
     // console.log("ETH Overflow is ", result);
@@ -535,7 +542,7 @@ describe("Currencies overflow values displaying", () => {
   it("WETH - Overflow", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.OVERFLOW,
-      Currency.Weth
+      Currency.Weth,
     );
 
     // console.log("WETH Overflow is ", result);
@@ -545,7 +552,7 @@ describe("Currencies overflow values displaying", () => {
   it("DAI - Overflow", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.OVERFLOW,
-      Currency.Dai
+      Currency.Dai,
     );
 
     // console.log("DAI Overflow is ", result);
@@ -555,7 +562,7 @@ describe("Currencies overflow values displaying", () => {
   it("USDC - Overflow", () => {
     const result = runCurrencyTestsForScenario(
       CurrencyTestScenario.OVERFLOW,
-      Currency.Usdc
+      Currency.Usdc,
     );
 
     // console.log("USDC Overflow is ", result);

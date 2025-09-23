@@ -137,7 +137,7 @@ export const PriceCurrencyFormat: Record<Currency, CurrencyConfig> = {
 export const getPrimaryDisplayCurrency = (
   rule: CurrencyDisplayRule,
   preferredCurrency: Currency,
-  nativeCurrency: Currency
+  nativeCurrency: Currency,
 ): Currency => {
   if (rule === CurrencyDisplayRule.PreferredCurrency) {
     return preferredCurrency;
@@ -149,7 +149,7 @@ export const getPrimaryDisplayCurrency = (
 export const getAlternateDisplayCurrency = (
   rule: CurrencyDisplayRule,
   preferredCurrency: Currency,
-  nativeCurrency: Currency
+  nativeCurrency: Currency,
 ): Currency => {
   if (rule === CurrencyDisplayRule.PreferredCurrency) {
     if (nativeCurrency === preferredCurrency) {
@@ -170,7 +170,8 @@ export const parseStringToCurrency = (str: string): Currency => {
   const curatedStr = str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
   const currency = Currency[curatedStr as keyof typeof Currency];
 
-  if (!currency) throw new Error(`Cannot convert: "${str}" to a recognized Currency`);
+  if (!currency)
+    throw new Error(`Cannot convert: "${str}" to a recognized Currency`);
 
   return currency;
 };
