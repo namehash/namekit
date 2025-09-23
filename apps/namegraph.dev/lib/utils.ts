@@ -14,7 +14,7 @@ import {
   ScrambleMethod,
 } from "@namehash/namegraph-sdk/utils";
 import { createNameGraphClient } from "@namehash/namegraph-sdk";
-import { buildENSName } from "@namehash/ens-utils";
+import { buildENSName, labelhash } from "@namehash/ens-utils";
 import { availableTlds, Tlds } from "@/components/collections/tld";
 
 export function cn(...inputs: ClassValue[]) {
@@ -257,7 +257,7 @@ export const getFirstLabelOfString = (str: string) => {
 };
 
 export const ExternalLinkHosts = {
-  Vision: "Vision",
+  OpenSea: "OpenSea",
   ENSDomains: "ENSDomains",
 } as const;
 
@@ -271,24 +271,11 @@ export const getExternalLinkURLForName = (
   switch (host) {
     case ExternalLinkHosts.ENSDomains:
       return `https://app.ens.domains/${name}`;
-    case ExternalLinkHosts.Vision:
-      let route = "dns";
+    case ExternalLinkHosts.OpenSea:
+      // TODO: name -> tokenId
+      return `https://opensea.io/assets/ethereum/0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85/${name}`;
 
-      /**
-       * This first condition guarantees we will only redirect users to Vision when
-       * domain search is .eth as Vision does not support subdomains so far
-       */
-      if (
-        name.includes(availableTlds[Tlds.ETH]) &&
-        name.split(".").length === 2
-      )
-        route = "ens";
-      /**
-       * Vision supports .box
-       */ else if (name.includes(availableTlds[Tlds.BOX])) route = "3dns";
-      else return false;
-
-      return `https://vision.io/name/${route}/${name}`;
+    // return false;
     default:
       return getNameDetailsPageHref(host);
   }

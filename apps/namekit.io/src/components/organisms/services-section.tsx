@@ -18,7 +18,6 @@ import {
   ShoppingCartIcon,
 } from "@heroicons/react/24/solid";
 import { ExternalLinkIcon } from "../atoms/icons/external-link-icon";
-import { EnsVisionIcon } from "../atoms/icons/ensvision-icon";
 import OpenSeaIcon from "../atoms/icons/opensea-icon";
 import { LooksRareIcon } from "../atoms/icons/looksrare-icon";
 // import LensProtocolLogo from "../atoms/icons/lens-protocol-logo";
@@ -279,7 +278,6 @@ const services: ServiceProps[] = [
           Automatic integrations with:
         </Text>
         <div className="flex flex-wrap gap-x-6 gap-y-4 items-center justify-center lg:justify-start">
-          <EnsVisionIcon />
           <OpenSeaIcon />
           <RaribleIcon />
           <X2y2Logo />
