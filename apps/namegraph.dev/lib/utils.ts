@@ -257,7 +257,6 @@ export const getFirstLabelOfString = (str: string) => {
 };
 
 export const ExternalLinkHosts = {
-  OpenSea: "OpenSea",
   ENSDomains: "ENSDomains",
 } as const;
 
@@ -271,11 +270,6 @@ export const getExternalLinkURLForName = (
   switch (host) {
     case ExternalLinkHosts.ENSDomains:
       return `https://app.ens.domains/${name}`;
-    case ExternalLinkHosts.OpenSea:
-      // TODO: name -> tokenId
-      return `https://opensea.io/assets/ethereum/0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85/${name}`;
-
-    // return false;
     default:
       return getNameDetailsPageHref(host);
   }

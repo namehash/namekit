@@ -66,7 +66,6 @@ import Skeleton from "@/components/skeleton";
 import { analyzeLabel } from "@/components/name-ai/actions";
 import { NLPLabelAnalysis } from "@namehash/nameai";
 import { EnsOutlineIcon } from "@/components/nft-avatar/ens-outline-icon";
-import { OpenSeaIcon } from "@/components/name/opensea-icon";
 import { OtherCategories } from "@/components/collections/other-categories";
 
 export const NameDetailsPage = ({ name }: { name: string }) => {
@@ -758,8 +757,6 @@ const getIconForExternalLinkHost = (host: ExternalLinkHosts): JSX.Element => {
   switch (host) {
     case ExternalLinkHosts.ENSDomains:
       return <EnsOutlineIcon className="w-8 h-8 hover:scale-110 transition" />;
-    case ExternalLinkHosts.OpenSea:
-      return <OpenSeaIcon className="w-8 h-8 hover:scale-110 transition" />;
     default:
       return <></>;
   }
