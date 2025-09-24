@@ -1,5 +1,5 @@
 export const ServiceProviderBadge = (
-  props: React.HTMLAttributes<HTMLDivElement>
+  props: React.HTMLAttributes<HTMLDivElement>,
 ) => {
   return (
     <svg

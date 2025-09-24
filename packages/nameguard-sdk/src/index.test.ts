@@ -29,7 +29,10 @@ describe("inspectName", () => {
 
 describe("bulkInspectNames", () => {
   it("should fetch the consolidated NameGuard reports of multiple names", async () => {
-    const data = await nameguard.bulkInspectNames(["notrab.eth", "vitalik.eth"]);
+    const data = await nameguard.bulkInspectNames([
+      "notrab.eth",
+      "vitalik.eth",
+    ]);
 
     expect(data.results?.length).toBe(2);
     expect(data.results?.[0].inspected).toBe(true);
@@ -38,22 +41,24 @@ describe("bulkInspectNames", () => {
 
 describe("inspectNamehash", () => {
   it("should return the name for a valid namehash", async () => {
-    const data = await nameguard.inspectNamehash("0xEe6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835");
+    const data = await nameguard.inspectNamehash(
+      "0xEe6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835",
+    );
     expect(data.name).toBe("vitalik.eth");
   });
 
   it("should throw an error if invalid namehash provided", async () => {
-    await expect(nameguard.inspectNamehash("0x1234567890abcdef")).rejects.toThrow(
-      "Invalid Keccak256 hash format for namehash."
-    );
+    await expect(
+      nameguard.inspectNamehash("0x1234567890abcdef"),
+    ).rejects.toThrow("Invalid Keccak256 hash format for namehash.");
   });
 });
 
 describe("inspectLabelhash", () => {
   it("should throw an error if invalid labelhash provided", async () => {
-    await expect(nameguard.inspectLabelhash("0x1234567890abcdef")).rejects.toThrow(
-      "Invalid Keccak256 hash format for labelhash."
-    );
+    await expect(
+      nameguard.inspectLabelhash("0x1234567890abcdef"),
+    ).rejects.toThrow("Invalid Keccak256 hash format for labelhash.");
   });
 });
 
@@ -226,7 +231,7 @@ describe("fakeEthNameCheck", () => {
     const data = await nameguard.fakeEthNameCheck(
       "0x495f947276749ce646f68ac8c248420045cb7b5e",
       "61995921128521442959106650131462633744885269624153038309795231243542768648193",
-      { title: "nick.eth" }
+      { title: "nick.eth" },
     );
 
     expect(data.status).toBe("impersonated_eth_name");

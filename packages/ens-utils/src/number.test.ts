@@ -41,14 +41,14 @@ describe("decimalToBigInt() function", () => {
   it("Correctly converts positive decimals to BigInt", () => {
     expect(decimalToBigInt(new Decimal("123.456"))).toBe(123n);
     expect(decimalToBigInt(new Decimal("9007199254740991.999"))).toBe(
-      9007199254740992n
+      9007199254740992n,
     );
   });
 
   it("Correctly converts negative decimals to BigInt", () => {
     expect(decimalToBigInt(new Decimal("-456.789"))).toBe(-457n); // Rounded down
     expect(decimalToBigInt(new Decimal("-9007199254740991.999"))).toBe(
-      -9007199254740992n
+      -9007199254740992n,
     ); // Rounded down
   });
 
@@ -66,7 +66,7 @@ describe("decimalToBigInt() function", () => {
 
   it("Correctly handles decimals with a large number of decimal places", () => {
     expect(
-      decimalToBigInt(new Decimal("123.456789012345678901234567890"))
+      decimalToBigInt(new Decimal("123.456789012345678901234567890")),
     ).toBe(123n);
   });
 
@@ -81,7 +81,7 @@ describe("decimalToBigInt() function", () => {
   it("Correctly throws an error for invalid Decimal input", () => {
     // Assuming your Decimal library throws an error for invalid input
     expect(() => decimalToBigInt(new Decimal("abc"))).toThrowError(
-      "[DecimalError] Invalid argument: abc"
+      "[DecimalError] Invalid argument: abc",
     );
   });
 });
@@ -93,13 +93,13 @@ describe("stringToBigInt() function", () => {
 
   it("Correctly converts a large positive integer string", () => {
     expect(stringToBigInt("123456789012345678901234567890")).toBe(
-      123456789012345678901234567890n
+      123456789012345678901234567890n,
     );
   });
 
   it("Correctly converts a large negative integer string", () => {
     expect(stringToBigInt("-123456789012345678901234567890")).toBe(
-      -123456789012345678901234567890n
+      -123456789012345678901234567890n,
     );
   });
 
@@ -113,25 +113,25 @@ describe("stringToBigInt() function", () => {
 
   it("Correctly throws an error for non-numeric strings", () => {
     expect(() => stringToBigInt("abc")).toThrowError(
-      "Cannot convert string: abc to BigInt"
+      "Cannot convert string: abc to BigInt",
     );
   });
 
   it("Correctly throws an error for strings with non-numeric characters and numeric part", () => {
     expect(() => stringToBigInt("123abc")).toThrowError(
-      "Cannot convert string: 123abc to BigInt"
+      "Cannot convert string: 123abc to BigInt",
     );
   });
 
   it("Correctly throws an error for a string with special characters", () => {
     expect(() => stringToBigInt("@#$%^")).toThrowError(
-      "Cannot convert string: @#$%^ to BigInt"
+      "Cannot convert string: @#$%^ to BigInt",
     );
   });
 
   it("Correctly throws an error for a string representing a floating-point number", () => {
     expect(() => stringToBigInt("123.45")).toThrowError(
-      "Cannot convert string: 123.45 to BigInt"
+      "Cannot convert string: 123.45 to BigInt",
     );
   });
 
@@ -141,7 +141,7 @@ describe("stringToBigInt() function", () => {
 
   it('Correctly throws an error for a string starting with "0x" but not a valid hexadecimal number', () => {
     expect(() => stringToBigInt("0xinvalid")).toThrowError(
-      "Cannot convert string: 0xinvalid to BigInt"
+      "Cannot convert string: 0xinvalid to BigInt",
     );
   });
 });
@@ -177,25 +177,25 @@ describe("numberToBigInt() function", () => {
 
   it("Correctly handles positive infinity by throwing an error", () => {
     expect(() => numberToBigInt(Number.POSITIVE_INFINITY)).toThrowError(
-      "Cannot convert number: Infinity to BigInt"
+      "Cannot convert number: Infinity to BigInt",
     );
   });
 
   it("Correctly handles negative infinity by throwing an error", () => {
     expect(() => numberToBigInt(Number.NEGATIVE_INFINITY)).toThrowError(
-      "Cannot convert number: -Infinity to BigInt"
+      "Cannot convert number: -Infinity to BigInt",
     );
   });
 
   it("Correctly handles NaN by throwing an error", () => {
     expect(() => numberToBigInt(NaN)).toThrowError(
-      "Cannot convert number: NaN to BigInt"
+      "Cannot convert number: NaN to BigInt",
     );
   });
 
   it("Correctly throws an error for non-numeric input", () => {
     expect(() => numberToBigInt("abc" as any)).toThrowError(
-      "Cannot convert number: abc to BigInt"
+      "Cannot convert number: abc to BigInt",
     );
   });
 });

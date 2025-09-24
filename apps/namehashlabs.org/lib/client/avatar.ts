@@ -45,7 +45,7 @@ export const queryMultipleEndpointsToGetAvatar = async ({
         console.error(
           "Failed to query ",
           avatarQueries[queryCallbackIndex],
-          ", trying next one"
+          ", trying next one",
         );
       }
     }
@@ -59,7 +59,7 @@ export const queryMultipleEndpointsToGetAvatar = async ({
         "Successfully queried ",
         avatarQueries[queryCallbackIndex],
         ", response: ",
-        successfulQueryRes
+        successfulQueryRes,
       );
     }
   } else {

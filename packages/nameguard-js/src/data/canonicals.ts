@@ -12,7 +12,7 @@ export interface GraphemeCanonical {
    * Always greater than or equal to 0.
    */
   numConfusables: number;
-};
+}
 
 /**
  * Map containing graphemes and their canonical forms.
@@ -22,10 +22,13 @@ export let GRAPHEME_CANONICALS: Map<string, GraphemeCanonical> | null = null;
 
 export function initializeCanonicals() {
   // The json stores the data as a map of grapheme -> [canonicalGrapheme, numConfusables]
-  const GRAPHEME_CANONICALS_: { [key: string]: [string, number] } = require("./canonicals.json");
-  GRAPHEME_CANONICALS =
-    new Map(
-      Object.entries(GRAPHEME_CANONICALS_)
-        .map(([k, v]) => [k, { canonicalGrapheme: v[0], numConfusables: v[1] }])
-    );
+  const GRAPHEME_CANONICALS_: {
+    [key: string]: [string, number];
+  } = require("./canonicals.json");
+  GRAPHEME_CANONICALS = new Map(
+    Object.entries(GRAPHEME_CANONICALS_).map(([k, v]) => [
+      k,
+      { canonicalGrapheme: v[0], numConfusables: v[1] },
+    ]),
+  );
 }

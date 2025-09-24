@@ -1,10 +1,15 @@
 import { charCount } from "@namehash/ens-utils";
-import { EMOJI_SEQUENCES, EMOJI_ZWJ_SEQUENCES, EMOJI_BLOCK_STARTS, EMOJI_BLOCK_IS_EMOJI } from "./data/unicode";
+import {
+  EMOJI_SEQUENCES,
+  EMOJI_ZWJ_SEQUENCES,
+  EMOJI_BLOCK_STARTS,
+  EMOJI_BLOCK_IS_EMOJI,
+} from "./data/unicode";
 import { COMBINING } from "./data/combining";
 
 /**
  * Checks if the given string is a single character.
- * 
+ *
  * @param text - The string to check.
  * @returns `true` if the string is a single character, `false` otherwise.
  */
@@ -14,10 +19,10 @@ export function isCharacter(text: string): boolean {
 
 /**
  * Checks if the given grapheme is an emoji sequence.
- * 
+ *
  * An emoji sequence is a specific combination of code points that represent a single emoji.
  * This function checks if the provided grapheme is present in the predefined set of emoji sequences.
- * 
+ *
  * The emoji sequences are based on Unicode 15.1.0 standards.
  *
  * @param grapheme - The grapheme to check.
@@ -29,11 +34,11 @@ export function isEmojiSequence(grapheme: string): boolean {
 
 /**
  * Checks if the given grapheme is an emoji Zero Width Joiner (ZWJ) sequence.
- * 
- * An emoji ZWJ sequence is a specific combination of emoji characters joined by 
- * Zero Width Joiner (U+200D) characters to create a single emoji. This function 
+ *
+ * An emoji ZWJ sequence is a specific combination of emoji characters joined by
+ * Zero Width Joiner (U+200D) characters to create a single emoji. This function
  * checks if the provided grapheme is present in the predefined set of emoji ZWJ sequences.
- * 
+ *
  * The emoji ZWJ sequences are based on Unicode 15.1.0 standards.
  *
  * @param grapheme - The grapheme to check.
@@ -45,12 +50,12 @@ export function isEmojiZwjSequence(grapheme: string): boolean {
 
 /**
  * Checks if the given character is an emoji character.
- * 
+ *
  * This function determines if a single Unicode character is an emoji by checking
  * its code point against predefined emoji blocks.
- * 
+ *
  * This function is based on the Unicode 15.1.0 standards.
- * 
+ *
  * Returns `false` for multi-character strings.
  *
  * @param char - The character to check.
@@ -73,10 +78,10 @@ export function isEmojiChar(char: string): boolean {
 
 /**
  * Checks if the given grapheme is an emoji.
- * 
+ *
  * This function combines the checks from isEmojiSequence, isEmojiZwjSequence, and isEmojiChar
  * to determine if a grapheme is any type of emoji recognized by Unicode standards.
- * 
+ *
  * The function is based on Unicode 15.1.0 standards and covers:
  * - Emoji sequences (including emoji modifier sequences and emoji flag sequences)
  * - Emoji ZWJ (Zero Width Joiner) sequences
@@ -87,7 +92,11 @@ export function isEmojiChar(char: string): boolean {
  */
 
 export function isEmoji(grapheme: string): boolean {
-  return isEmojiSequence(grapheme) || isEmojiZwjSequence(grapheme) || isEmojiChar(grapheme);
+  return (
+    isEmojiSequence(grapheme) ||
+    isEmojiZwjSequence(grapheme) ||
+    isEmojiChar(grapheme)
+  );
 }
 
 /**

@@ -8,7 +8,7 @@ export const DEFAULT_MIN_SUGGESTIONS = 100;
 export const DEFAULT_MAX_SUGGESTIONS = 100;
 
 /* Mode for processing that should result in faster responses.
-*/
+ */
 export const DEFAULT_INSTANT_MODE = "instant";
 
 /* Other modes are: full and domain_detail.
@@ -348,9 +348,12 @@ export const sampleWritersBlockSuggestions = (
 
 /** Available methods for scrambling names from collections*/
 export const ScrambleMethod = {
-  "left-right-shuffle": "left-right-shuffle", /* tokenize labels as bigrams and shuffle the right-side tokens (do not use unigrams) */
-  "left-right-shuffle-with-unigrams": "left-right-shuffle-with-unigrams", /* same as above, but with some tokens swapped with unigrams */
-  "full-shuffle": "full-shuffle", /* shuffle all tokens from bigrams and unigrams and create random bigrams */
+  "left-right-shuffle":
+    "left-right-shuffle" /* tokenize labels as bigrams and shuffle the right-side tokens (do not use unigrams) */,
+  "left-right-shuffle-with-unigrams":
+    "left-right-shuffle-with-unigrams" /* same as above, but with some tokens swapped with unigrams */,
+  "full-shuffle":
+    "full-shuffle" /* shuffle all tokens from bigrams and unigrams and create random bigrams */,
 } as const;
 
 export type ScrambleMethod =

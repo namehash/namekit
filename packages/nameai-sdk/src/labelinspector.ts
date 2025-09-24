@@ -1,6 +1,5 @@
 import { LabelStatus } from "./index";
 
-
 export interface InspectorGraphemeResult {
   /** The grapheme string */
   value: string;
@@ -43,7 +42,7 @@ export interface InspectorGraphemeResult {
    * - null if the grapheme is not assigned to any version
    */
   unicode_version: string | null;
-}// Character and grapheme types can potentially evolve independently.
+} // Character and grapheme types can potentially evolve independently.
 
 export enum CharacterType {
   /** A lowercase letter [a-z] */
@@ -74,7 +73,7 @@ export enum CharacterType {
   Invisible = "invisible",
 
   /** Any character that doesn't match other classifications */
-  Special = "special"
+  Special = "special",
 }
 export enum GraphemeType {
   /** Only lowercase letters [a-z] */
@@ -106,7 +105,7 @@ export enum GraphemeType {
 
   /** Either a grapheme that doesn't match other classifications, or a multi-character
    * grapheme containing characters of different types */
-  Special = "special"
+  Special = "special",
 }
 export interface InspectorCharResult {
   /** Character being inspected */
@@ -138,7 +137,8 @@ export interface InspectorCharResult {
   unicode_version: string | null;
 }
 
-export interface InspectorConfusableGraphemeResult extends InspectorGraphemeResult { }
+export interface InspectorConfusableGraphemeResult
+  extends InspectorGraphemeResult {}
 export interface InspectorConfusableMultiGraphemeResult {
   /** The confusable string */
   value: string;
@@ -146,9 +146,11 @@ export interface InspectorConfusableMultiGraphemeResult {
   /** List of characters in the confusable */
   chars: InspectorCharResult[];
 }
-export type InspectorConfusableResult = InspectorConfusableGraphemeResult |
-  InspectorConfusableMultiGraphemeResult;
-export interface InspectorGraphemeWithConfusablesResult extends InspectorGraphemeResult {
+export type InspectorConfusableResult =
+  | InspectorConfusableGraphemeResult
+  | InspectorConfusableMultiGraphemeResult;
+export interface InspectorGraphemeWithConfusablesResult
+  extends InspectorGraphemeResult {
   /** Canonical form of confusable grapheme.
    * - may be null if canonical form is not known/does not exist
    * - may be null when simple_confusables is enabled and the canonical is not single-grapheme or not normalized
@@ -175,7 +177,7 @@ export enum PunycodeCompatibility {
   InvalidLabelExtension = "INVALID_LABEL_EXTENSION",
 
   /** The Punycode encoded label exceeds 63 characters */
-  LabelTooLong = "LABEL_TOO_LONG"
+  LabelTooLong = "LABEL_TOO_LONG",
 }
 export interface InspectorResultBase {
   /** Input label */
@@ -286,5 +288,6 @@ export interface InspectorResultUnnormalized extends InspectorResultBase {
    */
   suggested_replacement: InspectorCharResult[] | null;
 }
-export type InspectorResult = InspectorResultNormalized | InspectorResultUnnormalized;
-
+export type InspectorResult =
+  | InspectorResultNormalized
+  | InspectorResultUnnormalized;

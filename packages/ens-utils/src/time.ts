@@ -321,7 +321,7 @@ const DEFAULT_LOCALE = "en-US";
 
 /**
  * Formats a `Timestamp` as `string`.
- * 
+ *
  * @param {Timestamp} timestamp - The `Timestamp` to format.
  * @param {FormatTimestampOptions} [options] - Optional. The options for how to
  *                                             format the `Timestamp`.

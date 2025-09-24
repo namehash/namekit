@@ -14,7 +14,7 @@ import {
   ScrambleMethod,
 } from "@namehash/namegraph-sdk/utils";
 import { createNameGraphClient } from "@namehash/namegraph-sdk";
-import { buildENSName } from "@namehash/ens-utils";
+import { buildENSName, labelhash } from "@namehash/ens-utils";
 import { availableTlds, Tlds } from "@/components/collections/tld";
 
 export function cn(...inputs: ClassValue[]) {
@@ -145,7 +145,9 @@ export const findCollectionsByCollection = async (
   max_related_collections?: number,
 ): Promise<NameGraphFindCollectionsResponse> => {
   const nameGeneratorSuggestions =
-    await NameGraphClient.findCollectionsByCollection(collection_id, {max_related_collections});
+    await NameGraphClient.findCollectionsByCollection(collection_id, {
+      max_related_collections,
+    });
 
   return nameGeneratorSuggestions;
 };
@@ -233,7 +235,7 @@ export const customizedPillsColors = [
 
 export const getRandomColor = () =>
   customizedPillsColors[
-  Math.floor(Math.random() * customizedPillsColors.length)
+    Math.floor(Math.random() * customizedPillsColors.length)
   ];
 
 export const FromNameGraphSortOrderToDropdownTextContent: Record<
@@ -255,39 +257,26 @@ export const getFirstLabelOfString = (str: string) => {
 };
 
 export const ExternalLinkHosts = {
-  "Vision": "Vision",
-  "ENSDomains": "ENSDomains"
+  ENSDomains: "ENSDomains",
 } as const;
 
-export type ExternalLinkHosts = typeof ExternalLinkHosts[keyof typeof ExternalLinkHosts];
+export type ExternalLinkHosts =
+  (typeof ExternalLinkHosts)[keyof typeof ExternalLinkHosts];
 
-export const getExternalLinkURLForName = (host: ExternalLinkHosts, name: string) => {
+export const getExternalLinkURLForName = (
+  host: ExternalLinkHosts,
+  name: string,
+) => {
   switch (host) {
     case ExternalLinkHosts.ENSDomains:
-      return `https://app.ens.domains/${name}`
-    case ExternalLinkHosts.Vision:
-      let route = "dns"
-
-      /**  
-       * This first condition guarantees we will only redirect users to Vision when 
-       * domain search is .eth as Vision does not support subdomains so far 
-       */
-      if (name.includes(availableTlds[Tlds.ETH]) && name.split(".").length === 2) route = "ens"
-
-      /**  
-       * Vision supports .box
-       */
-      else if (name.includes(availableTlds[Tlds.BOX])) route = "3dns"
-      else return false
-
-      return `https://vision.io/name/${route}/${name}`
+      return `https://app.ens.domains/${name}`;
     default:
-      return getNameDetailsPageHref(host)
+      return getNameDetailsPageHref(host);
   }
-}
+};
 
-export const ZEROED_ADDRESS = "0x0000000000000000000000000000000000000000"
+export const ZEROED_ADDRESS = "0x0000000000000000000000000000000000000000";
 
 export const formatNumber = (num: number): string => {
   return new Intl.NumberFormat().format(num);
-}
+};

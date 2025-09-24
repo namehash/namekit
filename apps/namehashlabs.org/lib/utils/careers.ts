@@ -3,14 +3,14 @@ import { Role } from "@/types";
 /**
  * Gets the distinct set of roles from a list of roles.
  * Uses each role's slug to determine uniqueness.
- * 
+ *
  * @param roles The list of roles to filter.
  * @param slugs An optional list of slugs to also exclude from the results.
  * @returns The distinct set of roles.
  */
 export const getDistinctRoles = (roles: Role[], slugs?: string[]): Role[] => {
   const seenSlugs = new Set<string>(slugs ? slugs : []);
-  return roles.filter(role => {
+  return roles.filter((role) => {
     if (seenSlugs.has(role.slug)) {
       return false;
     } else {
@@ -18,14 +18,14 @@ export const getDistinctRoles = (roles: Role[], slugs?: string[]): Role[] => {
       return true;
     }
   });
-}
+};
 
 /**
  * Gets distinct roles in `allOpenRoles` that are distinct from `role` but most related to `role`.
- * 
+ *
  * Related roles are defined as roles in the same category as `role`, followed by roles
  * in different categories.
- * 
+ *
  * Distinct roles are defined as roles with distinct `slug` values.
  *
  * @param role The `Role` to get related roles for.
@@ -42,9 +42,8 @@ export const getRelatedRoles = (
   role: Role,
   allOpenRoles: Role[],
   shuffle: boolean,
-  maxRelatedRoles: number
+  maxRelatedRoles: number,
 ): Role[] => {
-  
   // filter out the specified role and any duplicates in allOpenRoles
   const distinctRoles = getDistinctRoles(allOpenRoles, [role.slug]);
 
@@ -53,12 +52,12 @@ export const getRelatedRoles = (
 
   // get all roles in the same category as the specified role
   const sameCategoryRoles = shuffledRoles.filter(
-    (item) => item.category.name === role.category.name
+    (item) => item.category.name === role.category.name,
   );
 
   // get all roles in a different category as the specified role
   const differentCategoryRoles = shuffledRoles.filter(
-    (item) => item.category.name !== role.category.name
+    (item) => item.category.name !== role.category.name,
   );
 
   // combine the two sets of roles, ensuring that the same category roles come first

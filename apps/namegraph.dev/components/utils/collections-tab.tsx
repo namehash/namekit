@@ -94,9 +94,7 @@ export const CollectionsTabContent = ({
                         ),
                       )
                     ) : (
-                      <p className="mt-8 text-sm ml-2">
-                        No collections
-                      </p>
+                      <p className="mt-8 text-sm ml-2">No collections</p>
                     )}
                   </div>
                 </div>

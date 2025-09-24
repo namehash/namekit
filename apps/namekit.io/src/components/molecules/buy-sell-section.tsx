@@ -1,4 +1,3 @@
-import { EnsVisionLogo } from "@/components/atoms/icons/explore-web3-lp/ens-vision-logo";
 import { OpenseaLogo } from "@/components/atoms/icons/explore-web3-lp/opensea-logo";
 import { ExploreWeb3CardsSection } from "@/components/organisms/explore-web3-cards-section";
 import Image from "next/image";
@@ -29,21 +28,6 @@ export const BuySellSection = () => {
         title: "Buy & sell",
       }}
       apps={[
-        {
-          title: <EnsVisionLogo />,
-          description:
-            "Discover and trade ENS names across marketplaces. Bulk search, bulk register, and explore a marketplace exclusively dedicated to ENS names.",
-          illustration: (
-            <Image
-              width={518}
-              height={140}
-              alt="ensvision"
-              src={"/images/explore-web3/Illustration-ensvision.png"}
-            />
-          ),
-          gradient: "#FFF6E7",
-          url: "https://ens.vision/",
-        },
         {
           title: <OpenseaLogo />,
           description:

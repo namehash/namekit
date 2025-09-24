@@ -2,17 +2,16 @@ import { ChainId } from "./chain";
 import { Address } from "./address";
 
 export interface ContractRef {
+  /**
+   * Chain Id of the contract.
+   */
+  chain: ChainId;
 
-    /**
-     * Chain Id of the contract.
-     */
-    chain: ChainId;
-
-    /**
-     * Contract address
-     */
-    address: Address;
-};
+  /**
+   * Contract address
+   */
+  address: Address;
+}
 
 /**
  * Builds a ContractRef object.
@@ -21,12 +20,11 @@ export interface ContractRef {
  * @returns a ContractRef object.
  */
 export const buildContractRef = (
-    chain: ChainId,
-    address: Address,
+  chain: ChainId,
+  address: Address,
 ): ContractRef => {
-
-    return {
-        chain,
-        address
-    };
-}
+  return {
+    chain,
+    address,
+  };
+};

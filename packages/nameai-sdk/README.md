@@ -15,6 +15,7 @@ This SDK provides a TypeScript interface to the NameAI API. Developers intereste
 ## Features
 
 Additional features provided by NameAI on top of NameGuard:
+
 - **Natural Language Processing**: Evaluate how well ENS names represent meaningful words or phrases
 - **Tokenization**: Break down names into meaningful word components with probability scoring
 - **Purity Scoring**: Assess the cleanliness and quality of ENS names
@@ -50,32 +51,32 @@ const report = await nameai.inspectName("vitalik.eth");
   nameai: {
     // Quality score (0.0 to 1.0) for the first label
     purity_score: 0.29,
-    
+
     // Ranking score (0.0 to 1.0) for the first label
     sort_score: 0.35,
-    
+
     analysis: {  // undefined for uninspected names
       // The normalization status of the name (normalized, unnormalized, or unknown)
       status: "normalized",
-      
+
       // Details about the inspected name component
       inspection: {
         label: "vitalik",
         // ... other inspection details
       },
-      
+
       // Text meaningfulness (0.0 to 1.0)
       probability: 0.95,
-      
+
       // Natural log of probability (≤ 0.0)
       log_probability: -0.05,
-      
+
       // Minimum words in valid tokenizations
       word_count: 1,
-      
+
       // Recommended word breakdown (may be undefined)
       top_tokenization: ["vitalik"],
-      
+
       // All possible tokenizations (up to 1000)
       tokenizations: [
         {
@@ -95,7 +96,9 @@ const report = await nameai.inspectName("vitalik.eth");
 The SDK provides detailed tokenization inspection:
 
 ```ts
-const { nameai: { analysis } } = await nameai.inspectName("cryptowallet.eth");
+const {
+  nameai: { analysis },
+} = await nameai.inspectName("cryptowallet.eth");
 
 console.log(analysis.top_tokenization); // ["crypto", "wallet"]
 console.log(analysis.tokenizations); // Array of possible tokenizations with probabilities
@@ -110,7 +113,7 @@ import { createClient } from "@namehash/nameai";
 
 const nameai = createClient({
   nameaiEndpoint: "...",
-  network: "sepolia"
+  network: "sepolia",
 });
 ```
 

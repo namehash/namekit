@@ -2,7 +2,8 @@ import { TruncatedText } from "@namehash/namekit-react/client";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const SHORT_TEXT = "heyiamsmall";
-const LONG_TEXT = "heyiamaverylongtextthatkeepsgrowingunstopablyomgiamstillgoingonokdone";
+const LONG_TEXT =
+  "heyiamaverylongtextthatkeepsgrowingunstopablyomgiamstillgoingonokdone";
 
 const meta: Meta<typeof TruncatedText> = {
   component: TruncatedText,

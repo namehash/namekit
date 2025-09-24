@@ -6,20 +6,20 @@
 
 2. Build the NameGuard SDK.
 
-    ```bash
-    cd /path/to/namekit/packages/nameguard-sdk
-    pnpm build
-    ```
+   ```bash
+   cd /path/to/namekit/packages/nameguard-sdk
+   pnpm build
+   ```
 
 3. Install NameGuard JS dependencies.
 
-    ```bash
-    cd /path/to/namekit/packages/nameguard-js
-    pnpm install
-    ```
+   ```bash
+   cd /path/to/namekit/packages/nameguard-js
+   pnpm install
+   ```
 
 4. Run the tests.
 
-    ```bash
-    pnpm test
-    ```
+   ```bash
+   pnpm test
+   ```

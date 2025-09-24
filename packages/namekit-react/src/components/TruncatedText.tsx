@@ -60,12 +60,12 @@ export const TruncatedText = ({
     text,
   ]);
 
-  const getTextElm = (
-    classes: string,
-    maxWidth?: number,
-  ): JSX.Element => {
+  const getTextElm = (classes: string, maxWidth?: number): JSX.Element => {
     return (
-      <p style={maxWidth !== undefined ? { maxWidth } : undefined} className={classes}>
+      <p
+        style={maxWidth !== undefined ? { maxWidth } : undefined}
+        className={classes}
+      >
         {text}
       </p>
     );
@@ -74,21 +74,22 @@ export const TruncatedText = ({
   const textDefaultClasses = "nk-truncate";
 
   const renderText = (): JSX.Element => {
-    return getTextElm(cc([textStylingClasses, textDefaultClasses]), maxDisplayWidth);
+    return getTextElm(
+      cc([textStylingClasses, textDefaultClasses]),
+      maxDisplayWidth,
+    );
   };
 
   const renderTextWithATooltip = (): JSX.Element => {
     return (
       <div>
-
-
         <div
           className={cc([
             textStylingClasses,
             "nk-invisible nk-absolute nk-left-0 nk-top-0 nk-pointer-events-none",
           ])}
         >
-        {/* 
+          {/* 
           This invisible div is used to measure the true width of `text` as it
           would be rendered in the DOM.
         */}
@@ -118,10 +119,9 @@ export const TruncatedText = ({
             </Tooltip>
           </>
         ) : (
-
           // `text` doesn't overflow `maxDisplayWidth`, therefore we can render
           // it once without any truncation
-          
+
           renderText()
         )}
       </div>

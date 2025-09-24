@@ -39,7 +39,9 @@ export const CollectionCard = ({
             className="ml-3 flex justify-center items-center rounded-md bg-background h-[72px] w-[72px] bg-gray-100"
           >
             <div className="relative flex items-center justify-center overflow-hidden">
-              <p className={`text-3xl ${notoBlack.className}`}>{collection.avatar_emoji}</p>
+              <p className={`text-3xl ${notoBlack.className}`}>
+                {collection.avatar_emoji}
+              </p>
             </div>
           </div>
           <div className="flex-1 overflow-hidden flex flex-col items-start">

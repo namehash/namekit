@@ -418,7 +418,7 @@ describe("charCount", () => {
     const text = "🧟‍♂";
     const result = charCount(text);
 
-    expect(result).toBe(3);  // 3 Unicode characters
+    expect(result).toBe(3); // 3 Unicode characters
     expect(text.length).toBe(4); // 4 UTF-16 code units
   });
 
@@ -443,7 +443,7 @@ describe("charCount", () => {
     const result = charCount(text);
 
     expect(result).toBe(4); // 4 Unicode characters
-    expect(text.length).toBe(6);  // 6 UTF-16 code units
+    expect(text.length).toBe(6); // 6 UTF-16 code units
   });
 });
 
@@ -459,7 +459,7 @@ describe("charSplit", () => {
     const text = "🧟‍♂";
     const result = charSplit(text);
 
-    expect(result).toEqual(["🧟", "‍", "♂"]);  // 3 Unicode characters
+    expect(result).toEqual(["🧟", "‍", "♂"]); // 3 Unicode characters
   });
 
   it("splits another multi codepoint emoji", () => {
