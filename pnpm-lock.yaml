@@ -68,7 +68,7 @@ importers:
         version: 18.3.1
       autoprefixer:
         specifier: 10.4.20
-        version: 10.4.20(postcss@8.4.47)
+        version: 10.4.20(postcss@8.5.6)
       eslint:
         specifier: 8.57.1
         version: 8.57.1
@@ -76,8 +76,8 @@ importers:
         specifier: 14.2.14
         version: 14.2.14(eslint@8.57.1)(typescript@5.6.2)
       postcss:
-        specifier: 8.4.47
-        version: 8.4.47
+        specifier: 8.5.6
+        version: 8.5.6
       tailwindcss:
         specifier: 3.4.13
         version: 3.4.13
@@ -146,8 +146,8 @@ importers:
         specifier: 14.2.14
         version: 14.2.14(eslint@8.57.1)(typescript@5.6.2)
       postcss:
-        specifier: 8.4.47
-        version: 8.4.47
+        specifier: 8.5.6
+        version: 8.5.6
       tailwind-scrollbar-hide:
         specifier: 1.1.7
         version: 1.1.7
@@ -288,8 +288,8 @@ importers:
         specifier: 14.2.14
         version: 14.2.14(eslint@8.57.1)(typescript@5.6.2)
       postcss:
-        specifier: 8.4.47
-        version: 8.4.47
+        specifier: 8.5.6
+        version: 8.5.6
       tailwindcss:
         specifier: 3.4.13
         version: 3.4.13
@@ -356,7 +356,7 @@ importers:
         version: 18.3.1
       autoprefixer:
         specifier: 10.4.20
-        version: 10.4.20(postcss@8.4.47)
+        version: 10.4.20(postcss@8.5.6)
       eslint:
         specifier: 8.57.1
         version: 8.57.1
@@ -364,8 +364,8 @@ importers:
         specifier: 14.2.14
         version: 14.2.14(eslint@8.57.1)(typescript@5.6.2)
       postcss:
-        specifier: 8.4.47
-        version: 8.4.47
+        specifier: 8.5.6
+        version: 8.5.6
       tailwind-scrollbar-hide:
         specifier: 1.1.7
         version: 1.1.7
@@ -450,7 +450,7 @@ importers:
         version: 18.3.1
       autoprefixer:
         specifier: 10.4.20
-        version: 10.4.20(postcss@8.4.47)
+        version: 10.4.20(postcss@8.5.6)
       eslint:
         specifier: 8.57.1
         version: 8.57.1
@@ -458,8 +458,8 @@ importers:
         specifier: 14.2.14
         version: 14.2.14(eslint@8.57.1)(typescript@5.6.2)
       postcss:
-        specifier: 8.4.47
-        version: 8.4.47
+        specifier: 8.5.6
+        version: 8.5.6
       tailwindcss:
         specifier: 3.4.13
         version: 3.4.13
@@ -642,10 +642,10 @@ importers:
         version: 18.3.1
       autoprefixer:
         specifier: 10.4.20
-        version: 10.4.20(postcss@8.4.47)
+        version: 10.4.20(postcss@8.5.6)
       postcss:
-        specifier: 8.4.47
-        version: 8.4.47
+        specifier: 8.5.6
+        version: 8.5.6
       tailwindcss:
         specifier: 3.4.13
         version: 3.4.13
@@ -690,7 +690,7 @@ importers:
         version: link:../../internal/tsconfig
       tsup:
         specifier: 8.3.5
-        version: 8.3.5(jiti@1.21.7)(postcss@8.4.47)(typescript@5.6.2)(yaml@2.7.0)
+        version: 8.3.5(jiti@1.21.7)(postcss@8.5.6)(typescript@5.6.2)(yaml@2.7.0)
       typescript:
         specifier: 5.6.2
         version: 5.6.2
@@ -720,7 +720,7 @@ importers:
         version: 22.7.4
       tsup:
         specifier: 8.3.5
-        version: 8.3.5(jiti@1.21.7)(postcss@8.4.47)(typescript@5.6.2)(yaml@2.7.0)
+        version: 8.3.5(jiti@1.21.7)(postcss@8.5.6)(typescript@5.6.2)(yaml@2.7.0)
       typescript:
         specifier: 5.6.2
         version: 5.6.2
@@ -742,7 +742,7 @@ importers:
         version: 22.7.4
       tsup:
         specifier: 8.3.5
-        version: 8.3.5(jiti@1.21.7)(postcss@8.4.47)(typescript@5.6.2)(yaml@2.7.0)
+        version: 8.3.5(jiti@1.21.7)(postcss@8.5.6)(typescript@5.6.2)(yaml@2.7.0)
       typescript:
         specifier: 5.6.2
         version: 5.6.2
@@ -776,7 +776,7 @@ importers:
         version: 22.7.4
       tsup:
         specifier: 8.3.5
-        version: 8.3.5(jiti@1.21.7)(postcss@8.4.47)(typescript@5.6.2)(yaml@2.7.0)
+        version: 8.3.5(jiti@1.21.7)(postcss@8.5.6)(typescript@5.6.2)(yaml@2.7.0)
       typescript:
         specifier: 5.6.2
         version: 5.6.2
@@ -825,10 +825,10 @@ importers:
         version: 18.3.0
       autoprefixer:
         specifier: 10.4.20
-        version: 10.4.20(postcss@8.4.47)
+        version: 10.4.20(postcss@8.5.6)
       postcss:
-        specifier: 8.4.47
-        version: 8.4.47
+        specifier: 8.5.6
+        version: 8.5.6
       react:
         specifier: 18.3.1
         version: 18.3.1
@@ -840,7 +840,7 @@ importers:
         version: 3.4.13
       tsup:
         specifier: 8.3.5
-        version: 8.3.5(jiti@1.21.7)(postcss@8.4.47)(typescript@5.6.2)(yaml@2.7.0)
+        version: 8.3.5(jiti@1.21.7)(postcss@8.5.6)(typescript@5.6.2)(yaml@2.7.0)
       typescript:
         specifier: 5.6.2
         version: 5.6.2
@@ -862,7 +862,7 @@ importers:
         version: 22.7.4
       tsup:
         specifier: 8.3.5
-        version: 8.3.5(jiti@1.21.7)(postcss@8.4.47)(typescript@5.6.2)(yaml@2.7.0)
+        version: 8.3.5(jiti@1.21.7)(postcss@8.5.6)(typescript@5.6.2)(yaml@2.7.0)
       typescript:
         specifier: 5.6.2
         version: 5.6.2
@@ -914,10 +914,10 @@ importers:
         version: 18.3.0
       autoprefixer:
         specifier: 10.4.20
-        version: 10.4.20(postcss@8.4.47)
+        version: 10.4.20(postcss@8.5.6)
       postcss:
-        specifier: 8.4.47
-        version: 8.4.47
+        specifier: 8.5.6
+        version: 8.5.6
       react:
         specifier: 18.3.1
         version: 18.3.1
@@ -929,7 +929,7 @@ importers:
         version: 3.4.13
       tsup:
         specifier: 8.3.5
-        version: 8.3.5(jiti@1.21.7)(postcss@8.4.47)(typescript@5.6.2)(yaml@2.7.0)
+        version: 8.3.5(jiti@1.21.7)(postcss@8.5.6)(typescript@5.6.2)(yaml@2.7.0)
       typescript:
         specifier: 5.6.2
         version: 5.6.2
@@ -2126,6 +2126,7 @@ packages:
 
   '@paulmillr/qr@0.2.1':
     resolution: {integrity: sha512-IHnV6A+zxU7XwmKFinmYjUcwlyK9+xkG3/s9KcQhI9BjQKycrJ1JRO+FbNYPwZiPKW3je/DR0k7w8/gLa5eaxQ==}
+    deprecated: 'The package is now available as "qr": npm install qr'
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -3201,6 +3202,7 @@ packages:
 
   '@walletconnect/ethereum-provider@2.17.0':
     resolution: {integrity: sha512-b+KTAXOb6JjoxkwpgYQQKPUcTwENGmdEdZoIDLeRicUmZTn/IQKfkMoC2frClB4YxkyoVMtj1oMV2JAax+yu9A==}
+    deprecated: 'Reliability and performance improvements. See: https://github.com/WalletConnect/walletconnect-monorepo/releases'
 
   '@walletconnect/events@1.0.1':
     resolution: {integrity: sha512-NPTqaoi0oPBVNuLv7qPaJazmGHs5JGyO8eEAk5VGKmJzDR7AHzD4k6ilox5kxk1iwiOnFopBOOMLs86Oa76HpQ==}
@@ -3242,6 +3244,7 @@ packages:
 
   '@walletconnect/modal@2.7.0':
     resolution: {integrity: sha512-RQVt58oJ+rwqnPcIvRFeMGKuXb9qkgSmwz4noF8JZGUym3gUAzVs+uW2NQ1Owm9XOJAV+sANrtJ+VoVq1ftElw==}
+    deprecated: Please follow the migration guide on https://docs.reown.com/appkit/upgrade/wcm
 
   '@walletconnect/relay-api@1.0.11':
     resolution: {integrity: sha512-tLPErkze/HmC9aCmdZOhtVmYZq1wKfWTJtygQHoWtgg722Jd4homo54Cs4ak2RUFUZIGO2RsOpIcWipaua5D5Q==}
@@ -3254,6 +3257,7 @@ packages:
 
   '@walletconnect/sign-client@2.17.0':
     resolution: {integrity: sha512-sErYwvSSHQolNXni47L3Bm10ptJc1s1YoJvJd34s5E9h9+d3rj7PrhbiW9X82deN+Dm5oA8X9tC4xty1yIBrVg==}
+    deprecated: 'Reliability and performance improvements. See: https://github.com/WalletConnect/walletconnect-monorepo/releases'
 
   '@walletconnect/time@1.0.2':
     resolution: {integrity: sha512-uzdd9woDcJ1AaBZRhqy5rNC9laqWGErfc4dxA9a87mPdKOgWMD85mcFo9dIYIts/Jwocfwn07EC6EzclKubk/g==}
@@ -4949,6 +4953,7 @@ packages:
 
   lodash.isequal@4.5.0:
     resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
+    deprecated: This package is deprecated. Use require('node:util').isDeepStrictEqual instead.
 
   lodash.merge@4.6.2:
     resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
@@ -5165,6 +5170,11 @@ packages:
   mz@2.7.0:
     resolution: {integrity: sha512-z81GNO7nnYMEhrGh9LeymoE4+Yr0Wn5McHIZMK5cfQCl+NDX08sCZgUc9/6MHni9IWuFLm1Z3HTCXu2z9fN62Q==}
 
+  nanoid@3.3.11:
+    resolution: {integrity: sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==}
+    engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+
   nanoid@3.3.8:
     resolution: {integrity: sha512-WNLf5Sd8oZxOm+TzppcYk8gVOgP+l58xNy58D0nbUnOxOWRWvlcCV4kUF7ltmI6PsrLl/BgKEyS4mqsGChFN0w==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
@@ -5222,6 +5232,7 @@ packages:
   node-domexception@1.0.0:
     resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
     engines: {node: '>=10.5.0'}
+    deprecated: Use your platform's native DOMException instead
 
   node-fetch-native@1.6.6:
     resolution: {integrity: sha512-8Mc2HhqPdlIfedsuZoc3yioPuzp6b+L5jRCRY1QzuWZh2EGJVQrGppC6V6cF0bLdbW0+O2YpqCA25aF/1lvipQ==}
@@ -5564,8 +5575,8 @@ packages:
     resolution: {integrity: sha512-PS08Iboia9mts/2ygV3eLpY5ghnUcfLV/EXTOW1E2qYxJKGGBUtNjN76FYHnMs36RmARn41bC0AZmn+rR0OVpQ==}
     engines: {node: ^10 || ^12 || >=14}
 
-  postcss@8.4.47:
-    resolution: {integrity: sha512-56rxCq7G/XfB4EkXq9Egn5GCqugWvDFjafDOThIdMBsI15iqPqR5r15TfSr1YPYeEI19YeaXMCbY6u88Y76GLQ==}
+  postcss@8.5.6:
+    resolution: {integrity: sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==}
     engines: {node: ^10 || ^12 || >=14}
 
   preact@10.25.4:
@@ -6024,6 +6035,7 @@ packages:
   source-map@0.8.0-beta.0:
     resolution: {integrity: sha512-2ymg6oRBpebeZi9UUNsgQ89bhx01TcTkmNTGnNO88imTmbSgy4nfujrgVEFKWpMTEGA11EDkTt7mqObTPdigIA==}
     engines: {node: '>= 8'}
+    deprecated: The work that was done in this beta branch won't be included in future versions
 
   space-separated-tokens@2.0.2:
     resolution: {integrity: sha512-PEGlAwrG8yXGXRjW32fGbg66JAlOAwbObuqVoJpv/mRgoWDQfgH1wDPvtzWyUSNAXBGSk8h755YDbbcEy3SH2Q==}
@@ -10017,14 +10029,14 @@ snapshots:
 
   atropos@1.0.2: {}
 
-  autoprefixer@10.4.20(postcss@8.4.47):
+  autoprefixer@10.4.20(postcss@8.5.6):
     dependencies:
       browserslist: 4.24.4
       caniuse-lite: 1.0.30001692
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.1.1
-      postcss: 8.4.47
+      postcss: 8.5.6
       postcss-value-parser: 4.2.0
 
   available-typed-arrays@1.0.7:
@@ -11941,6 +11953,8 @@ snapshots:
       object-assign: 4.1.1
       thenify-all: 1.6.0
 
+  nanoid@3.3.11: {}
+
   nanoid@3.3.8: {}
 
   natural-compare@1.4.0: {}
@@ -12271,36 +12285,36 @@ snapshots:
 
   possible-typed-array-names@1.0.0: {}
 
-  postcss-import@15.1.0(postcss@8.4.47):
+  postcss-import@15.1.0(postcss@8.5.6):
     dependencies:
-      postcss: 8.4.47
+      postcss: 8.5.6
       postcss-value-parser: 4.2.0
       read-cache: 1.0.0
       resolve: 1.22.10
 
-  postcss-js@4.0.1(postcss@8.4.47):
+  postcss-js@4.0.1(postcss@8.5.6):
     dependencies:
       camelcase-css: 2.0.1
-      postcss: 8.4.47
+      postcss: 8.5.6
 
-  postcss-load-config@4.0.2(postcss@8.4.47):
+  postcss-load-config@4.0.2(postcss@8.5.6):
     dependencies:
       lilconfig: 3.1.3
       yaml: 2.7.0
     optionalDependencies:
-      postcss: 8.4.47
+      postcss: 8.5.6
 
-  postcss-load-config@6.0.1(jiti@1.21.7)(postcss@8.4.47)(yaml@2.7.0):
+  postcss-load-config@6.0.1(jiti@1.21.7)(postcss@8.5.6)(yaml@2.7.0):
     dependencies:
       lilconfig: 3.1.3
     optionalDependencies:
       jiti: 1.21.7
-      postcss: 8.4.47
+      postcss: 8.5.6
       yaml: 2.7.0
 
-  postcss-nested@6.2.0(postcss@8.4.47):
+  postcss-nested@6.2.0(postcss@8.5.6):
     dependencies:
-      postcss: 8.4.47
+      postcss: 8.5.6
       postcss-selector-parser: 6.1.2
 
   postcss-selector-parser@6.1.2:
@@ -12316,9 +12330,9 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  postcss@8.4.47:
+  postcss@8.5.6:
     dependencies:
-      nanoid: 3.3.8
+      nanoid: 3.3.11
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
@@ -12794,7 +12808,7 @@ snapshots:
       lodash.template: 4.5.0
       node-fetch: 3.3.2
       ora: 6.3.1
-      postcss: 8.4.47
+      postcss: 8.5.6
       prompts: 2.4.2
       recast: 0.23.9
       stringify-object: 5.0.0
@@ -13126,11 +13140,11 @@ snapshots:
       normalize-path: 3.0.0
       object-hash: 3.0.0
       picocolors: 1.1.1
-      postcss: 8.4.47
-      postcss-import: 15.1.0(postcss@8.4.47)
-      postcss-js: 4.0.1(postcss@8.4.47)
-      postcss-load-config: 4.0.2(postcss@8.4.47)
-      postcss-nested: 6.2.0(postcss@8.4.47)
+      postcss: 8.5.6
+      postcss-import: 15.1.0(postcss@8.5.6)
+      postcss-js: 4.0.1(postcss@8.5.6)
+      postcss-load-config: 4.0.2(postcss@8.5.6)
+      postcss-nested: 6.2.0(postcss@8.5.6)
       postcss-selector-parser: 6.1.2
       resolve: 1.22.10
       sucrase: 3.35.0
@@ -13256,7 +13270,7 @@ snapshots:
 
   tslib@2.8.1: {}
 
-  tsup@8.3.5(jiti@1.21.7)(postcss@8.4.47)(typescript@5.6.2)(yaml@2.7.0):
+  tsup@8.3.5(jiti@1.21.7)(postcss@8.5.6)(typescript@5.6.2)(yaml@2.7.0):
     dependencies:
       bundle-require: 5.1.0(esbuild@0.24.2)
       cac: 6.7.14
@@ -13266,7 +13280,7 @@ snapshots:
       esbuild: 0.24.2
       joycon: 3.1.1
       picocolors: 1.1.1
-      postcss-load-config: 6.0.1(jiti@1.21.7)(postcss@8.4.47)(yaml@2.7.0)
+      postcss-load-config: 6.0.1(jiti@1.21.7)(postcss@8.5.6)(yaml@2.7.0)
       resolve-from: 5.0.0
       rollup: 4.30.1
       source-map: 0.8.0-beta.0
@@ -13275,7 +13289,7 @@ snapshots:
       tinyglobby: 0.2.10
       tree-kill: 1.2.2
     optionalDependencies:
-      postcss: 8.4.47
+      postcss: 8.5.6
       typescript: 5.6.2
     transitivePeerDependencies:
       - jiti
@@ -13572,7 +13586,7 @@ snapshots:
   vite@5.4.11(@types/node@22.10.10):
     dependencies:
       esbuild: 0.21.5
-      postcss: 8.4.47
+      postcss: 8.5.6
       rollup: 4.30.1
     optionalDependencies:
       '@types/node': 22.10.10
@@ -13581,7 +13595,7 @@ snapshots:
   vite@5.4.11(@types/node@22.7.4):
     dependencies:
       esbuild: 0.21.5
-      postcss: 8.4.47
+      postcss: 8.5.6
       rollup: 4.30.1
     optionalDependencies:
       '@types/node': 22.7.4
