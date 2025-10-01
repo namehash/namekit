@@ -4,9 +4,7 @@ import { SectionText, SectionTitle } from "../1 - atoms";
 import { ColorfulBg } from "../1 - atoms/colorful-bg";
 import { BlockfulLogo } from "../1 - atoms/icons/blockful-logo";
 import { EnelpolLogo } from "../1 - atoms/icons/enelpol-logo";
-import { AxiomLogo } from "../1 - atoms/icons/axiom-logo";
 import { ContactUsForm } from "@namehash/internal";
-import { EnsVisionLogo } from "../1 - atoms/icons/ens-vision-logo";
 import { PonderLogo } from "../1 - atoms/icons/ponder-logo";
 
 export const PartnersPage = () => {
@@ -116,35 +114,6 @@ const partners: PartnerCardProps[] = [
     websiteUrl: "http://enelpol.com/",
   },
   {
-    title: <EnsVisionLogo className="h-8" />,
-    text: (
-      <Balancer>
-        Vision provides the top marketplace for ENS names. We appreciate the
-        incredible service they provide to the ENS community and the special
-        role they serve in the growth of ENS. Our team is proud to collaborate
-        with Vision on solutions like{" "}
-        <a
-          href="https://www.nameai.io/"
-          target="_blank"
-          className="underline whitespace-nowrap hover:text-black transition-colors duration-200"
-        >
-          NameAI
-        </a>{" "}
-        and{" "}
-        <a
-          href="https://namegraph.dev/"
-          target="_blank"
-          className="underline whitespace-nowrap hover:text-black transition-colors duration-200"
-        >
-          NameGraph
-        </a>{" "}
-        that help improve the discoverability and liquidity of ENS names on
-        secondary markets.
-      </Balancer>
-    ),
-    websiteUrl: "https://vision.io/",
-  },
-  {
     title: <PonderLogo className="h-6" />,
     text: (
       <Balancer>
@@ -166,24 +135,5 @@ const partners: PartnerCardProps[] = [
       </Balancer>
     ),
     websiteUrl: "https://ponder.sh/",
-  },
-  {
-    title: <AxiomLogo className="h-8" />,
-    text: (
-      <Balancer>
-        We collaborated with Axiom on an{" "}
-        <a
-          href="https://github.com/namehash/ens-referrals"
-          target="_blank"
-          className="underline whitespace-nowrap hover:text-black transition-colors duration-200"
-        >
-          ENS Referral program prototype
-        </a>
-        . This R&D effort explored how ZK-proofs and Axiom&apos;s ZK-coprocessor
-        technology could achieve better economic incentives for all parties,
-        including the ENS DAO, referrers, and referred persons.
-      </Balancer>
-    ),
-    websiteUrl: "https://www.axiom.xyz/",
   },
 ];
