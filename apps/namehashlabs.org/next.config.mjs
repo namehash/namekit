@@ -12,6 +12,11 @@ const nextConfig = {
         destination: '/ens-v2-referral-programs',
         permanent: true,
       },
+      {
+        source: '/ens-v2-referral-programs',
+        destination: "https://ensawards.org/ens-referral-awards",
+        permanent: true
+      }
     ]
   },
 }

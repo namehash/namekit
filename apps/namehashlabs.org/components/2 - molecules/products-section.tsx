@@ -117,7 +117,7 @@ const Product = ({
             {buttonUrl && buttonLabel && (
               <div className="flex lg:justify-start justify-center">
                 <Button asChild>
-                  <NextLink href={buttonUrl}>{buttonLabel}</NextLink>
+                  <NextLink target={isInternalLink(buttonUrl) ? "_self" : "_blank"} href={buttonUrl}>{buttonLabel}</NextLink>
                 </Button>
               </div>
             )}
@@ -223,15 +223,15 @@ const products: ProductProps[] = [
     ),
   },
   {
-    title: "ENSv2 Referral Programs",
+    title: "ENS Referral Program",
     subtitle:
-      "ENS needs growth and revenues. Referral programs incentivize platforms with large existing audiences to integrate and promote .eth registrations and renewals.  Passionate about ENS? Become an ENSv2 Referrer, help grow ENS, and start earning.",
+      "ENS needs growth and revenues. Referral programs incentivize platforms with large existing audiences to integrate and promote .eth registrations and renewals.  Passionate about ENS? Become an ENS Referrer, help grow ENS, and start earning.",
     label: {
       title: "ENS Growth Incentive Program",
       icon: <ChartBarSquareIcon className="h-5 w-5 text-gray-500" />,
     },
     buttonLabel: "Learn more",
-    buttonUrl: "/ens-v2-referral-programs",
+    buttonUrl: "https://ensawards.org/ens-referral-awards",
     sectionId: "ens-v2-referral-programs",
     illustration: (
       <div className="w-full h-auto z-10">

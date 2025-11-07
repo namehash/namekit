@@ -73,13 +73,15 @@ const MobileMenu = () => {
             </Button>
             <Button variant="primary" asChild>
               <NextLink
-                href="/ens-v2-referral-programs"
+                target="_blank"
+                rel="noreferrer noopener"
+                href="https://ensawards.org/"
                 onClick={() => {
                   toggleMenu();
                   enableScroll();
                 }}
               >
-                ENSv2 Referral Programs
+                ENSAwards
               </NextLink>
             </Button>
             <Button variant="primary" asChild>
