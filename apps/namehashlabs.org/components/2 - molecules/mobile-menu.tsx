@@ -73,8 +73,8 @@ const MobileMenu = () => {
             </Button>
             <Button variant="primary" asChild>
               <NextLink
-                  target="_blank"
-                  rel="noreferrer noopener"
+                target="_blank"
+                rel="noreferrer noopener"
                 href="https://ensawards.org/"
                 onClick={() => {
                   toggleMenu();
