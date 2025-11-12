@@ -251,7 +251,7 @@ const products: ProductProps[] = [
   {
     title: "ENSAwards",
     subtitle:
-        "Are you fully supporting ENS best practices?",
+        "Earn awards for following ENS best practices!",
     label: {
       title: "ENS Awards Program",
       icon: <TrophyIcon className="h-5 w-5 text-gray-500" />,
