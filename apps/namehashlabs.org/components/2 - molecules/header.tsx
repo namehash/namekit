@@ -16,16 +16,6 @@ export const Header = () => {
         </NextLink>
 
         <div className="hidden md:flex items-center justify-end gap-3">
-          <Button variant="ghost" size="medium" asChild>
-            <NextLink
-                href="https://ensawards.org/"
-                target="_blank"
-                rel="noreferrer noopener"
-            >
-              ENSAwards
-            </NextLink>
-          </Button>
-
           <Button
             variant="secondary"
             size="medium"
