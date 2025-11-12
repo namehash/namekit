@@ -7,6 +7,7 @@ import {
   SparklesIcon,
   StarIcon,
   WrenchScrewdriverIcon,
+  TrophyIcon,
 } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { Balancer } from "react-wrap-balancer";
@@ -18,6 +19,7 @@ import { SectionText, SectionTitle } from "../1 - atoms";
 
 import making_the_unknown_img from "/public/images/making_the_unknown.png";
 import ens_admin_img from "/public/images/ens-admin-illustration.png";
+import ens_awards_img from "/public/images/ensawards-illustration.svg";
 import namegraph_img from "/public/images/namegraph-illustration.png";
 import ens_v2_referral_programs_img from "/public/images/ens-v2-referral-programs.svg";
 import nameai_img from "/public/images/nameai-illustration.png";
@@ -241,6 +243,30 @@ const products: ProductProps[] = [
           height={360}
           className="w-full h-auto"
           src={ens_v2_referral_programs_img}
+          alt="hero"
+        />
+      </div>
+    ),
+  },
+  {
+    title: "ENSAwards",
+    subtitle:
+        "Earn awards for following ENS best practices!",
+    label: {
+      title: "ENS Awards Program",
+      icon: <TrophyIcon className="h-5 w-5 text-gray-500" />,
+    },
+    buttonLabel: "Learn more",
+    buttonUrl: "https://ensawards.org/",
+    sectionId: "ensawards",
+    illustration: (
+      <div className="max-w-[400px] w-full h-auto z-10">
+        <Image
+          quality={100}
+          width={568}
+          height={360}
+          className="w-full h-auto"
+          src={ens_awards_img}
           alt="hero"
         />
       </div>
