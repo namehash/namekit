@@ -1,12 +1,13 @@
 import os
 import re
-from typing import Union
+from typing import Union, Optional
 
 from nameguard.models.checks import UNINSPECTED_CHECK_RESULT
 from nameguard.models.result import UninspectedNameGuardReport
 from nameguard.our_ens import OurENS
 from ens_normalize import is_ens_normalized, ens_cure, DisallowedSequence, ens_process
 
+import httpx
 import requests
 from label_inspector.inspector import Inspector
 from label_inspector.config import initialize_inspector_config
@@ -58,6 +59,8 @@ from nameguard.subgraph import (
     resolve_all_labelhashes_in_names_querying_labelhashes,
 )
 from nameguard.generic_utils import capitalize_words
+
+USE_ENSNODE_API = os.environ.get('USE_ENSNODE_API', 'true').lower() in ('true', '1', 'yes')
 
 DNA_CHECKS = [
     (checks.dna.normalized.check_grapheme, checks.dna.normalized.check_label, checks.dna.normalized.check_name),
@@ -447,11 +450,34 @@ class NameGuard:
             is_canonical=False,
         )
 
+    async def get_primary_name(self, address: str, network_name: NetworkName) -> Optional[str]:
+        # Check environment variable to determine whether to use ENSNode API or RPC
+        # Default is True (use ENSNode API)
+
+        if not USE_ENSNODE_API:
+            return self.ns[network_name].name(address)
+
+        if network_name == NetworkName.MAINNET:
+            url = f'https://api.alpha.ensnode.io/api/resolve/primary-name/{address}/1'
+        elif network_name == NetworkName.SEPOLIA:
+            url = f'http://api.alpha-sepolia.ensnode.io/api/resolve/primary-name/{address}/11155111'
+        else:
+            return self.ns[network_name].name(address)
+
+        async with httpx.AsyncClient() as client:
+            response = await client.get(url, params={'accelerate': 'true'})
+            if response.status_code == 404:
+                return None
+            response.raise_for_status()
+            return response.json().get('name')
+
     async def secure_primary_name(
         self, address: str, network_name: str, return_nameguard_report: bool = False
     ) -> SecurePrimaryNameResult:
         try:
-            domain = self.ns[network_name].name(address)
+            domain = await self.get_primary_name(address, network_name)
+        except (httpx.RequestError, httpx.HTTPStatusError) as ex:
+            raise ProviderUnavailable(f'Communication error with ENSNode API occurred: {ex}')
         except requests.exceptions.ConnectionError as ex:
             raise ProviderUnavailable(f'Communication error with provider occurred: {ex}')
         except ContractLogicError:
