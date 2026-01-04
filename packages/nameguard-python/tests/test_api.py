@@ -266,7 +266,13 @@ def test_bulk_inspect_name_post_stress(test_client):
             'vitalik.eth',
         ),
         ('mainnet', '0xe0fe380f4d877f643e88ceabbed4e5ee0efb66f079aabba23e8902336f7948da', 404, None),
-        ('sepolia', '0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835', 200, 'vitalik.eth'),
+        pytest.param(
+            'sepolia',
+            '0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835',
+            200,
+            'vitalik.eth',
+            marks=pytest.mark.xfail(reason='Sepolia subgraph is not working'),
+        ),
     ],
 )
 def test_inspect_namehash_get(

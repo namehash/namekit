@@ -373,6 +373,7 @@ async def test_namehash_non_null_name(nameguard: NameGuard):
 
 
 @pytest.mark.asyncio
+@pytest.mark.xfail(reason='Sepolia subgraph is not working')
 async def test_namehash_sepolia(nameguard: NameGuard):
     network_name = 'sepolia'
     r = await nameguard.inspect_namehash(
