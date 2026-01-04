@@ -4,7 +4,6 @@ from typing import Union, Optional
 
 from nameguard.models.checks import UNINSPECTED_CHECK_RESULT
 from nameguard.models.result import UninspectedNameGuardReport
-from nameguard.our_ens import OurENS
 from ens_normalize import is_ens_normalized, ens_cure, DisallowedSequence, ens_process
 
 import httpx
@@ -12,7 +11,6 @@ import requests
 from label_inspector.inspector import Inspector
 from label_inspector.config import initialize_inspector_config
 from label_inspector.models import InspectorConfusableGraphemeResult, InspectorResult
-from web3 import HTTPProvider
 from web3.exceptions import ContractLogicError
 from dotenv import load_dotenv
 
@@ -59,8 +57,6 @@ from nameguard.subgraph import (
     resolve_all_labelhashes_in_names_querying_labelhashes,
 )
 from nameguard.generic_utils import capitalize_words
-
-USE_ENSNODE_API = os.environ.get('USE_ENSNODE_API', 'true').lower() in ('true', '1', 'yes')
 
 DNA_CHECKS = [
     (checks.dna.normalized.check_grapheme, checks.dna.normalized.check_label, checks.dna.normalized.check_name),
@@ -172,15 +168,6 @@ class NameGuard:
     def __init__(self):
         self._inspector = init_inspector()
         load_dotenv()
-        # TODO use web sockets and async
-        self.ns = {}
-        for network_name, env_var in (
-            (NetworkName.MAINNET, 'PROVIDER_URI_MAINNET'),
-            (NetworkName.SEPOLIA, 'PROVIDER_URI_SEPOLIA'),
-        ):
-            if os.environ.get(env_var) is None:
-                logger.warning(f'Environment variable {env_var} is not set')
-            self.ns[network_name] = OurENS(HTTPProvider(os.environ.get(env_var)))
 
         # optimization
         self.eth_label = self._inspector.analyse_label('eth', simple_confusables=True, omit_cure=True)
@@ -451,18 +438,26 @@ class NameGuard:
         )
 
     async def get_primary_name(self, address: str, network_name: NetworkName) -> Optional[str]:
-        # Check environment variable to determine whether to use ENSNode API or RPC
-        # Default is True (use ENSNode API)
+        """
+        Looks up the primary ENS name for an address using the ENSNode API.
 
-        if not USE_ENSNODE_API:
-            return self.ns[network_name].name(address)
+        The ENSNode API only returns normalized primary names. If the primary name
+        is unnormalized, this method returns None.
 
+        Args:
+            address: The Ethereum address to look up
+            network_name: The network to query (MAINNET or SEPOLIA)
+
+        Returns:
+            The normalized primary name, or None if no primary name exists or
+            the primary name is unnormalized.
+        """
         if network_name == NetworkName.MAINNET:
             url = f'https://api.alpha.ensnode.io/api/resolve/primary-name/{address}/1'
         elif network_name == NetworkName.SEPOLIA:
             url = f'http://api.alpha-sepolia.ensnode.io/api/resolve/primary-name/{address}/11155111'
         else:
-            return self.ns[network_name].name(address)
+            raise ValueError(f'Unsupported network: {network_name}')
 
         async with httpx.AsyncClient() as client:
             response = await client.get(url, params={'accelerate': 'true'})
@@ -488,16 +483,15 @@ class NameGuard:
         primary_name = None
         nameguard_report = None
         if domain is None:
+            # ENSNode API returns None for addresses with no primary name or unnormalized primary names
             status = SecurePrimaryNameStatus.NO_PRIMARY_NAME
             impersonation_estimate = None
         else:
+            # If ENSNode API returns a name, it's guaranteed to be normalized
             nameguard_report = await self.inspect_name(network_name, domain)
 
             if nameguard_report.highest_risk and nameguard_report.highest_risk.check.name == Check.UNINSPECTED.name:
                 status = SecurePrimaryNameStatus.UNINSPECTED
-                impersonation_estimate = None
-            elif nameguard_report.normalization == Normalization.UNNORMALIZED:
-                status = SecurePrimaryNameStatus.UNNORMALIZED
                 impersonation_estimate = None
             else:
                 display_name = nameguard_report.beautiful_name

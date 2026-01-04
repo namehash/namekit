@@ -75,11 +75,11 @@ See the [NameGuard Python README](./apps/api.nameguard.io/README.md) for more de
 
 ### Environment Variables
 
-NameGuard uses the specified Provider endpoints (e.g. Alchemy, Infura, your own Ethereum node, etc...) for `secure-primary-name/`. Provider endpoints have to be set by environment variables, e.g.:
+NameGuard uses the ENSNode API for primary name lookups in `secure-primary-name`. The ENSNode API only returns normalized primary names, so unnormalized primary names are treated as having no primary name.
+
+For `fake-eth-name-check`, NameGuard uses Alchemy endpoints. Alchemy endpoints have to be set by environment variables, e.g.:
 
 ```bash
-export PROVIDER_URI_MAINNET=https://eth-mainnet.g.alchemy.com/v2/[YOUR_ALCHEMY_API_KEY]
-export PROVIDER_URI_SEPOLIA=https://eth-sepolia.g.alchemy.com/v2/[YOUR_ALCHEMY_API_KEY]
 export ALCHEMY_URI_MAINNET=https://eth-mainnet.g.alchemy.com/v2/[YOUR_ALCHEMY_API_KEY]
 export ALCHEMY_URI_SEPOLIA=https://eth-sepolia.g.alchemy.com/v2/[YOUR_ALCHEMY_API_KEY]
 export ENS_SUBGRAPH_URL_MAINNET="https://gateway-arbitrum.network.thegraph.com/api/[YOUR_SUBGRAPH_API_KEY]/subgraphs/id/5XqPmWe6gjyrJtFn9cLy237i4cWw2j9HcUJEXsP5qGtH"

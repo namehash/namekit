@@ -372,6 +372,15 @@ async def test_namehash_non_null_name(nameguard: NameGuard):
         )
 
 
+@pytest.mark.asyncio
+async def test_namehash_sepolia(nameguard: NameGuard):
+    network_name = 'sepolia'
+    r = await nameguard.inspect_namehash(
+        network_name, '0xee6c4522aab0003e8d14cd40a6af439055fd2577951148c14b6cea9a53475835'
+    )
+    assert r.name == 'vitalik.eth'
+
+
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 @pytest.mark.asyncio
 @pytest.mark.xfail
@@ -643,14 +652,14 @@ async def test_dynamic_check_order(nameguard: NameGuard):
     assert r.checks[1].check == Check.TYPING_DIFFICULTY
     assert r.checks[1].status == CheckStatus.WARN
 
-    # normalized is ALERT but impersonation risk is WARN
-    r = await nameguard.secure_primary_name(
-        '0xc9f598bc5bb554b6a15a96d19954b041c9fdbf14', 'mainnet', return_nameguard_report=True
-    )
-    assert r.nameguard_report.checks[0].check == Check.NORMALIZED
-    assert r.nameguard_report.checks[0].status == CheckStatus.ALERT
-    assert r.nameguard_report.checks[1].check == Check.TYPING_DIFFICULTY
-    assert r.nameguard_report.checks[1].status == CheckStatus.WARN
+    # normalized is ALERT but impersonation risk is WARN - impossible now
+    # r = await nameguard.secure_primary_name(
+    #     '0xc9f598bc5bb554b6a15a96d19954b041c9fdbf14', 'mainnet', return_nameguard_report=True
+    # )
+    # assert r.nameguard_report.checks[0].check == Check.NORMALIZED
+    # assert r.nameguard_report.checks[0].status == CheckStatus.ALERT
+    # assert r.nameguard_report.checks[1].check == Check.TYPING_DIFFICULTY
+    # assert r.nameguard_report.checks[1].status == CheckStatus.WARN
 
     r = await nameguard.secure_primary_name(
         '0xd8da6bf26964af9d7eed9e03e53415d37aa96045', 'mainnet', return_nameguard_report=True
@@ -674,13 +683,43 @@ async def test_dynamic_check_order(nameguard: NameGuard):
 
 
 @pytest.mark.asyncio
+async def test_secure_primary_name(nameguard: NameGuard):
+    network = 'mainnet'
+    r = await nameguard.secure_primary_name(
+        '0x2211d1D0020DAEA8039E46Cf1367962070d77DA9', network, return_nameguard_report=True
+    )
+    assert r.primary_name_status == 'normalized'
+
+
+@pytest.mark.asyncio
 async def test_secure_primary_name_error(nameguard: NameGuard, monkeypatch):
     network = 'mainnet'
-    monkeypatch.setattr(nameguard.ns[network], 'name', lambda address: (_ for _ in ()).throw(Exception('Error')))
+
+    async def mock_get_primary_name_error(self, address, network_name):
+        raise Exception('Error')
+
+    monkeypatch.setattr(NameGuard, 'get_primary_name', mock_get_primary_name_error)
     r = await nameguard.secure_primary_name(
-        '0xFD9eE68000Dc92aa6c67F8f6EB5d9d1a24086fAd', network, return_nameguard_report=True
+        '0x2211d1D0020DAEA8039E46Cf1367962070d77DA9', network, return_nameguard_report=True
     )
     assert r.primary_name_status == 'no_primary_name'
+
+
+@pytest.mark.asyncio
+async def test_secure_primary_name_uninspected(nameguard: NameGuard, monkeypatch):
+    network = 'mainnet'
+
+    async def mock_get_primary_name_error(self, address, network_name):
+        return '●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●.eth'
+
+    monkeypatch.setattr(NameGuard, 'get_primary_name', mock_get_primary_name_error)
+    r = await nameguard.secure_primary_name(
+        '0xf4A4D9C75dA65d507cfcd5ff0aCB73D40D3A3bCB', network, return_nameguard_report=True
+    )
+    assert r.primary_name_status == 'uninspected'
+    assert r.impersonation_estimate is None
+    assert r.primary_name is None
+    assert r.display_name == 'Unnamed f4a4'
 
 
 @pytest.mark.asyncio
