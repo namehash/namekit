@@ -1,4 +1,3 @@
-import { PublicClient } from "viem";
 import {
   NameGuard,
   SecurePrimaryNameOptions,
@@ -10,29 +9,16 @@ import { securePrimaryName as securePrimaryNameImpl } from "./securePrimaryName"
 import { initializeData } from "./data";
 
 export interface NameGuardJSOptions extends NameGuardOptions {
-  publicClient: PublicClient;
+  // No additional required options - uses ENS node API directly instead of nameguardEndpoint
 }
 
 class NameGuardJS extends NameGuard {
-  private publicClient: PublicClient;
-
   constructor(options: NameGuardJSOptions) {
     super(options);
 
-    this.publicClient = options.publicClient;
-
-    // Validate that the public client is connected to the correct network
-    const chainId = this.publicClient.chain?.id;
-    if (this.network === "mainnet" && chainId !== 1) {
-      throw new Error(
-        `Network mismatch: expected mainnet (chain id 1), but got chain id ${chainId}.`,
-      );
-    } else if (this.network === "sepolia" && chainId !== 11155111) {
-      throw new Error(
-        `Network mismatch: expected sepolia (chain id 11155111), but got chain id ${chainId}.`,
-      );
-    } else if (this.network !== "mainnet" && this.network !== "sepolia") {
-      throw new Error(`Unsupported network: ${this.network}.`);
+    // Validate that the network is supported
+    if (this.network !== "mainnet" && this.network !== "sepolia") {
+      throw new Error(`Unsupported network: ${this.network}. Only mainnet and sepolia are supported.`);
     }
 
     // This class is the only public interface to the data, so we initialize it here.
@@ -43,12 +29,12 @@ class NameGuardJS extends NameGuard {
     address: string,
     options?: SecurePrimaryNameOptions,
   ): Promise<SecurePrimaryNameResult> {
-    const returnNameGuardReport =
-      options?.returnNameGuardReport || DEFAULT_COMPUTE_NAMEGUARD_REPORT;
-    if (returnNameGuardReport) {
+    const computeNameGuardReport =
+      options?.computeNameGuardReport || DEFAULT_COMPUTE_NAMEGUARD_REPORT;
+    if (computeNameGuardReport) {
       return super.getSecurePrimaryName(address, options);
     }
-    return securePrimaryNameImpl(address, this.publicClient);
+    return securePrimaryNameImpl(address, this.network as "mainnet" | "sepolia");
   }
 }
 

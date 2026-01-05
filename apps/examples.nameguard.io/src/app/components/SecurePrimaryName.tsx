@@ -1,19 +1,8 @@
 import { createClient } from "@namehash/nameguard-js";
-import { createPublicClient, http } from "viem";
-import { mainnet } from "viem/chains";
 import { headers } from "next/headers";
 
-// This is a server component, so your secrets are safe
-const PROVIDER_URI_MAINNET = process.env.PROVIDER_URI_MAINNET;
-
-// You can use your own client
-const publicClient = createPublicClient({
-  chain: mainnet,
-  // For example, put your own URI here
-  transport: http(PROVIDER_URI_MAINNET),
-});
-
-const nameguard = createClient({ publicClient });
+// No longer need a public client - we use ENS node API directly
+const nameguard = createClient({ network: "mainnet" });
 
 interface Props {
   address: string;
@@ -26,7 +15,7 @@ export async function SecurePrimaryName({ address }: Props) {
 
   // This function does not use the NameGuard API server
   const data = await nameguard.getSecurePrimaryName(address, {
-    returnNameGuardReport: true,
+    computeNameGuardReport: true,
   });
 
   const pillColor =
