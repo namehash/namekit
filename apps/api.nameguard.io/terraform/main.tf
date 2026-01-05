@@ -13,8 +13,6 @@ module "lambda_api" {
   aws_region      = var.aws_region
 
   # Lambda environment variables
-  PROVIDER_URI_MAINNET      = var.PROVIDER_URI_MAINNET
-  PROVIDER_URI_SEPOLIA      = var.PROVIDER_URI_SEPOLIA
   ALCHEMY_URI_MAINNET       = var.ALCHEMY_URI_MAINNET
   ALCHEMY_URI_SEPOLIA       = var.ALCHEMY_URI_SEPOLIA
   ENS_SUBGRAPH_URL_MAINNET  = var.ENS_SUBGRAPH_URL_MAINNET

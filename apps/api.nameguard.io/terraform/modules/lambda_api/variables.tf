@@ -29,18 +29,6 @@ variable "aws_region" {
 }
 
 # Lambda environment variables
-variable "PROVIDER_URI_MAINNET" {
-  description = "Provider URI for Mainnet"
-  type        = string
-  sensitive   = true
-}
-
-variable "PROVIDER_URI_SEPOLIA" {
-  description = "Provider URI for Sepolia"
-  type        = string
-  sensitive   = true
-}
-
 variable "ALCHEMY_URI_MAINNET" {
   description = "Alchemy URI for Mainnet"
   type        = string
