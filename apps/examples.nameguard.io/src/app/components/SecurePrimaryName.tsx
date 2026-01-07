@@ -15,7 +15,7 @@ export async function SecurePrimaryName({ address }: Props) {
 
   // This function does not use the NameGuard API server
   const data = await nameguard.getSecurePrimaryName(address, {
-    computeNameGuardReport: true,
+    returnNameGuardReport: true,
   });
 
   const pillColor =
