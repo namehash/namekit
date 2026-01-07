@@ -29,7 +29,7 @@ describe("secure primary name", () => {
     initializeData();
   });
 
-  it.only(
+  it(
     "should detect impersonation",
     async () => {
       // examples taken from Python Nameguard API tests
