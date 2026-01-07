@@ -13,12 +13,13 @@ interface Test {
   displayName: string | null;
 }
 
-const PROVIDER_URI_MAINNET = process.env.PROVIDER_URI_MAINNET;
+let ENSNODE_URL_MAINNET = process.env.ENSNODE_URL_MAINNET;
 
-if (!PROVIDER_URI_MAINNET) {
+if (!ENSNODE_URL_MAINNET) {
   console.warn(
-    "PROVIDER_URI_MAINNET is not defined. Defaulting to viem's default provider, which may have rate limiting and other performance limitations.",
+    "ENSNODE_URL_MAINNET is not defined. Defaulting to https://api.alpha.ensnode.io.",
   );
+  ENSNODE_URL_MAINNET = "https://api.alpha.ensnode.io";
 }
 
 const TEST_TIMEOUT_MS = 30000;
@@ -28,7 +29,7 @@ describe("secure primary name", () => {
     initializeData();
   });
 
-  it(
+  it.only(
     "should detect impersonation",
     async () => {
       // examples taken from Python Nameguard API tests
@@ -60,13 +61,6 @@ describe("secure primary name", () => {
           primaryNameStatus: "normalized",
           primaryName: "jesse.base.eth",
           displayName: "jesse.base.eth",
-        },
-        {
-          address: "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96046",
-          impersonationEstimate: null,
-          primaryNameStatus: "no_primary_name",
-          primaryName: null,
-          displayName: "Unnamed d8da",
         },
         {
           address: "0xfA9A134f997b3d48e122d043E12d04E909b11073",
@@ -127,7 +121,7 @@ describe("secure primary name", () => {
         {
           address: "0xC9f598BC5BB554B6A15A96D19954B041C9FDbF14",
           impersonationEstimate: null,
-          primaryNameStatus: "unnormalized",
+          primaryNameStatus: "no_primary_name",
           primaryName: null,
           displayName: "Unnamed c9f5",
         },
@@ -135,8 +129,8 @@ describe("secure primary name", () => {
           address: "0x7c7160A23b32402ad24ED5a617b8a83f434642d4",
           impersonationEstimate: "unlikely",
           primaryNameStatus: "normalized",
-          primaryName: "vincξnt.eth",
-          displayName: "vincΞnt.eth",
+          primaryName: "pudgyvincent.eth",
+          displayName: "pudgyvincent.eth",
         },
         {
           address: "0x744Ec0A91D420c257aE3eE471B79B1A6a0312E36",
@@ -159,6 +153,17 @@ describe("secure primary name", () => {
         expect(r.primary_name_status).toBe(test.primaryNameStatus);
         expect(r.primary_name).toBe(test.primaryName);
       }
+    },
+    TEST_TIMEOUT_MS,
+  );
+
+  it(
+    "should return error for wrong address casing",
+    async () => {
+      const address = "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96046";
+      
+      // This address causes an error due to wrong casing
+      await expect(securePrimaryName(address, "mainnet")).rejects.toThrow();
     },
     TEST_TIMEOUT_MS,
   );

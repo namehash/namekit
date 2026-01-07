@@ -4,7 +4,7 @@ from web3 import Web3
 from nameguard.context import endpoint_name
 from nameguard.models import Rating, Check, CheckStatus, Normalization, GenericCheckResult, GraphemeNormalization
 from nameguard.nameguard import NameGuard
-from nameguard.exceptions import NamehashNotFoundInSubgraph, NotAGrapheme
+from nameguard.exceptions import NamehashNotFoundInSubgraph, NotAGrapheme, ProviderUnavailable
 from nameguard.endpoints import Endpoints
 from nameguard.utils import (
     MAX_INSPECTED_NAME_CHARACTERS,
@@ -692,6 +692,15 @@ async def test_secure_primary_name(nameguard: NameGuard):
 
 
 @pytest.mark.asyncio
+async def test_secure_primary_name_wrong_casing(nameguard: NameGuard):
+    network = 'mainnet'
+    with pytest.raises(ProviderUnavailable):
+        await nameguard.secure_primary_name(
+            '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96046', network, return_nameguard_report=True
+        )
+
+
+@pytest.mark.asyncio
 async def test_secure_primary_name_error(nameguard: NameGuard, monkeypatch):
     network = 'mainnet'
 
@@ -699,10 +708,10 @@ async def test_secure_primary_name_error(nameguard: NameGuard, monkeypatch):
         raise Exception('Error')
 
     monkeypatch.setattr(NameGuard, 'get_primary_name', mock_get_primary_name_error)
-    r = await nameguard.secure_primary_name(
-        '0x2211d1D0020DAEA8039E46Cf1367962070d77DA9', network, return_nameguard_report=True
-    )
-    assert r.primary_name_status == 'no_primary_name'
+    with pytest.raises(Exception):
+        await nameguard.secure_primary_name(
+            '0x2211d1D0020DAEA8039E46Cf1367962070d77DA9', network, return_nameguard_report=True
+        )
 
 
 @pytest.mark.asyncio

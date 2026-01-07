@@ -3,19 +3,21 @@ import { createPublicClient, http } from "viem";
 import { mainnet, sepolia } from "viem/chains";
 import { createClient } from "./nameguard-js";
 
-const PROVIDER_URI_MAINNET = process.env.PROVIDER_URI_MAINNET;
-const PROVIDER_URI_SEPOLIA = process.env.PROVIDER_URI_SEPOLIA;
+let ENSNODE_URL_MAINNET = process.env.ENSNODE_URL_MAINNET;
+let ENSNODE_URL_SEPOLIA = process.env.ENSNODE_URL_SEPOLIA;
 
-if (!PROVIDER_URI_MAINNET) {
+if (!ENSNODE_URL_MAINNET) {
   console.warn(
-    "PROVIDER_URI_MAINNET is not defined. Defaulting to viem's default provider, which may have rate limiting and other performance limitations.",
+    "ENSNODE_URL_MAINNET is not defined. Defaulting to https://api.alpha.ensnode.io.",
   );
+  ENSNODE_URL_MAINNET = "https://api.alpha.ensnode.io";
 }
 
-if (!PROVIDER_URI_SEPOLIA) {
+if (!ENSNODE_URL_SEPOLIA) {
   console.warn(
-    "PROVIDER_URI_SEPOLIA is not defined. Defaulting to viem's default provider, which may have rate limiting and other performance limitations.",
+    "ENSNODE_URL_SEPOLIA is not defined. Defaulting to https://api.alpha-sepolia.ensnode.io.",
   );
+  ENSNODE_URL_SEPOLIA = "https://api.alpha-sepolia.ensnode.io";
 }
 
 /**
@@ -52,9 +54,7 @@ describe("NameGuardJS", () => {
         "0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5",
         { returnNameGuardReport: true },
       ),
-    ).rejects.toThrow(
-      "request to http://localhost:1234/secure-primary-name/mainnet/0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5?return_nameguard_report=true failed",
-    );
+    ).rejects.toThrow(/Failed to perform request to/);
   });
 
   it("should support mainnet network", () => {

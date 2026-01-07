@@ -455,7 +455,7 @@ class NameGuard:
         if network_name == NetworkName.MAINNET:
             url = f'https://api.alpha.ensnode.io/api/resolve/primary-name/{address}/1'
         elif network_name == NetworkName.SEPOLIA:
-            url = f'http://api.alpha-sepolia.ensnode.io/api/resolve/primary-name/{address}/11155111'
+            url = f'https://api.alpha-sepolia.ensnode.io/api/resolve/primary-name/{address}/11155111'
         else:
             raise ValueError(f'Unsupported network: {network_name}')
 
@@ -477,8 +477,8 @@ class NameGuard:
             raise ProviderUnavailable(f'Communication error with provider occurred: {ex}')
         except ContractLogicError:
             domain = None
-        except Exception:
-            domain = None
+        except Exception as ex:
+            raise ProviderUnavailable(f'Communication error with provider occurred: {ex}')
         display_name = f'Unnamed {address[2:6].lower()}'
         primary_name = None
         nameguard_report = None

@@ -10,15 +10,15 @@ export async function lookupPrimaryName(
   network: "mainnet" | "sepolia",
 ): Promise<string | null> {
   const baseUrl = network === "mainnet"
-    ? "https://api.alpha.ensnode.io"
-    : "http://api.alpha-sepolia.ensnode.io";
+    ? process.env.ENSNODE_URL_MAINNET || "https://api.alpha.ensnode.io"
+    : process.env.ENSNODE_URL_SEPOLIA || "https://api.alpha-sepolia.ensnode.io";
 
   const chainId = network === "mainnet" ? 1 : 11155111;
   const url = `${baseUrl}/api/resolve/primary-name/${address}/${chainId}`;
 
   try {
     const response = await fetch(`${url}?accelerate=true`);
-
+    
     if (response.status === 404) {
       return null;
     }

@@ -50,12 +50,12 @@ def set_monkeypatch(monkeypatch):
 
         async def mock_get_primary_name(self, address: str, network_name):
             try:
-                return json.load(open(f'{TESTS_DATA_PATH}/primary_name__{address.lower()}.json'))
+                return json.load(open(f'{TESTS_DATA_PATH}/primary_name__{address}.json'))
             except FileNotFoundError:
                 result = await original_get_primary_name(self, address, network_name)
                 json.dump(
                     result,
-                    open(f'{TESTS_DATA_PATH}/NEW-primary_name__{address.lower()}.json', 'w'),
+                    open(f'{TESTS_DATA_PATH}/NEW-primary_name__{address}.json', 'w'),
                     indent=2,
                     ensure_ascii=False,
                 )
