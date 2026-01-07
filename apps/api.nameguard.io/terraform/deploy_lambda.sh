@@ -90,6 +90,8 @@ done
 # Validate Lambda environment variables
 echo "Validating Lambda environment variables..."
 LAMBDA_ENV_VARS=(
+    "ENSNODE_URL_MAINNET"
+    "ENSNODE_URL_SEPOLIA"
     "ALCHEMY_URI_MAINNET"
     "ALCHEMY_URI_SEPOLIA"
     "ENS_SUBGRAPH_URL_MAINNET"

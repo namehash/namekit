@@ -475,7 +475,7 @@ class NameGuardError extends Error {
 const DEFAULT_ENDPOINT = "https://api.nameguard.io";
 const DEFAULT_NETWORK: Network = "mainnet";
 const DEFAULT_INSPECT_LABELHASH_PARENT = ETH_TLD;
-export const DEFAULT_COMPUTE_NAMEGUARD_REPORT = false;
+export const DEFAULT_RETURN_NAMEGUARD_REPORT = false;
 const MAX_BULK_INSPECTION_NAMES = 250;
 
 /** includes label separators */
@@ -711,7 +711,7 @@ export class NameGuard {
 
     const network_name = this.network;
     const returnNameGuardReport =
-      options?.returnNameGuardReport || DEFAULT_COMPUTE_NAMEGUARD_REPORT;
+      options?.returnNameGuardReport || DEFAULT_RETURN_NAMEGUARD_REPORT;
 
     let response = await this.rawRequest(
       `secure-primary-name/${network_name}/${address}?return_nameguard_report=${returnNameGuardReport}`,

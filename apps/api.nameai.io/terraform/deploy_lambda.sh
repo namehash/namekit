@@ -90,6 +90,8 @@ done
 # Validate Lambda environment variables
 echo "Validating Lambda environment variables..."
 LAMBDA_ENV_VARS=(
+    "ENSNODE_URL_MAINNET"
+    "ENSNODE_URL_SEPOLIA"
     "ALCHEMY_URI_MAINNET"
     "ALCHEMY_URI_SEPOLIA"
     "ENS_SUBGRAPH_URL_MAINNET"
@@ -217,6 +219,8 @@ IMAGE_URI=`docker inspect --format='{{index .RepoDigests 0}}' ${ECR_URL}:latest`
 echo "Using Image URI: ${IMAGE_URI}"
 
 # Export individual environment variables for Terraform
+export TF_VAR_ENSNODE_URL_MAINNET="${ENSNODE_URL_MAINNET}"
+export TF_VAR_ENSNODE_URL_SEPOLIA="${ENSNODE_URL_SEPOLIA}"
 export TF_VAR_ALCHEMY_URI_MAINNET="${ALCHEMY_URI_MAINNET}"
 export TF_VAR_ALCHEMY_URI_SEPOLIA="${ALCHEMY_URI_SEPOLIA}"
 export TF_VAR_ENS_SUBGRAPH_URL_MAINNET="${ENS_SUBGRAPH_URL_MAINNET}"

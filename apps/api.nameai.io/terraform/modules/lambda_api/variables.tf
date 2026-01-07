@@ -29,6 +29,18 @@ variable "aws_region" {
 }
 
 # Lambda environment variables
+variable "ENSNODE_URL_MAINNET" {
+  description = "ENSNode URL for Mainnet"
+  type        = string
+  sensitive   = true
+}
+
+variable "ENSNODE_URL_SEPOLIA" {
+  description = "ENSNode URL for Sepolia"
+  type        = string
+  sensitive   = true
+}
+
 variable "ALCHEMY_URI_MAINNET" {
   description = "Alchemy URI for Mainnet"
   type        = string

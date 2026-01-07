@@ -27,7 +27,7 @@ export async function securePrimaryName(
       impersonation_estimate: null,
       display_name: unnamedName,
       primary_name_status: "no_primary_name",
-      nameguard_result: null,
+      nameguard_report: null,
     };
   }
 
@@ -38,7 +38,7 @@ export async function securePrimaryName(
       impersonation_estimate: null,
       display_name: unnamedName,
       primary_name_status: "unnormalized",
-      nameguard_result: null,
+      nameguard_report: null,
     };
   }
 
@@ -51,6 +51,6 @@ export async function securePrimaryName(
     impersonation_estimate: computeImpersonationEstimate(primaryName),
     display_name: beautifulName,
     primary_name_status: "normalized",
-    nameguard_result: null,
+    nameguard_report: null,
   };
 }

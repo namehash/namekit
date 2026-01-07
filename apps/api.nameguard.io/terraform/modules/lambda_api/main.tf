@@ -64,6 +64,8 @@ resource "aws_lambda_function" "nameguard_lambda" {
 
   environment {
     variables = {
+      ENSNODE_URL_MAINNET      = var.ENSNODE_URL_MAINNET
+      ENSNODE_URL_SEPOLIA      = var.ENSNODE_URL_SEPOLIA
       ALCHEMY_URI_MAINNET       = var.ALCHEMY_URI_MAINNET
       ALCHEMY_URI_SEPOLIA       = var.ALCHEMY_URI_SEPOLIA
       ENS_SUBGRAPH_URL_MAINNET  = var.ENS_SUBGRAPH_URL_MAINNET

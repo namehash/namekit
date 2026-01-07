@@ -137,7 +137,7 @@ class NameAIError extends Error {
 const DEFAULT_ENDPOINT = "https://api.nameai.io/";
 const DEFAULT_NETWORK: Network = "mainnet";
 const DEFAULT_INSPECT_LABELHASH_PARENT = ETH_TLD;
-export const DEFAULT_COMPUTE_NAMEGUARD_REPORT = false;
+export const DEFAULT_RETURN_NAMEGUARD_REPORT = false;
 const MAX_BULK_INSPECTION_NAMES = 250;
 
 /** includes label separators */

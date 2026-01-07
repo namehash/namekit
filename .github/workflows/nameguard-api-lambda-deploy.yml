@@ -53,6 +53,8 @@ jobs:
 
       - name: Build and deploy lambda
         env:
+          ENSNODE_URL_MAINNET: ${{ secrets.ENSNODE_URL_MAINNET }}
+          ENSNODE_URL_SEPOLIA: ${{ secrets.ENSNODE_URL_SEPOLIA }}
           ALCHEMY_URI_MAINNET: ${{ secrets.ALCHEMY_URI_MAINNET }}
           ALCHEMY_URI_SEPOLIA: ${{ secrets.ALCHEMY_URI_SEPOLIA }}
           ENS_SUBGRAPH_URL_MAINNET: ${{ secrets.ENS_SUBGRAPH_URL_MAINNET }}

@@ -3,7 +3,7 @@ import {
   SecurePrimaryNameOptions,
   SecurePrimaryNameResult,
   NameGuardOptions,
-  DEFAULT_COMPUTE_NAMEGUARD_REPORT,
+  DEFAULT_RETURN_NAMEGUARD_REPORT,
 } from "@namehash/nameguard";
 import { securePrimaryName as securePrimaryNameImpl } from "./securePrimaryName";
 import { initializeData } from "./data";
@@ -29,9 +29,9 @@ class NameGuardJS extends NameGuard {
     address: string,
     options?: SecurePrimaryNameOptions,
   ): Promise<SecurePrimaryNameResult> {
-    const computeNameGuardReport =
-      options?.computeNameGuardReport || DEFAULT_COMPUTE_NAMEGUARD_REPORT;
-    if (computeNameGuardReport) {
+    const returnNameGuardReport =
+      options?.returnNameGuardReport || DEFAULT_RETURN_NAMEGUARD_REPORT;
+    if (returnNameGuardReport) {
       return super.getSecurePrimaryName(address, options);
     }
     return securePrimaryNameImpl(address, this.network as "mainnet" | "sepolia");
