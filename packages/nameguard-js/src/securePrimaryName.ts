@@ -1,5 +1,4 @@
 import { ens_beautify } from "@adraffy/ens-normalize";
-import { PublicClient } from "viem";
 import { SecurePrimaryNameResult } from "@namehash/nameguard";
 import { computeImpersonationEstimate } from "./impersonation";
 import { lookupPrimaryName } from "./lookup";
@@ -9,14 +8,14 @@ import { isEnsNormalized } from "./normalization";
  * Analyzes the primary name associated with an address to determine if it is a potential impersonation attempt.
  *
  * @param address - The address to analyze.
- * @param client - The viem client used to perform the primary name lookup.
+ * @param network - The network to query ("mainnet" or "sepolia").
  * @returns A promise that resolves to a `SecurePrimaryNameResult` object containing the analysis results.
  */
 export async function securePrimaryName(
   address: string,
-  client: PublicClient,
+  network: "mainnet" | "sepolia",
 ): Promise<SecurePrimaryNameResult> {
-  const primaryName = await lookupPrimaryName(address, client);
+  const primaryName = await lookupPrimaryName(address, network);
 
   // This name is displayed when the primary name is not found.
   const unnamedName = `Unnamed ${address.slice(2, 6).toLowerCase()}`;

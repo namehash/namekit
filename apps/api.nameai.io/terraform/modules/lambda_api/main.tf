@@ -64,8 +64,8 @@ resource "aws_lambda_function" "nameai_lambda" {
 
   environment {
     variables = {
-      PROVIDER_URI_MAINNET      = var.PROVIDER_URI_MAINNET
-      PROVIDER_URI_SEPOLIA      = var.PROVIDER_URI_SEPOLIA
+      ENSNODE_URL_MAINNET      = var.ENSNODE_URL_MAINNET
+      ENSNODE_URL_SEPOLIA      = var.ENSNODE_URL_SEPOLIA
       ALCHEMY_URI_MAINNET       = var.ALCHEMY_URI_MAINNET
       ALCHEMY_URI_SEPOLIA       = var.ALCHEMY_URI_SEPOLIA
       ENS_SUBGRAPH_URL_MAINNET  = var.ENS_SUBGRAPH_URL_MAINNET
