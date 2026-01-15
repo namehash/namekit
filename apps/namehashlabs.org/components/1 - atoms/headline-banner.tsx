@@ -9,7 +9,7 @@ export const HeadlineBanner = () => {
       <div className="flex space-x-3 items-center">
         <MegaphoneIcon className="flex shrink-0 w-6 h-6 opacity-50 -mr-1" />
         <p className=" sm:pr-0">
-          <Balancer>Meet us at Devconnect Nov 17-22</Balancer>
+          <Balancer>Meet us at Consensus HK Feb 10-12</Balancer>
         </p>
       </div>
 
