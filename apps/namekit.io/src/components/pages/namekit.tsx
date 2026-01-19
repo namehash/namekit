@@ -14,7 +14,7 @@ import { useEffect } from "react";
 export const NameKitPage = () => {
   // Add debugging in development mode
   useEffect(() => {
-    if (process.env.NODE_ENV === "development") {
+    if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
       const buttons = document.querySelectorAll("button button");
       if (buttons.length > 0) {
         console.error("Found nested buttons:", buttons);

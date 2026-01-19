@@ -1,7 +1,7 @@
 import { Float } from "@headlessui-float/react";
 import { Popover } from "@headlessui/react";
 import cc from "classcat";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 type Props = {
   trigger: React.ReactNode;
@@ -40,6 +40,11 @@ export function Tooltip({
   ...props
 }: Props) {
   const [open, setOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -53,7 +58,7 @@ export function Tooltip({
         shift={6}
         flip={10}
         arrow
-        portal
+        portal={isMounted}
         enter={cc([
           "nk-transition nk-duration-300 nk-ease-out",
           {
