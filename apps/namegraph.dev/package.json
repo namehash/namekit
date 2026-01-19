@@ -32,7 +32,7 @@
     "ethereum-identity-kit": "0.2.16",
     "fast-average-color": "9.3.0",
     "lucide-react": "^0.468.0",
-    "next": "14.2.35",
+    "next": "15.4.10",
     "react": "18.3.1",
     "react-debounce-input": "3.3.0",
     "react-device-detect": "2.2.2",
