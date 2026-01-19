@@ -84,9 +84,13 @@ export default function RootLayout({
               <div className="flex flex-row items-center justify-between md:gap-5 h-[40px]">
                 <div className="items-center justify-center flex gap-2">
                   {demoLinks.map((link) => (
-                    <Button key={link.text} variant="ghost" asChild>
-                      <Link href={link.href}>{link.text}</Link>
-                    </Button>
+                    <Link
+                      key={link.text}
+                      href={link.href}
+                      className="nk-button nk-transition nk-text-base nk-rounded-lg nk-border nk-font-medium nk-inline-flex nk-gap-2 nk-items-center nk-whitespace-nowrap nk-underline-none nk-text-black nk-border-transparent hover:nk-bg-black/5 nk-py-2 nk-px-4"
+                    >
+                      {link.text}
+                    </Link>
                   ))}
                 </div>
               </div>
