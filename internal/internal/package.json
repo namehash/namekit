@@ -9,7 +9,7 @@
     "@heroicons/react": "2.2.0",
     "@namehash/namekit-react": "workspace:*",
     "classcat": "5.0.5",
-    "next": "14.2.21",
+    "next": "14.2.35",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "yup": "1.4.0"
