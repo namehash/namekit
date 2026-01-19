@@ -17,7 +17,7 @@
     "@namehash/nameai": "workspace:*",
     "@namehash/namekit-react": "workspace:*",
     "classcat": "5.0.5",
-    "next": "15.1.9",
+    "next": "15.1.11",
     "react": "19.0.1",
     "react-dom": "19.0.1",
     "react-wrap-balancer": "1.1.1",
