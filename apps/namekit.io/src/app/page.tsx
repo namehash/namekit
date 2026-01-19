@@ -2,6 +2,9 @@
 
 import { NameKitPage } from "@/components/pages/namekit";
 
+// Force dynamic rendering to avoid SSR issues with browser APIs
+export const dynamic = 'force-dynamic';
+
 export default function Home() {
   return (
     <div>
