@@ -10,6 +10,7 @@ from nameai.models import (
 )
 from nameai.all_tokenizer import AllTokenizer
 from nameai.ngrams import Ngrams
+from nameai.person_names import PersonNameTokenizer
 
 
 def init_inspector():
@@ -49,6 +50,7 @@ class NLPInspector:
     def __init__(self, config):
         self.inspector = init_inspector()
         self.tokenizer = AllTokenizer(config)
+        self.person_names_tokenizer = PersonNameTokenizer(config)
         self.ngrams = Ngrams(config)
 
     def nlp_analyse_label(self, label: str) -> NLPLabelAnalysis:
@@ -92,27 +94,51 @@ class NLPInspector:
         return self.inspector.analyse_label(label, simple_confusables=True)
 
     def tokenize(self, label: str, tokenizations_limit: int) -> tuple[list[dict], bool]:
-        tokenizeds_iterator = self.tokenizer.tokenize(label)
+        """
+        Tokenize text using both person name and general-purpose tokenizers.
+
+        Combines results from PersonNameTokenizer (with name-specific probabilities)
+        and AllTokenizer (with ngram-based probabilities).
+        Returns tokenizations sorted by probability.
+        """
+        all_tokenizer_iterator = self.tokenizer.tokenize(label)
+        person_names_iterator = self.person_names_tokenizer.tokenize_with_scores(label)
+
         tokenizeds = []
         partial_tokenization = False
         try:
             used = set()
             i = 0
-            for tokenized in tokenizeds_iterator:
+
+            # first add person name tokenizations with their original scores
+            for tokenized, log_prob in person_names_iterator:
                 if tokenized not in used:
                     if i == tokenizations_limit:
                         partial_tokenization = True
                         break
                     used.add(tokenized)
                     i += 1
-                    tokenizeds.append(tokenized)
+                    tokenizeds.append({'tokens': tokenized, 'log_probability': log_prob, 'source': 'person_names'})
+
+            # then add regular tokenizations
+            for tokenized in all_tokenizer_iterator:
+                if tokenized not in used:
+                    if i == tokenizations_limit:
+                        partial_tokenization = True
+                        break
+                    used.add(tokenized)
+                    i += 1
+                    # for AllTokenizer tokenizations, use ngrams probability
+                    tokenizeds.append(
+                        {
+                            'tokens': tokenized,
+                            'log_probability': self.ngrams.sequence_log_probability(tokenized),
+                            'source': 'ngrams',
+                        }
+                    )
+
         except RecursionError:
             partial_tokenization = True
-
-        tokenizeds = [
-            {'tokens': tokenized, 'log_probability': self.ngrams.sequence_log_probability(tokenized)}
-            for tokenized in tokenizeds
-        ]
 
         for tokenized in tokenizeds:
             tokenized['tokens'] = tuple(uniq_gaps(tokenized['tokens']))
