@@ -1,96 +1,104 @@
 import { Currency } from "@namehash/ens-utils";
-import { CurrencySymbol } from "@namehash/namekit-react/client";
-import { CurrencySymbolSize } from "@namehash/namekit-react/client";
+import {
+  CurrencySymbol,
+  CurrencySymbology,
+} from "@namehash/namekit-react/client";
+import { CurrencyIconSize } from "@namehash/namekit-react/client";
 import type { Meta, StoryObj } from "@storybook/react";
-
-export const ETH: Story = {
-  args: {
-    currency: Currency.Eth,
-    size: CurrencySymbolSize.Large,
-  },
-};
-export const USD: Story = {
-  args: {
-    currency: Currency.Usd,
-    size: CurrencySymbolSize.Large,
-  },
-};
-export const USDC: Story = {
-  args: {
-    currency: Currency.Usdc,
-    size: CurrencySymbolSize.Large,
-  },
-};
-export const WETH: Story = {
-  args: {
-    currency: Currency.Weth,
-    size: CurrencySymbolSize.Large,
-  },
-};
-export const DAI: Story = {
-  args: {
-    currency: Currency.Dai,
-    size: CurrencySymbolSize.Large,
-  },
-};
-export const SmallSize: Story = {
-  args: {
-    size: CurrencySymbolSize.Small,
-    currency: Currency.Eth,
-  },
-};
-export const LargeSize: Story = {
-  args: {
-    size: CurrencySymbolSize.Large,
-    currency: Currency.Eth,
-  },
-};
-export const WithCustomSymbolColor: Story = {
-  args: {
-    symbolFillColor: "#007bff",
-    size: CurrencySymbolSize.Large,
-    currency: Currency.Eth,
-  },
-};
-export const ShowingTooltipDescription: Story = {
-  args: {
-    describeCurrencyInTooltip: true,
-    size: CurrencySymbolSize.Large,
-    currency: Currency.Eth,
-  },
-};
-export const NotShowingTooltipDescription: Story = {
-  args: {
-    describeCurrencyInTooltip: false,
-    size: CurrencySymbolSize.Large,
-    currency: Currency.Eth,
-  },
-};
 
 const meta: Meta<typeof CurrencySymbol> = {
   component: CurrencySymbol,
   title: "Namekit/CurrencySymbol",
   argTypes: {
-    symbolFillColor: { control: "color" },
     currency: {
-      options: [
-        Currency.Eth,
-        Currency.Usd,
-        Currency.Usdc,
-        Currency.Weth,
-        Currency.Dai,
-      ],
-      control: { type: "select" },
+      options: Object.values(Currency),
+      control: {
+        labels: Object.keys(Currency),
+        type: "select",
+      },
     },
-    size: {
-      options: Object.keys(CurrencySymbolSize),
-      mapping: CurrencySymbolSize,
-      control: { type: "select" },
+    iconSize: {
+      options: Object.values(CurrencyIconSize),
+      if: { arg: "symbology", eq: CurrencySymbology.Icon },
+      control: {
+        labels: {
+          [CurrencyIconSize.Small]: "Small (16px)",
+          [CurrencyIconSize.Large]: "Large (20px)",
+        },
+        type: "select",
+      },
+    },
+    className: {
+      if: { arg: "symbology", neq: CurrencySymbology.Icon },
+      control: {
+        type: "text",
+      },
     },
     describeCurrencyInTooltip: { control: { type: "boolean" } },
+    symbology: {
+      options: Object.keys(CurrencySymbology),
+      control: { type: "select" },
+    },
+  },
+  args: {
+    iconSize: CurrencyIconSize.Small,
+    describeCurrencyInTooltip: false,
+    symbology: CurrencySymbology.TextSymbol,
   },
 };
 
 export default meta;
 
 type Story = StoryObj<typeof CurrencySymbol>;
+
+export const AsAnAcronym: Story = {
+  args: {
+    currency: Currency.Eth,
+    symbology: CurrencySymbology.Acronym,
+  },
+};
+export const AsATextSymbol: Story = {
+  args: {
+    currency: Currency.Eth,
+    symbology: CurrencySymbology.TextSymbol,
+  },
+};
+export const AsASmallIcon: Story = {
+  args: {
+    currency: Currency.Eth,
+    iconSize: CurrencyIconSize.Small,
+    symbology: CurrencySymbology.Icon,
+  },
+};
+export const AsALargeIcon: Story = {
+  args: {
+    currency: Currency.Eth,
+    iconSize: CurrencyIconSize.Large,
+    symbology: CurrencySymbology.Icon,
+  },
+};
+export const WithCustomIconColor: Story = {
+  argTypes: {
+    fill: { control: { type: "color" } },
+  },
+  args: {
+    currency: Currency.Eth,
+    symbology: CurrencySymbology.Icon,
+    fill: "#007bff",
+  },
+};
+export const WithCustomFontStyle: Story = {
+  argTypes: {
+    className: { control: { type: "text" } },
+  },
+  args: {
+    currency: Currency.Eth,
+    className: "nk-text-3xl colorful-text",
+  },
+};
+export const ShowingTooltipDescription: Story = {
+  args: {
+    currency: Currency.Eth,
+    describeCurrencyInTooltip: true,
+  },
+};
