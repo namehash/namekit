@@ -29,14 +29,14 @@ variable "aws_region" {
 }
 
 # Lambda environment variables
-variable "PROVIDER_URI_MAINNET" {
-  description = "Provider URI for Mainnet"
+variable "ENSNODE_URL_MAINNET" {
+  description = "ENSNode URL for Mainnet"
   type        = string
   sensitive   = true
 }
 
-variable "PROVIDER_URI_SEPOLIA" {
-  description = "Provider URI for Sepolia"
+variable "ENSNODE_URL_SEPOLIA" {
+  description = "ENSNode URL for Sepolia"
   type        = string
   sensitive   = true
 }

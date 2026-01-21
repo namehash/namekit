@@ -89,8 +89,8 @@ export enum Rating {
  */
 export type SecurePrimaryNameStatus =
   | "normalized" /** The ENS primary name was found and it is normalized. */
-  | "no_primary_name" /** The ENS primary name was not found. */
-  | "unnormalized" /** The ENS primary name was found, but it is not normalized. */
+  | "no_primary_name" /** The ENS primary name was not found, or the primary name is unnormalized. The ENSNode API only returns normalized primary names, so unnormalized primary names are treated as having no primary name. */
+  | "unnormalized" /** @deprecated This status is no longer returned. Unnormalized primary names are now treated as having no primary name. */
   | "uninspected" /** A name was exceptionally long and was not inspected for performance reasons */;
 
 export type ImpersonationEstimate =
@@ -475,7 +475,7 @@ class NameGuardError extends Error {
 const DEFAULT_ENDPOINT = "https://api.nameguard.io";
 const DEFAULT_NETWORK: Network = "mainnet";
 const DEFAULT_INSPECT_LABELHASH_PARENT = ETH_TLD;
-export const DEFAULT_COMPUTE_NAMEGUARD_REPORT = false;
+export const DEFAULT_RETURN_NAMEGUARD_REPORT = false;
 const MAX_BULK_INSPECTION_NAMES = 250;
 
 /** includes label separators */
@@ -688,9 +688,8 @@ export class NameGuard {
   /**
    * Performs a reverse lookup of an Ethereum `address` to a primary name.
    *
-   * Data sources for the primary name lookup include:
-   * 1. The Ethereum Provider configured in the NameGuard instance.
-   * 2. For ENS names using CCIP-Read: requests to externally defined gateway servers.
+   * The primary name lookup uses the ENSNode API, which only returns normalized primary names.
+   * If an address has an unnormalized primary name, it will be treated as having no primary name.
    *
    * Returns `display_name` to be shown to users and estimates `impersonation_estimate`
    *
@@ -712,7 +711,7 @@ export class NameGuard {
 
     const network_name = this.network;
     const returnNameGuardReport =
-      options?.returnNameGuardReport || DEFAULT_COMPUTE_NAMEGUARD_REPORT;
+      options?.returnNameGuardReport || DEFAULT_RETURN_NAMEGUARD_REPORT;
 
     let response = await this.rawRequest(
       `secure-primary-name/${network_name}/${address}?return_nameguard_report=${returnNameGuardReport}`,

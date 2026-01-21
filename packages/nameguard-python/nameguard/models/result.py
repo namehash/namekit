@@ -344,14 +344,14 @@ class SecurePrimaryNameStatus(str, Enum):
     The status of a secure primary ENS name lookup performed by NameGuard.
 
     * `normalized`: The ENS primary name was found and it is normalized.
-    * `no_primary_name`: The ENS primary name was not found.
-    * `unnormalized`: The ENS primary name was found, but it is not normalized.
+    * `no_primary_name`: The ENS primary name was not found, or the primary name is unnormalized.
+      The ENSNode API only returns normalized primary names, so unnormalized primary names
+      are treated as having no primary name.
     * `uninspected`: The name was exceptionally long and was not inspected for performance reasons.
     """
 
     NORMALIZED = 'normalized'
     NO_PRIMARY_NAME = 'no_primary_name'
-    UNNORMALIZED = 'unnormalized'
     UNINSPECTED = 'uninspected'
 
 

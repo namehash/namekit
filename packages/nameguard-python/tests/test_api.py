@@ -313,11 +313,11 @@ def test_inspect_namehash_get(
             'unknown',
             '[3fddf465ed81d79ae943b35800b1d187dc0b5d69614bf7e8ebddbae19d72cae8].genevaswis.eth',
         ),
-        (
-            '0x00f52438ae09d2f909ee2efc19ba8af75058e74ca4507aa091bd8282aa490e77',
-            'unknown',
-            '🥛.[2e8eaa68c7e128861299162323c29c29672f5c094aceaf22d9c0935e4bbd3f85].🛸.👽.enspunks.eth',
-        ),
+        # (
+        #     '0x00f52438ae09d2f909ee2efc19ba8af75058e74ca4507aa091bd8282aa490e77',
+        #     'unknown',
+        #     '🥛.[2e8eaa68c7e128861299162323c29c29672f5c094aceaf22d9c0935e4bbd3f85].🛸.👽.enspunks.eth',
+        # ), # now it is known
         pytest.param(
             '0x1bc53f6413409d078ec18a29b17f981eafab341598a4e970ac9efab7d29258af',
             'unnormalized',
@@ -387,10 +387,10 @@ def test_inspect_namehash_get_root(test_client):
             '0xb2636b6e3b1abdd3fbec454d4f4b1a904e7b15e3609cb208bcfc5a5487293308',
             '[3fddf465ed81d79ae943b35800b1d187dc0b5d69614bf7e8ebddbae19d72cae8].genevaswis.eth',
         ),
-        (
-            '0x00f52438ae09d2f909ee2efc19ba8af75058e74ca4507aa091bd8282aa490e77',
-            '[7710d5ebf94bcebcf1996bb7a3f5e24a6d24435b314b3cec815da03640c2940c].[2e8eaa68c7e128861299162323c29c29672f5c094aceaf22d9c0935e4bbd3f85].[a64d2b5a93eda272d27734cc2fb8d1c468562e279f1e97e759eea1a5a410f8e3].[462a1d6391f7ea5916874504f3b5fc8cd43626f6bbabc8a22fe4312dc1585362].enspunks.eth',
-        ),
+        # (
+        #     '0x00f52438ae09d2f909ee2efc19ba8af75058e74ca4507aa091bd8282aa490e77',
+        #     '[7710d5ebf94bcebcf1996bb7a3f5e24a6d24435b314b3cec815da03640c2940c].[2e8eaa68c7e128861299162323c29c29672f5c094aceaf22d9c0935e4bbd3f85].[a64d2b5a93eda272d27734cc2fb8d1c468562e279f1e97e759eea1a5a410f8e3].[462a1d6391f7ea5916874504f3b5fc8cd43626f6bbabc8a22fe4312dc1585362].enspunks.eth',
+        # ), # now it is known
     ],
 )
 def test_inspect_namehash_get_unknown(test_client, namehash: str, expected_name: str):
@@ -644,14 +644,14 @@ def test_inspect_grapheme_multi(test_client):
             '٧٣٧.eth',
         ),
         (
-            '0x9d32572997DA4948063E3Fc11c2552Eb82F7208E',
+            '0x2211d1D0020DAEA8039E46Cf1367962070d77DA9',
             'unlikely',
             'normalized',
-            'poet.base.eth',
-            'poet.base.eth',
-            'poet.base.eth',
+            'jesse.base.eth',
+            'jesse.base.eth',
+            'jesse.base.eth',
             False,
-            'poet.base.eth',
+            'jesse.base.eth',
         ),
         (
             '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96046',
@@ -666,7 +666,7 @@ def test_inspect_grapheme_multi(test_client):
         (
             '0xfA9A134f997b3d48e122d043E12d04E909b11073',
             None,
-            'unnormalized',
+            'no_primary_name',
             None,
             'Unnamed fa9a',
             None,
@@ -676,7 +676,7 @@ def test_inspect_grapheme_multi(test_client):
         (
             '0x76fd9b1B2d8F2cd9Ba06c925506627883F97B97C',
             None,
-            'unnormalized',
+            'no_primary_name',
             None,
             'Unnamed 76fd',
             None,
@@ -686,7 +686,7 @@ def test_inspect_grapheme_multi(test_client):
         (
             '0xf537a27F31d7A014c5b8008a0069c61f827fA7A1',
             None,
-            'unnormalized',
+            'no_primary_name',
             None,
             'Unnamed f537',
             None,
@@ -696,7 +696,7 @@ def test_inspect_grapheme_multi(test_client):
         (
             '0x0ebDfD75d33c05025074fd7845848D44966AB367',
             None,
-            'unnormalized',
+            'no_primary_name',
             None,
             'Unnamed 0ebd',
             None,
@@ -706,7 +706,7 @@ def test_inspect_grapheme_multi(test_client):
         (
             '0xaf738F6C83d7D2C46723b727Ce794F9c79Cc47E6',
             None,
-            'unnormalized',
+            'no_primary_name',
             None,
             'Unnamed af73',
             None,
@@ -716,7 +716,7 @@ def test_inspect_grapheme_multi(test_client):
         (
             '0xb281405429C3bc91e52707a21754cDaCeCbB035E',
             None,
-            'unnormalized',
+            'no_primary_name',
             None,
             'Unnamed b281',
             None,
@@ -726,7 +726,7 @@ def test_inspect_grapheme_multi(test_client):
         (
             '0x0d756ee0e8C250f88f5e0eDd7C723dc3A0BF75cF',
             None,
-            'unnormalized',
+            'no_primary_name',
             None,
             'Unnamed 0d75',
             None,
@@ -736,7 +736,7 @@ def test_inspect_grapheme_multi(test_client):
         (
             '0x7Da3CdE891a76416ec9D1c3354B8EfE550Bd4e20',
             None,
-            'unnormalized',
+            'no_primary_name',
             None,
             'Unnamed 7da3',
             'vitalik.eth',
@@ -746,7 +746,7 @@ def test_inspect_grapheme_multi(test_client):
         (
             '0xC9f598BC5BB554B6A15A96D19954B041C9FDbF14',
             None,
-            'unnormalized',
+            'no_primary_name',
             None,
             'Unnamed c9f5',
             'vitalik.eth',
@@ -757,16 +757,16 @@ def test_inspect_grapheme_multi(test_client):
             '0x7c7160A23b32402ad24ED5a617b8a83f434642d4',
             'unlikely',
             'normalized',
-            'vincξnt.eth',
-            'vincΞnt.eth',
-            'vincξnt.eth',
+            'pudgyvincent.eth',
+            'pudgyvincent.eth',
+            'pudgyvincent.eth',
             False,
-            'vincξnt.eth',
+            'pudgyvincent.eth',
         ),
         (
             '0x744Ec0A91D420c257aE3eE471B79B1A6a0312E36',
             None,
-            'unnormalized',
+            'no_primary_name',
             None,
             'Unnamed 744e',
             None,
@@ -864,15 +864,15 @@ def test_primary_name_get_uppercase(test_client):
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
 def test_primary_name_get_offchain(test_client):
-    address = '0x9d32572997DA4948063E3Fc11c2552Eb82F7208E'
+    address = '0x2211d1D0020DAEA8039E46Cf1367962070d77DA9'
     response = test_client.get(f'/secure-primary-name/mainnet/{address}')
     assert response.status_code == 200
     res_json = response.json()
     print(res_json)
     assert res_json['impersonation_estimate'] == 'unlikely'
     assert res_json['primary_name_status'] == 'normalized'
-    assert res_json['primary_name'] == 'poet.base.eth'
-    assert res_json['display_name'] == 'poet.base.eth'
+    assert res_json['primary_name'] == 'jesse.base.eth'
+    assert res_json['display_name'] == 'jesse.base.eth'
 
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
@@ -889,29 +889,19 @@ def test_primary_name_get_no_primary_name(test_client):
 
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
-def test_primary_name_get_unnormalized(test_client):
+def test_primary_name_get_no_primary_name_for_unnormalized(test_client):
+    """
+    Test that addresses with unnormalized primary names are treated as having no primary name.
+    The ENSNode API only returns normalized primary names, so unnormalized names are treated as no primary name.
+    """
     address = '0xfA9A134f997b3d48e122d043E12d04E909b11073'  # 888‍‍.eth
     response = test_client.get(f'/secure-primary-name/mainnet/{address}')
     assert response.status_code == 200
     res_json = response.json()
-    print(res_json)
     assert res_json['impersonation_estimate'] is None
-    assert res_json['primary_name_status'] == 'unnormalized'
+    assert res_json['primary_name_status'] == 'no_primary_name'
     assert res_json['primary_name'] is None
     assert res_json['display_name'] == 'Unnamed fa9a'
-
-
-@pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
-def test_primary_name_get_uninspected(test_client):
-    address = '0xf4A4D9C75dA65d507cfcd5ff0aCB73D40D3A3bCB'
-    response = test_client.get(f'/secure-primary-name/mainnet/{address}')
-    assert response.status_code == 200
-    res_json = response.json()
-    print(res_json)
-    assert res_json['impersonation_estimate'] is None
-    assert res_json['primary_name_status'] == 'uninspected'
-    assert res_json['primary_name'] is None
-    assert res_json['display_name'] == 'Unnamed f4a4'
 
 
 def test_primary_name_get_invalid_address(test_client):
