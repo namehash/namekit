@@ -1,6 +1,4 @@
 import { describe, it, expect } from "vitest";
-import { createPublicClient, http } from "viem";
-import { mainnet, sepolia } from "viem/chains";
 import { createClient } from "./nameguard-js";
 
 let ENSNODE_URL_MAINNET = process.env.ENSNODE_URL_MAINNET;
@@ -30,8 +28,6 @@ const INVALID_NAMEGUARD_API_ENDPOINT = "http://localhost:1234";
 describe("NameGuardJS", () => {
   it("should compute secure primary name", async () => {
     const localNameguard = createClient({
-      // not a real endpoint, will error if used
-
       network: "mainnet",
     });
 
@@ -42,19 +38,33 @@ describe("NameGuardJS", () => {
     expect(data.display_name).toBe("nick.eth");
   });
 
-  it("should use the API for requests with a requested nameguard report", () => {
-    const localNameguard = createClient({
-      // not a real endpoint, will error if used
+  it("should return nameguard report when requested", async () => {
+    const nameguard = createClient({
       network: "mainnet",
     });
 
-    expect(
-      // this should try to fetch from the endpoint
-      localNameguard.getSecurePrimaryName(
+    const data = await nameguard.getSecurePrimaryName(
+      "0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5",
+      { returnNameGuardReport: true },
+    );
+
+    expect(data.display_name).toBe("nick.eth");
+    expect(data.nameguard_report).not.toBeNull();
+    expect(data.nameguard_report).toBeDefined();
+  });
+
+  it("should throw an error when using client with wrong endpoint", async () => {
+    const nameguard = createClient({
+      nameguardEndpoint: INVALID_NAMEGUARD_API_ENDPOINT,
+      network: "mainnet",
+    });
+
+    await expect(
+      nameguard.getSecurePrimaryName(
         "0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5",
         { returnNameGuardReport: true },
       ),
-    ).rejects.toThrow(/Failed to perform request to/);
+    ).rejects.toThrow(/request to .* failed/);
   });
 
   it("should support mainnet network", () => {
