@@ -2,10 +2,11 @@ import { ens_beautify } from "@adraffy/ens-normalize";
 import { SecurePrimaryNameResult } from "@namehash/nameguard";
 import { computeImpersonationEstimate } from "./impersonation";
 import { lookupPrimaryName } from "./lookup";
-import { isEnsNormalized } from "./normalization";
 
 /**
  * Analyzes the primary name associated with an address to determine if it is a potential impersonation attempt.
+ *
+ * The ENSNode API only returns normalized primary names, so if a name is returned, it is guaranteed to be normalized.
  *
  * @param address - The address to analyze.
  * @param network - The network to query ("mainnet" or "sepolia").
@@ -20,7 +21,7 @@ export async function securePrimaryName(
   // This name is displayed when the primary name is not found.
   const unnamedName = `Unnamed ${address.slice(2, 6).toLowerCase()}`;
 
-  // No primary name found.
+  // No primary name found (or unnormalized primary name, which ENSNode API treats as no primary name).
   if (primaryName === null) {
     return {
       primary_name: null,
@@ -31,18 +32,7 @@ export async function securePrimaryName(
     };
   }
 
-  // Primary name is not normalized.
-  if (!isEnsNormalized(primaryName)) {
-    return {
-      primary_name: null,
-      impersonation_estimate: null,
-      display_name: unnamedName,
-      primary_name_status: "unnormalized",
-      nameguard_report: null,
-    };
-  }
-
-  // This name is displayed when the primary name is normalized.
+  // ENSNode API only returns normalized names, so if we get here, the name is normalized.
   const beautifulName = ens_beautify(primaryName);
 
   return {

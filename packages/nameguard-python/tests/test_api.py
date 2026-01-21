@@ -889,12 +889,15 @@ def test_primary_name_get_no_primary_name(test_client):
 
 
 @pytest.mark.flaky(retries=2, condition=not pytest.use_monkeypatch)
-def test_primary_name_get_unnormalized(test_client):
+def test_primary_name_get_no_primary_name_for_unnormalized(test_client):
+    """
+    Test that addresses with unnormalized primary names are treated as having no primary name.
+    The ENSNode API only returns normalized primary names, so unnormalized names are treated as no primary name.
+    """
     address = '0xfA9A134f997b3d48e122d043E12d04E909b11073'  # 888‍‍.eth
     response = test_client.get(f'/secure-primary-name/mainnet/{address}')
     assert response.status_code == 200
     res_json = response.json()
-    print(res_json)
     assert res_json['impersonation_estimate'] is None
     assert res_json['primary_name_status'] == 'no_primary_name'
     assert res_json['primary_name'] is None

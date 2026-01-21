@@ -7,11 +7,9 @@ from nameguard.models.result import UninspectedNameGuardReport
 from ens_normalize import is_ens_normalized, ens_cure, DisallowedSequence, ens_process
 
 import httpx
-import requests
 from label_inspector.inspector import Inspector
 from label_inspector.config import initialize_inspector_config
 from label_inspector.models import InspectorConfusableGraphemeResult, InspectorResult
-from web3.exceptions import ContractLogicError
 from dotenv import load_dotenv
 
 from nameguard import checks
@@ -452,12 +450,17 @@ class NameGuard:
             The normalized primary name, or None if no primary name exists or
             the primary name is unnormalized.
         """
+        # Use environment variables with fallback to default ENSNode API URLs
         if network_name == NetworkName.MAINNET:
-            url = f'https://api.alpha.ensnode.io/api/resolve/primary-name/{address}/1'
+            base_url = os.environ.get('ENSNODE_URL_MAINNET', 'https://api.alpha.ensnode.io')
+            chain_id = 1
         elif network_name == NetworkName.SEPOLIA:
-            url = f'https://api.alpha-sepolia.ensnode.io/api/resolve/primary-name/{address}/11155111'
+            base_url = os.environ.get('ENSNODE_URL_SEPOLIA', 'https://api.alpha-sepolia.ensnode.io')
+            chain_id = 11155111
         else:
             raise ValueError(f'Unsupported network: {network_name}')
+
+        url = f'{base_url}/api/resolve/primary-name/{address}/{chain_id}'
 
         async with httpx.AsyncClient() as client:
             response = await client.get(url, params={'accelerate': 'true'})
@@ -473,12 +476,6 @@ class NameGuard:
             domain = await self.get_primary_name(address, network_name)
         except (httpx.RequestError, httpx.HTTPStatusError) as ex:
             raise ProviderUnavailable(f'Communication error with ENSNode API occurred: {ex}')
-        except requests.exceptions.ConnectionError as ex:
-            raise ProviderUnavailable(f'Communication error with provider occurred: {ex}')
-        except ContractLogicError:
-            domain = None
-        except Exception as ex:
-            raise ProviderUnavailable(f'Communication error with provider occurred: {ex}')
         display_name = f'Unnamed {address[2:6].lower()}'
         primary_name = None
         nameguard_report = None
