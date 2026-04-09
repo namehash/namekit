@@ -21,12 +21,9 @@ const namehashLabsTeam = {
     getCachedProfile("theloner.eth"),
     getCachedProfile("shrugs.eth"),
     getCachedProfile("tko.box"),
-    getCachedProfile("sebban.eth"),
     getCachedProfile("y3drk.eth"),
-    getCachedProfile("duds.eth"),
     getCachedProfile("goader.eth"),
-    getCachedProfile("byczong.eth"),
-    getCachedProfile("karbowski.eth"),
+    getCachedProfile("levvv.eth"),
     getCachedProfile("apohllo.eth"),
   ],
 };
@@ -52,7 +49,7 @@ export const TeamSection = () => {
             <NextLink href="/careers">Join our team</NextLink>
           </Button>
         </div>
-        <div className="grid lg:grid-cols-5 grid-cols-3 m-auto md:grid-cols-5 sm:grid-cols-3 place-items-center lg:gap-x-auto gap-6 lg:gap-8 lg:ml-auto lg:max-w-[1216px]">
+        <div className="grid lg:grid-cols-4 grid-cols-3 m-auto md:grid-cols-4 sm:grid-cols-3 place-items-center lg:gap-x-auto gap-6 lg:gap-8 lg:ml-auto lg:max-w-[1216px]">
           {namehashLabsTeam.profiles.map((member) => {
             return (
               <UltimateENSAvatar

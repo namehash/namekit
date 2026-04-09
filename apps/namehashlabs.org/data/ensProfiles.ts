@@ -476,15 +476,6 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     }),
   ],
   [
-    "0x6148bB313D42f2B72f8992f739a15dF984236F23",
-    buildProfile({
-      ensName: "karbowski.eth",
-      title: "Engineering",
-      displayName: "Jakub Karbowski",
-      address: "0x6148bB313D42f2B72f8992f739a15dF984236F23",
-    }),
-  ],
-  [
     "0x1E7F4DF4Abe4bd01E0D7271AF11A2607969bB5b2",
     buildProfile({
       ensName: "goader.eth",
@@ -502,35 +493,11 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
     }),
   ],
   [
-    "0xdf696B8a034416b4725793388ed8A232195C1ce9",
-    buildProfile({
-      ensName: "byczong.eth",
-      title: "Engineering",
-      address: "0xdf696B8a034416b4725793388ed8A232195C1ce9",
-    }),
-  ],
-  [
-    "0x89F8e4020c0dd384F13c288bc5743F963F9D8fdF",
-    buildProfile({
-      ensName: "duds.eth",
-      title: "Engineering",
-      address: "0x89F8e4020c0dd384F13c288bc5743F963F9D8fdF",
-    }),
-  ],
-  [
     "0x26A1BC2b06DD438669094bD68f1E2481F47FEC5b",
     buildProfile({
       ensName: "y3drk.eth",
       title: "Engineering",
       address: "0x26A1BC2b06DD438669094bD68f1E2481F47FEC5b",
-    }),
-  ],
-  [
-    "0x69A193cf78a6CBb48084797A69164ca409EBb285",
-    buildProfile({
-      ensName: "sebban.eth",
-      title: "Engineering",
-      address: "0x69A193cf78a6CBb48084797A69164ca409EBb285",
     }),
   ],
   [
@@ -551,6 +518,14 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       displayName: "Tomasz Kopacki",
       twitterProfile: "https://x.com/0xTko",
       address: "0x8d3B2c5B93716508639E3CcFE2A3DB58AF540B66",
+    }),
+  ],
+  [
+    "0xc0De20A37E2dAC848F81A93BD85FE4ACDdE7C0DE",
+    buildProfile({
+      ensName: "levvv.eth",
+      title: "Engineering",
+      address: "0xc0De20A37E2dAC848F81A93BD85FE4ACDdE7C0DE",
     }),
   ],
 ]);
