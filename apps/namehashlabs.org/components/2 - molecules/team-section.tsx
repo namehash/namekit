@@ -23,7 +23,7 @@ const namehashLabsTeam = {
     getCachedProfile("tko.box"),
     getCachedProfile("y3drk.eth"),
     getCachedProfile("goader.eth"),
-    getCachedProfile("levvv.eth"),
+    getCachedProfile("llev.me"),
     getCachedProfile("apohllo.eth"),
   ],
 };
