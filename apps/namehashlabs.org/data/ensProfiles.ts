@@ -523,7 +523,7 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
   [
     "0xc0De20A37E2dAC848F81A93BD85FE4ACDdE7C0DE",
     buildProfile({
-      ensName: "levvv.eth",
+      ensName: "llev.me",
       title: "Engineering",
       address: "0xc0De20A37E2dAC848F81A93BD85FE4ACDdE7C0DE",
     }),
