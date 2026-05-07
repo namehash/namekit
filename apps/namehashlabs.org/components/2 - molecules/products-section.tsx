@@ -177,54 +177,6 @@ export const ProductsSection = () => {
 
 const products: ProductProps[] = [
   {
-    title: "ENSRainbow",
-    subtitle:
-      "All ENS apps depending on indexed ENS name data need infrastructure to reduce the occurrence of ENS users being exposed to ugly and confusing technical implementation details of ENS smart contracts.",
-    label: {
-      title: "ENS User Experience Infrastructure",
-      icon: <StarIcon className="h-5 w-5 text-gray-500" />,
-    },
-    buttonLabel: "Learn more",
-    buttonUrl: "https://ensrainbow.io",
-    sectionId: "ens-rainbow",
-    illustration: (
-      <div className="w-full h-auto z-10">
-        <Image
-          quality={100}
-          width={568}
-          height={360}
-          className="w-full h-auto"
-          src={making_the_unknown_img}
-          alt="hero"
-        />
-      </div>
-    ),
-  },
-  {
-    title: "ENSAdmin",
-    subtitle:
-      "ENS Developers need “power tools” to explore the ENS Protocol and trace operations like never before. Interactively learn and debug how ENS Registries, Registrars, Resolvers, Gateways, and Clients interact.",
-    label: {
-      title: "ENS Developer Power Tools",
-      icon: <WrenchScrewdriverIcon className="h-5 w-5 text-gray-500" />,
-    },
-    buttonLabel: "Learn more",
-    buttonUrl: "https://admin.ensnode.io/status",
-    sectionId: "ens-admin",
-    illustration: (
-      <div className="w-full h-auto z-10">
-        <Image
-          quality={100}
-          width={568}
-          height={360}
-          className="w-full h-auto"
-          src={ens_admin_img}
-          alt="hero"
-        />
-      </div>
-    ),
-  },
-  {
     title: "ENS Referral Program",
     subtitle:
       "ENS needs growth and revenues. Referral programs incentivize platforms with large existing audiences to integrate and promote .eth registrations and renewals.  Passionate about ENS? Become an ENS Referrer, help grow ENS, and start earning.",
@@ -251,9 +203,9 @@ const products: ProductProps[] = [
   {
     title: "ENSAwards",
     subtitle:
-        "Earn awards for following ENS best practices!",
+        "Awarding the best integrations and advocates in ENS!",
     label: {
-      title: "ENS Awards Program",
+      title: "ENS Social Influence Infrastructure",
       icon: <TrophyIcon className="h-5 w-5 text-gray-500" />,
     },
     buttonLabel: "Learn more",
@@ -267,6 +219,54 @@ const products: ProductProps[] = [
           height={360}
           className="w-full h-auto"
           src={ens_awards_img}
+          alt="hero"
+        />
+      </div>
+    ),
+  },
+  {
+    title: "ENSRainbow",
+    subtitle:
+      "All ENS apps depending on indexed ENS name data need infrastructure to reduce the occurrence of ENS users being exposed to ugly and confusing technical implementation details of ENS smart contracts.",
+    label: {
+      title: "ENS User Experience Infrastructure",
+      icon: <StarIcon className="h-5 w-5 text-gray-500" />,
+    },
+    buttonLabel: "Learn more",
+    buttonUrl: "https://ensrainbow.io",
+    sectionId: "ens-rainbow",
+    illustration: (
+      <div className="w-full h-auto z-10">
+        <Image
+          quality={100}
+          width={568}
+          height={360}
+          className="w-full h-auto"
+          src={making_the_unknown_img}
+          alt="hero"
+        />
+      </div>
+    ),
+  },
+  {
+    title: "ENSAdmin",
+    subtitle:
+      "ENS Developers need “power tools” to inspect the ENS Protocol and trace operations like never before.",
+    label: {
+      title: "ENS Developer Power Tools",
+      icon: <WrenchScrewdriverIcon className="h-5 w-5 text-gray-500" />,
+    },
+    buttonLabel: "Learn more",
+    buttonUrl: "https://admin.ensnode.io/",
+    sectionId: "ens-admin",
+    illustration: (
+      <div className="w-full h-auto z-10">
+        <Image
+          quality={100}
+          width={568}
+          height={360}
+          className="w-full h-auto"
+          src={ens_admin_img}
           alt="hero"
         />
       </div>
