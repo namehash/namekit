@@ -14,8 +14,8 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <ReadySections />
-      <ComingSoonSections />
+      {/* <ReadySections />
+      <ComingSoonSections /> */}
       <ChecksSection />
       <MobileSectionDivider />
       <DevelopersSection />
