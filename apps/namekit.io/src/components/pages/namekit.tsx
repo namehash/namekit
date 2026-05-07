@@ -2,7 +2,6 @@
 
 import {
   BuildUiSection,
-  GetYourWeb3NameSection,
   HeroSection,
   IntroducingNamekit,
   TheVisionSection,
@@ -31,12 +30,12 @@ export const NameKitPage = () => {
       <IntroducingNamekit />
       <BuildUiSection />
       {/* <ServicesSection />
-      <BuildFutureSection /> */}
+      <BuildFutureSection />
       <GetYourWeb3NameSection
         title="Ready to get started?"
         description="Our team is standing by to answer your questions and find the right solution for you"
         buttonText="Schedule a call"
-      />
+      /> */}
     </div>
   );
 };
