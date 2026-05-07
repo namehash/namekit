@@ -58,13 +58,12 @@ export const ENSNodeProductPanel = () => {
                 fundamentally incompatible with ENSv2.
               </p>
               <p>
-                The launch and operation of ENSv2 has a critical need for a
-                strong &quot;production ready&quot; alternative.
-                That solution is ENSNode, the full-stack ENSv2 development platform.
+                The solution is ENSNode, the full-stack ENSv2 development platform.
                 Most ENSv2 builders will use the all new ENS Omnigraph API that
-                builds a unified state and query model for indexed ENSv2+v1 data, ENS resolutions, 
+                delivers a unified state and query model for indexed ENSv2+v1 data, ENS resolutions, 
                 and so much more. Choose your full-stack integration point, including enssdk, enskit,
                 or build your own powerful ENS services on top of ENSDb and ENSIndexer.
+                It's never been easier to build the ENS app of your dreams.
               </p>
             </div>
 
