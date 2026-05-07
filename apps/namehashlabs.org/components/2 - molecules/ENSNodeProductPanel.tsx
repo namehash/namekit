@@ -55,17 +55,17 @@ export const ENSNodeProductPanel = () => {
                 Many ENS apps with widespread adoption depend on the ENS
                 Subgraph as critical infrastructure for ENSv1, generating over
                 700 million / requests a year. However, the Subgraph is
-                fundamentally incompatible with ENSv2.
+                fundamentally incompatible with ENSv2. A replacement is urgently needed.
               </p>
               <p>
                 The solution is ENSNode, the full-stack ENSv2 development platform.
-                Most ENSv2 builders will use the all new ENS Omnigraph API that
+                Most developers will use the all new ENS Omnigraph API that
                 delivers a unified state and query model for indexed ENSv2+v1 data, ENS resolutions, 
                 and so much more. Choose your full-stack integration point, including enssdk, enskit,
                 or build your own powerful ENS services on top of ENSDb and ENSIndexer.
               </p>
               <p>
-                It&apos;s never been easier to build the ENS app of your dreams.
+                <i>Now it's easy to build on ENSv2!</i>
               </p>
             </div>
 
