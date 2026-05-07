@@ -32,7 +32,7 @@ export const HeroSection = () => {
                   </span>
                   <span className="text-gray-400 text-sm">
                     <Balancer>
-                      NameKit will build for ENSv2 using{" "}
+                      Ideas that inspired NameKit now live on in{" "}
                       <Link
                         variant="underline"
                         href="https://ensnode.io"
@@ -42,6 +42,7 @@ export const HeroSection = () => {
                       >
                         ENSNode
                       </Link>
+                      {" "}— the full-stack ENSv2 development platform.
                     </Balancer>
                   </span>
                 </div>

@@ -54,18 +54,18 @@ export const ENSNodeProductPanel = () => {
               <p>
                 Many ENS apps with widespread adoption depend on the ENS
                 Subgraph as critical infrastructure for ENSv1, generating over
-                700 million / requests a year. However, the Subgraph is single
-                chain only. This means ENS apps already lack data on more than
-                90% of ENS names. The Subgraph is fundamentally incompatible
-                with ENSv2.
+                700 million / requests a year. However, the Subgraph is
+                fundamentally incompatible with ENSv2. A replacement is urgently needed.
               </p>
               <p>
-                The launch and operation of ENSv2 has a critical need for a
-                strong &quot;production ready&quot; ENS data indexing solution.
-                That solution is ENSNode, the new multichain indexer for ENSv2
-                that will also radically accelerate slow ENS resolution times,
-                boost ENS DAO revenues, fill missing infrastructure for ENS
-                tokenization data, and support the success of Namechain.
+                The solution is ENSNode, the full-stack ENSv2 development platform.
+                Most developers will use the all new ENS Omnigraph API that
+                delivers a unified state and query model for indexed ENSv2+v1 data, ENS resolutions, 
+                and so much more. Choose your full-stack integration point, including enssdk, enskit,
+                or build your own powerful ENS services on top of ENSDb and ENSIndexer.
+              </p>
+              <p>
+                <i>Now it&apos;s easy to build on ENSv2!</i>
               </p>
             </div>
 

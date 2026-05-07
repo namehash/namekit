@@ -1,12 +1,9 @@
 "use client";
 
 import {
-  BuildFutureSection,
   BuildUiSection,
-  GetYourWeb3NameSection,
   HeroSection,
   IntroducingNamekit,
-  ServicesSection,
   TheVisionSection,
 } from "@/components/organisms";
 import { useEffect } from "react";
@@ -32,13 +29,13 @@ export const NameKitPage = () => {
       <TheVisionSection />
       <IntroducingNamekit />
       <BuildUiSection />
-      <ServicesSection />
+      {/* <ServicesSection />
       <BuildFutureSection />
       <GetYourWeb3NameSection
         title="Ready to get started?"
         description="Our team is standing by to answer your questions and find the right solution for you"
         buttonText="Schedule a call"
-      />
+      /> */}
     </div>
   );
 };
