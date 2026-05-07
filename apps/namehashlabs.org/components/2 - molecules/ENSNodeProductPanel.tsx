@@ -65,7 +65,7 @@ export const ENSNodeProductPanel = () => {
                 or build your own powerful ENS services on top of ENSDb and ENSIndexer.
               </p>
               <p>
-                <i>Now it's easy to build on ENSv2!</i>
+                <i>Now it&apos;s easy to build on ENSv2!</i>
               </p>
             </div>
 
