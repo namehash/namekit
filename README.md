@@ -49,7 +49,7 @@
 
 ## Project Status
 
-⚡️ Our team learned a lot about ENS market adoption opportunities through our work on NameKit. This includes both where big opportunities live, and also where they don't. Based on these lessons learned, we are now advancing an improved market adoption strategy: [ENSNode, the fullstack ENSv2 development platform](https://github.com/namehash/ensnode) ⚡️
+⚡️ Our team learned a lot about ENS market adoption opportunities through our work on NameKit. This includes both where big opportunities live, and also where they don't. Based on these lessons learned, we are now advancing a much-improved growth strategy for ENS that includes [ENSNode, the fullstack ENSv2 development platform](https://github.com/namehash/ensnode) ⚡️
 
 🧊 **All development of NameKit was suspended in 2025. This repo is retained only for archive purposes.** 🧊
 
