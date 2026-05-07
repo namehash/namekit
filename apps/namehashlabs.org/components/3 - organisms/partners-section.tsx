@@ -28,11 +28,11 @@ export const PartnersPage = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 max-w-[1216px] m-auto">
+      {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 max-w-[1216px] m-auto">
         {partners.map((partner) => (
           <PartnerCard key={partner.websiteUrl} {...partner} />
         ))}
-      </div>
+      </div> */}
 
       <div className="w-full flex lg:pt-20 pt-10 flex-col lg:flex-row m-auto gap-10 max-w-[1216px]">
         <div className="lg:w-1/2 w-full flex flex-col gap-3 items-start">
