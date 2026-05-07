@@ -1,12 +1,9 @@
 "use client";
 
 import {
-  BuildFutureSection,
   BuildUiSection,
-  GetYourWeb3NameSection,
   HeroSection,
   IntroducingNamekit,
-  ServicesSection,
   TheVisionSection,
 } from "@/components/organisms";
 import { useEffect } from "react";
