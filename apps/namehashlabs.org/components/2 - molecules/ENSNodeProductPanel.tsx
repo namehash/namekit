@@ -63,6 +63,8 @@ export const ENSNodeProductPanel = () => {
                 delivers a unified state and query model for indexed ENSv2+v1 data, ENS resolutions, 
                 and so much more. Choose your full-stack integration point, including enssdk, enskit,
                 or build your own powerful ENS services on top of ENSDb and ENSIndexer.
+              </p>
+              <p>
                 It&apos;s never been easier to build the ENS app of your dreams.
               </p>
             </div>
