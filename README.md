@@ -27,18 +27,6 @@
       <img src="https://img.shields.io/github/license/namehash/namekit?color=444444" alt="MIT License">
     </picture>
   </a>
-  <a href="https://github.com/namehash/namekit/actions/workflows/typescript-packages-unit-tests.yml?query=branch%3Amain">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/github/actions/workflow/status/namehash/namekit/typescript-packages-unit-tests.yml?logo=typescript&logoColor=ffffff&color=444444">
-      <img src="https://img.shields.io/github/actions/workflow/status/namehash/namekit/typescript-packages-unit-tests.yml?logo=typescript&logoColor=ffffff&color=444444" alt="TypeScript Build Status">
-    </picture>
-  </a>
-  <a href="https://github.com/namehash/namekit/actions/workflows/nameguard-python-unit-tests.yml?query=branch%3Amain">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/github/actions/workflow/status/namehash/namekit/nameguard-python-unit-tests.yml?logo=python&logoColor=ffffff&color=444444">
-      <img src="https://img.shields.io/github/actions/workflow/status/namehash/namekit/nameguard-python-unit-tests.yml?logo=python&logoColor=ffffff&color=444444" alt="Python Build Status">
-    </picture>
-  </a>
   <a href="#project-status">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://img.shields.io/badge/status-alpha-444444">
@@ -49,9 +37,19 @@
 
 ## Project Status
 
-⚡️ Our team learned a lot about ENS market adoption opportunities through our work on NameKit. This includes both where big opportunities live, and also where they don't. Based on these lessons learned, we are now advancing a much-improved growth strategy for ENS that includes [ENSNode, the fullstack ENSv2 development platform](https://github.com/namehash/ensnode) ⚡️
+Our team learned a lot about ENS market adoption through our work on [NameKit](https://namekit.io). This includes where big opportunities live, and also where they don't. Based on these lessons learned, we are now advancing a much-improved growth strategy for ENS that includes:
 
-🧊 **All development of NameKit was suspended in 2025. This repo is retained only for archive purposes.** 🧊
+➡️ [ENSNode, the fullstack ENSv2 development platform.](https://github.com/namehash/ensnode)
+
+<br>
+<br>
+
+🧊 **All development of NameKit was suspended in 2025.** 🧊
+
+🧊 **This repo is retained only for archive purposes.** 🧊
+
+<br>
+<br>
 
 ## Project Directory
 
