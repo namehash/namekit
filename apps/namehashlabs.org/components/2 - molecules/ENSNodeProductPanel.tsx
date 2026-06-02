@@ -5,12 +5,12 @@ import Image from "next/image";
 export const ENSNodeProductPanel = () => {
   return (
     <div className="lg:px-[120px] px-5 w-full flex items-center justify-center">
-      <div className="w-full flex flex-col lg:flex-row items-center lg:gap-10 max-w-[1216px] bg-dark-blue rounded-[20px] p-8 lg:p-20 bg-[#0d111c]">
+      <div className="w-full flex flex-col lg:flex-row items-center gap-3 lg:gap-10 max-w-[1216px] bg-dark-blue rounded-[20px] p-8 lg:p-20 bg-[linear-gradient(180deg,#00293B_0%,#011A25_100%)]">
         {/* Mobile badge - At the top */}
         <div className="flex justify-center lg:hidden w-full mb-8 order-1">
-          <div className="items-center gap-2 px-4 py-2 bg-gray-800 rounded-[20px] inline-flex">
-            <BoltIcon className="w-4 h-4 text-gray-300" />
-            <span className="text-sm leading-5 font-medium text-gray-300">
+          <div className="items-center gap-2 px-4 py-2 bg-white/10 rounded-[20px] inline-flex">
+            <BoltIcon className="w-5 h-5 text-white" />
+            <span className="text-sm leading-5 font-medium text-white">
               Critical ENSv2 Infrastructure
             </span>
           </div>
@@ -18,27 +18,33 @@ export const ENSNodeProductPanel = () => {
 
         {/* Image section - Second on mobile, Left on desktop */}
         <div className="lg:w-1/2 w-full lg:mt-0 order-2">
-          <div className="relative flex items-center justify-center">
-            <div className="relative aspect-[4/3] w-full">
+          <div className="relative flex items-center justify-center lg:justify-start">
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 z-0 m-auto aspect-square w-[120%] max-w-[500px] rounded-full
+                  bg-[radial-gradient(circle,rgba(24,125,176,0.45)_0%,rgba(24,125,176,0.4)_40%,transparent_70%)]
+                  blur-3xl">
+              </div>
               <Image
                 quality={100}
-                src="/images/ensnode-diagram.png"
-                alt="ENSNode infrastructure diagram showing multiple chains connecting"
-                fill
-                className="object-contain"
+                src="/images/ensnode-badge.png"
+                alt=""
+                aria-hidden="true"
+                className="object-contain w-full max-w-[420px] relative z-10"
+                width={1136}
+                height={696}
               />
-            </div>
           </div>
         </div>
 
         {/* Content section - Last on mobile, Right on desktop */}
-        <div className="lg:w-1/2 w-full flex items-start justify-center order-3">
+        <div className="lg:w-1/2 w-full flex items-start justify-center order-3 relative z-10">
           <div className="flex-col inline-flex gap-5 lg:max-w-[568px]">
             {/* Badge lg screen */}
             <div className="justify-center lg:justify-start hidden lg:flex">
-              <div className="items-center gap-2 px-4 py-2 bg-gray-800 rounded-[20px] inline-flex">
-                <BoltIcon className="w-4 h-4 text-gray-300" />
-                <span className="text-sm leading-5 font-medium text-gray-300">
+              <div className="items-center gap-2 px-4 py-2 bg-white/10 rounded-[20px] inline-flex">
+                <BoltIcon className="w-5 h-5 text-white" />
+                <span className="text-sm leading-5 font-medium text-white">
                   Critical ENSv2 Infrastructure
                 </span>
               </div>
