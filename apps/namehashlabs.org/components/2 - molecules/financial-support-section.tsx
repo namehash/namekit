@@ -20,21 +20,12 @@ export const FinancialSupportSection = () => {
           role="text"
           className="text-2xl leading-8 font-semibold text-center"
         >
-          <Balancer>Our work has received generous support from:</Balancer>
+          <Balancer>NameHash is backed by the ENS DAO as an official ENS Service Provider.</Balancer>
         </div>
         <div className="flex gap-3 items-center justify-center">
           <a target="_blank" aria-label="ENS" href="https://ensdao.org/">
             <Button variant="secondary" size="large">
               <EnsDAOLogoColored className="w-full h-7" />
-            </Button>
-          </a>
-          <a
-            target="_blank"
-            aria-label="GitCoin"
-            href="https://www.gitcoin.co/"
-          >
-            <Button variant="secondary" size="large">
-              <GitcoinLogo className="w-full h-7" />
             </Button>
           </a>
         </div>

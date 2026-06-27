@@ -16,15 +16,15 @@ const namehashLabsTeam = {
   profiles: [
     getCachedProfile("lightwalker.eth"),
     getCachedProfile("caldonia.eth"),
+    getCachedProfile("shrugs.eth"),
+    getCachedProfile("paulio.eth"),
+    getCachedProfile("tko.box"),
+    getCachedProfile("llev.me"),
     getCachedProfile("kwrobel.eth"),
+    getCachedProfile("goader.eth"),
+    getCachedProfile("y3drk.eth"),
     getCachedProfile("notrab.eth"),
     getCachedProfile("theloner.eth"),
-    getCachedProfile("shrugs.eth"),
-    getCachedProfile("tko.box"),
-    getCachedProfile("y3drk.eth"),
-    getCachedProfile("goader.eth"),
-    getCachedProfile("llev.me"),
-    getCachedProfile("apohllo.eth"),
   ],
 };
 

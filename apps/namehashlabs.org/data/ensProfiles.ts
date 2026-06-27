@@ -528,4 +528,13 @@ const EnsProfiles = new Map<`0x${string}`, Profile>([
       address: "0xc0De20A37E2dAC848F81A93BD85FE4ACDdE7C0DE",
     }),
   ],
+  [
+    "0x056aA6367DcC826c61ce69388d2C02D9e6154418",
+    buildProfile({
+      ensName: "paulio.eth",
+      title: "Engineering",
+      twitterProfile: "https://x.com/0xpaulio",
+      address: "0x056aA6367DcC826c61ce69388d2C02D9e6154418",
+    }),
+  ],
 ]);
