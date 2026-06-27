@@ -20,7 +20,7 @@ export const FinancialSupportSection = () => {
           role="text"
           className="text-xl leading-8 font-semibold text-center"
         >
-          <Balancer>NameHash is backed by the ENS DAO as an official ENS Service Provider.</Balancer>
+          <Balancer>NameHash is backed by the ENS DAO as an official ENS Service Provider</Balancer>
         </div>
         <div className="flex gap-3 items-center justify-center">
           <a target="_blank" aria-label="ENS" href="https://ensdao.org/">
