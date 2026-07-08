@@ -2,7 +2,7 @@ import React, { type SVGProps } from "react";
 
 const USDC_DEFAULT_COLOR = "#2775CA";
 
-export const UsdcSymbol = (props: SVGProps<SVGSVGElement>) => {
+export const UsdcIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg
       {...props}
@@ -26,7 +26,11 @@ export const UsdcSymbol = (props: SVGProps<SVGSVGElement>) => {
       </g>
       <defs>
         <clipPath id="clip0_12879_99838">
-          <rect width="16" height="16" fill="white" />
+          <rect
+            height={props.height || "16"}
+            width={props.width || "16"}
+            fill="white"
+          />
         </clipPath>
       </defs>
     </svg>

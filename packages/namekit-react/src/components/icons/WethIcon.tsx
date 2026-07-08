@@ -18,7 +18,7 @@ const WETH_DEFAULT_COLORS = [
   "#DA3979",
 ];
 
-export const WethSymbol = (props: SVGProps<SVGSVGElement>) => {
+export const WethIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg {...props} viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
       <path
