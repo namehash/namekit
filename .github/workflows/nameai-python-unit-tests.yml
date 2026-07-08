@@ -37,7 +37,11 @@ jobs:
 
       - name: Install dependencies
         working-directory: ./apps/api.nameai.io
-        run: poetry install --extras "lambda"
+        run: poetry install --extras "lambda" --with dev
+
+      - name: Download required data files
+        working-directory: ./apps/api.nameai.io
+        run: poetry run python -m nameai.download
 
       - name: Run tests
         working-directory: ./apps/api.nameai.io

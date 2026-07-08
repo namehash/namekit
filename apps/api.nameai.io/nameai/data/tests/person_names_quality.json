@@ -1,0 +1,55 @@
+{
+    "simple_names": {
+        "piotrwiśniewski": ["piotr", "wiśniewski"],
+        "camilleclaudel": ["camille", "claudel"],
+        "johnnydepp": ["johnny", "depp"],
+        "giancarloesposito": ["giancarlo", "esposito"],
+        "maríagarcía": ["maría", "garcía"],
+        "viktororbán": ["viktor", "orbán"],
+        "sørenkierkegaard": ["søren", "kierkegaard"],
+        "oceanneguérin": ["oceanne", "guérin"]
+    },
+    "ambiguous_names": {
+        "dragonfernandez": {
+            "person_name": ["dragon", "fernandez"],
+            "words": ["dragon", "fern", "a", "ndez"]
+        },
+        "wolfsmith": {
+            "person_name": ["wolf", "smith"],
+            "words": ["wolf", "smith"]
+        },
+        "blacksmith": {
+            "person_name": null,
+            "words": ["black", "smith"]
+        },
+        "charleswood": {
+            "person_name": ["charles", "wood"],
+            "words": ["char", "les", "wood"]
+        },
+        "maylin": {
+            "person_name": ["may", "lin"],
+            "words": ["may", "lin"]
+        },
+        "natalieportman": {
+            "person_name": ["natalie", "portman"],
+            "words": ["nat", "alie", "port", "man"]
+        },
+        "sunyoung": {
+            "person_name": ["sunyoung"],
+            "words": ["suny", "oung"]
+        },
+        "annalísa": {
+            "person_name": ["anna", "lísa"],
+            "words": ["ann", "alísa"]
+        }
+    },
+    "non_names": {
+        "dragonfernouch": ["dragon", "fern", "ouch"],
+        "webmaster": ["webmaster"],
+        "quantumleap": ["quantum", "leap"],
+        "neuralnet": ["neural", "net"],
+        "deepmatrix": ["deep", "matrix"],
+        "cloudsync": ["cloud", "sync"],
+        "byteflow": ["byte", "flow"]
+    }
+}

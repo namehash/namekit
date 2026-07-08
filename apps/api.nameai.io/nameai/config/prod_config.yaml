@@ -4,12 +4,26 @@ tokenization:
   dictionary: words.txt
   custom_dictionary: custom_dictionary.txt
   domain_specific_dictionary: domain_specific_dictionary.txt
-  should_be_tokenized: should_be_tokenized.txt
-  skip_non_words: false
-  with_gaps: true
+  all_tokenizer:
+    should_be_tokenized: should_be_tokenized.txt
+    skip_non_words: false
+    with_gaps: true
+  person_names:
+    first_names: pn_firstnames.json
+    last_names: pn_lastnames.json
+    other: pn_other.json
+    country_stats: pn_country_stats.json
+    country_bonus: 100
 ngrams:
   unigrams: unigram_freq.csv
   bigrams: bigram_freq.csv
   custom_dictionary: custom_dictionary.txt
   domain_specific_dictionary: domain_specific_dictionary.txt
   custom_token_frequency: 500000
+s3_resources:
+  bucket: prod-name-generator-namegeneratori-inputss3bucket-c26jqo3twfxy
+  person_names:
+    first_names_key: person_names_firstnames.json
+    last_names_key: person_names_lastnames.json
+    other_key: person_names_other.json
+    country_stats_key: person_names_country_stats.json
