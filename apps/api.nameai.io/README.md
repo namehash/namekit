@@ -78,8 +78,6 @@ Ensure that Docker and the AWS CLI are installed and configured on your machine.
 
 You need to set up the following environment variables before running the script:
 
-- `PROVIDER_URI_MAINNET`
-- `PROVIDER_URI_SEPOLIA`
 - `ALCHEMY_URI_MAINNET`
 - `ALCHEMY_URI_SEPOLIA`
 - `ENS_SUBGRAPH_URL_MAINNET`
@@ -93,7 +91,7 @@ If you are using GitHub Actions for deployment, you need to configure the follow
 
 - `AWS_ROLE` - The IAM role to assume for AWS actions.
 - `AWS_REGION` - The AWS region where your resources are located.
-- `PROVIDER_URI_MAINNET`, `PROVIDER_URI_SEPOLIA`, `ALCHEMY_URI_MAINNET`, `ALCHEMY_URI_SEPOLIA`, `ENS_SUBGRAPH_URL_MAINNET`, `ENS_SUBGRAPH_URL_SEPOLIA` - The respective URIs for your application.
+- `ALCHEMY_URI_MAINNET`, `ALCHEMY_URI_SEPOLIA`, `ENS_SUBGRAPH_URL_MAINNET`, `ENS_SUBGRAPH_URL_SEPOLIA` - The respective URIs for your application.
 - `CERTIFICATE_NAME` - The name of the ACM certificate.
 - `HOSTED_ZONE_NAME` - The name of your Route 53 hosted zone.
 - `PROD_DOMAIN_NAME` - The production domain name.

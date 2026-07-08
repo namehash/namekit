@@ -1,21 +1,21 @@
 import { describe, it, expect } from "vitest";
-import { createPublicClient, http } from "viem";
-import { mainnet, sepolia } from "viem/chains";
 import { createClient } from "./nameguard-js";
 
-const PROVIDER_URI_MAINNET = process.env.PROVIDER_URI_MAINNET;
-const PROVIDER_URI_SEPOLIA = process.env.PROVIDER_URI_SEPOLIA;
+let ENSNODE_URL_MAINNET = process.env.ENSNODE_URL_MAINNET;
+let ENSNODE_URL_SEPOLIA = process.env.ENSNODE_URL_SEPOLIA;
 
-if (!PROVIDER_URI_MAINNET) {
+if (!ENSNODE_URL_MAINNET) {
   console.warn(
-    "PROVIDER_URI_MAINNET is not defined. Defaulting to viem's default provider, which may have rate limiting and other performance limitations.",
+    "ENSNODE_URL_MAINNET is not defined. Defaulting to https://api.alpha.ensnode.io.",
   );
+  ENSNODE_URL_MAINNET = "https://api.alpha.ensnode.io";
 }
 
-if (!PROVIDER_URI_SEPOLIA) {
+if (!ENSNODE_URL_SEPOLIA) {
   console.warn(
-    "PROVIDER_URI_SEPOLIA is not defined. Defaulting to viem's default provider, which may have rate limiting and other performance limitations.",
+    "ENSNODE_URL_SEPOLIA is not defined. Defaulting to https://api.alpha-sepolia.ensnode.io.",
   );
+  ENSNODE_URL_SEPOLIA = "https://api.alpha-sepolia.ensnode.io";
 }
 
 /**
@@ -27,15 +27,8 @@ const INVALID_NAMEGUARD_API_ENDPOINT = "http://localhost:1234";
 
 describe("NameGuardJS", () => {
   it("should compute secure primary name", async () => {
-    const publicClient = createPublicClient({
-      chain: mainnet,
-      transport: http(PROVIDER_URI_MAINNET),
-    });
-
     const localNameguard = createClient({
-      // not a real endpoint, will error if used
-      nameguardEndpoint: INVALID_NAMEGUARD_API_ENDPOINT,
-      publicClient,
+      network: "mainnet",
     });
 
     const data = await localNameguard.getSecurePrimaryName(
@@ -45,86 +38,56 @@ describe("NameGuardJS", () => {
     expect(data.display_name).toBe("nick.eth");
   });
 
-  it("should use the API for requests with a requested nameguard report", () => {
-    const publicClient = createPublicClient({
-      chain: mainnet,
-      transport: http(PROVIDER_URI_MAINNET),
+  it("should return nameguard report when requested", async () => {
+    const nameguard = createClient({
+      network: "mainnet",
     });
 
-    const localNameguard = createClient({
-      // not a real endpoint, will error if used
+    const data = await nameguard.getSecurePrimaryName(
+      "0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5",
+      { returnNameGuardReport: true },
+    );
+
+    expect(data.display_name).toBe("nick.eth");
+    expect(data.nameguard_report).not.toBeNull();
+    expect(data.nameguard_report).toBeDefined();
+  });
+
+  it("should throw an error when using client with wrong endpoint", async () => {
+    const nameguard = createClient({
       nameguardEndpoint: INVALID_NAMEGUARD_API_ENDPOINT,
-      publicClient,
+      network: "mainnet",
     });
 
-    expect(
-      // this should try to fetch from the endpoint
-      localNameguard.getSecurePrimaryName(
+    await expect(
+      nameguard.getSecurePrimaryName(
         "0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5",
         { returnNameGuardReport: true },
       ),
-    ).rejects.toThrow(
-      "request to http://localhost:1234/secure-primary-name/mainnet/0xb8c2C29ee19D8307cb7255e1Cd9CbDE883A267d5?return_nameguard_report=true failed",
-    );
+    ).rejects.toThrow(/request to .* failed/);
   });
 
-  it("should throw an error for network mismatch on mainnet", () => {
-    const sepoliaClient = createPublicClient({
-      chain: sepolia,
-      transport: http(PROVIDER_URI_SEPOLIA),
-    });
-
+  it("should support mainnet network", () => {
     expect(() => {
       createClient({
         network: "mainnet",
-        publicClient: sepoliaClient,
-      });
-    }).toThrow(
-      "Network mismatch: expected mainnet (chain id 1), but got chain id 11155111.",
-    );
-  });
-
-  it("should throw an error for network mismatch on sepolia", () => {
-    const mainnetClient = createPublicClient({
-      chain: mainnet,
-      transport: http(PROVIDER_URI_MAINNET),
-    });
-
-    expect(() => {
-      createClient({
-        network: "sepolia",
-        publicClient: mainnetClient,
-      });
-    }).toThrow(
-      "Network mismatch: expected sepolia (chain id 11155111), but got chain id 1.",
-    );
-  });
-
-  it("should not throw an error for correct network on mainnet", () => {
-    const mainnetClient = createPublicClient({
-      chain: mainnet,
-      transport: http(PROVIDER_URI_MAINNET),
-    });
-
-    expect(() => {
-      createClient({
-        network: "mainnet",
-        publicClient: mainnetClient,
       });
     }).not.toThrow();
   });
 
-  it("should not throw an error for correct network on sepolia", () => {
-    const sepoliaClient = createPublicClient({
-      chain: sepolia,
-      transport: http(PROVIDER_URI_SEPOLIA),
-    });
-
+  it("should support sepolia network", () => {
     expect(() => {
       createClient({
         network: "sepolia",
-        publicClient: sepoliaClient,
       });
     }).not.toThrow();
+  });
+
+  it("should throw an error for unsupported network", () => {
+    expect(() => {
+      createClient({
+        network: "unsupported" as any,
+      });
+    }).toThrow("Unsupported network: unsupported. Only mainnet and sepolia are supported.");
   });
 });

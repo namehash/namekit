@@ -17,8 +17,8 @@ on:
       - "!packages/nameguard-python/**"
 
 env:
-  PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
-  PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}
+  ENSNODE_URL_MAINNET: ${{ secrets.ENSNODE_URL_MAINNET }}
+  ENSNODE_URL_SEPOLIA: ${{ secrets.ENSNODE_URL_SEPOLIA }}
 
 jobs:
   test:

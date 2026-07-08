@@ -78,8 +78,8 @@ jobs:
         if: needs.check_changes.outputs.api_changed > 0
         working-directory: ./packages/nameguard-python
         env:
-          PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
-          PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}
+          ENSNODE_URL_MAINNET: ${{ secrets.ENSNODE_URL_MAINNET }}
+          ENSNODE_URL_SEPOLIA: ${{ secrets.ENSNODE_URL_SEPOLIA }}
           ALCHEMY_URI_MAINNET: ${{ secrets.ALCHEMY_URI_MAINNET }}
           ALCHEMY_URI_SEPOLIA: ${{ secrets.ALCHEMY_URI_SEPOLIA }}
           ENS_SUBGRAPH_URL_MAINNET: ${{ secrets.ENS_SUBGRAPH_URL_MAINNET }}
@@ -104,7 +104,4 @@ jobs:
           fi
 
       - name: Run tests
-        env:
-          PROVIDER_URI_MAINNET: ${{ secrets.PROVIDER_URI_MAINNET }}
-          PROVIDER_URI_SEPOLIA: ${{ secrets.PROVIDER_URI_SEPOLIA }}
         run: pnpm test --filter ./packages/nameguard-sdk

@@ -1,18 +1,15 @@
 import os
 import re
-from typing import Union
+from typing import Union, Optional
 
 from nameguard.models.checks import UNINSPECTED_CHECK_RESULT
 from nameguard.models.result import UninspectedNameGuardReport
-from nameguard.our_ens import OurENS
 from ens_normalize import is_ens_normalized, ens_cure, DisallowedSequence, ens_process
 
-import requests
+import httpx
 from label_inspector.inspector import Inspector
 from label_inspector.config import initialize_inspector_config
 from label_inspector.models import InspectorConfusableGraphemeResult, InspectorResult
-from web3 import HTTPProvider
-from web3.exceptions import ContractLogicError
 from dotenv import load_dotenv
 
 from nameguard import checks
@@ -169,15 +166,6 @@ class NameGuard:
     def __init__(self):
         self._inspector = init_inspector()
         load_dotenv()
-        # TODO use web sockets and async
-        self.ns = {}
-        for network_name, env_var in (
-            (NetworkName.MAINNET, 'PROVIDER_URI_MAINNET'),
-            (NetworkName.SEPOLIA, 'PROVIDER_URI_SEPOLIA'),
-        ):
-            if os.environ.get(env_var) is None:
-                logger.warning(f'Environment variable {env_var} is not set')
-            self.ns[network_name] = OurENS(HTTPProvider(os.environ.get(env_var)))
 
         # optimization
         self.eth_label = self._inspector.analyse_label('eth', simple_confusables=True, omit_cure=True)
@@ -447,31 +435,60 @@ class NameGuard:
             is_canonical=False,
         )
 
+    async def get_primary_name(self, address: str, network_name: NetworkName) -> Optional[str]:
+        """
+        Looks up the primary ENS name for an address using the ENSNode API.
+
+        The ENSNode API only returns normalized primary names. If the primary name
+        is unnormalized, this method returns None.
+
+        Args:
+            address: The Ethereum address to look up
+            network_name: The network to query (MAINNET or SEPOLIA)
+
+        Returns:
+            The normalized primary name, or None if no primary name exists or
+            the primary name is unnormalized.
+        """
+        # Use environment variables with fallback to default ENSNode API URLs
+        if network_name == NetworkName.MAINNET:
+            base_url = os.environ.get('ENSNODE_URL_MAINNET', 'https://api.alpha.ensnode.io')
+            chain_id = 1
+        elif network_name == NetworkName.SEPOLIA:
+            base_url = os.environ.get('ENSNODE_URL_SEPOLIA', 'https://api.alpha-sepolia.ensnode.io')
+            chain_id = 11155111
+        else:
+            raise ValueError(f'Unsupported network: {network_name}')
+
+        url = f'{base_url}/api/resolve/primary-name/{address}/{chain_id}'
+
+        async with httpx.AsyncClient() as client:
+            response = await client.get(url, params={'accelerate': 'true'})
+            if response.status_code == 404:
+                return None
+            response.raise_for_status()
+            return response.json().get('name')
+
     async def secure_primary_name(
         self, address: str, network_name: str, return_nameguard_report: bool = False
     ) -> SecurePrimaryNameResult:
         try:
-            domain = self.ns[network_name].name(address)
-        except requests.exceptions.ConnectionError as ex:
-            raise ProviderUnavailable(f'Communication error with provider occurred: {ex}')
-        except ContractLogicError:
-            domain = None
-        except Exception:
-            domain = None
+            domain = await self.get_primary_name(address, network_name)
+        except (httpx.RequestError, httpx.HTTPStatusError) as ex:
+            raise ProviderUnavailable(f'Communication error with ENSNode API occurred: {ex}')
         display_name = f'Unnamed {address[2:6].lower()}'
         primary_name = None
         nameguard_report = None
         if domain is None:
+            # ENSNode API returns None for addresses with no primary name or unnormalized primary names
             status = SecurePrimaryNameStatus.NO_PRIMARY_NAME
             impersonation_estimate = None
         else:
+            # If ENSNode API returns a name, it's guaranteed to be normalized
             nameguard_report = await self.inspect_name(network_name, domain)
 
             if nameguard_report.highest_risk and nameguard_report.highest_risk.check.name == Check.UNINSPECTED.name:
                 status = SecurePrimaryNameStatus.UNINSPECTED
-                impersonation_estimate = None
-            elif nameguard_report.normalization == Normalization.UNNORMALIZED:
-                status = SecurePrimaryNameStatus.UNNORMALIZED
                 impersonation_estimate = None
             else:
                 display_name = nameguard_report.beautiful_name
