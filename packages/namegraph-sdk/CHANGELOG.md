@@ -1,5 +1,15 @@
 # @namehash/namegraph-sdk
 
+## 0.6.0
+
+### Minor Changes
+
+- e22a20a: Fix collections counting param in NameGraph API method call
+
+### Patch Changes
+
+- 8cf999b: Exposed parameters affecting the output size and added corresponding unit tests
+
 ## 0.5.1
 
 ### Patch Changes
